@@ -75,8 +75,7 @@ Ads.removeBannerAds()
 Ads.removeAllAds()
 
 
-
-You will need to create a google adMob account 
+# Note 
 The google banner ads are set up for landscape, if your app is in portrait than you will need to go the AdsHelper.swift and find the function loadGoogleBannerAd and change "kGADAdSizeSmartBannerLandscape" to "kGADAdSizeSmartBannerPortrait"
 
 The sample project shows a banner ad on launch and a inter ad when pressing a button. Please feel free to go through this code and let me know about any bugs or improvements, I am by now means an expert. 
