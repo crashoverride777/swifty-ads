@@ -23,6 +23,7 @@ SetUp
 - Step 5: In your app delegate underneath import UIKit write the following
 
 import iAd
+
 import GoogleMobileAds
 
 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -32,6 +33,7 @@ let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 - Step 6: Still in your app delegate you will need to create these properties
 
 var bannerAdView = ADBannerView()
+
 var googleBannerAdView = GADBannerView()
 
 // This is what is called a shared Banner ad, although not really needed for a spritekit game with 1 view controller this is the correct way to use banner ads in apps with multiple ViewControllers. You can read more about shared banner ads on apples website.
@@ -39,7 +41,9 @@ var googleBannerAdView = GADBannerView()
 - Step 7: In your gameViewController (spritekit) or viewController (normal app) write the following in ViewDidLoad
 
 Ads.sharedInstance.presentingViewController = self
+
 Ads.iAdsCheckSupport()
+
 Ads.preloadInterAds()
 
 The first line here sets up the presentingViewController property to your Current View Controller, this step is important as your app will crash otherwise when calling an ad.
@@ -58,6 +62,7 @@ Thats it for set-Up and there should be no more errors in your project. The Help
 - To show a supported banner or Inter Ad simply call these anywhere you like. iAds are shown be default unless they are not supported.
 
 Ads.loadSupportedBannerAd()
+
 Ads.showSupportedInterAd()
 
 - To remove Banner Ads for example during gamePlay simply call 
