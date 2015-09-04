@@ -84,13 +84,13 @@ Ads.removeAllAds()
 ```
 # When you go Live 
 Google Ads are a bit of a hassle when testing and when going live.
-Google Ads are in sandbox mode are using test ad IDs and this line of code request.testDevices = [ kGADSimulatorID ];,
-When you go live you will have to do the following
+Google Ads are in sandbox mode are using test ad IDs and this line of code ```request.testDevices = [ kGADSimulatorID ];```.
+So when your app gooes live you will have to do the following
 
 - 1: In AdsHelper.swift right at the top in the struct called ID enter your real ad IDs.
 - 2: In the function ```loadGoolgeBannerAd()``` and ```showGoogleInterAd()``` change the ap ID reference from "Test" to "Live" and comment out the line ```request.testDevices = [ kGADSimulatorID"```. I wrote some comments at those points to avoid this hassle in the future by setting a D_DEBUG flat.
 
-Note: The google banner ads are set up for landscape, if your app is in portrait than you will need to go the find the function loadGoogleBannerAd() and change "kGADAdSizeSmartBannerLandscape" to "kGADAdSizeSmartBannerPortrait"
+Note: The google banner ads are set up for landscape, if your app is in portrait than you will need to go the find the function ```loadGoogleBannerAd()``` and change "kGADAdSizeSmartBannerLandscape" to "kGADAdSizeSmartBannerPortrait"
 
 # Final Info
 The sample project shows a banner ads on launch and an inter ad when pressing a button. 
