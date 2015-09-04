@@ -22,15 +22,14 @@ I did not do this for Inter Ads since they are not regulary show and because the
  Click the + button again and than press the "Add Other" button and search your project for the folder you copied at Step 2 containing the googleframework file. Once you added that file search for it as you did in step 3 and add it. This should bring your total linked binary (framework) count to 12
 
 - Step 6: In your AppDelegate.swift underneath ```import UIKit``` write the following
-```
+```swift
 import iAd
 ```
-```
+```swift
 import GoogleMobileAds
 ```
-```
+```swift
 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-Ads.sharedInstance.presentingViewController = self
 ```
 
 The last line is needed for shared banner ads, see step 7
@@ -39,23 +38,23 @@ The last line is needed for shared banner ads, see step 7
 
 - Step 7: Still in your AppDelegate.swift you will need to create these properties
 
-```
+```swift
 var bannerAdView = ADBannerView()
 ```
-```
+```swift
 var googleBannerAdView = GADBannerView()
 ```
 
 // This is what is called a shared Banner ad, although not really needed for a spritekit game with 1 view controller this is the correct way to use banner ads in apps with multiple ViewControllers. You can read more about shared banner ads on apples website (https://developer.apple.com/library/ios/technotes/tn2286/_index.html).
 
 - Step 8: In your first viewController write the following in ```ViewDidLoad```. Its best to call these as soon as possible.
-```
+```swift
 Ads.sharedInstance.presentingViewController = self
 ```
-```
+```swift
 Ads.iAdsCheckSupport()
 ```
-```
+```swift
 Ads.preloadInterAds()
 ```
 The first line here sets up the presentingViewController var to your Current View Controller, this step is important as your app will crash otherwise when calling an Ad.
@@ -72,27 +71,27 @@ The third line will simply preload the first bunch of InterAds . This also only 
 There should be no more errors in your project now and the Helper is ready to be used. You can blame Google for most of the work here. Also bear in mind that the Google banner ads are set up for landscape, if your app is in portrait than you will need to go the the var called googleBannerType and change it from "kGADAdSizeSmartBannerLandscape" to "kGADAdSizeSmartBannerPortrait"
 
 - To show a supported Banner or Inter Ad simply call these anywhere you like. iAds are always shown by default unless they are not supported.
-```
+```swift
 Ads.loadSupportedBannerAd()
 ```
-```
+```swift
 Ads.showSupportedInterAd()
 ```
 - To remove Banner Ads for example during gamePlay simply call 
-```
+```swift
 Ads.removeBannerAds()
 ```
 - To remove all Ads, for example for in app purchases simply call
-```
+```swift
 Ads.removeAllAds()
 ```
 # When you go Live 
 Google Ads are a bit of a hassle when testing and when going live.
-Google Ads are using test ad IDs and this line of code ```request.testDevices = [ kGADSimulatorID ];```.
+Google Ads are using test ad IDs and this line of code ```swiftrequest.testDevices = [ kGADSimulatorID ];```.
 So when your app gooes live you will have to do the following
 
 - 1: In Ads.swift right at the top in the struct called ID enter your real Ad IDs for both banner and inter Ads.
-- 2: In the function ```loadGoolgeBannerAd()``` and ```showGoogleInterAd()``` change the ad ID reference from "ID.bannerTest/ID.interText" to "ID.bannerLive/ID.interLive" and comment out the line ```request.testDevices = [ kGADSimulatorID"```. I wrote some comments at those points to avoid this hassle in the future by setting a D_DEBUG flag.
+- 2: In the function ```swiftloadGoolgeBannerAd()``` and ```swiftshowGoogleInterAd()``` change the ad ID reference from "ID.bannerTest/ID.interText" to "ID.bannerLive/ID.interLive" and comment out the line ```swiftrequest.testDevices = [ kGADSimulatorID"```. I wrote some comments at those points to avoid this hassle in the future by setting a D_DEBUG flag.
 
 
 # Final Info
