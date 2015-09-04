@@ -21,32 +21,39 @@ Whats nice is that incase iAd Banners are having an error it will automatically 
  Click the + button again and than press the "Add Other" button and search your project for the folder you copied at Step 2 containing the googleframeworks file. Once you added that file search for it as you did in step 3 and add it. This should bring your total linked binary (framework) count to 12
 
 - Step 6: In your app delegate underneath import UIKit write the following
-
+```
 import iAd
-
+```
+```
 import GoogleMobileAds
-
+```
+```
 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-
+```
 // last line is needed for shared banner ads, see step 6
 
 
 - Step 7: Still in your app delegate you will need to create these properties
 
+```
 var bannerAdView = ADBannerView()
-
+```
+```
 var googleBannerAdView = GADBannerView()
+```
 
 // This is what is called a shared Banner ad, although not really needed for a spritekit game with 1 view controller this is the correct way to use banner ads in apps with multiple ViewControllers. You can read more about shared banner ads on apples website.
 
 - Step 8: In your viewController write the following in ViewDidLoad. Its best to call this as soon as possible.
-
+```
 Ads.sharedInstance.presentingViewController = self
-
+```
+```
 Ads.iAdsCheckSupport()
-
+```
+```
 Ads.preloadInterAds()
-
+```
 The first line here sets up the presentingViewController property to your Current View Controller, this step is important as your app will crash otherwise when calling an ad.
 
 NOTE: In SpriteKit this normally only needs to be done once as there usually is only 1 viewController, however if your app has multiple view controllers than do not forget to call call this again when changing viewControllers and calling new ads. 
