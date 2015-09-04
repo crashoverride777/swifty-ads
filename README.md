@@ -1,7 +1,7 @@
 # iAds and AdMob Helper
 
 A simple helper class that should make integrating Banner and Interterstitial Ads from Apple and Google a breeze.
-I decided to go the Singleton way but please feel free to change it however you feel. This helper has been designed for spritekit but can be used for any kind of app.
+I decided to go the Singleton way but please feel free to change it however you feel. This helper has been while designing my SpriteKit game but it can be used for any kind of app.
 
 The cool thing is that the helper will show iAds when they are supported otherwise it will show AdMob. 
 Whats really cool is that incase iAd Banners are having an error it will automatically load a Google Banner Ad. In case the Google Banner ad is having an error it will reload iAd Banners. 
@@ -97,7 +97,8 @@ So when your app gooes live you will have to do the following
 
 
 # Final Info
-The sample project is the basic apple spritekit template provided by apple. It shows a banner Ads on launch and an inter ad when touching the screen.
+
+The sample project is the basic apple spritekit template. It shows a banner Ad on launch and an inter ad when touching the screen.
 I also made some comments in relevant spots of the helper file incase your need to pause your game, music etc.
 
 Please let me know about any bugs or improvements, I am by now means an expert. 
