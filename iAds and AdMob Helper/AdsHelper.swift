@@ -42,8 +42,8 @@ class Ads: NSObject, ADBannerViewDelegate, ADInterstitialAdDelegate, GADBannerVi
     var googleInterAd: GADInterstitial!
     
     struct ID {
-        static let banner = "Your real app ID from your google account"
-        static let inter = "Your real app ID from your google account"
+        static let bannerLive = "Your real app ID from your google account"
+        static let interLive = "Your real app ID from your google account"
         
         static let bannerTest = "ca-app-pub-3940256099942544/2934735716"
         static let interTest = "ca-app-pub-3940256099942544/4411468910"
