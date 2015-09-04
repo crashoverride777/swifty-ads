@@ -95,9 +95,9 @@ Note: The google banner ads are set up for landscape, if your app is in portrait
 
 # Final Info
 The sample project shows a banner ads on launch and an inter ad when pressing a button. 
-The google banner ads are set up for landscape, if your app is in portrait than you will need to go the AdsHelper.swift and find the function loadGoogleBannerAd() and change "kGADAdSizeSmartBannerLandscape" to "kGADAdSizeSmartBannerPortrait"
-
+I also made some comments in relevant spots of the helper file incase your need to pause your game, music etc.
 Please feel free to go through this code and let me know about any bugs or improvements, I am by now means an expert. 
+
 Enjoy
 
 
