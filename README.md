@@ -47,7 +47,7 @@ var googleBannerAdView = GADBannerView()
 
 // This is what is called a shared Banner ad, although not really needed for a spritekit game with 1 view controller this is the correct way to use banner ads in apps with multiple ViewControllers. You can read more about shared banner ads on apples website (https://developer.apple.com/library/ios/technotes/tn2286/_index.html).
 
-- Step 8: In your first viewController write the following in ```ViewDidLoad```. Its best to call these as soon as possible.
+- Step 8: In your first viewController write the following in ```swiftViewDidLoad```. Its best to call these as soon as possible.
 ```swift
 Ads.sharedInstance.presentingViewController = self
 ```
@@ -87,11 +87,11 @@ Ads.removeAllAds()
 ```
 # When you go Live 
 Google Ads are a bit of a hassle when testing and when going live.
-Google Ads are using test ad IDs and this line of code ```swiftrequest.testDevices = [ kGADSimulatorID ];```.
+Google Ads are using test ad IDs and this line of code ```swift request.testDevices = [ kGADSimulatorID ];```.
 So when your app gooes live you will have to do the following
 
 - 1: In Ads.swift right at the top in the struct called ID enter your real Ad IDs for both banner and inter Ads.
-- 2: In the function ```swiftloadGoolgeBannerAd()``` and ```swiftshowGoogleInterAd()``` change the ad ID reference from "ID.bannerTest/ID.interText" to "ID.bannerLive/ID.interLive" and comment out the line ```swiftrequest.testDevices = [ kGADSimulatorID"```. I wrote some comments at those points to avoid this hassle in the future by setting a D_DEBUG flag.
+- 2: In the function ```swift loadGoolgeBannerAd()``` and ```swift showGoogleInterAd()``` change the ad ID reference from "ID.bannerTest/ID.interText" to "ID.bannerLive/ID.interLive" and comment out the line ```swift request.testDevices = [ kGADSimulatorID"```. I wrote some comments at those points to avoid this hassle in the future by setting a D_DEBUG flag.
 
 
 # Final Info
