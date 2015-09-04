@@ -5,7 +5,7 @@ I decided to go the Singleton way but please feel free to change it however you 
 
 The cool thing is that the helper will show iAds when they are supported otherwise AdMob will be shown. 
 Whats really cool is that incase iAd Banners are having an error it will automatically load a Google Banner Ad. In case the Google Banner ad is having an error it will reload iAd Banners. 
-I did not do this for Inter Ads because they will always preload before being shown, and if there is an error preloading they will just try again. 
+I did not do this for Inter Ads since they are not regulary show and because they will always preload before being shown, and if there is an error preloading they will just try again. 
 
 # Set-Up
 
