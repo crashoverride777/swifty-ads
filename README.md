@@ -10,7 +10,7 @@ I did not do this for Inter Ads since they will always preload and cannot be sho
 # Set-Up
 
 - Step 1: Make sure your apple account is set up for iAds (https://developer.apple.com/iad/)
-- 
+
 - Step 2: Sign up for a Google AdMob account and create your ad IDs (https://support.google.com/admob/answer/2784575?hl=en-GB)
 
 - Step 3: Copy the google framework folder found in the sample project into your own project or download the latest version from googles website (https://developers.google.com/admob/ios/download)
