@@ -41,11 +41,11 @@ class Ads: NSObject, ADBannerViewDelegate, ADInterstitialAdDelegate, GADBannerVi
     
     var googleInterAd: GADInterstitial!
     
-    var googleBannerType = kGADAdSizeSmartBannerLandscape //kGADAdSizeSmartBannerPortrait
+    var googleBannerType = kGADAdSizeSmartBannerPortrait //kGADAdSizeSmartBannerLandscape
     
     struct ID {
-        static let bannerLive = "Your real app ID from your google account"
-        static let interLive = "Your real app ID from your google account"
+        static let bannerLive = "Your real banner ad ID from your adMob account"
+        static let interLive = "Your real inter ad ID from your adMob account"
         
         static let bannerTest = "ca-app-pub-3940256099942544/2934735716"
         static let interTest = "ca-app-pub-3940256099942544/4411468910"
@@ -117,8 +117,8 @@ class Ads: NSObject, ADBannerViewDelegate, ADInterstitialAdDelegate, GADBannerVi
     // MARK: AdMob
     func loadGoogleBannerAd() {
         println("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
-        appDelegate.googleBannerAdView = GADBannerView(adSize: googleBannerType) //kGADAdSizeSmartBannerLandscape)
-        appDelegate.googleBannerAdView.adUnitID = ID.bannerTest // when going live change ID.bannerTest to ID.bannerLive
+        appDelegate.googleBannerAdView = GADBannerView(adSize: googleBannerType)
+        appDelegate.googleBannerAdView.adUnitID = ID.bannerTest //ID.bannerLive
         appDelegate.googleBannerAdView.delegate = self
         appDelegate.googleBannerAdView.rootViewController = presentingViewController
         appDelegate.googleBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.googleBannerAdView.frame.size.height / 2))
@@ -176,7 +176,6 @@ class Ads: NSObject, ADBannerViewDelegate, ADInterstitialAdDelegate, GADBannerVi
     func preloadInterAds() {
         if iAdsAreSupported == true {
             preloadInterAd()
-            googleInterAd = preloadGoogleInterAd()
         } else {
             googleInterAd = preloadGoogleInterAd()
         }
@@ -241,7 +240,6 @@ class Ads: NSObject, ADBannerViewDelegate, ADInterstitialAdDelegate, GADBannerVi
             interAdView.addSubview(interAdCloseButton)
             
             // pause game, music etc
-            
         } else {
             println("iAds Inter cannot be shown, reloading")
             preloadInterAd()
@@ -307,6 +305,8 @@ class Ads: NSObject, ADBannerViewDelegate, ADInterstitialAdDelegate, GADBannerVi
     func interstitial(ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
         println("AdMob Inter error")
         googleInterAd = preloadGoogleInterAd()
+        
+        // resume game, music etc
     }
     
     func showGoogleInterAd() {
