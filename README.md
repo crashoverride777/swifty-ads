@@ -14,7 +14,7 @@ SetUp
 
 - Step 2: Copy the google Frame work folder found in the sample project into your project or download the latest version from googles website.
 
-- Step 3: In your project you will need to add multiple frameworks for adMob to work and the errors to go away. So lets go through them as listed by google (https://developers.google.com/admob/ios/quick-start?hl=en
+- Step 3: In your project you will need to add multiple frameworks for adMob to work and the errors to go away. So  lets go through them as listed by google (https://developers.google.com/admob/ios/quick-start?hl=en
  )
 
 Go to targets-BuildPhases-LinkBinaries and click the + button to and search for and add each of these frameworks.
