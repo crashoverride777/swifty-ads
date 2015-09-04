@@ -69,7 +69,7 @@ The third line will simply preload the first bunch of InterAds . This also only 
 
 # How to use
 
-There should be no more errors in your project now and the Helper is ready to be used. You can blame Google for most of the work here. Also keep in mind that the Google banner ads are set up for landscape, if your app is in portrait than you will need to change ```swift var called googleBannerType``` from "kGADAdSizeSmartBannerLandscape" to "kGADAdSizeSmartBannerPortrait"
+There should be no more errors in your project now and the Helper is ready to be used. You can blame Google for most of the work here. Also keep in mind that the Google banner ads are set up for portrait, if your app is in landscape than you will need to change ```swift var called googleBannerType``` from "kGADAdSizeSmartBannerPortrait" to "kGADAdSizeSmartBannerLandscape"
 
 - To show a supported Banner or Inter Ad simply call these anywhere you like. iAds are always shown by default unless they are not supported.
 ```swift
