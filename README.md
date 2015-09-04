@@ -30,6 +30,7 @@ import GoogleMobileAds
 ```
 ```
 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+Ads.sharedInstance.presentingViewController = self
 ```
 
 The last line is needed for shared banner ads, see step 7
