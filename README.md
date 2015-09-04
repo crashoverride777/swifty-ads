@@ -12,15 +12,15 @@ Whats nice is that incase iAd Banners are having an error it will automatically 
 
 - Step 1: Copy the AdsHelper.swift file into your project
 
-- Step 2: Copy the google Frame work folder found in the sample project into your own project or download the latest version from googles website.
+- Step 2: Copy the google Frame work folder found in the sample project into your own project or download the latest version from googles website (https://developers.google.com/admob/ios/download)
 
 - Step 3: In your project you will need to add multiple frameworks for adMob to work and the errors to go away. So  lets go through them as listed by google (https://developers.google.com/admob/ios/quick-start?hl=en
- ) Go to Targets - BuildPhases - LinkBinaries and click the + button and search for and than add each of these frameworks: AdSupport, AudioToolbox, AVFoundation, CoreGraphics, CoreMedia, CoreTelephony, EventKit, EventKitUI, MessageUI, StoreKit, SystemConfiguration
+ ). Go to Targets - BuildPhases - LinkBinaries and click the + button and search for and than add each of these frameworks: AdSupport, AudioToolbox, AVFoundation, CoreGraphics, CoreMedia, CoreTelephony, EventKit, EventKitUI, MessageUI, StoreKit, SystemConfiguration
 
 - Step 4: Add the google framework itself. 
- Click the + button again and than press the "Add Other" button and search your project for the folder you copied at Step 2 containing the googleframeworks file. Once you added that file search for it as you did in step 3 and add it. This should bring your total linked binary (framework) count to 12
+ Click the + button again and than press the "Add Other" button and search your project for the folder you copied at Step 2 containing the googleframework file. Once you added that file search for it as you did in step 3 and add it. This should bring your total linked binary (framework) count to 12
 
-- Step 6: In your app delegate underneath import UIKit write the following
+- Step 6: In your app delegate underneath ```import UIKit``` write the following
 ```
 import iAd
 ```
@@ -30,7 +30,8 @@ import GoogleMobileAds
 ```
 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 ```
-// last line is needed for shared banner ads, see step 6
+
+The last line is needed for shared banner ads, see step 6
 
 
 - Step 7: Still in your app delegate you will need to create these properties
