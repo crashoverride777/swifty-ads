@@ -14,7 +14,7 @@ SetUp
 
 - Step 2: Copy the google Frame work folder found in the sample project into your project or download the latest version from googles website.
 
-Step 3: In your project you will need to add multiple frameworks for adMob to work and the errors to go away. So lets go through them as listed by google (https://developers.google.com/admob/ios/quick-start?hl=en
+- Step 3: In your project you will need to add multiple frameworks for adMob to work and the errors to go away. So lets go through them as listed by google (https://developers.google.com/admob/ios/quick-start?hl=en
  )
 
 Go to targets-BuildPhases-LinkBinaries and click the + button to and search for and add each of these frameworks.
@@ -34,7 +34,7 @@ Go to targets-BuildPhases-LinkBinaries and click the + button to and search for 
 - Step 4: Ad the google framework itself. 
  Click the + button again and than press the add other button and search your project for the folder you copied at step 2 containing the googleframeworks file. Once you added that file search for it as you did in step 3 and add it. This should bring your total linked binary (framework) count to 12
 
-Step 5: In your app delegate underneath import UIKit write the following
+- Step 5: In your app delegate underneath import UIKit write the following
 
 import iAd
 import GoogleMobileAds
