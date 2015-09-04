@@ -68,31 +68,31 @@ The third line will simply preload the InterAds . This also only needs to be cal
 There should be no more errors in your project now and the Helper is ready to be used. You can blame google for most of the work here.
 
 - To show a supported Banner or Inter Ads simply call these anywhere you like. iAds are always shown be default unless they are not supported.
-
+```
 Ads.loadSupportedBannerAd()
-
+```
+```
 Ads.showSupportedInterAd()
-
+```
 - To remove Banner Ads for example during gamePlay simply call 
-
+```
 Ads.removeBannerAds()
-
+```
 - To remove all Ads, for example for in app purchases simply call
-
+```
 Ads.removeAllAds()
-
+```
 # When you go Live 
 Google Ads are a bit of a hassle when testing and when going live.
 Google Ads are in sandbox mode are using test ad IDs and this line of code request.testDevices = [ kGADSimulatorID ];,
 When you go live you will have to do the following
 
-- 1: In AdsHelper.swift right at the top enter your real ad IDs.
-- 2: In the function loadGoolgeBannerAd() and showGoogleInterAd() change the ap ID reference from "Test" to "Live" and comment out this line "request.testDevices = [ kGADSimulatorID". I wrote some commets at those points to avoid this hassle in the future by setting a D_DEBUG flat.
+- 1: In AdsHelper.swift right at the top in the struct called ID enter your real ad IDs.
+- 2: In the function ```loadGoolgeBannerAd()``` and ```showGoogleInterAd()``` change the ap ID reference from "Test" to "Live" and comment out the line ```request.testDevices = [ kGADSimulatorID"```. I wrote some comments at those points to avoid this hassle in the future by setting a D_DEBUG flat.
 
+Note: The google banner ads are set up for landscape, if your app is in portrait than you will need to go the find the function loadGoogleBannerAd() and change "kGADAdSizeSmartBannerLandscape" to "kGADAdSizeSmartBannerPortrait"
 
-The google banner ads are set up for landscape, if your app is in portrait than you will need to go the find the function loadGoogleBannerAd() and change "kGADAdSizeSmartBannerLandscape" to "kGADAdSizeSmartBannerPortrait"
-
-# Note
+# Final Info
 The sample project shows a banner ads on launch and an inter ad when pressing a button. 
 The google banner ads are set up for landscape, if your app is in portrait than you will need to go the AdsHelper.swift and find the function loadGoogleBannerAd() and change "kGADAdSizeSmartBannerLandscape" to "kGADAdSizeSmartBannerPortrait"
 
