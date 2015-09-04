@@ -9,21 +9,17 @@ I did not do this for Inter Ads since they will always preload and cannot be sho
 
 # Set-Up
 
-- Step 1: Make sure your apple account is set up for iAds (https://developer.apple.com/iad/)
+- Step 1: Copy the google framework folder found in the sample project into your own project or download the latest version from googles website (https://developers.google.com/admob/ios/download)
 
-- Step 2: Sign up for a Google AdMob account and create your ad IDs (https://support.google.com/admob/answer/2784575?hl=en-GB)
+- Step 2: Copy the Ads.swift file into your project
 
-- Step 3: Copy the google framework folder found in the sample project into your own project or download the latest version from googles website (https://developers.google.com/admob/ios/download)
-
-- Step 4: Copy the Ads.swift file into your project
-
-- Step 5: In your project you will need to add multiple frameworks for AdMob to work. So  lets go through them as listed by Google (https://developers.google.com/admob/ios/quick-start?hl=en
+- Step 3: In your project you will need to add multiple frameworks for AdMob to work. So  lets go through them as listed by Google (https://developers.google.com/admob/ios/quick-start?hl=en
  ). Go to Targets - BuildPhases - LinkedBinaries and click the + button and search for and than add each of these frameworks: AdSupport, AudioToolbox, AVFoundation, CoreGraphics, CoreMedia, CoreTelephony, EventKit, EventKitUI, MessageUI, StoreKit, SystemConfiguration
 
-- Step 6: Add the Google framework itself. 
+- Step 4: Add the Google framework itself. 
  Click the + button again and than press the "Add Other" button and search your project for the folder you copied at Step 2 containing the googleframework file. Once you added that file search for it as you did in step 3 and add it. This should bring your total linked binary (framework) count to 12
 
-- Step 7: In your AppDelegate.swift underneath ```import UIKit``` write the following
+- Step 5: In your AppDelegate.swift underneath ```import UIKit``` write the following
 ```swift
 import iAd
 ```
@@ -34,10 +30,10 @@ import GoogleMobileAds
 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 ```
 
-The last line is needed for shared banner ads, see step 8
+The last line is needed for shared banner ads, see step 6
 
 
-- Step 8: Still in your AppDelegate.swift you will need to create these properties
+- Step 6: Still in your AppDelegate.swift you will need to create these properties
 
 ```swift
 var bannerAdView = ADBannerView()
@@ -48,7 +44,7 @@ var googleBannerAdView = GADBannerView()
 
 This is what is called a shared Banner ad, although not really needed for a spritekit game with 1 view controller this is the correct way to use banner ads in aps with multiple ViewControllers. You can read more about shared banner ads on Apples website (https://developer.apple.com/library/ios/technotes/tn2286/_index.html).
 
-- Step 9: In your viewController write the following in ```swift ViewDidLoad```. Its best to call these as soon as possible.
+- Step 7: In your viewController write the following in ```swift ViewDidLoad```. Its best to call these as soon as possible.
 ```swift
 Ads.sharedInstance.presentingViewController = self
 ```
@@ -90,15 +86,19 @@ Ads.removeAllAds()
 
 Google Ads are a bit of a hassle when testing and when going live.
 Google Ads are using test ad IDs and this line of code ```swift request.testDevices = [ kGADSimulatorID ];```.
-So when your app gooes live you will have to do the following
+So when your app goes live you will have to do the following
 
-- 1: In Ads.swift right at the top in the struct called ID enter your real Ad IDs for both banner and inter Ads.
-- 2: In the function ```swift loadGoolgeBannerAd()``` and ```swift showGoogleInterAd()``` change the ad ID reference from "ID.bannerTest/ID.interText" to "ID.bannerLive/ID.interLive" and comment out the line ```swift request.testDevices = [ kGADSimulatorID"```. I wrote some comments at those points to avoid this hassle in the future by setting a D_DEBUG flag.
+- Step 1: Make sure your apple account is set up for iAds (https://developer.apple.com/iad/)
+
+- Step 2: Sign up for a Google AdMob account and create your ad IDs (https://support.google.com/admob/answer/2784575?hl=en-GB)
+
+- Step 3: In Ads.swift right at the top in the struct called ID enter your real Ad IDs for both banner and inter Ads.
+- Step 4: In the function ```swift loadGoolgeBannerAd()``` and ```swift showGoogleInterAd()``` change the ad ID reference from "ID.bannerTest/ID.interText" to "ID.bannerLive/ID.interLive" and comment out the line ```swift request.testDevices = [ kGADSimulatorID"```. I wrote some comments at those points to avoid this hassle in the future if you set up D_DEBUG flag.
 
 
 # Final Info
 
-The sample project is the basic apple spritekit template. It shows a banner Ad on launch and an inter ad when touching the screen.
+The sample project is the basic apple spritekit template. It now shows a banner Ad on launch and an inter ad, if it loadened, when touching the screen.
 I also made some comments in relevant spots of the helper file incase your need to pause your game, music etc.
 
 Please let me know about any bugs or improvements, I am by now means an expert. 
