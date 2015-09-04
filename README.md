@@ -7,8 +7,9 @@ This helper has been designed for spritekit but can be used for any kind of app.
 The idea is that the helper will show iAds when they are supported otherwise AdMob ads will be shown. 
 Whats nice is that incase iAd Banners are having an error it will automatically load a Google Banner Ad. In case the Google Banner ad is having an error, and iAds are supported, than it will reload iAd Banners.
 
+# Set-Up
 
-SetUp
+- Step 1: Sign up for a google AdMob account and create your ad IDs (https://support.google.com/admob/answer/2784575?hl=en-GB)
 
 - Step 1: Copy the AdsHelper.swift file into your project
 
@@ -20,7 +21,7 @@ SetUp
 - Step 4: Ad the google framework itself. 
  Click the + button again and than press the add other button and search your project for the folder you copied at step 2 containing the googleframeworks file. Once you added that file search for it as you did in step 3 and add it. This should bring your total linked binary (framework) count to 12
 
-- Step 5: In your app delegate underneath import UIKit write the following
+- Step 6: In your app delegate underneath import UIKit write the following
 
 import iAd
 
@@ -30,7 +31,7 @@ let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
 // The last line is needed for step 6
 
-- Step 6: Still in your app delegate you will need to create these properties
+- Step 7: Still in your app delegate you will need to create these properties
 
 var bannerAdView = ADBannerView()
 
@@ -38,7 +39,7 @@ var googleBannerAdView = GADBannerView()
 
 // This is what is called a shared Banner ad, although not really needed for a spritekit game with 1 view controller this is the correct way to use banner ads in apps with multiple ViewControllers. You can read more about shared banner ads on apples website.
 
-- Step 7: In your gameViewController (spritekit) or viewController (normal app) write the following in ViewDidLoad
+- Step 8: In your gameViewController (spritekit) or viewController (normal app) write the following in ViewDidLoad
 
 Ads.sharedInstance.presentingViewController = self
 
@@ -55,7 +56,7 @@ The second line checks if iAds are supported in the current location.
 The third line will simply preload the InterAds . This only needs to be called once as interAds will preload automatically after being viewed the first time. Preloading inter Ads is what most tutorial don’t show you and it makes them appear much faster and more reliable.
 
 
-
+# How to use
 
 Thats it for set-Up and there should be no more errors in your project. The Helper is now ready to be used, you can blame google for most of the work here.
 
@@ -75,7 +76,7 @@ Ads.removeAllAds()
 
 
 
-
+You will need to create a google adMob account 
 The google banner ads are set up for landscape, if your app is in portrait than you will need to go the AdsHelper.swift and find the function loadGoogleBannerAd and change "kGADAdSizeSmartBannerLandscape" to "kGADAdSizeSmartBannerPortrait"
 
 The sample project shows a banner ad on launch and a inter ad when pressing a button. Please feel free to go through this code and let me know about any bugs or improvements, I am by now means an expert. 
