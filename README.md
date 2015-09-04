@@ -11,7 +11,7 @@ I did not do this for Inter Ads since they are not regulary show and because the
 
 - Step 1: Sign up for a Google AdMob account and create your ad IDs (https://support.google.com/admob/answer/2784575?hl=en-GB)
 
-- Step 1: Copy the AdsHelper.swift file into your project
+- Step 1: Copy the Ads.swift file into your project
 
 - Step 2: Copy the google Frame work folder found in the sample project into your own project or download the latest version from googles website (https://developers.google.com/admob/ios/download)
 
@@ -68,9 +68,9 @@ The third line will simply preload the first bunch of InterAds . This also only 
 
 # How to use
 
-There should be no more errors in your project now and the Helper is ready to be used. You can blame google for most of the work here.
+There should be no more errors in your project now and the Helper is ready to be used. You can blame Google for most of the work here. Also bear in mind that the Google banner ads are set up for landscape, if your app is in portrait than you will need to go the the var called googleBannerType and change it from "kGADAdSizeSmartBannerLandscape" to "kGADAdSizeSmartBannerPortrait"
 
-- To show a supported Banner or Inter Ads simply call these anywhere you like. iAds are always shown by default unless they are not supported.
+- To show a supported Banner or Inter Ad simply call these anywhere you like. iAds are always shown by default unless they are not supported.
 ```
 Ads.loadSupportedBannerAd()
 ```
@@ -90,10 +90,9 @@ Google Ads are a bit of a hassle when testing and when going live.
 Google Ads are using test ad IDs and this line of code ```request.testDevices = [ kGADSimulatorID ];```.
 So when your app gooes live you will have to do the following
 
-- 1: In AdsHelper.swift right at the top in the struct called ID enter your real ad IDs.
-- 2: In the function ```loadGoolgeBannerAd()``` and ```showGoogleInterAd()``` change the ap ID reference from "Test" to "Live" and comment out the line ```request.testDevices = [ kGADSimulatorID"```. I wrote some comments at those points to avoid this hassle in the future by setting a D_DEBUG flat.
+- 1: In Ads.swift right at the top in the struct called ID enter your real Ad IDs for both banner and inter Ads.
+- 2: In the function ```loadGoolgeBannerAd()``` and ```showGoogleInterAd()``` change the ad ID reference from "ID.bannerTest/ID.interText" to "ID.bannerLive/ID.interLive" and comment out the line ```request.testDevices = [ kGADSimulatorID"```. I wrote some comments at those points to avoid this hassle in the future by setting a D_DEBUG flag.
 
-Note: The google banner ads are set up for landscape, if your app is in portrait than you will need to go the function ```loadGoogleBannerAd()``` and change "kGADAdSizeSmartBannerLandscape" to "kGADAdSizeSmartBannerPortrait"
 
 # Final Info
 The sample project shows a banner ads on launch and an inter ad when pressing a button. 
