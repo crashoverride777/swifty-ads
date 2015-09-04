@@ -15,21 +15,7 @@ SetUp
 - Step 2: Copy the google Frame work folder found in the sample project into your project or download the latest version from googles website.
 
 - Step 3: In your project you will need to add multiple frameworks for adMob to work and the errors to go away. So  lets go through them as listed by google (https://developers.google.com/admob/ios/quick-start?hl=en
- )
-
-Go to targets-BuildPhases-LinkBinaries and click the + button to and search for and add each of these frameworks.
-
-- AdSupport
-- AudioToolbox
-- AVFoundation
-- CoreGraphics
-- CoreMedia
-- CoreTelephony
-- EventKit
-- EventKitUI
-- MessageUI
-- StoreKit
-- SystemConfiguration
+ ) Go to targets-BuildPhases-LinkBinaries and click the + button to and search for and add each of these frameworks: AdSupport, AudioToolbox, AVFoundation, CoreGraphics, CoreMedia, CoreTelephony, EventKit, EventKitUI, MessageUI, StoreKit, SystemConfiguration
 
 - Step 4: Ad the google framework itself. 
  Click the + button again and than press the add other button and search your project for the folder you copied at step 2 containing the googleframeworks file. Once you added that file search for it as you did in step 3 and add it. This should bring your total linked binary (framework) count to 12
@@ -66,27 +52,29 @@ The third line will simply preload the InterAds . This only needs to be called o
 
 
 
-- Thats it for set-Up and there should be no more errors in your project. The Helper is now ready to be used, you can blame google for most of the work here.
 
-To show a supported banner or Inter Ad depending on location simply call this anywhere you like. iAds are shown be default unless they are not supported.
+Thats it for set-Up and there should be no more errors in your project. The Helper is now ready to be used, you can blame google for most of the work here.
+
+- To show a supported banner or Inter Ad simply call these anywhere you like. iAds are shown be default unless they are not supported.
 
 Ads.loadSupportedBannerAd()
 Ads.showSupportedInterAd()
 
-To remove Banner Ads for example during gamePlay simply call 
+- To remove Banner Ads for example during gamePlay simply call 
 
 Ads.removeBannerAds()
 
-To remove all Ads, for example for in app purchases simply call
+- To remove all Ads, for example for in app purchases simply call
 
 Ads.removeAllAds()
 
 
 
-- The google banner ads are set up for landscape, if your app is in portrait than you will need to go the AdsHelper.swift and find the function loadGoogleBanner ad and change this kGADAdSizeSmartBannerLandscape to this kGADAdSizeSmartBannerPortrait
 
-The sample project shows a banner ad on launch and a inter ad when pressing a button. Please feel free to go through this code and let me know about any bugs or improvements, I am by now means an expert
-.I am using this code on one of my current projects and though it would be nice to put all the code into a helper file for easier use in the future and share it with you guys.
+The google banner ads are set up for landscape, if your app is in portrait than you will need to go the AdsHelper.swift and find the function loadGoogleBannerAd and change "kGADAdSizeSmartBannerLandscape" to "kGADAdSizeSmartBannerPortrait"
+
+The sample project shows a banner ad on launch and a inter ad when pressing a button. Please feel free to go through this code and let me know about any bugs or improvements, I am by now means an expert. 
+I am using this code on one of my current projects and though it would be nice to put all the code into a helper file for easier use in the future and share it with you guys.
 
 Enjoy
 
