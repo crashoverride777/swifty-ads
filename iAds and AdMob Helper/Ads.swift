@@ -41,6 +41,8 @@ class Ads: NSObject, ADBannerViewDelegate, ADInterstitialAdDelegate, GADBannerVi
     
     var googleInterAd: GADInterstitial!
     
+    var googleBannerType = kGADAdSizeSmartBannerLandscape //kGADAdSizeSmartBannerPortrait
+    
     struct ID {
         static let bannerLive = "Your real app ID from your google account"
         static let interLive = "Your real app ID from your google account"
@@ -115,8 +117,8 @@ class Ads: NSObject, ADBannerViewDelegate, ADInterstitialAdDelegate, GADBannerVi
     // MARK: AdMob
     func loadGoogleBannerAd() {
         println("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
-        appDelegate.googleBannerAdView = GADBannerView(adSize: kGADAdSizeSmartBannerLandscape)
-        appDelegate.googleBannerAdView.adUnitID = ID.bannerTest
+        appDelegate.googleBannerAdView = GADBannerView(adSize: googleBannerType) //kGADAdSizeSmartBannerLandscape)
+        appDelegate.googleBannerAdView.adUnitID = ID.bannerTest // when going live change ID.bannerTest to ID.bannerLive
         appDelegate.googleBannerAdView.delegate = self
         appDelegate.googleBannerAdView.rootViewController = presentingViewController
         appDelegate.googleBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.googleBannerAdView.frame.size.height / 2))
@@ -261,12 +263,12 @@ class Ads: NSObject, ADBannerViewDelegate, ADInterstitialAdDelegate, GADBannerVi
     func preloadGoogleInterAd() -> GADInterstitial {
         println("AdMob Inter preloading")
         
-        var googleInterAd = GADInterstitial(adUnitID: ID.interTest)
+        var googleInterAd = GADInterstitial(adUnitID: ID.interTest) // when going live change ID.interTest to ID.interLive
         googleInterAd.delegate = self
         
         var request = GADRequest()
         
-        //#if DEBUG // set flag as above
+        //#if DEBUG // set flag as above or comment out line below
         request.testDevices = [ kGADSimulatorID ];
         //#endif
         
