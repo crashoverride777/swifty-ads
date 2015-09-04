@@ -1,23 +1,24 @@
-# iAds-and-AdMob-helper
+# iAds and AdMob Helper
 
 A simple helper class that should make integrating Banner and Interterstitial Ads from Apple and Google a breeze.
-I decided to go the singleton way but please feel free to change it however you feel. This helper has been designed for spritekit but can be used for any kind of app.
+I decided to go the Singleton way but please feel free to change it however you feel. This helper has been designed for spritekit but can be used for any kind of app.
 
-The idea is that the helper will show iAds when they are supported otherwise AdMob ads will be shown. 
-Whats nice is that incase iAd Banners are having an error it will automatically load a Google Banner Ad. In case the Google Banner ad is having an error, and iAds are supported, than it will reload iAd Banners.
+The cool thing is that the helper will show iAds when they are supported otherwise AdMob will be shown. 
+Whats really cool is that incase iAd Banners are having an error it will automatically load a Google Banner Ad. In case the Google Banner ad is having an error it will reload iAd Banners. 
+I did not do this for Inter Ads because they will always preload before being shown, and if there is an error preloading they will just try again. 
 
 # Set-Up
 
-- Step 1: Sign up for a google AdMob account and create your ad IDs (https://support.google.com/admob/answer/2784575?hl=en-GB)
+- Step 1: Sign up for a Google AdMob account and create your ad IDs (https://support.google.com/admob/answer/2784575?hl=en-GB)
 
 - Step 1: Copy the AdsHelper.swift file into your project
 
 - Step 2: Copy the google Frame work folder found in the sample project into your own project or download the latest version from googles website (https://developers.google.com/admob/ios/download)
 
-- Step 3: In your project you will need to add multiple frameworks for adMob to work and the errors to go away. So  lets go through them as listed by google (https://developers.google.com/admob/ios/quick-start?hl=en
+- Step 3: In your project you will need to add multiple frameworks for AdMob to work. So  lets go through them as listed by Google (https://developers.google.com/admob/ios/quick-start?hl=en
  ). Go to Targets - BuildPhases - LinkBinaries and click the + button and search for and than add each of these frameworks: AdSupport, AudioToolbox, AVFoundation, CoreGraphics, CoreMedia, CoreTelephony, EventKit, EventKitUI, MessageUI, StoreKit, SystemConfiguration
 
-- Step 4: Add the google framework itself. 
+- Step 4: Add the Google framework itself. 
  Click the + button again and than press the "Add Other" button and search your project for the folder you copied at Step 2 containing the googleframework file. Once you added that file search for it as you did in step 3 and add it. This should bring your total linked binary (framework) count to 12
 
 - Step 6: In your AppDelegate.swift underneath ```import UIKit``` write the following
@@ -46,7 +47,7 @@ var googleBannerAdView = GADBannerView()
 
 // This is what is called a shared Banner ad, although not really needed for a spritekit game with 1 view controller this is the correct way to use banner ads in apps with multiple ViewControllers. You can read more about shared banner ads on apples website (https://developer.apple.com/library/ios/technotes/tn2286/_index.html).
 
-- Step 8: In your viewController write the following in ```ViewDidLoad```. Its best to call these as soon as possible.
+- Step 8: In your first viewController write the following in ```ViewDidLoad```. Its best to call these as soon as possible.
 ```
 Ads.sharedInstance.presentingViewController = self
 ```
@@ -62,7 +63,7 @@ NOTE: In SpriteKit this normally only needs to be done once as there usually is 
 
 The second line checks if iAds are supported in the current location. This only needs to be called once
 
-The third line will simply preload the InterAds . This also only needs to be called once as interAds will preload automatically after being viewed the first time. Preloading apples inter Ads is what most tutorial don’t show you and it makes them appear much faster and more reliable, similar to googles way.
+The third line will simply preload the first bunch of InterAds . This also only needs to be called once as interAds will preload automatically after being viewed the first time. Preloading apples inter Ads is what most tutorial don’t show you and it makes them appear much faster and more reliable, similar to googles way.
 
 
 # How to use
