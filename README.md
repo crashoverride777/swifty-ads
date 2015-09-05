@@ -101,13 +101,13 @@ I wrote some comments at those points to avoid this hassle in the future if you 
 # Final Info
 
 The sample project is the basic apple spritekit template. It now shows a banner Ad on launch and an inter ad, if it has loaded, when touching the screen.
-To make it easier to call these methods I made class func in Ads.swift. If you would like to cut down the helper file a bit you can delete the class func and call the methods like so
+To make it easier to call these methods I made class functions in Ads.swift. If you would like to cut down the helper file a bit you can delete all the class functions and call the methods like so
 ```swift
 Ads.sharedInstance.preloadInterAds()
 Ads.sharedInstance.loadBannerAds()
 etc
 ```
-Like I mentioned above I primarly focused on SpriteKit to make it easy to call ads from your SKScenes without having to use NSNotifactionCenter or delegates to constantly communicate with the viewController. 
+Like I mentioned above I primarly focused on SpriteKit to make it easy to call ads from your SKScenes without having to use NSNotifactionCenter or delegates to constantly communicate with the viewController. Also this should help keep your viewControllef clean as mine became a mess after integration google ads too.
 If you have an app that mainly uses viewControllers to show its UI than it might be clunky to call 
 ```swift 
 Ads.sharedInstance.presentingViewController = self
