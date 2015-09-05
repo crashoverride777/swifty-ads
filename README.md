@@ -47,7 +47,7 @@ The 1st line sets up the presentingViewController var to your Current View Contr
 NOTE: In SpriteKit this normally only needs to be done once as there usually is only 1 viewController. 
 However if your app is not a spriteKit game and uses multiple view controllers than do not forget to call this again when changing viewControllers or check the "final info" for a better way.
 
-The 2nd line will simply preload the first bunch of InterAds . This also only needs to be called
+The 2nd line will simply preload the first bunch of InterAds . This also only needs to be called once
 
 # How to use
 
@@ -68,7 +68,7 @@ in the super.init() method.
 Ads.loadSupportedBannerAd()
 Ads.showSupportedInterAd()
 ```
-- To remove Banner Ads or All Ads for example during gamePlay of for in app purchases simply call 
+- To remove Banner Ads or All Ads, for example during gamePlay or for in app purchases simply call 
 ```swift
 Ads.removeBannerAds()
 Ads.removeAllAds()
@@ -96,7 +96,7 @@ change the ad ID reference from "ID.bannerTest/ID.interTest" to "ID.bannerLive/I
 ```swift 
 request.testDevices = [ kGADSimulatorID"
 ``` 
-I wrote some comments at those points to avoid this hassle in the future if you set up a D_DEBUG flag.
+I wrote some comments at those points to avoid this hassle in the future if you set up a D-DEBUG flag.
 
 # Final Info
 
@@ -107,12 +107,12 @@ Ads.sharedInstance.preloadInterAds()
 Ads.sharedInstance.loadBannerAds()
 etc
 ```
-Like I mentioned above I primarly focused on SpriteKit to make it easy to call ads from your SKScenes without having to use NSNotifaction or delegates to constantly communicate with the viewController. 
+Like I mentioned above I primarly focused on SpriteKit to make it easy to call ads from your SKScenes without having to use NSNotifactionCenter or delegates to constantly communicate with the viewController. 
 If you have an app that mainly uses viewControllers to show its UI than it might be clunky to call 
 ```swift 
 Ads.sharedInstance.presentingViewController = self
 ```
-especially repeatedly when changing viewControllers. This might even potentially cause issue with shared banner ads, although I have not tested that myself. In those kind of apps a better way would be to make some adjustments in Ads.swift. For example you clould change func such as theses
+especially repeatedly when changing viewControllers. This might even potentially cause issue with shared banner ads, although I have not tested that myself. In those kind of apps a better way would be to make some adjustments in Ads.swift. For example you could change func such as theses
 ```swift 
   class func loadSupportedBannerAd() {
         Ads.sharedInstance.loadSupportedBannerAd()
@@ -140,12 +140,12 @@ to
         }
     }
 ```
-and than call it like so
+and than call it directly like so
 ```swift 
 Ads.loadSupportedBannerAd(self)
 ```
 
-I also made some comments in relevant spots of the helper file incase your need to pause your game, music etc.
+I also made some comments in the relevant spots of the helper file incase you need to pause your game, music etc.
 
 Please let me know about any bugs or improvements, I am by now means an expert. 
 
