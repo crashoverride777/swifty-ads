@@ -32,7 +32,7 @@ let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 The last line is needed for shared banner ads, see step 6
 
 
-- Step 6: Still in your AppDelegate.swift you will need to create these properties
+- Step 6: Still in your AppDelegate.swift under the class method you will need to create these properties
 
 ```swift
 var bannerAdView = ADBannerView()
