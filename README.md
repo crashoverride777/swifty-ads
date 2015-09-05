@@ -5,8 +5,8 @@ I decided to go the Singleton way but please feel free to change that if you don
 
 The cool thing is that iAds will show when they are supported otherwise it will show AdMob. 
 Whats really cool is that incase iAd banners are having an error it will automatically load an AdMob banner and in case the AdMob banner is having an error it will load an iAd banner again. 
-Nice, because tutorials I have seen show you this but in such a way that if the the iAd banner fails and than the adMob banner also fails it will never reload a iAd banner again until you close the app. You dont want that as that means less money in your pockets.
 
+Nice, because tutorials I have seen show you this but in such a way that if the the iAd banner fails and than the adMob banner also fails it will never reload a iAd banner again until you close the app. You dont want that as that means less money in your pockets.
 I did not do the same for Inter Ads because they have to be preloaded before you can actually show them. Besides that they are not shown regularly so there is really no point.
 
 # Set-Up
