@@ -7,7 +7,7 @@ It has all the standard features you expect, like banners only animating in when
 The cool thing is that iAds will be used when they are supported otherwise AdMob will be used. 
 Whats really cool is that incase iAd banners are having an error it will automatically load an AdMob banner. In case that AdMob banner is than having an error it will load an iAd banner again. 
 
-Nice because that means chances are very low that there are no banners showing wich means more money in your pocket. There are tutorials that teach you this, but in unfortunatley in the wrong way. In those tutorials if there is an iAd banner error and than the adMob banner also has an error, and believe me this can happen, it would never reload another iAd banner until you close the app. You dont want that as that means less money in your pocket.
+Nice because that means chances are very low that there are no banners showing wich means more money in your pocket. There are tutorials that teach you this, but in unfortunatley in the wrong way. You dont want that as that means less money in your pocket.
 
 I did not do the same for Inter Ads because they have to be preloaded before you can actually show them. Besides that they are not shown regularly so there really is no point. 
 There are not many tutorials that actually show you how to preload iAd inter ads, like Google does, so nice again.
