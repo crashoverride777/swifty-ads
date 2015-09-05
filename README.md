@@ -144,6 +144,7 @@ to
     }
     
     func loadSupportedBannerAd(viewController: UIViewController) {
+        presentingViewController = viewController
         ...
     }
     
@@ -152,6 +153,7 @@ to
     }
     
     func preloadFirstSupportedInterAd(viewController: UIViewController) {
+        presentingViewController = viewController
         ...
     }
     
@@ -160,6 +162,7 @@ to
     }
     
     func showSupportedInterAd(viewController: UIViewController) {
+        presentingViewController = viewController
         ...
     }
 ```
