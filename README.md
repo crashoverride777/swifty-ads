@@ -140,7 +140,9 @@ to
         ...
     }
  ```
- Than go the Ads.swift init method and remove the line "preloadFirstSupportedInterAd()" and instead edit/add these functions
+ Than go the Ads.swift init method and remove the line "preloadFirstSupportedInterAd()"
+ 
+ Than edit/add these functions
     
  ```swift
 class func preloadFirstSupportedInterAd(viewController: UIViewController) {
