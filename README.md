@@ -4,12 +4,7 @@ A simple helper class that should make integrating Banner and Interterstitial Ad
 I decided to go the Singleton way but please feel free to change that if you dont like it. This helper has been made while designing my SpriteKit game but it can be used for any kind of app. 
 
 The cool thing is that iAds will be used when they are supported otherwise AdMob will be used. 
-Whats really cool is that incase iAd banners are having an error it will automatically load an AdMob banner. In case that AdMob banner is than having an error it will load an iAd banner again. 
-
-Nice because that means chances are very low that there are no banners showing wich means more money in your pocket. There are tutorials that teach you this, but in unfortunatley in the wrong way.
-
-I did not do the same for Inter Ads because they have to be preloaded before you can actually show them. Besides that they are not shown regularly so there really is no point. 
-There are not many tutorials that actually show you how to preload iAd inter ads, like Google does, so nice again.
+Whats really cool is that incase iAd banners are having an error it will automatically load an AdMob banner. In case that AdMob banner is than having an error it will load an iAd banner again. Nice because there are tutorials that teach you this, but in unfortunatley in the wrong way.
 
 # Set-Up
 
@@ -30,8 +25,6 @@ import GoogleMobileAds
 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 ```
 
-The last line is needed for shared banner ads, see step 6
-
 - Step 6: Still in your AppDelegate.swift under the class implementation you will need to create these properties
 
 ```swift
@@ -45,13 +38,15 @@ This is what is called a shared Banner ad and although not really needed for a s
 ```swift
 Ads.sharedInstance.presentingViewController = self
 ```
-This sets the presentingViewController var to your current ViewController and init the Helper. This step is important because your app will crash otherwise when trying to call an Ad. In a spriteKit game this really needs to called only once since there usually is just 1 viewController.
+This sets the presentingViewController var to your current ViewController and inits Ads.swift. This step is important because your app will crash otherwise when trying to call an Ad. In a spriteKit game this really needs to called just once since there usually is only 1 viewController.
 
 NOTE: If your app is not a spriteKit game and uses multiple view controllers than you should completly ignore this Step and check  "not a SpriteKit game?" after reading the rest.
 
 # How to use
 
-There should be no more errors in your project now and the Helper is ready to be used. You can blame Google for most of the work here. Keep in mind that the Google banner ads (iAds do it automatically ) are set up for portrait mode, if your app is in landscape than you will need to change
+There should be no more errors in your project now and the Helper is ready to be used. You can blame Google for most of the work here. 
+
+- Keep in mind that the Google banner ads (iAds do it automatically ) are set up for portrait mode, if your app is in landscape than you will need to change
 ```swift 
 var googleBannerType
 ```
@@ -83,9 +78,9 @@ request.testDevices = [ kGADSimulatorID ];
 ```
 So before your app goes live you will have to do the following
 
-- Step 1: If you havent used iAds before make sure your apple account is set up for iAds. You mainly have to sign an agreement in your developer account. (https://developer.apple.com/iad/)
+- Step 1: If you havent used iAds before make sure your account is set up for iAds. You mainly have to sign an agreement in your developer account. (https://developer.apple.com/iad/)
 
-- Step 2: Sign up for a Google AdMob account and create your ad IDs. You need 1 for banner and 1 for inter Ads. (https://support.google.com/admob/answer/2784575?hl=en-GB)
+- Step 2: Sign up for a Google AdMob account and create your ad IDs, 1 for banner and 1 for inter Ads. (https://support.google.com/admob/answer/2784575?hl=en-GB)
 
 - Step 3: In Ads.swift in the struct called ID enter your real Ad IDs for both "bannerLive" and "interLive".
 
@@ -98,7 +93,7 @@ change the ad ID reference from "ID.bannerTest/ID.interTest" to "ID.bannerLive/I
 ```swift 
 request.testDevices = [ kGADSimulatorID"
 ``` 
-I wrote some comments at those points to avoid this hassle in the future if you set up a D-DEBUG flag. http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version
+I wrote some comments at those points to avoid this hassle in the future if you set up a D-DEBUG flag. (http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
 
 - Step 4: When you submit your app on iTunes Connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected. If you decide to just use iAds than remove all google frameworks and references from your project and make sure you select NO, otherwise your app will also get rejected.
 
@@ -169,6 +164,7 @@ Ads.loadSupportedBannerAd(self)
 or
 Ads.showSupportedInterAd(self)
 ```
+
 # Final Info
 
 The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and an inter ad, if it has loaded, when touching the screen.
