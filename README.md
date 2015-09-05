@@ -45,11 +45,8 @@ This is what is called a shared Banner ad, although not really needed for a spri
 - Step 7: In your viewController write the following in ```ViewDidLoad```. Its best to call these as soon as possible.
 ```swift
 Ads.sharedInstance.presentingViewController = self
-Ads.preloadFirstSupportedInterAd()
 ```
 The 1st line sets the presentingViewController var to your current ViewController, this step is important because your app will crash otherwise when trying to call an Ad. In a spriteKit game this really needs to called only once since there usually is only 1 viewController.
-
-The 2nd line simply preloads the first InterAd . This also only needs to be called once, interAds will preload automatically afterwards.
 
 NOTE: If your app is not a spriteKit game and uses multiple view controllers than you should completly ignore this Step and check  "not a SpriteKit game?" for a better way once finished reading the rest.
 
@@ -121,14 +118,6 @@ especially repeatedly when changing viewControllers. This might even cause issue
         ...
     }
     
-  class func preloadFirstSupportedInterAd() {
-        Ads.sharedInstance.preloadFirstSupportedInterAd()
-    }
-    
-    func preloadFirstSupportedInterAd() {
-        ...
-     }
-     
      class func showSupportedInterAd() {
          Ads.sharedInstance.showSupportedInterAd()
     }
@@ -148,15 +137,6 @@ to
         ...
     }
     
-  class func preloadFirstSupportedInterAd(viewController: UIViewController) {
-         Ads.sharedInstance.preloadFirstSupportedInterAd(viewController)
-    }
-    
-    func preloadFirstSupportedInterAd(viewController: UIViewController) {
-        presentingViewController = viewController
-        ...
-    }
-    
   class func showSupportedInterAd(viewController: UIViewController) {
          Ads.sharedInstance.showSupportedInterAd(viewController)
     }
@@ -165,8 +145,21 @@ to
         presentingViewController = viewController
         ...
     }
+ ```
+ Than go the Ads.swift init method and remove the line "preloadFirstSupportedInterAd()" and instead edit/add these functions so they look like so
+    
+ ```swift
+class func preloadFirstSupportedInterAd(viewController: UIViewController) {
+         Ads.sharedInstance.preloadFirstSupportedInterAd(viewController)
+    }
+    
+    func preloadFirstSupportedInterAd(viewController: UIViewController) {
+        presentingViewController = viewController
+        ...
+    }
 ```
-You than simply preload the first interAd like so (Step 7)
+
+You than simply preload the first interAd yourself in the ViewController like so
 ```swift 
 Ads.preloadFirstSupportedInterAd(self)
 ```
