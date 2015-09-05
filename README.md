@@ -43,7 +43,7 @@ var googleBannerAdView = GADBannerView()
 
 This is what is called a shared Banner ad, although not really needed for a spritekit game with 1 view controller this is the correct way to use banner ads in apps with multiple ViewControllers. You can read more about shared banner ads on Apples website (https://developer.apple.com/library/ios/technotes/tn2286/_index.html).
 
-- Step 7: In your viewController write the following in ```swift ViewDidLoad```. Its best to call these as soon as possible.
+- Step 7: In your viewController write the following in ```ViewDidLoad```. Its best to call these as soon as possible.
 ```swift
 Ads.sharedInstance.presentingViewController = self
 ```
@@ -59,15 +59,26 @@ The 2nd line will simply preload the first bunch of InterAds . This also only ne
 
 # How to use
 
-There should be no more errors in your project now and the Helper is ready to be used. You can blame Google for most of the work here. Also keep in mind that the Google banner ads are set up for portrait, if your app is in landscape than you will need to change ```swift var called googleBannerType``` from "kGADAdSizeSmartBannerPortrait" to "kGADAdSizeSmartBannerLandscape"
+There should be no more errors in your project now and the Helper is ready to be used. You can blame Google for most of the work here. Also keep in mind that the Google banner ads are set up for portrait, if your app is in landscape than you will need to change 
+```swift 
+var googleBannerType
+```
+from "kGADAdSizeSmartBannerPortrait" to "kGADAdSizeSmartBannerLandscape"
 
-- To show a supported Banner or Inter Ad simply call these anywhere you like. iAds are always shown by default unless they are not supported.
+- To show a supported Banner or Inter Ad simply call these anywhere you like. 
 ```swift
 Ads.loadSupportedBannerAd()
 ```
 ```swift
 Ads.showSupportedInterAd()
 ```
+
+- iAds are always shown by default unless they are not supported. If you want to manually test google ads comment out the line 
+```swift
+iAdsAreSupported = iAdTimeZoneSupported()
+```
+in the super.init() method
+
 - To remove Banner Ads for example during gamePlay simply call 
 ```swift
 Ads.removeBannerAds()
@@ -79,7 +90,10 @@ Ads.removeAllAds()
 # When you go Live 
 
 Google Ads are a bit of a hassle when testing and when going live.
-Google Ads are using test ad IDs and this line of code ```swift request.testDevices = [ kGADSimulatorID ];```.
+Google Ads are using test ad IDs and this line of code 
+```swift 
+request.testDevices = [ kGADSimulatorID ];
+```
 So when your app goes live you will have to do the following
 
 - Step 1: Make sure your apple account is set up for iAds (https://developer.apple.com/iad/)
@@ -87,12 +101,19 @@ So when your app goes live you will have to do the following
 - Step 2: Sign up for a Google AdMob account and create your ad IDs (https://support.google.com/admob/answer/2784575?hl=en-GB)
 
 - Step 3: In Ads.swift right at the top in the struct called ID enter your real Ad IDs for both banner and inter Ads.
-- Step 4: In the function ```swift loadGoolgeBannerAd()``` and ```swift showGoogleInterAd()``` change the ad ID reference from "ID.bannerTest/ID.interText" to "ID.bannerLive/ID.interLive" and comment out the line ```swift request.testDevices = [ kGADSimulatorID"```. I wrote some comments at those points to avoid this hassle in the future if you set up D_DEBUG flag.
-
+- Step 4: In the function 
+```swift 
+- loadGoolgeBannerAd()
+``` 
+and 
+```swift 
+showGoogleInterAd()
+``` 
+change the ad ID reference from "ID.bannerTest/ID.interText" to "ID.bannerLive/ID.interLive" and comment out the line ```swift request.testDevices = [ kGADSimulatorID"```. I wrote some comments at those points to avoid this hassle in the future if you set up D_DEBUG flag.
 
 # Final Info
 
-The sample project is the basic apple spritekit template. It now shows a banner Ad on launch and an inter ad, if it loadened, when touching the screen.
+The sample project is the basic apple spritekit template. It now shows a banner Ad on launch and an inter ad, if it has loaded, when touching the screen.
 I also made some comments in relevant spots of the helper file incase your need to pause your game, music etc.
 
 Please let me know about any bugs or improvements, I am by now means an expert. 
