@@ -44,8 +44,7 @@ Ads.preloadSupportedInterAd()
 ```
 The 1st line sets up the presentingViewController var to your Current View Controller, this step is important as your app will crash otherwise when calling an Ad.
 
-NOTE: In SpriteKit this normally only needs to be done once as there usually is only 1 viewController. 
-However if your app is not a spriteKit game and uses multiple view controllers than do not forget to call this again when changing viewControllers or check the "final info" for a better way.
+NOTE: If your app is not a spriteKit game and uses multiple view controllers than you should ignore Step 7 and check  "not a SpriteKit game?" for a better way.
 
 The 2nd line will simply preload the first bunch of InterAds . This also only needs to be called once
 
@@ -98,17 +97,7 @@ request.testDevices = [ kGADSimulatorID"
 ``` 
 I wrote some comments at those points to avoid this hassle in the future if you set up a D-DEBUG flag.
 
-# Final Info
-
-The sample project is the basic apple spritekit template. It now shows a banner Ad on launch and an inter ad, if it has loaded, when touching the screen.
-To make it easier to call these methods I made class functions in Ads.swift. If you would like to cut down the helper file a bit you can delete all the class functions and call the methods like so
-```swift
-Ads.sharedInstance.preloadSupportedInterAd()
-Ads.sharedInstance.loadSupportedBannerAd()
-etc
-```
-Like I mentioned above I primarly focused on SpriteKit to make it easy to call ads from your SKScenes without having to use NSNotificationCenter or delegates to constantly communicate with the viewController. Also this should help keep your viewController clean as mine became a mess after integrating google ads.
-
+# Not a SpriteKit game?
 If you have an app that mainly uses viewControllers to show its UI than it might be clunky to call 
 ```swift 
 Ads.sharedInstance.presentingViewController = self
@@ -174,7 +163,16 @@ and than show ads like so
 Ads.loadSupportedBannerAd(self)
 Ads.showSupportedInterAd(self)
 ```
+# Final Info
 
+The sample project is the basic apple spritekit template. It now shows a banner Ad on launch and an inter ad, if it has loaded, when touching the screen.
+To make it easier to call these methods I made class functions in Ads.swift. If you would like to cut down the helper file a bit you can delete all the class functions and call the methods like so
+```swift
+Ads.sharedInstance.preloadSupportedInterAd()
+Ads.sharedInstance.loadSupportedBannerAd()
+etc
+```
+Like I mentioned above I primarly focused on SpriteKit to make it easy to call ads from your SKScenes without having to use NSNotificationCenter or delegates to constantly communicate with the viewController. Also this should help keep your viewController clean as mine became a mess after integrating google ads.
 
 I also made some comments in the relevant spots of the helper file incase you need to pause your game, music etc.
 
