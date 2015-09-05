@@ -48,18 +48,13 @@ This is what is called a shared Banner ad, although not really needed for a spri
 Ads.sharedInstance.presentingViewController = self
 ```
 ```swift
-Ads.iAdsCheckSupport()
-```
-```swift
 Ads.preloadSupportedInterAd()
 ```
-The first line here sets up the presentingViewController var to your Current View Controller, this step is important as your app will crash otherwise when calling an Ad.
+The 1st line sets up the presentingViewController var to your Current View Controller, this step is important as your app will crash otherwise when calling an Ad.
 
 NOTE: In SpriteKit this normally only needs to be done once as there usually is only 1 viewController, however if your app has multiple view controllers than do not forget to call call this again when changing viewControllers and calling new ads. 
 
-The second line checks if iAds are supported in the current location. This only needs to be called once
-
-The third line will simply preload the first bunch of InterAds . This also only needs to be called once as interAds will preload automatically after being viewed the first time. Preloading Apples inter Ads is also what most tutorial don’t show you and it makes them appear much faster and more reliable, similar to Googles inter ads.
+The 2nd line will simply preload the first bunch of InterAds . This also only needs to be called once as interAds will preload automatically after being viewed the first time. Preloading Apples inter Ads is also what most tutorial don’t show you and it makes them appear much faster and more reliable, similar to Googles inter ads.
 
 
 # How to use
