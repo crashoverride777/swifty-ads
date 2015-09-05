@@ -13,7 +13,7 @@ I did not do this for Inter Ads since they will always preload and cannot be sho
 
 - Step 2: Copy the google framework folder found in the sample project into your own project or download the latest version from googles website (https://developers.google.com/admob/ios/download)
 
-- Step 3: Add the Google framework to your prohect. Go to Targets - BuildPhases - LinkedBinaries and click the + button and than press the "Add Other" button and search your computer for the folder you copied at Step 2 containing the googleframework file. Once you done that search for googleframework and add it, your linkedBinaries should now say 1.
+- Step 3: Add the Google framework to your project. Go to Targets - BuildPhases - LinkedBinaries and click the + button and than press the "Add Other" button and search your computer for the folder you copied at Step 2 containing the googleframework file. Once you done that search for googleframework and add it, your linkedBinaries should now say 1.
 
 - Step 4: Add the other frameworks needed. Click the + button again and search for and than add each of these frameworks: AdSupport, AudioToolbox, AVFoundation, CoreGraphics, CoreMedia, CoreTelephony, EventKit, EventKitUI, MessageUI, StoreKit, SystemConfiguration (https://developers.google.com/admob/ios/quick-start?hl=en
  ). This should bring your total linked binary (framework) count to 12
@@ -41,7 +41,7 @@ var bannerAdView = ADBannerView()
 var googleBannerAdView = GADBannerView()
 ```
 
-This is what is called a shared Banner ad, although not really needed for a spritekit game with 1 view controller this is the correct way to use banner ads in aps with multiple ViewControllers. You can read more about shared banner ads on Apples website (https://developer.apple.com/library/ios/technotes/tn2286/_index.html).
+This is what is called a shared Banner ad, although not really needed for a spritekit game with 1 view controller this is the correct way to use banner ads in apps with multiple ViewControllers. You can read more about shared banner ads on Apples website (https://developer.apple.com/library/ios/technotes/tn2286/_index.html).
 
 - Step 7: In your viewController write the following in ```swift ViewDidLoad```. Its best to call these as soon as possible.
 ```swift
