@@ -97,6 +97,8 @@ request.testDevices = [ kGADSimulatorID"
 ``` 
 I wrote some comments at those points to avoid this hassle in the future if you set up a D-DEBUG flag.
 
+- Step 4: When you submit your app on itunes connect do not forget to select yes for "does your app use an ad identifier", otherise your app will get rejected.
+
 # Not a SpriteKit game?
 If you have an app that mainly uses viewControllers to show its UI than it might be clunky to call 
 ```swift 
