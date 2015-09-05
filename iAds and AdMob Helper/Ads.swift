@@ -74,6 +74,7 @@ class Ads: NSObject {
     
     // MARK: iAds
     func loadBannerAd() {
+        println("Loading banner ads")
         appDelegate.bannerAdView = ADBannerView(frame: presentingViewController.view.bounds)
          appDelegate.bannerAdView.delegate = self
         appDelegate.bannerAdView.sizeToFit()
@@ -82,6 +83,7 @@ class Ads: NSObject {
     
     // MARK: AdMob
     func loadGoogleBannerAd() {
+        println("Loading adMob banner ad")
         println("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
         appDelegate.googleBannerAdView = GADBannerView(adSize: googleBannerType)
         appDelegate.googleBannerAdView.adUnitID = ID.bannerTest //ID.bannerLive
@@ -184,11 +186,12 @@ class Ads: NSObject {
         println("AdMob Inter showing")
         if googleInterAd.isReady == true {
             googleInterAd.presentFromRootViewController(presentingViewController)
+            
+            // pause game, music etc.
         } else {
+            println("AdMob Inter cannot be shown, reloading")
             googleInterAd = preloadGoogleInterAd()
         }
-        
-        // pause game, music etc.
     }
     
     // MARK: - Remove Banner Ads
@@ -210,15 +213,15 @@ class Ads: NSObject {
     }
     
     func removeAllAds() {
-        appDelegate.bannerAdView.removeFromSuperview()
         appDelegate.bannerAdView.delegate = nil
+        appDelegate.bannerAdView.removeFromSuperview()
         
-        appDelegate.googleBannerAdView.removeFromSuperview()
         appDelegate.googleBannerAdView.delegate = nil
+        appDelegate.googleBannerAdView.removeFromSuperview()
         
+        interAd.delegate = nil
         interAdCloseButton.removeFromSuperview()
         interAdView.removeFromSuperview()
-        interAd.delegate = nil
         
         if googleInterAd != nil {
             googleInterAd.delegate = nil
@@ -258,6 +261,7 @@ extension Ads: ADBannerViewDelegate {
     
     func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
         println("iAds Banner clicked")
+        
         // pause game, music etc
         
         return true
@@ -265,6 +269,7 @@ extension Ads: ADBannerViewDelegate {
     
     func bannerViewActionDidFinish(banner: ADBannerView!) {
         println("iAds banner closed")
+        
         // resume game, music etc
     }
     
@@ -321,11 +326,13 @@ extension Ads: GADBannerViewDelegate {
     
     func adViewWillPresentScreen(bannerView: GADBannerView!) {
         println("AdMob banner clicked")
+        
         // pause game, music etc
     }
     
     func adViewDidDismissScreen(bannerView: GADBannerView!) {
         println("AdMob banner closed")
+        
         // resume game, music etc
     }
     
@@ -341,8 +348,6 @@ extension Ads: GADBannerViewDelegate {
             appDelegate.googleBannerAdView.delegate = nil
             appDelegate.bannerAdView.delegate = self
         }
-        
-        // resume game, music etc
     }
 }
 
@@ -355,6 +360,7 @@ extension Ads:  GADInterstitialDelegate {
     
     func interstitialWillPresentScreen(ad: GADInterstitial!) {
         println("AdMob Inter will present")
+        
         // pause game, music etc
     }
     
@@ -378,7 +384,5 @@ extension Ads:  GADInterstitialDelegate {
     func interstitial(ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
         println("AdMob Inter error")
         googleInterAd = preloadGoogleInterAd()
-        
-        // resume game, music etc
     }
 }
