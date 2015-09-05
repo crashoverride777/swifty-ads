@@ -46,7 +46,7 @@ The 1st line sets up the presentingViewController var to your Current View Contr
 
 NOTE: If your app is not a spriteKit game and uses multiple view controllers than you should ignore Step 7 and check  "not a SpriteKit game?" for a better way.
 
-The 2nd line will simply preload the first bunch of InterAds . This also only needs to be called once
+The 2nd line will simply preloads the first InterAd . This also only needs to be called once, it will preload automatically as soon as an inter ad is viewed
 
 # How to use
 
@@ -116,11 +116,11 @@ especially repeatedly when changing viewControllers. This might even potentially
         }
     }
     
-  class func preloadSupportedInterAd() {
-        Ads.sharedInstance.preloadSupportedInterAd()
+  class func preloadFirstSupportedInterAd() {
+        Ads.sharedInstance.preloadFirstSupportedInterAd()
     }
     
-    func preloadSupportedInterAd() {
+    func preloadFirstSupportedInterAd() {
         if iAdsAreSupported == true {
             preloadInterAd()
         } else {
@@ -153,11 +153,11 @@ to
         }
     }
     
-  class func preloadSupportedInterAd(viewController: UIViewController) {
-        Ads.sharedInstance.preloadSupportedInterAd(viewController)
+  class func preloadFirstSupportedInterAd(viewController: UIViewController) {
+        Ads.sharedInstance.preloadFirstSupportedInterAd(viewController)
     }
     
-    func preloadSupportedInterAd(viewController: UIViewController) {
+    func preloadFirstSupportedInterAd(viewController: UIViewController) {
         if iAdsAreSupported == true {
             preloadInterAd()
         } else {
