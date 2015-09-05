@@ -51,6 +51,13 @@ class Ads: NSObject, ADBannerViewDelegate, ADInterstitialAdDelegate, GADBannerVi
         static let interTest = "ca-app-pub-3940256099942544/4411468910"
     }
     
+    override init() {
+        super.init()
+        
+        println("Ads Helper init")
+        iAdsAreSupported = iAdTimeZoneSupported()
+    }
+    
     // MARK: - Banner Ads
     class func loadSupportedBannerAd() {
         Ads.sharedInstance.loadSupportedBannerAd()
@@ -221,15 +228,7 @@ class Ads: NSObject, ADBannerViewDelegate, ADInterstitialAdDelegate, GADBannerVi
         }
     }
 
-    // MARK: - iAds Check Support
-    class func iAdsCheckSupport() {
-        Ads.sharedInstance.iAdsCheckSupport()
-    }
-    
-    func iAdsCheckSupport() {
-        iAdsAreSupported = iAdTimeZoneSupported()
-    }
-    
+    // MARK: - Check iAd Support
     func iAdTimeZoneSupported() -> Bool {
         let iAdTimeZones = "America/;US/;Pacific/;Asia/Tokyo;Europe/".componentsSeparatedByString(";")
         var myTimeZone = NSTimeZone.localTimeZone().name
