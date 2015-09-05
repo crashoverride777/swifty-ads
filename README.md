@@ -13,7 +13,7 @@ I did not do the same for Inter Ads because they will always preload before you 
 
 - Step 1: Copy the Ads.swift file into your project
 
-- Step 2: Copy the Google framework folder found in the sample project into your projects folder on your computer. Its best to copy it to your projects root folder because if you just reference the file from a random folder on your computer it can cause issues. You can also download the latest version from Googles website (https://developers.google.com/admob/ios/download)
+- Step 2: Copy the Google framework folder found in the sample project into your projects folder on your computer. Its best to copy it to your projects root folder because if you just reference the file (Step 3)from a random location on your computer it could cause issues. You can also download the latest version from Googles website (https://developers.google.com/admob/ios/download)
 
 - Step 3: Add the Google framework to your project. Go to Targets - BuildPhases - LinkedBinaries and click the + button and than press the "Add Other" button. Search your computer for the folder you copied at Step 2 containing the googleframework file and add that file. Once you done that click the + button again use the search bar at the top and search for googleframework and than add it. Your linkedBinaries should now say 1.
 
@@ -78,11 +78,11 @@ Ads.removeAllAds()
 ```
 # When you go Live 
 
-Google Ads are a bit of a hassle when testing and when going live. Google Ads are using test ad IDs and this line of code 
+Google Ads are a bit of a hassle when testing and when going live because they are using test ad IDs and this line of code 
 ```swift 
 request.testDevices = [ kGADSimulatorID ];
 ```
-So when your app goes live you will have to do the following
+So before your app goes live you will have to do the following
 
 - Step 1: If you havent used iAds before make sure your apple account is set up for iAds (https://developer.apple.com/iad/). You mainly have to sign an agreement in your developer account.
 
