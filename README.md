@@ -59,26 +59,25 @@ The 2nd line will simply preload the first bunch of InterAds . This also only ne
 
 # How to use
 
-There should be no more errors in your project now and the Helper is ready to be used. You can blame Google for most of the work here. Also keep in mind that the Google banner ads are set up for portrait, if your app is in landscape than you will need to change 
+There should be no more errors in your project now and the Helper is ready to be used. You can blame Google for most of the work here. Also keep in mind that the Google banner ads (iAds do it automatically ) are set up for portrait mode, if your app is in landscape than you will need to change
 ```swift 
 var googleBannerType
 ```
 from "kGADAdSizeSmartBannerPortrait" to "kGADAdSizeSmartBannerLandscape"
 
-- To show a supported Banner or Inter Ad simply call these anywhere you like. 
+- iAds are always shown by default unless they are not supported. If you want to manually test google ads comment out the line 
+```swift
+iAdsAreSupported = iAdTimeZoneSupported()
+```
+in the super.init() method.
+
+- To show a supported Banner or Inter Ad simply call these anywhere you like in your project.
 ```swift
 Ads.loadSupportedBannerAd()
 ```
 ```swift
 Ads.showSupportedInterAd()
 ```
-
-- iAds are always shown by default unless they are not supported. If you want to manually test google ads comment out the line 
-```swift
-iAdsAreSupported = iAdTimeZoneSupported()
-```
-in the super.init() method
-
 - To remove Banner Ads for example during gamePlay simply call 
 ```swift
 Ads.removeBannerAds()
@@ -100,16 +99,21 @@ So when your app goes live you will have to do the following
 
 - Step 2: Sign up for a Google AdMob account and create your ad IDs (https://support.google.com/admob/answer/2784575?hl=en-GB)
 
-- Step 3: In Ads.swift right at the top in the struct called ID enter your real Ad IDs for both banner and inter Ads.
-- Step 4: In the function 
+- Step 3: In Ads.swift in the struct called ID enter your real Ad IDs for both banner and inter Ads.
+
+- Step 4: In the functions
 ```swift 
-- loadGoolgeBannerAd()
+- func loadGoogleBannerAd()
 ``` 
 and 
 ```swift 
-showGoogleInterAd()
+func showGoogleInterAd()
 ``` 
-change the ad ID reference from "ID.bannerTest/ID.interText" to "ID.bannerLive/ID.interLive" and comment out the line ```swift request.testDevices = [ kGADSimulatorID"```. I wrote some comments at those points to avoid this hassle in the future if you set up D_DEBUG flag.
+change the ad ID reference from "ID.bannerTest/ID.interText" to "ID.bannerLive/ID.interLive" and comment out the line 
+```swift 
+request.testDevices = [ kGADSimulatorID"
+``` 
+I wrote some comments at those points to avoid this hassle in the future if you set up D_DEBUG flag.
 
 # Final Info
 
