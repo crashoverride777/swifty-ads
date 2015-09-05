@@ -46,7 +46,7 @@ The 1st line sets up the presentingViewController var to your Current View Contr
 
 NOTE: If your app is not a spriteKit game and uses multiple view controllers than you should ignore Step 7 and check  "not a SpriteKit game?" for a better way.
 
-The 2nd line will simply preloads the first InterAd . This also only needs to be called once, it will preload automatically as soon as an inter ad is viewed
+The 2nd line simply preloads the first InterAd . This also only needs to be called once, interAds will preload automatically afterwards.
 
 # How to use
 
