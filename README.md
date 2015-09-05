@@ -45,7 +45,7 @@ Ads.preloadSupportedInterAd()
 The 1st line sets up the presentingViewController var to your Current View Controller, this step is important as your app will crash otherwise when calling an Ad.
 
 NOTE: In SpriteKit this normally only needs to be done once as there usually is only 1 viewController. 
-However if your app has is not a spriteKit game and uses multiple view controllers than do not forget to call this again when changing viewControllers or check the "final info" for a better way.
+However if your app is not a spriteKit game and uses multiple view controllers than do not forget to call this again when changing viewControllers or check the "final info" for a better way.
 
 The 2nd line will simply preload the first bunch of InterAds . This also only needs to be called
 
