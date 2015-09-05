@@ -363,11 +363,11 @@ extension Ads:  GADInterstitialDelegate {
     
     func interstitialWillDismissScreen(ad: GADInterstitial!) {
         println("AdMob Inter about to be closed")
-        googleInterAd = preloadGoogleInterAd()
     }
     
     func interstitialDidDismissScreen(ad: GADInterstitial!) {
         println("AdMob Inter closed")
+        googleInterAd = preloadGoogleInterAd()
         
         // resume game, music etc
     }
