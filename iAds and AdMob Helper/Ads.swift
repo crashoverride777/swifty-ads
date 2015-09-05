@@ -285,7 +285,6 @@ extension Ads: ADBannerViewDelegate {
         
         // resume game, music etc
     }
-    
 }
 
 // MARK: - iAds Inter Delegates
