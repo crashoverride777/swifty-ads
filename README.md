@@ -42,7 +42,7 @@ This is what is called a shared Banner ad, although not really needed for a spri
 Ads.sharedInstance.presentingViewController = self
 Ads.preloadFirstSupportedInterAd()
 ```
-The 1st line sets up the presentingViewController var to your Current View Controller, this step is important as your app will crash otherwise when calling an Ad.
+The 1st line sets up the presentingViewController var to your Current View Controller, this step is important as your app will crash otherwise when calling an Ad. In a spriteKit game this only really needs to called once since there usually only is 1 viewController.
 
 The 2nd line simply preloads the first InterAd . This also only needs to be called once, interAds will preload automatically afterwards.
 
@@ -60,16 +60,18 @@ from "kGADAdSizeSmartBannerPortrait" to "kGADAdSizeSmartBannerLandscape"
 ```swift
 iAdsAreSupported = iAdTimeZoneSupported()
 ```
-in the super.init() method.
+in the init method.
 
-- To show a supported Banner or Inter Ad simply call these anywhere you like in your project.
+- To show a supported Ads simply call these anywhere you like in your project.
 ```swift
-Ads.loadSupportedBannerAd()
+Ads.loadSupportedBannerAd() 
+or
 Ads.showSupportedInterAd()
 ```
-- To remove Banner Ads or All Ads, for example during gamePlay or for in app purchases simply call 
+- To remove Ads, for example during gamePlay or for in app purchases simply call 
 ```swift
-Ads.removeBannerAds()
+Ads.removeBannerAds() 
+or
 Ads.removeAllAds()
 ```
 # When you go Live 
@@ -80,9 +82,9 @@ request.testDevices = [ kGADSimulatorID ];
 ```
 So when your app goes live you will have to do the following
 
-- Step 1: Make sure your apple account is set up for iAds (https://developer.apple.com/iad/)
+- Step 1: If you havent used iAds before make sure your apple account is set up for iAds (https://developer.apple.com/iad/). You mainly have to sign an agreement in your developer account.
 
-- Step 2: Sign up for a Google AdMob account and create your ad IDs (https://support.google.com/admob/answer/2784575?hl=en-GB). You need 1 for banner and 1 for inter ads.
+- Step 2: Sign up for a Google AdMob account and create your ad IDs. You need 1 for banner and 1 for inter ads. (https://support.google.com/admob/answer/2784575?hl=en-GB)
 
 - Step 3: In Ads.swift in the struct called ID enter your real Ad IDs for both banner and inter Ads.
 
@@ -97,14 +99,14 @@ request.testDevices = [ kGADSimulatorID"
 ``` 
 I wrote some comments at those points to avoid this hassle in the future if you set up a D-DEBUG flag.
 
-- Step 4: When you submit your app on itunes connect do not forget to select yes for "does your app use an ad identifier", otherise your app will get rejected.
+- Step 4: When you submit your app on itunes connect do not forget to select yes for "does your app use an advertising identifier", otherise your app will get rejected. This is needed for AdMob, if you decide to only use iAds than make sure you select no, otherwise your app will also get rejected.
 
 # Not a SpriteKit game?
 If you have an app that mainly uses viewControllers to show its UI than it might be clunky to call 
 ```swift 
 Ads.sharedInstance.presentingViewController = self
 ```
-especially repeatedly when changing viewControllers. This might even potentially cause issue with shared banner ads, although I have not tested that myself. In those kind of apps a better way would be to make some adjustments in Ads.swift. You should change these functions
+especially repeatedly when changing viewControllers. This might even potentially cause issue with shared banner ads, although I have not tested that myself. For those apps you should change these functions
 ```swift 
   class func loadSupportedBannerAd() {
         Ads.sharedInstance.loadSupportedBannerAd()
