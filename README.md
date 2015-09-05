@@ -204,6 +204,9 @@ Please let me know about any bugs or improvements, I am by now means an expert.
 
 Enjoy
 
+# Release Notes
+v.1.0
+
 
 
  
