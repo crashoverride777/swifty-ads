@@ -114,7 +114,7 @@ Ads.sharedInstance.presentingViewController = self
 especially repeatedly when changing viewControllers. This might even cause issue with shared banner ads, although I have not tested that myself. For those apps you should change these functions
 ```swift 
   class func loadSupportedBannerAd() {
-        ...
+        Ads.sharedInstance.loadSupportedBannerAd()
     }
     
     func loadSupportedBannerAd() {
@@ -122,7 +122,7 @@ especially repeatedly when changing viewControllers. This might even cause issue
     }
     
   class func preloadFirstSupportedInterAd() {
-        ...
+        Ads.sharedInstance.preloadFirstSupportedInterAd()
     }
     
     func preloadFirstSupportedInterAd() {
@@ -130,7 +130,7 @@ especially repeatedly when changing viewControllers. This might even cause issue
      }
      
      class func showSupportedInterAd() {
-        ...
+         Ads.sharedInstance.showSupportedInterAd()
     }
     
     func showSupportedInterAd() {
@@ -140,7 +140,7 @@ especially repeatedly when changing viewControllers. This might even cause issue
 to
 ```swift 
   class func loadSupportedBannerAd(viewController: UIViewController) {
-        ...
+         Ads.sharedInstance.loadSupportedBannerAd(viewController)
     }
     
     func loadSupportedBannerAd(viewController: UIViewController) {
@@ -148,7 +148,7 @@ to
     }
     
   class func preloadFirstSupportedInterAd(viewController: UIViewController) {
-        ...
+         Ads.sharedInstance.preloadFirstSupportedInterAd(viewController)
     }
     
     func preloadFirstSupportedInterAd(viewController: UIViewController) {
@@ -156,7 +156,7 @@ to
     }
     
   class func showSupportedInterAd(viewController: UIViewController) {
-        ...
+         Ads.sharedInstance.showSupportedInterAd(viewController)
     }
     
     func showSupportedInterAd(viewController: UIViewController) {
