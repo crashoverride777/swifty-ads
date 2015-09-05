@@ -47,7 +47,7 @@ class GameViewController: UIViewController {
         
         // Ads
         Ads.sharedInstance.presentingViewController = self
-        Ads.preloadSupportedInterAd()
+        Ads.preloadFirstSupportedInterAd()
         Ads.loadSupportedBannerAd()
     }
 

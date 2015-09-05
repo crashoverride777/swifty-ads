@@ -99,11 +99,11 @@ class Ads: NSObject {
     }
     
     // MARK: - Inter Ads
-    class func preloadSupportedInterAd() {
-        Ads.sharedInstance.preloadSupportedInterAd()
+    class func preloadFirstSupportedInterAd() {
+        Ads.sharedInstance.preloadFirstSupportedInterAd()
     }
     
-    func preloadSupportedInterAd() {
+    func preloadFirstSupportedInterAd() {
         if iAdsAreSupported == true {
             preloadInterAd()
         } else {
