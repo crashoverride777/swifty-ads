@@ -184,7 +184,9 @@ Please let me know about any bugs or improvements, I am by now means an expert.
 Enjoy
 
 # Release Notes
+
 v1.1 - Sorry for all the initial commits, its my first rep. Helper should be good to go now.
+
 v1.0
 
 
