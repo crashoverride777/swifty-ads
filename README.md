@@ -126,6 +126,17 @@ especially repeatedly when changing viewControllers. This might even potentially
             loadGoogleBannerAd()
         }
     }
+    
+  class func preloadSupportedInterAd() {
+        Ads.sharedInstance.preloadSupportedInterAd()
+    }
+    
+    func preloadSupportedInterAd() {
+        if iAdsAreSupported == true {
+            preloadInterAd()
+        } else {
+            googleInterAd = preloadGoogleInterAd()
+        }
 ```
 to
 ```swift 
@@ -140,11 +151,30 @@ to
             loadGoogleBannerAd()
         }
     }
+    
+  class func preloadSupportedInterAd(viewController: UIViewController) {
+        Ads.sharedInstance.preloadSupportedInterAd(viewController)
+    }
+    
+    func preloadSupportedInterAd(viewController: UIViewController) {
+        if iAdsAreSupported == true {
+            preloadInterAd()
+        } else {
+            googleInterAd = preloadGoogleInterAd()
+        }
+    }
 ```
-and than call it directly like so
+You than simply preload the first interAd like so
 ```swift 
-Ads.loadSupportedBannerAd(self)
+Ads.preloadSupportedInterAd(self)
 ```
+
+and than show ads like so
+```swift
+Ads.loadSupportedBannerAd(self)
+Ads.showSupportedInterAd(self)
+```
+
 
 I also made some comments in the relevant spots of the helper file incase you need to pause your game, music etc.
 
