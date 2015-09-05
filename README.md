@@ -4,7 +4,7 @@ A simple helper class that should make integrating Banner and Interterstitial Ad
 I decided to go the Singleton way but please feel free to change that if you dont like it. This helper has been made while designing my SpriteKit game but it can be used for any kind of app. 
 
 The cool thing is that iAds will be used when they are supported otherwise AdMob will be used. 
-Whats really cool is that incase iAd banners are having an error it will automatically load an AdMob banner. In case that AdMob banner is than having an error it will load an iAd banner again. Nice because there are tutorials that teach you this, but in unfortunatley in the wrong way.
+Whats really cool is that if iAd banners are having an error it will automatically load an AdMob banner. In case that AdMob banner is than having an error it will load an iAd banner again. Nice, because there are tutorials that teach you this, but in unfortunatley in the wrong way.
 
 # Set-Up
 
