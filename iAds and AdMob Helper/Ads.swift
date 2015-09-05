@@ -72,48 +72,6 @@ class Ads: NSObject, ADBannerViewDelegate, ADInterstitialAdDelegate, GADBannerVi
         appDelegate.bannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.bannerAdView.frame.size.height / 2))
     }
     
-    func bannerViewWillLoadAd(banner: ADBannerView!) {
-        
-    }
-    
-    func bannerViewDidLoadAd(banner: ADBannerView!) {
-        println("iAds banner did load")
-        presentingViewController.view.addSubview(appDelegate.bannerAdView)
-        UIView.beginAnimations(nil, context: nil)
-        UIView.setAnimationDuration(1.5)
-        appDelegate.bannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.bannerAdView.frame.size.height / 2))
-        UIView.commitAnimations()
-    }
-    
-    func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
-        println("iAds Banner clicked")
-        
-        // pause game or music
-        
-        return true
-    }
-    
-    func bannerViewActionDidFinish(banner: ADBannerView!) {
-        println("iAds banner closed")
-        
-        // resume game or music
-    }
-    
-    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
-        println("iAds banner error")
-        UIView.beginAnimations(nil, context: nil)
-        UIView.setAnimationDuration(1.5)
-        appDelegate.bannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.bannerAdView.frame.size.height / 2))
-        appDelegate.bannerAdView.hidden = true
-        appDelegate.bannerAdView.delegate = nil
-        UIView.commitAnimations()
-        
-        
-        loadGoogleBannerAd()
-        
-        // resume game or music
-    }
-
     // MARK: AdMob
     func loadGoogleBannerAd() {
         println("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
@@ -133,47 +91,12 @@ class Ads: NSObject, ADBannerViewDelegate, ADInterstitialAdDelegate, GADBannerVi
         appDelegate.googleBannerAdView.loadRequest(request)
     }
     
-    func adViewDidReceiveAd(bannerView: GADBannerView!) {
-        println("AdMob banner did load")
-        presentingViewController.view.addSubview(appDelegate.googleBannerAdView)
-        UIView.beginAnimations(nil, context: nil)
-        UIView.setAnimationDuration(1.5)
-        appDelegate.googleBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.googleBannerAdView.frame.size.height / 2))
-        UIView.commitAnimations()
-    }
-    
-    func adViewWillPresentScreen(bannerView: GADBannerView!) {
-        println("AdMob banner clicked")
-        
-        // pause game or menu music
-    }
-    
-    func adViewDidDismissScreen(bannerView: GADBannerView!) {
-        println("AdMob banner closed")
-        
-        // resume game or menu music
-    }
-    
-    func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
-        println("AdMob banner error")
-        UIView.beginAnimations(nil, context: nil)
-        UIView.setAnimationDuration(1.5)
-        appDelegate.googleBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.googleBannerAdView.frame.size.height / 2))
-        appDelegate.googleBannerAdView.hidden = true
-        UIView.commitAnimations()
-        
-        if iAdsAreSupported == true {
-            appDelegate.googleBannerAdView.delegate = nil
-            appDelegate.bannerAdView.delegate = self // reset the iAds delegate so it reloads new iAds
-        }
-    }
-    
     // MARK: - Inter Ads
-    class func preloadInterAds() {
-        Ads.sharedInstance.preloadInterAds()
+    class func preloadSupportedInterAd() {
+        Ads.sharedInstance.preloadSupportedInterAd()
     }
     
-    func preloadInterAds() {
+    func preloadSupportedInterAd() {
         if iAdsAreSupported == true {
             preloadInterAd()
         } else {
@@ -207,28 +130,6 @@ class Ads: NSObject, ADBannerViewDelegate, ADInterstitialAdDelegate, GADBannerVi
         interAdCloseButton.layer.borderColor = UIColor.grayColor().CGColor
         interAdCloseButton.layer.borderWidth = 2
         interAdCloseButton.addTarget(self, action: "pressedCloseButton:", forControlEvents: UIControlEvents.TouchDown)
-    }
-    
-    func interstitialAdDidLoad(interstitialAd: ADInterstitialAd!) {
-        println("iAds Inter did preload")
-        interAdView = UIView()
-        interAdView.frame = presentingViewController.view.bounds
-        interAdLoaded = true
-    }
-    
-    func interstitialAdDidUnload(interstitialAd: ADInterstitialAd!) {
-        println("iAds Inter did unload")
-    }
-    
-    func interstitialAd(interstitialAd: ADInterstitialAd!, didFailWithError error: NSError!) {
-        println("iAds Inter error")
-        println(error.localizedDescription)
-        interAdCloseButton.removeFromSuperview()
-        interAdView.removeFromSuperview()
-        interAd.delegate = nil
-        interAdLoaded = false
-        
-        preloadInterAd()
     }
     
     func showInterAd() {
@@ -273,40 +174,6 @@ class Ads: NSObject, ADBannerViewDelegate, ADInterstitialAdDelegate, GADBannerVi
         googleInterAd.loadRequest(request)
         
         return googleInterAd
-    }
-    
-    func interstitialDidReceiveAd(ad: GADInterstitial!) {
-        println("AdMob Inter did preload")
-    }
-    
-    func interstitialWillPresentScreen(ad: GADInterstitial!) {
-        println("AdMob Inter will present")
-        
-        // pause game here, music etc
-    }
-    
-    func interstitialWillDismissScreen(ad: GADInterstitial!) {
-        println("AdMob Inter about to be closed")
-        googleInterAd = preloadGoogleInterAd()
-    }
-    
-    func interstitialDidDismissScreen(ad: GADInterstitial!) {
-        println("AdMob Inter closed")
-        
-        // resume game, music etc
-    }
-    
-    func interstitialWillLeaveApplication(ad: GADInterstitial!) {
-        println("AdMob Inter about to leave app")
-        
-        // pause game, music etc
-    }
-    
-    func interstitial(ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
-        println("AdMob Inter error")
-        googleInterAd = preloadGoogleInterAd()
-        
-        // resume game, music etc
     }
     
     func showGoogleInterAd() {
@@ -374,5 +241,107 @@ class Ads: NSObject, ADBannerViewDelegate, ADInterstitialAdDelegate, GADBannerVi
         }
         println("iAds not supported")
         return false
+    }
+}
+
+// MARK: - iAds Inter Delegates
+extension Ads: ADInterstitialAdDelegate {
+    
+    func interstitialAdDidLoad(interstitialAd: ADInterstitialAd!) {
+        println("iAds Inter did preload")
+        interAdView = UIView()
+        interAdView.frame = presentingViewController.view.bounds
+        interAdLoaded = true
+    }
+    
+    func interstitialAdDidUnload(interstitialAd: ADInterstitialAd!) {
+        println("iAds Inter did unload")
+    }
+    
+    func interstitialAd(interstitialAd: ADInterstitialAd!, didFailWithError error: NSError!) {
+        println("iAds Inter error")
+        println(error.localizedDescription)
+        interAdCloseButton.removeFromSuperview() // dont think needed anymore but keep incase
+        interAdView.removeFromSuperview()
+        interAd.delegate = nil
+        interAdLoaded = false
+        
+        preloadInterAd()
+    }
+}
+
+// MARK: - AdMob Banner Delegates
+extension Ads: GADBannerViewDelegate {
+    
+    func adViewDidReceiveAd(bannerView: GADBannerView!) {
+        println("AdMob banner did load")
+        presentingViewController.view.addSubview(appDelegate.googleBannerAdView)
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(1.5)
+        appDelegate.googleBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.googleBannerAdView.frame.size.height / 2))
+        UIView.commitAnimations()
+    }
+    
+    func adViewWillPresentScreen(bannerView: GADBannerView!) {
+        println("AdMob banner clicked")
+        // pause game, music etc
+    }
+    
+    func adViewDidDismissScreen(bannerView: GADBannerView!) {
+        println("AdMob banner closed")
+        // resume game, music etc
+    }
+    
+    func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
+        println("AdMob banner error")
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(1.5)
+        appDelegate.googleBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.googleBannerAdView.frame.size.height / 2))
+        appDelegate.googleBannerAdView.hidden = true
+        UIView.commitAnimations()
+        
+        if iAdsAreSupported == true {
+            appDelegate.googleBannerAdView.delegate = nil // stop Google delegate
+            appDelegate.bannerAdView.delegate = self // reset the iAds delegate so it reloads new iAds
+        }
+        
+        // resume game, music etc
+    }
+}
+
+// MARK: - AdMob Inter Delegates
+extension Ads:  GADInterstitialDelegate {
+    
+    func interstitialDidReceiveAd(ad: GADInterstitial!) {
+        println("AdMob Inter did preload")
+    }
+    
+    func interstitialWillPresentScreen(ad: GADInterstitial!) {
+        println("AdMob Inter will present")
+        // pause game, music etc
+    }
+    
+    func interstitialWillDismissScreen(ad: GADInterstitial!) {
+        println("AdMob Inter about to be closed")
+        googleInterAd = preloadGoogleInterAd()
+    }
+    
+    func interstitialDidDismissScreen(ad: GADInterstitial!) {
+        println("AdMob Inter closed")
+        
+        // resume game, music etc
+    }
+    
+    func interstitialWillLeaveApplication(ad: GADInterstitial!) {
+        println("AdMob Inter about to leave app")
+        
+        // pause game, music etc
+    }
+    
+    func interstitial(ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
+        println("AdMob Inter error")
+        googleInterAd = preloadGoogleInterAd()
+        
+        // resume game, music etc
     }
 }
