@@ -2,14 +2,15 @@
 
 A simple helper class that should make integrating Banner and Interterstitial Ads from Apple and Google a breeze.
 I decided to go the Singleton way but please feel free to change that if you dont like it. This helper has been made while designing my SpriteKit game but it can be used for any kind of app. 
-It has all the standard features you expect, like banners only animating in when they are ready and disspapearing when they haven an error.
+It has all the standard features you expect, like banners only animating in when they are ready and dissappearing when they haven an error.
 
 The cool thing is that iAds will be used when they are supported otherwise AdMob will be used. 
-Whats really cool is that incase iAd banners are having an error it will automatically load an AdMob banner and in case that AdMob banner is having an error it will load an iAd banner again. 
+Whats really cool is that incase iAd banners are having an error it will automatically load an AdMob banner. In case that AdMob banner is than having an error it will load an iAd banner again. 
 
 Nice because that means chances are very low that there are no banners showing wich means more money in your pocket. There are tutorials that teach you this, but in unfortunatley in the wrong way. In those tutorials if there is an iAd banner error and than the adMob banner also has an error, and believe me this can happen, it would never reload another iAd banner until you close the app. You dont want that as that means less money in your pocket.
 
-I did not do the same for Inter Ads because they have to be preloaded before you can actually show them. Besides that they are not shown regularly so there really is no point.
+I did not do the same for Inter Ads because they have to be preloaded before you can actually show them. Besides that they are not shown regularly so there really is no point. 
+There are not many tutorials that actually show you how to preload iAd inter ads, like Google does, so nice again.
 
 # Set-Up
 
