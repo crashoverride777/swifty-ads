@@ -3,8 +3,7 @@
 //  iAds and AdMob Helper
 //
 //  Created by Dominik on 04/09/2015.
-//  Copyright (c) 2015 Dominik Ringler. All rights reserved.
-//
+
 
 import UIKit
 import SpriteKit
@@ -47,8 +46,7 @@ class GameViewController: UIViewController {
         
         // Ads
         Ads.sharedInstance.presentingViewController = self
-        Ads.preloadFirstSupportedInterAd()
-        Ads.loadSupportedBannerAd()
+        Ads.loadSupportedBannerAd() // can also be called in GameScene
     }
 
     override func shouldAutorotate() -> Bool {

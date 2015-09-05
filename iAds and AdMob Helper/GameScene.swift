@@ -3,8 +3,7 @@
 //  iAds and AdMob Helper
 //
 //  Created by Dominik on 04/09/2015.
-//  Copyright (c) 2015 Dominik Ringler. All rights reserved.
-//
+
 
 import SpriteKit
 
@@ -36,6 +35,7 @@ class GameScene: SKScene {
             sprite.runAction(SKAction.repeatActionForever(action))
             
             self.addChild(sprite)
+            
             
             Ads.showSupportedInterAd()
         }

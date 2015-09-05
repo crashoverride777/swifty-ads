@@ -56,6 +56,7 @@ class Ads: NSObject {
         
         println("Ads Helper init")
         iAdsAreSupported = iAdTimeZoneSupported()
+        preloadFirstSupportedInterAd()
     }
     
     // MARK: - Banner Ads
@@ -99,10 +100,6 @@ class Ads: NSObject {
     }
     
     // MARK: - Inter Ads
-    class func preloadFirstSupportedInterAd() {
-        Ads.sharedInstance.preloadFirstSupportedInterAd()
-    }
-    
     func preloadFirstSupportedInterAd() {
         if iAdsAreSupported == true {
             preloadInterAd()

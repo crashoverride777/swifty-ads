@@ -3,14 +3,12 @@
 //  iAds and AdMob Helper
 //
 //  Created by Dominik on 04/09/2015.
-//  Copyright (c) 2015 Dominik Ringler. All rights reserved.
-//
+
 
 import UIKit
 import iAd
 import GoogleMobileAds
 
-// Shared App Delegate
 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
 @UIApplicationMain
@@ -18,8 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    
-    // Ads Properties
+    // shared banner ads 
     var bannerAdView = ADBannerView()
     var googleBannerAdView = GADBannerView()
 
