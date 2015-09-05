@@ -2,12 +2,11 @@
 
 A simple helper class that should make integrating Banner and Interterstitial Ads from Apple and Google a breeze.
 I decided to go the Singleton way but please feel free to change that if you dont like it. This helper has been made while designing my SpriteKit game but it can be used for any kind of app. 
-It has all the standard features you expect, like banners only animating in when they are ready and dissappearing when they haven an error.
 
 The cool thing is that iAds will be used when they are supported otherwise AdMob will be used. 
 Whats really cool is that incase iAd banners are having an error it will automatically load an AdMob banner. In case that AdMob banner is than having an error it will load an iAd banner again. 
 
-Nice because that means chances are very low that there are no banners showing wich means more money in your pocket. There are tutorials that teach you this, but in unfortunatley in the wrong way. You dont want that as that means less money in your pocket.
+Nice because that means chances are very low that there are no banners showing wich means more money in your pocket. There are tutorials that teach you this, but in unfortunatley in the wrong way.
 
 I did not do the same for Inter Ads because they have to be preloaded before you can actually show them. Besides that they are not shown regularly so there really is no point. 
 There are not many tutorials that actually show you how to preload iAd inter ads, like Google does, so nice again.
@@ -16,7 +15,7 @@ There are not many tutorials that actually show you how to preload iAd inter ads
 
 - Step 1: Copy the Ads.swift file into your project
 
-- Step 2: Copy the Google framework folder found in the sample project into your projects folder on your computer. Its best to copy it to your projects root folder because if you just reference the file (Step 3)from a random location on your computer it could cause issues. You can also download the latest version from Googles website (https://developers.google.com/admob/ios/download)
+- Step 2: Copy the Google framework folder found in the sample project into your projects folder on your computer. Its best to copy it to your projects root folder because if you just reference the file (Step 3) from a random location on your computer it could cause issues. You can also download the latest version from Googles website (https://developers.google.com/admob/ios/download)
 
 - Step 3: Add the Google framework to your project. Go to Targets - BuildPhases - LinkedBinaries and click the + button and than press the "Add Other" button. Search your computer for the folder you copied at Step 2 containing the googleframework file and add that file. Once you done that click the + button again use the search bar at the top and search for googleframework and than add it. Your linkedBinaries should now say 1.
 
@@ -40,15 +39,15 @@ var bannerAdView = ADBannerView()
 var googleBannerAdView = GADBannerView()
 ```
 
-This is what is called a shared Banner ad, although not really needed for a spritekit game with 1 view controller this is the correct way to use banner ads in apps with multiple ViewControllers. You can read more about shared banner ads on Apples website (https://developer.apple.com/library/ios/technotes/tn2286/_index.html).
+This is what is called a shared Banner ad and although not really needed for a spritekit game with 1 view controller this is the correct way to use banner ads in apps with multiple ViewControllers. (https://developer.apple.com/library/ios/technotes/tn2286/_index.html)
 
-- Step 7: In your viewController write the following in ```ViewDidLoad```. Its best to call this as soon as possible.
+- Step 7: In your viewController write the following in ```ViewDidLoad``` as soon as possible. 
 ```swift
 Ads.sharedInstance.presentingViewController = self
 ```
-This sets the presentingViewController var to your current ViewController, this step is important because your app will crash otherwise when trying to call an Ad. In a spriteKit game this really needs to called only once since there usually is only 1 viewController.
+This sets the presentingViewController var to your current ViewController and init the Helper. This step is important because your app will crash otherwise when trying to call an Ad. In a spriteKit game this really needs to called only once since there usually is just 1 viewController.
 
-NOTE: If your app is not a spriteKit game and uses multiple view controllers than you should completly ignore this Step and check  "not a SpriteKit game?" for a better way once you finished reading the rest.
+NOTE: If your app is not a spriteKit game and uses multiple view controllers than you should completly ignore this Step and check  "not a SpriteKit game?" after reading the rest.
 
 # How to use
 
@@ -146,7 +145,7 @@ to
         ...
     }
  ```
- Than go the Ads.swift init method and remove the line "preloadFirstSupportedInterAd()" and instead edit/add these functions so they look like so
+ Than go the Ads.swift init method and remove the line "preloadFirstSupportedInterAd()" and instead edit/add these functions
     
  ```swift
 class func preloadFirstSupportedInterAd(viewController: UIViewController) {
@@ -182,7 +181,6 @@ Ads.sharedInstance.showSupportedInterAd()
 Like I mentioned above I primarly focused on SpriteKit to make it easy to call Ads from your SKScenes without having to use NSNotificationCenter or delegates to constantly communicate with the viewController. Also this should help keep your viewController clean as mine became a mess after integrating AdMob.
 
 I also made some comments in the relevant spots of the helper file incase you need to pause your game, music etc.
-
 Please let me know about any bugs or improvements, I am by now means an expert. 
 
 Enjoy
