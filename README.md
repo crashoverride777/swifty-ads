@@ -42,13 +42,13 @@ var googleBannerAdView = GADBannerView()
 
 This is what is called a shared Banner ad, although not really needed for a spritekit game with 1 view controller this is the correct way to use banner ads in apps with multiple ViewControllers. You can read more about shared banner ads on Apples website (https://developer.apple.com/library/ios/technotes/tn2286/_index.html).
 
-- Step 7: In your viewController write the following in ```ViewDidLoad```. Its best to call these as soon as possible.
+- Step 7: In your viewController write the following in ```ViewDidLoad```. Its best to call this as soon as possible.
 ```swift
 Ads.sharedInstance.presentingViewController = self
 ```
-The 1st line sets the presentingViewController var to your current ViewController, this step is important because your app will crash otherwise when trying to call an Ad. In a spriteKit game this really needs to called only once since there usually is only 1 viewController.
+This sets the presentingViewController var to your current ViewController, this step is important because your app will crash otherwise when trying to call an Ad. In a spriteKit game this really needs to called only once since there usually is only 1 viewController.
 
-NOTE: If your app is not a spriteKit game and uses multiple view controllers than you should completly ignore this Step and check  "not a SpriteKit game?" for a better way once finished reading the rest.
+NOTE: If your app is not a spriteKit game and uses multiple view controllers than you should completly ignore this Step and check  "not a SpriteKit game?" for a better way once you finished reading the rest.
 
 # How to use
 
