@@ -40,7 +40,7 @@ This is what is called a shared Banner ad, although not really needed for a spri
 - Step 7: In your viewController write the following in ```ViewDidLoad```. Its best to call these as soon as possible.
 ```swift
 Ads.sharedInstance.presentingViewController = self
-Ads.preloadSupportedInterAd()
+Ads.preloadFirstSupportedInterAd()
 ```
 The 1st line sets up the presentingViewController var to your Current View Controller, this step is important as your app will crash otherwise when calling an Ad.
 
@@ -102,7 +102,7 @@ If you have an app that mainly uses viewControllers to show its UI than it might
 ```swift 
 Ads.sharedInstance.presentingViewController = self
 ```
-especially repeatedly when changing viewControllers. This might even potentially cause issue with shared banner ads, although I have not tested that myself. In those kind of apps a better way would be to make some adjustments in Ads.swift. For example you could change func such as theses
+especially repeatedly when changing viewControllers. This might even potentially cause issue with shared banner ads, although I have not tested that myself. In those kind of apps a better way would be to make some adjustments in Ads.swift. You shoud change these functions
 ```swift 
   class func loadSupportedBannerAd() {
         Ads.sharedInstance.loadSupportedBannerAd()
@@ -125,7 +125,19 @@ especially repeatedly when changing viewControllers. This might even potentially
             preloadInterAd()
         } else {
             googleInterAd = preloadGoogleInterAd()
-        }
+     }
+     
+     class func showSupportedInterAd() {
+        Ads.sharedInstance.showSupportedInterAd()
+    }
+    
+    func showSupportedInterAd() {
+        if iAdsAreSupported == true {
+            showInterAd()
+        } else {
+            showGoogleInterAd
+       }
+    }
 ```
 to
 ```swift 
@@ -152,8 +164,20 @@ to
             googleInterAd = preloadGoogleInterAd()
         }
     }
+    
+  class func showSupportedInterAd(viewController: UIViewController) {
+        Ads.sharedInstance.showSupportedInterAd(viewController)
+    }
+    
+    func showSupportedInterAd(viewController: UIViewController) {
+        if iAdsAreSupported == true {
+            showInterAd()
+        } else {
+            showGoogleInterAd
+       }
+    }
 ```
-You than simply preload the first interAd like so
+You than simply preload the first interAd like so (Step 7)
 ```swift 
 Ads.preloadSupportedInterAd(self)
 ```
@@ -168,7 +192,7 @@ Ads.showSupportedInterAd(self)
 The sample project is the basic apple spritekit template. It now shows a banner Ad on launch and an inter ad, if it has loaded, when touching the screen.
 To make it easier to call these methods I made class functions in Ads.swift. If you would like to cut down the helper file a bit you can delete all the class functions and call the methods like so
 ```swift
-Ads.sharedInstance.preloadSupportedInterAd()
+Ads.sharedInstance.preloadFirstSupportedInterAd()
 Ads.sharedInstance.loadSupportedBannerAd()
 etc
 ```
