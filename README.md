@@ -107,7 +107,7 @@ Ads.sharedInstance.preloadSupportedInterAd()
 Ads.sharedInstance.loadSupportedBannerAd()
 etc
 ```
-Like I mentioned above I primarly focused on SpriteKit to make it easy to call ads from your SKScenes without having to use NSNotifactionCenter or delegates to constantly communicate with the viewController. Also this should help keep your viewController clean as mine became a mess after integrating google ads.
+Like I mentioned above I primarly focused on SpriteKit to make it easy to call ads from your SKScenes without having to use NSNotificationCenter or delegates to constantly communicate with the viewController. Also this should help keep your viewController clean as mine became a mess after integrating google ads.
 
 If you have an app that mainly uses viewControllers to show its UI than it might be clunky to call 
 ```swift 
