@@ -169,12 +169,12 @@ class Ads: NSObject {
     func preloadGoogleInterAd() -> GADInterstitial {
         println("AdMob Inter preloading")
         
-        var googleInterAd = GADInterstitial(adUnitID: ID.interTest) // when going live change ID.interTest to ID.interLive
+        var googleInterAd = GADInterstitial(adUnitID: ID.interTest) // ID.interLive
         googleInterAd.delegate = self
         
         var request = GADRequest()
         
-        //#if DEBUG // set flag as above or comment out line below
+        //#if DEBUG // set flag as above and comment out line below
         request.testDevices = [ kGADSimulatorID ];
         //#endif
         
@@ -277,12 +277,10 @@ extension Ads: ADBannerViewDelegate {
         UIView.setAnimationDuration(1.5)
         appDelegate.bannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.bannerAdView.frame.size.height / 2))
         appDelegate.bannerAdView.hidden = true
-        appDelegate.bannerAdView.delegate = nil // stop delegate, so it wont try to reload, dont removeFromSuperview as that stops all
+        appDelegate.bannerAdView.delegate = nil
         UIView.commitAnimations()
         
         loadGoogleBannerAd()
-        
-        // resume game, music etc
     }
 }
 
@@ -303,7 +301,7 @@ extension Ads: ADInterstitialAdDelegate {
     func interstitialAd(interstitialAd: ADInterstitialAd!, didFailWithError error: NSError!) {
         println("iAds Inter error")
         println(error.localizedDescription)
-        interAdCloseButton.removeFromSuperview() // dont think needed anymore but keep incase
+        interAdCloseButton.removeFromSuperview()
         interAdView.removeFromSuperview()
         interAd.delegate = nil
         interAdLoaded = false
@@ -343,8 +341,8 @@ extension Ads: GADBannerViewDelegate {
         UIView.commitAnimations()
         
         if iAdsAreSupported == true {
-            appDelegate.googleBannerAdView.delegate = nil // stop Google delegate
-            appDelegate.bannerAdView.delegate = self // reset the iAds delegate so it reloads new iAds
+            appDelegate.googleBannerAdView.delegate = nil
+            appDelegate.bannerAdView.delegate = self
         }
         
         // resume game, music etc
