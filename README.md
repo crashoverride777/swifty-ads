@@ -38,9 +38,9 @@ This is what is called a shared Banner ad and although not really needed for a s
 ```swift
 Ads.sharedInstance.presentingViewController = self
 ```
-This sets the presentingViewController var to your current ViewController and inits Ads.swift. This step is important because your app will crash otherwise when trying to call an Ad. In a spriteKit game this really needs to called just once since there usually is only 1 viewController.
+This sets the presentingViewController var to your current ViewController and inits Ads.swift. This step is important because your app will crash otherwise when trying to call an Ad. In a spriteKit game this really needs to be called just once since there usually is only 1 viewController.
 
-NOTE: If your app is not a spriteKit game and uses multiple view controllers than you should completly ignore this Step and check  "not a SpriteKit game?" after reading the rest.
+NOTE: If your app is not a spriteKit game and uses multiple view controllers than you should completly ignore this Step and check "not a SpriteKit game?" after reading the rest.
 
 # How to use
 
