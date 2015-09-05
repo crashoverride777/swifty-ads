@@ -83,7 +83,7 @@ So when your app goes live you will have to do the following
 
 - Step 1: Make sure your apple account is set up for iAds (https://developer.apple.com/iad/)
 
-- Step 2: Sign up for a Google AdMob account and create your ad IDs (https://support.google.com/admob/answer/2784575?hl=en-GB)
+- Step 2: Sign up for a Google AdMob account and create your ad IDs (https://support.google.com/admob/answer/2784575?hl=en-GB). You need 1 for banner and 1 for inter ads.
 
 - Step 3: In Ads.swift in the struct called ID enter your real Ad IDs for both banner and inter Ads.
 
