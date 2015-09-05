@@ -5,19 +5,20 @@ I decided to go the Singleton way but please feel free to change that if you do 
 
 The cool thing is that iAds will show when they are supported otherwise it will show AdMob. 
 Whats really cool is that incase iAd banners are having an error it will automatically load a AdMob banner and in case the AdMob banner is having an error it will reload a iAd banner. 
-Noice, because tutorials I have seen show you this but in such a way that if the the iAd banner fails and than the adMob banner also fails it will never reload a iAd banner again until you close the app.
+
+Nice, because tutorials I have seen show you this but in such a way that if the the iAd banner fails and than the adMob banner also fails it will never reload a iAd banner again until you close the app.
 I did not do this for Inter Ads since they will always preload and cannot be shown beforehand so there is really no point.
 
 # Set-Up
 
 - Step 1: Copy the Ads.swift file into your project
 
-- Step 2: Copy the google framework folder found in the sample project into your projects folder on your computer. You can download the latest version from googles website (https://developers.google.com/admob/ios/download)
+- Step 2: Copy the google framework folder found in the sample project into your projects folder on your computer. You can download the latest version from Googles website (https://developers.google.com/admob/ios/download)
 
-- Step 3: Add the Google framework to your project. Go to Targets - BuildPhases - LinkedBinaries and click the + button and than press the "Add Other" button. Search your computer for the folder you copied at Step 2 containing the googleframework file and add it. Once you done that click the + button again and than just use the search bar and search for googleframework and add it. Your linkedBinaries should now say 1.
+- Step 3: Add the Google framework to your project. Go to Targets - BuildPhases - LinkedBinaries and click the + button and than press the "Add Other" button. Search your computer for the folder you copied at Step 2 containing the googleframework file and add that file. Once you done that click the + button again and than just use the search bar at the top and search for googleframework and than add it. Your linkedBinaries should now say 1.
 
 - Step 4: Add the other frameworks needed. Click the + button again and search for and than add each of these frameworks: AdSupport, AudioToolbox, AVFoundation, CoreGraphics, CoreMedia, CoreTelephony, EventKit, EventKitUI, MessageUI, StoreKit, SystemConfiguration (https://developers.google.com/admob/ios/quick-start?hl=en
- ). This should bring your total linked binary (framework) count to 12. You might want to consider putting all the added frameworks you now see in your project into a Group called Frameworks, similar to the sample project, to keep it clean.
+ ). This should bring your total linked binary (framework) count to 12. You might want to consider putting all the added frameworks you now see in your project sidebar into a Group called Frameworks, similar to the sample project, to keep it clean.
 
 - Step 5: In your AppDelegate.swift underneath ```import UIKit``` write the following
 ```swift
