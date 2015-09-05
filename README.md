@@ -51,7 +51,7 @@ Ads.sharedInstance.presentingViewController = self
 Ads.iAdsCheckSupport()
 ```
 ```swift
-Ads.preloadInterAds()
+Ads.preloadSupportedInterAd()
 ```
 The first line here sets up the presentingViewController var to your Current View Controller, this step is important as your app will crash otherwise when calling an Ad.
 
