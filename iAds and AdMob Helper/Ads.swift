@@ -244,6 +244,50 @@ class Ads: NSObject, ADBannerViewDelegate, ADInterstitialAdDelegate, GADBannerVi
     }
 }
 
+// MARK: - iAds Banner Delegates
+extension Ads: ADBannerViewDelegate {
+    
+    func bannerViewWillLoadAd(banner: ADBannerView!) {
+        
+    }
+    
+    func bannerViewDidLoadAd(banner: ADBannerView!) {
+        println("iAds banner did load")
+        presentingViewController.view.addSubview(appDelegate.bannerAdView)
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(1.5)
+        appDelegate.bannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.bannerAdView.frame.size.height / 2))
+        UIView.commitAnimations()
+    }
+    
+    func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
+        println("iAds Banner clicked")
+        // pause game, music etc
+        
+        return true
+    }
+    
+    func bannerViewActionDidFinish(banner: ADBannerView!) {
+        println("iAds banner closed")
+        // resume game, music etc
+    }
+    
+    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
+        println("iAds banner error")
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(1.5)
+        appDelegate.bannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.bannerAdView.frame.size.height / 2))
+        appDelegate.bannerAdView.hidden = true
+        appDelegate.bannerAdView.delegate = nil // stop delegate, so it wont try to reload, dont removeFromSuperview as that stops all
+        UIView.commitAnimations()
+        
+        loadGoogleBannerAd()
+        
+        // resume game, music etc
+    }
+    
+}
+
 // MARK: - iAds Inter Delegates
 extension Ads: ADInterstitialAdDelegate {
     
