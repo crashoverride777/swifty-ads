@@ -90,7 +90,7 @@ So when your app goes live you will have to do the following
 - Step 4: In
 ```swift 
 func loadGoogleBannerAd()
-func showGoogleInterAd()
+func preloadGoogleInterAd()
 ``` 
 change the ad ID reference from "ID.bannerTest/ID.interTest" to "ID.bannerLive/ID.interLive" and comment out the line 
 ```swift 
