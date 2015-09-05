@@ -11,7 +11,7 @@ I did not do this for Inter Ads since they will always preload and cannot be sho
 
 - Step 1: Copy the Ads.swift file into your project
 
-- Step 2: Copy the google framework folder found in the sample project into your own project or download the latest version from googles website (https://developers.google.com/admob/ios/download)
+- Step 2: Copy the google framework folder found in the sample project into your own projects folder on your computer. You can also download the latest version from googles website (https://developers.google.com/admob/ios/download)
 
 - Step 3: Add the Google framework to your project. Go to Targets - BuildPhases - LinkedBinaries and click the + button and than press the "Add Other" button and search your computer for the folder you copied at Step 2 containing the googleframework file. Once you done that search for googleframework and add it, your linkedBinaries should now say 1.
 
