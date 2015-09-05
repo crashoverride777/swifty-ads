@@ -1,13 +1,15 @@
 # iAds and AdMob Helper
 
 A simple helper class that should make integrating Banner and Interterstitial Ads from Apple and Google a breeze.
-I decided to go the Singleton way but please feel free to change that if you dont like it. This helper has been made while designing my SpriteKit game but it can be used for any kind of app.
+I decided to go the Singleton way but please feel free to change that if you dont like it. This helper has been made while designing my SpriteKit game but it can be used for any kind of app. 
+It has all the standard features you expect, like banners only animating in when they are ready and disspapearing when they haven an error.
 
-The cool thing is that iAds will show when they are supported otherwise it will show AdMob. 
-Whats really cool is that incase iAd banners are having an error it will automatically load an AdMob banner and in case the AdMob banner is having an error it will load an iAd banner again. 
+The cool thing is that iAds will be used when they are supported otherwise AdMob will be used. 
+Whats really cool is that incase iAd banners are having an error it will automatically load an AdMob banner and in case that AdMob banner is having an error it will load an iAd banner again. 
 
-Nice, because tutorials I have seen show you this but in such a way that if the iAd banner has an erroer and than the adMob banner also has error it would never reload an iAd banner again, until you close the app. You dont want that as that means less money in your pockets.
-I did not do the same for Inter Ads because they have to be preloaded before you can actually show them. Besides that they are not shown regularly so there is really no point.
+Nice because that means chances are very low that there are no banners showing wich means more money in your pocket. There are tutorials that teach you this, but in unfortunatley in the wrong way. In those tutorials if there is an iAd banner error and than the adMob banner also has an error, and believe me this can happen, it would never reload another iAd banner until you close the app. You dont want that as that means less money in your pocket.
+
+I did not do the same for Inter Ads because they have to be preloaded before you can actually show them. Besides that they are not shown regularly so there really is no point.
 
 # Set-Up
 
@@ -18,7 +20,7 @@ I did not do the same for Inter Ads because they have to be preloaded before you
 - Step 3: Add the Google framework to your project. Go to Targets - BuildPhases - LinkedBinaries and click the + button and than press the "Add Other" button. Search your computer for the folder you copied at Step 2 containing the googleframework file and add that file. Once you done that click the + button again use the search bar at the top and search for googleframework and than add it. Your linkedBinaries should now say 1.
 
 - Step 4: Add the other frameworks needed. Click the + button again and search for and than add each of these frameworks: AdSupport, AudioToolbox, AVFoundation, CoreGraphics, CoreMedia, CoreTelephony, EventKit, EventKitUI, MessageUI, StoreKit, SystemConfiguration (https://developers.google.com/admob/ios/quick-start?hl=en
- ). This should bring your total linked binary (framework) count to 12. You might want to consider putting all the added frameworks you now see in your project sidebar into a Group called Frameworks, similar to the sample project, to keep it clean.
+ ). This should bring your total linked binary (framework) count to 12. You might want to consider putting all the added frameworks you now see in your project sidebar into a folder called Frameworks, similar to the sample project, to keep it clean.
 
 - Step 5: In your AppDelegate.swift underneath ```import UIKit``` write the following
 ```swift
