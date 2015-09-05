@@ -102,7 +102,7 @@ If you have an app that mainly uses viewControllers to show its UI than it might
 ```swift 
 Ads.sharedInstance.presentingViewController = self
 ```
-especially repeatedly when changing viewControllers. This might even potentially cause issue with shared banner ads, although I have not tested that myself. In those kind of apps a better way would be to make some adjustments in Ads.swift. You shoud change these functions
+especially repeatedly when changing viewControllers. This might even potentially cause issue with shared banner ads, although I have not tested that myself. In those kind of apps a better way would be to make some adjustments in Ads.swift. You should change these functions
 ```swift 
   class func loadSupportedBannerAd() {
         Ads.sharedInstance.loadSupportedBannerAd()
