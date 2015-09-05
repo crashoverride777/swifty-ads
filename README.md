@@ -62,13 +62,13 @@ iAdsAreSupported = iAdTimeZoneSupported()
 ```
 in the init method.
 
-- To show a supported Ads simply call these anywhere you like in your project.
+- To show a supported Ad simply call these anywhere you like in your project.
 ```swift
 Ads.loadSupportedBannerAd() 
 or
 Ads.showSupportedInterAd()
 ```
-- To remove Ads, for example during gamePlay or for in app purchases simply call 
+- To remove Ads, for example during gameplay or for in app purchases simply call 
 ```swift
 Ads.removeBannerAds() 
 or
