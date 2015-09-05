@@ -25,7 +25,7 @@
 import iAd
 import GoogleMobileAds
 
-class Ads: NSObject, ADBannerViewDelegate, ADInterstitialAdDelegate, GADBannerViewDelegate, GADInterstitialDelegate {
+class Ads: NSObject {
     
     // MARK: - Properties
     static let sharedInstance = Ads()
