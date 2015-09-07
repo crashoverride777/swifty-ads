@@ -1,5 +1,5 @@
 
-//  Created by Dominik Ringler on 22/08/2015.
+//  Created by Dominik on 22/08/2015.
 
 //    The MIT License (MIT)
 //
