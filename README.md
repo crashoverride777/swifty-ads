@@ -185,6 +185,8 @@ Ads.showSupportedInterAd(self)
 
 # Release Notes
 
+v1.2 - Small changes
+
 v1.1 - Sorry for all the initial commits, its my first rep. Helper should be good to go now.
 
 v1.0
