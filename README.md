@@ -172,11 +172,11 @@ Ads.showSupportedInterAd(self)
 The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and an inter ad, if it has loaded, when touching the screen.
 To make it easier to call these methods I made class functions in Ads.swift. If you would like to cut down the helper file a bit you can delete all the class functions and call the methods like so
 ```swift
-Ads.sharedInstance.preloadFirstSupportedInterAd()
 Ads.sharedInstance.loadSupportedBannerAd()
 Ads.sharedInstance.showSupportedInterAd()
+etc
 ```
-Like I mentioned above I primarly focused on SpriteKit to make it easy to call Ads from your SKScenes without having to use NSNotificationCenter or delegates to constantly communicate with the viewController. Also this should help keep your viewController clean as mine became a mess after integrating AdMob.
+Like I mentioned above I primarly focused on SpriteKit to make it easy to call Ads from your SKScenes without having to use NSNotificationCenter or Delegates to constantly communicate with the viewController. Also this should help keep your viewController clean as mine became a mess after integrating AdMob.
 
 I also made some comments in the relevant spots of the helper file incase you need to pause your game, music etc.
 Please let me know about any bugs or improvements, I am by now means an expert. 
