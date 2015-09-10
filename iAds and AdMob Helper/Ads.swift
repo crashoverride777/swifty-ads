@@ -132,7 +132,7 @@ class Ads: NSObject {
     private func iAdLoadBannerAd() {
         print("Load banner ad")
         appDelegate.iAdBannerAdView = ADBannerView(frame: presentingViewController.view.bounds)
-         appDelegate.iAdBannerAdView.delegate = self
+        appDelegate.iAdBannerAdView.delegate = self
         appDelegate.iAdBannerAdView.sizeToFit()
         appDelegate.iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.iAdBannerAdView.frame.size.height / 2))
     }
