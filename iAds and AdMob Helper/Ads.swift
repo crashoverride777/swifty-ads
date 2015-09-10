@@ -32,17 +32,17 @@ class Ads: NSObject {
     
     var presentingViewController: UIViewController!
     
-    var iAdsAreSupported = false
+    private var iAdsAreSupported = false
     
-    var iAdInterAd = ADInterstitialAd()
-    var iAdInterAdView = UIView()
-    var iAdInterAdCloseButton = UIButton(type: UIButtonType.System)
-    var iAdInterAdLoaded = false
+    private var iAdInterAd = ADInterstitialAd()
+    private var iAdInterAdView = UIView()
+    private var iAdInterAdCloseButton = UIButton(type: UIButtonType.System)
+    private var iAdInterAdLoaded = false
     
-    var adMobInterAd: GADInterstitial!
-    var adMobBannerType = kGADAdSizeSmartBannerPortrait //kGADAdSizeSmartBannerLandscape
+    private var adMobInterAd: GADInterstitial!
+    private var adMobBannerType = kGADAdSizeSmartBannerPortrait //kGADAdSizeSmartBannerLandscape
     
-    struct ID {
+    private struct ID {
         static let bannerLive = "Your real banner adUnit ID from your google adMob account"
         static let interLive = "Your real inter adUnit ID from your google adMob account"
         
@@ -129,7 +129,7 @@ class Ads: NSObject {
     // MARK: - Internal Functions
 
     // iAd Banner
-    func iAdLoadBannerAd() {
+    private func iAdLoadBannerAd() {
         print("Load banner ad")
         appDelegate.iAdBannerAdView = ADBannerView(frame: presentingViewController.view.bounds)
          appDelegate.iAdBannerAdView.delegate = self
@@ -138,7 +138,7 @@ class Ads: NSObject {
     }
     
     // iAd Inter
-    func iAdPreloadInterAd() {
+    private func iAdPreloadInterAd() {
         print("iAd Inter preloading...")
         iAdInterAd = ADInterstitialAd()
         iAdInterAd.delegate = self
@@ -153,7 +153,7 @@ class Ads: NSObject {
         iAdInterAdCloseButton.addTarget(self, action: "iAdPressedInterAdCloseButton:", forControlEvents: UIControlEvents.TouchDown)
     }
     
-    func iAdShowInterAd() {
+    private func iAdShowInterAd() {
         if iAdInterAd.loaded == true && iAdInterAdLoaded == true {
             print("iAd Inter showing")
             presentingViewController.view.addSubview(iAdInterAdView)
@@ -180,7 +180,7 @@ class Ads: NSObject {
     }
     
     // AdMob Banner
-    func adMobLoadBannerAd() {
+    private func adMobLoadBannerAd() {
         print("Load adMob banner")
         print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
         appDelegate.adMobBannerAdView = GADBannerView(adSize: adMobBannerType)
@@ -200,7 +200,7 @@ class Ads: NSObject {
     }
     
     // AdMob Inter
-    func adMobPreloadInterAd() -> GADInterstitial {
+    private func adMobPreloadInterAd() -> GADInterstitial {
         print("AdMob Inter preloading...")
         
         let adMobInterAd = GADInterstitial(adUnitID: ID.interTest) // ID.interLive
@@ -217,7 +217,7 @@ class Ads: NSObject {
         return adMobInterAd
     }
     
-    func adMobShowInterAd() {
+    private func adMobShowInterAd() {
         print("AdMob Inter showing")
         if adMobInterAd.isReady == true {
             adMobInterAd.presentFromRootViewController(presentingViewController)
@@ -230,7 +230,7 @@ class Ads: NSObject {
     }
     
     // Check iAd Support
-    func iAdTimeZoneSupported() -> Bool {
+    private func iAdTimeZoneSupported() -> Bool {
         let iAdTimeZones = "America/;US/;Pacific/;Asia/Tokyo;Europe/".componentsSeparatedByString(";")
         let myTimeZone = NSTimeZone.localTimeZone().name
         for zone in iAdTimeZones {
