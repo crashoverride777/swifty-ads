@@ -28,8 +28,8 @@ let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 - Step 6: Still in your AppDelegate.swift under the class implementation you will need to create these properties
 
 ```swift
-var bannerAdView = ADBannerView()
-var googleBannerAdView = GADBannerView()
+var iAdBannerAdView = ADBannerView()
+var adMobBannerAdView = GADBannerView()
 ```
 
 This is what is called a shared Banner ad and although not really needed for a spritekit game with 1 view controller this is the correct way to use banner ads in apps with multiple ViewControllers. (https://developer.apple.com/library/ios/technotes/tn2286/_index.html)
@@ -48,7 +48,7 @@ There should be no more errors in your project now and the Helper is ready to be
 
 - Keep in mind that the Google banner ads (iAds do it automatically ) are set up for portrait mode, if your app is in landscape than you will need to change
 ```swift 
-var googleBannerType
+var adMobBannerType
 ```
 from "kGADAdSizeSmartBannerPortrait" to "kGADAdSizeSmartBannerLandscape"
 
@@ -86,8 +86,8 @@ So before your app goes live you will have to do the following
 
 - Step 4: In Ads.swift in
 ```swift 
-func loadGoogleBannerAd()
-func preloadGoogleInterAd()
+func adMobLoadBannerAd()
+func adMobPreloadInterAd()
 ``` 
 change the ad ID reference from "ID.bannerTest/ID.interTest" to "ID.bannerLive/ID.interLive" and comment out the line 
 ```swift 
@@ -156,9 +156,9 @@ to
         ...
     }
  ```
- Than go the Ads.swift init method and remove the line "preloadFirstSupportedInterAd()"
+ Than go the Ads.swift init method and remove the code that preloads the first InterAd.
  
- Than edit/add these functions
+ Than add these functions
     
  ```swift
 class func preloadFirstSupportedInterAd(viewController: UIViewController) {
@@ -184,6 +184,8 @@ Ads.showSupportedInterAd(self)
 ```
 
 # Release Notes
+
+v1.4 - Clean-Up and small improvements
 
 v1.3 - Upgraded to Swift 2
 
