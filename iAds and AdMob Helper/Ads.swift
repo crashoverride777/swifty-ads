@@ -39,9 +39,10 @@ class Ads: NSObject {
     private var iAdInterAdCloseButton = UIButton(type: UIButtonType.System)
     private var iAdInterAdLoaded = false
     
-    private var adMobInterAd: GADInterstitial!
     private var adMobBannerType = kGADAdSizeSmartBannerPortrait //kGADAdSizeSmartBannerLandscape
+    private var adMobInterAd: GADInterstitial!
     
+    // adMob Unit ID
     private struct ID {
         static let bannerLive = "Your real banner adUnit ID from your google adMob account"
         static let interLive = "Your real inter adUnit ID from your google adMob account"
@@ -53,25 +54,25 @@ class Ads: NSObject {
     // MARK: - Init
     override init() {
         super.init()
-        print("Ads Helper init")
+        print("Ads helper init")
         iAdsAreSupported = iAdTimeZoneSupported()
         
         // Preload first inter ad
         if iAdsAreSupported == true {
-            iAdPreloadInterAd()
+            iAdLoadInterAd()
         } else {
-            adMobInterAd = adMobPreloadInterAd()
+            adMobInterAd = adMobLoadInterAd()
         }
     }
     
     // MARK: - User Functions
     
     // Load Supported Banner Ad
-    class func loadSupportedBannerAd() {
-        Ads.sharedInstance.loadSupportedBannerAd()
+    class func showSupportedBannerAd() {
+        Ads.sharedInstance.showSupportedBannerAd()
     }
     
-    func loadSupportedBannerAd() {
+    func showSupportedBannerAd() {
         if iAdsAreSupported == true {
             iAdLoadBannerAd()
         } else {
@@ -130,7 +131,7 @@ class Ads: NSObject {
 
     // iAd Banner
     private func iAdLoadBannerAd() {
-        print("Load banner ad")
+        print("iAd banner ad loading...")
         appDelegate.iAdBannerAdView = ADBannerView(frame: presentingViewController.view.bounds)
         appDelegate.iAdBannerAdView.delegate = self
         appDelegate.iAdBannerAdView.sizeToFit()
@@ -138,8 +139,8 @@ class Ads: NSObject {
     }
     
     // iAd Inter
-    private func iAdPreloadInterAd() {
-        print("iAd Inter preloading...")
+    private func iAdLoadInterAd() {
+        print("iAd inter ad loading...")
         iAdInterAd = ADInterstitialAd()
         iAdInterAd.delegate = self
         
@@ -155,7 +156,7 @@ class Ads: NSObject {
     
     private func iAdShowInterAd() {
         if iAdInterAd.loaded == true && iAdInterAdLoaded == true {
-            print("iAd Inter showing")
+            print("iAd inter showing")
             presentingViewController.view.addSubview(iAdInterAdView)
             iAdInterAd.presentInView(iAdInterAdView)
             UIViewController.prepareInterstitialAds()
@@ -163,8 +164,8 @@ class Ads: NSObject {
             
             // pause game, music etc
         } else {
-            print("iAd Inter cannot be shown, reloading...")
-            iAdPreloadInterAd()
+            print("iAd inter cannot be shown, reloading...")
+            iAdLoadInterAd()
         }
     }
     
@@ -174,14 +175,14 @@ class Ads: NSObject {
         iAdInterAd.delegate = nil
         iAdInterAdLoaded = false
         
-        iAdPreloadInterAd()
+        iAdLoadInterAd()
         
         // resume game, music etc
     }
     
     // AdMob Banner
     private func adMobLoadBannerAd() {
-        print("Load adMob banner")
+        print("AdMob banner loading...")
         print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
         appDelegate.adMobBannerAdView = GADBannerView(adSize: adMobBannerType)
         appDelegate.adMobBannerAdView.adUnitID = ID.bannerTest //ID.bannerLive
@@ -200,8 +201,8 @@ class Ads: NSObject {
     }
     
     // AdMob Inter
-    private func adMobPreloadInterAd() -> GADInterstitial {
-        print("AdMob Inter preloading...")
+    private func adMobLoadInterAd() -> GADInterstitial {
+        print("AdMob inter loading...")
         
         let adMobInterAd = GADInterstitial(adUnitID: ID.interTest) // ID.interLive
         adMobInterAd.delegate = self
@@ -218,14 +219,14 @@ class Ads: NSObject {
     }
     
     private func adMobShowInterAd() {
-        print("AdMob Inter showing")
+        print("AdMob inter showing")
         if adMobInterAd.isReady == true {
             adMobInterAd.presentFromRootViewController(presentingViewController)
             
             // pause game, music etc.
         } else {
-            print("AdMob Inter cannot be shown, reloading...")
-            adMobInterAd = adMobPreloadInterAd()
+            print("AdMob inter cannot be shown, reloading...")
+            adMobInterAd = adMobLoadInterAd()
         }
     }
     
@@ -250,11 +251,10 @@ class Ads: NSObject {
 extension Ads: ADBannerViewDelegate {
     
     func bannerViewWillLoadAd(banner: ADBannerView!) {
-        print("iAd banner loading...")
     }
     
     func bannerViewDidLoadAd(banner: ADBannerView!) {
-        print("iAd banner did load")
+        print("iAd banner did load, showing")
         presentingViewController.view.addSubview(appDelegate.iAdBannerAdView)
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(1.5)
@@ -263,7 +263,7 @@ extension Ads: ADBannerViewDelegate {
     }
     
     func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
-        print("iAd Banner clicked")
+        print("iAd banner clicked")
         
         // pause game, music etc
         
@@ -293,25 +293,25 @@ extension Ads: ADBannerViewDelegate {
 extension Ads: ADInterstitialAdDelegate {
     
     func interstitialAdDidLoad(interstitialAd: ADInterstitialAd!) {
-        print("iAd Inter did preload")
+        print("iAd inter did load")
         iAdInterAdView = UIView()
         iAdInterAdView.frame = presentingViewController.view.bounds
         iAdInterAdLoaded = true
     }
     
     func interstitialAdDidUnload(interstitialAd: ADInterstitialAd!) {
-        print("iAd Inter did unload")
+        print("iAd inter did unload")
     }
     
     func interstitialAd(interstitialAd: ADInterstitialAd!, didFailWithError error: NSError!) {
-        print("iAd Inter error")
+        print("iAd inter error")
         print(error.localizedDescription)
         iAdInterAdCloseButton.removeFromSuperview()
         iAdInterAdView.removeFromSuperview()
         iAdInterAd.delegate = nil
         iAdInterAdLoaded = false
         
-        iAdPreloadInterAd()
+        iAdLoadInterAd()
     }
 }
 
@@ -319,7 +319,7 @@ extension Ads: ADInterstitialAdDelegate {
 extension Ads: GADBannerViewDelegate {
     
     func adViewDidReceiveAd(bannerView: GADBannerView!) {
-        print("AdMob banner did load")
+        print("AdMob banner did load, showing")
         presentingViewController.view.addSubview(appDelegate.adMobBannerAdView)
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(1.5)
@@ -358,34 +358,34 @@ extension Ads: GADBannerViewDelegate {
 extension Ads: GADInterstitialDelegate {
     
     func interstitialDidReceiveAd(ad: GADInterstitial!) {
-        print("AdMob Inter did preload")
+        print("AdMob inter did load")
     }
     
     func interstitialWillPresentScreen(ad: GADInterstitial!) {
-        print("AdMob Inter will present")
+        print("AdMob inter will present")
         
         // pause game, music etc
     }
     
     func interstitialWillDismissScreen(ad: GADInterstitial!) {
-        print("AdMob Inter about to be closed")
+        print("AdMob inter about to be closed")
     }
     
     func interstitialDidDismissScreen(ad: GADInterstitial!) {
-        print("AdMob Inter closed")
-        adMobInterAd = adMobPreloadInterAd()
+        print("AdMob inter closed")
+        adMobInterAd = adMobLoadInterAd()
         
         // resume game, music etc
     }
     
     func interstitialWillLeaveApplication(ad: GADInterstitial!) {
-        print("AdMob Inter about to leave app")
+        print("AdMob inter about to leave app")
         
         // pause game, music etc
     }
     
     func interstitial(ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
-        print("AdMob Inter error")
-        adMobInterAd = adMobPreloadInterAd()
+        print("AdMob inter error")
+        adMobInterAd = adMobLoadInterAd()
     }
 }

@@ -28,7 +28,11 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // set adsViewController and init ads helper, call ASAP
+        Ads.sharedInstance.presentingViewController = self
 
+        
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
             // Configure the view.
             let skView = self.view as! SKView
@@ -43,10 +47,6 @@ class GameViewController: UIViewController {
             
             skView.presentScene(scene)
         }
-        
-        // Ads
-        Ads.sharedInstance.presentingViewController = self
-        Ads.loadSupportedBannerAd() // can also be called in GameScene
     }
 
     override func shouldAutorotate() -> Bool {

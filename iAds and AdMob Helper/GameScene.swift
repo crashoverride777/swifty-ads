@@ -16,6 +16,9 @@ class GameScene: SKScene {
         myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
         
         self.addChild(myLabel)
+        
+        // Show banner ad
+        Ads.showSupportedBannerAd()
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -36,7 +39,7 @@ class GameScene: SKScene {
             
             self.addChild(sprite)
             
-            
+            // Show inter ad
             Ads.showSupportedInterAd()
         }
     }
