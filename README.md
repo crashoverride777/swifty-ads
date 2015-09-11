@@ -162,7 +162,7 @@ to
     
  ```swift
 class func loadFirstSupportedInterAd(viewController: UIViewController) {
-         Ads.sharedInstance.LoadFirstSupportedInterAd(viewController)
+         Ads.sharedInstance.loadFirstSupportedInterAd(viewController)
     }
     
     func loadFirstSupportedInterAd(viewController: UIViewController) {
