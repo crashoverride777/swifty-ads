@@ -60,7 +60,7 @@ in the init method.
 
 - To show a supported Ad simply call these anywhere you like in your project.
 ```swift
-Ads.loadSupportedBannerAd() 
+Ads.showSupportedBannerAd() 
 or
 Ads.showSupportedInterAd()
 ```
@@ -102,7 +102,7 @@ I wrote some comments at those points to avoid this hassle in the future if you 
 The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and an inter ad, if it has loaded, when touching the screen.
 To make it easier to call these methods I made class functions in Ads.swift. If you would like to cut down the helper file a bit you can delete all the class functions and call the methods like so
 ```swift
-Ads.sharedInstance.loadSupportedBannerAd()
+Ads.sharedInstance.showSupportedBannerAd()
 Ads.sharedInstance.showSupportedInterAd()
 etc
 ```
@@ -178,7 +178,7 @@ Ads.preloadFirstSupportedInterAd(self)
 
 and than show Ads like so
 ```swift
-Ads.loadSupportedBannerAd(self)
+Ads.showSupportedBannerAd(self)
 or
 Ads.showSupportedInterAd(self)
 ```
