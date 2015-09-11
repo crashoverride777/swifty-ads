@@ -87,7 +87,7 @@ So before your app goes live you will have to do the following
 - Step 4: In Ads.swift in
 ```swift 
 func adMobLoadBannerAd()
-func adMobPreloadInterAd()
+func adMobLoadInterAd()
 ``` 
 change the ad ID reference from "ID.bannerTest/ID.interTest" to "ID.bannerLive/ID.interLive" and comment out the line 
 ```swift 
@@ -120,11 +120,11 @@ Ads.sharedInstance.presentingViewController = self
 ```
 especially repeatedly when changing viewControllers. This might even cause issue with shared banner ads, although I have not tested that myself. For those apps you should change these functions
 ```swift 
-  class func loadSupportedBannerAd() {
-        Ads.sharedInstance.loadSupportedBannerAd()
+  class func showSupportedBannerAd() {
+        Ads.sharedInstance.showSupportedBannerAd()
     }
     
-    func loadSupportedBannerAd() {
+    func showSupportedBannerAd() {
         ...
     }
     
@@ -138,11 +138,11 @@ especially repeatedly when changing viewControllers. This might even cause issue
 ```
 to
 ```swift 
-  class func loadSupportedBannerAd(viewController: UIViewController) {
-         Ads.sharedInstance.loadSupportedBannerAd(viewController)
+  class func showSupportedBannerAd(viewController: UIViewController) {
+         Ads.sharedInstance.showSupportedBannerAd(viewController)
     }
     
-    func loadSupportedBannerAd(viewController: UIViewController) {
+    func showSupportedBannerAd(viewController: UIViewController) {
         presentingViewController = viewController
         ...
     }
@@ -161,11 +161,11 @@ to
  Than add these functions
     
  ```swift
-class func preloadFirstSupportedInterAd(viewController: UIViewController) {
-         Ads.sharedInstance.preloadFirstSupportedInterAd(viewController)
+class func loadFirstSupportedInterAd(viewController: UIViewController) {
+         Ads.sharedInstance.LoadFirstSupportedInterAd(viewController)
     }
     
-    func preloadFirstSupportedInterAd(viewController: UIViewController) {
+    func loadFirstSupportedInterAd(viewController: UIViewController) {
         presentingViewController = viewController
         ...
     }
@@ -173,7 +173,7 @@ class func preloadFirstSupportedInterAd(viewController: UIViewController) {
 
 You than simply preload the first interAd yourself in the ViewController like so
 ```swift 
-Ads.preloadFirstSupportedInterAd(self)
+Ads.loadFirstSupportedInterAd(self)
 ```
 
 and than show Ads like so
