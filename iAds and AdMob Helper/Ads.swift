@@ -58,7 +58,7 @@ class Ads: NSObject {
         iAdsAreSupported = iAdTimeZoneSupported()
         
         // Preload first inter ad
-        if iAdsAreSupported == true {
+        if iAdsAreSupported {
             iAdLoadInterAd()
         } else {
             adMobInterAd = adMobLoadInterAd()
@@ -73,7 +73,7 @@ class Ads: NSObject {
     }
     
     func showSupportedBannerAd() {
-        if iAdsAreSupported == true {
+        if iAdsAreSupported {
             iAdLoadBannerAd()
         } else {
             adMobLoadBannerAd()
@@ -86,7 +86,7 @@ class Ads: NSObject {
     }
     
     func showSupportedInterAd() {
-        if iAdsAreSupported == true {
+        if iAdsAreSupported {
             iAdShowInterAd()
         } else {
             adMobShowInterAd()
@@ -155,7 +155,7 @@ class Ads: NSObject {
     }
     
     private func iAdShowInterAd() {
-        if iAdInterAd.loaded == true && iAdInterAdLoaded == true {
+        if iAdInterAd.loaded  && iAdInterAdLoaded {
             print("iAd inter showing")
             presentingViewController.view.addSubview(iAdInterAdView)
             iAdInterAd.presentInView(iAdInterAdView)
@@ -220,7 +220,7 @@ class Ads: NSObject {
     
     private func adMobShowInterAd() {
         print("AdMob inter showing")
-        if adMobInterAd.isReady == true {
+        if adMobInterAd.isReady {
             adMobInterAd.presentFromRootViewController(presentingViewController)
             
             // pause game, music etc.
@@ -347,7 +347,7 @@ extension Ads: GADBannerViewDelegate {
         appDelegate.adMobBannerAdView.hidden = true
         UIView.commitAnimations()
         
-        if iAdsAreSupported == true {
+        if iAdsAreSupported {
             appDelegate.adMobBannerAdView.delegate = nil
             appDelegate.iAdBannerAdView.delegate = self
         }
