@@ -37,7 +37,6 @@ class Ads: NSObject {
     private var iAdInterAd = ADInterstitialAd()
     private var iAdInterAdView = UIView()
     private var iAdInterAdCloseButton = UIButton(type: UIButtonType.System)
-    private var iAdInterAdLoaded = false
     
     private var adMobBannerType = kGADAdSizeSmartBannerPortrait //kGADAdSizeSmartBannerLandscape
     private var adMobInterAd: GADInterstitial!
@@ -155,7 +154,7 @@ class Ads: NSObject {
     }
     
     private func iAdShowInterAd() {
-        if iAdInterAd.loaded  && iAdInterAdLoaded {
+        if iAdInterAd.loaded {
             print("iAd inter showing")
             iAdInterAdView = UIView()
             iAdInterAdView.frame = presentingViewController.view.bounds
@@ -175,7 +174,6 @@ class Ads: NSObject {
         iAdInterAdCloseButton.removeFromSuperview()
         iAdInterAdView.removeFromSuperview()
         iAdInterAd.delegate = nil
-        iAdInterAdLoaded = false
         
         iAdLoadInterAd()
         
@@ -296,7 +294,6 @@ extension Ads: ADInterstitialAdDelegate {
     
     func interstitialAdDidLoad(interstitialAd: ADInterstitialAd!) {
         print("iAd inter did load")
-        iAdInterAdLoaded = true
     }
     
     func interstitialAdDidUnload(interstitialAd: ADInterstitialAd!) {
@@ -309,7 +306,6 @@ extension Ads: ADInterstitialAdDelegate {
         iAdInterAdCloseButton.removeFromSuperview()
         iAdInterAdView.removeFromSuperview()
         iAdInterAd.delegate = nil
-        iAdInterAdLoaded = false
         
         iAdLoadInterAd()
     }
