@@ -69,7 +69,7 @@ or
 Ads.removeAllAds()
 ```
 
-- To pause or resume tasks in your app or game when ads are opened/closed use these interal methods.
+- To pause or resume tasks in your app or game when ads are opened/closed use these interal methods. These get called automatically so all you do is enter your code.
 ```swift
 private func pauseTasks() 
 private func resumeTasks()
