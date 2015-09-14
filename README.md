@@ -45,32 +45,27 @@ NOTE: If your app is not a spriteKit game and uses multiple view controllers tha
 
 - Step 8: This Step is only needed if your app supports both portrait and landscape orientation. Still in your ViewController add the following method.
 ```swift
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
         
-        coordinator.animateAlongsideTransition( { (UIViewControllerTransitionCoordinatorContext) -> Void in
+        coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) -> Void in
             
-            Ads.sharedInstance.deviceOrientationChanged()
+            Ads.deviceOrientationChanged()
             
-            let orientation = UIApplication.sharedApplication().statusBarOrientation
-            switch orientation {
-            case .Portrait:
-                print("Portrait")
-            
-                // Do something
-            
-            default:
-                print("Anything But Portrait")
-            
-                // Do something else
-            }
+            //let orientation = UIApplication.sharedApplication().statusBarOrientation
+            //switch orientation {
+            //case .Portrait:
+            //    print("Portrait")
+            //    // Do something
+            //default:
+            //    print("Anything But Portrait")
+            //    // Do something else
+            //}
             
             }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
-                print("Rotation completed")
+                print("Device rotation completed")
         })
-        
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
     }
-}
 ```
 NOTE: This is a ios 8 method, if your app supports ios 7 or below you maybe want to use something like a  NSNotifcationCenter  UIDeviceOrientationDidChangeNotification Observer
 
