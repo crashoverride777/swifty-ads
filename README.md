@@ -51,7 +51,7 @@ There should be no more errors in your project now and the Helper is ready to be
 iAdsAreSupported = iAdTimeZoneSupported()
 ```
 - If your app only supports 1 device orientation you can also comment out the NSNotifactionObserver in the init method
-- 
+
 ```swift
  NSNotificationCenter.defaultCenter().addObserver(self, selector: "deviceOrientationChanged", name: UIDeviceOrientationDidChangeNotification, object: nil)
 ```
@@ -171,7 +171,6 @@ Ads.showSupportedInterAd(self)
 
 # Release Notes
 v1.5
-Clean-up
 AdMob banner ads now automatically identify if your app is in potrait or landscape
 All banner ads now automatically change orientation and adjust their position if you rotate your device
 iAd inter ad close button on iPads inter ads has been adjusted.
