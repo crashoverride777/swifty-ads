@@ -46,12 +46,6 @@ NOTE: If your app is not a spriteKit game and uses multiple view controllers tha
 
 There should be no more errors in your project now and the Helper is ready to be used. You can blame Google for most of the work here. 
 
-- Keep in mind that the Google banner ads (iAds do it automatically ) are set up for portrait mode, if your app is in landscape than you will need to change
-```swift 
-var adMobBannerType
-```
-from "kGADAdSizeSmartBannerPortrait" to "kGADAdSizeSmartBannerLandscape"
-
 - iAds are always shown by default unless they are not supported. If you want to manually test Google ads comment out the line 
 ```swift
 iAdsAreSupported = iAdTimeZoneSupported()
@@ -166,6 +160,8 @@ Ads.showSupportedInterAd(self)
 ```
 
 # Release Notes
+v1.5 - Clean-Up, adMob ads now automatically choose device orientation, ads now automatically change orientation if you rotate your device, and close button for ipads inter ads has been adjusted.
+
 v1.4.1 - Clean-Up and small improvements
 
 v1.4 - Clean-Up and small improvements
