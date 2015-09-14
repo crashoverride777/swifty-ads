@@ -45,7 +45,6 @@ NOTE: If your app is not a spriteKit game and uses multiple view controllers tha
 
 - Step 8: This Step is only needed if your app supports both portrait and landscape orientation. Still in your ViewController add the following method.
 ```swift
-    // MARK: - Device Orientation Changes
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         
         coordinator.animateAlongsideTransition( { (UIViewControllerTransitionCoordinatorContext) -> Void in
