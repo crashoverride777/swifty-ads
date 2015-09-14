@@ -41,6 +41,7 @@ class GameScene: SKScene {
             
             // Show inter ad
             Ads.showSupportedInterAd()
+            Ads.removeAllAds()
         }
     }
    
