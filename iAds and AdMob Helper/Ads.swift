@@ -157,6 +157,7 @@ class Ads: NSObject {
     private func iAdShowInterAd() {
         if iAdInterAd.loaded  && iAdInterAdLoaded {
             print("iAd inter showing")
+            iAdInterAdView.frame = presentingViewController.view.bounds
             presentingViewController.view.addSubview(iAdInterAdView)
             iAdInterAd.presentInView(iAdInterAdView)
             UIViewController.prepareInterstitialAds()
@@ -294,8 +295,6 @@ extension Ads: ADInterstitialAdDelegate {
     
     func interstitialAdDidLoad(interstitialAd: ADInterstitialAd!) {
         print("iAd inter did load")
-        iAdInterAdView = UIView()
-        iAdInterAdView.frame = presentingViewController.view.bounds
         iAdInterAdLoaded = true
     }
     
