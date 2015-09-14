@@ -34,13 +34,46 @@ var adMobBannerAdView = GADBannerView()
 
 This is what is called a shared Banner ad and although not really needed for a spritekit game with 1 view controller this is the correct way to use banner ads in apps with multiple ViewControllers. (https://developer.apple.com/library/ios/technotes/tn2286/_index.html)
 
-- Step 7: In your viewController write the following in ```ViewDidLoad``` as soon as possible. 
+- Step 7: In your viewController write the following right at the top of ```ViewDidLoad``` BEFORE doing any other setUps. 
 ```swift
 Ads.sharedInstance.presentingViewController = self
 ```
+
 This sets the presentingViewController var to your current ViewController and inits Ads.swift. This step is important because your app will crash otherwise when trying to call an Ad. In a spriteKit game this really needs to be called just once since there usually is only 1 viewController.
 
 NOTE: If your app is not a spriteKit game and uses multiple view controllers than you should completly ignore this Step and check "not a SpriteKit game?" after reading the rest.
+
+- Step 8: This Step is only needed if your app supports both portrait and landscape orientation. Still in your ViewController add the following method.
+```swift
+    // MARK: - Device Orientation Changes
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        
+        coordinator.animateAlongsideTransition( { (UIViewControllerTransitionCoordinatorContext) -> Void in
+            
+            Ads.sharedInstance.deviceOrientationChanged()
+            
+            let orientation = UIApplication.sharedApplication().statusBarOrientation
+            switch orientation {
+            case .Portrait:
+                print("Portrait")
+            
+                // Do something
+            
+            default:
+                print("Anything But Portrait")
+            
+                // Do something else
+            }
+            
+            }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
+                print("Rotation completed")
+        })
+        
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+    }
+}
+```
+NOTE: This is a ios 8 method, if your app supports ios 7 or below you maybe want to use something like a  NSNotifcationCenter  UIDeviceOrientationDidChangeNotification Observer
 
 # How to use
 
@@ -49,11 +82,6 @@ There should be no more errors in your project now and the Helper is ready to be
 - iAds are always shown by default unless they are not supported. If you want to manually test Google ads comment out this line in the init method,
 ```swift
 iAdsAreSupported = iAdTimeZoneSupported()
-```
-- If your app only supports 1 device orientation you can also comment out the NSNotifactionObserver in the init method
-
-```swift
- NSNotificationCenter.defaultCenter().addObserver(self, selector: "deviceOrientationChanged", name: UIDeviceOrientationDidChangeNotification, object: nil)
 ```
 
 - To show a supported Ad simply call these anywhere you like in your project.
