@@ -61,11 +61,8 @@ class Ads: NSObject {
         } else {
             adMobInterAd = adMobLoadInterAd()
         }
-        
-        // Orientation Change Observer (comment out if your app only has 1 orientation)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "deviceOrientationChanged", name: UIDeviceOrientationDidChangeNotification, object: nil)
     }
-    
+   
     // MARK: - User Functions
     
     // Load Supported Banner Ad
@@ -73,7 +70,7 @@ class Ads: NSObject {
         Ads.sharedInstance.showSupportedBannerAd()
     }
     
-    func showSupportedBannerAd() {
+    private func showSupportedBannerAd() {
         if iAdsAreSupported {
             iAdLoadBannerAd()
         } else {
@@ -86,7 +83,7 @@ class Ads: NSObject {
         Ads.sharedInstance.showSupportedInterAd()
     }
     
-    func showSupportedInterAd() {
+    private func showSupportedInterAd() {
         if iAdsAreSupported {
             iAdShowInterAd()
         } else {
@@ -99,7 +96,8 @@ class Ads: NSObject {
         Ads.sharedInstance.removeBannerAds()
     }
     
-    func removeBannerAds() {
+    private func removeBannerAds() {
+        print("Removed banner ads")
         appDelegate.iAdBannerAdView.delegate = nil
         appDelegate.iAdBannerAdView.removeFromSuperview()
         
@@ -112,7 +110,8 @@ class Ads: NSObject {
         Ads.sharedInstance.removeAllAds()
     }
     
-    func removeAllAds() {
+    private func removeAllAds() {
+        print("Removed all ads")
         appDelegate.iAdBannerAdView.delegate = nil
         appDelegate.iAdBannerAdView.removeFromSuperview()
         
@@ -126,9 +125,29 @@ class Ads: NSObject {
         if adMobInterAd != nil {
             adMobInterAd.delegate = nil
         }
+    }
+    
+    // Orientation Changed
+    class func deviceOrientationChanged() {
+        Ads.sharedInstance.deviceOrientationChanged()
+    }
+    
+    func deviceOrientationChanged() {
+        print("Device orientation changed, adjusting ads")
         
-        // Remove Device Orientation Change Observer
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        // iAds
+        appDelegate.iAdBannerAdView.frame = presentingViewController.view.bounds
+        appDelegate.iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.iAdBannerAdView.frame.size.height / 2))
+        
+        iAdInterAdView.frame = presentingViewController.view.bounds
+        
+        // AdMob
+        if UIDevice.currentDevice().orientation.isPortrait {
+            appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerPortrait
+        } else {
+            appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerLandscape
+        }
+        appDelegate.adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.adMobBannerAdView.frame.size.height / 2))
     }
     
     // MARK: - Internal Functions
@@ -254,23 +273,6 @@ class Ads: NSObject {
         }
         print("iAds not supported")
         return false
-    }
-    
-    // Orientation Change
-    func deviceOrientationChanged() {
-        print("Device orientation changed")
-        
-        // iAds
-        appDelegate.iAdBannerAdView.frame = presentingViewController.view.bounds
-        appDelegate.iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.iAdBannerAdView.frame.size.height / 2))
-
-        // AdMob
-        if UIDevice.currentDevice().orientation.isPortrait {
-            appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerPortrait
-        } else {
-            appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerLandscape
-        }
-        appDelegate.adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.adMobBannerAdView.frame.size.height / 2))
     }
     
     // Game/App Controls

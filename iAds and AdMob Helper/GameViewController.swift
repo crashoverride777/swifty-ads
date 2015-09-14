@@ -48,6 +48,31 @@ class GameViewController: UIViewController {
             skView.presentScene(scene)
         }
     }
+   
+    // Check for device orientation changes
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        
+        coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) -> Void in
+            
+            Ads.deviceOrientationChanged()
+            
+//            let orientation = UIApplication.sharedApplication().statusBarOrientation
+//            switch orientation {
+//            case .Portrait:
+//                print("Portrait")
+//                // Do something
+//            default:
+//                print("Anything But Portrait")
+//                // Do something else
+//            }
+            
+            }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
+                print("Device rotation completed")
+        })
+        
+        //super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+    }
 
     override func shouldAutorotate() -> Bool {
         return true
