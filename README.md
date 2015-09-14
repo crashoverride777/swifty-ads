@@ -91,7 +91,7 @@ or
 Ads.removeAllAds()
 ```
 
-- To pause or resume tasks in your app or game when ads are opened/closed use these interal methods. These get called automatically so all you do is enter your code.
+- To pause or resume tasks in your app or game when ads are opened/closed use these internal methods. These get called automatically so all you do is enter your code.
 ```swift
 private func pauseTasks() 
 private func resumeTasks()
@@ -133,8 +133,6 @@ Ads.sharedInstance.showSupportedInterAd()
 etc
 ```
 Like I mentioned above I primarly focused on SpriteKit to make it easy to call Ads from your SKScenes without having to use NSNotificationCenter or Delegates to constantly communicate with the viewController. Also this should help keep your viewController clean as mine became a mess after integrating AdMob.
-
-I also made some comments in the relevant spots of the helper file incase you need to pause your game, music etc.
 Please let me know about any bugs or improvements, I am by now means an expert. 
 
 Enjoy
@@ -198,7 +196,7 @@ AdMob banner ads now automatically identify if your app is in potrait or landsca
 
 All banner ads now automatically change orientation and adjust their position if you rotate your device
 
-iAd inter ad close button on iPads inter ads has been adjusted.
+iAd inter ad close button size on iPads has been adjusted.
 
 v1.4.1
 
