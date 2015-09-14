@@ -34,7 +34,7 @@ var adMobBannerAdView = GADBannerView()
 
 This is what is called a shared Banner ad and although not really needed for a spritekit game with 1 view controller this is the correct way to use banner ads in apps with multiple ViewControllers. (https://developer.apple.com/library/ios/technotes/tn2286/_index.html)
 
-- Step 7: In your viewController write the following right at the top of ```ViewDidLoad``` BEFORE doing any other setUps. 
+- Step 7: In your viewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 ```swift
 Ads.sharedInstance.presentingViewController = self
 ```
