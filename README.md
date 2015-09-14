@@ -156,27 +156,9 @@ to
         ...
     }
  ```
- Than go the Ads.swift init method and remove the code that preloads the first InterAd.
  
- Than add these functions
-    
- ```swift
-class func loadFirstSupportedInterAd(viewController: UIViewController) {
-         Ads.sharedInstance.loadFirstSupportedInterAd(viewController)
-    }
-    
-    func loadFirstSupportedInterAd(viewController: UIViewController) {
-        presentingViewController = viewController
-        ...
-    }
-```
+Than show Ads like so
 
-You than simply preload the first interAd yourself in the ViewController like so
-```swift 
-Ads.loadFirstSupportedInterAd(self)
-```
-
-and than show Ads like so
 ```swift
 Ads.showSupportedBannerAd(self)
 or
@@ -184,6 +166,7 @@ Ads.showSupportedInterAd(self)
 ```
 
 # Release Notes
+v1.5 - Clean-Up and small improvements
 
 v1.4 - Clean-Up and small improvements
 
