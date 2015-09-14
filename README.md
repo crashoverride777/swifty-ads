@@ -46,11 +46,15 @@ NOTE: If your app is not a spriteKit game and uses multiple view controllers tha
 
 There should be no more errors in your project now and the Helper is ready to be used. You can blame Google for most of the work here. 
 
-- iAds are always shown by default unless they are not supported. If you want to manually test Google ads comment out the line 
+- iAds are always shown by default unless they are not supported. If you want to manually test Google ads comment out this line in the init method,
 ```swift
 iAdsAreSupported = iAdTimeZoneSupported()
 ```
-in the init method.
+- If your app only supports 1 device orientation you can also comment out the NSNotifactionObserver in the init method
+- 
+```swift
+ NSNotificationCenter.defaultCenter().addObserver(self, selector: "deviceOrientationChanged", name: UIDeviceOrientationDidChangeNotification, object: nil)
+```
 
 - To show a supported Ad simply call these anywhere you like in your project.
 ```swift
@@ -63,6 +67,12 @@ Ads.showSupportedInterAd()
 Ads.removeBannerAds() 
 or
 Ads.removeAllAds()
+```
+
+- To pause or resume tasks in your app or game when ads are opened/closed use these interal methods.
+```swift
+private func pauseTasks() 
+private func resumeTasks()
 ```
 # When you go Live 
 
@@ -160,17 +170,26 @@ Ads.showSupportedInterAd(self)
 ```
 
 # Release Notes
-v1.5 - Clean-Up, adMob ads now automatically choose device orientation, ads now automatically change orientation if you rotate your device, and close button for ipads inter ads has been adjusted.
+v1.5
+Clean-up
+AdMob banner ads now automatically identify if your app is in potrait or landscape
+All banner ads now automatically change orientation and adjust their position if you rotate your device
+iAd inter ad close button on iPads inter ads has been adjusted.
 
-v1.4.1 - Clean-Up and small improvements
+v1.4.1
+Clean-up and small improvements
 
-v1.4 - Clean-Up and small improvements
+v1.4
+Clean-up and small improvements
 
-v1.3 - Upgraded to Swift 2
+v1.3
+Upgraded to Swift 2
 
-v1.2 - Small changes
+v1.2
+Small changes
 
-v1.1 - Sorry for all the initial commits, its my first rep. Helper should be good to go now.
+v1.1
+Sorry for all the initial commits, its my first rep. Helper should be good to go now.
 
 v1.0
 
