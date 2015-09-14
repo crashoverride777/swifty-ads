@@ -54,7 +54,6 @@ class GameViewController: UIViewController {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
         
         coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) -> Void in
-            
             Ads.deviceOrientationChanged()
             
 //            let orientation = UIApplication.sharedApplication().statusBarOrientation
@@ -70,8 +69,6 @@ class GameViewController: UIViewController {
             }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
                 print("Device rotation completed")
         })
-        
-        //super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
     }
 
     override func shouldAutorotate() -> Bool {

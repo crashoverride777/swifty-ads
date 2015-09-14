@@ -132,7 +132,7 @@ class Ads: NSObject {
         Ads.sharedInstance.deviceOrientationChanged()
     }
     
-    func deviceOrientationChanged() {
+    private func deviceOrientationChanged() {
         print("Device orientation changed, adjusting ads")
         
         // iAds
