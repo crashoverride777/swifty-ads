@@ -193,23 +193,31 @@ Ads.showSupportedInterAd(self)
 
 # Release Notes
 v1.5
+
 AdMob banner ads now automatically identify if your app is in potrait or landscape
+
 All banner ads now automatically change orientation and adjust their position if you rotate your device
+
 iAd inter ad close button on iPads inter ads has been adjusted.
 
 v1.4.1
+
 Clean-up and small improvements
 
 v1.4
+
 Clean-up and small improvements
 
 v1.3
+
 Upgraded to Swift 2
 
 v1.2
+
 Small changes
 
 v1.1
+
 Sorry for all the initial commits, its my first rep. Helper should be good to go now.
 
 v1.0
