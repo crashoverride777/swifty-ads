@@ -38,7 +38,6 @@ class Ads: NSObject {
     private var iAdInterAdView = UIView()
     private var iAdInterAdCloseButton = UIButton(type: UIButtonType.System)
     
-    private var adMobBannerType = kGADAdSizeSmartBannerPortrait //kGADAdSizeSmartBannerLandscape
     private var adMobInterAd: GADInterstitial!
     
     // adMob Unit ID
@@ -62,6 +61,9 @@ class Ads: NSObject {
         } else {
             adMobInterAd = adMobLoadInterAd()
         }
+        
+        // Orientation Change Observer (comment out if your app only has 1 orientation)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "deviceOrientationChanged", name: UIDeviceOrientationDidChangeNotification, object: nil)
     }
     
     // MARK: - User Functions
@@ -124,6 +126,9 @@ class Ads: NSObject {
         if adMobInterAd != nil {
             adMobInterAd.delegate = nil
         }
+        
+        // Remove Device Orientation Change Observer
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     // MARK: - Internal Functions
@@ -131,9 +136,9 @@ class Ads: NSObject {
     // iAd Banner
     private func iAdLoadBannerAd() {
         print("iAd banner ad loading...")
-        appDelegate.iAdBannerAdView = ADBannerView(frame: presentingViewController.view.bounds)
+        appDelegate.iAdBannerAdView.frame = presentingViewController.view.bounds
+        //appDelegate.iAdBannerAdView = ADBannerView(frame: presentingViewController.view.bounds)
         appDelegate.iAdBannerAdView.delegate = self
-        appDelegate.iAdBannerAdView.sizeToFit()
         appDelegate.iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.iAdBannerAdView.frame.size.height / 2))
     }
     
@@ -143,7 +148,12 @@ class Ads: NSObject {
         iAdInterAd = ADInterstitialAd()
         iAdInterAd.delegate = self
         
-        iAdInterAdCloseButton.frame = CGRectMake(13, 13, 22, 22)
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            iAdInterAdCloseButton.frame = CGRectMake(18, 18, 27, 27)
+        } else {
+            iAdInterAdCloseButton.frame = CGRectMake(13, 13, 22, 22)
+        }
+        
         iAdInterAdCloseButton.layer.cornerRadius = 12
         iAdInterAdCloseButton.setTitle("X", forState: .Normal)
         iAdInterAdCloseButton.setTitleColor(UIColor.grayColor(), forState: .Normal)
@@ -163,7 +173,7 @@ class Ads: NSObject {
             UIViewController.prepareInterstitialAds()
             iAdInterAdView.addSubview(iAdInterAdCloseButton)
             
-            // pause game, music etc
+            pauseTasks()
         } else {
             print("iAd inter cannot be shown, reloading...")
             iAdLoadInterAd()
@@ -176,20 +186,26 @@ class Ads: NSObject {
         iAdInterAd.delegate = nil
         
         iAdLoadInterAd()
-        
-        // resume game, music etc
+        resumeTasks()
     }
     
     // AdMob Banner
     private func adMobLoadBannerAd() {
         print("AdMob banner loading...")
         print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
-        appDelegate.adMobBannerAdView = GADBannerView(adSize: adMobBannerType)
+        
+        if UIDevice.currentDevice().orientation.isPortrait {
+            appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerPortrait
+            //appDelegate.adMobBannerAdView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
+        } else {
+            appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerLandscape
+            //appDelegate.adMobBannerAdView = GADBannerView(adSize: kGADAdSizeSmartBannerLandscape)
+        }
+        
         appDelegate.adMobBannerAdView.adUnitID = ID.bannerTest //ID.bannerLive
         appDelegate.adMobBannerAdView.delegate = self
         appDelegate.adMobBannerAdView.rootViewController = presentingViewController
         appDelegate.adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.adMobBannerAdView.frame.size.height / 2))
-        
         
         let request = GADRequest()
         
@@ -222,8 +238,7 @@ class Ads: NSObject {
         print("AdMob inter showing")
         if adMobInterAd.isReady {
             adMobInterAd.presentFromRootViewController(presentingViewController)
-            
-            // pause game, music etc.
+            pauseTasks()
         } else {
             print("AdMob inter cannot be shown, reloading...")
             adMobInterAd = adMobLoadInterAd()
@@ -242,6 +257,32 @@ class Ads: NSObject {
         }
         print("iAds not supported")
         return false
+    }
+    
+    // Orientation Change
+    func deviceOrientationChanged() {
+        print("Device orientation change")
+        
+        // iAds
+        appDelegate.iAdBannerAdView.frame = presentingViewController.view.bounds
+        appDelegate.iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.iAdBannerAdView.frame.size.height / 2))
+
+        // AdMob
+        if UIDevice.currentDevice().orientation.isPortrait {
+            appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerPortrait
+        } else {
+            appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerLandscape
+        }
+        appDelegate.adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.adMobBannerAdView.frame.size.height / 2))
+    }
+    
+    // Game/App Controls
+    private func pauseTasks() {
+        // pause game, music etc here
+    }
+    
+    private func resumeTasks() {
+        // resume game, music etc here
     }
 }
 
@@ -264,16 +305,14 @@ extension Ads: ADBannerViewDelegate {
     
     func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
         print("iAd banner clicked")
-        
-        // pause game, music etc
+        pauseTasks()
         
         return true
     }
     
     func bannerViewActionDidFinish(banner: ADBannerView!) {
         print("iAd banner closed")
-        
-        // resume game, music etc
+        resumeTasks()
     }
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
@@ -325,14 +364,12 @@ extension Ads: GADBannerViewDelegate {
     
     func adViewWillPresentScreen(bannerView: GADBannerView!) {
         print("AdMob banner clicked")
-        
-        // pause game, music etc
+        pauseTasks()
     }
     
     func adViewDidDismissScreen(bannerView: GADBannerView!) {
         print("AdMob banner closed")
-        
-        // resume game, music etc
+        resumeTasks()
     }
     
     func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
@@ -359,8 +396,7 @@ extension Ads: GADInterstitialDelegate {
     
     func interstitialWillPresentScreen(ad: GADInterstitial!) {
         print("AdMob inter will present")
-        
-        // pause game, music etc
+        pauseTasks()
     }
     
     func interstitialWillDismissScreen(ad: GADInterstitial!) {
@@ -370,14 +406,12 @@ extension Ads: GADInterstitialDelegate {
     func interstitialDidDismissScreen(ad: GADInterstitial!) {
         print("AdMob inter closed")
         adMobInterAd = adMobLoadInterAd()
-        
-        // resume game, music etc
+        resumeTasks()
     }
     
     func interstitialWillLeaveApplication(ad: GADInterstitial!) {
         print("AdMob inter about to leave app")
-        
-        // pause game, music etc
+        pauseTasks()
     }
     
     func interstitial(ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
