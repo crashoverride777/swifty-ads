@@ -141,7 +141,6 @@ class Ads: NSObject {
     // iAd Inter
     private func iAdLoadInterAd() {
         print("iAd inter ad loading...")
-        iAdInterAd = ADInterstitialAd()
         iAdInterAd.delegate = self
         
         iAdInterAdCloseButton.frame = CGRectMake(13, 13, 22, 22)
