@@ -166,7 +166,7 @@ Ads.showSupportedInterAd(self)
 ```
 
 # Release Notes
-v1.5 - Clean-Up and small improvements
+v1.4.1 - Clean-Up and small improvements
 
 v1.4 - Clean-Up and small improvements
 
