@@ -81,20 +81,20 @@ iAdsAreSupported = iAdTimeZoneSupported()
 - To show a supported Ad simply call these anywhere you like in your project.
 ```swift
 Ads.showSupportedBannerAd() 
-or
 Ads.showSupportedInterAd()
 ```
 - To remove Ads, for example during gameplay or for in app purchases simply call 
 ```swift
 Ads.removeBannerAds() 
-or
 Ads.removeAllAds()
 ```
 
 - To pause or resume tasks in your app or game when ads are opened/closed use these internal methods. These get called automatically so all you do is enter your code.
 ```swift
-private func pauseTasks() 
-private func resumeTasks()
+private func pauseTasks() {
+}
+private func resumeTasks() {
+}
 ```
 # When you go Live 
 
