@@ -54,6 +54,7 @@ class GameViewController: UIViewController {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
         
         coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) -> Void in
+            
             Ads.deviceOrientationChanged()
             
 //            let orientation = UIApplication.sharedApplication().statusBarOrientation
