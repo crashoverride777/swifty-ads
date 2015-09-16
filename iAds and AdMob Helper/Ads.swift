@@ -142,10 +142,10 @@ class Ads: NSObject {
         iAdInterAdView.frame = presentingViewController.view.bounds
         
         // AdMob
-        if UIDevice.currentDevice().orientation.isPortrait {
-            appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerPortrait
-        } else {
+        if UIDevice.currentDevice().orientation.isLandscape {
             appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerLandscape
+        } else {
+            appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerPortrait
         }
         
         appDelegate.adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.adMobBannerAdView.frame.size.height / 2))
@@ -213,10 +213,10 @@ class Ads: NSObject {
         print("AdMob banner loading...")
         print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
         
-        if UIDevice.currentDevice().orientation.isPortrait {
-            appDelegate.adMobBannerAdView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
+        if UIDevice.currentDevice().orientation.isLandscape {
+            appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerLandscape
         } else {
-            appDelegate.adMobBannerAdView = GADBannerView(adSize: kGADAdSizeSmartBannerLandscape)
+            appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerPortrait
         }
         
         appDelegate.adMobBannerAdView.adUnitID = ID.bannerTest //ID.bannerLive
