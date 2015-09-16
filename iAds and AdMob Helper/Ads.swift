@@ -163,7 +163,7 @@ class Ads: NSObject {
     // iAd Inter
     private func iAdLoadInterAd() {
         print("iAd inter ad loading...")
-        iAdInterAd = ADInterstitialAd()
+        iAdInterAd = ADInterstitialAd()  // always create new instance with inter ads
         iAdInterAd.delegate = self
         
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
@@ -184,7 +184,7 @@ class Ads: NSObject {
     private func iAdShowInterAd() {
         if iAdInterAd.loaded {
             print("iAd inter showing")
-            iAdInterAdView = UIView() // always create new instance with inter ads
+            //iAdInterAdView = UIView()
             iAdInterAdView.frame = presentingViewController.view.bounds
             presentingViewController.view.addSubview(iAdInterAdView)
             iAdInterAd.presentInView(iAdInterAdView)
