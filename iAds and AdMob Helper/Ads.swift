@@ -35,7 +35,6 @@ class Ads: NSObject {
     var presentingViewController: UIViewController!
     
     private var iAdsAreSupported = false
-    
     private var iAdInterAd = ADInterstitialAd()
     private var iAdInterAdView = UIView()
     private var iAdInterAdCloseButton = UIButton(type: UIButtonType.System)
@@ -220,11 +219,12 @@ class Ads: NSObject {
     }
     
     func iAdPressedInterAdCloseButton(sender: UIButton) {
+        print("iAd inter closed")
+        iAdInterAd.delegate = nil
         iAdInterAdCloseButton.removeFromSuperview()
         iAdInterAdView.removeFromSuperview()
-        iAdInterAd.delegate = nil
-        
         iAdLoadInterAd()
+        
         resumeTasks()
     }
     
@@ -353,9 +353,9 @@ extension Ads: ADBannerViewDelegate {
         UIView.setAnimationDuration(1.5)
         appDelegate.iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.iAdBannerAdView.frame.size.height / 2))
         appDelegate.iAdBannerAdView.hidden = true
-        appDelegate.iAdBannerAdView.delegate = nil
         UIView.commitAnimations()
         
+        appDelegate.iAdBannerAdView.delegate = nil // stop iAd banner from reloading
         adMobLoadBannerAd() // try AdMob
     }
 }
@@ -372,12 +372,10 @@ extension Ads: ADInterstitialAdDelegate {
     }
     
     func interstitialAd(interstitialAd: ADInterstitialAd!, didFailWithError error: NSError!) {
-        print("iAd inter error")
-        print(error.localizedDescription)
+        print("iAd inter error \(error)")
+        iAdInterAd.delegate = nil
         iAdInterAdCloseButton.removeFromSuperview()
         iAdInterAdView.removeFromSuperview()
-        iAdInterAd.delegate = nil
-        
         iAdLoadInterAd()
     }
 }
