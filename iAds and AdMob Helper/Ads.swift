@@ -283,7 +283,12 @@ class Ads: NSObject {
         } else {
             print("AdMob inter cannot be shown, reloading...")
             adMobInterAd = adMobLoadInterAd()
-            // Do not try iAd again like it does for banner ads. They might might get stuck in a loop if there are connection problems and the ad than might show at the wrong moment which is obviously bad when they are full screen.
+            /*
+            Do not try iAd again like it does for banner ads.
+            They might might get stuck in a loop if there are connection problems
+            and the ad than might show at an unexpected moment which is obviously bad
+            because they are full screen
+            */
         }
     }
     
