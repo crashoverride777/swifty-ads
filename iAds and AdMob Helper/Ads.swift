@@ -21,6 +21,8 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
+//    v1.6
+
 
 import iAd
 import GoogleMobileAds
@@ -41,7 +43,7 @@ class Ads: NSObject {
     private var adMobInterAd: GADInterstitial!
     
     // adMob Unit ID
-    private struct ID {
+    private struct AdUnitID {
         static let bannerLive = "Your real banner adUnit ID from your google adMob account"
         static let interLive = "Your real inter adUnit ID from your google adMob account"
         
@@ -236,14 +238,16 @@ class Ads: NSObject {
             appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerPortrait
         }
         
-        appDelegate.adMobBannerAdView.adUnitID = ID.bannerTest //ID.bannerLive
+        appDelegate.adMobBannerAdView.adUnitID = AdUnitID.bannerTest //AdUnitID.bannerLive
         appDelegate.adMobBannerAdView.delegate = self
         appDelegate.adMobBannerAdView.rootViewController = presentingViewController
         appDelegate.adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.adMobBannerAdView.frame.size.height / 2))
         
         let request = GADRequest()
         
-        //#if DEBUG // make sure to set the D-DEBUG flag in your project othewise this wont work
+        //#if DEBUG 
+        // make sure to set the D-DEBUG flag in your project othewise this wont work.
+        // otherwise comment out this line
         request.testDevices = [ kGADSimulatorID ];
         //#endif
         
@@ -254,12 +258,14 @@ class Ads: NSObject {
     private func adMobLoadInterAd() -> GADInterstitial {
         print("AdMob inter loading...")
         
-        let adMobInterAd = GADInterstitial(adUnitID: ID.interTest) // ID.interLive
+        let adMobInterAd = GADInterstitial(adUnitID: AdUnitID.interTest) // AdUnitID.interLive
         adMobInterAd.delegate = self
         
         let request = GADRequest()
         
-        //#if DEBUG // make sure to set the D-DEBUG flag in your project othewise this wont work.
+        //#if DEBUG 
+        // make sure to set the D-DEBUG flag in your project othewise this wont work.
+        // otherwise comment out this line
         request.testDevices = [ kGADSimulatorID ];
         //#endif
         
