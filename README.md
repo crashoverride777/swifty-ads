@@ -144,21 +144,13 @@ If you have an app that mainly uses viewControllers to show its UI than it might
 ```swift 
 Ads.sharedInstance.presentingViewController = self
 ```
-especially repeatedly when changing viewControllers. This might even cause issue with shared banner ads, although I have not tested that myself. For those apps you should change these functions
+especially repeatedly when changing viewControllers. This might even cause issue with shared banner ads, although I have not tested that myself. For those apps you should change the user methods such as this
 ```swift 
   class func showSupportedBannerAd() {
         Ads.sharedInstance.showSupportedBannerAd()
     }
     
     private func showSupportedBannerAd() {
-        ...
-    }
-    
-     class func showSupportedInterAd() {
-         Ads.sharedInstance.showSupportedInterAd()
-    }
-    
-    private func showSupportedInterAd() {
         ...
     }
 ```
@@ -172,23 +164,13 @@ to
         presentingViewController = viewController
         ...
     }
-    
-  class func showSupportedInterAd(viewController: UIViewController) {
-         Ads.sharedInstance.showSupportedInterAd(viewController)
-    }
-    
-    private func showSupportedInterAd(viewController: UIViewController) {
-        presentingViewController = viewController
-        ...
-    }
  ```
  
-Than show Ads like so
+Than call the methods like so
 
 ```swift
 Ads.showSupportedBannerAd(self)
-or
-Ads.showSupportedInterAd(self)
+etc
 ```
 
 # Release Notes
