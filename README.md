@@ -39,9 +39,9 @@ This is what is called a shared Banner ad and although not really needed for a s
 Ads.sharedInstance.presentingViewController = self
 ```
 
-This sets the presentingViewController var to your current ViewController and inits Ads.swift. This step is important because your app will crash otherwise when trying to call an Ad. In a spriteKit game this really needs to be called just once since there usually is only 1 viewController.
+This sets the presentingViewController property to your current ViewController and inits Ads.swift. This step is important because your app will crash otherwise when trying to call an Ad. In a spriteKit game this really needs to be called just once since there usually is only 1 viewController.
 
-NOTE: If your app is not a spriteKit game and uses multiple view controllers than you should completly ignore this Step and check "not a SpriteKit game?" after reading the rest.
+NOTE: If your app is not a spriteKit game and uses multiple view controllers than you should ignore this Step and check "not a SpriteKit game?" after reading the rest.
 
 - Step 8: This Step is only needed if your app supports both portrait and landscape orientation. Still in your ViewController add the following method.
 ```swift
@@ -67,7 +67,7 @@ override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator c
         })
     }
 ```
-NOTE: This is a ios 8 method, if your app supports ios 7 or below you maybe want to use something like a  NSNotifcationCenter  UIDeviceOrientationDidChangeNotification Observer
+NOTE: This is a ios 8 method, if your app supports ios 7 or below you maybe want to use something like a  NSNotifcationCenter UIDeviceOrientationDidChangeNotification Observer
 
 # How to use
 
@@ -81,7 +81,8 @@ iAdsAreSupported = iAdTimeZoneSupported()
 - To show a supported Ad simply call these anywhere you like in your project.
 ```swift
 Ads.showSupportedBannerAd() 
-Ads.showSupportedInterAd()
+Ads.showSupportedInterAd() // shows inter ad every time
+Ads.showSupportedInterAdRandomly() // 25% chance of showing inter ads, can always be tweaked.
 ```
 - To remove Ads, for example during gameplay or for in app purchases simply call 
 ```swift
@@ -125,11 +126,12 @@ I wrote some comments at those points to avoid this hassle in the future if you 
 
 # Final Info
 
-The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and an inter ad, if it has loaded, when touching the screen.
+The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and a inter ad randomly when touching the screen.
 To make it easier to call these methods I made class functions in Ads.swift. If you would like to cut down the helper file a bit you can delete all the class functions. Than remove the word "private" from the UserFunctions and call the methods like so
 ```swift
 Ads.sharedInstance.showSupportedBannerAd()
 Ads.sharedInstance.showSupportedInterAd()
+Ads.sharedInstance.showSupportedInterAdRandomly()
 etc
 ```
 Like I mentioned above I primarly focused on SpriteKit to make it easy to call Ads from your SKScenes without having to use NSNotificationCenter or Delegates to constantly communicate with the viewController. Also this should help keep your viewController clean as mine became a mess after integrating AdMob.
@@ -190,6 +192,10 @@ Ads.showSupportedInterAd(self)
 ```
 
 # Release Notes
+v1.6
+
+Added new method to showInterAds randomly
+
 v1.5
 
 AdMob banner ads now automatically identify if your app is in potrait or landscape
