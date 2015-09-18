@@ -57,12 +57,11 @@ class Ads: NSObject {
         print("Ads helper init")
         iAdsAreSupported = iAdTimeZoneSupported()
         
-        // Preload first inter ad
+        // Preload inter ads
         if iAdsAreSupported {
             iAdLoadInterAd()
-        } else {
-            adMobInterAd = adMobLoadInterAd()
         }
+        adMobInterAd = adMobLoadInterAd() // always load AdMob
     }
    
     // MARK: - User Functions
@@ -213,8 +212,10 @@ class Ads: NSObject {
             
             pauseTasks()
         } else {
-            print("iAd inter cannot be shown, reloading...")
+            print("iAd inter cannot be shown, reloading and trying adMob...")
             iAdLoadInterAd()
+            adMobShowInterAd() // try AdMob
+            
         }
     }
     
@@ -282,6 +283,7 @@ class Ads: NSObject {
         } else {
             print("AdMob inter cannot be shown, reloading...")
             adMobInterAd = adMobLoadInterAd()
+            // Do not try iAd again like it does for banner ads. They might might get stuck in a loop if there are connection problems and the ad than might show at the wrong moment which is obviously bad when they are full screen.
         }
     }
     
@@ -349,7 +351,7 @@ extension Ads: ADBannerViewDelegate {
         appDelegate.iAdBannerAdView.delegate = nil
         UIView.commitAnimations()
         
-        adMobLoadBannerAd()
+        adMobLoadBannerAd() // try AdMob
     }
 }
 
@@ -405,6 +407,7 @@ extension Ads: GADBannerViewDelegate {
         appDelegate.adMobBannerAdView.hidden = true
         UIView.commitAnimations()
         
+        // Try iAd again if supported.
         if iAdsAreSupported {
             appDelegate.adMobBannerAdView.delegate = nil
             appDelegate.iAdBannerAdView.delegate = self
