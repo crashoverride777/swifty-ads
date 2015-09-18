@@ -75,7 +75,7 @@ class GameViewController: UIViewController {
     override func shouldAutorotate() -> Bool {
         return true
     }
-
+    
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
             return UIInterfaceOrientationMask.AllButUpsideDown

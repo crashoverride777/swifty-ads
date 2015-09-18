@@ -91,6 +91,23 @@ class Ads: NSObject {
         }
     }
     
+    // Show Supported Inter Ad Randomly
+    class func showSupportedInterAdRandomly() {
+        Ads.sharedInstance.showSupportedInterAdRandomly()
+    }
+    
+    private func showSupportedInterAdRandomly() {
+        let randomInterAd = Int(arc4random() % 4)
+        print("randomInterAd = \(randomInterAd)")
+        if randomInterAd == 1 {
+            if iAdsAreSupported {
+                iAdShowInterAd()
+            } else {
+                adMobShowInterAd()
+            }
+        }
+    }
+    
     // Remove Banner Ads
     class func removeBannerAds() {
         Ads.sharedInstance.removeBannerAds()
@@ -142,7 +159,7 @@ class Ads: NSObject {
         iAdInterAdView.frame = presentingViewController.view.bounds
         
         // AdMob
-        if UIDevice.currentDevice().orientation.isLandscape {
+        if UIApplication.sharedApplication().statusBarOrientation.isLandscape {
             appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerLandscape
         } else {
             appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerPortrait
@@ -213,7 +230,7 @@ class Ads: NSObject {
         print("AdMob banner loading...")
         print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
         
-        if UIDevice.currentDevice().orientation.isLandscape {
+        if UIApplication.sharedApplication().statusBarOrientation.isLandscape {
             appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerLandscape
         } else {
             appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerPortrait

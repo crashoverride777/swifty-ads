@@ -40,7 +40,7 @@ class GameScene: SKScene {
             self.addChild(sprite)
             
             // Show inter ad
-            Ads.showSupportedInterAd()
+            Ads.showSupportedInterAdRandomly()
         }
     }
    
