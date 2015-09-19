@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v1.6
+//    v1.7
 
 
 import iAd
@@ -194,7 +194,7 @@ class Ads: NSObject {
         }
     }
     
-    func iAdPressedInterAdCloseButton(sender: UIButton) {
+    func iAdPressedInterAdCloseButton(sender: UIButton) { // dont make private as its called witha selector 
         print("iAd inter closed")
         iAdInterAd.delegate = nil
         iAdInterAdCloseButton.removeFromSuperview()
