@@ -110,14 +110,14 @@ So before your app goes live you will have to do the following
 
 - Step 2: Sign up for a Google AdMob account and create your ad IDs, 1 for banner and 1 for inter Ads. (https://support.google.com/admob/answer/2784575?hl=en-GB)
 
-- Step 3: In Ads.swift in the struct called ID enter your real Ad IDs for both "bannerLive" and "interLive".
+- Step 3: In Ads.swift in the struct called AdUnitId enter your real Ad IDs for both "bannerLive" and "interLive".
 
 - Step 4: In Ads.swift in
 ```swift 
 func adMobLoadBannerAd()
 func adMobLoadInterAd()
 ``` 
-change the ad ID reference from "ID.bannerTest/ID.interTest" to "ID.bannerLive/ID.interLive" and comment out the line 
+change the ad ID reference from "AdUnitID.bannerTest/AdUnitID.interTest" to "AdUnitID.bannerLive/AdUnitID.interLive" and comment out the line 
 ```swift 
 request.testDevices = [ kGADSimulatorID"
 ``` 
@@ -128,13 +128,6 @@ I wrote some comments at those points to avoid this hassle in the future if you 
 # Final Info
 
 The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and a inter ad randomly when touching the screen.
-To make it easier to call these methods I made class functions in Ads.swift. If you would like to cut down the helper file a bit you can delete all the class functions. Than remove the word "private" from the UserFunctions and call the methods like so
-```swift
-Ads.sharedInstance.showSupportedBannerAd()
-Ads.sharedInstance.showSupportedInterAd()
-Ads.sharedInstance.showSupportedInterAdRandomly()
-etc
-```
 Like I mentioned above I primarly focused on SpriteKit to make it easy to call Ads from your SKScenes without having to use NSNotificationCenter or Delegates to constantly communicate with the viewController. Also this should help keep your viewController clean as mine became a mess after integrating AdMob.
 Please let me know about any bugs or improvements, I am by now means an expert. 
 
@@ -175,6 +168,12 @@ etc
 ```
 
 # Release Notes
+v1.7
+
+Deleted the class methods as it just seemed unnecessary bloat. If you prefer to still use them just change it. Call user methods like so now
+    Ads.sharedInstance.showSupportedBannerAd()
+    etc
+
 v1.6
 
 Added new method to showInterAds randomly
