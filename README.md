@@ -5,6 +5,7 @@ I decided to go the Singleton way but please feel free to change that if you don
 
 The cool thing is that iAds will be used when they are supported otherwise AdMob will be used. 
 Whats really cool is that if iAd banners are having an error it will automatically load an AdMob banner. In case that AdMob banner is than having an error it will load an iAd banner again. 
+
 If an iAd Inter ad fails it will try an AdMob Inter ad, incase that adMob inter ad also fails it will however not try iAd again because you obviously dont want a full screen ad show at the wrong time.
 
 # Set-Up
@@ -81,9 +82,9 @@ iAdsAreSupported = iAdTimeZoneSupported()
 
 - To show a supported Ad simply call these anywhere you like in your project.
 ```swift
-Ads.sharedInstance.showSupportedBannerAd() 
-Ads.sharedInstance.showSupportedInterAd() // shows inter ad every time
-Ads.sharedInstance.showSupportedInterAdRandomly() // 25% chance of showing inter ads, can always be tweaked.
+Ads.sharedInstance.showBannerAd() 
+Ads.sharedInstance.showInterAd() // shows inter ad every time
+Ads.sharedInstance.showInterAdRandomly() // 25% chance of showing inter ads, can always be tweaked.
 ```
 - To remove Ads, for example during gameplay or for in app purchases simply call 
 ```swift
@@ -145,13 +146,13 @@ Ads.sharedInstance.presentingViewController = self
 ```
 especially repeatedly when changing viewControllers. This might even cause issue with shared banner ads, although I have not tested that myself. For those apps you should change all the user methods such as this
 ```swift 
-  func showSupportedBannerAd() {
+  func showBannerAd() {
         ...
     }
 ```
 to
 ```swift 
-  func showSupportedBannerAd(viewController: UIViewController) {
+  func showBannerAd(viewController: UIViewController) {
         presentingViewController = viewController
         ...
     }
@@ -160,11 +161,16 @@ to
 Than call the methods like so
 
 ```swift
-Ads.sharedInstance.showSupportedBannerAd(self)
+Ads.sharedInstance.showBannerAd(self)
 etc
 ```
 
 # Release Notes
+
+v1.7.1
+
+Clean-up
+
 v1.7
 
 Deleted the class methods as it just seemed unnecessary bloat. If you prefer to still use them just change it. Call user methods like so now
