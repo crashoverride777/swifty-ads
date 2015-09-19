@@ -110,14 +110,19 @@ So before your app goes live you will have to do the following
 
 - Step 2: Sign up for a Google AdMob account and create your ad IDs, 1 for banner and 1 for inter Ads. (https://support.google.com/admob/answer/2784575?hl=en-GB)
 
-- Step 3: In Ads.swift in the struct called AdUnitId enter your real Ad IDs for both "bannerLive" and "interLive".
+- Step 3: In Ads.swift in the struct called AdUnitId enter your real Ad IDs for both banner and inter ads.
 
-- Step 4: In Ads.swift in
+- Step 4: In Ads.swift change the adUnit IDs to LIVE, so the properties look like this
+```swift 
+private var adMobBannerAdID = AdUnitID.Banner.live
+private var adMobInterAdID = AdUnitID.Inter.live
+``` 
+Than go to both these methods  
 ```swift 
 func adMobLoadBannerAd()
 func adMobLoadInterAd()
-``` 
-change the ad ID reference from "AdUnitID.bannerTest/AdUnitID.interTest" to "AdUnitID.bannerLive/AdUnitID.interLive" and comment out the line 
+```
+ and comment out the line 
 ```swift 
 request.testDevices = [ kGADSimulatorID"
 ``` 
