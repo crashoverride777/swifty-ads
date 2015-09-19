@@ -51,7 +51,7 @@ override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator c
         
         coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) -> Void in
             
-            Ads.deviceOrientationChanged()
+            Ads.sharedInstance.deviceOrientationChanged()
             
             //let orientation = UIApplication.sharedApplication().statusBarOrientation
             //switch orientation {
@@ -81,14 +81,14 @@ iAdsAreSupported = iAdTimeZoneSupported()
 
 - To show a supported Ad simply call these anywhere you like in your project.
 ```swift
-Ads.showSupportedBannerAd() 
-Ads.showSupportedInterAd() // shows inter ad every time
-Ads.showSupportedInterAdRandomly() // 25% chance of showing inter ads, can always be tweaked.
+Ads.sharedInstance.showSupportedBannerAd() 
+Ads.sharedInstance.showSupportedInterAd() // shows inter ad every time
+Ads.sharedInstance.showSupportedInterAdRandomly() // 25% chance of showing inter ads, can always be tweaked.
 ```
 - To remove Ads, for example during gameplay or for in app purchases simply call 
 ```swift
-Ads.removeBannerAds() 
-Ads.removeAllAds()
+Ads.sharedInstance.removeBannerAds() 
+Ads.sharedInstance.removeAllAds()
 ```
 
 - To pause or resume tasks in your app or game when ads are opened/closed use these internal methods. These get called automatically so all you do is enter your code.
@@ -138,23 +138,15 @@ If you have an app that mainly uses viewControllers to show its UI than it might
 ```swift 
 Ads.sharedInstance.presentingViewController = self
 ```
-especially repeatedly when changing viewControllers. This might even cause issue with shared banner ads, although I have not tested that myself. For those apps you should change the user methods such as this
+especially repeatedly when changing viewControllers. This might even cause issue with shared banner ads, although I have not tested that myself. For those apps you should change all the user methods such as this
 ```swift 
-  class func showSupportedBannerAd() {
-        Ads.sharedInstance.showSupportedBannerAd()
-    }
-    
-    private func showSupportedBannerAd() {
+  func showSupportedBannerAd() {
         ...
     }
 ```
 to
 ```swift 
-  class func showSupportedBannerAd(viewController: UIViewController) {
-         Ads.sharedInstance.showSupportedBannerAd(viewController)
-    }
-    
-    private func showSupportedBannerAd(viewController: UIViewController) {
+  func showSupportedBannerAd(viewController: UIViewController) {
         presentingViewController = viewController
         ...
     }
@@ -163,7 +155,7 @@ to
 Than call the methods like so
 
 ```swift
-Ads.showSupportedBannerAd(self)
+Ads.sharedInstance.showSupportedBannerAd(self)
 etc
 ```
 
