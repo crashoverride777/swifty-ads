@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v1.7
+//    v1.7.1
 
 
 import iAd
@@ -39,7 +39,7 @@ class Ads: NSObject {
     private var iAdInterAdView = UIView()
     private var iAdInterAdCloseButton = UIButton(type: UIButtonType.System)
     
-    private var adMobInterAd: GADInterstitial!
+    private var adMobInterAd: GADInterstitial?
     
     private var adMobBannerAdID = AdUnitID.Banner.test // change "test" to "live" when releasing
     private var adMobInterAdID = AdUnitID.Inter.test  // change "test" to "live" when releasing
@@ -70,8 +70,8 @@ class Ads: NSObject {
    
     // MARK: - User Functions
     
-    // Load Supported Banner Ad
-    func showSupportedBannerAd() {
+    // Show Banner Ad
+    func showBannerAd() {
         if iAdsAreSupported {
             iAdLoadBannerAd()
         } else {
@@ -79,8 +79,8 @@ class Ads: NSObject {
         }
     }
     
-    // Show Supported Inter Ad
-    func showSupportedInterAd() {
+    // Show Inter Ad
+    func showInterAd() {
         if iAdsAreSupported {
             iAdShowInterAd()
         } else {
@@ -88,8 +88,8 @@ class Ads: NSObject {
         }
     }
     
-    // Show Supported Inter Ad Randomly
-    func showSupportedInterAdRandomly() {
+    // Show Inter Ad Randomly
+    func showInterAdRandomly() {
         let randomInterAd = Int(arc4random() % 4)
         print("randomInterAd = \(randomInterAd)")
         if randomInterAd == 1 {
@@ -125,7 +125,7 @@ class Ads: NSObject {
         iAdInterAdView.removeFromSuperview()
         
         if adMobInterAd != nil {
-            adMobInterAd.delegate = nil
+            adMobInterAd!.delegate = nil
         }
     }
     
@@ -192,21 +192,21 @@ class Ads: NSObject {
             
             //pauseTasks() // not really needed for inter as you tend to show them when not playing.
         } else {
-            print("iAd inter cannot be shown, reloading and trying adMob...")
+            print("iAd inter not ready, reloading and trying adMob...")
             iAdLoadInterAd()
             adMobShowInterAd() // try AdMob
             
         }
     }
     
-    func iAdPressedInterAdCloseButton(sender: UIButton) { // dont make private as its called witha selector 
+    func iAdPressedInterAdCloseButton(sender: UIButton) { // dont make private as its called with a selector
         print("iAd inter closed")
         iAdInterAd.delegate = nil
         iAdInterAdCloseButton.removeFromSuperview()
         iAdInterAdView.removeFromSuperview()
         iAdLoadInterAd()
         
-        //resumeTasks() // not really needed for inter as you tend to show them when not playing.
+        //resumeTasks() // not really needed for inter as you tend to not show them during gameplay
     }
     
     // AdMob Banner
@@ -229,7 +229,7 @@ class Ads: NSObject {
         
         #if DEBUG
         // make sure to set the D-DEBUG flag in your project othewise this wont work.
-        // otherwise comment out this line
+        // otherwise comment out line below
         request.testDevices = [ kGADSimulatorID ];
         #endif
         
@@ -247,7 +247,7 @@ class Ads: NSObject {
         
         #if DEBUG
         // make sure to set the D-DEBUG flag in your project or this wont work.
-        // otherwise comment out this line
+        // otherwise comment out line below
         request.testDevices = [ kGADSimulatorID ];
         #endif
         
@@ -258,17 +258,23 @@ class Ads: NSObject {
     
     private func adMobShowInterAd() {
         print("AdMob inter showing")
-        if adMobInterAd.isReady {
-            adMobInterAd.presentFromRootViewController(presentingViewController)
-            // pauseTasks() // not really needed for inter as you tend to show them when not playing.
+        
+        guard adMobInterAd != nil else {
+            print("AdMob inter is nil, reloading")
+            adMobInterAd = adMobLoadInterAd()
+            return
+        }
+        
+        if adMobInterAd!.isReady {
+            adMobInterAd!.presentFromRootViewController(presentingViewController)
+            // pauseTasks() // not really needed for inter as you tend to not show them during gameplay
         } else {
-            print("AdMob inter cannot be shown, reloading...")
+            print("AdMob inter is not ready, reloading...")
             adMobInterAd = adMobLoadInterAd()
             /*
             Do not try iAd again like it does for banner ads.
             They might might get stuck in a loop if there are connection problems
-            and the ad than might show at an unexpected moment which is obviously bad
-            because they are full screen
+            and the ad than might show at an unexpected moment
             */
         }
     }
@@ -357,7 +363,8 @@ extension Ads: ADInterstitialAdDelegate {
         iAdInterAd.delegate = nil
         iAdInterAdCloseButton.removeFromSuperview()
         iAdInterAdView.removeFromSuperview()
-        iAdLoadInterAd()
+        
+        //iAdLoadInterAd() // not needed, also could cause performance issues when no internet (stuck in loop trying to fetch)
     }
 }
 
@@ -428,6 +435,6 @@ extension Ads: GADInterstitialDelegate {
     
     func interstitial(ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
         print("AdMob inter error")
-        adMobInterAd = adMobLoadInterAd()
+        //adMobInterAd = adMobLoadInterAd() // not really needed, also could cause performance issues when no internet (stuck in loop trying to fetch)
     }
 }
