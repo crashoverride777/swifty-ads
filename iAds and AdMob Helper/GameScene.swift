@@ -18,7 +18,7 @@ class GameScene: SKScene {
         self.addChild(myLabel)
         
         // Show banner ad
-        Ads.showSupportedBannerAd()
+        Ads.sharedInstance.showSupportedBannerAd()
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -40,7 +40,7 @@ class GameScene: SKScene {
             self.addChild(sprite)
             
             // Show inter ad
-            Ads.showSupportedInterAdRandomly()
+            Ads.sharedInstance.showSupportedInterAdRandomly()
         }
     }
    

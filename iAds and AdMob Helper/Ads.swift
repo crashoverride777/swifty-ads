@@ -66,11 +66,7 @@ class Ads: NSObject {
     // MARK: - User Functions
     
     // Load Supported Banner Ad
-    class func showSupportedBannerAd() {
-        Ads.sharedInstance.showSupportedBannerAd()
-    }
-    
-    private func showSupportedBannerAd() {
+    func showSupportedBannerAd() {
         if iAdsAreSupported {
             iAdLoadBannerAd()
         } else {
@@ -79,11 +75,7 @@ class Ads: NSObject {
     }
     
     // Show Supported Inter Ad
-    class func showSupportedInterAd() {
-        Ads.sharedInstance.showSupportedInterAd()
-    }
-    
-    private func showSupportedInterAd() {
+    func showSupportedInterAd() {
         if iAdsAreSupported {
             iAdShowInterAd()
         } else {
@@ -92,11 +84,7 @@ class Ads: NSObject {
     }
     
     // Show Supported Inter Ad Randomly
-    class func showSupportedInterAdRandomly() {
-        Ads.sharedInstance.showSupportedInterAdRandomly()
-    }
-    
-    private func showSupportedInterAdRandomly() {
+    func showSupportedInterAdRandomly() {
         let randomInterAd = Int(arc4random() % 4)
         print("randomInterAd = \(randomInterAd)")
         if randomInterAd == 1 {
@@ -109,11 +97,7 @@ class Ads: NSObject {
     }
     
     // Remove Banner Ads
-    class func removeBannerAds() {
-        Ads.sharedInstance.removeBannerAds()
-    }
-    
-    private func removeBannerAds() {
+    func removeBannerAds() {
         print("Removed banner ads")
         appDelegate.iAdBannerAdView.delegate = nil
         appDelegate.iAdBannerAdView.removeFromSuperview()
@@ -123,11 +107,7 @@ class Ads: NSObject {
     }
     
     // Remove All Ads
-    class func removeAllAds() {
-        Ads.sharedInstance.removeAllAds()
-    }
-    
-    private func removeAllAds() {
+    func removeAllAds() {
         print("Removed all ads")
         appDelegate.iAdBannerAdView.delegate = nil
         appDelegate.iAdBannerAdView.removeFromSuperview()
@@ -145,11 +125,7 @@ class Ads: NSObject {
     }
     
     // Orientation Changed
-    class func deviceOrientationChanged() {
-        Ads.sharedInstance.deviceOrientationChanged()
-    }
-    
-    private func deviceOrientationChanged() {
+    func deviceOrientationChanged() {
         print("Device orientation changed, adjusting ads")
         
         // iAds
