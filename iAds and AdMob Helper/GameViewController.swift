@@ -55,7 +55,7 @@ class GameViewController: UIViewController {
         
         coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) -> Void in
             
-            Ads.sharedInstance.deviceOrientationChanged()
+            Ads.sharedInstance.orientationChanged()
             
 //            let orientation = UIApplication.sharedApplication().statusBarOrientation
 //            switch orientation {

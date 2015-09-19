@@ -130,7 +130,7 @@ class Ads: NSObject {
     }
     
     // Orientation Changed
-    func deviceOrientationChanged() {
+    func orientationChanged() {
         print("Device orientation changed, adjusting ads")
         
         // iAds
