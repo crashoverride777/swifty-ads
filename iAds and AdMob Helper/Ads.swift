@@ -68,7 +68,7 @@ class Ads: NSObject {
         adMobInterAd = adMobLoadInterAd() // always load AdMob
     }
    
-    // MARK: - User Functions
+    // MARK: - User Methods
     
     // Show Banner Ad
     func showBannerAd() {
@@ -149,7 +149,7 @@ class Ads: NSObject {
         appDelegate.adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.adMobBannerAdView.frame.size.height / 2))
     }
     
-    // MARK: - Internal Functions
+    // MARK: - Internal Methods
 
     // iAd Banner
     private func iAdLoadBannerAd() {
