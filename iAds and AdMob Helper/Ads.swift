@@ -185,7 +185,7 @@ class Ads: NSObject {
             UIViewController.prepareInterstitialAds()
             iAdInterAdView.addSubview(iAdInterAdCloseButton)
             
-            pauseTasks()
+            //pauseTasks() // not really needed for inter as you tend to show them when not playing.
         } else {
             print("iAd inter cannot be shown, reloading and trying adMob...")
             iAdLoadInterAd()
@@ -201,7 +201,7 @@ class Ads: NSObject {
         iAdInterAdView.removeFromSuperview()
         iAdLoadInterAd()
         
-        resumeTasks()
+        //resumeTasks() // not really needed for inter as you tend to show them when not playing.
     }
     
     // AdMob Banner
@@ -255,7 +255,7 @@ class Ads: NSObject {
         print("AdMob inter showing")
         if adMobInterAd.isReady {
             adMobInterAd.presentFromRootViewController(presentingViewController)
-            pauseTasks()
+            // pauseTasks() // not really needed for inter as you tend to show them when not playing.
         } else {
             print("AdMob inter cannot be shown, reloading...")
             adMobInterAd = adMobLoadInterAd()
@@ -403,7 +403,7 @@ extension Ads: GADInterstitialDelegate {
     
     func interstitialWillPresentScreen(ad: GADInterstitial!) {
         print("AdMob inter will present")
-        pauseTasks()
+        // pauseTasks() // not really needed for inter as you tend to show them when not playing.
     }
     
     func interstitialWillDismissScreen(ad: GADInterstitial!) {
@@ -413,12 +413,12 @@ extension Ads: GADInterstitialDelegate {
     func interstitialDidDismissScreen(ad: GADInterstitial!) {
         print("AdMob inter closed")
         adMobInterAd = adMobLoadInterAd()
-        resumeTasks()
+        // resumeTasks() // not really needed for inter as you tend to show them when not playing.
     }
     
     func interstitialWillLeaveApplication(ad: GADInterstitial!) {
         print("AdMob inter about to leave app")
-        pauseTasks() // dont forget to resume your app/game when going back, use AppDelegate for example
+        // pauseTasks() // not really needed for inter as you tend to show them when not playing.
     }
     
     func interstitial(ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
