@@ -41,13 +41,18 @@ class Ads: NSObject {
     
     private var adMobInterAd: GADInterstitial!
     
-    // adMob Unit ID
+    private var adMobBannerAdID = AdUnitID.Banner.test // change "test" to "live" when releasing
+    private var adMobInterAdID = AdUnitID.Inter.test  // change "test" to "live" when releasing
+   
     private struct AdUnitID {
-        static let bannerLive = "Your real banner adUnit ID from your google adMob account"
-        static let interLive = "Your real inter adUnit ID from your google adMob account"
-        
-        static let bannerTest = "ca-app-pub-3940256099942544/2934735716"
-        static let interTest = "ca-app-pub-3940256099942544/4411468910"
+        struct Banner {
+            static let live = "Your real banner adUnit ID from your google adMob account"
+            static let test = "ca-app-pub-3940256099942544/2934735716"
+        }
+        struct Inter {
+            static let live = "Your real inter adUnit ID from your google adMob account"
+            static let test = "ca-app-pub-3940256099942544/4411468910"
+        }
     }
     
     // MARK: - Init
@@ -215,18 +220,18 @@ class Ads: NSObject {
             appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerPortrait
         }
         
-        appDelegate.adMobBannerAdView.adUnitID = AdUnitID.bannerTest //AdUnitID.bannerLive
+        appDelegate.adMobBannerAdView.adUnitID = adMobBannerAdID
         appDelegate.adMobBannerAdView.delegate = self
         appDelegate.adMobBannerAdView.rootViewController = presentingViewController
         appDelegate.adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.adMobBannerAdView.frame.size.height / 2))
         
         let request = GADRequest()
         
-        //#if DEBUG 
+        #if DEBUG
         // make sure to set the D-DEBUG flag in your project othewise this wont work.
         // otherwise comment out this line
         request.testDevices = [ kGADSimulatorID ];
-        //#endif
+        #endif
         
         appDelegate.adMobBannerAdView.loadRequest(request)
     }
@@ -235,16 +240,16 @@ class Ads: NSObject {
     private func adMobLoadInterAd() -> GADInterstitial {
         print("AdMob inter loading...")
         
-        let adMobInterAd = GADInterstitial(adUnitID: AdUnitID.interTest) // AdUnitID.interLive
+        let adMobInterAd = GADInterstitial(adUnitID: adMobInterAdID)
         adMobInterAd.delegate = self
         
         let request = GADRequest()
         
-        //#if DEBUG 
-        // make sure to set the D-DEBUG flag in your project othewise this wont work.
+        #if DEBUG
+        // make sure to set the D-DEBUG flag in your project or this wont work.
         // otherwise comment out this line
         request.testDevices = [ kGADSimulatorID ];
-        //#endif
+        #endif
         
         adMobInterAd.loadRequest(request)
         
