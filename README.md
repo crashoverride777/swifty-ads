@@ -31,7 +31,7 @@ let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
 ```swift
 var iAdBannerAdView = ADBannerView()
-var adMobBannerAdView = GADBannerView()
+var adMobBannerAdView: GADBannerView!
 ```
 
 This is what is called a shared Banner ad and although not really needed for a spritekit game with 1 view controller this is the correct way to use banner ads in apps with multiple ViewControllers. (https://developer.apple.com/library/ios/technotes/tn2286/_index.html)
@@ -166,6 +166,16 @@ etc
 ```
 
 # Release Notes
+
+v1.8
+
+Fixed an issue that could cause GameCenter banners to show in the wrong orienation. Please update your helper and also update your appdelegate from
+
+var adMobBannerAdView = GADBannerView()
+
+to
+ 
+var adMobBannerAdView: GADBannerView!
 
 v1.7.1
 
