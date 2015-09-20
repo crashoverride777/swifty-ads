@@ -30,7 +30,7 @@ let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 - Step 6: Still in your AppDelegate.swift under the class implementation you will need to create these properties
 
 ```swift
-var iAdBannerAdView = ADBannerView()
+var iAdBannerAdView: ADBannerView!
 var adMobBannerAdView: GADBannerView!
 ```
 
@@ -52,7 +52,7 @@ override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator c
         
         coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) -> Void in
             
-            Ads.sharedInstance.deviceOrientationChanged()
+            Ads.sharedInstance.orientationChanged()
             
             //let orientation = UIApplication.sharedApplication().statusBarOrientation
             //switch orientation {
@@ -172,12 +172,9 @@ v1.8
 
 Added a new method to show banner ads with a slight delay i.e when transitioning to new scene/view
 
-Fixed an issue that could cause GameCenter banners to show in the wrong orienation. Please update your helper and also update your appdelegate from
+Fixed an issue that could cause GameCenter banners to show in the wrong orientation. Please update your helper and also change your appDelegate properties so they look like this
 
-var adMobBannerAdView = GADBannerView()
-
-to
- 
+var iAdBannerAdView: ADBannerView!
 var adMobBannerAdView: GADBannerView!
 
 v1.7.1
