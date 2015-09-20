@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v1.7.1
+//    v1.8
 
 
 import iAd
@@ -107,8 +107,10 @@ class Ads: NSObject {
         appDelegate.iAdBannerAdView.delegate = nil
         appDelegate.iAdBannerAdView.removeFromSuperview()
         
-        appDelegate.adMobBannerAdView.delegate = nil
-        appDelegate.adMobBannerAdView.removeFromSuperview()
+        if appDelegate.adMobBannerAdView != nil {
+            appDelegate.adMobBannerAdView.delegate = nil
+            appDelegate.adMobBannerAdView.removeFromSuperview()
+        }
     }
     
     // Remove All Ads
@@ -117,12 +119,14 @@ class Ads: NSObject {
         appDelegate.iAdBannerAdView.delegate = nil
         appDelegate.iAdBannerAdView.removeFromSuperview()
         
-        appDelegate.adMobBannerAdView.delegate = nil
-        appDelegate.adMobBannerAdView.removeFromSuperview()
-        
         iAdInterAd.delegate = nil
         iAdInterAdCloseButton.removeFromSuperview()
         iAdInterAdView.removeFromSuperview()
+        
+        if appDelegate.adMobBannerAdView != nil {
+            appDelegate.adMobBannerAdView.delegate = nil
+            appDelegate.adMobBannerAdView.removeFromSuperview()
+        }
         
         if adMobInterAd != nil {
             adMobInterAd!.delegate = nil

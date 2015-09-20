@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // shared banner ads 
     var iAdBannerAdView = ADBannerView()
-    var adMobBannerAdView = GADBannerView()
+    var adMobBannerAdView: GADBannerView!
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
