@@ -83,8 +83,8 @@ iAdsAreSupported = iAdTimeZoneSupported()
 - To show a supported Ad simply call these anywhere you like in your project.
 ```swift
 Ads.sharedInstance.showBannerAd() 
-Ads.sharedInstance.showBannerAdDelayed() // delays showing banner slightly eg when transitioning to new scene/view
-Ads.sharedInstance.showInterAd() // shows inter ad every time
+Ads.sharedInstance.showBannerAdDelayed() // delay showing banner slightly eg when transitioning to new scene/view
+Ads.sharedInstance.showInterAd()
 Ads.sharedInstance.showInterAdRandomly() // 25% chance of showing inter ads, can always be tweaked.
 ```
 - To remove Ads, for example during gameplay or for in app purchases simply call 
