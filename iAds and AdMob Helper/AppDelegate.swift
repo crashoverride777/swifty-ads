@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     // shared banner ads 
-    var iAdBannerAdView = ADBannerView()
+    var iAdBannerAdView: ADBannerView!
     var adMobBannerAdView: GADBannerView!
 
 

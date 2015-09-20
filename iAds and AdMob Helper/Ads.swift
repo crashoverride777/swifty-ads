@@ -35,7 +35,7 @@ class Ads: NSObject {
     var presentingViewController: UIViewController!
     
     private var iAdsAreSupported = false
-    private var iAdInterAd = ADInterstitialAd()
+    private var iAdInterAd: ADInterstitialAd?
     private var iAdInterAdView = UIView()
     private var iAdInterAdCloseButton = UIButton(type: UIButtonType.System)
     
@@ -63,7 +63,7 @@ class Ads: NSObject {
         
         // Preload inter ads
         if iAdsAreSupported {
-            iAdLoadInterAd()
+            iAdInterAd = iAdLoadInterAd()
         }
         adMobInterAd = adMobLoadInterAd() // always load AdMob
     }
@@ -107,8 +107,10 @@ class Ads: NSObject {
     // Remove Banner Ads
     func removeBannerAds() {
         print("Removed banner ads")
-        appDelegate.iAdBannerAdView.delegate = nil
-        appDelegate.iAdBannerAdView.removeFromSuperview()
+        if appDelegate.iAdBannerAdView != nil {
+            appDelegate.iAdBannerAdView.delegate = nil
+            appDelegate.iAdBannerAdView.removeFromSuperview()
+        }
         
         if appDelegate.adMobBannerAdView != nil {
             appDelegate.adMobBannerAdView.delegate = nil
@@ -119,12 +121,16 @@ class Ads: NSObject {
     // Remove All Ads
     func removeAllAds() {
         print("Removed all ads")
-        appDelegate.iAdBannerAdView.delegate = nil
-        appDelegate.iAdBannerAdView.removeFromSuperview()
+        if appDelegate.iAdBannerAdView != nil {
+            appDelegate.iAdBannerAdView.delegate = nil
+            appDelegate.iAdBannerAdView.removeFromSuperview()
+        }
         
-        iAdInterAd.delegate = nil
-        iAdInterAdCloseButton.removeFromSuperview()
-        iAdInterAdView.removeFromSuperview()
+        if iAdInterAd != nil {
+            iAdInterAd!.delegate = nil
+            iAdInterAdCloseButton.removeFromSuperview()
+            iAdInterAdView.removeFromSuperview()
+        }
         
         if appDelegate.adMobBannerAdView != nil {
             appDelegate.adMobBannerAdView.delegate = nil
@@ -141,19 +147,23 @@ class Ads: NSObject {
         print("Device orientation changed, adjusting ads")
         
         // iAds
-        appDelegate.iAdBannerAdView.frame = presentingViewController.view.bounds
-        appDelegate.iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.iAdBannerAdView.frame.size.height / 2))
+        if appDelegate.iAdBannerAdView != nil {
+            appDelegate.iAdBannerAdView.frame = presentingViewController.view.bounds
+            appDelegate.iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.iAdBannerAdView.frame.size.height / 2))
+        }
         
         iAdInterAdView.frame = presentingViewController.view.bounds
         
         // AdMob
-        if UIApplication.sharedApplication().statusBarOrientation.isLandscape {
-            appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerLandscape
-        } else {
-            appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerPortrait
-        }
+        if appDelegate.adMobBannerAdView != nil {
+            if UIApplication.sharedApplication().statusBarOrientation.isLandscape {
+                appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerLandscape
+            } else {
+                appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerPortrait
+            }
         
-        appDelegate.adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.adMobBannerAdView.frame.size.height / 2))
+            appDelegate.adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.adMobBannerAdView.frame.size.height / 2))
+        }
     }
     
     // MARK: - Internal Methods
@@ -167,9 +177,9 @@ class Ads: NSObject {
     }
     
     // iAd Inter
-    private func iAdLoadInterAd() {
+    private func iAdLoadInterAd() -> ADInterstitialAd {
         print("iAd inter ad loading...")
-        iAdInterAd = ADInterstitialAd()  // always create new instance with inter ads
+        let iAdInterAd = ADInterstitialAd()
         iAdInterAd.delegate = self
         
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
@@ -185,22 +195,23 @@ class Ads: NSObject {
         iAdInterAdCloseButton.layer.borderColor = UIColor.grayColor().CGColor
         iAdInterAdCloseButton.layer.borderWidth = 2
         iAdInterAdCloseButton.addTarget(self, action: "iAdPressedInterAdCloseButton:", forControlEvents: UIControlEvents.TouchDown)
+        
+        return iAdInterAd
     }
     
     private func iAdShowInterAd() {
-        if iAdInterAd.loaded {
+        if iAdInterAd!.loaded {
             print("iAd inter showing")
-            //iAdInterAdView = UIView()
             iAdInterAdView.frame = presentingViewController.view.bounds
             presentingViewController.view.addSubview(iAdInterAdView)
-            iAdInterAd.presentInView(iAdInterAdView)
+            iAdInterAd!.presentInView(iAdInterAdView)
             UIViewController.prepareInterstitialAds()
             iAdInterAdView.addSubview(iAdInterAdCloseButton)
             
             //pauseTasks() // not really needed for inter as you tend to show them when not playing.
         } else {
             print("iAd inter not ready, reloading and trying adMob...")
-            iAdLoadInterAd()
+            iAdInterAd = iAdLoadInterAd()
             adMobShowInterAd() // try AdMob
             
         }
@@ -208,10 +219,10 @@ class Ads: NSObject {
     
     func iAdPressedInterAdCloseButton(sender: UIButton) { // dont make private as its called with a selector
         print("iAd inter closed")
-        iAdInterAd.delegate = nil
+        iAdInterAd!.delegate = nil
         iAdInterAdCloseButton.removeFromSuperview()
         iAdInterAdView.removeFromSuperview()
-        iAdLoadInterAd()
+        iAdInterAd = iAdLoadInterAd()
         
         //resumeTasks() // not really needed for inter as you tend to not show them during gameplay
     }
@@ -367,11 +378,11 @@ extension Ads: ADInterstitialAdDelegate {
     
     func interstitialAd(interstitialAd: ADInterstitialAd!, didFailWithError error: NSError!) {
         print("iAd inter error \(error)")
-        iAdInterAd.delegate = nil
+        iAdInterAd!.delegate = nil
         iAdInterAdCloseButton.removeFromSuperview()
         iAdInterAdView.removeFromSuperview()
         
-        //iAdLoadInterAd() // not needed, also could cause performance issues when no internet (stuck in loop trying to fetch)
+        //iAdInterAd = iAdLoadInterAd() // not needed, also could cause performance issues when no internet (stuck in loop trying to fetch)
     }
 }
 
