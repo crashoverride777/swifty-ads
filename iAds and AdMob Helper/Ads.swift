@@ -281,8 +281,6 @@ class Ads: NSObject {
     }
     
     private func adMobShowInterAd() {
-        print("AdMob inter showing")
-        
         guard adMobInterAd != nil else {
             print("AdMob inter is nil, reloading")
             adMobInterAd = adMobLoadInterAd()
@@ -290,6 +288,7 @@ class Ads: NSObject {
         }
         
         if adMobInterAd!.isReady {
+            print("AdMob inter showing")
             adMobInterAd!.presentFromRootViewController(presentingViewController)
             // pauseTasks() // not really needed for inter as you tend to not show them during gameplay
         } else {
