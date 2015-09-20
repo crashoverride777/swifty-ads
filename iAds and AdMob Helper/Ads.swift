@@ -69,6 +69,9 @@ class Ads: NSObject {
     }
    
     // MARK: - User Methods
+    func showBannerAdDelayed() {
+        NSTimer.scheduledTimerWithTimeInterval(0.8, target: self, selector: "showBannerAd", userInfo: nil, repeats: false)
+    }
     
     // Show Banner Ad
     func showBannerAd() {
