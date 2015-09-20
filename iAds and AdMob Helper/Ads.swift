@@ -219,9 +219,9 @@ class Ads: NSObject {
         print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
         
         if UIApplication.sharedApplication().statusBarOrientation.isLandscape {
-            appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerLandscape
+            appDelegate.adMobBannerAdView = GADBannerView(adSize: kGADAdSizeSmartBannerLandscape)
         } else {
-            appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerPortrait
+            appDelegate.adMobBannerAdView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
         }
         
         appDelegate.adMobBannerAdView.adUnitID = adMobBannerAdID
