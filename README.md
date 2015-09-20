@@ -83,6 +83,7 @@ iAdsAreSupported = iAdTimeZoneSupported()
 - To show a supported Ad simply call these anywhere you like in your project.
 ```swift
 Ads.sharedInstance.showBannerAd() 
+Ads.sharedInstance.showBannerAdDelayed() // delays showing banner slightly eg when transitioning to new scene/view
 Ads.sharedInstance.showInterAd() // shows inter ad every time
 Ads.sharedInstance.showInterAdRandomly() // 25% chance of showing inter ads, can always be tweaked.
 ```
@@ -168,6 +169,8 @@ etc
 # Release Notes
 
 v1.8
+
+Added a new method to show banner ads with a slight delay i.e when transitioning to new scene/view
 
 Fixed an issue that could cause GameCenter banners to show in the wrong orienation. Please update your helper and also update your appdelegate from
 
