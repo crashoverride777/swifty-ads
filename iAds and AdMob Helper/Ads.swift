@@ -200,6 +200,12 @@ class Ads: NSObject {
     }
     
     private func iAdShowInterAd() {
+        guard iAdInterAd != nil else {
+            print("iAd inter is nil, reloading")
+            iAdInterAd = iAdLoadInterAd()
+            return
+        }
+        
         if iAdInterAd!.loaded {
             print("iAd inter showing")
             iAdInterAdView.frame = presentingViewController.view.bounds
