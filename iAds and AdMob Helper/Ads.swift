@@ -207,7 +207,7 @@ class Ads: NSObject {
             iAdInterAdCloseButton.frame = CGRectMake(13, 13, 22, 22)
         }
         
-        iAdInterAdCloseButton.layer.cornerRadius = 12
+        iAdInterAdCloseButton.layer.cornerRadius = 11
         iAdInterAdCloseButton.setTitle("X", forState: .Normal)
         iAdInterAdCloseButton.setTitleColor(UIColor.grayColor(), forState: .Normal)
         iAdInterAdCloseButton.backgroundColor = UIColor.whiteColor()
