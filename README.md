@@ -85,7 +85,7 @@ iAdsAreSupported = iAdTimeZoneSupported()
 Ads.sharedInstance.showBannerAd() 
 Ads.sharedInstance.showBannerAdDelayed() // delay showing banner slightly eg when transitioning to new scene/view
 Ads.sharedInstance.showInterAd()
-Ads.sharedInstance.showInterAdRandomly() // 25% chance of showing inter ads, can always be tweaked.
+Ads.sharedInstance.showInterAdRandomly() // 33% chance of showing inter ads, can always be tweaked.
 ```
 - To remove Ads, for example during gameplay or for in app purchases simply call 
 ```swift
@@ -134,7 +134,7 @@ I wrote some comments at those points to avoid this hassle in the future if you 
 
 # Final Info
 
-The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and a inter ad randomly when touching the screen.
+The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and an inter ad randomly when touching the screen.
 Like I mentioned above I primarly focused on SpriteKit to make it easy to call Ads from your SKScenes without having to use NSNotificationCenter or Delegates to constantly communicate with the viewController. Also this should help keep your viewController clean as mine became a mess after integrating AdMob.
 Please let me know about any bugs or improvements, I am by now means an expert. 
 
@@ -159,7 +159,7 @@ to
     }
  ```
  
-Than call the methods like so
+Than call the methods from your viewControllers like so
 
 ```swift
 Ads.sharedInstance.showBannerAd(self)
@@ -167,6 +167,10 @@ etc
 ```
 
 # Release Notes
+
+v 1.8.2
+
+Clean-up
 
 v1.8.1
 
