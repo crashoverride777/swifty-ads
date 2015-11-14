@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v1.8
+//    v1.8.2
 
 
 import iAd
@@ -30,20 +30,35 @@ import GoogleMobileAds
 class Ads: NSObject {
     
     // MARK: - Properties
+    
+    /// shared instance
     static let sharedInstance = Ads()
     
+    /// presenting view controller
     var presentingViewController: UIViewController!
     
+    /// iads are supported
     private var iAdsAreSupported = false
+    
+    /// iad inter ad
     private var iAdInterAd: ADInterstitialAd?
+    
+    /// iad inter ad view
     private var iAdInterAdView = UIView()
+    
+    /// iad inter ad close button
     private var iAdInterAdCloseButton = UIButton(type: UIButtonType.System)
     
+    /// admob inter ad
     private var adMobInterAd: GADInterstitial?
     
+    /// admob banner ad id
     private var adMobBannerAdID = AdUnitID.Banner.test // change "test" to "live" when releasing
+    
+    /// admob inter ad id
     private var adMobInterAdID = AdUnitID.Inter.test  // change "test" to "live" when releasing
    
+    /// admob ids
     private struct AdUnitID {
         struct Banner {
             static let live = "Your real banner adUnit ID from your google adMob account"
@@ -59,9 +74,11 @@ class Ads: NSObject {
     override init() {
         super.init()
         print("Ads helper init")
+        
+        /// check if iads are supported
         iAdsAreSupported = iAdTimeZoneSupported()
         
-        // Preload inter ads
+        /// preload inter ads
         if iAdsAreSupported {
             iAdInterAd = iAdLoadInterAd()
         }
@@ -69,11 +86,13 @@ class Ads: NSObject {
     }
    
     // MARK: - User Methods
+    
+    /// show banner ad with delay
     func showBannerAdDelayed() {
         NSTimer.scheduledTimerWithTimeInterval(0.8, target: self, selector: "showBannerAd", userInfo: nil, repeats: false)
     }
     
-    // Show Banner Ad
+    /// show banner ad
     func showBannerAd() {
         if iAdsAreSupported {
             iAdLoadBannerAd()
@@ -82,7 +101,7 @@ class Ads: NSObject {
         }
     }
     
-    // Show Inter Ad
+    /// show inter ad
     func showInterAd() {
         if iAdsAreSupported {
             iAdShowInterAd()
@@ -91,9 +110,9 @@ class Ads: NSObject {
         }
     }
     
-    // Show Inter Ad Randomly
+    /// show inter ad randomly (33% chance)
     func showInterAdRandomly() {
-        let randomInterAd = Int(arc4random() % 4)
+        let randomInterAd = Int(arc4random() % 3)
         print("randomInterAd = \(randomInterAd)")
         if randomInterAd == 1 {
             if iAdsAreSupported {
@@ -104,7 +123,7 @@ class Ads: NSObject {
         }
     }
     
-    // Remove Banner Ads
+    /// remove banner ads
     func removeBannerAds() {
         print("Removed banner ads")
         if appDelegate.iAdBannerAdView != nil {
@@ -118,7 +137,7 @@ class Ads: NSObject {
         }
     }
     
-    // Remove All Ads
+    /// remove all ads
     func removeAllAds() {
         print("Removed all ads")
         if appDelegate.iAdBannerAdView != nil {
@@ -142,11 +161,11 @@ class Ads: NSObject {
         }
     }
     
-    // Orientation Changed
+    /// device orientation changed
     func orientationChanged() {
         print("Device orientation changed, adjusting ads")
         
-        // iAds
+        // iad
         if appDelegate.iAdBannerAdView != nil {
             appDelegate.iAdBannerAdView.frame = presentingViewController.view.bounds
             appDelegate.iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.iAdBannerAdView.frame.size.height / 2))
@@ -154,7 +173,7 @@ class Ads: NSObject {
         
         iAdInterAdView.frame = presentingViewController.view.bounds
         
-        // AdMob
+        // admob
         if appDelegate.adMobBannerAdView != nil {
             if UIApplication.sharedApplication().statusBarOrientation.isLandscape {
                 appDelegate.adMobBannerAdView.adSize = kGADAdSizeSmartBannerLandscape
@@ -168,7 +187,7 @@ class Ads: NSObject {
     
     // MARK: - Internal Methods
 
-    // iAd Banner
+    /// iad show banner ad
     private func iAdLoadBannerAd() {
         print("iAd banner ad loading...")
         appDelegate.iAdBannerAdView = ADBannerView(frame: presentingViewController.view.bounds)
@@ -176,7 +195,7 @@ class Ads: NSObject {
         appDelegate.iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.iAdBannerAdView.frame.size.height / 2))
     }
     
-    // iAd Inter
+    /// iad load inter ad
     private func iAdLoadInterAd() -> ADInterstitialAd {
         print("iAd inter ad loading...")
         let iAdInterAd = ADInterstitialAd()
@@ -199,6 +218,7 @@ class Ads: NSObject {
         return iAdInterAd
     }
     
+    /// iad show inter ad
     private func iAdShowInterAd() {
         guard iAdInterAd != nil else {
             print("iAd inter is nil, reloading")
@@ -223,6 +243,7 @@ class Ads: NSObject {
         }
     }
     
+    /// iad inter ad pressed close button
     func iAdPressedInterAdCloseButton(sender: UIButton) { // dont make private as its called with a selector
         print("iAd inter closed")
         iAdInterAd!.delegate = nil
@@ -233,7 +254,7 @@ class Ads: NSObject {
         //resumeTasks() // not really needed for inter as you tend to not show them during gameplay
     }
     
-    // AdMob Banner
+    /// adbob show banner ad
     private func adMobLoadBannerAd() {
         print("AdMob banner loading...")
         print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
@@ -260,7 +281,7 @@ class Ads: NSObject {
         appDelegate.adMobBannerAdView.loadRequest(request)
     }
     
-    // AdMob Inter
+    /// admob load inter ad
     private func adMobLoadInterAd() -> GADInterstitial {
         print("AdMob inter loading...")
         
@@ -280,6 +301,7 @@ class Ads: NSObject {
         return adMobInterAd
     }
     
+    /// admob show inter ad
     private func adMobShowInterAd() {
         guard adMobInterAd != nil else {
             print("AdMob inter is nil, reloading")
@@ -302,7 +324,7 @@ class Ads: NSObject {
         }
     }
     
-    // Check iAd Support
+    /// check if iads are supported
     private func iAdTimeZoneSupported() -> Bool {
         let iAdTimeZones = "America/;US/;Pacific/;Asia/Tokyo;Europe/".componentsSeparatedByString(";")
         let myTimeZone = NSTimeZone.localTimeZone().name
@@ -316,21 +338,22 @@ class Ads: NSObject {
         return false
     }
     
-    // Game/App Controls
+    /// pause tasks in the app/game
     private func pauseTasks() {
-        // Pause game, music etc here. 
-        // You could use NSNotifactionCenter or Delegates to call methods in other SKScenes / ViewControllers
+        // Pause app/game, music etc here.
+        // you could use NSNotifactionCenter or Delegates to call methods in other SKScenes / ViewControllers
     }
     
+    /// resume tasks in the app/game
     private func resumeTasks() {
-        // Resume game, music etc here.
-        // You could use NSNotifactionCenter or Delegates to call methods in other SKScenes / ViewControllers
+        // Resume app/game, music etc here.
+        // you could use NSNotifactionCenter or Delegates to call methods in other SKScenes / ViewControllers
     }
 }
 
 // MARK: - Delegates
 
-// iAd Banner
+/// iad banner ad
 extension Ads: ADBannerViewDelegate {
     
     func bannerViewWillLoadAd(banner: ADBannerView!) {
@@ -365,12 +388,12 @@ extension Ads: ADBannerViewDelegate {
         appDelegate.iAdBannerAdView.hidden = true
         UIView.commitAnimations()
         
-        appDelegate.iAdBannerAdView.delegate = nil // stop iAd banner from reloading
-        adMobLoadBannerAd() // try AdMob
+        appDelegate.iAdBannerAdView.delegate = nil // stop iad banner from reloading
+        adMobLoadBannerAd() // try admob
     }
 }
 
-// iAds Inter
+/// iad inter ad
 extension Ads: ADInterstitialAdDelegate {
     
     func interstitialAdDidLoad(interstitialAd: ADInterstitialAd!) {
@@ -391,7 +414,7 @@ extension Ads: ADInterstitialAdDelegate {
     }
 }
 
-// AdMob Banner
+/// admob banner ad
 extension Ads: GADBannerViewDelegate {
     
     func adViewDidReceiveAd(bannerView: GADBannerView!) {
@@ -421,7 +444,7 @@ extension Ads: GADBannerViewDelegate {
         appDelegate.adMobBannerAdView.hidden = true
         UIView.commitAnimations()
         
-        // Try iAd again if supported.
+        // try iad again if supported.
         if iAdsAreSupported {
             appDelegate.adMobBannerAdView.delegate = nil
             appDelegate.iAdBannerAdView.delegate = self
@@ -429,7 +452,7 @@ extension Ads: GADBannerViewDelegate {
     }
 }
 
-// AdMob Inter
+/// admob inter ad
 extension Ads: GADInterstitialDelegate {
     
     func interstitialDidReceiveAd(ad: GADInterstitial!) {
