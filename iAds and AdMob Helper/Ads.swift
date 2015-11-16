@@ -71,7 +71,7 @@ class Ads: NSObject {
     }
     
     // MARK: - Init
-    override init() {
+    private override init() {
         super.init()
         print("Ads helper init")
         
