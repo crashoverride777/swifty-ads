@@ -29,10 +29,24 @@ import GoogleMobileAds
 
 class Ads: NSObject {
     
-    // MARK: - Properties
+    // MARK: - Static Properties
     
     /// shared instance
     static let sharedInstance = Ads()
+    
+    /// admob ids
+    private struct AdUnitID {
+        struct Banner {
+            static let live = "Your real banner adUnit ID from your google adMob account"
+            static let test = "ca-app-pub-3940256099942544/2934735716"
+        }
+        struct Inter {
+            static let live = "Your real inter adUnit ID from your google adMob account"
+            static let test = "ca-app-pub-3940256099942544/4411468910"
+        }
+    }
+    
+    // MARK: - Properties
     
     /// presenting view controller
     var presentingViewController: UIViewController!
@@ -58,18 +72,6 @@ class Ads: NSObject {
     /// admob inter ad id
     private var adMobInterAdID = AdUnitID.Inter.test  // change "test" to "live" when releasing
    
-    /// admob ids
-    private struct AdUnitID {
-        struct Banner {
-            static let live = "Your real banner adUnit ID from your google adMob account"
-            static let test = "ca-app-pub-3940256099942544/2934735716"
-        }
-        struct Inter {
-            static let live = "Your real inter adUnit ID from your google adMob account"
-            static let test = "ca-app-pub-3940256099942544/4411468910"
-        }
-    }
-    
     // MARK: - Init
     private override init() {
         super.init()
