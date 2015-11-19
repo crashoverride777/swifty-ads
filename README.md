@@ -10,16 +10,20 @@ If an iAd Inter ad fails it will try an AdMob Inter ad, incase that adMob inter 
 
 # Set-Up
 
-- Step 1: Copy the Ads.swift file into your project
+- Step 1: Set-Up "-D DEBUG" custom flag. This will reduce the hassle of having to manually change the google ad ids. Also this is a good idea in general for things such as hiding print statements when releasing.
+Go to targets -> buildSettings -> SwiftCompiler-CustomFlags and add the custom flag "-D DEBUG "under the Debug section (see the sample project or http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
 
-- Step 2: Copy the Google framework folder found in the sample project into your projects folder on your computer. Its best to copy it to your projects root folder because if you just reference the file (Step 3) from a random location on your computer it could cause issues. You can also download the latest version from Googles website (https://developers.google.com/admob/ios/download)
+- Step 2: Copy the Ads.swift file into your project
 
-- Step 3: Add the Google framework to your project. Go to Targets - BuildPhases - LinkedBinaries and click the + button and than press the "Add Other" button. Search your computer for the folder you copied at Step 2 containing the googleframework file and add that file. Your linkedBinaries should now say 1.
+- Step 3: Copy the Google framework folder found in the sample project into your projects folder on your computer. Its best to copy it to your projects root folder because if you just reference the file (next Step) from a random location on your computer it could cause issues when that file gets deleted/moved. You can download the latest version from Googles website (https://developers.google.com/admob/ios/download)
 
-- Step 4: Add the other frameworks needed. Click the + button again and search for and than add each of these frameworks: AdSupport, AudioToolbox, AVFoundation, CoreGraphics, CoreMedia, CoreTelephony, EventKit, EventKitUI, MessageUI, StoreKit, SystemConfiguration (https://developers.google.com/admob/ios/quick-start?hl=en
- ). This should bring your total linked binary (framework) count to 12. You might want to consider putting all the added frameworks you now see in your project sidebar into a folder called Frameworks, similar to the sample project, to keep it clean.
+- Step 4: Add the Google framework to your project. Go to Targets -> BuildPhases -> LinkedBinaries and click the + button. Than press the "Add Other" button and search your computer for the folder you copied at Step 3 containing the googleframework file and add that file. Your linkedBinaries should now say 1.
 
-- Step 5: In your AppDelegate.swift underneath ```import UIKit``` write the following
+- Step 5: Add the other frameworks needed. Click the + button again and search for and than add each of these frameworks: AdSupport, AudioToolbox, AVFoundation, CoreGraphics, CoreMedia, CoreTelephony, EventKit, EventKitUI, MessageUI, StoreKit, SystemConfiguration. (https://developers.google.com/admob/ios/quick-start?hl=en
+ ). 
+You might want to consider putting all the added frameworks you now see in your projects sidebar into a folder called Frameworks, similar to the sample project, to keep it clean.
+
+- Step 6: In your AppDelegate.swift underneath ```import UIKit``` write the following
 ```swift
 import iAd
 import GoogleMobileAds
@@ -27,7 +31,7 @@ import GoogleMobileAds
 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 ```
 
-- Step 6: Still in your AppDelegate.swift under the class implementation you will need to create these properties
+- Step 7: Still in your AppDelegate.swift under the class implementation you will need to create these properties
 
 ```swift
 var iAdBannerAdView: ADBannerView!
@@ -36,7 +40,7 @@ var adMobBannerAdView: GADBannerView!
 
 This is what is called a shared Banner ad and although not really needed for a spritekit game with 1 view controller this is the correct way to use banner ads in apps with multiple ViewControllers. (https://developer.apple.com/library/ios/technotes/tn2286/_index.html)
 
-- Step 7: In your viewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
+- Step 8: In your viewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 ```swift
 Ads.sharedInstance.presentingViewController = self
 ```
@@ -45,7 +49,7 @@ This sets the presentingViewController property to your current ViewController a
 
 NOTE: If your app is not a spriteKit game and uses multiple view controllers than you should ignore this Step and check "not a SpriteKit game?" after reading the rest.
 
-- Step 8: This Step is only needed if your app supports both portrait and landscape orientation. Still in your ViewController add the following method.
+- Step 9: This Step is only needed if your app supports both portrait and landscape orientation. Still in your ViewController add the following method.
 ```swift
 override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
@@ -69,7 +73,7 @@ override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator c
         })
     }
 ```
-NOTE: This is a ios 8 method, if your app supports ios 7 or below you maybe want to use something like a  NSNotifcationCenter UIDeviceOrientationDidChangeNotification Observer
+NOTE: This is an ios 8 method, if your app supports ios 7 or below you maybe want to use something like a  NSNotifcationCenter UIDeviceOrientationDidChangeNotification Observer
 
 # How to use
 
@@ -102,35 +106,15 @@ private func resumeTasks() {
 ```
 # When you go Live 
 
-Google Ads are a bit of a hassle when testing and when going live because they are using test ad IDs and this line of code 
-```swift 
-request.testDevices = [ kGADSimulatorID ];
-```
-So before your app goes live you will have to do the following
-
 - Step 1: If you havent used iAds before make sure your account is set up for iAds. You mainly have to sign an agreement in your developer account. (https://developer.apple.com/iad/)
 
 - Step 2: Sign up for a Google AdMob account and create your ad IDs, 1 for banner and 1 for inter Ads. (https://support.google.com/admob/answer/2784575?hl=en-GB)
 
 - Step 3: In Ads.swift in the struct called AdUnitId enter your real Ad IDs for both banner and inter ads.
 
-- Step 4: In Ads.swift change the adUnit IDs to LIVE, so the properties look like this
-```swift 
-private var adMobBannerAdID = AdUnitID.Banner.live
-private var adMobInterAdID = AdUnitID.Inter.live
-``` 
-Than go to both these methods  
-```swift 
-func adMobLoadBannerAd()
-func adMobLoadInterAd()
-```
- and comment out the line 
-```swift 
-request.testDevices = [ kGADSimulatorID"
-``` 
-I wrote some comments at those points to avoid this hassle in the future if you set up a D-DEBUG flag. (http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
-
 - Step 4: When you submit your app on iTunes Connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected. If you decide to just use iAds than remove all google frameworks and references from your project and make sure you select NO, otherwise your app will also get rejected.
+
+NOTE: - Dont forget to setup the -D DEBUG flag (step 1) or the helper will not change the goolge adUnit ids automatically from test to release. 
 
 # Final Info
 
@@ -167,6 +151,12 @@ etc
 ```
 
 # Release Notes
+
+v 2.0
+
+Helper will now automatically identify if an app is in debug or release mode and will adjust google ad ids accordingly. Please ensure you have set up a -D DEBUG flag as this will not work otherwise. See step 1.
+
+Clean-Up
 
 v 1.8.2
 
