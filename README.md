@@ -10,8 +10,8 @@ If an iAd Inter ad fails it will try an AdMob Inter ad, incase that adMob inter 
 
 # Set-Up
 
-- Step 1: Set-Up "-D DEBUG" custom flag. This will reduce the hassle of having to manually change the google ad ids. Also this is a good idea in general for things such as hiding print statements when releasing.
-Go to targets -> buildSettings -> SwiftCompiler-CustomFlags and add the custom flag "-D DEBUG "under the Debug section (see the sample project or http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
+- Step 1: Set-Up "-D DEBUG" custom flag. This will reduce the hassle of having to manually change the google ad ids when testing or when releasing. This is a good idea in general for other things such as hiding print statements.
+Go to Targets -> BuildSettings -> SwiftCompiler-CustomFlags and add a custom flag named "-D DEBUG "under the Debug section (see the sample project or http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
 
 - Step 2: Copy the Ads.swift file into your project
 
@@ -40,14 +40,14 @@ var adMobBannerAdView: GADBannerView!
 
 This is what is called a shared Banner ad and although not really needed for a spritekit game with 1 view controller this is the correct way to use banner ads in apps with multiple ViewControllers. (https://developer.apple.com/library/ios/technotes/tn2286/_index.html)
 
-- Step 8: In your viewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
+- Step 8: In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 ```swift
 Ads.sharedInstance.presentingViewController = self
 ```
 
 This sets the presentingViewController property to your current ViewController and inits Ads.swift. This step is important because your app will crash otherwise when trying to call an Ad. In a spriteKit game this really needs to be called just once since there usually is only 1 viewController.
 
-NOTE: If your app is not a spriteKit game and uses multiple view controllers than you should ignore this Step and check "not a SpriteKit game?" after reading the rest.
+NOTE: If your app is not a spriteKit game or uses multiple view controllers than you should ignore this Step and check "not a SpriteKit game?" after reading the rest.
 
 - Step 9: This Step is only needed if your app supports both portrait and landscape orientation. Still in your ViewController add the following method.
 ```swift
@@ -89,7 +89,7 @@ iAdsAreSupported = iAdTimeZoneSupported()
 Ads.sharedInstance.showBannerAd() 
 Ads.sharedInstance.showBannerAdDelayed() // delay showing banner slightly eg when transitioning to new scene/view
 Ads.sharedInstance.showInterAd()
-Ads.sharedInstance.showInterAdRandomly() // 33% chance of showing inter ads, can always be tweaked.
+Ads.sharedInstance.showInterAdRandomly() // 33% chance of showing inter ads, can always be changed
 ```
 - To remove Ads, for example during gameplay or for in app purchases simply call 
 ```swift
@@ -97,7 +97,7 @@ Ads.sharedInstance.removeBannerAds()
 Ads.sharedInstance.removeAllAds()
 ```
 
-- To pause or resume tasks in your app or game when ads are opened/closed use these internal methods. These get called automatically so all you do is enter your code.
+- To pause/resume tasks in your app/game when Ads are viewed use these internal methods. These get called automatically so all you do is enter your code. You could use delegates, protocols or NSNotifcationCenter for example to call methods in you gameScene etc.
 ```swift
 private func pauseTasks() {
 }
@@ -114,7 +114,7 @@ private func resumeTasks() {
 
 - Step 4: When you submit your app on iTunes Connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected. If you decide to just use iAds than remove all google frameworks and references from your project and make sure you select NO, otherwise your app will also get rejected.
 
-NOTE: - Dont forget to setup the -D DEBUG flag (step 1) or the helper will not change the goolge adUnit ids automatically from test to release. 
+NOTE: - Dont forget to setup the "-D DEBUG" custom flag (step 1) or the helper will not change the google adUnit IDs automatically from test to release. 
 
 # Final Info
 
@@ -129,7 +129,7 @@ If you have an app that mainly uses viewControllers to show its UI than it might
 ```swift 
 Ads.sharedInstance.presentingViewController = self
 ```
-especially repeatedly when changing viewControllers. This might even cause issue with shared banner ads, although I have not tested that myself. For those apps you should change all the user methods such as this
+especially repeatedly when changing viewControllers. For those apps you should change all the user methods in Ads.swift such as this
 ```swift 
   func showBannerAd() {
         ...
@@ -143,7 +143,7 @@ to
     }
  ```
  
-Than call the methods from your viewControllers like so
+Than call the user methods from your ViewControllers like so
 
 ```swift
 Ads.sharedInstance.showBannerAd(self)
