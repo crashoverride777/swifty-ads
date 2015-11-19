@@ -21,7 +21,9 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v2.0
+
+
+//    v2.0 (Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
 
 import iAd
@@ -288,8 +290,6 @@ class Ads: NSObject {
         let request = GADRequest()
         
         #if DEBUG
-        // make sure to set the D-DEBUG flag in your project othewise this wont work.
-        // otherwise comment out line below
         request.testDevices = [ kGADSimulatorID ];
         #endif
         
@@ -306,8 +306,6 @@ class Ads: NSObject {
         let request = GADRequest()
         
         #if DEBUG
-        // make sure to set the D-DEBUG flag in your project or this wont work.
-        // otherwise comment out line below
         request.testDevices = [ kGADSimulatorID ];
         #endif
         
