@@ -120,11 +120,11 @@
 		B4B01A151B9A0AF500F9A8EA /* iAds and AdMob Helper */ = {
 			isa = PBXGroup;
 			children = (
+				B4B01A3C1B9A0B0700F9A8EA /* Ads.swift */,
 				B4B01A181B9A0AF500F9A8EA /* AppDelegate.swift */,
 				B4B01A1A1B9A0AF500F9A8EA /* GameScene.sks */,
 				B4B01A1C1B9A0AF500F9A8EA /* GameScene.swift */,
 				B4B01A1E1B9A0AF500F9A8EA /* GameViewController.swift */,
-				B4B01A3C1B9A0B0700F9A8EA /* Ads.swift */,
 				B4B01A201B9A0AF500F9A8EA /* Main.storyboard */,
 				B4B01A231B9A0AF500F9A8EA /* Images.xcassets */,
 				B4B01A251B9A0AF500F9A8EA /* LaunchScreen.xib */,
@@ -424,6 +424,7 @@
 				INFOPLIST_FILE = "iAds and AdMob Helper/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "Swift-2-iAds-and-AdMob-Helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
