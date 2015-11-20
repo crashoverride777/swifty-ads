@@ -79,7 +79,7 @@ class Ads: NSObject {
         super.init()
         print("Ads helper init")
         
-        // Check if in test or release mode
+        /// Check if in test or release mode
         #if DEBUG
             print("Ads in test mode")
             adMobBannerAdID = AdUnitID.Banner.test
