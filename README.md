@@ -156,69 +156,6 @@ v 2.0
 
 Helper will now automatically identify if an app is in debug or release mode and will adjust google ad ids accordingly. Please ensure you have set up a -D DEBUG flag as this will not work otherwise. See step 1.
 
-Clean-Up
-
-v 1.8.2
-
-Clean-up
-
-v1.8.1
-
-Updated google frameworks to v7.5.2
-
-v1.8
-
-Added a new method to show banner ads with a slight delay i.e when transitioning to new scene/view
-
-Fixed an issue that could cause GameCenter banners to show in the wrong orientation. Please update your helper and also change your appDelegate properties so they look like this
-
-var iAdBannerAdView: ADBannerView!
-var adMobBannerAdView: GADBannerView!
-
-v1.7.1
-
-Clean-up
-
-v1.7
-
-Deleted the class methods as it just seemed unnecessary bloat. If you prefer to still use them just change it. Call user methods like so now
-    Ads.sharedInstance.showSupportedBannerAd()
-    etc
-
-v1.6
-
-Added new method to showInterAds randomly
-
-v1.5
-
-AdMob banner ads now automatically identify if your app is in potrait or landscape
-
-All banner ads now automatically change orientation and adjust their position if you rotate your device
-
-iAd inter ad close button size on iPads has been adjusted.
-
-v1.4.1
-
-Clean-up and small improvements
-
-v1.4
-
-Clean-up and small improvements
-
-v1.3
-
-Upgraded to Swift 2
-
-v1.2
-
-Small changes
-
-v1.1
-
-Sorry for all the initial commits, its my first rep. Helper should be good to go now.
-
-v1.0
-
 
 
  
