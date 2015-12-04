@@ -97,13 +97,18 @@ Ads.sharedInstance.removeBannerAds()
 Ads.sharedInstance.removeAllAds()
 ```
 
-- To pause/resume tasks in your app/game when Ads are viewed use these internal methods. These get called automatically so all you do is enter your code. You could use delegates, protocols or NSNotifcationCenter for example to call methods in you gameScene etc.
+- To pause/resume tasks in your app/game when Ads are viewed you can implement the delegate methods if needed. Simply implement the delegate in your SKScene like so.
 ```swift
-private func pauseTasks() {
-}
-private func resumeTasks() {
-}
+class GameScene: SKScene, AdsDelegate {
+ ....
+ }
 ```
+
+and by setting the delegate in the same GameScene init method like so
+```swift
+Ads.sharedInstance.delegate = self
+```
+
 # When you go Live 
 
 - Step 1: If you havent used iAds before make sure your account is set up for iAds. You mainly have to sign an agreement in your developer account. (https://developer.apple.com/iad/)
@@ -151,6 +156,10 @@ etc
 ```
 
 # Release Notes
+
+v 2.1
+
+Added a protocol to make it easier to pause or resume tasks if needed.
 
 v 2.0
 
