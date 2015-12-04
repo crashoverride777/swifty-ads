@@ -97,7 +97,7 @@ Ads.sharedInstance.removeBannerAds()
 Ads.sharedInstance.removeAllAds()
 ```
 
-- To pause/resume tasks in your app/game when Ads are viewed you can implement the delegate methods if needed. Simply implement the delegate in your SKScene like so.
+- To pause/resume tasks in your app/game when Ads are viewed you can implement the delegate methods if needed (if you dont need to do this just ignore this step). Simply implement the delegate in your SKScene like so.
 ```swift
 class GameScene: SKScene, AdsDelegate {
  ....
