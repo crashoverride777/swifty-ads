@@ -23,11 +23,19 @@
 
 
 
-//    v2.0 (Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
+//    v2.1 (Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
 
 import iAd
 import GoogleMobileAds
+
+// MARK: - Delegate
+/// Implement this delegate in your scenes/view controllers if needed.
+/// Dont forget to call "Ads.sharedInstance.delegate = self" in the init method of the relevant scene/viewController
+protocol AdsDelegate {
+    func pauseTasks()  // change name if needed or comment out if necessary ie only 1 func needed
+    func resumeTasks() // change name if needed of comment out if necessary ie only 1 func needed
+}
 
 class Ads: NSObject {
     
@@ -52,6 +60,9 @@ class Ads: NSObject {
     
     /// Presenting view controller
     var presentingViewController: UIViewController!
+    
+    /// Delegate
+    var delegate: AdsDelegate?
     
     /// iAds are supported
     private var iAdsAreSupported = false
@@ -251,7 +262,7 @@ class Ads: NSObject {
             UIViewController.prepareInterstitialAds()
             iAdInterAdView.addSubview(iAdInterAdCloseButton)
             
-            //pauseTasks() // not really needed for inter as you tend to show them when not playing.
+            //delegate?.pauseTasks() // not really needed for inter as you tend to show them when not playing.
         } else {
             print("iAd inter not ready, reloading and trying adMob...")
             iAdInterAd = iAdLoadInterAd()
@@ -268,7 +279,7 @@ class Ads: NSObject {
         iAdInterAdView.removeFromSuperview()
         iAdInterAd = iAdLoadInterAd()
         
-        //resumeTasks() // not really needed for inter as you tend to not show them during gameplay
+        //delegate?.pauseTasks() // not really needed for inter as you tend to not show them during gameplay
     }
     
     /// Adbob show banner ad
@@ -350,18 +361,6 @@ class Ads: NSObject {
         print("iAds not supported")
         return false
     }
-    
-    /// Pause tasks in the app/game
-    private func pauseTasks() {
-        // Pause app/game, music etc here.
-        // you could use NSNotifactionCenter or Delegates to call methods in other SKScenes / ViewControllers
-    }
-    
-    /// Resume tasks in the app/game
-    private func resumeTasks() {
-        // Resume app/game, music etc here.
-        // you could use NSNotifactionCenter or Delegates to call methods in other SKScenes / ViewControllers
-    }
 }
 
 // MARK: - Delegates iAd Banner
@@ -381,14 +380,14 @@ extension Ads: ADBannerViewDelegate {
     
     func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
         print("iAd banner clicked")
-        pauseTasks()
+        delegate?.pauseTasks()
         
         return true
     }
     
     func bannerViewActionDidFinish(banner: ADBannerView!) {
         print("iAd banner closed")
-        resumeTasks()
+        delegate?.resumeTasks()
     }
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
@@ -439,12 +438,12 @@ extension Ads: GADBannerViewDelegate {
     
     func adViewWillPresentScreen(bannerView: GADBannerView!) {
         print("AdMob banner clicked")
-        pauseTasks()
+        delegate?.pauseTasks()
     }
     
     func adViewDidDismissScreen(bannerView: GADBannerView!) {
         print("AdMob banner closed")
-        resumeTasks()
+        delegate?.resumeTasks()
     }
     
     func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
@@ -472,7 +471,7 @@ extension Ads: GADInterstitialDelegate {
     
     func interstitialWillPresentScreen(ad: GADInterstitial!) {
         print("AdMob inter will present")
-        // pauseTasks() // not really needed for inter as you tend to show them when not playing.
+        //delegate?.pauseTasks() // not really needed for inter as you tend to show them when not playing.
     }
     
     func interstitialWillDismissScreen(ad: GADInterstitial!) {
@@ -482,12 +481,12 @@ extension Ads: GADInterstitialDelegate {
     func interstitialDidDismissScreen(ad: GADInterstitial!) {
         print("AdMob inter closed")
         adMobInterAd = adMobLoadInterAd()
-        // resumeTasks() // not really needed for inter as you tend to show them when not playing.
+        //delegate?.resumeTasks() // not really needed for inter as you tend to show them when not playing.
     }
     
     func interstitialWillLeaveApplication(ad: GADInterstitial!) {
         print("AdMob inter about to leave app")
-        // pauseTasks() // not really needed for inter as you tend to show them when not playing.
+        //delegate?.pauseTasks() // not really needed for inter as you tend to show them when not playing.
     }
     
     func interstitial(ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
