@@ -23,7 +23,7 @@
 
 
 
-//    v2.1 (Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
+//    v2.1.1 (Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
 
 import iAd
@@ -392,14 +392,12 @@ extension Ads: ADBannerViewDelegate {
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
         print("iAd banner error")
-        UIView.beginAnimations(nil, context: nil)
-        UIView.setAnimationDuration(1.5)
-        appDelegate.iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.iAdBannerAdView.frame.size.height / 2))
         appDelegate.iAdBannerAdView.hidden = true
-        UIView.commitAnimations()
+        appDelegate.iAdBannerAdView.delegate = nil
+        appDelegate.iAdBannerAdView.removeFromSuperview()
         
-        appDelegate.iAdBannerAdView.delegate = nil // stop iad banner from reloading
-        adMobLoadBannerAd() // try admob
+        // Try adMob
+        adMobLoadBannerAd()
     }
 }
 
@@ -448,16 +446,14 @@ extension Ads: GADBannerViewDelegate {
     
     func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
         print("AdMob banner error")
-        UIView.beginAnimations(nil, context: nil)
-        UIView.setAnimationDuration(1.5)
-        appDelegate.adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.adMobBannerAdView.frame.size.height / 2))
+      
         appDelegate.adMobBannerAdView.hidden = true
-        UIView.commitAnimations()
         
-        // try iad again if supported.
+        // Try iAd again if supported.
         if iAdsAreSupported {
             appDelegate.adMobBannerAdView.delegate = nil
-            appDelegate.iAdBannerAdView.delegate = self
+            appDelegate.adMobBannerAdView.removeFromSuperview()
+            iAdLoadBannerAd()
         }
     }
 }
