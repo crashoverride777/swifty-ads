@@ -157,6 +157,10 @@ etc
 
 # Release Notes
 
+v 2.1.1
+
+Improvements to error handling
+
 v 2.1
 
 Added a protocol to make it easier to pause or resume tasks if needed.
