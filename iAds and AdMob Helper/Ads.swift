@@ -23,7 +23,7 @@
 
 
 
-//    v2.1.1 (Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
+//    v2.1.2 (Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
 
 import iAd
@@ -91,17 +91,7 @@ class Ads: NSObject {
         print("Ads helper init")
         
         /// Check if in test or release mode
-        #if DEBUG
-            print("Ads in test mode")
-            adMobBannerAdID = AdUnitID.Banner.test
-            adMobInterAdID = AdUnitID.Inter.test
-        #endif
-        
-        #if !DEBUG
-            print("Ads in release mode")
-            adMobBannerAdID = AdUnitID.Banner.live
-            adMobInterAdID = AdUnitID.Inter.live
-        #endif
+        checkAdMobAdUnitID()
         
         /// Check if iAds are supported, comment out to test google ads
         iAdsAreSupported = iAdTimeZoneSupported()
@@ -111,6 +101,8 @@ class Ads: NSObject {
             iAdInterAd = iAdLoadInterAd()
         }
         adMobInterAd = adMobLoadInterAd() // always load AdMob
+        
+        print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
     }
    
     // MARK: - User Methods
@@ -282,10 +274,24 @@ class Ads: NSObject {
         //delegate?.pauseTasks() // not really needed for inter as you tend to not show them during gameplay
     }
     
+    /// AdMob check ID
+    private func checkAdMobAdUnitID() {
+        #if DEBUG
+            print("Ads in test mode")
+            adMobBannerAdID = AdUnitID.Banner.test
+            adMobInterAdID = AdUnitID.Inter.test
+        #endif
+        
+        #if !DEBUG
+            print("Ads in release mode")
+            adMobBannerAdID = AdUnitID.Banner.live
+            adMobInterAdID = AdUnitID.Inter.live
+        #endif
+    }
+    
     /// Adbob show banner ad
     private func adMobLoadBannerAd() {
         print("AdMob banner loading...")
-        print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
         
         if UIApplication.sharedApplication().statusBarOrientation.isLandscape {
             appDelegate.adMobBannerAdView = GADBannerView(adSize: kGADAdSizeSmartBannerLandscape)
