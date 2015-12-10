@@ -32,7 +32,7 @@ import GoogleMobileAds
 // MARK: - Delegate
 /// Implement this delegate in your scenes/view controllers if needed.
 /// Dont forget to call "Ads.sharedInstance.delegate = self" in the init method of the relevant scene/viewController
-protocol AdsDelegate {
+protocol AdsDelegate: class {
     func pauseTasks()  // change name if needed or comment out if necessary ie only 1 func needed
     func resumeTasks() // change name if needed of comment out if necessary ie only 1 func needed
 }
@@ -62,7 +62,7 @@ class Ads: NSObject {
     var presentingViewController: UIViewController!
     
     /// Delegate
-    var delegate: AdsDelegate?
+    weak var delegate: AdsDelegate?
     
     /// iAds are supported
     private var iAdsAreSupported = false
