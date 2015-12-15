@@ -97,6 +97,11 @@ Ads.sharedInstance.removeBannerAds()
 Ads.sharedInstance.removeAllAds()
 ```
 
+- For in app purchases you can set this bool to true to ensure ads are not shown anymore. (For permanent storage you will need to use something line NSUserDefaults, Keychain or NSCoding)
+```swift
+Ads.sharedInstance.removedAds = true
+```
+
 - To pause/resume tasks in your app/game when Ads are viewed you can implement the delegate methods if needed (if you dont need to do this just ignore this step). Simply implement the delegate in your SKScene like so.
 ```swift
 class GameScene: SKScene, AdsDelegate {
@@ -156,6 +161,10 @@ etc
 ```
 
 # Release Notes
+
+v 2.2
+
+Added "removedAds" bool
 
 v 2.1.1
 
