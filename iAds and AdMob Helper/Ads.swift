@@ -112,6 +112,7 @@ class Ads: NSObject {
     
     /// Show banner ad with delay
     func showBannerAdDelayed() {
+        guard !removedAds else { return }
         NSTimer.scheduledTimerWithTimeInterval(0.8, target: self, selector: "showBannerAd", userInfo: nil, repeats: false)
     }
     
