@@ -23,7 +23,7 @@
 
 
 
-//    v2.1.2 (Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
+//    v2.2 (Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
 
 import iAd
@@ -63,6 +63,9 @@ class Ads: NSObject {
     
     /// Delegate
     weak var delegate: AdsDelegate?
+    
+    /// Removed ads
+    var removedAds = false
     
     /// iAds are supported
     private var iAdsAreSupported = false
@@ -114,6 +117,7 @@ class Ads: NSObject {
     
     /// Show banner ad
     func showBannerAd() {
+        guard !removedAds else { return }
         if iAdsAreSupported {
             iAdLoadBannerAd()
         } else {
@@ -123,6 +127,7 @@ class Ads: NSObject {
     
     /// Show inter ad
     func showInterAd() {
+        guard !removedAds else { return }
         if iAdsAreSupported {
             iAdShowInterAd()
         } else {
@@ -132,6 +137,7 @@ class Ads: NSObject {
     
     /// Show inter ad randomly (33% chance)
     func showInterAdRandomly() {
+        guard !removedAds else { return }
         let randomInterAd = Int(arc4random() % 3)
         print("randomInterAd = \(randomInterAd)")
         if randomInterAd == 1 {
