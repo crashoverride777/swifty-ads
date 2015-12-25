@@ -162,6 +162,10 @@ etc
 
 # Release Notes
 
+v 2.2.1
+
+Added protocol extension, which means not all protocol methods have to be implemented
+
 v 2.2
 
 Added "removedAds" bool
