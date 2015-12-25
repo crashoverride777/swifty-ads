@@ -23,18 +23,29 @@
 
 
 
-//    v2.2 (Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
+//    v2.2.1 (Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
 
 import iAd
 import GoogleMobileAds
 
 // MARK: - Delegate
+
 /// Implement this delegate in your scenes/view controllers if needed.
 /// Dont forget to call "Ads.sharedInstance.delegate = self" in the init method of the relevant scene/viewController
 protocol AdsDelegate: class {
-    func pauseTasks()  // change name if needed or comment out if necessary ie only 1 func needed
-    func resumeTasks() // change name if needed of comment out if necessary ie only 1 func needed
+    func pauseTasks()
+    func resumeTasks()
+}
+
+/// Give a default implementation so you dont have to call both methods if only 1 is needed
+extension AdsDelegate {
+    func pauseTasks() {
+        print("Pause tasks")
+    }
+    func resumeTasks() {
+        print("Resume tasks")
+    }
 }
 
 class Ads: NSObject {
