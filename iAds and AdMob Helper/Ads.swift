@@ -223,7 +223,7 @@ class Ads: NSObject {
         }
     }
     
-    // MARK: - Internal Methods
+    // MARK: - Private Methods
 
     /// iAd show banner ad
     private func iAdLoadBannerAd() {
