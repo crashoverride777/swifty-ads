@@ -175,28 +175,36 @@ class Ads: NSObject {
         }
     }
     
-    /// Remove all ads
+    /// Remove all ads (In app purchases)
     func removeAllAds() {
         print("Removed all ads")
+        
+        // iAd Banner
         if appDelegate.iAdBannerAdView != nil {
             appDelegate.iAdBannerAdView.delegate = nil
             appDelegate.iAdBannerAdView.removeFromSuperview()
         }
         
+        // iAd Inter
         if iAdInterAd != nil {
             iAdInterAd!.delegate = nil
             iAdInterAdCloseButton.removeFromSuperview()
             iAdInterAdView.removeFromSuperview()
         }
         
+        // AdMob Banner
         if appDelegate.adMobBannerAdView != nil {
             appDelegate.adMobBannerAdView.delegate = nil
             appDelegate.adMobBannerAdView.removeFromSuperview()
         }
         
+        // AdMob Inter
         if adMobInterAd != nil {
             adMobInterAd!.delegate = nil
         }
+        
+        // Removed ads, still needs to be saved permantently
+        removedAds = true
     }
     
     /// Device orientation changed
