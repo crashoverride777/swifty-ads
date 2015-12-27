@@ -94,15 +94,11 @@ Ads.sharedInstance.showInterAdRandomly() // 33% chance of showing inter ads, can
 - To remove Ads, for example during gameplay or for in app purchases simply call 
 ```swift
 Ads.sharedInstance.removeBannerAds() 
-Ads.sharedInstance.removeAllAds()
+Ads.sharedInstance.removeAllAds() // This sets the bool "RemovedAds" to true. For permanent storage you will need to use something line NSUserDefaults, Keychain or NSCoding)
 ```
 
-- For in app purchases you can set this bool to true to ensure ads are not shown anymore. (For permanent storage you will need to use something line NSUserDefaults, Keychain or NSCoding)
-```swift
-Ads.sharedInstance.removedAds = true
-```
-
-- To pause/resume tasks in your app/game when Ads are viewed you can implement the delegate methods if needed (if you dont need to do this just ignore this step). Simply implement the delegate in your SKScene like so.
+- To pause/resume tasks in your app/game when Ads are viewed you can implement the delegate methods if needed (if you dont need to do this just ignore this step). 
+Simply implement the delegate in your SKScene like so.
 ```swift
 class GameScene: SKScene, AdsDelegate {
  ....
