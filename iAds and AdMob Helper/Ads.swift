@@ -21,10 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-
-
 //    v2.2.1 (Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
-
 
 import iAd
 import GoogleMobileAds
@@ -37,8 +34,7 @@ protocol AdsDelegate: class {
     func pauseTasks()
     func resumeTasks()
 }
-
-/// Give a default implementation so you dont have to call both methods if only 1 is needed
+/// Give a default implementation to the delegate so you dont have to call both methods if only 1 is needed
 extension AdsDelegate {
     func pauseTasks() {
         print("Pause tasks")
@@ -76,7 +72,7 @@ class Ads: NSObject {
     weak var delegate: AdsDelegate?
     
     /// Removed ads
-    var removedAds = false
+    private var removedAds = false
     
     /// iAds are supported
     private var iAdsAreSupported = false
@@ -103,6 +99,7 @@ class Ads: NSObject {
     private override init() {
         super.init()
         print("Ads helper init")
+        print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
         
         /// Check if in test or release mode
         checkAdMobAdUnitID()
@@ -115,8 +112,6 @@ class Ads: NSObject {
             iAdInterAd = iAdLoadInterAd()
         }
         adMobInterAd = adMobLoadInterAd() // always load AdMob
-        
-        print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
     }
    
     // MARK: - User Methods
@@ -179,6 +174,9 @@ class Ads: NSObject {
     func removeAllAds() {
         print("Removed all ads")
         
+        // Removed ads
+        removedAds = true
+        
         // iAd Banner
         if appDelegate.iAdBannerAdView != nil {
             appDelegate.iAdBannerAdView.delegate = nil
@@ -202,9 +200,6 @@ class Ads: NSObject {
         if adMobInterAd != nil {
             adMobInterAd!.delegate = nil
         }
-        
-        // Removed ads, still needs to be saved permantently
-        removedAds = true
     }
     
     /// Device orientation changed
@@ -333,7 +328,7 @@ class Ads: NSObject {
         let request = GADRequest()
         
         #if DEBUG
-        request.testDevices = [ kGADSimulatorID ];
+        request.testDevices = [kGADSimulatorID]
         #endif
         
         appDelegate.adMobBannerAdView.loadRequest(request)
@@ -349,7 +344,7 @@ class Ads: NSObject {
         let request = GADRequest()
         
         #if DEBUG
-        request.testDevices = [ kGADSimulatorID ];
+        request.testDevices = [kGADSimulatorID]
         #endif
         
         adMobInterAd.loadRequest(request)
