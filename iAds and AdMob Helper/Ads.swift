@@ -262,7 +262,7 @@ class Ads: NSObject {
     /// iAd show inter ad
     private func iAdShowInterAd() {
         guard iAdInterAd != nil && iAdInterAd!.loaded else {
-            print("iAd inter not ready, reloading and trying adMob...")
+            print("iAd inter not ready, reloading and trying adMob")
             iAdInterAd = iAdLoadInterAd()
             adMobShowInterAd() // try AdMob
             return
@@ -348,7 +348,7 @@ class Ads: NSObject {
     /// Admob show inter ad
     private func adMobShowInterAd() {
         guard adMobInterAd != nil && adMobInterAd!.isReady else {
-            print("AdMob inter is not ready, reloading...")
+            print("AdMob inter is not ready, reloading")
             adMobInterAd = adMobLoadInterAd()
             return
             /*
