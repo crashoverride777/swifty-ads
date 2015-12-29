@@ -99,14 +99,13 @@ Ads.sharedInstance.removeBannerAds()
 - To remove all Ads, mainly for in app purchases simply call 
 ```swift
 Ads.sharedInstance.removeAllAds() 
-
-// This method will set a removedAds bool to true in the Ads.swift helper. This ensures you only have to call this method to remove Ads and afterwards all the above "Ads.sharedInstance.show..." methods will not fire anymore and therefore require no further editing.
-
-NOTE
-// For permanent storage you will need to create your own bool and save it in something like NSUserDefaults, Keychain or NSCoding and than call this method when your app launches)
 ```
 
-- To pause/resume tasks in your app/game when Ads are viewed you can implement the delegate methods if needed (if you dont need to do this just ignore this step). 
+NOTE
+This method will set a removedAds bool to true in the Ads.swift helper. This ensures you only have to call this method to remove Ads and afterwards all the above "Ads.sharedInstance.show..." methods will not fire anymore and therefore require no further editing.
+For permanent storage you will need to create your own bool and save it in something like NSUserDefaults, Keychain or NSCoding and than call this method when your app launches)
+
+- To pause/resume tasks in your app/game when Ads are viewed you can implement the delegate methods if needed
 Simply implement the delegate in your SKScene like so.
 ```swift
 class GameScene: SKScene, AdsDelegate {
@@ -114,7 +113,7 @@ class GameScene: SKScene, AdsDelegate {
  }
 ```
 
-and by setting the delegate in the same GameScene init method like so
+and by setting the delegate in the same GameScene "didMoveToView" (init) method like so
 ```swift
 Ads.sharedInstance.delegate = self
 ```
