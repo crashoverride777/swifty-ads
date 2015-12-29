@@ -267,21 +267,20 @@ class Ads: NSObject {
             return
         }
         
-        if iAdInterAd!.loaded {
-            print("iAd inter showing")
-            iAdInterAdView.frame = presentingViewController.view.bounds
-            presentingViewController.view.addSubview(iAdInterAdView)
-            iAdInterAd!.presentInView(iAdInterAdView)
-            UIViewController.prepareInterstitialAds()
-            iAdInterAdView.addSubview(iAdInterAdCloseButton)
-            
-            //delegate?.pauseTasks() // not really needed for inter as you tend to show them when not playing.
-        } else {
+        guard iAdInterAd!.loaded else {
             print("iAd inter not ready, reloading and trying adMob...")
             iAdInterAd = iAdLoadInterAd()
             adMobShowInterAd() // try AdMob
-            
+            return
         }
+        
+        print("iAd inter showing")
+        iAdInterAdView.frame = presentingViewController.view.bounds
+        presentingViewController.view.addSubview(iAdInterAdView)
+        iAdInterAd!.presentInView(iAdInterAdView)
+        UIViewController.prepareInterstitialAds()
+        iAdInterAdView.addSubview(iAdInterAdCloseButton)
+        //delegate?.pauseTasks() // not really needed for inter as you tend to show them when not playing.
     }
     
     /// iAd inter ad pressed close button
@@ -360,19 +359,20 @@ class Ads: NSObject {
             return
         }
         
-        if adMobInterAd!.isReady {
-            print("AdMob inter showing")
-            adMobInterAd!.presentFromRootViewController(presentingViewController)
-            // pauseTasks() // not really needed for inter as you tend to not show them during gameplay
-        } else {
+        guard adMobInterAd!.isReady else {
             print("AdMob inter is not ready, reloading...")
             adMobInterAd = adMobLoadInterAd()
+            return
             /*
             Do not try iAd again like it does for banner ads.
             They might might get stuck in a loop if there are connection problems
             and the ad than might show at an unexpected moment
             */
         }
+        
+        print("AdMob inter showing")
+        adMobInterAd!.presentFromRootViewController(presentingViewController)
+        // pauseTasks() // not really needed for inter as you tend to not show them during gameplay
     }
     
     /// Check if iads are supported
