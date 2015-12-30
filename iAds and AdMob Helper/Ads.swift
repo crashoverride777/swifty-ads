@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v2.2.1 (Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
+//    v2.2.2 (Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
 import iAd
 import GoogleMobileAds
@@ -147,12 +147,11 @@ class Ads: NSObject {
         guard !removedAds else { return }
         let randomInterAd = Int(arc4random() % 3)
         print("randomInterAd = \(randomInterAd)")
-        if randomInterAd == 1 {
-            if iAdsAreSupported {
-                iAdShowInterAd()
-            } else {
-                adMobShowInterAd()
-            }
+        guard randomInterAd == 1 else { return }
+        if iAdsAreSupported {
+            iAdShowInterAd()
+        } else {
+            adMobShowInterAd()
         }
     }
     
@@ -407,12 +406,14 @@ extension Ads: ADBannerViewDelegate {
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
         print("iAd banner error")
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(1.5)
         appDelegate.iAdBannerAdView.hidden = true
+        appDelegate.iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.iAdBannerAdView.frame.size.height / 2))
         appDelegate.iAdBannerAdView.delegate = nil
         appDelegate.iAdBannerAdView.removeFromSuperview()
-        
-        // Try adMob
         adMobLoadBannerAd()
+        UIView.commitAnimations()
     }
 }
 
@@ -445,6 +446,7 @@ extension Ads: GADBannerViewDelegate {
         presentingViewController.view.addSubview(appDelegate.adMobBannerAdView)
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(1.5)
+        appDelegate.adMobBannerAdView.hidden = false
         appDelegate.adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.adMobBannerAdView.frame.size.height / 2))
         UIView.commitAnimations()
     }
@@ -461,15 +463,18 @@ extension Ads: GADBannerViewDelegate {
     
     func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
         print("AdMob banner error")
-      
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(1.5)
         appDelegate.adMobBannerAdView.hidden = true
+        appDelegate.adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.adMobBannerAdView.frame.size.height / 2))
         
-        // Try iAd again if supported.
         if iAdsAreSupported {
             appDelegate.adMobBannerAdView.delegate = nil
             appDelegate.adMobBannerAdView.removeFromSuperview()
             iAdLoadBannerAd()
         }
+        
+        UIView.commitAnimations()
     }
 }
 
