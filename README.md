@@ -138,15 +138,6 @@ and see the comments I made.
 
 NOTE: - Dont forget to setup the "-D DEBUG" custom flag (step 1) or the helper will not change the google adUnit IDs automatically from test to release. 
 
-# Final Info
-
-The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and an inter ad randomly when touching the screen. 
-Like I mentioned above I primarly focused on SpriteKit to make it easy to call Ads from your SKScenes without having to use NSNotificationCenter or Delegates to constantly communicate with the viewController. Also this should help keep your viewController clean as mine became a mess after integrating AdMob.
-
-Please let me know about any bugs or improvements, I am by now means an expert. 
-
-Enjoy
-
 # Not a SpriteKit game?
 If you have an app that mainly uses viewControllers to show its UI than it might be clunky to call 
 ```swift 
@@ -172,6 +163,15 @@ Than call the user methods from your ViewControllers like so
 Ads.sharedInstance.showBannerAd(self)
 etc
 ```
+
+# Final Info
+
+The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and an inter ad randomly when touching the screen. 
+Like I mentioned above I primarly focused on SpriteKit to make it easy to call Ads from your SKScenes without having to use NSNotificationCenter or Delegates to constantly communicate with the viewController. Also this should help keep your viewController clean as mine became a mess after integrating AdMob.
+
+Please let me know about any bugs or improvements, I am by now means an expert. 
+
+Enjoy
 
 # Release Notes
 
