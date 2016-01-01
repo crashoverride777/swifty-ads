@@ -1,6 +1,6 @@
 # iAds, AdMob and CustomAds Helper
 
-A simple helper class that should make integrating Banner and Interterstitial Ads from Apple and Google as well as custom Ads a breeze.
+A simple helper class that should make integrating Ads from Apple and Google as well as your own custom Ads a breeze.
 I decided to go the Singleton way but please feel free to change that if you dont like it. This helper has been made while designing my SpriteKit game but it can be used for any kind of app. 
 
 The cool thing is that iAds will be used when they are supported otherwise AdMob will be used. 
@@ -122,7 +122,7 @@ Ads.sharedInstance.delegate = self
 
 - To add more custom Ads simply create a new struct called CustomAd2 with the new properties and than go to the method
 ```swift
-Ads.sharedInstance.showInterAd...
+func showInterAd(includeCustomAd showCustomAd: Bool) {
 ```
 and see the comments I made.
 
