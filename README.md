@@ -88,8 +88,8 @@ iAdsAreSupported = iAdTimeZoneSupported()
 ```swift
 Ads.sharedInstance.showBannerAd() 
 Ads.sharedInstance.showBannerAdDelayed() // delay showing banner slightly eg when transitioning to new scene/view
-Ads.sharedInstance.showInterAd(includeCustomAd: true)
-Ads.sharedInstance.showInterAdRandomly(includeCustomAd: true) // 33% chance of showing inter ads, can always be changed
+Ads.sharedInstance.showInterAd(includeCustomAd: true) // if true it will show a customAd every 4th time an ad is shown
+Ads.sharedInstance.showInterAdRandomly(includeCustomAd: true) // 33% chance of showing inter ads, if true it will show a customAd every 4th time an ad is shown. Settings can always be tweaked
 ```
 - To remove Banner Ads, for example during gameplay 
 ```swift
