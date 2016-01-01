@@ -121,9 +121,9 @@ Ads.sharedInstance.delegate = self
 ```
 
 - To add more custom Ads simply create a new struct called CustomAd2 with the new properties and than go to the method
-
-    Ads.sharedInstance.showInterAd...
-    
+```swift
+Ads.sharedInstance.showInterAd...
+```
 and see the comments I made.
 
 # When you go Live 
