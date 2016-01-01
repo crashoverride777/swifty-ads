@@ -1,4 +1,4 @@
-# iAds and AdMob Helper
+# iAds, AdMob and CustomAds Helper
 
 A simple helper class that should make integrating Banner and Interterstitial Ads from Apple and Google as well as custom Ads a breeze.
 I decided to go the Singleton way but please feel free to change that if you dont like it. This helper has been made while designing my SpriteKit game but it can be used for any kind of app. 
