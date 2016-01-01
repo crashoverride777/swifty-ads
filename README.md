@@ -88,8 +88,8 @@ iAdsAreSupported = iAdTimeZoneSupported()
 ```swift
 Ads.sharedInstance.showBannerAd() 
 Ads.sharedInstance.showBannerAdDelayed() // delay showing banner slightly eg when transitioning to new scene/view
-Ads.sharedInstance.showInterAd()
-Ads.sharedInstance.showInterAdRandomly() // 33% chance of showing inter ads, can always be changed
+Ads.sharedInstance.showInterAd(includeCustomAd: true)
+Ads.sharedInstance.showInterAdRandomly(includeCustomAd: true) // 33% chance of showing inter ads, can always be changed
 ```
 - To remove Banner Ads, for example during gameplay 
 ```swift
@@ -102,8 +102,10 @@ Ads.sharedInstance.removeAllAds()
 ```
 
 NOTE
+
 This method will set a removedAds bool to true in the Ads.swift helper. This ensures you only have to call this method to remove Ads and afterwards all the above "Ads.sharedInstance.show..." methods will not fire anymore and therefore require no further editing.
-For permanent storage you will need to create your own bool and save it in something like NSUserDefaults, Keychain or NSCoding and than call this method when your app launches)
+
+For permanent storage you will need to create your own product bool and save it in something like NSUserDefaults, Keychain or NSCoding and than call this method when your app launches.
 
 - To pause/resume tasks in your app/game when Ads are viewed you can implement the delegate methods if needed
 Simply implement the delegate in your SKScene like so.
@@ -132,7 +134,7 @@ NOTE: - Dont forget to setup the "-D DEBUG" custom flag (step 1) or the helper w
 
 # Final Info
 
-The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and an inter ad randomly when touching the screen.
+The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and an inter ad randomly when touching the screen. 
 Like I mentioned above I primarly focused on SpriteKit to make it easy to call Ads from your SKScenes without having to use NSNotificationCenter or Delegates to constantly communicate with the viewController. Also this should help keep your viewController clean as mine became a mess after integrating AdMob.
 Please let me know about any bugs or improvements, I am by now means an expert. 
 
@@ -166,25 +168,9 @@ etc
 
 # Release Notes
 
-v 2.2.1
+v 3.0
 
-Added protocol extension, which means not all protocol methods have to be implemented
 
-v 2.2
-
-Added "removedAds" bool
-
-v 2.1.1
-
-Improvements to error handling
-
-v 2.1
-
-Added a protocol to make it easier to pause or resume tasks if needed.
-
-v 2.0
-
-Helper will now automatically identify if an app is in debug or release mode and will adjust google ad ids accordingly. Please ensure you have set up a -D DEBUG flag as this will not work otherwise. See step 1.
 
 
 
