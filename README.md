@@ -177,6 +177,10 @@ etc
 
 v 3.0
 
+- Added ability to show custom ads
+- Added extension to hide print statements for release
+- Small fixes, improvements and clean-up
+
 
 
 
