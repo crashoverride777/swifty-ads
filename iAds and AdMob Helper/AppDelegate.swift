@@ -7,7 +7,7 @@
 
 import UIKit
 import iAd
-import GoogleMobileAds
+import GoogleMobileAds 
 
 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 

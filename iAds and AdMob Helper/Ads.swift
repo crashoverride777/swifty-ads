@@ -173,7 +173,7 @@ class Ads: NSObject {
         
         // Custom ad 1
         if customAdCounter == 4 {
-            customAdCounter = 0
+            customAdCounter = 0 // delete if more than one custom ad
             let customAd1 = customAdShow(CustomAd1.backgroundColor, headerColor: CustomAd1.headerColor, headerText: CustomAd1.headerText, imageName: CustomAd1.image, appURL: CustomAd1.appURL)
             presentingViewController.view.addSubview(customAd1)
         }

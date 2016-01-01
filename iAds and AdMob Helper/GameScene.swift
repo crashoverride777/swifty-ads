@@ -19,7 +19,7 @@ class GameScene: SKScene {
         
         // Show banner ad
         Ads.sharedInstance.showBannerAd()
-    }
+    } 
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
