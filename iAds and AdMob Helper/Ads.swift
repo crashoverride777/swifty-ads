@@ -37,8 +37,8 @@ protocol AdsDelegate: class {
 }
 // Give empty default implementation so you dont have to confirm to both methods in your SKScene if you only use 1.
 extension AdsDelegate {
-    func pauseTasks() { }
-    func resumeTasks() { }
+    func pause() { }
+    func resume() { }
 }
 
 #if os(iOS)
