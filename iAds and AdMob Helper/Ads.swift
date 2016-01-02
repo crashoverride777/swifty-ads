@@ -30,13 +30,8 @@ import GoogleMobileAds
 
 // MARK: - Ads Delegate
 protocol AdsDelegate: class {
-    func pause()
-    func resume()
-}
-// Give empty default implementation so you dont have to confirm to both methods in your SKScene if you only use 1.
-extension AdsDelegate {
-    func pause() { }
-    func resume() { }
+    func pauseTasks()
+    func resumeTasks()
 }
 
 class Ads: NSObject {
@@ -491,13 +486,13 @@ extension Ads: ADBannerViewDelegate {
     
     func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
         Debug.print("iAds banner clicked")
-        delegate?.pause()
+        delegate?.pauseTasks()
         return true
     }
     
     func bannerViewActionDidFinish(banner: ADBannerView!) {
         Debug.print("iAds banner closed")
-        delegate?.resume()
+        delegate?.resumeTasks()
     }
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
@@ -546,12 +541,12 @@ extension Ads: GADBannerViewDelegate {
     
     func adViewWillPresentScreen(bannerView: GADBannerView!) {
         Debug.print("AdMob banner clicked")
-        delegate?.pause()
+        delegate?.pauseTasks()
     }
     
     func adViewDidDismissScreen(bannerView: GADBannerView!) {
         Debug.print("AdMob banner closed")
-        delegate?.resume()
+        delegate?.resumeTasks()
     }
     
     func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
