@@ -532,6 +532,7 @@ extension Ads: ADInterstitialAdDelegate {
         iAdInterAd!.delegate = nil
         iAdInterAdCloseButton.removeFromSuperview()
         iAdInterAdView.removeFromSuperview()
+        iAdLoadInterAd()
     }
 }
 
@@ -600,6 +601,7 @@ extension Ads: GADInterstitialDelegate {
     
     func interstitial(ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
         Debug.print("AdMob inter error")
+        adMobLoadInterAd()
     }
 }
 #endif
