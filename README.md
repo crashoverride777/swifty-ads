@@ -108,16 +108,27 @@ This method will set a removedAds bool to true in the Ads.swift helper. This ens
 For permanent storage you will need to create your own product bool and save it in something like NSUserDefaults, Keychain or NSCoding and than call this method when your app launches.
 
 - To pause/resume tasks in your app/game when Ads are viewed you can implement the delegate methods if needed
-Simply implement the delegate in your SKScene like so.
+
+Simply implement the delegate in your SKScene,
 ```swift
 class GameScene: SKScene, AdsDelegate {
  ....
  }
 ```
 
-and by setting the delegate in the same GameScene "didMoveToView" (init) method like so
+set the delegate in the same GameScene "didMoveToView" (init) method like so
 ```swift
 Ads.sharedInstance.delegate = self
+```
+
+and create the two protocol methods
+```swift
+func pauseTasks() {
+   // pause your game/app
+}
+func resumeTasks() {
+   // resume your game/app
+}
 ```
 
 - To add more custom Ads simply create a new struct called CustomAd2 with the new properties and than go to the method
