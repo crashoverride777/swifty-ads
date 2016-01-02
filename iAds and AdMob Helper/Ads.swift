@@ -322,7 +322,7 @@ class Ads: NSObject {
     }
     
     /// AdMob check ad unit id
-    func adMobCheckAdUnitID() {
+    private func adMobCheckAdUnitID() {
         #if DEBUG
             Debug.print("Ads in test mode")
             adMobBannerAdID = AdUnitID.Banner.test
