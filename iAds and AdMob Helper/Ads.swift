@@ -601,6 +601,7 @@ extension Ads: GADInterstitialDelegate {
     
     func interstitial(ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
         Debug.print("AdMob inter error")
+        adMobInterAd!.delegate = nil
         adMobLoadInterAd()
     }
 }
