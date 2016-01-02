@@ -25,10 +25,8 @@
 
 //    v3.0
 
-#if os(iOS)
 import iAd
 import GoogleMobileAds
-#endif
 
 // MARK: - Ads Delegate
 protocol AdsDelegate: class {
@@ -41,7 +39,6 @@ extension AdsDelegate {
     func resume() { }
 }
 
-#if os(iOS)
 class Ads: NSObject {
     
     // MARK: - Static Properties
@@ -603,7 +600,6 @@ extension Ads: GADInterstitialDelegate {
         adMobInterAd = adMobLoadInterAd()
     }
 }
-#endif
 
 // MARK: - Print Debug (can be used for every print statement in your project)
 struct Debug {
