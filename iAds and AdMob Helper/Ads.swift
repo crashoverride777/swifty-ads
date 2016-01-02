@@ -529,7 +529,6 @@ extension Ads: ADInterstitialAdDelegate {
     
     func interstitialAd(interstitialAd: ADInterstitialAd!, didFailWithError error: NSError!) {
         Debug.print("iAds inter error \(error)")
-        iAdInterAd!.delegate = nil
         iAdInterAdCloseButton.removeFromSuperview()
         iAdInterAdView.removeFromSuperview()
         iAdInterAd = iAdLoadInterAd()
@@ -601,7 +600,6 @@ extension Ads: GADInterstitialDelegate {
     
     func interstitial(ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
         Debug.print("AdMob inter error")
-        adMobInterAd!.delegate = nil
         adMobInterAd = adMobLoadInterAd()
     }
 }
