@@ -109,25 +109,20 @@ For permanent storage you will need to create your own product bool and save it 
 
 - To pause/resume tasks in your app/game when Ads are viewed you can implement the delegate methods if needed
 
-Simply implement the delegate in your SKScene,
-```swift
-class GameScene: SKScene, AdsDelegate {
- ....
- }
-```
-
-set the delegate in the same GameScene "didMoveToView" (init) method like so
+Set the delegate in the same GameScene "didMoveToView" (init) method like so
 ```swift
 Ads.sharedInstance.delegate = self
 ```
 
-and create the two protocol methods
+and create an extension conforming to the protocol (this helps with clean code as well)
 ```swift
-func pauseTasks() {
-   // pause your game/app
-}
-func resumeTasks() {
-   // resume your game/app
+extension GameScene: AdsDelegate {
+    func pauseTasks() {
+        // pause your game/app
+    }
+    func resumeTasks() { 
+       // resume your game/app
+    }
 }
 ```
 
