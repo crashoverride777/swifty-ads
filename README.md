@@ -19,6 +19,8 @@ Go to Targets -> BuildSettings -> SwiftCompiler-CustomFlags and add a custom fla
 
 - Step 4: Add the Google framework to your project. Go to Targets -> BuildPhases -> LinkedBinaries and click the + button. Than press the "Add Other" button and search your computer for the folder you copied at Step 3 containing the googleframework file and add that file. Your linkedBinaries should now say 1.
 
+NOTE: - If you ever update the frameworks, you will need delete the old framework from your project siderbar and the framework folder from your project root folder. You need to than go to Targets-BuildSettings-SearchPaths and under FrameworkSearchPaths you should see a link to your old folder. Delete this link and than redo step 4 to add the updated version.
+
 - Step 5: Add the other frameworks needed. Click the + button again and search for and than add each of these frameworks: AdSupport, AudioToolbox, AVFoundation, CoreGraphics, CoreMedia, CoreTelephony, EventKit, EventKitUI, MessageUI, StoreKit, SystemConfiguration. (https://developers.google.com/admob/ios/quick-start?hl=en
  ). 
 You might want to consider putting all the added frameworks you now see in your projects sidebar into a folder called Frameworks, similar to the sample project, to keep it clean.
@@ -101,9 +103,7 @@ Ads.sharedInstance.removeBannerAds()
 Ads.sharedInstance.removeAllAds() 
 ```
 
-NOTE
-
-This method will set a removedAds bool to true in the Ads.swift helper. This ensures you only have to call this method to remove Ads and afterwards all the above "Ads.sharedInstance.show..." methods will not fire anymore and therefore require no further editing.
+NOTE: - This method will set a removedAds bool to true in the Ads.swift helper. This ensures you only have to call this method to remove Ads and afterwards all the above "Ads.sharedInstance.show..." methods will not fire anymore and therefore require no further editing.
 
 For permanent storage you will need to create your own product bool and save it in something like NSUserDefaults, Keychain or NSCoding and than call this method when your app launches.
 
