@@ -307,7 +307,6 @@ class Ads: NSObject {
     /// iAd pressed inter close button
     func iAdPressedInterAdCloseButton(sender: UIButton) {
         Debug.print("iAd inter closed")
-        iAdInterAd!.delegate = nil
         iAdInterAdCloseButton.removeFromSuperview()
         iAdInterAdView.removeFromSuperview()
         iAdInterAd = iAdLoadInterAd()
