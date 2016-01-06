@@ -8,7 +8,7 @@ Whats really cool is that if iAd banners are having an error it will automatical
 
 If an iAd Inter ad fails it will try an AdMob Inter ad, incase that adMob inter ad also fails it will however not try iAd again because you obviously dont want a full screen ad show at the wrong time.
 
-This Helper creates whats called a shared iAd Banner. The usual way is to put the iAd and adMob banner properties into the appDelegate but because this helper is a Singleton there is no need for this because there is only 1 instance of the class. To read more about shared banner ads read this documentation from Apple
+This Helper creates whats called a shared Banner which is the recommended way by apple. The usual way is to put the iAd and adMob banner properties into the appDelegate but because this helper is a Singleton there is no need for this because there is only 1 instance of the class. To read more about shared banner ads read this documentation from Apple
 https://developer.apple.com/library/ios/technotes/tn2286/_index.html
 
 # Set-Up
