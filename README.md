@@ -95,7 +95,7 @@ For permanent storage you will need to create your own product bool and save it 
 
 - To pause/resume tasks in your app/game when Ads are viewed you can implement the delegate methods if needed
 
-Set the delegate in the same GameScene "didMoveToView" (init) method like so
+Set the delegate in your GameScenes "didMoveToView" (init) method like so
 ```swift
 Ads.sharedInstance.delegate = self
 ```
