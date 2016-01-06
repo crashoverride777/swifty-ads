@@ -8,6 +8,9 @@ Whats really cool is that if iAd banners are having an error it will automatical
 
 If an iAd Inter ad fails it will try an AdMob Inter ad, incase that adMob inter ad also fails it will however not try iAd again because you obviously dont want a full screen ad show at the wrong time.
 
+This Helper creates whats called a shared iAd Banner. The usual way is to put the iAd and adMob banner properties into the appDelegate but because this helper is a Singleton there is no need for this because there is only 1 instance of the class. To read more about shared banner ads read this documentation from Apple
+https://developer.apple.com/library/ios/technotes/tn2286/_index.html
+
 # Set-Up
 
 - Step 1: Set-Up "-D DEBUG" custom flag. This will reduce the hassle of having to manually change the google ad ids when testing or when releasing. This is a good idea in general for other things such as hiding print statements.
@@ -25,24 +28,7 @@ NOTE: - If you ever update the frameworks, you will need delete the old framewor
  ). 
 You might want to consider putting all the added frameworks you now see in your projects sidebar into a folder called Frameworks, similar to the sample project, to keep it clean.
 
-- Step 6: In your AppDelegate.swift underneath ```import UIKit``` write the following
-```swift
-import iAd
-import GoogleMobileAds
-
-let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-```
-
-- Step 7: Still in your AppDelegate.swift under the class implementation you will need to create these properties
-
-```swift
-var iAdBannerAdView: ADBannerView!
-var adMobBannerAdView: GADBannerView!
-```
-
-This is what is called a shared Banner ad and although not really needed for a spritekit game with 1 view controller this is the correct way to use banner ads in apps with multiple ViewControllers. (https://developer.apple.com/library/ios/technotes/tn2286/_index.html)
-
-- Step 8: In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
+- Step 6: In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 ```swift
 Ads.sharedInstance.presentingViewController = self
 ```
@@ -51,7 +37,7 @@ This sets the presentingViewController property to your current ViewController a
 
 NOTE: If your app is not a spriteKit game or uses multiple view controllers than you should ignore this Step and check "not a SpriteKit game?" after reading the rest.
 
-- Step 9: This Step is only needed if your app supports both portrait and landscape orientation. Still in your ViewController add the following method.
+- Step 7: This Step is only needed if your app supports both portrait and landscape orientation. Still in your ViewController add the following method.
 ```swift
 override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
@@ -180,6 +166,10 @@ Please let me know about any bugs or improvements, I am by now means an expert.
 Enjoy
 
 # Release Notes
+
+v 3.1
+
+- Removed iAd and AdMob banner properties from the appDelegate because there is no need for this with a Singleton because there is only 1 instance of the class anyway.
 
 v 3.0
 
