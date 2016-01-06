@@ -7,19 +7,12 @@
 
 import UIKit
 import iAd
-import GoogleMobileAds 
-
-let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
-    // shared banner ads 
-    var iAdBannerAdView: ADBannerView!
-    var adMobBannerAdView: GADBannerView!
-
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.

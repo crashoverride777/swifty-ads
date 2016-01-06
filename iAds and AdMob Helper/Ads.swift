@@ -23,7 +23,7 @@
 
 //    Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
-//    v3.0
+//    v3.1
 
 import iAd
 import GoogleMobileAds
@@ -76,6 +76,9 @@ class Ads: NSObject {
     /// iAds are supported
     private var iAdsAreSupported = false
     
+    /// iAd banner
+    private var iAdBannerAdView: ADBannerView!
+    
     /// iAd inter
     private var iAdInterAd: ADInterstitialAd?
     
@@ -85,7 +88,10 @@ class Ads: NSObject {
     /// iAd inter close button
     private var iAdInterAdCloseButton = UIButton(type: UIButtonType.System)
     
-    /// Admob inter
+    /// adMob banner
+    private var adMobBannerAdView: GADBannerView!
+    
+    /// admob inter
     private var adMobInterAd: GADInterstitial?
     
     /// admob banner id
@@ -186,10 +192,10 @@ class Ads: NSObject {
     
     /// Remove banner ads
     func removeBannerAd() {
-        appDelegate.iAdBannerAdView?.delegate = nil
-        appDelegate.iAdBannerAdView?.removeFromSuperview()
-        appDelegate.adMobBannerAdView?.delegate = nil
-        appDelegate.adMobBannerAdView?.removeFromSuperview()
+        iAdBannerAdView?.delegate = nil
+        iAdBannerAdView?.removeFromSuperview()
+        adMobBannerAdView?.delegate = nil
+        adMobBannerAdView?.removeFromSuperview()
     }
     
     /// Remove all ads (IAPs)
@@ -219,18 +225,18 @@ class Ads: NSObject {
         Debug.print("Adjusting ads for new device orientation")
         
         // iAds
-        appDelegate.iAdBannerAdView?.frame = presentingViewController.view.bounds
-        appDelegate.iAdBannerAdView?.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.iAdBannerAdView.frame.size.height / 2))
+        iAdBannerAdView?.frame = presentingViewController.view.bounds
+        iAdBannerAdView?.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (iAdBannerAdView.frame.size.height / 2))
         
         iAdInterAdView.frame = presentingViewController.view.bounds
         
         // Admob
         if UIApplication.sharedApplication().statusBarOrientation.isLandscape {
-            appDelegate.adMobBannerAdView?.adSize = kGADAdSizeSmartBannerLandscape
+            adMobBannerAdView?.adSize = kGADAdSizeSmartBannerLandscape
         } else {
-            appDelegate.adMobBannerAdView?.adSize = kGADAdSizeSmartBannerPortrait
+            adMobBannerAdView?.adSize = kGADAdSizeSmartBannerPortrait
         }
-        appDelegate.adMobBannerAdView?.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.adMobBannerAdView.frame.size.height / 2))
+        adMobBannerAdView?.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (adMobBannerAdView.frame.size.height / 2))
         
         // Custom ad
         customAdView.frame = CGRect(x: 0, y: 0, width: presentingViewController.view.frame.width, height: presentingViewController.view.frame.height)
@@ -256,9 +262,9 @@ class Ads: NSObject {
     /// iAd load banner
     private func iAdLoadBannerAd() {
         Debug.print("iAd banner loading...")
-        appDelegate.iAdBannerAdView = ADBannerView(frame: presentingViewController.view.bounds)
-        appDelegate.iAdBannerAdView.delegate = self
-        appDelegate.iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.iAdBannerAdView.frame.size.height / 2)) // not sure why divided by 2
+        iAdBannerAdView = ADBannerView(frame: presentingViewController.view.bounds)
+        iAdBannerAdView.delegate = self
+        iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (iAdBannerAdView.frame.size.height / 2)) // not sure why divided by 2
     }
     
     /// iAd load inter
@@ -332,15 +338,15 @@ class Ads: NSObject {
         Debug.print("AdMob banner loading...")
         
         if UIApplication.sharedApplication().statusBarOrientation.isLandscape {
-            appDelegate.adMobBannerAdView = GADBannerView(adSize: kGADAdSizeSmartBannerLandscape)
+            adMobBannerAdView = GADBannerView(adSize: kGADAdSizeSmartBannerLandscape)
         } else {
-            appDelegate.adMobBannerAdView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
+            adMobBannerAdView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
         }
         
-        appDelegate.adMobBannerAdView.adUnitID = adMobBannerAdID
-        appDelegate.adMobBannerAdView.delegate = self
-        appDelegate.adMobBannerAdView.rootViewController = presentingViewController
-        appDelegate.adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.adMobBannerAdView.frame.size.height / 2))
+        adMobBannerAdView.adUnitID = adMobBannerAdID
+        adMobBannerAdView.delegate = self
+        adMobBannerAdView.rootViewController = presentingViewController
+        adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (adMobBannerAdView.frame.size.height / 2))
         
         let request = GADRequest()
         
@@ -348,7 +354,7 @@ class Ads: NSObject {
             request.testDevices = [kGADSimulatorID]
         #endif
         
-        appDelegate.adMobBannerAdView.loadRequest(request)
+        adMobBannerAdView.loadRequest(request)
     }
     
     /// Admob inter
@@ -476,10 +482,10 @@ extension Ads: ADBannerViewDelegate {
     
     func bannerViewDidLoadAd(banner: ADBannerView!) {
         Debug.print("iAds banner did load, showing")
-        presentingViewController.view.addSubview(appDelegate.iAdBannerAdView)
+        presentingViewController.view.addSubview(iAdBannerAdView)
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(1.5)
-        appDelegate.iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.iAdBannerAdView.frame.size.height / 2))
+        iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (iAdBannerAdView.frame.size.height / 2))
         UIView.commitAnimations()
     }
     
@@ -498,10 +504,10 @@ extension Ads: ADBannerViewDelegate {
         Debug.print("iAds banner error")
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(1.5)
-        appDelegate.iAdBannerAdView.hidden = true
-        appDelegate.iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.iAdBannerAdView.frame.size.height / 2))
-        appDelegate.iAdBannerAdView.delegate = nil
-        appDelegate.iAdBannerAdView.removeFromSuperview()
+        iAdBannerAdView.hidden = true
+        iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (iAdBannerAdView.frame.size.height / 2))
+        iAdBannerAdView.delegate = nil
+        iAdBannerAdView.removeFromSuperview()
         adMobLoadBannerAd()
         UIView.commitAnimations()
     }
@@ -531,10 +537,10 @@ extension Ads: GADBannerViewDelegate {
     
     func adViewDidReceiveAd(bannerView: GADBannerView!) {
         Debug.print("AdMob banner did load, showing")
-        presentingViewController.view.addSubview(appDelegate.adMobBannerAdView)
+        presentingViewController.view.addSubview(adMobBannerAdView)
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(1.5)
-        appDelegate.adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (appDelegate.adMobBannerAdView.frame.size.height / 2))
+        adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (adMobBannerAdView.frame.size.height / 2))
         UIView.commitAnimations()
     }
     
@@ -552,12 +558,12 @@ extension Ads: GADBannerViewDelegate {
         Debug.print("AdMob banner error")
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(1.5)
-        appDelegate.adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (appDelegate.adMobBannerAdView.frame.size.height / 2))
-        appDelegate.adMobBannerAdView.hidden = true
+        adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (adMobBannerAdView.frame.size.height / 2))
+        adMobBannerAdView.hidden = true
         
         if iAdsAreSupported {
-            appDelegate.adMobBannerAdView.delegate = nil
-            appDelegate.adMobBannerAdView.removeFromSuperview()
+            adMobBannerAdView.delegate = nil
+            adMobBannerAdView.removeFromSuperview()
             iAdLoadBannerAd()
         }
         
