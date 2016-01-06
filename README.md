@@ -170,6 +170,7 @@ Enjoy
 v 3.1
 
 - Removed iAd and AdMob banner properties from the appDelegate because there is no need for this with a Singleton because there is only 1 instance of the class anyway.
+- If you used a previous version of this helper you can delete the 1 appDelegate property and 2 banner properties in your "AppDelegate.swift"
 
 v 3.0
 
