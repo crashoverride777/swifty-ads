@@ -3,12 +3,12 @@
 A simple helper class that should make integrating Ads from Apple and Google as well as your own custom Ads a breeze.
 I decided to go the Singleton way but please feel free to change that if you dont like it. This helper has been made while designing my SpriteKit game but it can be used for any kind of app. 
 
-The cool thing is that iAds will be used when they are supported otherwise AdMob will be used. 
-Whats really cool is that if iAd banners are having an error it will automatically load an AdMob banner. In case that AdMob banner is than having an error it will load an iAd banner again. 
+The cool thing is that iAds will be used when they are supported otherwise AdMob will be used. iAds tend to have a better impressions and are usually prefered as default ads.
+Whats really cool is that if iAd banners are having an error it will automatically load an AdMob banner and if that AdMob banner is than having an error it will try loading an iAd banner again. 
 
-If an iAd Inter ad fails it will try an AdMob Inter ad, incase that adMob inter ad also fails it will however not try iAd again because you obviously dont want a full screen ad show at the wrong time.
+If an iAd Inter ad fails it will try an AdMob Inter ad, incase that adMob inter ad also fails it will however not try iAd again because you obviously dont want a full screen ad showing at the wrong time.
 
-This Helper creates whats called a shared Banner which is the recommended way by apple. The usual way is to put the iAd and adMob banner properties into the appDelegate but because this helper is a Singleton there is no need for this because there is only 1 instance of the class. To read more about shared banner ads read this documentation from Apple
+This Helper creates whats called a shared Banner which is the recommended way by apple. The usual way to achieve this is to put the iAd and adMob banner properties into the appDelegate but because this helper is a Singleton there is no need for this because there is only 1 instance of the class and therefore the banner properties anyway. To read more about shared banner ads you can read this documentation from Apple
 https://developer.apple.com/library/ios/technotes/tn2286/_index.html
 
 # Set-Up
@@ -61,7 +61,10 @@ override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator c
         })
     }
 ```
-NOTE: This is an ios 8 method, if your app supports ios 7 or below you maybe want to use something like a  NSNotifcationCenter UIDeviceOrientationDidChangeNotification Observer
+NOTE: This is an ios 8 method, if your app supports ios 7 or below you maybe want to use something like a
+```swift
+NSNotificationCenter UIDeviceOrientationDidChangeNotification Observer
+```
 
 # How to use
 
