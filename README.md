@@ -1,11 +1,9 @@
 # iAds, AdMob and CustomAds Helper
 
-A simple helper class that should make integrating Ads from Apple and Google as well as your own custom Ads a breeze.
-I decided to go the Singleton way but please feel free to change that if you dont like it. This helper has been made while designing my SpriteKit game but it can be used for any kind of app. 
+A simple helper class that should make integrating Ads from Apple and Google as well as your own custom Ads a breeze. This helper has been made while designing my SpriteKit game but it can be used for any kind of app. 
 
 The cool thing is that iAds will be used when they are supported otherwise AdMob will be used. iAds tend to have a better impressions and are usually prefered as default ads.
 Whats really cool is that if iAd banners are having an error it will automatically load an AdMob banner and if that AdMob banner is than having an error it will try loading an iAd banner again. 
-
 If an iAd Inter ad fails it will try an AdMob Inter ad, incase that adMob inter ad also fails it will however not try iAd again because you obviously dont want a full screen ad showing at the wrong time.
 
 This Helper creates whats called a shared Banner which is the recommended way by apple. The usual way to achieve this is to put the iAd and adMob banner properties into the appDelegate but because this helper is a Singleton there is no need for this because there is only 1 instance of the class and therefore the banner properties anyway. To read more about shared banner ads you can read this documentation from Apple
@@ -80,7 +78,9 @@ iAdsAreSupported = iAdTimeZoneSupported()
 Ads.sharedInstance.showBannerAd() 
 Ads.sharedInstance.showBannerAdDelayed() // delay showing banner slightly eg when transitioning to new scene/view
 Ads.sharedInstance.showInterAd(includeCustomAd: true) // if true it will show a customAd every 4th time an ad is shown
-Ads.sharedInstance.showInterAdRandomly(includeCustomAd: true) // 33% chance of showing inter ads, if true it will show a customAd every 4th time an ad is shown. Settings can always be tweaked
+Ads.sharedInstance.showInterAdRandomly(includeCustomAd: true) // 33% chance of showing inter ads, if true it will show a customAd every 4th time an ad is shown. 
+
+// Settings can always be tweaked
 ```
 - To remove Banner Ads, for example during gameplay 
 ```swift
@@ -92,9 +92,9 @@ Ads.sharedInstance.removeBannerAds()
 Ads.sharedInstance.removeAllAds() 
 ```
 
-NOTE: - This method will set a removedAds bool to true in the Ads.swift helper. This ensures you only have to call this method to remove Ads and afterwards all the above "Ads.sharedInstance.show..." methods will not fire anymore and therefore require no further editing.
+NOTE: - This method will set a removedAds bool to true in the Ads.swift helper. This ensures you only have to call this method to remove Ads and afterwards all the "Ads.sharedInstance.show..." methods will not fire anymore and therefore require no further editing.
 
-For permanent storage you will need to create your own product bool and save it in something like NSUserDefaults, Keychain or NSCoding and than call this method when your app launches.
+For permanent storage you will need to create your own "removedAdsProduct" bool and save it in something like NSUserDefaults, Keychain or NSCoding and than call this method when your app launches.
 
 - To pause/resume tasks in your app/game when Ads are viewed you can implement the delegate methods if needed
 
@@ -176,7 +176,7 @@ v 3.1.1
 
 v 3.1
 
-- Removed iAd and AdMob banner properties from the appDelegate because there is no need for this with a Singleton because there is only 1 instance of the class anyway.
+- Removed iAd and AdMob banner properties from the appDelegate and moved them to Ads.swfit because its a Singleton class anyway.
 - If you used a previous version of this helper you can delete the 1 "let appDelegate..." property and 2 banner properties in your "AppDelegate.swift"
 
 v 3.0
