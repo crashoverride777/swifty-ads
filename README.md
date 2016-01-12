@@ -170,6 +170,10 @@ Enjoy
 
 # Release Notes
 
+v 3.1.1
+
+- Clean-up
+
 v 3.1
 
 - Removed iAd and AdMob banner properties from the appDelegate because there is no need for this with a Singleton because there is only 1 instance of the class anyway.
