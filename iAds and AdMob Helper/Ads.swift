@@ -23,7 +23,7 @@
 
 //    Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
-//    v3.1
+//    v3.1.1
 
 import iAd
 import GoogleMobileAds
@@ -41,7 +41,7 @@ class Ads: NSObject {
     /// Shared instance
     static let sharedInstance = Ads()
     
-    /// Admob ad unit ids
+    /// Admob ad unit IDs
     private struct AdUnitID {
         struct Banner {
             static let live = "Enter your real adMob banner ID"
@@ -85,9 +85,6 @@ class Ads: NSObject {
     /// iAd inter view
     private var iAdInterAdView = UIView()
     
-    /// iAd inter close button
-    private var iAdInterAdCloseButton = UIButton(type: UIButtonType.System)
-    
     /// adMob banner
     private var adMobBannerAdView: GADBannerView!
     
@@ -114,6 +111,9 @@ class Ads: NSObject {
     
     /// Custom ad counter
     private var customAdCounter = 0
+    
+    /// Inter ad close button
+    private var interAdCloseButton = UIButton(type: UIButtonType.System)
     
     // MARK: - Init
     private override init() {
@@ -210,7 +210,6 @@ class Ads: NSObject {
         
         // iAd Inter
         iAdInterAd?.delegate = nil
-        iAdInterAdCloseButton.removeFromSuperview()
         iAdInterAdView.removeFromSuperview()
         
         // AdMob inter
@@ -275,20 +274,7 @@ class Ads: NSObject {
         iAdInterAd.delegate = self
         
         // close button
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
-            iAdInterAdCloseButton.frame = CGRectMake(19, 19, 28, 28)
-            iAdInterAdCloseButton.layer.cornerRadius = 14
-        } else {
-            iAdInterAdCloseButton.frame = CGRectMake(12, 12, 21, 21)
-            iAdInterAdCloseButton.layer.cornerRadius = 11
-        }
-        
-        iAdInterAdCloseButton.setTitle("X", forState: .Normal)
-        iAdInterAdCloseButton.setTitleColor(UIColor.grayColor(), forState: .Normal)
-        iAdInterAdCloseButton.backgroundColor = UIColor.whiteColor()
-        iAdInterAdCloseButton.layer.borderColor = UIColor.grayColor().CGColor
-        iAdInterAdCloseButton.layer.borderWidth = 2
-        iAdInterAdCloseButton.addTarget(self, action: "iAdPressedInterAdCloseButton:", forControlEvents: UIControlEvents.TouchDown) // function such as this with content in brackets need : for selector. VIP
+        prepareInterAdCloseButton()
         
         return iAdInterAd
     }
@@ -307,15 +293,7 @@ class Ads: NSObject {
         presentingViewController.view.addSubview(iAdInterAdView)
         iAdInterAd!.presentInView(iAdInterAdView)
         UIViewController.prepareInterstitialAds()
-        iAdInterAdView.addSubview(iAdInterAdCloseButton)
-    }
-    
-    /// iAd pressed inter close button
-    func iAdPressedInterAdCloseButton(sender: UIButton) {
-        Debug.print("iAd inter closed")
-        iAdInterAdCloseButton.removeFromSuperview()
-        iAdInterAdView.removeFromSuperview()
-        iAdInterAd = iAdLoadInterAd()
+        iAdInterAdView.addSubview(interAdCloseButton)
     }
     
     /// AdMob check ad unit id
@@ -428,21 +406,8 @@ class Ads: NSObject {
         customAdView.addSubview(downloadButton)
         
         // Close button
-        let closeButton = UIButton(type: UIButtonType.System)
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
-            closeButton.frame = CGRectMake(19, 19, 28, 28)
-            closeButton.layer.cornerRadius = 14
-        } else {
-            closeButton.frame = CGRectMake(12, 12, 21, 21)
-            closeButton.layer.cornerRadius = 11
-        }
-        closeButton.setTitle("X", forState: .Normal)
-        closeButton.setTitleColor(UIColor.grayColor(), forState: .Normal)
-        closeButton.backgroundColor = UIColor.whiteColor()
-        closeButton.layer.borderColor = UIColor.grayColor().CGColor
-        closeButton.layer.borderWidth = 2
-        closeButton.addTarget(self, action: "customAdPressedCloseButton:", forControlEvents: UIControlEvents.TouchDown)
-        customAdView.addSubview(closeButton)
+        prepareInterAdCloseButton()
+        customAdView.addSubview(interAdCloseButton)
         
         // Return custom ad view
         return customAdView
@@ -453,9 +418,30 @@ class Ads: NSObject {
         UIApplication.sharedApplication().openURL(customAdURL)
     }
     
-    /// Pressed custom inter close button
-    func customAdPressedCloseButton(sender: UIButton) {
+    /// Prepare inter ad close button
+    private func prepareInterAdCloseButton() {
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            interAdCloseButton.frame = CGRectMake(19, 19, 28, 28)
+            interAdCloseButton.layer.cornerRadius = 14
+        } else {
+            interAdCloseButton.frame = CGRectMake(12, 12, 21, 21)
+            interAdCloseButton.layer.cornerRadius = 11
+        }
+        
+        interAdCloseButton.setTitle("X", forState: .Normal)
+        interAdCloseButton.setTitleColor(UIColor.grayColor(), forState: .Normal)
+        interAdCloseButton.backgroundColor = UIColor.whiteColor()
+        interAdCloseButton.layer.borderColor = UIColor.grayColor().CGColor
+        interAdCloseButton.layer.borderWidth = 2
+        interAdCloseButton.addTarget(self, action: "pressedInterAdCloseButton:", forControlEvents: UIControlEvents.TouchDown) // function such as this with content in brackets need : for selector. VIP
+    }
+    
+    /// Pressed inter ad close button
+    func pressedInterAdCloseButton(sender: UIButton) {
+        Debug.print("Inter ad closed")
         customAdView.removeFromSuperview()
+        iAdInterAdView.removeFromSuperview()
+        iAdInterAd = iAdLoadInterAd()
     }
     
     /// iAds check support
@@ -526,7 +512,6 @@ extension Ads: ADInterstitialAdDelegate {
     
     func interstitialAd(interstitialAd: ADInterstitialAd!, didFailWithError error: NSError!) {
         Debug.print("iAds inter error \(error)")
-        iAdInterAdCloseButton.removeFromSuperview()
         iAdInterAdView.removeFromSuperview()
         iAdInterAd = iAdLoadInterAd()
     }
@@ -601,10 +586,10 @@ extension Ads: GADInterstitialDelegate {
     }
 }
 
-// MARK: - Print Debug (can be used for every print statement in your project)
+// MARK: - Print Debug 
+// can be used for every print statement in your project
 struct Debug {
     static func print(object: Any) {
-        
         #if DEBUG
         Swift.print("DEBUG", object) //, terminator: "")
         #endif
