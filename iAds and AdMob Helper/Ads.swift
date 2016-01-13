@@ -28,11 +28,13 @@
 import iAd
 import GoogleMobileAds
 
+/// Delegate
 protocol AdsDelegate: class {
     func pauseTasks()
     func resumeTasks()
 }
 
+/// Ads singleton class
 class Ads: NSObject {
     
     // MARK: - Static Properties
