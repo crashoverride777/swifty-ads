@@ -34,33 +34,34 @@ protocol AdsDelegate: class {
     func resumeTasks()
 }
 
+// MARK: - Admob ad unit IDs
+private struct AdMobUnitID {
+    struct Banner {
+        static let live = "Enter your real adMob banner ID"
+        static let test = "ca-app-pub-3940256099942544/2934735716"
+    }
+    struct Inter {
+        static let live = "Enter your real adMob inter ID"
+        static let test = "ca-app-pub-3940256099942544/4411468910"
+    }
+}
+
+// MARK: - Custom ad 1 settings
+private struct CustomAd1 {
+    static let backgroundColor = UIColor(red:0.08, green:0.62, blue:0.85, alpha:1.0)
+    static let headerColor = UIColor.whiteColor()
+    static let image = "CustomAd"
+    static let headerText = "Played Angry Flappies yet?"
+    static let appURL = NSURL(string: "https://itunes.apple.com/gb/app/angry-flappies/id991933749?mt=8")!
+}
+
+// MARK: - Ads
 class Ads: NSObject {
     
     // MARK: - Static Properties
     
     /// Shared instance
     static let sharedInstance = Ads()
-    
-    /// Admob ad unit IDs
-    private struct AdUnitID {
-        struct Banner {
-            static let live = "Enter your real adMob banner ID"
-            static let test = "ca-app-pub-3940256099942544/2934735716"
-        }
-        struct Inter {
-            static let live = "Enter your real adMob inter ID"
-            static let test = "ca-app-pub-3940256099942544/4411468910"
-        }
-    }
-    
-    /// Custom ad 1 settings
-    private struct CustomAd1 {
-        static let backgroundColor = UIColor(red:0.08, green:0.62, blue:0.85, alpha:1.0)
-        static let headerColor = UIColor.whiteColor()
-        static let image = "CustomAd"
-        static let headerText = "Played Angry Flappies yet?"
-        static let appURL = NSURL(string: "https://itunes.apple.com/gb/app/angry-flappies/id991933749?mt=8")!
-    }
     
     // MARK: - Properties
     
@@ -300,14 +301,14 @@ class Ads: NSObject {
     private func adMobCheckAdUnitID() {
         #if DEBUG
             Debug.print("Ads in test mode")
-            adMobBannerAdID = AdUnitID.Banner.test
-            adMobInterAdID = AdUnitID.Inter.test
+            adMobBannerAdID = AdMobUnitID.Banner.test
+            adMobInterAdID = AdMobUnitID.Inter.test
         #endif
         
         #if !DEBUG
             Debug.print("Ads in live mode")
-            adMobBannerAdID = AdUnitID.Banner.live
-            adMobInterAdID = AdUnitID.Inter.live
+            adMobBannerAdID = AdMobUnitID.Banner.live
+            adMobInterAdID = AdMobUnitID.Inter.live
         #endif
     }
     
