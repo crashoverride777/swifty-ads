@@ -187,6 +187,8 @@ In SpriteKit games you normally dont want the view to resize when showing banner
     }
     }
 ```
+NOTE:
+This might not create a sharedBanner ad that can be used accross multiple viewControllers.
 
 # Final Info
 
