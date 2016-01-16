@@ -74,46 +74,28 @@ class Ads: NSObject {
     /// Removed Ads
     private var removedAds = false
     
-    /// iAds are supported
+    /// iAds
     private var iAdsAreSupported = false
-    
-    /// iAd banner
     private var iAdBannerAdView: ADBannerView!
-    
-    /// iAd inter
     private var iAdInterAd: ADInterstitialAd?
-    
-    /// iAd inter view
     private var iAdInterAdView = UIView()
     
-    /// adMob banner
+    /// adMob
     private var adMobBannerAdView: GADBannerView!
-    
-    /// adMob inter
     private var adMobInterAd: GADInterstitial?
     
-    /// adMob banner id
+    /// adMob IDs
     private var adMobBannerAdID: String!
-    
-    /// adMob inter id
     private var adMobInterAdID: String!
     
-    /// Custom ad view
+    /// Custom ad
     private var customAdView = UIView()
-    
-    /// Custom ad header
     private var customAdHeaderLabel: UILabel!
-    
-    /// Custom ad image
     private var customAdImage: UIImageView!
-    
-    /// Custom ad URL
     private var customAdURL: NSURL!
-    
-    /// Custom ad counter
     private var customAdCounter = 0
     
-    /// Inter ad close button
+    /// Inter ads close button (iAd and customAd)
     private var interAdCloseButton = UIButton(type: UIButtonType.System)
     
     // MARK: - Init
