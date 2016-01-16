@@ -201,7 +201,7 @@ Enjoy
 
 v 3.1.2
 
-- Added the ability to resize your views for banner ads
+- Added the ability to use automatically created iAd banners which will resize your views
 
 v 3.1.1
 
