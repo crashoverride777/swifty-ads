@@ -136,12 +136,10 @@ class Ads: NSObject {
     /// Show banner ad
     func showBannerAd() {
         guard !removedAds else { return }
-        
-        // Resize view
-        //presentingViewController.canDisplayBannerAds = true // // uncomment line to resize view for banner ads
-        
+      
         if iAdsAreSupported {
-            iAdLoadBannerAd()
+            //presentingViewController.canDisplayBannerAds = true // // uncomment line to resize view for banner ads
+            iAdLoadBannerAd() // comment out if above line is used, no need to manually create banner ads with canDisplayBannerAds = true
         } else {
             adMobLoadBannerAd()
         }
