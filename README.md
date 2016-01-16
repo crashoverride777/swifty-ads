@@ -159,7 +159,6 @@ should now look like this
 ```swift 
   func showBannerAd(viewController: UIViewController) {
         presentingViewController = viewController
-        //presentingViewController.canDisplayBannerAds = true // uncomment line to resize view for banner ads
         ...
     }
  ```
