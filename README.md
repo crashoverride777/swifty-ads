@@ -175,23 +175,9 @@ etc
 
 In SpriteKit games you normally dont want the view to resize when showing banner ads, however in UIKit apps this might be prefered. To resize your views you need to let apple create the Banners by themselves by using the canDisplayBannerAds bool. You should change the showBannerAd method so it looks like this
 
-SpriteKit
 ```swift
-  func showBannerAd() {
-        if iAdsAreSupported {
-              presentingViewController.canDisplayBannerAds = true // uncomment line to resize view for banner ads
-        //    iAdLoadBannerAd() // comment out if canDisplayBanner ads is used because it now creates banner automatically
-        } else {
-            adMobLoadBannerAd() // not sure how to resize view with adMob banner
-        }
-    }
-    }
-```
-
-UIKit
-```swift 
-  func showBannerAd(viewController: UIViewController) {
-        presentingViewController = viewController
+  func showBannerAd(...) {
+        ...
         
         if iAdsAreSupported {
               presentingViewController.canDisplayBannerAds = true // uncomment line to resize view for banner ads
@@ -199,6 +185,7 @@ UIKit
         } else {
             adMobLoadBannerAd() // not sure how to resize view with adMob banner
         }
+    }
     }
 ```
 
