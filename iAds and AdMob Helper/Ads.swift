@@ -138,7 +138,7 @@ class Ads: NSObject {
         guard !removedAds else { return }
       
         if iAdsAreSupported {
-            //presentingViewController.canDisplayBannerAds = true // // uncomment line to resize view for banner ads
+            //presentingViewController.canDisplayBannerAds = true // // uncomment line to resize view for banner ads. Delegates will not work
             iAdLoadBannerAd() // comment out if above line is used, no need to manually create banner ads with canDisplayBannerAds = true
         } else {
             adMobLoadBannerAd()
