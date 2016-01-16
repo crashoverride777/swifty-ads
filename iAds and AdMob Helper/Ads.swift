@@ -93,8 +93,6 @@ class Ads: NSObject {
     /// adMob
     private var adMobBannerAdView: GADBannerView!
     private var adMobInterAd: GADInterstitial?
-    
-    /// adMob IDs
     private var adMobBannerAdID: String!
     private var adMobInterAdID: String!
     
