@@ -213,14 +213,13 @@ v 3.1.1
 
 v 3.1
 
-- Removed iAd and AdMob banner properties from the appDelegate and moved them to Ads.swift because its a Singleton class anyway. If you used a previous version of this helper you can delete
+- Removed iAd and AdMob banner properties from the appDelegate and moved them to Ads.swift because its a Singleton class and there is therefore only 1 instance of the banners anyway. 
+If you used a previous version of this helper you can delete these in your "AppDelegate.swift".
 ```swift
 let appDelegate...
 var iAdBanner...
 var adMobBanner...
 ```
-
-in your "AppDelegate.swift".
 
 v 3.0
 
