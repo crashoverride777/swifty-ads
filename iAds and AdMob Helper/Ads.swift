@@ -23,7 +23,7 @@
 
 //    Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
-//    v3.1.1
+//    v3.1.2
 
 import iAd
 import GoogleMobileAds
@@ -146,6 +146,10 @@ class Ads: NSObject {
     /// Show banner ad
     func showBannerAd() {
         guard !removedAds else { return }
+        
+        /// Use this if you want your view to resize with the banner
+        //presentingViewController.canDisplayBannerAds = true
+        
         if iAdsAreSupported {
             iAdLoadBannerAd()
         } else {
