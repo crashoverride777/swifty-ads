@@ -162,7 +162,7 @@ etc
 
 # Resize view for banner ads
 
-In spritekit games you normall dont want the view to resize when showing banner ads. However in UIKit app this might be prefered. To resize your views simply uncomment the canDisplayBannerAd line in the showBannerAd method. So it now looks like this 
+In spritekit games you normall dont want the view to resize when showing banner ads, however in UIKit apps this might be prefered. To resize your views simply uncomment the "canDisplayBannerAd" line in the "showBannerAd" method so it now looks like this 
 
 SpriteKit
 ```swift
@@ -194,7 +194,7 @@ Enjoy
 
 v 3.1.2
 
-- Added the ability to resize your view for banner ads
+- Added the ability to resize your views for banner ads
 
 v 3.1.1
 
