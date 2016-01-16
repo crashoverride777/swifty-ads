@@ -189,6 +189,14 @@ In SpriteKit games you normally dont want the view to resize when showing banner
     }
 ```
 
+NOTE:
+This will invalidate some of my helper methods for iAd banners such as 
+```swift
+Ads.sharedInstance.removeBannerAds()
+```
+
+because iAd banner ads are now automatically created. I will try to update the helper in the future with a new solution to this.
+
 # Final Info
 
 The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and an inter ad randomly when touching the screen. 
