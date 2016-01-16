@@ -28,6 +28,16 @@
 import iAd
 import GoogleMobileAds
 
+/// Hide print statements for release
+/// Can be used for every print statement in your project
+struct Debug {
+    static func print(object: Any) {
+        #if DEBUG
+            Swift.print("DEBUG", object) //, terminator: "")
+        #endif
+    }
+}
+
 /// Admob ad unit IDs
 private struct AdMobUnitID {
     struct Banner {
@@ -570,15 +580,5 @@ extension Ads: GADInterstitialDelegate {
     func interstitial(ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
         Debug.print("AdMob inter error")
         adMobInterAd = adMobLoadInterAd()
-    }
-}
-
-// MARK: - Print Debug 
-// can be used for every print statement in your project
-struct Debug {
-    static func print(object: Any) {
-        #if DEBUG
-        Swift.print("DEBUG", object) //, terminator: "")
-        #endif
     }
 }
