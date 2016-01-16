@@ -148,6 +148,7 @@ to
 ```swift 
   func showBannerAd(viewController: UIViewController) {
         presentingViewController = viewController
+        //presentingViewController.canDisplayBannerAds = true // uncomment line to resize view for banner ads
         ...
     }
  ```
@@ -157,6 +158,27 @@ Than call the user methods from your ViewControllers like so
 ```swift
 Ads.sharedInstance.showBannerAd(self)
 etc
+```
+
+# Resize view for banner ads
+
+In spritekit games you normall dont want the view to resize when showing banner ads. However in UIKit app this might be prefered. To resize your views simply uncomment the canDisplayBannerAd line in the showBannerAd method. So it now looks like this 
+
+SpriteKit
+```swift
+  func showBannerAd() {
+        presentingViewController.canDisplayBannerAds = true // uncomment line to resize view for banner ads
+        ....
+    }
+```
+
+UIKit
+```swift 
+  func showBannerAd(viewController: UIViewController) {
+        presentingViewController = viewController
+        presentingViewController.canDisplayBannerAds = true // uncomment line to resize view for banner ads
+        ...
+    }
 ```
 
 # Final Info
@@ -169,6 +191,10 @@ Please let me know about any bugs or improvements, I am by now means an expert.
 Enjoy
 
 # Release Notes
+
+v 3.1.2
+
+- Added the ability to resize your view for banner ads
 
 v 3.1.1
 
