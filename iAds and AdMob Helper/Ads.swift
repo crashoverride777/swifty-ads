@@ -147,8 +147,8 @@ class Ads: NSObject {
     func showBannerAd() {
         guard !removedAds else { return }
         
-        /// Use this if you want your view to resize with the banner
-        //presentingViewController.canDisplayBannerAds = true
+        // Resize view
+        //presentingViewController.canDisplayBannerAds = true // // uncomment line to resize view for banner ads
         
         if iAdsAreSupported {
             iAdLoadBannerAd()
