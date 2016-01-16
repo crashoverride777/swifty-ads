@@ -4,7 +4,7 @@ A simple helper class that should make integrating Ads from Apple and Google as 
 
 The cool thing is that iAds will be used when they are supported otherwise AdMob will be used. iAds tend to have a better impressions and are usually prefered as default ads.
 Whats really cool is that if iAd banners are having an error it will automatically load an AdMob banner and if that AdMob banner is than having an error it will try loading an iAd banner again. 
-If an iAd Inter ad fails it will try an AdMob Inter ad, incase that adMob inter ad also fails it will however not try iAd again because you obviously dont want a full screen ad showing at the wrong time.
+When an iAd inter ad fails it will try an AdMob Inter ad but incase that adMob inter ad also fails it will not try iAd again because you obviously dont want a full screen ad showing at the wrong time.
 
 This Helper creates whats called a shared Banner which is the recommended way by apple. The usual way to achieve this is to put the iAd and adMob banner properties into the appDelegate but because this helper is a Singleton there is no need for this because there is only 1 instance of the class and therefore the banner properties anyway. To read more about shared banner ads you can read this documentation from Apple
 https://developer.apple.com/library/ios/technotes/tn2286/_index.html
@@ -173,7 +173,7 @@ etc
 
 # Resize view for banner ads
 
-In spritekit games you normall dont want the view to resize when showing banner ads, however in UIKit apps this might be prefered. To resize your views simply uncomment the "canDisplayBannerAd" line in the "showBannerAd" method so it now looks like this 
+In SpriteKit games you normally dont want the view to resize when showing banner ads, however in UIKit apps this might be prefered. To resize your views simply uncomment the "canDisplayBannerAd" line in the "showBannerAd" method so it now looks like this 
 
 SpriteKit
 ```swift
