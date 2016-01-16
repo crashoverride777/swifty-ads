@@ -24,6 +24,8 @@ class GameScene: SKScene {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
         
+        Ads.sharedInstance.removeBannerAd()
+        
         for touch in (touches ) {
             let location = touch.locationInNode(self)
             
