@@ -138,13 +138,24 @@ If you have an app that mainly uses viewControllers to show its UI than it might
 ```swift 
 Ads.sharedInstance.presentingViewController = self
 ```
-especially repeatedly when changing viewControllers. For those apps you should change all the user methods in Ads.swift such as this
+especially repeatedly when changing viewControllers. For those apps you need to change all the user methods in Ads.swift.
+
+In the showBannerAdDelayed method you will need to add : to the selector so it now looks like this
+ ```swift 
+  func showBannerAdDelayed() {
+        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "showBannerAd:", userInfo: nil, repeats: false)
+    }
+```
+The other user methods such as this
+
 ```swift 
   func showBannerAd() {
         ...
     }
 ```
-to
+
+should now look like this
+
 ```swift 
   func showBannerAd(viewController: UIViewController) {
         presentingViewController = viewController
