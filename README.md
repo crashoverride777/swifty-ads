@@ -9,6 +9,10 @@ When an iAd inter ad fails it will try an AdMob Inter ad but incase that adMob i
 This Helper creates whats called a shared Banner which is the recommended way by apple. The usual way to achieve this is to put the iAd and adMob banner properties into the appDelegate but because this helper is a Singleton there is no need for this because there is only 1 instance of the class and therefore the banner properties anyway. To read more about shared banner ads you can read this documentation from Apple
 https://developer.apple.com/library/ios/technotes/tn2286/_index.html
 
+NOTE: Apple is apparently planning to shut down the iAd App Network in June 30th. There is not much info about this yet but as far as I understand this will not affect developers trying to integrate iAds but developers that want to have their own apps advertised. I will post further news when things become more clear.
+
+https://developer.apple.com/news/?id=01152016a&1452895272
+
 # Set-Up
 
 - Step 1: Set-Up "-D DEBUG" custom flag. This will reduce the hassle of having to manually change the google ad ids when testing or when releasing. This is a good idea in general for other things such as hiding print statements.
