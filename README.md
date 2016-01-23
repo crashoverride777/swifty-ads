@@ -205,6 +205,10 @@ Enjoy
 
 # Release Notes
 
+v 3.2
+
+- iPadPro improvements
+
 v 3.1.2
 
 - Added the ability to use automatically created iAd banners which will resize your views
