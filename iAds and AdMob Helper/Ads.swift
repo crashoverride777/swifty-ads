@@ -23,7 +23,7 @@
 
 //    Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
-//    v3.1.2
+//    v3.2
 
 import iAd
 import GoogleMobileAds
@@ -36,6 +36,18 @@ struct Debug {
             Swift.print("DEBUG", object) //, terminator: "")
         #endif
     }
+}
+
+/// Device check
+private struct DeviceCheck {
+    
+    static let iPad      = UIDevice.currentDevice().userInterfaceIdiom == .Pad && maxLength == 1024.0
+    static let iPadPro   = UIDevice.currentDevice().userInterfaceIdiom == .Pad && maxLength == 1366.0
+    
+    static let width     = UIScreen.mainScreen().bounds.size.width
+    static let height    = UIScreen.mainScreen().bounds.size.height
+    static let maxLength = max(width, height)
+    static let minLength = min(width, height)
 }
 
 /// Admob ad unit IDs
@@ -372,10 +384,13 @@ class Ads: NSObject {
         // Header
         customAdHeaderLabel = UILabel()
         customAdHeaderLabel.text = headerText
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
-            customAdHeaderLabel.font = UIFont(name: "Damascus", size: 36)
+        let font = "Damascus"
+        if DeviceCheck.iPadPro {
+            customAdHeaderLabel.font = UIFont(name: font, size: 62)
+        } else if DeviceCheck.iPad {
+            customAdHeaderLabel.font = UIFont(name: font, size: 36)
         } else {
-            customAdHeaderLabel.font = UIFont(name: "Damascus", size: 28)
+            customAdHeaderLabel.font = UIFont(name: font, size: 28)
         }
         customAdHeaderLabel.frame = CGRectMake(0, 0, presentingViewController.view.frame.width, presentingViewController.view.frame.height)
         customAdHeaderLabel.center = CGPoint(x: customAdView.frame.width / 2, y: CGRectGetMinY(customAdView.frame) + 80)
@@ -414,7 +429,10 @@ class Ads: NSObject {
     
     /// Prepare inter ad close button
     private func prepareInterAdCloseButton() {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+        if DeviceCheck.iPadPro {
+            interAdCloseButton.frame = CGRectMake(28, 28, 37, 37)
+            interAdCloseButton.layer.cornerRadius = 18
+        } else if DeviceCheck.iPad {
             interAdCloseButton.frame = CGRectMake(19, 19, 28, 28)
             interAdCloseButton.layer.cornerRadius = 14
         } else {
