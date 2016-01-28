@@ -94,7 +94,7 @@ to include custom ads as well. In this example there is 2 custom ads in total. T
 
     showInterAd() { ....
    
-and add more cases to the switch statement to match your total custom Ads you want to show. 
+and add more cases to the switch statement to match your total custom Ads you want to show. If you dont use custom ads you can comment out the whole block of  code after the 2 guard statements at the beginning of the method.
 
 - To remove Banner Ads, for example during gameplay 
 ```swift
