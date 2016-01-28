@@ -24,7 +24,7 @@ class GameScene: SKScene {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
         
-        Ads.sharedInstance.removeBannerAd()
+        ///Ads.sharedInstance.removeBannerAd()
         
         for touch in (touches ) {
             let location = touch.locationInNode(self)
@@ -42,7 +42,7 @@ class GameScene: SKScene {
             self.addChild(sprite)
             
             // Show inter ad
-            Ads.sharedInstance.showInterAdRandomly(includeCustomAd: true)
+            //Ads.sharedInstance.showInterAdRandomly(includeCustomAd: true)
         }
     }
    

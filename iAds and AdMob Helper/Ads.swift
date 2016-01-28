@@ -23,7 +23,7 @@
 
 //    Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
-//    v3.2
+//    v3.3
 
 import iAd
 import GoogleMobileAds
@@ -253,6 +253,17 @@ class Ads: NSObject {
         customAdImage?.center.y = customAdView.center.y + 20
     }
     
+    /// AdMob Custom methods (2 delegates dont get called)
+    func adMobBannerClicked() {
+        Debug.print("AdMob banner clicked")
+        delegate?.pauseTasks()
+    }
+    
+    func adMobBannerClosed() {
+        Debug.print("AdMob banner closed")
+        delegate?.resumeTasks()
+    }
+    
     // MARK: - Private Methods
     
     /// Showing inter ad
@@ -445,7 +456,7 @@ class Ads: NSObject {
         interAdCloseButton.backgroundColor = UIColor.whiteColor()
         interAdCloseButton.layer.borderColor = UIColor.grayColor().CGColor
         interAdCloseButton.layer.borderWidth = 2
-        interAdCloseButton.addTarget(self, action: "pressedInterAdCloseButton:", forControlEvents: UIControlEvents.TouchDown) // function such as this with content in brackets need : for selector. VIP
+        interAdCloseButton.addTarget(self, action: "pressedInterAdCloseButton:", forControlEvents: UIControlEvents.TouchDown)
     }
     
     /// Pressed inter ad close button
@@ -496,6 +507,18 @@ extension Ads: ADBannerViewDelegate {
     func bannerViewActionDidFinish(banner: ADBannerView!) {
         Debug.print("iAds banner closed")
         delegate?.resumeTasks()
+        
+        /// adjust for ipads incase orientation was portrait. IAd banners on ipads are shown in landscape and they get messed up after closing
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            // has to be a slight delay or it wont work
+            iAdBannerAdView.hidden = true
+            let delay: NSTimeInterval = 1
+            NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: "orientationChanged", userInfo: nil, repeats: false)
+            NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: "showBannerAgain", userInfo: nil, repeats: false)
+        }
+    }
+    func showBannerAgain() {
+        iAdBannerAdView.hidden = false
     }
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
@@ -541,16 +564,16 @@ extension Ads: GADBannerViewDelegate {
         UIView.commitAnimations()
     }
     
-    func adViewWillPresentScreen(bannerView: GADBannerView!) {
+    func adViewWillPresentScreen(bannerView: GADBannerView!) { // dont get called unless modal view
         Debug.print("AdMob banner clicked")
         delegate?.pauseTasks()
     }
-    
-    func adViewDidDismissScreen(bannerView: GADBannerView!) {
+
+    func adViewDidDismissScreen(bannerView: GADBannerView!) { // dont get called unless model view
         Debug.print("AdMob banner closed")
         delegate?.resumeTasks()
     }
-    
+
     func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
         Debug.print("AdMob banner error")
         UIView.beginAnimations(nil, context: nil)
