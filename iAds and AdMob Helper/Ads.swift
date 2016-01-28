@@ -228,8 +228,6 @@ class Ads: NSObject {
         iAdInterAd?.delegate = nil
         iAdInterAdView.removeFromSuperview()
         adMobInterAd?.delegate = nil
-        
-        // Custom ad
         customAdView.removeFromSuperview()
     }
     
@@ -239,6 +237,7 @@ class Ads: NSObject {
         
         // iAds
         iAdBannerAdView?.frame = presentingViewController.view.bounds
+        iAdBannerAdView?.sizeThatFits(presentingViewController.view.frame.size)
         iAdBannerAdView?.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (iAdBannerAdView.frame.size.height / 2))
         
         iAdInterAdView.frame = presentingViewController.view.bounds
@@ -286,9 +285,11 @@ class Ads: NSObject {
     /// iAd load banner
     private func iAdLoadBannerAd() {
         Debug.print("iAd banner loading...")
-        iAdBannerAdView = ADBannerView(frame: presentingViewController.view.bounds)
+        iAdBannerAdView = ADBannerView(adType: .Banner)
+        iAdBannerAdView.frame = presentingViewController.view.bounds
+        iAdBannerAdView.sizeThatFits(presentingViewController.view.frame.size)
+        iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (iAdBannerAdView.frame.size.height / 2))
         iAdBannerAdView.delegate = self
-        iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (iAdBannerAdView.frame.size.height / 2)) // not sure why divided by 2
     }
     
     /// iAd load inter
@@ -497,6 +498,8 @@ extension Ads: ADBannerViewDelegate {
     
     func bannerViewDidLoadAd(banner: ADBannerView!) {
         Debug.print("iAds banner did load, showing")
+        guard iAdBannerAdView.bannerLoaded else { return }
+        
         presentingViewController.view.addSubview(iAdBannerAdView)
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(1.5)
