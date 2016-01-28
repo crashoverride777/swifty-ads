@@ -119,6 +119,14 @@ extension GameScene: AdsDelegate {
 }
 ```
 
+NOTE: There seems to a problem with AdMob Banner delegates not getting called. Therefore if you need your game/app to be paused you need call these 2 user methods in your AppDelegate.swift at the correct spots.
+
+```swift
+Ads.sharedInstance.adMobBannerClicked()
+Ads.sharedInstance.adMobBannerClosed()
+
+which ensures the AdsDelegate protocol gets called.
+
 - To add more custom Ads simply create a new struct called CustomAd2 with the new properties and than go to the method
 ```swift
 func showInterAd(includeCustomAd showCustomAd: Bool) {
@@ -204,6 +212,13 @@ Please let me know about any bugs or improvements, I am by now means an expert.
 Enjoy
 
 # Release Notes
+
+v 3.3 
+
+- Fixed a bug that could cause iAdBanners to get misaligned when viewed in portrait mode on iPads.
+- Added 2 new custom user methods "adMobBannerClicked" and "adMobBannerClosed" because the corresponding delegate methods do not work. You should call these, if needed, in your appDelegate at the correct spots.
+
+Thanks you to member riklowe for pointing these out.
 
 v 3.2
 
