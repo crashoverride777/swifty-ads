@@ -329,7 +329,6 @@ class Ads: NSObject {
         #endif
         
         #if !DEBUG
-            Debug.print("Ads in live mode")
             adMobBannerAdID = AdMobUnitID.Banner.live
             adMobInterAdID = AdMobUnitID.Inter.live
         #endif
