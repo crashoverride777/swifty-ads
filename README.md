@@ -82,10 +82,10 @@ iAdsAreSupported = iAdTimeZoneSupported()
 Ads.sharedInstance.showBannerAd() 
 Ads.sharedInstance.showBannerAd(withDelay: 1) // delay showing banner slightly eg when transitioning to new scene/view
 Ads.sharedInstance.showInterAd()
-Ads.sharedInstance.showInterAdRandomly(randomness: 4) // 25% chance of showing inter ads 
+Ads.sharedInstance.showInterAd(randomness: 4) // 25% chance of showing inter ads 
 ```
 
-If you would like to include custom ads than you simply go the line where you init the helper in your GameViewController (Step 6) and add this line after setting the presentingViewController property.
+By default the helper does not inclued custom ads, if you would like to include custom ads than you simply go the line where you init the helper in your GameViewController (Step 6). Than add this line after setting the presentingViewController property.
 
 ```swift
 Ads.sharedInstance.includeCustomAds(totalCustomAds: 2, interval: 4)
