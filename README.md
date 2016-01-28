@@ -80,7 +80,7 @@ iAdsAreSupported = iAdTimeZoneSupported()
 - To show a supported Ad simply call these anywhere you like in your project.
 ```swift
 Ads.sharedInstance.showBannerAd() 
-Ads.sharedInstance.showBannerAdDelayed() // delay showing banner slightly eg when transitioning to new scene/view
+Ads.sharedInstance.showBannerAd(withDelay: 1) // delay showing banner slightly eg when transitioning to new scene/view
 Ads.sharedInstance.showInterAd(includeCustomAd: true) // if true it will show a customAd every 4th time an ad is shown
 Ads.sharedInstance.showInterAdRandomly(includeCustomAd: true) // 33% chance of showing inter ads, if true it will show a customAd every 4th time an ad is shown. 
 
