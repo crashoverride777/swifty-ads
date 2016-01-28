@@ -147,7 +147,7 @@ class Ads: NSObject {
     // MARK: - User Methods
     
     /// Prepare with custom ads
-    func prepareWithCustomAds(totalCustomAds customAdCount: Int, interval: Int) {
+    func includeCustomAds(totalCustomAds customAdCount: Int, interval: Int) {
         self.customAdCount = customAdCount
         self.customAdInterval = interval
     }

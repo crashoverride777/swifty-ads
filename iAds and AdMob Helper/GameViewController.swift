@@ -15,7 +15,7 @@ class GameViewController: UIViewController {
         
         // set adsViewController and init ads helper, call ASAP
         Ads.sharedInstance.presentingViewController = self
-        Ads.sharedInstance.prepareWithCustomAds(totalCustomAds: 2, interval: 4)
+        Ads.sharedInstance.includeCustomAds(totalCustomAds: 2, interval: 3)
 
         if let scene = GameScene(fileNamed: "GameScene") {
             // Configure the view.
