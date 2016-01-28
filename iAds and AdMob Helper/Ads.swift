@@ -28,8 +28,7 @@
 import iAd
 import GoogleMobileAds
 
-/// Hide print statements for release
-/// Can be used for every print statement in your project
+/// Hide print statements for release. Can be used for every print statement in your project
 struct Debug {
     static func print(object: Any) {
         #if DEBUG
@@ -40,10 +39,9 @@ struct Debug {
 
 /// Device check
 private struct DeviceCheck {
-    
     static let iPad      = UIDevice.currentDevice().userInterfaceIdiom == .Pad && maxLength == 1024.0
     static let iPadPro   = UIDevice.currentDevice().userInterfaceIdiom == .Pad && maxLength == 1366.0
-    
+
     static let width     = UIScreen.mainScreen().bounds.size.width
     static let height    = UIScreen.mainScreen().bounds.size.height
     static let maxLength = max(width, height)
@@ -127,10 +125,8 @@ class Ads: NSObject {
         /// Check if in test or release mode
         adMobCheckAdUnitID()
         
-        /// Check iAd support
+        /// Check iAd support and preload inter ads first time
         iAdsAreSupported = iAdTimeZoneSupported()
-        
-        /// preload inter ads first time
         if iAdsAreSupported {
             iAdInterAd = iAdLoadInterAd()
         }
@@ -139,13 +135,12 @@ class Ads: NSObject {
     
     // MARK: - User Methods
     
-    /// Show banner ad delayed
-    func showBannerAdDelayed() {
+    /// Show banner ads
+    func showBannerAd(withDelay delay: NSTimeInterval) {
         guard !removedAds else { return }
-        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "showBannerAd", userInfo: nil, repeats: false)
+        NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: "showBannerAd", userInfo: nil, repeats: false)
     }
     
-    /// Show banner ad
     func showBannerAd() {
         guard !removedAds else { return }
       
@@ -157,7 +152,7 @@ class Ads: NSObject {
         }
     }
     
-    /// Show inter ad or custom ad randomly
+    /// Show inter ads
     func showInterAdRandomly(includeCustomAd showCustomAd: Bool) {
         guard !removedAds else { return }
         let randomInterAd = Int(arc4random() % 3)
@@ -165,7 +160,6 @@ class Ads: NSObject {
         showInterAd(includeCustomAd: showCustomAd)
     }
     
-    /// Show inter ad
     func showInterAd(includeCustomAd showCustomAd: Bool) {
         guard !removedAds else { return }
         guard showCustomAd else {
@@ -211,14 +205,12 @@ class Ads: NSObject {
         // Removed Ads
         removedAds = true
         
-        // iAd and AdMob banner
+        // Banners
         removeBannerAd()
         
-        // iAd Inter
+        // Inter
         iAdInterAd?.delegate = nil
         iAdInterAdView.removeFromSuperview()
-        
-        // AdMob inter
         adMobInterAd?.delegate = nil
         
         // Custom ad
@@ -290,7 +282,6 @@ class Ads: NSObject {
         let iAdInterAd = ADInterstitialAd()
         iAdInterAd.delegate = self
         
-        // close button
         prepareInterAdCloseButton()
         
         return iAdInterAd
@@ -508,11 +499,10 @@ extension Ads: ADBannerViewDelegate {
         Debug.print("iAds banner closed")
         delegate?.resumeTasks()
         
-        /// adjust for ipads incase orientation was portrait. IAd banners on ipads are shown in landscape and they get messed up after closing
+        /// Adjust for ipads incase orientation was portrait. iAd banners on ipads are shown in landscape and they get messed up after closing
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
-            // has to be a slight delay or it wont work
             iAdBannerAdView.hidden = true
-            let delay: NSTimeInterval = 1
+            let delay: NSTimeInterval = 1 // use delay it wont work
             NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: "orientationChanged", userInfo: nil, repeats: false)
             NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: "showBannerAgain", userInfo: nil, repeats: false)
         }
