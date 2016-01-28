@@ -23,7 +23,7 @@
 
 //    Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
-//    v3.3
+//    v3.4
 
 import iAd
 import GoogleMobileAds
@@ -60,13 +60,22 @@ private struct AdMobUnitID {
     }
 }
 
-/// Custom ad 1 settings
-private struct CustomAd1 {
-    static let backgroundColor = UIColor(red:0.08, green:0.62, blue:0.85, alpha:1.0)
-    static let headerColor = UIColor.whiteColor()
-    static let image = "CustomAd"
-    static let headerText = "Played Angry Flappies yet?"
-    static let appURL = NSURL(string: "https://itunes.apple.com/gb/app/angry-flappies/id991933749?mt=8")!
+/// Custom ads
+private struct CustomAd {
+    struct Ad1 {
+        static let backgroundColor = UIColor(red:0.08, green:0.62, blue:0.85, alpha:1.0)
+        static let headerColor = UIColor.whiteColor()
+        static let image = "CustomAd"
+        static let headerText = "Played Angry Flappies yet?"
+        static let appURL = NSURL(string: "https://itunes.apple.com/gb/app/angry-flappies/id991933749?mt=8")!
+    }
+    struct Ad2 {
+        static let backgroundColor = UIColor.orangeColor()
+        static let headerColor = UIColor.blackColor()
+        static let image = "CustomAd"
+        static let headerText = "Played Angry Flappies yet?"
+        static let appURL = NSURL(string: "https://itunes.apple.com/gb/app/angry-flappies/id991933749?mt=8")!
+    }
 }
 
 /// Delegate
@@ -91,9 +100,6 @@ class Ads: NSObject {
     /// Delegate
     weak var delegate: AdsDelegate?
     
-    /// Removed Ads
-    private var removedAds = false
-    
     /// iAd
     private var iAdsAreSupported = false
     private var iAdBannerAdView: ADBannerView!
@@ -111,10 +117,15 @@ class Ads: NSObject {
     private var customAdHeaderLabel: UILabel!
     private var customAdImage: UIImageView!
     private var customAdURL: NSURL!
-    private var customAdCounter = 0
+    private var customAdCount = 0
+    private var customAdIntervalCounter = 0
+    private var customAdInterval = 0
     
     /// Inter ads close button (iAd and customAd)
     private var interAdCloseButton = UIButton(type: UIButtonType.System)
+    
+    /// Removed Ads
+    private var removedAds = false
     
     // MARK: - Init
     private override init() {
@@ -125,7 +136,7 @@ class Ads: NSObject {
         /// Check if in test or release mode
         adMobCheckAdUnitID()
         
-        /// Check iAd support and preload inter ads first time
+        /// Check iAds are supported and preload inter ads first time
         iAdsAreSupported = iAdTimeZoneSupported()
         if iAdsAreSupported {
             iAdInterAd = iAdLoadInterAd()
@@ -134,6 +145,12 @@ class Ads: NSObject {
     }
     
     // MARK: - User Methods
+    
+    /// Prepare with custom ads
+    func prepareWithCustomAds(totalCustomAds customAdCount: Int, interval: Int) {
+        self.customAdCount = customAdCount
+        self.customAdInterval = interval
+    }
     
     /// Show banner ads
     func showBannerAd(withDelay delay: NSTimeInterval) {
@@ -153,39 +170,37 @@ class Ads: NSObject {
     }
     
     /// Show inter ads
-    func showInterAdRandomly(includeCustomAd showCustomAd: Bool) {
+    func showInterAd(randomness randomNumber: UInt32) {
         guard !removedAds else { return }
-        let randomInterAd = Int(arc4random() % 3)
+        let randomInterAd = Int(arc4random() % randomNumber)
         guard randomInterAd == 1 else { return }
-        showInterAd(includeCustomAd: showCustomAd)
+        showInterAd()
     }
     
-    func showInterAd(includeCustomAd showCustomAd: Bool) {
+    func showInterAd() {
         guard !removedAds else { return }
-        guard showCustomAd else {
+        guard customAdCount != 0 else {
             showingInterAd()
             return
         }
         
-        customAdCounter++
-        
-        // Custom ad 1
-        if customAdCounter == 4 {
-            customAdCounter = 0 // delete if more than one custom ad
-            let customAd1 = customAdShow(CustomAd1.backgroundColor, headerColor: CustomAd1.headerColor, headerText: CustomAd1.headerText, imageName: CustomAd1.image, appURL: CustomAd1.appURL)
-            presentingViewController.view.addSubview(customAd1)
-        }
-        
-        /*// Custom ad 2
-        if customAdCounter == 8 {
-            customAdCounter = 0
-            let customAd2 = customAdShow(CustomAd2.backgroundColor, headerColor: CustomAd2.headerColor, headerText: CustomAd2.headerText, imageName: CustomAd2.image, appURL: CustomAd2.appURL)
-            presentingViewController.view.addSubview(customAd2)
-        } */
-            
-        // iAd or AdMob
-        else {
+        customAdIntervalCounter++
+        guard customAdIntervalCounter == customAdInterval else {
             showingInterAd()
+            return
+        }
+        customAdIntervalCounter = 0
+
+        let randomCustomInterAd = Int(arc4random() % UInt32(customAdCount))
+        switch randomCustomInterAd {
+            case 0:
+                let customAd1 = customAdShow(CustomAd.Ad1.backgroundColor, headerColor: CustomAd.Ad1.headerColor, headerText: CustomAd.Ad1.headerText, imageName: CustomAd.Ad1.image, appURL: CustomAd.Ad1.appURL)
+                presentingViewController.view.addSubview(customAd1)
+            case 1:
+                let customAd2 = customAdShow(CustomAd.Ad2.backgroundColor, headerColor: CustomAd.Ad2.headerColor, headerText: CustomAd.Ad2.headerText, imageName: CustomAd.Ad2.image, appURL: CustomAd.Ad2.appURL)
+                presentingViewController.view.addSubview(customAd2)
+            default:
+                break
         }
     }
     
@@ -409,12 +424,12 @@ class Ads: NSObject {
         customAdView.addSubview(customAdImage)
         
         // Download button
-        let downloadButton = UIButton()
-        downloadButton.frame = CGRectMake(0, 0, customAdView.frame.size.width, customAdView.frame.size.height)
-        downloadButton.backgroundColor = UIColor.clearColor()
-        downloadButton.addTarget(self, action: "customAdPressedDownloadButton:", forControlEvents: UIControlEvents.TouchDown)
-        downloadButton.center = CGPoint(x: CGRectGetMidX(customAdView.frame), y: CGRectGetMidY(customAdView.frame))
-        customAdView.addSubview(downloadButton)
+        let downloadArea = UIButton()
+        downloadArea.frame = CGRectMake(0, 0, customAdView.frame.size.width, customAdView.frame.size.height)
+        downloadArea.backgroundColor = UIColor.clearColor()
+        downloadArea.addTarget(self, action: "customAdPressedDownloadButton:", forControlEvents: UIControlEvents.TouchDown)
+        downloadArea.center = CGPoint(x: CGRectGetMidX(customAdView.frame), y: CGRectGetMidY(customAdView.frame))
+        customAdView.addSubview(downloadArea)
         
         // Close button
         prepareInterAdCloseButton()
