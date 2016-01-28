@@ -124,6 +124,7 @@ NOTE: There seems to a problem with AdMob Banner delegates not getting called. T
 ```swift
 Ads.sharedInstance.adMobBannerClicked()
 Ads.sharedInstance.adMobBannerClosed()
+```
 
 which ensures the AdsDelegate protocol gets called.
 
