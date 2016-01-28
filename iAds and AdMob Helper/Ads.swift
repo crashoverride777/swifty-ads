@@ -118,8 +118,8 @@ class Ads: NSObject {
     private var customAdImage: UIImageView!
     private var customAdURL: NSURL!
     private var customAdCount = 0
-    private var customAdIntervalCounter = 0
     private var customAdInterval = 0
+    private var customAdIntervalCounter = 0
     
     /// Inter ads close button (iAd and customAd)
     private var interAdCloseButton = UIButton(type: UIButtonType.System)
