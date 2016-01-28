@@ -85,16 +85,16 @@ Ads.sharedInstance.showInterAd()
 Ads.sharedInstance.showInterAd(randomness: 4) // 25% chance of showing inter ads 
 ```
 
-By default the helper does not inclued custom ads, if you would like to include custom ads than you simply go the line where you init the helper in your GameViewController (Step 6). Than add this line after setting the presentingViewController property.
+By default the helper does not include custom ads, if you would like to include your own ads than you simply go the line where you init the helper in your GameViewController (Step 6). Than add this line after setting the presentingViewController property
 
 ```swift
 Ads.sharedInstance.includeCustomAds(totalCustomAds: 2, interval: 4)
 ```
-The helper will now included custom ads as well. In this example there is 2 custom ads total. The interval means that every 4th time an Inter ad is shown it will show a custom one (randomised between totalCustomAds). To add more custom adds go to the struct CustomAds and add more. Than go to 
+to include custom ads as well. In this example there is 2 custom ads in total. The interval means that every 4th time an Inter ad is shown it will show a custom one, randomised between the totalCustomAds. To add more custom adds go to the struct CustomAds and add more. Than go to 
 
     showInterAd() { ....
    
-and add more cases to the switchStatement to match your total custom Ads. 
+and add more cases to the switch statement to match your total custom Ads you want to show. 
 
 - To remove Banner Ads, for example during gameplay 
 ```swift
