@@ -184,6 +184,7 @@ class Ads: NSObject {
             return
         }
         
+        // /*
         customAdIntervalCounter++
         guard customAdIntervalCounter == customAdInterval else {
             showingInterAd()
@@ -201,7 +202,7 @@ class Ads: NSObject {
                 presentingViewController.view.addSubview(customAd2)
             default:
                 break
-        }
+        } // */
     }
     
     /// Remove banner ads
