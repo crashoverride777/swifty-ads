@@ -81,11 +81,21 @@ iAdsAreSupported = iAdTimeZoneSupported()
 ```swift
 Ads.sharedInstance.showBannerAd() 
 Ads.sharedInstance.showBannerAd(withDelay: 1) // delay showing banner slightly eg when transitioning to new scene/view
-Ads.sharedInstance.showInterAd(includeCustomAd: true) // if true it will show a customAd every 4th time an ad is shown
-Ads.sharedInstance.showInterAdRandomly(includeCustomAd: true) // 33% chance of showing inter ads, if true it will show a customAd every 4th time an ad is shown. 
-
-// Settings can always be tweaked
+Ads.sharedInstance.showInterAd()
+Ads.sharedInstance.showInterAdRandomly(randomness: 4) // 25% chance of showing inter ads 
 ```
+
+If you would like to include custom ads than you simply go the line where you init the helper in your GameViewController (Step 6) and add this line after setting the presentingViewController property.
+
+```swift
+Ads.sharedInstance.includeCustomAds(totalCustomAds: 2, interval: 4)
+```
+The helper will now included custom ads as well. In this example there is 2 custom ads total. The interval means that every 4th time an Inter ad is shown it will show a custom one (randomised between totalCustomAds). To add more custom adds go to the struct CustomAds and add more. Than go to 
+
+    showInterAd() { ....
+   
+and add more cases to the switchStatement to match your total custom Ads. 
+
 - To remove Banner Ads, for example during gameplay 
 ```swift
 Ads.sharedInstance.removeBannerAds() 
@@ -127,12 +137,6 @@ Ads.sharedInstance.adMobBannerClosed()
 ```
 
 which ensures the AdsDelegate protocol gets called.
-
-- To add more custom Ads simply create a new struct called CustomAd2 with the new properties and than go to the method
-```swift
-func showInterAd(includeCustomAd showCustomAd: Bool) {
-```
-and see the comments I made.
 
 # When you go Live 
 
@@ -213,6 +217,10 @@ Please let me know about any bugs or improvements, I am by now means an expert.
 Enjoy
 
 # Release Notes
+
+v 3.4
+
+- Changed the way custom ads are handled. Please read the "How to use" section again.
 
 v 3.3 
 
