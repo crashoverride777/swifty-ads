@@ -218,6 +218,10 @@ Enjoy
 
 # Release Notes
 
+v 3.4.1
+
+Fixed a bug where interAds could get stuck in a loop trying to reload when having connectivity issues.
+
 v 3.4
 
 - Changed the way custom ads are handled. Please read the "How to use" section again.
