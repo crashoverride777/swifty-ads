@@ -218,9 +218,13 @@ Enjoy
 
 # Release Notes
 
+v 3.5
+
+- This update should fix an issue when using multiple view controllers. Ads are now added to the apps rootViewController which should ensure they will always show.
+
 v 3.4.1
 
-Fixed a bug where interAds could get stuck in a loop trying to reload when having connectivity issues.
+- Fixed a bug where interAds could get stuck in a loop trying to reload when having connectivity issues.
 
 v 3.4
 
