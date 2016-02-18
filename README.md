@@ -150,43 +150,6 @@ which ensures the AdsDelegate protocol gets called.
 
 NOTE: - Dont forget to setup the "-D DEBUG" custom flag (step 1) or the helper will not change the google adUnit IDs automatically from test to release. 
 
-# Not a SpriteKit game?
-If you have an app that mainly uses viewControllers to show its UI than it might be clunky to call 
-```swift 
-Ads.sharedInstance.presentingViewController = self
-```
-especially repeatedly when changing viewControllers. For those apps you need to change all the user methods in Ads.swift.
-
-In the showBannerAdDelayed method you will need to add : to the selector so it now looks like this
- ```swift 
-  func showBannerAdDelayed() {
-        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "showBannerAd:", userInfo: nil, repeats: false)
-    }
-```
-The other user methods such as this
-
-```swift 
-  func showBannerAd() {
-        ...
-    }
-```
-
-should now look like this
-
-```swift 
-  func showBannerAd(viewController: UIViewController) {
-        presentingViewController = viewController
-        ...
-    }
- ```
- 
-Than call the user methods from your ViewControllers like so
-
-```swift
-Ads.sharedInstance.showBannerAd(self)
-etc
-```
-
 # Resize view for banner ads
 
 In SpriteKit games you normally dont want the view to resize when showing banner ads, however in UIKit apps this might be prefered. To resize your views you need to let apple create the Banners by themselves by using the canDisplayBannerAds bool. You should change the showBannerAd method so it looks like this
@@ -221,6 +184,8 @@ Enjoy
 v 3.5
 
 - Ads are now added to the apps rootViewController. This should ensure that ads are shown correctly when using multiple viewControllers.
+
+You can now reverse the changes in "Not a SpriteKit game" as it is not needed anymore. The presentingViewController property is now only really used to get a reference to the rootViewController.
 
 v 3.4.1
 
