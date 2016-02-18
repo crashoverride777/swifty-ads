@@ -23,7 +23,7 @@
 
 //    Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
-//    v3.4.1
+//    v3.5
 
 import iAd
 import GoogleMobileAds
@@ -196,10 +196,10 @@ class Ads: NSObject {
         switch randomCustomInterAd {
             case 0:
                 let customAd1 = customAdShow(CustomAd.Ad1.backgroundColor, headerColor: CustomAd.Ad1.headerColor, headerText: CustomAd.Ad1.headerText, imageName: CustomAd.Ad1.image, appURL: CustomAd.Ad1.appURL)
-                presentingViewController.view.addSubview(customAd1)
+                presentingViewController.view?.window?.rootViewController?.view.addSubview(customAd1)
             case 1:
                 let customAd2 = customAdShow(CustomAd.Ad2.backgroundColor, headerColor: CustomAd.Ad2.headerColor, headerText: CustomAd.Ad2.headerText, imageName: CustomAd.Ad2.image, appURL: CustomAd.Ad2.appURL)
-                presentingViewController.view.addSubview(customAd2)
+                presentingViewController.view?.window?.rootViewController?.view.addSubview(customAd2)
             default:
                 break
         } // */
@@ -315,7 +315,7 @@ class Ads: NSObject {
         
         Debug.print("iAds inter showing")
         iAdInterAdView.frame = presentingViewController.view.bounds
-        presentingViewController.view.addSubview(iAdInterAdView)
+        presentingViewController.view?.window?.rootViewController?.view.addSubview(iAdInterAdView)
         iAdInterAd!.presentInView(iAdInterAdView)
         UIViewController.prepareInterstitialAds()
         iAdInterAdView.addSubview(interAdCloseButton)
@@ -500,7 +500,7 @@ extension Ads: ADBannerViewDelegate {
         Debug.print("iAds banner did load, showing")
         guard iAdBannerAdView.bannerLoaded else { return }
         
-        presentingViewController.view.addSubview(iAdBannerAdView)
+        presentingViewController.view?.window?.rootViewController?.view.addSubview(iAdBannerAdView)
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(1.5)
         iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (iAdBannerAdView.frame.size.height / 2))
@@ -564,7 +564,7 @@ extension Ads: GADBannerViewDelegate {
     
     func adViewDidReceiveAd(bannerView: GADBannerView!) {
         Debug.print("AdMob banner did load, showing")
-        presentingViewController.view.addSubview(adMobBannerAdView)
+        presentingViewController.view?.window?.rootViewController?.view.addSubview(adMobBannerAdView)
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(1.5)
         adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (adMobBannerAdView.frame.size.height / 2))
