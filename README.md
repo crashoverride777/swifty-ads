@@ -220,7 +220,7 @@ Enjoy
 
 v 3.5
 
-- This update should fix an issue when using multiple view controllers. Ads are now added to the apps rootViewController which should ensure they will always show.
+- Ads are now added to the apps rootViewController. This should ensure that ads are shown correctly when using multiple viewControllers.
 
 v 3.4.1
 
