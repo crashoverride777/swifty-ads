@@ -35,9 +35,7 @@ You might want to consider putting all the added frameworks you now see in your 
 Ads.sharedInstance.presentingViewController = self
 ```
 
-This sets the presentingViewController property to your current ViewController and inits Ads.swift. This step is important because your app will crash otherwise when trying to call an Ad. In a spriteKit game this really needs to be called just once since there usually is only 1 viewController.
-
-NOTE: If your app is not a spriteKit game or uses multiple view controllers than you should ignore this Step and check "not a SpriteKit game?" after reading the rest.
+This sets the presentingViewController property to your current ViewController and inits Ads.swift. This is needed so we can get a referece to the rootViewController to present the Ads.
 
 - Step 7: This Step is only needed if your app supports both portrait and landscape orientation. Still in your ViewController add the following method.
 ```swift
