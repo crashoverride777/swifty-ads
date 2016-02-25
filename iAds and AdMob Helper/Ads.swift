@@ -195,11 +195,9 @@ class Ads: NSObject {
         let randomCustomInterAd = Int(arc4random() % UInt32(customAdCount))
         switch randomCustomInterAd {
             case 0:
-                let customAd1 = customAdShow(CustomAd.Ad1.backgroundColor, headerColor: CustomAd.Ad1.headerColor, headerText: CustomAd.Ad1.headerText, imageName: CustomAd.Ad1.image, appURL: CustomAd.Ad1.appURL)
-                presentingViewController.view?.window?.rootViewController?.view.addSubview(customAd1)
+                _ = customAdShow(CustomAd.Ad1.backgroundColor, headerColor: CustomAd.Ad1.headerColor, headerText: CustomAd.Ad1.headerText, imageName: CustomAd.Ad1.image, appURL: CustomAd.Ad1.appURL)
             case 1:
-                let customAd2 = customAdShow(CustomAd.Ad2.backgroundColor, headerColor: CustomAd.Ad2.headerColor, headerText: CustomAd.Ad2.headerText, imageName: CustomAd.Ad2.image, appURL: CustomAd.Ad2.appURL)
-                presentingViewController.view?.window?.rootViewController?.view.addSubview(customAd2)
+                _ = customAdShow(CustomAd.Ad2.backgroundColor, headerColor: CustomAd.Ad2.headerColor, headerText: CustomAd.Ad2.headerText, imageName: CustomAd.Ad2.image, appURL: CustomAd.Ad2.appURL)
             default:
                 break
         } // */
@@ -435,6 +433,9 @@ class Ads: NSObject {
         // Close button
         prepareInterAdCloseButton()
         customAdView.addSubview(interAdCloseButton)
+        
+        // Add
+        presentingViewController.view?.window?.rootViewController?.view.addSubview(customAdView)
         
         // Return custom ad view
         return customAdView
