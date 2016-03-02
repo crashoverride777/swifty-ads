@@ -179,6 +179,10 @@ Enjoy
 
 # Release Notes
 
+v 3.5.1
+
+- Updated Google AdMob SDK to v7.7.0
+
 v 3.5
 
 - Ads are now added to the apps rootViewController. This should ensure that ads are shown correctly when using multiple viewControllers.
