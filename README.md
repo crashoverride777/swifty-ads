@@ -183,6 +183,9 @@ v 3.5.1
 
 - Updated Google AdMob SDK to v7.7.0
 
+Note: It seems with this or one of the previous AdMob SDK updates it is possible to enable bitCode and not get a compiler error anymore. If you disabled bitCode due to the helper you should enable it again. 
+Go to targets-BuildPhases and type bitCode into the search field and set it to yes.
+
 v 3.5
 
 - Ads are now added to the apps rootViewController. This should ensure that ads are shown correctly when using multiple viewControllers.
