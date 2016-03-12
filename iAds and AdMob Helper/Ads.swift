@@ -384,7 +384,7 @@ class Ads: NSObject {
         }
         
         Debug.print("AdMob inter showing...")
-        adMobInterAd!.presentFromRootViewController(presentingViewController)
+        adMobInterAd!.presentFromRootViewController(presentingViewController.view?.window?.rootViewController)
     }
     
     /// Custom ad show
