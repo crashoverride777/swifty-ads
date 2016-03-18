@@ -314,7 +314,7 @@ class Ads: NSObject {
         Debug.print("iAds inter showing")
         iAdInterAdView.frame = presentingViewController.view.bounds
         presentingViewController.view?.window?.rootViewController?.view.addSubview(iAdInterAdView)
-        iAdInterAd!.presentInView(iAdInterAdView)
+        iAdInterAd?.presentInView(iAdInterAdView)
         UIViewController.prepareInterstitialAds()
         iAdInterAdView.addSubview(interAdCloseButton)
     }
@@ -384,7 +384,7 @@ class Ads: NSObject {
         }
         
         Debug.print("AdMob inter showing...")
-        adMobInterAd!.presentFromRootViewController(presentingViewController.view?.window?.rootViewController)
+        adMobInterAd?.presentFromRootViewController(presentingViewController.view?.window?.rootViewController)
     }
     
     /// Custom ad show
