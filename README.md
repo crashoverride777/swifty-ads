@@ -179,49 +179,55 @@ Enjoy
 
 # Release Notes
 
-v 3.5.1
+- v 3.5.2
 
-- Updated Google AdMob SDK to v7.7.0
+Small fixes and improvements
+
+
+- v 3.5.1
+
+Updated Google AdMob SDK to v7.7.0
 
 Note: It seems with this or one of the previous AdMob SDK updates it is possible to enable bitCode and not get a compiler error anymore. If you disabled bitCode due to the helper you should enable it again. 
 Go to targets-BuildPhases and type bitCode into the search field and set it to yes.
 
-v 3.5
+- v 3.5
 
-- Ads are now added to the apps rootViewController. This should ensure that ads are shown correctly when using multiple viewControllers.
+Ads are now added to the apps rootViewController. This should ensure that ads are shown correctly when using multiple viewControllers.
 
 You can now reverse the changes in "Not a SpriteKit game" as it is not needed anymore. The presentingViewController property is now only really used to get a reference to the rootViewController.
 
-v 3.4.1
+- v 3.4.1
 
-- Fixed a bug where interAds could get stuck in a loop trying to reload when having connectivity issues.
+Fixed a bug where interAds could get stuck in a loop trying to reload when having connectivity issues.
 
-v 3.4
+- v 3.4
 
-- Changed the way custom ads are handled. Please read the "How to use" section again.
+Changed the way custom ads are handled. Please read the "How to use" section again.
 
-v 3.3 
+- v 3.3 
 
-- Fixed a bug that could cause iAdBanners to get misaligned when viewed in portrait mode on iPads.
-- Added 2 new custom user methods "adMobBannerClicked" and "adMobBannerClosed" because the corresponding delegate methods do not work. You should call these, if needed, in your appDelegate at the correct spots.
+Fixed a bug that could cause iAdBanners to get misaligned when viewed in portrait mode on iPads.
+
+Added 2 new custom user methods "adMobBannerClicked" and "adMobBannerClosed" because the corresponding delegate methods do not work. You should call these, if needed, in your appDelegate at the correct spots.
 
 Thanks you to member riklowe for pointing these out.
 
-v 3.2
+- v 3.2
 
-- iPadPro improvements
+iPadPro improvements
 
-v 3.1.2
+- v 3.1.2
 
-- Added the ability to use automatically created iAd banners which will resize your views
+Added the ability to use automatically created iAd banners which will resize your views
 
-v 3.1.1
+- v 3.1.1
 
-- Clean-up
+Clean-up
 
-v 3.1
+- v 3.1
 
-- Removed iAd and AdMob banner properties from the appDelegate and moved them to Ads.swift because its a Singleton class and there is therefore only 1 instance of the banners anyway. 
+Removed iAd and AdMob banner properties from the appDelegate and moved them to Ads.swift because its a Singleton class and there is therefore only 1 instance of the banners anyway. 
 If you used a previous version of this helper you can delete these in your "AppDelegate.swift".
 ```swift
 let appDelegate...
@@ -229,11 +235,11 @@ var iAdBanner...
 var adMobBanner...
 ```
 
-v 3.0
+- v 3.0
 
-- Added ability to show custom ads
-- Added extension to hide print statements for release
-- Small fixes, improvements and clean-up
+Added ability to show custom ads
+Added extension to hide print statements for release
+Small fixes, improvements and clean-up
 
 
 
