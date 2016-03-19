@@ -231,7 +231,7 @@ class Ads: NSObject {
     
     /// Orientation changed
     func orientationChanged() {
-        guard let presentingViewController = self.presentingViewController else { return }
+        guard let presentingViewController = presentingViewController else { return }
         Debug.print("Adjusting ads for new device orientation")
         
         // iAds
@@ -283,7 +283,7 @@ class Ads: NSObject {
     
     /// iAd load banner
     private func iAdLoadBannerAd() {
-        guard let presentingViewController = self.presentingViewController else { return }
+        guard let presentingViewController = presentingViewController else { return }
         Debug.print("iAd banner loading...")
         iAdBannerAdView = ADBannerView(adType: .Banner)
         iAdBannerAdView.frame = presentingViewController.view.bounds
@@ -306,7 +306,7 @@ class Ads: NSObject {
     
     /// iAd show inter
     private func iAdShowInterAd() {
-        guard let presentingViewController = self.presentingViewController else { return }
+        guard let presentingViewController = presentingViewController else { return }
         guard iAdInterAd != nil && iAdInterAd!.loaded else {
             Debug.print("iAds inter is not ready, reloading and trying AdMob")
             iAdInterAd = iAdLoadInterAd()
@@ -338,7 +338,7 @@ class Ads: NSObject {
     
     /// Admob banner
     private func adMobLoadBannerAd() {
-        guard let presentingViewController = self.presentingViewController else { return }
+        guard let presentingViewController = presentingViewController else { return }
         Debug.print("AdMob banner loading...")
         
         if UIApplication.sharedApplication().statusBarOrientation.isLandscape {
@@ -503,7 +503,7 @@ extension Ads: ADBannerViewDelegate {
     }
     
     func bannerViewDidLoadAd(banner: ADBannerView!) {
-        guard let presentingViewController = self.presentingViewController else { return }
+        guard let presentingViewController = presentingViewController else { return }
         Debug.print("iAds banner did load, showing")
         guard iAdBannerAdView.bannerLoaded else { return }
         
@@ -537,7 +537,7 @@ extension Ads: ADBannerViewDelegate {
     }
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
-        guard let presentingViewController = self.presentingViewController else { return }
+        guard let presentingViewController = presentingViewController else { return }
         Debug.print("iAds banner error")
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(1.5)
@@ -571,7 +571,7 @@ extension Ads: ADInterstitialAdDelegate {
 extension Ads: GADBannerViewDelegate {
     
     func adViewDidReceiveAd(bannerView: GADBannerView!) {
-        guard let presentingViewController = self.presentingViewController else { return }
+        guard let presentingViewController = presentingViewController else { return }
         Debug.print("AdMob banner did load, showing")
         presentingViewController.view?.window?.rootViewController?.view.addSubview(adMobBannerAdView)
         UIView.beginAnimations(nil, context: nil)
@@ -591,7 +591,7 @@ extension Ads: GADBannerViewDelegate {
     }
 
     func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
-        guard let presentingViewController = self.presentingViewController else { return }
+        guard let presentingViewController = presentingViewController else { return }
         Debug.print("AdMob banner error")
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(1.5)
