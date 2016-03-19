@@ -381,7 +381,6 @@ class Ads: NSObject {
     
     /// Admob show inter
     private func adMobShowInterAd() {
-        guard let presentingViewController = self.presentingViewController else { return }
         guard adMobInterAd != nil && adMobInterAd!.isReady else { // calls interDidReceiveAd
             Debug.print("AdMob inter is not ready, reloading")
             adMobInterAd = adMobLoadInterAd() // do not try iAd again incase of error with both and than they show at the wrong time
@@ -389,7 +388,7 @@ class Ads: NSObject {
         }
         
         Debug.print("AdMob inter showing...")
-        adMobInterAd?.presentFromRootViewController(presentingViewController.view?.window?.rootViewController)
+        adMobInterAd?.presentFromRootViewController(presentingViewController?.view?.window?.rootViewController)
     }
     
     /// Custom ad show
