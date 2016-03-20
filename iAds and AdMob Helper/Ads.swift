@@ -504,13 +504,13 @@ extension Ads: ADBannerViewDelegate {
     
     func bannerViewDidLoadAd(banner: ADBannerView!) {
         guard let presentingViewController = presentingViewController else { return }
+        guard banner.bannerLoaded else { return }
         Debug.print("iAds banner did load, showing")
-        guard iAdBannerAdView.bannerLoaded else { return }
         
-        presentingViewController.view?.window?.rootViewController?.view.addSubview(iAdBannerAdView)
+        presentingViewController.view?.window?.rootViewController?.view.addSubview(banner)
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(1.5)
-        iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (iAdBannerAdView.frame.size.height / 2))
+        banner.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (banner.frame.size.height / 2))
         UIView.commitAnimations()
     }
     
@@ -526,7 +526,7 @@ extension Ads: ADBannerViewDelegate {
         
         /// Adjust for ipads incase orientation was portrait. iAd banners on ipads are shown in landscape and they get messed up after closing
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
-            iAdBannerAdView.hidden = true
+            banner.hidden = true
             let delay: NSTimeInterval = 1 // use delay it wont work
             NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: "orientationChanged", userInfo: nil, repeats: false)
             NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: "showBannerAgain", userInfo: nil, repeats: false)
@@ -539,12 +539,13 @@ extension Ads: ADBannerViewDelegate {
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
         guard let presentingViewController = presentingViewController else { return }
         Debug.print("iAds banner error")
+        
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(1.5)
-        iAdBannerAdView.hidden = true
-        iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (iAdBannerAdView.frame.size.height / 2))
-        iAdBannerAdView.delegate = nil
-        iAdBannerAdView.removeFromSuperview()
+        banner.hidden = true
+        banner.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (banner.frame.size.height / 2))
+        banner.delegate = nil
+        banner.removeFromSuperview()
         adMobLoadBannerAd()
         UIView.commitAnimations()
     }
@@ -562,7 +563,7 @@ extension Ads: ADInterstitialAdDelegate {
     }
     
     func interstitialAd(interstitialAd: ADInterstitialAd!, didFailWithError error: NSError!) {
-        Debug.print("iAds inter error \(error)")
+        Debug.print(error.localizedDescription)
         iAdInterAdView.removeFromSuperview()
     }
 }
@@ -573,10 +574,10 @@ extension Ads: GADBannerViewDelegate {
     func adViewDidReceiveAd(bannerView: GADBannerView!) {
         guard let presentingViewController = presentingViewController else { return }
         Debug.print("AdMob banner did load, showing")
-        presentingViewController.view?.window?.rootViewController?.view.addSubview(adMobBannerAdView)
+        presentingViewController.view?.window?.rootViewController?.view.addSubview(bannerView)
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(1.5)
-        adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (adMobBannerAdView.frame.size.height / 2))
+        bannerView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (bannerView.frame.size.height / 2))
         UIView.commitAnimations()
     }
     
@@ -591,16 +592,17 @@ extension Ads: GADBannerViewDelegate {
     }
 
     func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
+        Debug.print(error.localizedDescription)
         guard let presentingViewController = presentingViewController else { return }
-        Debug.print("AdMob banner error")
+        
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(1.5)
-        adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (adMobBannerAdView.frame.size.height / 2))
-        adMobBannerAdView.hidden = true
+        bannerView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (bannerView.frame.size.height / 2))
+        bannerView.hidden = true
         
         if iAdsAreSupported {
-            adMobBannerAdView.delegate = nil
-            adMobBannerAdView.removeFromSuperview()
+            bannerView.delegate = nil
+            bannerView.removeFromSuperview()
             iAdLoadBannerAd()
         }
         
@@ -633,6 +635,6 @@ extension Ads: GADInterstitialDelegate {
     }
     
     func interstitial(ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
-        Debug.print("AdMob inter error")
+        Debug.print(error.localizedDescription)
     }
 }
