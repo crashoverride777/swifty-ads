@@ -1,6 +1,14 @@
 # iAds, AdMob and CustomAds Helper
 
-A simple helper class that should make integrating Ads from Apple and Google as well as your own custom Ads a breeze. This helper has been made while designing my SpriteKit game but it can be used for any kind of app. 
+NOTE: Apple is shutting down the iAd App Network on June the 30th. 
+Some articles say it does not affect developers trying to integrate iAds but developers that want to have their own apps advertised. 
+Some other articles say it will completly shut down. 
+Other articles say it will shut down but relaunch using an automated services to host ads.
+I am not sure if you can still submit apps or what will happen to the APIs so for now I will leave the helper like it is until I know 100% what is happening.
+https://developer.apple.com/news/?id=01152016a&1452895272
+
+
+A helper class that should make integrating Ads from Apple and Google as well as your own custom Ads a breeze. This helper has been made while designing my SpriteKit game but it can be used for any kind of app. 
 
 The cool thing is that iAds will be used when they are supported otherwise AdMob will be used. iAds tend to have a better impressions and are usually prefered as default ads.
 Whats really cool is that if iAd banners are having an error it will automatically load an AdMob banner and if that AdMob banner is than having an error it will try loading an iAd banner again. 
@@ -8,10 +16,6 @@ When an iAd inter ad fails it will try an AdMob Inter ad but incase that adMob i
 
 This Helper creates whats called a shared Banner which is the recommended way by apple. The usual way to achieve this is to put the iAd and adMob banner properties into the appDelegate but because this helper is a Singleton there is no need for this because there is only 1 instance of the class and therefore the banner properties anyway. To read more about shared banner ads you can read this documentation from Apple
 https://developer.apple.com/library/ios/technotes/tn2286/_index.html
-
-NOTE: Apple is apparently planning to shut down the iAd App Network in June 30th. There is not much info about this yet. Some articles say it not affect developers trying to integrate iAds but developers that want to have their own apps advertised, some other articles say it will completly shut down. 
-I am not sure if you can still submit apps with iAd so for now I will leave the helper like it is until I know for sure.
-https://developer.apple.com/news/?id=01152016a&1452895272
 
 # Set-Up
 
