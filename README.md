@@ -183,6 +183,10 @@ Enjoy
 
 # Release Notes
 
+- v 3.6
+
+Updated to Swift 2.2
+
 - v 3.5.2
 
 Small fixes and improvements
