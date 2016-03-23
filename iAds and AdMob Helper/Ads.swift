@@ -23,7 +23,7 @@
 
 //    Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
-//    v3.5.2
+//    v3.6
 
 import iAd
 import GoogleMobileAds
@@ -153,9 +153,9 @@ class Ads: NSObject {
     }
     
     /// Show banner ads
-    func showBannerAd(withDelay delay: NSTimeInterval) {
+    func showBannerAdWithDelay(delay: NSTimeInterval) {
         guard !removedAds else { return }
-        NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: "showBannerAd", userInfo: nil, repeats: false)
+        NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: #selector(Ads.showBannerAd), userInfo: nil, repeats: false)
     }
     
     func showBannerAd() {
@@ -185,7 +185,7 @@ class Ads: NSObject {
         }
         
         // /*
-        customAdIntervalCounter++
+        customAdIntervalCounter += 1
         guard customAdIntervalCounter == customAdInterval else {
             showingInterAd()
             return
@@ -431,7 +431,7 @@ class Ads: NSObject {
         let downloadArea = UIButton()
         downloadArea.frame = CGRectMake(0, 0, customAdView.frame.size.width, customAdView.frame.size.height)
         downloadArea.backgroundColor = UIColor.clearColor()
-        downloadArea.addTarget(self, action: "customAdPressedDownloadButton:", forControlEvents: UIControlEvents.TouchDown)
+        downloadArea.addTarget(self, action: #selector(Ads.customAdPressedDownloadButton(_:)), forControlEvents: UIControlEvents.TouchDown)
         downloadArea.center = CGPoint(x: CGRectGetMidX(customAdView.frame), y: CGRectGetMidY(customAdView.frame))
         customAdView.addSubview(downloadArea)
         
@@ -469,7 +469,7 @@ class Ads: NSObject {
         interAdCloseButton.backgroundColor = UIColor.whiteColor()
         interAdCloseButton.layer.borderColor = UIColor.grayColor().CGColor
         interAdCloseButton.layer.borderWidth = 2
-        interAdCloseButton.addTarget(self, action: "pressedInterAdCloseButton:", forControlEvents: UIControlEvents.TouchDown)
+        interAdCloseButton.addTarget(self, action: #selector(Ads.pressedInterAdCloseButton(_:)), forControlEvents: UIControlEvents.TouchDown)
     }
     
     /// Pressed inter ad close button
@@ -528,8 +528,8 @@ extension Ads: ADBannerViewDelegate {
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
             banner.hidden = true
             let delay: NSTimeInterval = 1 // use delay it wont work
-            NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: "orientationChanged", userInfo: nil, repeats: false)
-            NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: "showBannerAgain", userInfo: nil, repeats: false)
+            NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: #selector(Ads.orientationChanged), userInfo: nil, repeats: false)
+            NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: #selector(Ads.showBannerAgain), userInfo: nil, repeats: false)
         }
     }
     func showBannerAgain() {
