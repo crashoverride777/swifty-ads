@@ -109,8 +109,8 @@ class Ads: NSObject {
     /// adMob
     private var adMobBannerAdView: GADBannerView!
     private var adMobInterAd: GADInterstitial?
-    private var adMobBannerAdID: String!
-    private var adMobInterAdID: String!
+    private var adMobBannerAdID = ""
+    private var adMobInterAdID = ""
     
     /// Custom ad
     private var customAdView = UIView()
