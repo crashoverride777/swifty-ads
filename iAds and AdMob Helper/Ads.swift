@@ -206,7 +206,6 @@ class Ads: NSObject {
         }
         customAdIntervalCounter = 0
          
-         
         let randomCustomInterAd = Int(arc4random() % UInt32(customAdCount))
         
         switch randomCustomInterAd {
