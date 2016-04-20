@@ -183,6 +183,10 @@ Enjoy
 
 # Release Notes
 
+- v 3.6.1
+
+Clean-Up and updated AdMob SDK to v7.7.1
+
 - v 3.6
 
 Updated to Swift 2.2
