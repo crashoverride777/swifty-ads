@@ -23,7 +23,7 @@
 
 //    Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
-//    v3.6.1
+//    v3.6.2
 
 import iAd
 import GoogleMobileAds
@@ -127,30 +127,37 @@ class Ads: NSObject {
     /// Removed Ads
     private var removedAds = false
     
-    /// iAds check support
-    private var iAdTimeZoneSupport: Bool {
-        let iAdTimeZones = "America/;US/;Pacific/;Asia/Tokyo;Europe/".componentsSeparatedByString(";")
-        let myTimeZone = NSTimeZone.localTimeZone().name
-        for zone in iAdTimeZones {
-            if (myTimeZone.hasPrefix(zone)) {
-                Debug.print("iAds supported")
-                return true
-            }
-        }
-        Debug.print("iAds not supported")
-        return false
-    }
-    
     // MARK: - Init
     private override init() {
         super.init()
         Debug.print("Ads init")
         Debug.print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
         
-        /// Check if in test or release mode
-        adMobCheckAdUnitID()
+        /// Set adMob AdUnit IDs
+        #if DEBUG
+            Debug.print("Ads in test mode")
+            adMobBannerAdID = AdMobUnitID.Banner.test
+            adMobInterAdID = AdMobUnitID.Inter.test
+        #else
+            Debug.print("Ads in release mode")
+            adMobBannerAdID = AdMobUnitID.Banner.live
+            adMobInterAdID = AdMobUnitID.Inter.live
+        #endif
         
-        /// Check iAds are supported
+        /// Check iAds if are supported
+        var iAdTimeZoneSupport: Bool {
+            let iAdTimeZones = "America/;US/;Pacific/;Asia/Tokyo;Europe/".componentsSeparatedByString(";")
+            let myTimeZone = NSTimeZone.localTimeZone().name
+            for zone in iAdTimeZones {
+                if (myTimeZone.hasPrefix(zone)) {
+                    Debug.print("iAds supported")
+                    return true
+                }
+            }
+            Debug.print("iAds not supported")
+            return false
+        }
+        
         iAdsAreSupported = iAdTimeZoneSupport
         
         /// Preload inter ads first time
@@ -426,21 +433,7 @@ extension Ads: ADInterstitialAdDelegate {
 
 // MARK: - AdMob
 private extension Ads {
-    
-    /// AdMob check ad unit id
-    func adMobCheckAdUnitID() {
-        #if DEBUG
-            Debug.print("Ads in test mode")
-            adMobBannerAdID = AdMobUnitID.Banner.test
-            adMobInterAdID = AdMobUnitID.Inter.test
-        #endif
-        
-        #if !DEBUG
-            adMobBannerAdID = AdMobUnitID.Banner.live
-            adMobInterAdID = AdMobUnitID.Inter.live
-        #endif
-    }
-    
+   
     /// Admob banner
     func adMobLoadBannerAd() {
         guard let presentingViewController = presentingViewController else { return }
