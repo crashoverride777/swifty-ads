@@ -183,6 +183,10 @@ Enjoy
 
 # Release Notes
 
+- v 3.6.2
+
+Clean-Up and improvements
+
 - v 3.6.1
 
 Clean-Up and updated AdMob SDK to v7.7.1
