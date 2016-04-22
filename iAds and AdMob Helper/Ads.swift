@@ -25,6 +25,11 @@
 
 //    v3.6.2
 
+/*
+    Abstract:
+    A Singleton class to manage banner and interstitial adverts from iAd and AdMob. This class is only included in the iOS version of the project.
+*/
+
 import iAd
 import GoogleMobileAds
 
