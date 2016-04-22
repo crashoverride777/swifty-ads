@@ -90,7 +90,7 @@ Ads.sharedInstance.showInterAd(randomness: 4) // 25% chance of showing inter ads
 By default the helper does not include custom ads, if you would like to include your own ads than you simply go the line where you init the helper in your GameViewController (Step 6). Than add this line after setting the presentingViewController property
 
 ```swift
-Ads.sharedInstance.includeCustomAds(totalCustomAds: 2, interval: 4)
+Ads.sharedInstance.includeCustomInterAds(totalCustomAds: 2, interval: 4)
 ```
 to include custom ads as well. In this example there is 2 custom ads in total. The interval means that every 4th time an Inter ad is shown it will show a custom one, randomised between the totalCustomAds. To add more custom adds go to the struct CustomAds and add more. Than go to 
 
