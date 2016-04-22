@@ -426,7 +426,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = "Swift-2-iAds-and-AdMob-Helper";
+				PRODUCT_BUNDLE_IDENTIFIER = "Swift-iAds-and-AdMob-Helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -444,7 +444,7 @@
 				INFOPLIST_FILE = "iAds and AdMob Helper/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Swift-2-iAds-and-AdMob-Helper";
+				PRODUCT_BUNDLE_IDENTIFIER = "Swift-iAds-and-AdMob-Helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

@@ -60,21 +60,21 @@ private struct AdMobUnitID {
     }
 }
 
-/// Custom ads
+/// Custom ads settings
 private struct CustomAd {
     struct Ad1 {
         static let backgroundColor = UIColor(red:0.08, green:0.62, blue:0.85, alpha:1.0)
         static let headerColor = UIColor.whiteColor()
         static let image = "CustomAd"
         static let headerText = "Played Angry Flappies yet?"
-        static let appURL = NSURL(string: "https://itunes.apple.com/gb/app/angry-flappies/id991933749?mt=8")!
+        static let appURL = NSURL(string: "https://itunes.apple.com/gb/app/angry-flappies/id991933749?mt=8")
     }
     struct Ad2 {
         static let backgroundColor = UIColor.orangeColor()
         static let headerColor = UIColor.blackColor()
         static let image = "CustomAd"
         static let headerText = "Played Angry Flappies yet?"
-        static let appURL = NSURL(string: "https://itunes.apple.com/gb/app/angry-flappies/id991933749?mt=8")!
+        static let appURL = NSURL(string: "https://itunes.apple.com/gb/app/angry-flappies/id991933749?mt=8")
     }
 }
 
@@ -102,21 +102,21 @@ class Ads: NSObject {
     
     /// iAd
     private var iAdsAreSupported = false
-    private var iAdBannerAdView: ADBannerView!
+    private var iAdBannerAdView: ADBannerView?
     private var iAdInterAd: ADInterstitialAd?
     private var iAdInterAdView = UIView()
     
     /// adMob
-    private var adMobBannerAdView: GADBannerView!
+    private var adMobBannerAdView: GADBannerView?
     private var adMobInterAd: GADInterstitial?
     private var adMobBannerAdID = ""
     private var adMobInterAdID = ""
     
     /// Custom ad
     private var customAdView = UIView()
-    private var customAdHeaderLabel: UILabel!
-    private var customAdImage: UIImageView!
-    private var customAdURL: NSURL!
+    private var customAdHeaderLabel: UILabel?
+    private var customAdImage: UIImageView?
+    private var customAdURL: NSURL?
     private var customAdCount = 0
     private var customAdInterval = 0
     private var customAdIntervalCounter = 0
@@ -150,8 +150,10 @@ class Ads: NSObject {
         /// Check if in test or release mode
         adMobCheckAdUnitID()
         
-        /// Check iAds are supported and preload inter ads first time
+        /// Check iAds are supported
         iAdsAreSupported = iAdTimeZoneSupport
+        
+        /// Preload inter ads first time
         if iAdsAreSupported {
             iAdInterAd = iAdLoadInterAd()
         }
@@ -160,9 +162,9 @@ class Ads: NSObject {
     
     // MARK: - User Methods
     
-    /// Prepare with custom ads
-    func includeCustomAds(totalCustomAds customAdCount: Int, interval: Int) {
-        self.customAdCount = customAdCount
+    /// Include custom ads. Call this after setting the presentingViewController to include custom inter ads
+    func includeCustomInterAds(totalCustomAds totalCustomAds: Int, interval: Int) {
+        self.customAdCount = totalCustomAds
         self.customAdInterval = interval
     }
     
@@ -198,12 +200,13 @@ class Ads: NSObject {
             return
         }
         
-       // /*
         customAdIntervalCounter += 1
+        
         guard customAdIntervalCounter == customAdInterval else {
             showingInterAd()
             return
         }
+        
         customAdIntervalCounter = 0
          
         let randomCustomInterAd = Int(arc4random() % UInt32(customAdCount))
@@ -211,18 +214,18 @@ class Ads: NSObject {
         switch randomCustomInterAd {
          
         case 0:
-            if let customAd1 = customAdShow(CustomAd.Ad1.backgroundColor, headerColor: CustomAd.Ad1.headerColor, headerText: CustomAd.Ad1.headerText, imageName: CustomAd.Ad1.image, appURL: CustomAd.Ad1.appURL) {
+            if let customAd1 = createCustomAd(CustomAd.Ad1.backgroundColor, headerColor: CustomAd.Ad1.headerColor, headerText: CustomAd.Ad1.headerText, imageName: CustomAd.Ad1.image, appURL: CustomAd.Ad1.appURL) {
             presentingViewController?.view?.window?.rootViewController?.view.addSubview(customAd1)
          }
          
         case 1:
-            if let customAd2 = customAdShow(CustomAd.Ad2.backgroundColor, headerColor: CustomAd.Ad2.headerColor, headerText: CustomAd.Ad2.headerText, imageName: CustomAd.Ad2.image, appURL: CustomAd.Ad2.appURL) {
+            if let customAd2 = createCustomAd(CustomAd.Ad2.backgroundColor, headerColor: CustomAd.Ad2.headerColor, headerText: CustomAd.Ad2.headerText, imageName: CustomAd.Ad2.image, appURL: CustomAd.Ad2.appURL) {
              presentingViewController?.view?.window?.rootViewController?.view.addSubview(customAd2)
          }
          
         default:
             break
-         } //*/
+         }
     }
     
     /// Remove banner ads
@@ -261,7 +264,7 @@ class Ads: NSObject {
         // iAds
         iAdBannerAdView?.frame = presentingViewController.view.bounds
         iAdBannerAdView?.sizeThatFits(presentingViewController.view.frame.size)
-        iAdBannerAdView?.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (iAdBannerAdView.frame.size.height / 2))
+        iAdBannerAdView?.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (iAdBannerAdView!.frame.size.height / 2))
         
         iAdInterAdView.frame = presentingViewController.view.bounds
         
@@ -271,7 +274,7 @@ class Ads: NSObject {
         } else {
             adMobBannerAdView?.adSize = kGADAdSizeSmartBannerPortrait
         }
-        adMobBannerAdView?.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (adMobBannerAdView.frame.size.height / 2))
+        adMobBannerAdView?.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (adMobBannerAdView!.frame.size.height / 2))
         
         // Custom ad
         customAdView.frame = CGRect(x: 0, y: 0, width: presentingViewController.view.frame.width, height: presentingViewController.view.frame.height)
@@ -312,10 +315,10 @@ private extension Ads {
         guard let presentingViewController = presentingViewController else { return }
         Debug.print("iAd banner loading...")
         iAdBannerAdView = ADBannerView(adType: .Banner)
-        iAdBannerAdView.frame = presentingViewController.view.bounds
-        iAdBannerAdView.sizeThatFits(presentingViewController.view.frame.size)
-        iAdBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (iAdBannerAdView.frame.size.height / 2))
-        iAdBannerAdView.delegate = self
+        iAdBannerAdView?.frame = presentingViewController.view.bounds
+        iAdBannerAdView?.sizeThatFits(presentingViewController.view.frame.size)
+        iAdBannerAdView?.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (iAdBannerAdView!.frame.size.height / 2))
+        iAdBannerAdView?.delegate = self
     }
     
     /// iAd load inter
@@ -385,7 +388,7 @@ extension Ads: ADBannerViewDelegate {
         }
     }
     func showBannerAgain() {
-        iAdBannerAdView.hidden = false
+        iAdBannerAdView?.hidden = false
     }
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
@@ -449,10 +452,10 @@ private extension Ads {
             adMobBannerAdView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
         }
         
-        adMobBannerAdView.adUnitID = adMobBannerAdID
-        adMobBannerAdView.delegate = self
-        adMobBannerAdView.rootViewController = presentingViewController
-        adMobBannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (adMobBannerAdView.frame.size.height / 2))
+        adMobBannerAdView?.adUnitID = adMobBannerAdID
+        adMobBannerAdView?.delegate = self
+        adMobBannerAdView?.rootViewController = presentingViewController
+        adMobBannerAdView?.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (adMobBannerAdView!.frame.size.height / 2))
         
         let request = GADRequest()
         
@@ -460,7 +463,7 @@ private extension Ads {
             request.testDevices = [kGADSimulatorID]
         #endif
         
-        adMobBannerAdView.loadRequest(request)
+        adMobBannerAdView?.loadRequest(request)
     }
     
     /// Admob inter
@@ -501,7 +504,7 @@ extension Ads: GADBannerViewDelegate {
         guard let presentingViewController = presentingViewController else { return }
         Debug.print("AdMob banner did load, showing")
         
-        presentingViewController.view?.window?.rootViewController?.view.addSubview(adMobBannerAdView)
+        presentingViewController.view?.window?.rootViewController?.view.addSubview(bannerView)
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(1.5)
         bannerView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (bannerView.frame.size.height / 2))
@@ -571,7 +574,7 @@ extension Ads: GADInterstitialDelegate {
 extension Ads {
     
     /// Custom ad show
-    private func customAdShow(backgroundColor: UIColor, headerColor: UIColor, headerText: String, imageName: String, appURL: NSURL) -> UIView? {
+    private func createCustomAd(backgroundColor: UIColor, headerColor: UIColor, headerText: String, imageName: String, appURL: NSURL?) -> UIView? {
         guard let presentingViewController = presentingViewController else { return nil }
         
         // App URL
@@ -583,28 +586,28 @@ extension Ads {
         
         // Header
         customAdHeaderLabel = UILabel()
-        customAdHeaderLabel.text = headerText
+        customAdHeaderLabel?.text = headerText
         let font = "Damascus"
         if DeviceCheck.iPadPro {
-            customAdHeaderLabel.font = UIFont(name: font, size: 62)
+            customAdHeaderLabel?.font = UIFont(name: font, size: 62)
         } else if DeviceCheck.iPad {
-            customAdHeaderLabel.font = UIFont(name: font, size: 36)
+            customAdHeaderLabel?.font = UIFont(name: font, size: 36)
         } else {
-            customAdHeaderLabel.font = UIFont(name: font, size: 28)
+            customAdHeaderLabel?.font = UIFont(name: font, size: 28)
         }
-        customAdHeaderLabel.frame = CGRectMake(0, 0, presentingViewController.view.frame.width, presentingViewController.view.frame.height)
-        customAdHeaderLabel.center = CGPoint(x: customAdView.frame.width / 2, y: CGRectGetMinY(customAdView.frame) + 80)
-        customAdHeaderLabel.textAlignment = NSTextAlignment.Center
-        customAdHeaderLabel.textColor = headerColor
-        customAdView.addSubview(customAdHeaderLabel)
+        customAdHeaderLabel?.frame = CGRectMake(0, 0, presentingViewController.view.frame.width, presentingViewController.view.frame.height)
+        customAdHeaderLabel?.center = CGPoint(x: customAdView.frame.width / 2, y: CGRectGetMinY(customAdView.frame) + 80)
+        customAdHeaderLabel?.textAlignment = NSTextAlignment.Center
+        customAdHeaderLabel?.textColor = headerColor
+        customAdView.addSubview(customAdHeaderLabel!)
         
         // Image
         customAdImage = UIImageView(image: UIImage(named: imageName))
-        customAdImage.frame = CGRectMake(0, 0, presentingViewController.view.frame.width / 1.1, presentingViewController.view.frame.height / 2)
-        customAdImage.contentMode = UIViewContentMode.ScaleAspectFit
-        customAdImage.center.x = customAdView.center.x
-        customAdImage.center.y = customAdView.center.y + 20
-        customAdView.addSubview(customAdImage)
+        customAdImage?.frame = CGRectMake(0, 0, presentingViewController.view.frame.width / 1.1, presentingViewController.view.frame.height / 2)
+        customAdImage?.contentMode = UIViewContentMode.ScaleAspectFit
+        customAdImage?.center.x = customAdView.center.x
+        customAdImage?.center.y = customAdView.center.y + 20
+        customAdView.addSubview(customAdImage!)
         
         // Download button
         let downloadArea = UIButton()
@@ -624,7 +627,9 @@ extension Ads {
     
     /// Pressed custom inter download button
     func customAdPressedDownloadButton(sender: UIButton) {
-        UIApplication.sharedApplication().openURL(customAdURL)
+        if let url = customAdURL {
+            UIApplication.sharedApplication().openURL(url)
+        }
     }
 }
 
