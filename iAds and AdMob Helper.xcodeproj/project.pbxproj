@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B45872B81CD76B6F0049A906 /* Ads(no iAds).swift in Sources */ = {isa = PBXBuildFile; fileRef = B45872B71CD76B6F0049A906 /* Ads(no iAds).swift */; };
 		B498F63F1CC81DFF00427B80 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B498F63E1CC81DFF00427B80 /* GoogleMobileAds.framework */; };
 		B4B01A191B9A0AF500F9A8EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B01A181B9A0AF500F9A8EA /* AppDelegate.swift */; };
 		B4B01A1B1B9A0AF500F9A8EA /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B4B01A1A1B9A0AF500F9A8EA /* GameScene.sks */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B45872B71CD76B6F0049A906 /* Ads(no iAds).swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ads(no iAds).swift"; sourceTree = "<group>"; };
 		B498F63E1CC81DFF00427B80 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "GoogleMobileAdsSdkiOS-7.7.1/GoogleMobileAds.framework"; sourceTree = SOURCE_ROOT; };
 		B4B01A131B9A0AF500F9A8EA /* iAds and AdMob Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iAds and AdMob Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4B01A171B9A0AF500F9A8EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				B4B01A3C1B9A0B0700F9A8EA /* Ads.swift */,
+				B45872B71CD76B6F0049A906 /* Ads(no iAds).swift */,
 				B4B01A181B9A0AF500F9A8EA /* AppDelegate.swift */,
 				B4B01A1A1B9A0AF500F9A8EA /* GameScene.sks */,
 				B4B01A1C1B9A0AF500F9A8EA /* GameScene.swift */,
@@ -282,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4B01A3D1B9A0B0700F9A8EA /* Ads.swift in Sources */,
+				B45872B81CD76B6F0049A906 /* Ads(no iAds).swift in Sources */,
 				B4B01A1D1B9A0AF500F9A8EA /* GameScene.swift in Sources */,
 				B4B01A1F1B9A0AF500F9A8EA /* GameViewController.swift in Sources */,
 				B4B01A191B9A0AF500F9A8EA /* AppDelegate.swift in Sources */,
