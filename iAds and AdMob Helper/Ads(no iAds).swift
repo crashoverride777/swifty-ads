@@ -226,7 +226,6 @@ class Ads: NSObject {
     
     /// Remove banner ads
     func removeBannerAd() {
-        presentingViewController?.canDisplayBannerAds = false
         adMobBannerAdView?.delegate = nil
         adMobBannerAdView?.removeFromSuperview()
     }
