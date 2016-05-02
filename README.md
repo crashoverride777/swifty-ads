@@ -4,7 +4,9 @@ NOTE: Apple is shutting down the iAd App Network on June the 30th.
 Some articles say it does not affect developers trying to integrate iAds but developers that want to have their own apps advertised. 
 Some other articles say it will completly shut down. 
 Other articles say it will shut down but relaunch using an automated services to host ads.
-I am not sure if you can still submit apps or what will happen to the APIs so for now I will leave the helper like it is until I know 100% what is happening.
+
+I am not sure if you can still submit apps or what will happen to the APIs. So for now I included the original project with iAds and another one without iAds.
+In the future when I am 100% sure what will happen with iAds I will include another 3rd party ad provider (most likely RevMob and/or Chartboost)
 https://developer.apple.com/news/?id=01152016a&1452895272
 
 
@@ -182,6 +184,10 @@ Please let me know about any bugs or improvements, I am by now means an expert.
 Enjoy
 
 # Release Notes
+
+- v 3.7
+
+Added a version without iAds. I will update the helper with another ad provider once I know 100% what is happening with iAds.
 
 - v 3.6.2
 
