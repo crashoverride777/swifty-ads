@@ -1,4 +1,3 @@
-# iAds, AdMob and CustomAds Helper
 
 NOTE: Apple is shutting down the iAd App Network on June the 30th. 
 Some articles say it does not affect developers trying to integrate iAds but developers that want to have their own apps advertised. 
@@ -9,6 +8,7 @@ I am not sure if you can still submit apps or what will happen to the APIs. So f
 In the future when I am 100% sure what will happen with iAds I will include another 3rd party ad provider (most likely RevMob and/or Chartboost)
 https://developer.apple.com/news/?id=01152016a&1452895272
 
+# iAds, AdMob and CustomAds Helper
 
 A helper class that should make integrating Ads from Apple and Google as well as your own custom Ads a breeze. This helper has been made while designing my SpriteKit game but it can be used for any kind of app. 
 
