@@ -186,6 +186,10 @@ Enjoy
 
 # Release Notes
 
+- v3.7.1
+
+Improved the "removeBannerAd" method to ensure that all banner instances get removed incase there are multiple instances of a banner from the same AdNetwork.
+
 - v 3.7
 
 Added a version without iAds. I will update the helper with another ad provider once I know 100% what is happening with iAds.
