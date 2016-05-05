@@ -507,7 +507,8 @@ private extension Ads {
         }
         
         Debug.print("AdMob inter showing...")
-        adMobInterAd?.presentFromRootViewController(presentingViewController?.view?.window?.rootViewController)
+        guard let rootViewController = presentingViewController?.view?.window?.rootViewController else { return }
+        adMobInterAd?.presentFromRootViewController(rootViewController)
     }
 }
 

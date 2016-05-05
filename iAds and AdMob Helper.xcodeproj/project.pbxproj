@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B452EFD91CDBF7FE009A69B5 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B452EFD81CDBF7FE009A69B5 /* GoogleMobileAds.framework */; };
 		B45872B81CD76B6F0049A906 /* Ads(no iAds).swift in Sources */ = {isa = PBXBuildFile; fileRef = B45872B71CD76B6F0049A906 /* Ads(no iAds).swift */; };
-		B498F63F1CC81DFF00427B80 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B498F63E1CC81DFF00427B80 /* GoogleMobileAds.framework */; };
 		B4B01A191B9A0AF500F9A8EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B01A181B9A0AF500F9A8EA /* AppDelegate.swift */; };
 		B4B01A1B1B9A0AF500F9A8EA /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B4B01A1A1B9A0AF500F9A8EA /* GameScene.sks */; };
 		B4B01A1D1B9A0AF500F9A8EA /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B01A1C1B9A0AF500F9A8EA /* GameScene.swift */; };
@@ -42,8 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B452EFD81CDBF7FE009A69B5 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "GoogleMobileAdsSdkiOS-7.8.0/GoogleMobileAds.framework"; sourceTree = SOURCE_ROOT; };
 		B45872B71CD76B6F0049A906 /* Ads(no iAds).swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ads(no iAds).swift"; sourceTree = "<group>"; };
-		B498F63E1CC81DFF00427B80 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "GoogleMobileAdsSdkiOS-7.7.1/GoogleMobileAds.framework"; sourceTree = SOURCE_ROOT; };
 		B4B01A131B9A0AF500F9A8EA /* iAds and AdMob Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iAds and AdMob Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4B01A171B9A0AF500F9A8EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B4B01A181B9A0AF500F9A8EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -75,7 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B498F63F1CC81DFF00427B80 /* GoogleMobileAds.framework in Frameworks */,
+				B452EFD91CDBF7FE009A69B5 /* GoogleMobileAds.framework in Frameworks */,
 				B4B01A561B9A0BF700F9A8EA /* SystemConfiguration.framework in Frameworks */,
 				B4B01A541B9A0BEC00F9A8EA /* StoreKit.framework in Frameworks */,
 				B4B01A521B9A0BDF00F9A8EA /* MessageUI.framework in Frameworks */,
@@ -164,7 +164,7 @@
 		B4B01A3E1B9A0B3500F9A8EA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B498F63E1CC81DFF00427B80 /* GoogleMobileAds.framework */,
+				B452EFD81CDBF7FE009A69B5 /* GoogleMobileAds.framework */,
 				B4B01A551B9A0BF700F9A8EA /* SystemConfiguration.framework */,
 				B4B01A531B9A0BEC00F9A8EA /* StoreKit.framework */,
 				B4B01A511B9A0BDF00F9A8EA /* MessageUI.framework */,
@@ -424,7 +424,7 @@
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/GoogleMobileAdsSdkiOS-7.7.1",
+					"$(PROJECT_DIR)/GoogleMobileAdsSdkiOS-7.8.0",
 				);
 				INFOPLIST_FILE = "iAds and AdMob Helper/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -443,7 +443,7 @@
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/GoogleMobileAdsSdkiOS-7.7.1",
+					"$(PROJECT_DIR)/GoogleMobileAdsSdkiOS-7.8.0",
 				);
 				INFOPLIST_FILE = "iAds and AdMob Helper/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
