@@ -30,7 +30,7 @@
 
 //    Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
-//    v3.7
+//    v3.7.1
 
 /*
  Abstract:
@@ -226,14 +226,27 @@ class Ads: NSObject {
     
     /// Remove banner ads
     func removeBannerAd() {
-        adMobBannerAdView?.delegate = nil
-        adMobBannerAdView?.removeFromSuperview()
+        guard let presentingViewControllerView = presentingViewController?.view else {
+            // Just incase
+            adMobBannerAdView?.delegate = nil
+            adMobBannerAdView?.removeFromSuperview()
+            return
+        }
+ 
+        presentingViewController?.canDisplayBannerAds = false
+ 
+        for banner in presentingViewControllerView.subviews {
+            if let adMobBanner = banner as? GADBannerView {
+                adMobBanner.delegate = nil
+                adMobBanner.removeFromSuperview()
+            }
+        }
     }
-    
+ 
     /// Remove all ads (IAPs)
     func removeAllAds() {
         Debug.print("Removed all ads")
-        
+ 
         // Removed Ads
         removedAds = true
         

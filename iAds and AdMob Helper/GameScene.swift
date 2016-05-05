@@ -39,6 +39,9 @@ class GameScene: SKScene {
             
             self.addChild(sprite)
             
+            // Remove all ads
+            //Ads.sharedInstance.removeAllAds()
+            
             // Show inter ad
             Ads.sharedInstance.showInterAd(randomness: 3)
         }
