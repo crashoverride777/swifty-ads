@@ -10,7 +10,7 @@ https://developer.apple.com/news/?id=01152016a&1452895272
 
 # iAds, AdMob and CustomAds Helper
 
-A helper class that should make integrating Ads from Apple and Google as well as your own custom Ads a breeze. This helper has been made while designing my SpriteKit game but it can be used for any kind of app. 
+A helper class that should make integrating Ads from Apple and Google as well as your own custom Ads a breeze. This helper has been made while designing my SpriteKit game but should workd for any kind of app. 
 
 The cool thing is that iAds will be used when they are supported otherwise AdMob will be used. iAds tend to have a better impressions and are usually prefered as default ads.
 Whats really cool is that if iAd banners are having an error it will automatically load an AdMob banner and if that AdMob banner is than having an error it will try loading an iAd banner again. 
@@ -180,7 +180,7 @@ This might not create a sharedBanner ad that can be used accross multiple viewCo
 The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and an inter ad randomly when touching the screen. 
 Like I mentioned above I primarly focused on SpriteKit to make it easy to call Ads from your SKScenes without having to use NSNotificationCenter or Delegates to constantly communicate with the viewController. Also this should help keep your viewController clean as mine became a mess after integrating AdMob.
 
-Please let me know about any bugs or improvements, I am by now means an expert. 
+Please let me know about any bugs or improvements, I am by no means an expert. 
 
 Enjoy
 
