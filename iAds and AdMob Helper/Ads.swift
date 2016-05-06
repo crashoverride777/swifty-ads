@@ -250,12 +250,12 @@ class Ads: NSObject {
         
         guard let presentingViewControllerView = presentingViewController?.view else { return }
         
-        for banner in presentingViewControllerView.subviews {
-            if let iAdBanner = banner as? ADBannerView {
+        for subview in presentingViewControllerView.subviews {
+            if let iAdBanner = subview as? ADBannerView {
                 iAdBanner.delegate = nil
                 iAdBanner.removeFromSuperview()
             }
-            if let adMobBanner = banner as? GADBannerView {
+            if let adMobBanner = subview as? GADBannerView {
                 adMobBanner.delegate = nil
                 adMobBanner.removeFromSuperview()
             }
