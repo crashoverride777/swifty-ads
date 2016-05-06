@@ -40,10 +40,10 @@ class GameScene: SKScene {
             self.addChild(sprite)
             
             // Remove all ads
-            //Ads.sharedInstance.removeAll()
+            Ads.sharedInstance.removeAll()
             
             // Show inter ad
-            Ads.sharedInstance.showInterRandomly(randomness: 3)
+            //Ads.sharedInstance.showInterRandomly(randomness: 3)
         }
     }
    

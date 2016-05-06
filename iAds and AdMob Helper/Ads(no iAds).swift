@@ -223,14 +223,11 @@ class Ads: NSObject {
     
     /// Remove banner ads
     func removeBanner() {
-        guard let presentingViewControllerView = presentingViewController?.view else {
-            // Just incase
-            adMobBannerAdView?.delegate = nil
-            adMobBannerAdView?.removeFromSuperview()
-            return
-        }
- 
+        adMobBannerAdView?.delegate = nil
+        adMobBannerAdView?.removeFromSuperview()
         presentingViewController?.canDisplayBannerAds = false
+        
+        guard let presentingViewControllerView = presentingViewController?.view else { return }
  
         for banner in presentingViewControllerView.subviews {
             if let adMobBanner = banner as? GADBannerView {
