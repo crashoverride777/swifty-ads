@@ -41,9 +41,7 @@ import GoogleMobileAds
 
 
 
-
 /*
-
 
  
  
@@ -143,7 +141,6 @@ class Ads: NSObject {
     // MARK: - Init
     private override init() {
         super.init()
-        Debug.print("Ads init")
         Debug.print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
         
         /// Set adMob AdUnit IDs
@@ -164,32 +161,32 @@ class Ads: NSObject {
     // MARK: - User Methods
     
     /// Include custom ads. Call this after setting the presentingViewController to include custom inter ads
-    func includeCustomInterAds(totalCustomAds totalCustomAds: Int, interval: Int) {
-        self.customAdCount = totalCustomAds
+    func includeCustom(total total: Int, interval: Int) {
+        self.customAdCount = total
         self.customAdInterval = interval
     }
     
     /// Show banner ads
-    func showBannerAdWithDelay(delay: NSTimeInterval) {
+    func showBannerWithDelay(delay: NSTimeInterval) {
         guard !removedAds else { return }
-        NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: #selector(showBannerAd), userInfo: nil, repeats: false)
+        NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: #selector(Ads.showBanner), userInfo: nil, repeats: false)
     }
     
-    func showBannerAd() {
+    func showBanner() {
         guard !removedAds else { return }
         
         adMobLoadBannerAd()
     }
     
     /// Show inter ads
-    func showInterAd(randomness randomNumber: UInt32) {
+    func showInterRandomly(randomness randomness: UInt32) {
         guard !removedAds else { return }
-        let randomInterAd = Int(arc4random() % randomNumber)
+        let randomInterAd = Int(arc4random() % randomness)
         guard randomInterAd == 1 else { return }
-        showInterAd()
+        showInter()
     }
     
-    func showInterAd() {
+    func showInter() {
         guard !removedAds else { return }
         guard customAdCount != 0 else {
             showingInterAd()
@@ -225,7 +222,7 @@ class Ads: NSObject {
     }
     
     /// Remove banner ads
-    func removeBannerAd() {
+    func removeBanner() {
         guard let presentingViewControllerView = presentingViewController?.view else {
             // Just incase
             adMobBannerAdView?.delegate = nil
@@ -244,14 +241,14 @@ class Ads: NSObject {
     }
  
     /// Remove all ads (IAPs)
-    func removeAllAds() {
+    func removeAll() {
         Debug.print("Removed all ads")
  
         // Removed Ads
         removedAds = true
         
         // Banners
-        removeBannerAd()
+        removeBanner()
         
         // Inter
         adMobInterAd?.delegate = nil
