@@ -190,7 +190,7 @@ Enjoy
 
 Improved the "removeBannerAd" method to ensure that all banner instances get removed incase there are multiple instances of a banner from the same AdNetwork.
 
-Updated AdMob SDK to v 7.8.0
+Updated AdMob SDK to v7.8.0
 
 - v 3.7
 
