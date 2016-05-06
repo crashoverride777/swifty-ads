@@ -83,10 +83,10 @@ iAdsAreSupported = iAdTimeZoneSupported()
 
 - To show a supported Ad simply call these anywhere you like in your project.
 ```swift
-Ads.sharedInstance.showBannerAd() 
-Ads.sharedInstance.showBannerAd(withDelay: 1) // delay showing banner slightly eg when transitioning to new scene/view
-Ads.sharedInstance.showInterAd()
-Ads.sharedInstance.showInterAd(randomness: 4) // 25% chance of showing inter ads (1/4)
+Ads.sharedInstance.showBanner() 
+Ads.sharedInstance.showBannerWithDelay(1) // delay showing banner slightly eg when transitioning to new scene/view
+Ads.sharedInstance.showInter()
+Ads.sharedInstance.showInterRandomly(randomness: 4) // 25% chance of showing inter ads (1/4)
 ```
 
 By default the helper does not include custom ads, if you would like to include your own ads than you simply go the line where you init the helper in your GameViewController (Step 6). Than add this line after setting the presentingViewController property
@@ -95,20 +95,20 @@ By default the helper does not include custom ads, if you would like to include 
 Ads.sharedInstance.includeCustomInterAds(totalCustomAds: 2, interval: 4)
 ```
 to include custom ads as well. 
-In this example there is 2 custom ads in total. The interval means that every 4th time an Inter ad is shown it will show a custom one, randomised between the totalCustomAds. To add more custom adds go to the struct CustomAds and add more. Than go to 
+In this example there is 2 custom ads in total. The interval means that every 4th time an Inter ad is shown it will show a custom one, randomised between the totalCustomAds. To add more custom adds go to the struct CustomAds and add more. Than go to the method 
 
-    showInterAd() { ....
+    showInter() { ....
    
 and add more cases to the switch statement to match your total custom Ads you want to show. If you dont use custom ads you can comment out the whole block of code after the 2 guard statements at the beginning of the method.
 
 - To remove Banner Ads, for example during gameplay 
 ```swift
-Ads.sharedInstance.removeBannerAds() 
+Ads.sharedInstance.removeBanner() 
 ```
 
 - To remove all Ads, mainly for in app purchases simply call 
 ```swift
-Ads.sharedInstance.removeAllAds() 
+Ads.sharedInstance.removeAll() 
 ```
 
 NOTE: - This method will set a removedAds bool to true in the Ads.swift helper. This ensures you only have to call this method to remove Ads and afterwards all the "Ads.sharedInstance.show..." methods will not fire anymore and therefore require no further editing.
