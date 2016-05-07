@@ -40,8 +40,18 @@ You might want to consider putting all the added frameworks you now see in your 
 
 - Step 6: In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 ```swift
-Ads.sharedInstance.presentingViewController = self
+Ads.sharedInstance.setUp(viewController: self, customAdsCount: 2, customAdsInterval: 5)
 ```
+This sets the viewController property in the helper to your viewController.
+In this example there is 2 custom ads in total. The interval means that every 4th time an Inter ad is shown it will show a custom one, randomised between the total ads count. If you do not want to include custom ads set both these values to 0.
+
+To add more custom adds go to the struct CustomAds and add more. Than go to the method 
+
+```swift
+func showInter() { ....
+```
+
+and add more cases to the switch statement to match your total custom Ads you want to show. If you dont use custom ads you can comment out the whole block of code after the 2 guard statements at the beginning of the method.
 
 - Step 7: This Step is only needed if your app supports both portrait and landscape orientation. Still in your ViewController add the following method.
 ```swift
@@ -88,18 +98,6 @@ Ads.sharedInstance.showBannerWithDelay(1) // delay showing banner slightly eg wh
 Ads.sharedInstance.showInter()
 Ads.sharedInstance.showInterRandomly(randomness: 4) // 25% chance of showing inter ads (1/4)
 ```
-
-By default the helper does not include custom ads, if you would like to include your own ads than you simply go the line where you init the helper in your GameViewController (Step 6). Than add this line after setting the presentingViewController property
-
-```swift
-Ads.sharedInstance.includeCustom(total: 2, interval: 4)
-```
-to include custom ads as well. 
-In this example there is 2 custom ads in total. The interval means that every 4th time an Inter ad is shown it will show a custom one, randomised between the total ads count. To add more custom adds go to the struct CustomAds and add more. Than go to the method 
-
-    showInter() { ....
-   
-and add more cases to the switch statement to match your total custom Ads you want to show. If you dont use custom ads you can comment out the whole block of code after the 2 guard statements at the beginning of the method.
 
 - To remove Banner Ads, for example during gameplay 
 ```swift
