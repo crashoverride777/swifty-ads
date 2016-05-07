@@ -40,10 +40,8 @@
 import GoogleMobileAds
 
 
-
 /*
 
- 
  
 /// Hide print statements for release. Can be used for every print statement in your project
 struct Debug {
