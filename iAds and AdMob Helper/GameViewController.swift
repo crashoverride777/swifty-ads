@@ -14,9 +14,8 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         // set adsViewController and init ads helper, call ASAP
-        Ads.sharedInstance.presentingViewController = self
-        Ads.sharedInstance.includeCustom(total: 2, interval: 3)
-
+        Ads.sharedInstance.setUp(viewController: self, customAdsCount: 2, customAdsInterval: 3)
+        
         if let scene = GameScene(fileNamed: "GameScene") {
             // Configure the view.
             let skView = self.view as! SKView

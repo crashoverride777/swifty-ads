@@ -110,13 +110,13 @@ class Ads: NSObject {
     static let sharedInstance = Ads()
     
     // MARK: - Properties
-    
-    /// Presenting view controller
-    var presentingViewController: UIViewController?
-    
+ 
     /// Delegate
     weak var delegate: AdsDelegate?
-    
+ 
+    /// Presenting view controller
+    private var presentingViewController: UIViewController?
+ 
     /// AdMob
     private var adMobBannerAdView: GADBannerView?
     private var adMobInterAd: GADInterstitial?
@@ -160,12 +160,13 @@ class Ads: NSObject {
     
     // MARK: - User Methods
     
-    /// Include custom ads. Call this after setting the presentingViewController to include custom inter ads
-    func includeCustom(total total: Int, interval: Int) {
-        self.customAdCount = total
-        self.customAdInterval = interval
+    /// SetUp
+    func setUp(viewController viewController: UIViewController, customAdsCount: Int, customAdsInterval: Int) {
+        self.presentingViewController = viewController
+        self.customAdCount = customAdsCount
+        self.customAdInterval = customAdsInterval
     }
-    
+ 
     /// Show banner ads
     func showBannerWithDelay(delay: NSTimeInterval) {
         guard !removedAds else { return }
