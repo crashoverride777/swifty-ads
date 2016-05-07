@@ -43,6 +43,26 @@ struct Debug {
     }
 }
 
+/// Admob ad unit IDs
+private struct AdMobUnitID {
+    
+    static var Banner: String {
+        #if !DEBUG
+            return "Enter your real adMob banner ID" // REAL ID
+        #else
+            return "ca-app-pub-3940256099942544/2934735716"
+        #endif
+    }
+    
+    static var Inter: String {
+        #if !DEBUG
+            return "Enter your real adMob inter ID" // REAL ID
+        #else
+            return "ca-app-pub-3940256099942544/4411468910"
+        #endif
+    }
+}
+
 /// Device check
 private struct DeviceCheck {
     static let iPad      = UIDevice.currentDevice().userInterfaceIdiom == .Pad && maxLength == 1024.0
@@ -52,18 +72,6 @@ private struct DeviceCheck {
     static let height    = UIScreen.mainScreen().bounds.size.height
     static let maxLength = max(width, height)
     static let minLength = min(width, height)
-}
-
-/// Admob ad unit IDs
-private struct AdMobUnitID {
-    struct Banner {
-        static let live = "Enter your real adMob banner ID"
-        static let test = "ca-app-pub-3940256099942544/2934735716"
-    }
-    struct Inter {
-        static let live = "Enter your real adMob inter ID"
-        static let test = "ca-app-pub-3940256099942544/4411468910"
-    }
 }
 
 /// Custom ads settings
@@ -115,8 +123,8 @@ class Ads: NSObject {
     /// AdMob
     private var adMobBannerAdView: GADBannerView?
     private var adMobInterAd: GADInterstitial?
-    private var adMobBannerAdID = ""
-    private var adMobInterAdID = ""
+    private var adMobBannerAdID = AdMobUnitID.Banner
+    private var adMobInterAdID = AdMobUnitID.Inter
     
     /// Custom ad
     private var customAdView = UIView()
@@ -137,17 +145,6 @@ class Ads: NSObject {
     private override init() {
         super.init()
         Debug.print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
-        
-        /// Set adMob AdUnit IDs
-        #if DEBUG
-            Debug.print("Ads in test mode")
-            adMobBannerAdID = AdMobUnitID.Banner.test
-            adMobInterAdID = AdMobUnitID.Inter.test
-        #else
-            Debug.print("Ads in release mode")
-            adMobBannerAdID = AdMobUnitID.Banner.live
-            adMobInterAdID = AdMobUnitID.Inter.live
-        #endif
         
         /// Check iAds if are supported
         var iAdTimeZoneSupport: Bool {
