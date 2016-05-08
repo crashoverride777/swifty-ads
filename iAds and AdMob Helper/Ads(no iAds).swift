@@ -54,23 +54,14 @@ struct Debug {
  
 /// Admob ad unit IDs
 private struct AdMobUnitID {
- 
-    static var Banner: String {
-        #if !DEBUG
-        return "Enter your real adMob banner ID" // REAL ID
-        #else
-        return "ca-app-pub-3940256099942544/2934735716"
-        #endif
-    }
- 
-    static var Inter: String {
-        #if !DEBUG
-        return "Enter your real adMob inter ID" // REAL ID
-        #else
-        return "ca-app-pub-3940256099942544/4411468910"
-        #endif
-    }
- }
+    #if !DEBUG
+    static let banner = "Enter your real adMob banner ID" // Real ID
+    static let inter = "Enter your real adMob inter ID" // Real ID
+    #else
+    static let banner = "ca-app-pub-3940256099942544/2934735716" // Test ID
+    static let inter = "ca-app-pub-3940256099942544/4411468910" // Test ID
+    #endif
+}
 
 /// Device check
 private struct DeviceCheck {
@@ -126,8 +117,6 @@ class Ads: NSObject {
     /// AdMob
     private var adMobBannerAdView: GADBannerView?
     private var adMobInterAd: GADInterstitial?
-    private var adMobBannerAdID = AdMobUnitID.Banner
-    private var adMobInterAdID = AdMobUnitID.Inter
     
     /// Custom ad
     private var customAdView = UIView()
@@ -285,7 +274,7 @@ private extension Ads {
             adMobBannerAdView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
         }
         
-        adMobBannerAdView?.adUnitID = adMobBannerAdID
+        adMobBannerAdView?.adUnitID = AdMobUnitID.banner
         adMobBannerAdView?.delegate = self
         adMobBannerAdView?.rootViewController = presentingViewController
         adMobBannerAdView?.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (adMobBannerAdView!.frame.size.height / 2))
@@ -303,7 +292,7 @@ private extension Ads {
     func adMobLoadInterAd() -> GADInterstitial {
         Debug.print("AdMob inter loading...")
         
-        let googleInterAd = GADInterstitial(adUnitID: adMobInterAdID)
+        let googleInterAd = GADInterstitial(adUnitID: AdMobUnitID.inter)
         googleInterAd.delegate = self
         
         let request = GADRequest()
