@@ -179,9 +179,11 @@ Enjoy
 
 - v3.8
 
-- New convinicence method to setUp the helper.
-- If custom ads are selected if will now show a custom ad the first time and than at the selected interval
-- It turns out the AdMob delegates adViewWillPresentScreen and adViewDidDismissScreen are actually getting called when in release mode. They just do not seem to work in test mode.
+New convinicence method to setUp the helper.
+
+If custom ads are selected if will now show a custom ad the first time and than at the selected interval
+
+It turns out the AdMob delegates adViewWillPresentScreen and adViewDidDismissScreen are actually getting called when in release mode. They just do not seem to work in test mode.
 
 - v3.7.1
 
