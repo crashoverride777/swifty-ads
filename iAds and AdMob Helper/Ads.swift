@@ -45,12 +45,14 @@ struct Debug {
 
 /// Admob ad unit IDs
 private struct AdMobUnitID {
+    // Real IDs
     #if !DEBUG
-    static let banner = "Enter your real adMob banner ID" // Real ID
-    static let inter = "Enter your real adMob inter ID" // Real ID
+    static let banner = "Enter your real adMob banner ID"
+    static let inter = "Enter your real adMob inter ID"
+    // Test IDs
     #else
-    static let banner = "ca-app-pub-3940256099942544/2934735716" // Test ID
-    static let inter = "ca-app-pub-3940256099942544/4411468910" // Test ID
+    static let banner = "ca-app-pub-3940256099942544/2934735716"
+    static let inter = "ca-app-pub-3940256099942544/4411468910"
     #endif
 }
 
