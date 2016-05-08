@@ -151,7 +151,7 @@ class Ads: NSObject {
             return false
         }
         
-        //iAdsAreSupported = iAdTimeZoneSupport
+        iAdsAreSupported = iAdTimeZoneSupport
         
         /// Preload inter ads first time
         if iAdsAreSupported {
