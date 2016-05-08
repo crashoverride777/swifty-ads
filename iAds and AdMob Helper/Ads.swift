@@ -23,7 +23,7 @@
 
 //    Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
-//    v3.7.1
+//    v3.8
 
 /*
     Abstract:
@@ -198,44 +198,37 @@ class Ads: NSObject {
     /// Show inter ads
     func showInterRandomly(randomness randomness: UInt32) {
         guard !removedAds else { return }
-        let randomInterAd = Int(arc4random() % randomness)
-        guard randomInterAd == 1 else { return }
+        
+        let randomInterAd = Int(arc4random_uniform(randomness))
+        guard randomInterAd == 0 else { return }
         showInter()
     }
     
     func showInter() {
         guard !removedAds else { return }
-        guard customAdCount != 0 else {
-            showingInterAd()
+        
+        // Check if custom ads are included
+        guard customAdCount > 0 else {
+            showInterAd()
             return
         }
         
-        customAdIntervalCounter += 1
-        
-        guard customAdIntervalCounter == customAdInterval else {
-            showingInterAd()
-            return
-        }
-        
-        customAdIntervalCounter = 0
-         
-        let randomCustomInterAd = Int(arc4random() % UInt32(customAdCount))
-        
-        switch randomCustomInterAd {
-         
+        // Check custom ads
+        switch customAdIntervalCounter {
+            
         case 0:
-            if let customAd1 = createCustomAd(CustomAd.Ad1.backgroundColor, headerColor: CustomAd.Ad1.headerColor, headerText: CustomAd.Ad1.headerText, imageName: CustomAd.Ad1.image, appURL: CustomAd.Ad1.appURL) {
-            presentingViewController?.view?.window?.rootViewController?.view.addSubview(customAd1)
-         }
-         
-        case 1:
-            if let customAd2 = createCustomAd(CustomAd.Ad2.backgroundColor, headerColor: CustomAd.Ad2.headerColor, headerText: CustomAd.Ad2.headerText, imageName: CustomAd.Ad2.image, appURL: CustomAd.Ad2.appURL) {
-             presentingViewController?.view?.window?.rootViewController?.view.addSubview(customAd2)
-         }
-         
+            showCustomInterAd()
+            
+        case customAdInterval:
+            customAdIntervalCounter = 0
+            showCustomInterAd()
+            
         default:
-            break
-         }
+            showInterAd()
+        }
+        
+        // Increase custom ad interval
+        customAdIntervalCounter += 1
     }
     
     /// Remove banner ads
@@ -309,19 +302,8 @@ class Ads: NSObject {
         customAdImage?.center.y = customAdView.center.y + 20
     }
     
-    /// AdMob Custom methods (2 delegates dont get called)
-    func adMobBannerClicked() {
-        Debug.print("AdMob banner clicked")
-        delegate?.pauseTasks()
-    }
-    
-    func adMobBannerClosed() {
-        Debug.print("AdMob banner closed")
-        delegate?.resumeTasks()
-    }
-    
     /// Showing inter ad
-    private func showingInterAd() {
+    private func showInterAd() {
         if iAdsAreSupported {
             iAdShowInterAd()
         } else {
@@ -582,6 +564,27 @@ extension Ads: GADInterstitialDelegate {
 
 // MARK: - Custom Ads
 extension Ads {
+    
+    private func showCustomInterAd() {
+        
+        let randomCustomInterAd = Int(arc4random() % UInt32(customAdCount))
+        
+        switch randomCustomInterAd {
+            
+        case 0:
+            if let customAd1 = createCustomAd(CustomAd.Ad1.backgroundColor, headerColor: CustomAd.Ad1.headerColor, headerText: CustomAd.Ad1.headerText, imageName: CustomAd.Ad1.image, appURL: CustomAd.Ad1.appURL) {
+                presentingViewController?.view?.window?.rootViewController?.view.addSubview(customAd1)
+            }
+            
+        case 1:
+            if let customAd2 = createCustomAd(CustomAd.Ad2.backgroundColor, headerColor: CustomAd.Ad2.headerColor, headerText: CustomAd.Ad2.headerText, imageName: CustomAd.Ad2.image, appURL: CustomAd.Ad2.appURL) {
+                presentingViewController?.view?.window?.rootViewController?.view.addSubview(customAd2)
+            }
+            
+        default:
+            break
+        }
+    }
     
     /// Custom ad show
     private func createCustomAd(backgroundColor: UIColor, headerColor: UIColor, headerText: String, imageName: String, appURL: NSURL?) -> UIView? {
