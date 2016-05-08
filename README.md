@@ -184,7 +184,7 @@ Enjoy
 
 # Release Notes
 
-- v3.7.2
+- v3.8
 
 - New convinicence method to setUp the helper.
 - If custom ads are selected if will now show a custom ad the first time and than at the selected interval
