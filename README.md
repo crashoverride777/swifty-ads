@@ -120,7 +120,7 @@ Set the delegate in your GameScenes "didMoveToView" (init) method like so
 Ads.sharedInstance.delegate = self
 ```
 
-and create an extension conforming to the protocol (this helps with clean code as well)
+and create an extension conforming to the protocol (this helps with clean code as well) 
 ```swift
 extension GameScene: AdsDelegate {
     func pauseTasks() {
@@ -132,14 +132,7 @@ extension GameScene: AdsDelegate {
 }
 ```
 
-NOTE: There seems to a problem with AdMob Banner delegates not getting called. Therefore if you need your game/app to be paused you need call these 2 user methods in your AppDelegate.swift at the correct spots.
-
-```swift
-Ads.sharedInstance.adMobBannerClicked()
-Ads.sharedInstance.adMobBannerClosed()
-```
-
-which ensures the AdsDelegate protocol gets called.
+NOTE: For adMob these only get called when in release mode and not when in test mode.
 
 # When you go Live 
 
