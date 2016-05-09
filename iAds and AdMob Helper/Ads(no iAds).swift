@@ -248,9 +248,9 @@ class Ads: NSObject {
         
         // Custom ad
         customAdView.frame = CGRect(x: 0, y: 0, width: presentingViewController.view.frame.width, height: presentingViewController.view.frame.height)
-        customAdHeaderLabel?.frame = CGRectMake(0, 0, presentingViewController.view.frame.width, presentingViewController.view.frame.height)
+        customAdHeaderLabel?.frame = CGRect(x: 0, y: 0, width: presentingViewController.view.frame.width, height: presentingViewController.view.frame.height)
         customAdHeaderLabel?.center = CGPoint(x: customAdView.frame.width / 2, y: CGRectGetMinY(customAdView.frame) + 80)
-        customAdImage?.frame = CGRectMake(0, 0, presentingViewController.view.frame.width / 1.1, presentingViewController.view.frame.height / 2)
+        customAdImage?.frame = CGRect(x: 0, y: 0, width: presentingViewController.view.frame.width / 1.1, height: presentingViewController.view.frame.height / 2)
         customAdImage?.contentMode = UIViewContentMode.ScaleAspectFit
         customAdImage?.center.x = customAdView.center.x
         customAdImage?.center.y = customAdView.center.y + 20
@@ -437,7 +437,7 @@ extension Ads {
         } else {
             customAdHeaderLabel?.font = UIFont(name: font, size: 28)
         }
-        customAdHeaderLabel?.frame = CGRectMake(0, 0, presentingViewController.view.frame.width, presentingViewController.view.frame.height)
+        customAdHeaderLabel?.frame = CGRect(x: 0, y: 0, width: presentingViewController.view.frame.width, height: presentingViewController.view.frame.height)
         customAdHeaderLabel?.center = CGPoint(x: customAdView.frame.width / 2, y: CGRectGetMinY(customAdView.frame) + 80)
         customAdHeaderLabel?.textAlignment = NSTextAlignment.Center
         customAdHeaderLabel?.textColor = headerColor
@@ -445,7 +445,7 @@ extension Ads {
         
         // Image
         customAdImage = UIImageView(image: UIImage(named: imageName))
-        customAdImage?.frame = CGRectMake(0, 0, presentingViewController.view.frame.width / 1.1, presentingViewController.view.frame.height / 2)
+        customAdImage?.frame = CGRect(x: 0, y: 0, width: presentingViewController.view.frame.width / 1.1, height: presentingViewController.view.frame.height / 2)
         customAdImage?.contentMode = UIViewContentMode.ScaleAspectFit
         customAdImage?.center.x = customAdView.center.x
         customAdImage?.center.y = customAdView.center.y + 20
@@ -453,7 +453,7 @@ extension Ads {
         
         // Download button
         let downloadArea = UIButton()
-        downloadArea.frame = CGRectMake(0, 0, customAdView.frame.size.width, customAdView.frame.size.height)
+        downloadArea.frame = CGRect(x: 0, y: 0, width: customAdView.frame.size.width, height: customAdView.frame.size.height)
         downloadArea.backgroundColor = UIColor.clearColor()
         downloadArea.addTarget(self, action: #selector(Ads.customAdPressedDownloadButton(_:)), forControlEvents: UIControlEvents.TouchDown)
         downloadArea.center = CGPoint(x: CGRectGetMidX(customAdView.frame), y: CGRectGetMidY(customAdView.frame))
@@ -481,13 +481,13 @@ extension Ads {
     /// Prepare inter ad close button
     private func prepareInterAdCloseButton() {
         if DeviceCheck.iPadPro {
-            interAdCloseButton.frame = CGRectMake(28, 28, 37, 37)
+            interAdCloseButton.frame = CGRect(x: 28, y: 28, width: 37, heigth: 37)
             interAdCloseButton.layer.cornerRadius = 18
         } else if DeviceCheck.iPad {
-            interAdCloseButton.frame = CGRectMake(19, 19, 28, 28)
+            interAdCloseButton.frame = CGRect(x: 19, y: 19, width: 28, heigth: 28)
             interAdCloseButton.layer.cornerRadius = 14
         } else {
-            interAdCloseButton.frame = CGRectMake(12, 12, 21, 21)
+            interAdCloseButton.frame = CGRect(x: 12, y: 12, width: 21, heigth: 21)
             interAdCloseButton.layer.cornerRadius = 11
         }
         
