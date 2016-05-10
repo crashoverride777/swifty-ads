@@ -1,16 +1,18 @@
 
 NOTE: Apple is shutting down the iAd App Network on June the 30th. 
-The news on this are very vague so far. Some articles say its closing down completly, some say its only the part that is for developers that want to advertise their own ads, others say it will get replaced with an automated service.
+The news on this are very vague so far. Some articles say its closing down completly, some say its only developers that want to advertise their own ads that are affected, others say it will get replaced with an automated service.
 
 I am not sure if you can still submit apps or what will happen to the APIs. Also WWDC is around the corner so maybe we get some further news.
+
 I will include another 3rd party ad provider (most likely RevMob and/or Chartboost) very soon.
+
 https://developer.apple.com/news/?id=01152016a&1452895272
 
 # iAds, AdMob and CustomAds Helpers
 
-A collection of helper classes to integrate Ads from Apple and Google as well as your own custom Ads. This helper has been intially been made while designing my SpriteKit game but should workd for any kind of app. 
+A collection of helper classes to integrate Ads from Apple and Google as well as your own custom Ads. This helper has been been made while making my 1st SpriteKit game but should work for any kind of app. 
 
-The cool thing is that iAds will be used when they are supported otherwise AdMob will be used. iAds tend to have a better impressions and are usually prefered as default ads.
+The cool thing is that iAds will be used when they are supported in the region of the device, otherwise AdMob will be used. iAds tend to have a better impressions and are usually prefered as default ads.
 Whats really cool is that if iAd banners are having an error it will automatically load an AdMob banner and if that AdMob banner is than having an error it will try loading an iAd banner again. 
 When an iAd inter ad fails it will try an AdMob Inter ad but incase that adMob inter ad also fails it will not try iAd again because you obviously dont want a full screen ad showing at the wrong time.
 
@@ -221,7 +223,8 @@ NOTE: For adMob these only get called when in release mode and not when in test 
 
 # Supporting both landscape and portrait orientation
 
-- Step 1: This Step is only needed if your app supports both portrait and landscape orientation. Still in your ViewController add the following method.
+- If your app supports both portrait and landscape orientation go to the ViewController add the following method.
+
 ```swift
 override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
@@ -233,16 +236,6 @@ override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator c
             
             // Single ad provider (e.g AdMob)
             AdMob.sharedInstance.orientationChanged()
-            
-            //let orientation = UIApplication.sharedApplication().statusBarOrientation
-            //switch orientation {
-            //case .Portrait:
-            //    print("Portrait")
-            //    // Do something
-            //default:
-            //    print("Anything But Portrait")
-            //    // Do something else
-            //}
             
             }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
                 print("Device rotation completed")
@@ -266,19 +259,20 @@ AdMob
 
 - Step 2: In Ads.swift in the struct called AdUnitId enter your real Ad IDs for both banner and inter ads.
 
-- Step 3: When you submit your app on iTunes Connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected. If you decide to just use iAds than remove all google frameworks and references from your project and make sure you select NO, otherwise your app will also get rejected.
+- Step 3: When you submit your app on iTunes Connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected. If you only use iAds and no 3rd party ad provider make sure you select NO, otherwise your app will also get rejected.
 
-NOTE: - Dont forget to setup the "-D DEBUG" custom flag (step 1) or the helper will not work correctly with adMob.
+NOTE: - Dont forget to setup the "-D DEBUG" custom flag or the helper will not work correctly with adMob.
 
 # Resize view for banner ads
 
-In SpriteKit games you normally dont want the view to resize when showing banner ads, however in UIKit apps this might be prefered. To resize your views (iAds only) you need to let apple create the Banners by themselves by using the canDisplayBannerAds bool. You should change the showBannerAd method in IAds.swift so it looks like this
+This only works for iAds, I am not sure if you can achieve the same effect with AdMob.
+In SpriteKit games you normally dont want the view to resize when showing banner ads, however in UIKit apps this might be prefered. To resize your views when iAd banners are shown you need to let apple create the banners. You can use the canDisplayBannerAds bool property to achieve this. You should change the showBannerAd method in IAds.swift so it looks like this
 
 ```swift
   func showBanner(...) {
         ...
-        presentingViewController.canDisplayBannerAds = true // uncomment line to resize view for banner ads
-        //iAdLoadBannerAd() // comment out if canDisplayBanner ads is used because it now creates banner automatically
+        presentingViewController.canDisplayBannerAds = true
+        //iAdLoadBannerAd()
     }
 ```
 NOTE:
@@ -286,7 +280,7 @@ This might not create a sharedBanner ad that can be used accross multiple viewCo
 
 # Final Info
 
-The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and an inter ad randomly when touching the screen. 
+The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and an inter ad randomly when touching the screen. After 5 clicks all ads will be removed to simulate what a removeAds button would do. 
 Like I mentioned above I primarly focused on SpriteKit to make it easy to call Ads from your SKScenes without having to use NSNotificationCenter or Delegates to constantly communicate with the viewController. Also this should help keep your viewController clean as mine became a mess after integrating AdMob.
 
 Please let me know about any bugs or improvements, I am by no means an expert. 
@@ -297,12 +291,12 @@ Enjoy
 
 - v4.0
 
-Complete redesign of the helper. The project was getting too big for my liking and since I am planning on adding another ad provider soon I decided to split the helper into individual files.
+Complete redesign of the helper. The project was getting too big for my liking and since I am planning on adding another Ad provider soon I decided to split the helper into individual files.
 
-This has the benefit of cleaner and easier to maintain code, especially when I will add another Ad provider.
-I also think this way is more flexible because you can decide to just use a single Ad provider or use a combination of multiple providers just as before. Its just alot easier to set up this project for your liking. 
+This should make code cleaner and better to maintain as well as easier to understand. I also think this way is more flexible because you can decide to just use a single Ad provider without having to rewrite the whole project. 
 
 Please re-read the instructions again for the new setUp.
+
 
 
 
