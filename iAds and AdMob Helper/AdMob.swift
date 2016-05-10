@@ -103,18 +103,19 @@ class AdMob: NSObject {
         presentingViewController = viewController
     }
     
-    /// Show banner ads
+    /// Show banner ad with delay
     func showBannerWithDelay(delay: NSTimeInterval) {
         guard !removedAds else { return }
         NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: #selector(showBanner), userInfo: nil, repeats: false)
     }
     
+    /// Show banner ad
     func showBanner() {
         guard !removedAds else { return }
         loadBannerAd()
     }
     
-    /// Show inter ads
+    /// Show inter ad randomly
     func showInterRandomly(randomness randomness: UInt32) {
         guard !removedAds else { return }
         
@@ -123,6 +124,7 @@ class AdMob: NSObject {
         showInterAd()
     }
     
+    /// Show inter ad
     func showInter() {
         guard !removedAds else { return }
         showInterAd()

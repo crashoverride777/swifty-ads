@@ -105,19 +105,20 @@ class IAd: NSObject {
         presentingViewController = viewController
     }
     
-    /// Show banner ads
+    /// Show banner ad with delay
     func showBannerWithDelay(delay: NSTimeInterval) {
         guard !removedAds else { return }
         NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: #selector(showBanner), userInfo: nil, repeats: false)
     }
     
+    /// Show banner ad
     func showBanner() {
         guard !removedAds else { return }
         //presentingViewController.canDisplayBannerAds = true // // uncomment line to resize view for banner ads. Delegates will not work
         loadBannerAd() // comment out if above line is used, no need to manually create banner ads with canDisplayBannerAds = true
     }
     
-    /// Show inter ads
+    /// Show inter ad randomly
     func showInterRandomly(randomness randomness: UInt32) {
         guard !removedAds else { return }
         
@@ -126,6 +127,7 @@ class IAd: NSObject {
         showInter()
     }
     
+    /// Show inter ad
     func showInter() {
         guard !removedAds else { return }
         showInterAd()

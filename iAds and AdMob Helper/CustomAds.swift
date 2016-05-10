@@ -114,7 +114,7 @@ class CustomAd: NSObject {
         presentingViewController = viewController
     }
     
-    /// Show inter ads
+    /// Show inter ad randomly
     func showInterRandomly(randomness randomness: UInt32) {
         guard !removedAds else { return }
         
@@ -123,6 +123,7 @@ class CustomAd: NSObject {
         showInterAd()
     }
     
+    /// Show inter ad
     func showInter() {
         guard !removedAds else { return }
         showInterAd()
@@ -131,7 +132,6 @@ class CustomAd: NSObject {
     /// Remove all ads (IAPs)
     func removeAll() {
         Debug.print("Removed all ads")
-        
         removedAds = true
         view.removeFromSuperview()
     }
@@ -152,7 +152,7 @@ class CustomAd: NSObject {
     }
 }
 
-// MARK: - Custom Ads
+// MARK: - Custom Ad Creation
 extension CustomAd {
     
     /// Show custom ad
