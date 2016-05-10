@@ -90,7 +90,7 @@ AdsManager.sharedInstance.setUp(viewController: self, customAdsCount: 0, customA
 
 Follow the same steps as above. Copy the ads folder into your project minus the adProvider that you do not wish to use. Than again delete all the errors in AdsManager.swift.
 
-# Set up using single adProvider
+# Set up using single adProvider no custom ads
 
 - Step 1:
 
