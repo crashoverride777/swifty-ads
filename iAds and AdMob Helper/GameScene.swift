@@ -8,11 +8,20 @@
 import SpriteKit
 
 class GameScene: SKScene {
+    
+    var myLabel: SKLabelNode!
+    var touchCounter = 5 {
+        didSet {
+           guard touchCounter >= 0 else {return }
+           myLabel.text = "Remove ads in \(touchCounter) clicks"
+        }
+    }
+    
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!";
-        myLabel.fontSize = 65;
+        myLabel = SKLabelNode(fontNamed:"Chalkduster")
+        myLabel.text = "Remove ads in \(touchCounter) clicks"
+        myLabel.fontSize = 25;
         myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
         
         self.addChild(myLabel)
@@ -24,26 +33,13 @@ class GameScene: SKScene {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
         
-        for touch in (touches ) {
-            let location = touch.locationInNode(self)
-            
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
-            
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
-            sprite.position = location
-            
-            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-            
-            sprite.runAction(SKAction.repeatActionForever(action))
-            
-            self.addChild(sprite)
-            
-            // Remove all ads
-            //AdsManager.sharedInstance.removeAll()
-            
-            // Show inter ad
-            AdsManager.sharedInstance.showInterRandomly(randomness: 3)
+        // Show inter ad
+        AdsManager.sharedInstance.showInterRandomly(randomness: 3)
+        
+        // Remove ads after 3 clicks
+        touchCounter -= 1
+        if touchCounter <= 0 {
+            AdsManager.sharedInstance.removeAll()
         }
     }
    
