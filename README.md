@@ -294,7 +294,9 @@ Complete redesign of the helper. The project was getting too big for my liking a
 This has the benefit of
 
 1) Cleaner code
+
 2) Easier to maintain
+
 3) More flexible, people can decide to just use a single Ad provider or use a combination of multiple providers just as before.
 
 Please re-read the instructions again for the new setUp.
