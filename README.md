@@ -21,27 +21,49 @@ https://developer.apple.com/library/ios/technotes/tn2286/_index.html
 
 # Set-Up
 
-- Step 1: Set-Up "-D DEBUG" custom flag. This will reduce the hassle of having to manually change the google ad ids when testing or when releasing. This step is important as google ads will otherwise not work automatically.
+# AdMob preparation
+
+- Step 1
+Set-Up "-D DEBUG" custom flag. This will reduce the hassle of having to manually change the google ad ids when testing or when releasing. This step is important as google ads will otherwise not work automatically.
 This is a good idea in general for other things such as hiding print statements.
 Go to Targets (left project sideBar, right at the top) -> BuildSettings. Than underneath buildSettings next to the search bar on the left there should be buttons called Basic, All, Combined and Level. 
 Click on All and than you should be able to scroll down in buildSettings and find the section called SwiftCompiler-CustomFlags. Click on other flags and than debug and add a custom flag named -D DEBUG (see the sample project or http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
 
-- Step 2: Copy the Ads.swift file into your project
+- Step 2: Copy the Google framework folder found in the sample project into your projects folder on your computer. Its best to copy it to your projects root folder because if you just reference the file (next Step) from a random location on your computer it could cause issues when that file gets deleted/moved. You can download the latest version from Googles website (https://developers.google.com/admob/ios/download)
 
-- Step 3: Copy the Google framework folder found in the sample project into your projects folder on your computer. Its best to copy it to your projects root folder because if you just reference the file (next Step) from a random location on your computer it could cause issues when that file gets deleted/moved. You can download the latest version from Googles website (https://developers.google.com/admob/ios/download)
-
-- Step 4: Add the Google framework to your project. Go to Targets -> BuildPhases -> LinkedBinaries and click the + button. Than press the "Add Other" button and search your computer for the folder you copied at Step 3 containing the googleframework file and add that file. Your linkedBinaries should now say 1.
+- Step 3: Add the Google framework to your project. Go to Targets -> BuildPhases -> LinkedBinaries and click the + button. Than press the "Add Other" button and search your computer for the folder you copied at Step 3 containing the googleframework file and add that file. Your linkedBinaries should now say 1.
 
 NOTE: - If you ever update the frameworks, you will need delete the old framework from your project siderbar and the framework folder from your projects root folder on your computer. You need to than go to Targets-BuildSettings-SearchPaths and under FrameworkSearchPaths you should see a link to your old folder. Delete this link to ensure there are no warnings when you add an updated version and than redo step 4.
 
-- Step 5: Add the other frameworks needed. Click the + button again and search for and than add each of these frameworks: AdSupport, AudioToolbox, AVFoundation, CoreGraphics, CoreMedia, CoreTelephony, EventKit, EventKitUI, MessageUI, StoreKit, SystemConfiguration. (https://developers.google.com/admob/ios/quick-start?hl=en
+- Step 4: Add the other frameworks needed. Click the + button again and search for and than add each of these frameworks: AdSupport, AudioToolbox, AVFoundation, CoreGraphics, CoreMedia, CoreTelephony, EventKit, EventKitUI, MessageUI, StoreKit, SystemConfiguration. (https://developers.google.com/admob/ios/quick-start?hl=en
  ). 
+
 You might want to consider putting all the added frameworks you now see in your projects sidebar into a folder called Frameworks, similar to the sample project, to keep it clean.
 
-- Step 6: In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
+# Set up the helpers.
+
+- Step 1: iAds and AdMob and/or CustomAds)
+
+Copy the Ads folder into your project. This should include the file AdsManager.swift, iAds.swift, AdMob.swift and CustomAds.swift.
+
+- Step 1: (Only using iAds or AdMob or customAds)
+
+Copy the relevant files from the Ads folder into your project (e.g AdMob.swift). 
+Than from the AdsManager.swift file you will need to copy these into the file you just copied into your project
+
+```swift
+struct Debug {...
+struct DeviceCheck {...
+protocol AdsDelegate {...
+```
+
+- Step 2: (Using iAds and AdMob and/or CustomAds)
+
+In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 ```swift
 Ads.sharedInstance.setUp(viewController: self, customAdsCount: 2, customAdsInterval: 5)
 ```
+
 This sets the viewController property in the helper to your viewController.
 In this example there is 2 custom ads in total. The interval means that every 4th time an Inter ad is shown it will show a custom one, randomised between the total ads count. If you do not want to include custom ads set both these values to 0.
 
@@ -53,7 +75,14 @@ func showInter() { ....
 
 and add more cases to the switch statement to match your total custom Ads you want to show. If you dont use custom ads you can comment out the whole block of code after the 2 guard statements at the beginning of the method.
 
-- Step 7: This Step is only needed if your app supports both portrait and landscape orientation. Still in your ViewController add the following method.
+- Step 2: (Using single ad Provider)
+
+In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups depending on your choosen adProvider.
+```swift
+AdMob.sharedInstance.presentingViewController = self
+```
+
+- Step 3: This Step is only needed if your app supports both portrait and landscape orientation. Still in your ViewController add the following method.
 ```swift
 override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
@@ -86,41 +115,83 @@ NSNotificationCenter UIDeviceOrientationDidChangeNotification Observer
 
 There should be no more errors in your project now and the Helper is ready to be used. You can blame Google for most of the work here. 
 
-- iAds are always shown by default unless they are not supported. If you want to manually test Google ads comment out this line in the init method,
+- If you are using multiple adProvides than iAds are always shown by default unless they are not supported. If you want to manually test Google ads comment out this line in the init method of AdsManager.swift.
 ```swift
 iAdsAreSupported = iAdTimeZoneSupported()
 ```
 
-- To show a supported Ad simply call these anywhere you like in your project.
+- To show a supported Ad simply call these anywhere you like in your project
+
+Multiple ad providers
 ```swift
-Ads.sharedInstance.showBanner() 
-Ads.sharedInstance.showBannerWithDelay(1) // delay showing banner slightly eg when transitioning to new scene/view
-Ads.sharedInstance.showInter()
-Ads.sharedInstance.showInterRandomly(randomness: 4) // 25% chance of showing inter ads (1/4)
+AdsManager.sharedInstance.showBanner() 
+AdsManager.sharedInstance.showBannerWithDelay(1) // delay showing banner slightly eg when transitioning to new scene/view
+AdsManager.sharedInstance.showInter()
+AdsManager.sharedInstance.showInterRandomly(randomness: 4) // 25% chance of showing inter ads (1/4)
+```
+
+Single ad Provide (e.g AdMob)
+```swift
+AdMob.sharedInstance.showBanner() 
+AdMob.sharedInstance.showBannerWithDelay(1) // delay showing banner slightly eg when transitioning to new scene/view
+AdMob.sharedInstance.showInter()
+AdMob.sharedInstance.showInterRandomly(randomness: 4) // 25% chance of showing inter ads (1/4)
 ```
 
 - To remove Banner Ads, for example during gameplay 
+
+Multiple ad providers
 ```swift
-Ads.sharedInstance.removeBanner() 
+AdsManager.sharedInstance.removeBanner() 
+```
+
+Single ad provider (e.g AdMob)
+```swift
+AdMob.sharedInstance.removeBanner() 
 ```
 
 - To remove all Ads, mainly for in app purchases simply call 
+
+Multiple ad providers
 ```swift
-Ads.sharedInstance.removeAll() 
+AdsManager.sharedInstance.removeAll() 
 ```
 
-NOTE: - This method will set a removedAds bool to true in the Ads.swift helper. This ensures you only have to call this method to remove Ads and afterwards all the "Ads.sharedInstance.show..." methods will not fire anymore and therefore require no further editing.
+Single ad providers (e.g. AdMob)
+```swift
+AdMob.sharedInstance.removeAll() 
+```
 
-For permanent storage you will need to create your own "removedAdsProduct" bool and save it in something like NSUserDefaults, Keychain or a class using NSCoding and than call this method when your app launches.
+NOTE: - These methods will set a removedAds bool to true in the ad helpers. This ensures you only have to call this method to remove Ads and afterwards all the methods such as
+```swift
+AdsManager.sharedInstance.show...
+```
+
+or 
+```swift
+AdMob.sharedInstance.show...
+```
+
+will not fire anymore and therefore require no further editing.
+
+For permanent storage you will need to create your own "removedAdsProduct" bool and save it in something like NSUserDefaults, Keychain or a class using NSCoding and than call it when your app launches.
+
 
 - To pause/resume tasks in your app/game when Ads are viewed you can implement the delegate methods if needed
 
 Set the delegate in your GameScenes "didMoveToView" (init) method like so
+
+Multiple ad providers
 ```swift
-Ads.sharedInstance.delegate = self
+AdsManager.sharedInstance.delegate = self 
 ```
 
-and create an extension conforming to the protocol (this helps with clean code as well) 
+Single ad provider (e.g. AdMob)
+```swift
+AdMob.sharedInstance.delegate = self
+```
+
+Than create an extension conforming to the protocol (this helps with clean code as well) 
 ```swift
 extension GameScene: AdsDelegate {
     func pauseTasks() {
@@ -136,31 +207,29 @@ NOTE: For adMob these only get called when in release mode and not when in test 
 
 # When you go Live 
 
+iAd 
+
 - Step 1: If you havent used iAds before make sure your account is set up for iAds. You mainly have to sign an agreement in your developer account. (https://developer.apple.com/iad/)
 
-- Step 2: Sign up for a Google AdMob account and create your real ad IDs, 1 for banner and 1 for inter Ads. (https://support.google.com/admob/answer/2784575?hl=en-GB)
+AdMob
 
-- Step 3: In Ads.swift in the struct called AdUnitId enter your real Ad IDs for both banner and inter ads.
+- Step 1: Sign up for a Google AdMob account and create your real ad IDs, 1 for banner and 1 for inter Ads. (https://support.google.com/admob/answer/2784575?hl=en-GB)
 
-- Step 4: When you submit your app on iTunes Connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected. If you decide to just use iAds than remove all google frameworks and references from your project and make sure you select NO, otherwise your app will also get rejected.
+- Step 2: In Ads.swift in the struct called AdUnitId enter your real Ad IDs for both banner and inter ads.
+
+- Step 3: When you submit your app on iTunes Connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected. If you decide to just use iAds than remove all google frameworks and references from your project and make sure you select NO, otherwise your app will also get rejected.
 
 NOTE: - Dont forget to setup the "-D DEBUG" custom flag (step 1) or the helper will not work correctly with adMob.
 
 # Resize view for banner ads
 
-In SpriteKit games you normally dont want the view to resize when showing banner ads, however in UIKit apps this might be prefered. To resize your views you need to let apple create the Banners by themselves by using the canDisplayBannerAds bool. You should change the showBannerAd method so it looks like this
+In SpriteKit games you normally dont want the view to resize when showing banner ads, however in UIKit apps this might be prefered. To resize your views you need to let apple create the Banners by themselves by using the canDisplayBannerAds bool. You should change the showBannerAd method in IAds.swift so it looks like this
 
 ```swift
-  func showBannerAd(...) {
+  func showBanner(...) {
         ...
-        
-        if iAdsAreSupported {
-              presentingViewController.canDisplayBannerAds = true // uncomment line to resize view for banner ads
-             //iAdLoadBannerAd() // comment out if canDisplayBanner ads is used because it now creates banner automatically
-        } else {
-            adMobLoadBannerAd() // not sure how to resize view with adMob banner
-        }
-    }
+        presentingViewController.canDisplayBannerAds = true // uncomment line to resize view for banner ads
+        //iAdLoadBannerAd() // comment out if canDisplayBanner ads is used because it now creates banner automatically
     }
 ```
 NOTE:
@@ -177,101 +246,17 @@ Enjoy
 
 # Release Notes
 
-- v3.8
+- v4.0
 
-New convinicence method to setUp the helper.
+Complete redesign of the helper. The project was getting too big for my liking and since I am planning on adding another ad provider soon I decided to split the helper into individual files.
 
-If custom ads are selected if will now show a custom ad the first time and than at the selected interval
+This has the benefit of
 
-It turns out the AdMob delegates adViewWillPresentScreen and adViewDidDismissScreen are actually getting called when in release mode. They just do not seem to work in test mode.
+1) Cleaner code
+2) Easier to maintain
+3) More flexible, people can decide the adProvider of their liking or use a combination of multiple providers just as before.
 
-- v3.7.1
-
-Improved the "removeBanner" method to ensure that all banner instances get removed incase there are multiple instances of a banner from the same AdNetwork.
-
-Updated AdMob SDK to v7.8.0
-
-Clean-up
-
-- v 3.7
-
-Added a version without iAds. I will update the helper with another ad provider once I know 100% what is happening with iAds.
-
-- v 3.6.2
-
-Clean-Up and improvements
-
-- v 3.6.1
-
-Clean-Up and updated AdMob SDK to v7.7.1
-
-- v 3.6
-
-Updated to Swift 2.2
-
-- v 3.5.2
-
-Small fixes and improvements
-
-
-- v 3.5.1
-
-Updated Google AdMob SDK to v7.7.0
-
-Note: It seems with this or one of the previous AdMob SDK updates it is possible to enable bitCode and not get a compiler error anymore. If you disabled bitCode due to the helper you should enable it again. 
-Go to targets-BuildPhases and type bitCode into the search field and set it to yes. BitCode helps adjust your app size in the appStore so it should be turned on.
-
-- v 3.5
-
-Ads are now added to the apps rootViewController. This should ensure that ads are shown correctly when using multiple viewControllers.
-
-You can now reverse the changes in "Not a SpriteKit game" as it is not needed anymore. The presentingViewController property is now only really used to get a reference to the rootViewController.
-
-- v 3.4.1
-
-Fixed a bug where interAds could get stuck in a loop trying to reload when having connectivity issues.
-
-- v 3.4
-
-Changed the way custom ads are handled. Please read the "How to use" section again.
-
-- v 3.3 
-
-Fixed a bug that could cause iAdBanners to get misaligned when viewed in portrait mode on iPads.
-
-Added 2 new custom user methods "adMobBannerClicked" and "adMobBannerClosed" because the corresponding delegate methods do not work. You should call these, if needed, in your appDelegate at the correct spots.
-
-Thanks you to member riklowe for pointing these out.
-
-- v 3.2
-
-iPadPro improvements
-
-- v 3.1.2
-
-Added the ability to use automatically created iAd banners which will resize your views
-
-- v 3.1.1
-
-Clean-up
-
-- v 3.1
-
-Removed iAd and AdMob banner properties from the appDelegate and moved them to Ads.swift because its a Singleton class and there is therefore only 1 instance of the banners anyway. 
-If you used a previous version of this helper you can delete these in your "AppDelegate.swift".
-```swift
-let appDelegate...
-var iAdBanner...
-var adMobBanner...
-```
-
-- v 3.0
-
-Added ability to show custom ads
-Added extension to hide print statements for release
-Small fixes, improvements and clean-up
-
-
+Please re-read the instructions again for the new setUp.
 
 
 
