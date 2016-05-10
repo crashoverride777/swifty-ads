@@ -1,31 +1,31 @@
 
 NOTE: Apple is shutting down the iAd App Network on June the 30th. 
-Some articles say it does not affect developers trying to integrate iAds but developers that want to have their own apps advertised. 
-Some other articles say it will completly shut down. 
-Other articles say it will shut down but relaunch using an automated services to host ads.
+The news on this are very vague so far. Some articles say its closing down completly, some say its only the part that is for developers that want to advertise their own ads, others say it will get replaced with an automated service.
 
-I am not sure if you can still submit apps or what will happen to the APIs. In the future when I am 100% sure what will happen with iAds I will include another 3rd party ad provider (most likely RevMob and/or Chartboost)
+I am not sure if you can still submit apps or what will happen to the APIs. Also WWDC is around the corner so maybe we get some further news.
+I will include another 3rd party ad provider (most likely RevMob and/or Chartboost) very soon.
 https://developer.apple.com/news/?id=01152016a&1452895272
 
-# iAds, AdMob and CustomAds Helper
+# iAds, AdMob and CustomAds Helpers
 
-A helper class that should make integrating Ads from Apple and Google as well as your own custom Ads a breeze. This helper has been made while designing my SpriteKit game but should workd for any kind of app. 
+A collection of helper classes to integrate Ads from Apple and Google as well as your own custom Ads. This helper has been intially been made while designing my SpriteKit game but should workd for any kind of app. 
 
 The cool thing is that iAds will be used when they are supported otherwise AdMob will be used. iAds tend to have a better impressions and are usually prefered as default ads.
 Whats really cool is that if iAd banners are having an error it will automatically load an AdMob banner and if that AdMob banner is than having an error it will try loading an iAd banner again. 
 When an iAd inter ad fails it will try an AdMob Inter ad but incase that adMob inter ad also fails it will not try iAd again because you obviously dont want a full screen ad showing at the wrong time.
 
-This Helper creates whats called a shared Banner which is the recommended way by apple. The usual way to achieve this is to put the iAd and adMob banner properties into the appDelegate but because this helper is a Singleton there is no need for this because there is only 1 instance of the class and therefore the banner properties anyway. To read more about shared banner ads you can read this documentation from Apple
+This Helper creates whats called a shared Banner which is the recommended way by apple. To read more about shared banner ads you can read this documentation from Apple
 https://developer.apple.com/library/ios/technotes/tn2286/_index.html
 
 # Set up DEBUG flag
 
-Set-Up "-D DEBUG" custom flag. This will reduce the hassle of having to manually change the google ad ids when testing or when releasing. This step is important as google ads will otherwise not work automatically.
-This is a good idea in general for other things such as hiding print statements.
-Go to Targets (left project sideBar, right at the top) -> BuildSettings. Than underneath buildSettings next to the search bar on the left there should be buttons called Basic, All, Combined and Level. 
+Set-Up "-D DEBUG" custom flag. 
+This will reduce the hassle of having to manually change the google ad ids when testing or when releasing. This step is important as google ads will otherwise not work automatically. This is a good idea in general for other things such as hiding print statements.
+
+Click on Targets (left project sideBar, at the top) -> BuildSettings. Than underneath buildSettings next to the search bar on the left there should be buttons called Basic, All, Combined and Level. 
 Click on All and than you should be able to scroll down in buildSettings and find the section called SwiftCompiler-CustomFlags. Click on other flags and than debug and add a custom flag named -D DEBUG (see the sample project or http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
 
-# Set up required AdMob SDK and frameworks
+# Set up AdMob SDK and frameworks if included
 
 - Step 1: 
 
@@ -43,7 +43,9 @@ Add the other frameworks needed. Click the + button again and search for and tha
 
 You might want to consider putting all the added frameworks you now see in your projects sidebar into a folder called Frameworks, similar to the sample project, to keep it clean.
 
-# Set up using multiple Ad providers with custom ads
+# Full helper with all ads
+
+SETUP
 
 - Step1: 
 
@@ -64,87 +66,17 @@ In your ViewController write the following in ```ViewDidLoad``` before doing any
 AdsManager.sharedInstance.setUp(viewController: self, customAdsCount: 2, customAdsInterval: 5)
 ```
 
-This sets the viewController property in the helpers to your viewController.
-In this example there is 2 custom ads in total. The interval means that every 4th time an Inter ad is shown it will show a custom one, randomised between the total ads count. 
+This sets the viewController property in the helpers to your viewController. In this example there is 2 custom ads in total. The first interAd will be a custom one. The interval means that every 4th time an Inter ad is shown it will show a custom one, randomised between the total ads count.
 
-To add more custom adds go to the struct CustomAds in CustomAds.swift and add more. Than go to the method 
+To add more custom adds go to the struct CustomAds in CustomAd.swift and add more properties. Than go to the method 
 
 ```swift
-func showInter() { ....
+func showInterAd() { ....
 ```
 
 and add more cases to the switch statement to match your total custom Ads you want to show. 
 
-# Set up using multiple Ad providers no custom ads
-
-Follow the same steps as above but exclude the CustomAds.swift file. Than in AdsManager.swift you should see some errors which you need to delete. This should be fairly straight forward, simply remove all the errors that relate to custom Ads.
-
-Than in your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
-```swift
-AdsManager.sharedInstance.setUp(viewController: self, customAdsCount: 0, customAdsInterval: 0)
-```
-
-# Set up using single Ad provider and custom ads
-
-Follow the same steps as above. Copy the ads folder into your project minus the adProvider that you do not wish to use. Than again delete all the errors in AdsManager.swift.
-
-# Set up using single adProvider no custom ads
-
-- Step 1:
-
-Copy the relevant file from the Ads folder into your project (e.g AdMob.swift). 
-
-- Step 2:
-
-Copy the struct 
-```swift
-struct Debug {...
-```
-right at the top of AdsManager.swift into the file your copied at step 1.
-
-- Step 2:
-
-In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups
-```swift
-AdMob.setUp(viewController: self)
-```
-
-# Supporting both landscape and portrait orientation
-
-- Step 1: This Step is only needed if your app supports both portrait and landscape orientation. Still in your ViewController add the following method.
-```swift
-override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
-        
-        coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) -> Void in
-            
-            // Multiple ad providers
-            AdsManager.sharedInstance.orientationChanged()
-            
-            // Single ad provider (e.g AdMob)
-            AdMob.sharedInstance.orientationChanged()
-            
-            //let orientation = UIApplication.sharedApplication().statusBarOrientation
-            //switch orientation {
-            //case .Portrait:
-            //    print("Portrait")
-            //    // Do something
-            //default:
-            //    print("Anything But Portrait")
-            //    // Do something else
-            //}
-            
-            }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
-                print("Device rotation completed")
-        })
-    }
-```
-NOTE: This is an ios 8 method, if your app supports ios 7 or below you maybe want to use something like a
-```swift
-NSNotificationCenter UIDeviceOrientationDidChangeNotification Observer
-```
-
-# How to use with multiple ad providers
+HOW TO USE
 
 - If you are using multiple Ad providers than iAds are always shown by default unless they are not supported. If you want to manually test Google ads comment out this line in the init method of AdsManager.swift.
 ```swift
@@ -188,10 +120,10 @@ AdsManager.sharedInstance.delegate = self
 Than create an extension in your SKScene or ViewController conforming to the protocol.
 ```swift
 extension GameScene: AdsDelegate {
-    func pauseTasks() {
+    func adClicked() {
         // pause your game/app
     }
-    func resumeTasks() { 
+    func adClosed() { 
        // resume your game/app
     }
 }
@@ -200,7 +132,43 @@ extension GameScene: AdsDelegate {
 NOTE: For adMob these only get called when in release mode and not when in test mode.
 
 
-# How to use with single adProvider only (e.g AdMob)
+# Multiple Ad providers without custom ads
+
+Follow the same steps as above but exclude the CustomAds.swift file. Than in AdsManager.swift you should see some errors which you need to delete. This should be fairly straight forward, simply remove all the errors that relate to custom Ads.
+
+Than in your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
+```swift
+AdsManager.sharedInstance.setUp(viewController: self, customAdsCount: 0, customAdsInterval: 0)
+```
+
+# Single Ad provider with custom ads
+
+Follow the same steps as above. Copy the ads folder into your project minus the adProvider that you do not wish to use. Than again delete all the errors in AdsManager.swift.
+
+# Single Ad provider without custom ads
+
+SETUP
+
+- Step 1:
+
+Copy the relevant file from the Ads folder into your project (e.g AdMob.swift). 
+
+- Step 2:
+
+Copy the struct 
+```swift
+struct Debug {...
+```
+right at the top of AdsManager.swift into the file your copied at step 1.
+
+- Step 2:
+
+In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups
+```swift
+AdMob.setUp(viewController: self)
+```
+
+HOW TO USE
 
 - To show a supported Ad simply call these anywhere you like in your project
 ```swift
@@ -240,16 +208,51 @@ AdMob.sharedInstance.delegate = self
 Than create an extension conforming to the protocol (this helps with clean code as well) 
 ```swift
 extension GameScene: AdMobDelegate {
-    func adMobPause() {
+    func adMobAdClicked() {
         // pause your game/app
     }
-    func adMobResume() { 
+    func adMobAdClosed() { 
        // resume your game/app
     }
 }
 ```
 
 NOTE: For adMob these only get called when in release mode and not when in test mode.
+
+# Supporting both landscape and portrait orientation
+
+- Step 1: This Step is only needed if your app supports both portrait and landscape orientation. Still in your ViewController add the following method.
+```swift
+override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        
+        coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) -> Void in
+            
+            // Multiple ad providers
+            AdsManager.sharedInstance.orientationChanged()
+            
+            // Single ad provider (e.g AdMob)
+            AdMob.sharedInstance.orientationChanged()
+            
+            //let orientation = UIApplication.sharedApplication().statusBarOrientation
+            //switch orientation {
+            //case .Portrait:
+            //    print("Portrait")
+            //    // Do something
+            //default:
+            //    print("Anything But Portrait")
+            //    // Do something else
+            //}
+            
+            }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
+                print("Device rotation completed")
+        })
+    }
+```
+NOTE: This is an ios 8 method, if your app supports ios 7 or below you maybe want to use something like a
+```swift
+NSNotificationCenter UIDeviceOrientationDidChangeNotification Observer
+```
 
 # When you go Live 
 
