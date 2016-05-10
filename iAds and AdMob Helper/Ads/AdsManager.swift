@@ -65,7 +65,7 @@ class AdsManager: NSObject {
     private var iAdsAreSupported = false
     
     /// Ads helpers
-    private let iAds = IAd.sharedInstance
+    private let iAd = IAd.sharedInstance
     private let adMob = AdMob.sharedInstance
     private let customAd = CustomAd.sharedInstance
     
@@ -74,22 +74,22 @@ class AdsManager: NSObject {
         super.init()
         
         // Delegates
-        iAds.delegate = self
+        iAd.delegate = self
         adMob.delegate = self
         customAd.delegate = self
         
-        iAds.errorDelegate = self
+        iAd.errorDelegate = self
         adMob.errorDelegate = self
         
         // Check if iAds are supported
-        iAdsAreSupported = iAds.timeZoneSupport
+        iAdsAreSupported = iAd.timeZoneSupport
     }
     
     // MARK: - User Methods
     
     /// SetUp
     func setUp(viewController viewController: UIViewController, customAdsCount: Int, customAdsInterval: Int) {
-        iAds.setUp(viewController: viewController)
+        iAd.setUp(viewController: viewController)
         adMob.setUp(viewController: viewController)
         customAd.setUp(viewController: viewController)
         
@@ -105,7 +105,7 @@ class AdsManager: NSObject {
     /// Show banner ad
     func showBanner() {
         if iAdsAreSupported {
-            iAds.showBanner()
+            iAd.showBanner()
         } else {
             adMob.showBanner()
         }
@@ -147,7 +147,7 @@ class AdsManager: NSObject {
     
     private func showingInterAd() {
         if iAdsAreSupported {
-            iAds.showInter()
+            iAd.showInter()
         } else {
             adMob.showInter()
         }
@@ -155,20 +155,20 @@ class AdsManager: NSObject {
     
     /// Remove banner
     func removeBanner() {
-        iAds.removeBanner()
+        iAd.removeBanner()
         adMob.removeBanner()
     }
     
     /// Remove all
     func removeAll() {
-        iAds.removeAll()
+        iAd.removeAll()
         adMob.removeAll()
         customAd.removeAll()
     }
     
     /// Orientation changed
     func orientationChanged() {
-        iAds.orientationChanged()
+        iAd.orientationChanged()
         adMob.orientationChanged()
         customAd.orientationChanged()
     }
@@ -218,7 +218,7 @@ extension AdsManager: IAdErrorDelegate, AdMobErrorDelegate {
     func adMobBannerFail() {
         guard iAdsAreSupported else { return }
         adMob.removeBanner()
-        iAds.showBanner()
+        iAd.showBanner()
     }
     
     func adMobInterFail() { }
