@@ -45,7 +45,7 @@ Add the other frameworks needed. Click the + button again and search for and tha
 
 You might want to consider putting all the added frameworks you now see in your projects sidebar into a folder called Frameworks, similar to the sample project, to keep it clean.
 
-# Set up using multiple adProviders and custom ads
+# Set up using multiple adProviders with/without custom ads
 
 - Step1: 
 
@@ -68,7 +68,8 @@ AdsManager.sharedInstance.setUp(viewController: self, customAdsCount: 2, customA
 
 This sets the viewController property in the helpers to your viewController.
 In this example there is 2 custom ads in total. The interval means that every 4th time an Inter ad is shown it will show a custom one, randomised between the total ads count. 
-If you do not want to include custom ads set both these values to 0.
+
+If you do not want to include custom ads set that the easiest way is to still include the file CustomAds.swift and just set both these values to 0.
 
 To add more custom adds go to the struct CustomAds in CustomAds.swift and add more. Than go to the method 
 
