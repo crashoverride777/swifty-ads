@@ -299,13 +299,8 @@ Enjoy
 
 Complete redesign of the helper. The project was getting too big for my liking and since I am planning on adding another ad provider soon I decided to split the helper into individual files.
 
-This has the benefit of
-
-1) Cleaner code
-
-2) Easier to maintain
-
-3) More flexible, people can decide to just use a single Ad provider or use a combination of multiple providers just as before.
+This has the benefit of cleaner and easier to maintain code, especially when I will add another Ad provider.
+I also think this way is more flexible because you can decide to just use a single Ad provider or use a combination of multiple providers just as before. Its just alot easier to set up this project for your liking. 
 
 Please re-read the instructions again for the new setUp.
 
