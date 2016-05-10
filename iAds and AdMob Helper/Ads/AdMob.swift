@@ -23,12 +23,12 @@
 
 //    v4.0
 
+//    Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
+
 /*
     Abstract:
     A Singleton class to manage banner and interstitial adverts from AdMob. This class is only included in the iOS version of the project.
 */
-
-//    Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
 import GoogleMobileAds
 
@@ -43,15 +43,6 @@ private enum AdMobUnitID: String {
     case Banner = "ca-app-pub-3940256099942544/2934735716"
     case Inter = "ca-app-pub-3940256099942544/4411468910"
     #endif
-}
-
-/// Hide print statements for release
-private struct Debug {
-    static func print(object: Any) {
-        #if DEBUG
-            Swift.print("DEBUG", object) //, terminator: "")
-        #endif
-    }
 }
 
 /// Delegates
@@ -90,6 +81,7 @@ class AdMob: NSObject {
     private var interAd: GADInterstitial?
     
     // MARK: - Init
+    
     private override init() {
         super.init()
         Debug.print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
@@ -97,6 +89,8 @@ class AdMob: NSObject {
         // Preload first inter ad
         interAd = loadInterAd()
     }
+    
+    // MARK: - User Methods
     
     /// SetUp
     func setUp(viewController viewController: UIViewController) {

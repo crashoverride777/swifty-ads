@@ -60,15 +60,6 @@ private struct DeviceCheck {
     static let minLength = min(width, height)
 }
 
-/// Hide print statements for release
-private struct Debug {
-    static func print(object: Any) {
-        #if DEBUG
-            Swift.print("DEBUG", object) //, terminator: "")
-        #endif
-    }
-}
-
 /// Delegate
 protocol CustomAdDelegate: class {
     func customAdPause()
@@ -79,11 +70,12 @@ protocol CustomAdDelegate: class {
 class CustomAd: NSObject {
     
     // MARK: - Static Properties
+    
     static let sharedInstance = CustomAd()
     
     // MARK: - Properties
     
-    /// Properties
+    /// Included custom ads total count
     var totalCount = 0
     
     /// Delegates
@@ -105,9 +97,12 @@ class CustomAd: NSObject {
     private var interAdCloseButton = UIButton(type: .System)
     
     // MARK: - Init
+    
     private override init() {
         super.init()
     }
+    
+    // MARK: - User Methods
     
     /// SetUp
     func setUp(viewController viewController: UIViewController) {

@@ -30,15 +30,6 @@
 
 import iAd
 
-/// Hide print statements for release
-private struct Debug {
-    static func print(object: Any) {
-        #if DEBUG
-            Swift.print("DEBUG", object) //, terminator: "")
-        #endif
-    }
-}
-
 /// Delegates
 protocol IAdDelegate: class {
     func iAdPause()
@@ -93,12 +84,15 @@ class IAd: NSObject {
     private var interAdCloseButton = UIButton(type: .System)
     
     // MARK: - Init
+    
     private override init() {
         super.init()
         
         /// Preload first inter ad
         interAd = loadInterAd()
     }
+    
+    // MARK: - User Methods
     
     /// SetUp
     func setUp(viewController viewController: UIViewController) {

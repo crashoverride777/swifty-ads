@@ -13,7 +13,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // set adsViewController and init ads helper
+        // Set up helpers
         AdsManager.sharedInstance.setUp(viewController: self, customAdsCount: 2, customAdsInterval: 3)
         
         if let scene = GameScene(fileNamed: "GameScene") {

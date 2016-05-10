@@ -30,7 +30,16 @@
 
 import UIKit
 
-/// Delegates
+/// Hide print statements for release
+struct Debug {
+    static func print(object: Any) {
+        #if DEBUG
+            Swift.print("DEBUG", object) //, terminator: "")
+        #endif
+    }
+}
+
+/// Delegate
 protocol AdsDelegate: class {
     func pauseTasks()
     func resumeTasks()
@@ -76,6 +85,8 @@ class AdsManager: NSObject {
         iAdsAreSupported = iAds.timeZoneSupport
     }
     
+    // MARK: - User Methods
+    
     /// SetUp
     func setUp(viewController viewController: UIViewController, customAdsCount: Int, customAdsInterval: Int) {
         iAds.setUp(viewController: viewController)
@@ -112,11 +123,7 @@ class AdsManager: NSObject {
         
         // Check if custom ads are included
         guard customAd.totalCount > 0 else {
-            if iAdsAreSupported {
-                iAds.showInter()
-            } else {
-                adMob.showInter()
-            }
+            showingInterAd()
             return
         }
         
@@ -131,15 +138,19 @@ class AdsManager: NSObject {
             customAd.showInter()
             
         default:
-            if iAdsAreSupported {
-                iAds.showInter()
-            } else {
-                adMob.showInter()
-            }
+            showingInterAd()
         }
         
         // Increase custom ad interval
         customAdIntervalCounter += 1
+    }
+    
+    private func showingInterAd() {
+        if iAdsAreSupported {
+            iAds.showInter()
+        } else {
+            adMob.showInter()
+        }
     }
     
     /// Remove banner
