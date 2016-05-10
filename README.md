@@ -83,7 +83,7 @@ and add more cases to the switch statement to match your total custom Ads you wa
 
 - Step 1:
 
-Copy the relevant files from the Ads folder into your project (e.g AdMob.swift). 
+Copy the relevant file from the Ads folder into your project (e.g AdMob.swift). 
 Than from the AdsManager.swift file you will need to copy these
 
 ```swift
