@@ -169,15 +169,14 @@ AdsManager.sharedInstance.removeBanner()
 AdsManager.sharedInstance.removeAll() 
 ```
 
-NOTE: - These methods will set a removedAds bool to true in the ad helpers. This ensures you only have to call this method to remove Ads and afterwards all the methods such as
+NOTE: - This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method to remove Ads and afterwards all the show methods such as
 ```swift
 AdsManager.sharedInstance.show...
 ```
 
 will not fire anymore and therefore require no further editing.
 
-For permanent storage you will need to create your own "removedAdsProduct" bool and save it in something like NSUserDefaults, Keychain or a class using NSCoding and than call it when your app launches.
-
+For permanent storage you will need to create your own "removedAdsProduct" bool and save it in something like NSUserDefaults, Keychain or a class using NSCoding and than call this method when your app launches.
 
 - To pause/resume tasks in your app/game when Ads are viewed you can implement the delegate methods if needed
 
@@ -186,7 +185,7 @@ Set the delegate in your GameScenes "didMoveToView" (init) method like so
 AdsManager.sharedInstance.delegate = self 
 ```
 
-Than create an extension in your SKScene conforming to the protocol (this helps with clean code as well) 
+Than create an extension in your SKScene or ViewController conforming to the protocol.
 ```swift
 extension GameScene: AdsDelegate {
     func pauseTasks() {
@@ -221,7 +220,7 @@ AdMob.sharedInstance.removeBanner()
 AdMob.sharedInstance.removeAll() 
 ```
 
-NOTE: - These methods will set a removedAds bool to true in the ad helpers. This ensures you only have to call this method to remove Ads and afterwards all the methods such as
+NOTE: - This method will set a removedAds bool to true in the ad helper. This ensures you only have to call this method to remove Ads and afterwards all the show methods such as
 ```swift
 AdMob.sharedInstance.show...
 ```
@@ -229,7 +228,6 @@ AdMob.sharedInstance.show...
 will not fire anymore and therefore require no further editing.
 
 For permanent storage you will need to create your own "removedAdsProduct" bool and save it in something like NSUserDefaults, Keychain or a class using NSCoding and than call this method when your app launches.
-
 
 - To pause/resume tasks in your app/game when Ads are viewed you can implement the delegate methods if needed
 
