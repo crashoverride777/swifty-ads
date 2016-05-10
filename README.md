@@ -255,9 +255,13 @@ iAd
 
 AdMob
 
-- Step 1: Sign up for a Google AdMob account and create your real ad IDs, 1 for banner and 1 for inter Ads. (https://support.google.com/admob/answer/2784575?hl=en-GB)
+- Step 1: Sign up for a Google AdMob account and create your real adUnitIDs, 1 for banner and 1 for inter Ads. You will need to do this for each app that will use adMob. (https://support.google.com/admob/answer/2784575?hl=en-GB)
 
-- Step 2: In Ads.swift in the struct called AdUnitId enter your real Ad IDs for both banner and inter ads.
+- Step 2: In AdMob.swift in 
+```swift
+struct AdUnitID {...
+```
+enter your real AdUnitIDs.
 
 - Step 3: When you submit your app on iTunes Connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected. If you only use iAds and no 3rd party ad provider make sure you select NO, otherwise your app will also get rejected.
 
@@ -281,6 +285,7 @@ This might not create a sharedBanner ad that can be used accross multiple viewCo
 # Final Info
 
 The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and an inter ad randomly when touching the screen. After 5 clicks all ads will be removed to simulate what a removeAds button would do. 
+
 Like I mentioned above I primarly focused on SpriteKit to make it easy to call Ads from your SKScenes without having to use NSNotificationCenter or Delegates to constantly communicate with the viewController. Also this should help keep your viewController clean as mine became a mess after integrating AdMob.
 
 Please let me know about any bugs or improvements, I am by no means an expert. 
