@@ -31,7 +31,7 @@
 import UIKit
 
 /// Custom ad settings
-private struct CustomAd {
+private struct CustomAds {
     struct Ad1 {
         static let backgroundColor = UIColor(red:0.08, green:0.62, blue:0.85, alpha:1.0)
         static let headerColor = UIColor.whiteColor()
@@ -49,24 +49,48 @@ private struct CustomAd {
     }
 }
 
+/// Device check
+private struct DeviceCheck {
+    static let iPad      = UIDevice.currentDevice().userInterfaceIdiom == .Pad && maxLength == 1024.0
+    static let iPadPro   = UIDevice.currentDevice().userInterfaceIdiom == .Pad && maxLength == 1366.0
+    
+    static let width     = UIScreen.mainScreen().bounds.size.width
+    static let height    = UIScreen.mainScreen().bounds.size.height
+    static let maxLength = max(width, height)
+    static let minLength = min(width, height)
+}
+
+/// Hide print statements for release
+private struct Debug {
+    static func print(object: Any) {
+        #if DEBUG
+            Swift.print("DEBUG", object) //, terminator: "")
+        #endif
+    }
+}
+
+/// Delegate
+protocol CustomAdDelegate: class {
+    func customAdPause()
+    func customAdResume()
+}
+
 /// Custom ads class
-class CustomAds: NSObject {
+class CustomAd: NSObject {
     
     // MARK: - Static Properties
-    static let sharedInstance = CustomAds()
+    static let sharedInstance = CustomAd()
     
     // MARK: - Properties
     
-    /// Presenting view controller
-    var presentingViewController: UIViewController?
+    /// Properties
+    var totalCount = 0
     
     /// Delegates
-    weak var delegate: AdsDelegate?
+    weak var delegate: CustomAdDelegate?
     
-    /// Properties
-    var count = 0
-    var interval = 0
-    var intervalCounter = 0
+    /// Presenting view controller
+    private var presentingViewController: UIViewController?
     
     /// Removed ads
     private var removedAds = false
@@ -77,13 +101,18 @@ class CustomAds: NSObject {
     private var image: UIImageView?
     private var URL: NSURL?
     
+    /// Inter ads close button (iAd and customAd)
+    private var interAdCloseButton: UIButton!
+    
     // MARK: - Init
     private override init() {
         super.init()
     }
     
-    /// Inter ads close button (iAd and customAd)
-    private var interAdCloseButton = UIButton(type: UIButtonType.System)
+    /// SetUp
+    func setUp(viewController viewController: UIViewController) {
+        presentingViewController = viewController
+    }
     
     /// Show inter ads
     func showInterRandomly(randomness randomness: UInt32) {
@@ -124,20 +153,20 @@ class CustomAds: NSObject {
 }
 
 // MARK: - Custom Ads
-extension CustomAds {
+extension CustomAd {
     
     /// Show custom ad
     private func showInterAd() {
-        let randomCustomInterAd = Int(arc4random_uniform(UInt32(count)))
+        let randomCustomInterAd = Int(arc4random_uniform(UInt32(totalCount)))
         
         switch randomCustomInterAd {
             
         case 0:
-            if let customAd1 = createCustomAd(CustomAd.Ad1.backgroundColor, headerColor: CustomAd.Ad1.headerColor, headerText: CustomAd.Ad1.headerText, imageName: CustomAd.Ad1.image, appURL: CustomAd.Ad1.appURL) {
+            if let customAd1 = createCustomAd(CustomAds.Ad1.backgroundColor, headerColor: CustomAds.Ad1.headerColor, headerText: CustomAds.Ad1.headerText, imageName: CustomAds.Ad1.image, appURL: CustomAds.Ad1.appURL) {
                 presentingViewController?.view?.window?.rootViewController?.view.addSubview(customAd1)
             }
         case 1:
-            if let customAd2 = createCustomAd(CustomAd.Ad2.backgroundColor, headerColor: CustomAd.Ad2.headerColor, headerText: CustomAd.Ad2.headerText, imageName: CustomAd.Ad2.image, appURL: CustomAd.Ad2.appURL) {
+            if let customAd2 = createCustomAd(CustomAds.Ad2.backgroundColor, headerColor: CustomAds.Ad2.headerColor, headerText: CustomAds.Ad2.headerText, imageName: CustomAds.Ad2.image, appURL: CustomAds.Ad2.appURL) {
                 presentingViewController?.view?.window?.rootViewController?.view.addSubview(customAd2)
             }
         default:
@@ -185,7 +214,7 @@ extension CustomAds {
         let downloadArea = UIButton()
         downloadArea.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height)
         downloadArea.backgroundColor = UIColor.clearColor()
-        downloadArea.addTarget(self, action: #selector(customAdPressedDownloadButton(_:)), forControlEvents: UIControlEvents.TouchDown)
+        downloadArea.addTarget(self, action: #selector(pressedDownloadButton(_:)), forControlEvents: UIControlEvents.TouchDown)
         downloadArea.center = CGPoint(x: CGRectGetMidX(view.frame), y: CGRectGetMidY(view.frame))
         view.addSubview(downloadArea)
         
@@ -197,24 +226,28 @@ extension CustomAds {
         return view
     }
     
-    /// Pressed custom inter download button
-    func customAdPressedDownloadButton(sender: UIButton) {
+    /// Download button
+    func pressedDownloadButton(sender: UIButton) {
         if let url = URL {
             UIApplication.sharedApplication().openURL(url)
-            delegate?.pauseTasks()
+            delegate?.customAdPause()
         }
     }
 }
 
-// MARK: - Inter ad close button
-extension CustomAds {
+// MARK: - Close Button
+extension CustomAd {
     
-    /// Prepare inter ad close button
     private func prepareInterAdCloseButton() {
-        if DeviceCheck.iPadPro {
+        
+        let maxLength = max(UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height)
+        let iPad      = UIDevice.currentDevice().userInterfaceIdiom == .Pad && maxLength == 1024.0
+        let iPadPro   = UIDevice.currentDevice().userInterfaceIdiom == .Pad && maxLength == 1366.0
+        
+        if iPadPro {
             interAdCloseButton.frame = CGRect(x: 28, y: 28, width: 37, height: 37)
             interAdCloseButton.layer.cornerRadius = 18
-        } else if DeviceCheck.iPad {
+        } else if iPad {
             interAdCloseButton.frame = CGRect(x: 19, y: 19, width: 28, height: 28)
             interAdCloseButton.layer.cornerRadius = 14
         } else {
@@ -230,10 +263,10 @@ extension CustomAds {
         interAdCloseButton.addTarget(self, action: #selector(pressedInterAdCloseButton(_:)), forControlEvents: UIControlEvents.TouchDown)
     }
     
-    /// Pressed inter ad close button
+    /// Close button
     func pressedInterAdCloseButton(sender: UIButton) {
         Debug.print("Inter ad closed")
         view.removeFromSuperview()
-        delegate?.resumeTasks()
+        delegate?.customAdResume()
     }
 }

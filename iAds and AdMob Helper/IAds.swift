@@ -30,19 +30,33 @@
 
 import iAd
 
-/// Error delegate
+/// Hide print statements for release
+private struct Debug {
+    static func print(object: Any) {
+        #if DEBUG
+            Swift.print("DEBUG", object) //, terminator: "")
+        #endif
+    }
+}
+
+/// Delegates
+protocol IAdDelegate: class {
+    func iAdPause()
+    func iAdResume()
+}
+
 protocol IAdErrorDelegate: class {
     func iAdBannerFail()
     func iAdInterFail()
 }
 
 /// Ads singleton class
-class IAds: NSObject {
+class IAd: NSObject {
     
     // MARK: - Static Properties
     
     /// Shared instance
-    static let sharedInstance = IAds()
+    static let sharedInstance = IAd()
     
     // MARK: - Properties
     
@@ -60,12 +74,12 @@ class IAds: NSObject {
         return false
     }
     
-    /// Presenting view controller
-    var presentingViewController: UIViewController?
-    
     /// Delegates
-    weak var delegate: AdsDelegate?
+    weak var delegate: IAdDelegate?
     weak var errorDelegate: IAdErrorDelegate?
+    
+    /// Presenting view controller
+    private var presentingViewController: UIViewController?
     
     /// Removed ads
     private var removedAds = false
@@ -84,6 +98,11 @@ class IAds: NSObject {
         
         /// Preload first inter ad
         interAd = loadInterAd()
+    }
+    
+    /// SetUp
+    func setUp(viewController viewController: UIViewController) {
+        presentingViewController = viewController
     }
     
     /// Show banner ads
@@ -131,7 +150,6 @@ class IAds: NSObject {
     /// Remove all ads (IAPs)
     func removeAll() {
         Debug.print("Removed all ads")
-        
         removedAds = true
         removeBanner()
         interAd?.delegate = nil
@@ -151,8 +169,8 @@ class IAds: NSObject {
     }
 }
 
-// MARK: - iAds
-private extension IAds {
+// MARK: - Private Methods
+private extension IAd {
     
     /// iAd load banner
     func loadBannerAd() {
@@ -198,7 +216,7 @@ private extension IAds {
 }
 
 // MARK: - Banner Delegates
-extension IAds: ADBannerViewDelegate {
+extension IAd: ADBannerViewDelegate {
     
     func bannerViewWillLoadAd(banner: ADBannerView!) {
         Debug.print("iAds banner will load")
@@ -216,13 +234,13 @@ extension IAds: ADBannerViewDelegate {
     
     func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
         Debug.print("iAds banner clicked")
-        delegate?.pauseTasks()
+        delegate?.iAdPause()
         return true
     }
     
     func bannerViewActionDidFinish(banner: ADBannerView!) {
         Debug.print("iAds banner closed")
-        delegate?.resumeTasks()
+        delegate?.iAdResume()
         
         /// Adjust for ipads incase orientation was portrait. iAd banners on ipads are shown in landscape and they get messed up after closing
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
@@ -254,7 +272,7 @@ extension IAds: ADBannerViewDelegate {
 }
 
 // MARK: - Inter Delegates
-extension IAds: ADInterstitialAdDelegate {
+extension IAd: ADInterstitialAdDelegate {
     
     func interstitialAdDidLoad(interstitialAd: ADInterstitialAd!) {
         Debug.print("iAds inter did load")
@@ -271,15 +289,19 @@ extension IAds: ADInterstitialAdDelegate {
     }
 }
 
-// MARK: - Inter ad close button
-extension IAds {
+// MARK: - Close Button
+extension IAd {
     
-    /// Prepare inter ad close button
     private func prepareInterAdCloseButton() {
-        if DeviceCheck.iPadPro {
+        
+        let maxLength = max(UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height)
+        let iPad      = UIDevice.currentDevice().userInterfaceIdiom == .Pad && maxLength == 1024.0
+        let iPadPro   = UIDevice.currentDevice().userInterfaceIdiom == .Pad && maxLength == 1366.0
+        
+        if iPadPro {
             interAdCloseButton.frame = CGRect(x: 28, y: 28, width: 37, height: 37)
             interAdCloseButton.layer.cornerRadius = 18
-        } else if DeviceCheck.iPad {
+        } else if iPad {
             interAdCloseButton.frame = CGRect(x: 19, y: 19, width: 28, height: 28)
             interAdCloseButton.layer.cornerRadius = 14
         } else {
@@ -295,7 +317,6 @@ extension IAds {
         interAdCloseButton.addTarget(self, action: #selector(pressedInterAdCloseButton(_:)), forControlEvents: UIControlEvents.TouchDown)
     }
     
-    /// Pressed inter ad close button
     func pressedInterAdCloseButton(sender: UIButton) {
         Debug.print("Inter ad closed")
         interAdView.removeFromSuperview()

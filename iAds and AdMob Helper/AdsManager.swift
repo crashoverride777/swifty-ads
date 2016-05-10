@@ -30,27 +30,6 @@
 
 import UIKit
 
-/// Hide print statements for release. Can be used for every print statement in your project
-struct Debug {
-    static func print(object: Any) {
-        #if DEBUG
-            Swift.print("DEBUG", object) //, terminator: "")
-        #endif
-    }
-}
-
-/// Device check
-struct DeviceCheck {
-    
-    static let iPad      = UIDevice.currentDevice().userInterfaceIdiom == .Pad && maxLength == 1024.0
-    static let iPadPro   = UIDevice.currentDevice().userInterfaceIdiom == .Pad && maxLength == 1366.0
-    
-    static let width     = UIScreen.mainScreen().bounds.size.width
-    static let height    = UIScreen.mainScreen().bounds.size.height
-    static let maxLength = max(width, height)
-    static let minLength = min(width, height)
-}
-
 /// Delegates
 protocol AdsDelegate: class {
     func pauseTasks()
@@ -66,17 +45,29 @@ class AdsManager: NSObject {
     
     // MARK: - Properties
     
+    /// Delegate
+    weak var delegate: AdsDelegate?
+    
+    /// Custom ads controls
+    private var customAdInterval = 0
+    private var customAdIntervalCounter = 0
+    
     /// iAds are supported
     private var iAdsAreSupported = false
     
     /// Ads helpers
-    private let iAds = IAds.sharedInstance
+    private let iAds = IAd.sharedInstance
     private let adMob = AdMob.sharedInstance
-    private let customAds = CustomAds.sharedInstance
+    private let customAd = CustomAd.sharedInstance
     
     // MARK: - Init
     private override init() {
         super.init()
+        
+        // Pause/Resume delegates
+        iAds.delegate = self
+        adMob.delegate = self
+        customAd.delegate = self
         
         // Error delegates
         iAds.errorDelegate = self
@@ -88,12 +79,12 @@ class AdsManager: NSObject {
     
     /// SetUp
     func setUp(viewController viewController: UIViewController, customAdsCount: Int, customAdsInterval: Int) {
-        iAds.presentingViewController = viewController
-        adMob.presentingViewController = viewController
-        customAds.presentingViewController = viewController
+        iAds.setUp(viewController: viewController)
+        adMob.setUp(viewController: viewController)
+        customAd.setUp(viewController: viewController)
         
-        customAds.count = customAdsCount
-        customAds.interval = customAdsInterval
+        customAd.totalCount = customAdsCount
+        customAdInterval = customAdsInterval
     }
     
     /// Show banner ads
@@ -113,33 +104,41 @@ class AdsManager: NSObject {
     func showInterRandomly(randomness randomness: UInt32) {
         let randomInterAd = Int(arc4random_uniform(randomness)) // get a random number between 0 and 2, so 33%
         guard randomInterAd == 0 else { return }
-        showInterAd()
+        showInter()
     }
     
-    func showInterAd() {
+    func showInter() {
         
         // Check if custom ads are included
-        guard customAds.count > 0 else {
-            showingInterAd()
+        guard customAd.totalCount > 0 else {
+            if iAdsAreSupported {
+                iAds.showInter()
+            } else {
+                adMob.showInter()
+            }
             return
         }
         
         // Check custom ads
-        switch customAds.intervalCounter {
+        switch customAdIntervalCounter {
             
         case 0:
-            customAds.showInter()
+            customAd.showInter()
             
-        case customAds.interval:
-            customAds.intervalCounter = 0
-            customAds.showInter()
+        case customAdInterval:
+            customAdIntervalCounter = 0
+            customAd.showInter()
             
         default:
-            showingInterAd()
+            if iAdsAreSupported {
+                iAds.showInter()
+            } else {
+                adMob.showInter()
+            }
         }
         
         // Increase custom ad interval
-        customAds.intervalCounter += 1
+        customAdIntervalCounter += 1
     }
     
     /// Remove banner
@@ -152,23 +151,40 @@ class AdsManager: NSObject {
     func removeAll() {
         iAds.removeAll()
         adMob.removeAll()
-        customAds.removeAll()
+        customAd.removeAll()
     }
     
     /// Orientation changed
     func orientationChanged() {
         iAds.orientationChanged()
         adMob.orientationChanged()
-        customAds.orientationChanged()
+        customAd.orientationChanged()
+    }
+}
+
+// MARK: - Game paused delegates
+extension AdsManager: IAdDelegate, AdMobDelegate, CustomAdDelegate {
+ 
+    // Pause
+    func iAdPause() {
+        delegate?.pauseTasks()
+    }
+    func adMobPause() {
+        delegate?.pauseTasks()
+    }
+    func customAdPause() {
+        delegate?.pauseTasks()
     }
     
-    /// Showing inter ad
-    private func showingInterAd() {
-        if iAdsAreSupported {
-            iAds.showInter()
-        } else {
-            adMob.showInter()
-        }
+    // Resume
+    func iAdResume() {
+        delegate?.resumeTasks()
+    }
+    func adMobResume() {
+        delegate?.resumeTasks()
+    }
+    func customAdResume() {
+        delegate?.resumeTasks()
     }
 }
 

@@ -33,19 +33,33 @@
 import GoogleMobileAds
 
 /// Admob ad unit IDs
-private struct AdMobUnitID {
+private enum AdMobUnitID: String {
     // Real IDs
     #if !DEBUG
-    static let banner = "ca-app-pub-2427795328331194/3512503063"
-    static let inter = "ca-app-pub-2427795328331194/4989236269"
+    case Banner = "ca-app-pub-2427795328331194/3512503063"
+    case Inter = "ca-app-pub-2427795328331194/4989236269"
     // Test IDs
     #else
-    static let banner = "ca-app-pub-3940256099942544/2934735716"
-    static let inter = "ca-app-pub-3940256099942544/4411468910"
+    case Banner = "ca-app-pub-3940256099942544/2934735716"
+    case Inter = "ca-app-pub-3940256099942544/4411468910"
     #endif
 }
 
-/// Error delegate
+/// Hide print statements for release
+private struct Debug {
+    static func print(object: Any) {
+        #if DEBUG
+            Swift.print("DEBUG", object) //, terminator: "")
+        #endif
+    }
+}
+
+/// Delegates
+protocol AdMobDelegate: class {
+    func adMobPause()
+    func adMobResume()
+}
+
 protocol AdMobErrorDelegate: class {
     func adMobBannerFail()
     func adMobInterFail()
@@ -61,12 +75,12 @@ class AdMob: NSObject {
     
     // MARK: - Properties
     
-    /// Presenting view controller
-    var presentingViewController: UIViewController?
-    
     /// Delegates
-    weak var delegate: AdsDelegate?
+    weak var delegate: AdMobDelegate?
     weak var errorDelegate: AdMobErrorDelegate?
+    
+    /// Presenting view controller
+    private var presentingViewController: UIViewController?
     
     /// Removed ads
     private var removedAds = false
@@ -82,6 +96,11 @@ class AdMob: NSObject {
         
         // Preload first inter ad
         interAd = loadInterAd()
+    }
+    
+    /// SetUp
+    func setUp(viewController viewController: UIViewController) {
+        presentingViewController = viewController
     }
     
     /// Show banner ads
@@ -127,7 +146,6 @@ class AdMob: NSObject {
     /// Remove all ads (IAPs)
     func removeAll() {
         Debug.print("Removed all ads")
-        
         removedAds = true
         removeBanner()
         interAd?.delegate = nil
@@ -146,7 +164,7 @@ class AdMob: NSObject {
     }
 }
 
-// MARK: - AdMob
+// MARK: - Private Methods
 private extension AdMob {
     
     /// Admob banner
@@ -160,7 +178,7 @@ private extension AdMob {
             bannerAdView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
         }
         
-        bannerAdView?.adUnitID = AdMobUnitID.banner
+        bannerAdView?.adUnitID = AdMobUnitID.Banner.rawValue
         bannerAdView?.delegate = self
         bannerAdView?.rootViewController = presentingViewController
         bannerAdView?.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (bannerAdView!.frame.size.height / 2))
@@ -178,7 +196,7 @@ private extension AdMob {
     func loadInterAd() -> GADInterstitial {
         Debug.print("AdMob inter loading...")
         
-        let googleInterAd = GADInterstitial(adUnitID: AdMobUnitID.inter)
+        let googleInterAd = GADInterstitial(adUnitID: AdMobUnitID.Inter.rawValue)
         googleInterAd.delegate = self
         
         let request = GADRequest()
@@ -222,12 +240,12 @@ extension AdMob: GADBannerViewDelegate {
     
     func adViewWillPresentScreen(bannerView: GADBannerView!) { // dont get called unless modal view
         Debug.print("AdMob banner clicked")
-        delegate?.pauseTasks()
+        delegate?.adMobPause()
     }
     
     func adViewDidDismissScreen(bannerView: GADBannerView!) { // dont get called unless model view
         Debug.print("AdMob banner closed")
-        delegate?.resumeTasks()
+        delegate?.adMobResume()
     }
     
     func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
