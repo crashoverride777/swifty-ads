@@ -78,6 +78,11 @@ func showInter() { ....
 
 and add more cases to the switch statement to match your total custom Ads you want to show. 
 
+# Set up using single Ad provider and custom ads
+
+If you would like to use a single ad provider and custom ads than the easiest way is to follow the setUp of multiple ads as outline above. 
+Copy the ads folder into your project minus the adProvider that you do not wish to use. Than you should see some errors in AdsManager.swift that you need to delete. This should be fairly straight forward, simply delete the lines of code that relate to the Ad provider that you are not using.
+
 # Set up using single adProvider
 
 - Step 1:
@@ -243,10 +248,6 @@ extension GameScene: AdsDelegate {
 ```
 
 NOTE: For adMob these only get called when in release mode and not when in test mode.
-
-# Set up using single Ad provider and custom ads
-
-If you would like to use a single ad provider and custom ads than the easiest way is to follow the setUp of multiple ads. Copy the ads folder into your project minus the adProvider that you do not wish to use. Than you should see some errors in AdsManager.swift that you need to delete. This should be fairly straight forward, simply delete the lines of code that relate to the Ad provider that you are not using.
 
 # When you go Live 
 
