@@ -33,7 +33,7 @@
 import GoogleMobileAds
 
 /// Admob ad unit IDs
-private enum AdMobUnitID: String {
+private enum AdUnitID: String {
     // Real IDs
     #if !DEBUG
     case Banner = "ca-app-pub-2427795328331194/3512503063"
@@ -174,7 +174,7 @@ private extension AdMob {
             bannerAdView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
         }
         
-        bannerAdView?.adUnitID = AdMobUnitID.Banner.rawValue
+        bannerAdView?.adUnitID = AdUnitID.Banner.rawValue
         bannerAdView?.delegate = self
         bannerAdView?.rootViewController = presentingViewController
         bannerAdView?.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (bannerAdView!.frame.size.height / 2))
@@ -192,7 +192,7 @@ private extension AdMob {
     func loadInterAd() -> GADInterstitial {
         Debug.print("AdMob inter loading...")
         
-        let googleInterAd = GADInterstitial(adUnitID: AdMobUnitID.Inter.rawValue)
+        let googleInterAd = GADInterstitial(adUnitID: AdUnitID.Inter.rawValue)
         googleInterAd.delegate = self
         
         let request = GADRequest()
