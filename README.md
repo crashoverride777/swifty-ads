@@ -51,7 +51,7 @@ You might want to consider putting all the added frameworks you now see in your 
 
 Copy the Ads folder into your project. This should include the files
 
-AdsManager.swift (This will handle showing ads when using multiple adProvides. 
+AdsManager.swift (This will handle showing ads when using multiple Ad providers). 
 
 IAds.swift
 
