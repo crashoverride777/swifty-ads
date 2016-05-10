@@ -259,7 +259,7 @@ AdMob
 
 - Step 2: In AdMob.swift in 
 ```swift
-struct AdUnitID {...
+private enum AdUnitID: String {...
 ```
 enter your real AdUnitIDs.
 
