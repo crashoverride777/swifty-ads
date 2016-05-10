@@ -41,8 +41,8 @@ struct Debug {
 
 /// Delegate
 protocol AdsDelegate: class {
-    func pauseTasks()
-    func resumeTasks()
+    func adClicked()
+    func adClosed()
 }
 
 /// Ads manager class
@@ -178,27 +178,27 @@ class AdsManager: NSObject {
 extension AdsManager: IAdDelegate, AdMobDelegate, CustomAdDelegate {
  
     // iAds
-    func iAdPause() {
-        delegate?.pauseTasks()
+    func iAdAdClicked() {
+        delegate?.adClicked()
     }
-    func iAdResume() {
-        delegate?.resumeTasks()
+    func iAdAdClosed() {
+        delegate?.adClosed()
     }
     
     // AdMob
-    func adMobPause() {
-        delegate?.pauseTasks()
+    func adMobAdClicked() {
+        delegate?.adClicked()
     }
-    func adMobResume() {
-        delegate?.resumeTasks()
+    func adMobAdClosed() {
+        delegate?.adClosed()
     }
     
     /// Custom ads
-    func customAdPause() {
-        delegate?.pauseTasks()
+    func customAdClicked() {
+        delegate?.adClicked()
     }
-    func customAdResume() {
-        delegate?.resumeTasks()
+    func customAdClosed() {
+        delegate?.adClosed()
     }
 }
 

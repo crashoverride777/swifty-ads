@@ -32,8 +32,8 @@ import iAd
 
 /// Delegates
 protocol IAdDelegate: class {
-    func iAdPause()
-    func iAdResume()
+    func iAdAdClicked()
+    func iAdAdClosed()
 }
 
 protocol IAdErrorDelegate: class {
@@ -230,13 +230,13 @@ extension IAd: ADBannerViewDelegate {
     
     func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
         Debug.print("iAds banner clicked")
-        delegate?.iAdPause()
+        delegate?.iAdAdClicked()
         return true
     }
     
     func bannerViewActionDidFinish(banner: ADBannerView!) {
         Debug.print("iAds banner closed")
-        delegate?.iAdResume()
+        delegate?.iAdAdClosed()
         
         /// Adjust for ipads incase orientation was portrait. iAd banners on ipads are shown in landscape and they get messed up after closing
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {

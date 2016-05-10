@@ -47,8 +47,8 @@ private enum AdMobUnitID: String {
 
 /// Delegates
 protocol AdMobDelegate: class {
-    func adMobPause()
-    func adMobResume()
+    func adMobAdClicked()
+    func adMobAdClosed()
 }
 
 protocol AdMobErrorDelegate: class {
@@ -236,12 +236,12 @@ extension AdMob: GADBannerViewDelegate {
     
     func adViewWillPresentScreen(bannerView: GADBannerView!) { // dont get called unless modal view
         Debug.print("AdMob banner clicked")
-        delegate?.adMobPause()
+        delegate?.adMobAdClicked()
     }
     
     func adViewDidDismissScreen(bannerView: GADBannerView!) { // dont get called unless model view
         Debug.print("AdMob banner closed")
-        delegate?.adMobResume()
+        delegate?.adMobAdClosed()
     }
     
     func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {

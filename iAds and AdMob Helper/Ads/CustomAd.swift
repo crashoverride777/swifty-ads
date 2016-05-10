@@ -62,8 +62,8 @@ private struct DeviceCheck {
 
 /// Delegate
 protocol CustomAdDelegate: class {
-    func customAdPause()
-    func customAdResume()
+    func customAdClicked()
+    func customAdClosed()
 }
 
 /// Custom ads class
@@ -225,7 +225,7 @@ extension CustomAd {
     func pressedDownloadButton(sender: UIButton) {
         if let url = URL {
             UIApplication.sharedApplication().openURL(url)
-            delegate?.customAdPause()
+            delegate?.customAdClicked()
         }
     }
 }
@@ -262,6 +262,6 @@ extension CustomAd {
     func pressedInterAdCloseButton(sender: UIButton) {
         Debug.print("Inter ad closed")
         view.removeFromSuperview()
-        delegate?.customAdResume()
+        delegate?.customAdClosed()
     }
 }
