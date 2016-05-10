@@ -81,8 +81,21 @@ class AdsManager: NSObject {
         iAd.errorDelegate = self
         adMob.errorDelegate = self
         
-        // Check if iAds are supported
-        iAdsAreSupported = iAd.timeZoneSupport
+        // Check iAd time zone support
+        var iAdTimeZoneSupport: Bool {
+            let iAdTimeZones = "America/;US/;Pacific/;Asia/Tokyo;Europe/".componentsSeparatedByString(";")
+            let myTimeZone = NSTimeZone.localTimeZone().name
+            for zone in iAdTimeZones {
+                if (myTimeZone.hasPrefix(zone)) {
+                    Debug.print("iAds supported")
+                    return true
+                }
+            }
+            Debug.print("iAds not supported")
+            return false
+        }
+        
+        iAdsAreSupported = iAdTimeZoneSupport
     }
     
     // MARK: - User Methods

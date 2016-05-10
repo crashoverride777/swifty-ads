@@ -51,20 +51,6 @@ class IAd: NSObject {
     
     // MARK: - Properties
     
-    // Check time zone support
-    var timeZoneSupport: Bool {
-        let iAdTimeZones = "America/;US/;Pacific/;Asia/Tokyo;Europe/".componentsSeparatedByString(";")
-        let myTimeZone = NSTimeZone.localTimeZone().name
-        for zone in iAdTimeZones {
-            if (myTimeZone.hasPrefix(zone)) {
-                Debug.print("iAds supported")
-                return true
-            }
-        }
-        Debug.print("iAds not supported")
-        return false
-    }
-    
     /// Delegates
     weak var delegate: IAdDelegate?
     weak var errorDelegate: IAdErrorDelegate?
