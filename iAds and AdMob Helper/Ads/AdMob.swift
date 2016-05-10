@@ -234,12 +234,12 @@ extension AdMob: GADBannerViewDelegate {
         UIView.commitAnimations()
     }
     
-    func adViewWillPresentScreen(bannerView: GADBannerView!) { // dont get called unless modal view
+    func adViewWillPresentScreen(bannerView: GADBannerView!) { // only get called in release mode
         Debug.print("AdMob banner clicked")
         delegate?.adMobAdClicked()
     }
     
-    func adViewDidDismissScreen(bannerView: GADBannerView!) { // dont get called unless model view
+    func adViewDidDismissScreen(bannerView: GADBannerView!) { // only get called in release mode
         Debug.print("AdMob banner closed")
         delegate?.adMobAdClosed()
     }
