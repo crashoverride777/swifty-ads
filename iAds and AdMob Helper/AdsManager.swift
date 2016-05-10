@@ -62,7 +62,7 @@ class AdsManager: NSObject {
     
     // MARK: - Static Properties
     
-    static let sharedInstance = AdsManager() // dont call shared as it will conflit with other classes
+    static let sharedInstance = AdsManager()
     
     // MARK: - Properties
     
