@@ -1,6 +1,4 @@
 
-NOTE: v4.0 is in pre-Release state
-
 NOTE: Apple is shutting down the iAd App Network on June the 30th. 
 Some articles say it does not affect developers trying to integrate iAds but developers that want to have their own apps advertised. 
 Some other articles say it will completly shut down. 
