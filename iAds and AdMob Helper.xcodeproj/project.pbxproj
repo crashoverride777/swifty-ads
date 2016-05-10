@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B435FFE11CE14C2A00A678AA /* AdMob.swift in Sources */ = {isa = PBXBuildFile; fileRef = B435FFE01CE14C2A00A678AA /* AdMob.swift */; };
+		B435FFE31CE14C3400A678AA /* IAds.swift in Sources */ = {isa = PBXBuildFile; fileRef = B435FFE21CE14C3400A678AA /* IAds.swift */; };
+		B435FFE51CE14D1900A678AA /* CustomAds.swift in Sources */ = {isa = PBXBuildFile; fileRef = B435FFE41CE14D1900A678AA /* CustomAds.swift */; };
 		B452EFD91CDBF7FE009A69B5 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B452EFD81CDBF7FE009A69B5 /* GoogleMobileAds.framework */; };
-		B45872B81CD76B6F0049A906 /* Ads(no iAds).swift in Sources */ = {isa = PBXBuildFile; fileRef = B45872B71CD76B6F0049A906 /* Ads(no iAds).swift */; };
 		B4B01A191B9A0AF500F9A8EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B01A181B9A0AF500F9A8EA /* AppDelegate.swift */; };
 		B4B01A1B1B9A0AF500F9A8EA /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B4B01A1A1B9A0AF500F9A8EA /* GameScene.sks */; };
 		B4B01A1D1B9A0AF500F9A8EA /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B01A1C1B9A0AF500F9A8EA /* GameScene.swift */; };
@@ -17,7 +19,7 @@
 		B4B01A241B9A0AF500F9A8EA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4B01A231B9A0AF500F9A8EA /* Images.xcassets */; };
 		B4B01A271B9A0AF500F9A8EA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4B01A251B9A0AF500F9A8EA /* LaunchScreen.xib */; };
 		B4B01A331B9A0AF500F9A8EA /* iAds_and_AdMob_HelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B01A321B9A0AF500F9A8EA /* iAds_and_AdMob_HelperTests.swift */; };
-		B4B01A3D1B9A0B0700F9A8EA /* Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B01A3C1B9A0B0700F9A8EA /* Ads.swift */; };
+		B4B01A3D1B9A0B0700F9A8EA /* AdsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B01A3C1B9A0B0700F9A8EA /* AdsManager.swift */; };
 		B4B01A401B9A0B7700F9A8EA /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4B01A3F1B9A0B7700F9A8EA /* AdSupport.framework */; };
 		B4B01A421B9A0B8100F9A8EA /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4B01A411B9A0B8100F9A8EA /* AudioToolbox.framework */; };
 		B4B01A441B9A0B8600F9A8EA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4B01A431B9A0B8600F9A8EA /* AVFoundation.framework */; };
@@ -42,8 +44,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B435FFE01CE14C2A00A678AA /* AdMob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdMob.swift; sourceTree = "<group>"; };
+		B435FFE21CE14C3400A678AA /* IAds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAds.swift; sourceTree = "<group>"; };
+		B435FFE41CE14D1900A678AA /* CustomAds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAds.swift; sourceTree = "<group>"; };
 		B452EFD81CDBF7FE009A69B5 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "GoogleMobileAdsSdkiOS-7.8.0/GoogleMobileAds.framework"; sourceTree = SOURCE_ROOT; };
-		B45872B71CD76B6F0049A906 /* Ads(no iAds).swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ads(no iAds).swift"; sourceTree = "<group>"; };
 		B4B01A131B9A0AF500F9A8EA /* iAds and AdMob Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iAds and AdMob Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4B01A171B9A0AF500F9A8EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B4B01A181B9A0AF500F9A8EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -56,7 +60,7 @@
 		B4B01A2C1B9A0AF500F9A8EA /* iAds and AdMob HelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iAds and AdMob HelperTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4B01A311B9A0AF500F9A8EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B4B01A321B9A0AF500F9A8EA /* iAds_and_AdMob_HelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iAds_and_AdMob_HelperTests.swift; sourceTree = "<group>"; };
-		B4B01A3C1B9A0B0700F9A8EA /* Ads.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ads.swift; sourceTree = "<group>"; };
+		B4B01A3C1B9A0B0700F9A8EA /* AdsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdsManager.swift; sourceTree = "<group>"; };
 		B4B01A3F1B9A0B7700F9A8EA /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		B4B01A411B9A0B8100F9A8EA /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		B4B01A431B9A0B8600F9A8EA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -100,6 +104,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B435FFE61CE14DAF00A678AA /* Ads */ = {
+			isa = PBXGroup;
+			children = (
+				B4B01A3C1B9A0B0700F9A8EA /* AdsManager.swift */,
+				B435FFE21CE14C3400A678AA /* IAds.swift */,
+				B435FFE01CE14C2A00A678AA /* AdMob.swift */,
+				B435FFE41CE14D1900A678AA /* CustomAds.swift */,
+			);
+			name = Ads;
+			sourceTree = "<group>";
+		};
 		B4B01A0A1B9A0AF500F9A8EA = {
 			isa = PBXGroup;
 			children = (
@@ -122,8 +137,7 @@
 		B4B01A151B9A0AF500F9A8EA /* iAds and AdMob Helper */ = {
 			isa = PBXGroup;
 			children = (
-				B4B01A3C1B9A0B0700F9A8EA /* Ads.swift */,
-				B45872B71CD76B6F0049A906 /* Ads(no iAds).swift */,
+				B435FFE61CE14DAF00A678AA /* Ads */,
 				B4B01A181B9A0AF500F9A8EA /* AppDelegate.swift */,
 				B4B01A1A1B9A0AF500F9A8EA /* GameScene.sks */,
 				B4B01A1C1B9A0AF500F9A8EA /* GameScene.swift */,
@@ -284,11 +298,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B4B01A3D1B9A0B0700F9A8EA /* Ads.swift in Sources */,
-				B45872B81CD76B6F0049A906 /* Ads(no iAds).swift in Sources */,
+				B4B01A3D1B9A0B0700F9A8EA /* AdsManager.swift in Sources */,
 				B4B01A1D1B9A0AF500F9A8EA /* GameScene.swift in Sources */,
+				B435FFE31CE14C3400A678AA /* IAds.swift in Sources */,
 				B4B01A1F1B9A0AF500F9A8EA /* GameViewController.swift in Sources */,
+				B435FFE11CE14C2A00A678AA /* AdMob.swift in Sources */,
 				B4B01A191B9A0AF500F9A8EA /* AppDelegate.swift in Sources */,
+				B435FFE51CE14D1900A678AA /* CustomAds.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

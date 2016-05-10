@@ -13,8 +13,8 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // set adsViewController and init ads helper, call ASAP
-        Ads.sharedInstance.setUp(viewController: self, customAdsCount: 2, customAdsInterval: 3)
+        // set adsViewController and init ads helper
+        AdsManager.sharedInstance.setUp(viewController: self, customAdsCount: 2, customAdsInterval: 3)
         
         if let scene = GameScene(fileNamed: "GameScene") {
             // Configure the view.
@@ -38,7 +38,7 @@ class GameViewController: UIViewController {
         
         coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) -> Void in
             
-            Ads.sharedInstance.orientationChanged()
+            AdsManager.sharedInstance.orientationChanged()
             
 //            let orientation = UIApplication.sharedApplication().statusBarOrientation
 //            switch orientation {
