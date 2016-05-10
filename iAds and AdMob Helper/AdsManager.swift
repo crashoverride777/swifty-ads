@@ -64,12 +64,11 @@ class AdsManager: NSObject {
     private override init() {
         super.init()
         
-        // Pause/Resume delegates
+        // Delegates
         iAds.delegate = self
         adMob.delegate = self
         customAd.delegate = self
         
-        // Error delegates
         iAds.errorDelegate = self
         adMob.errorDelegate = self
         
@@ -164,7 +163,7 @@ class AdsManager: NSObject {
     }
 }
 
-// MARK: - Delegates
+// MARK: - Action Delegates
 extension AdsManager: IAdDelegate, AdMobDelegate, CustomAdDelegate {
  
     // iAds
