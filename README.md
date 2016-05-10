@@ -66,7 +66,7 @@ In your ViewController write the following in ```ViewDidLoad``` before doing any
 AdsManager.sharedInstance.setUp(viewController: self, customAdsCount: 2, customAdsInterval: 5)
 ```
 
-This sets the viewController property in the helper to your viewController.
+This sets the viewController property in the helpers to your viewController.
 In this example there is 2 custom ads in total. The interval means that every 4th time an Inter ad is shown it will show a custom one, randomised between the total ads count. 
 If you do not want to include custom ads set both these values to 0.
 
@@ -144,7 +144,6 @@ iAdsAreSupported = iAdTimeZoneSupported()
 ```
 
 - To show a supported Ad simply call these anywhere you like in your project
-- 
 ```swift
 AdsManager.sharedInstance.showBanner() 
 AdsManager.sharedInstance.showBannerWithDelay(1) // delay showing banner slightly eg when transitioning to new scene/view
@@ -153,13 +152,11 @@ AdsManager.sharedInstance.showInterRandomly(randomness: 4) // 25% chance of show
 ```
 
 - To remove Banner Ads, for example during gameplay 
-
 ```swift
 AdsManager.sharedInstance.removeBanner() 
 ```
 
 - To remove all Ads, mainly for in app purchases simply call 
-
 ```swift
 AdsManager.sharedInstance.removeAll() 
 ```
@@ -207,19 +204,16 @@ AdMob.sharedInstance.showInterRandomly(randomness: 4) // 25% chance of showing i
 ```
 
 - To remove Banner Ads, for example during gameplay 
-
 ```swift
 AdMob.sharedInstance.removeBanner() 
 ```
 
 - To remove all Ads, mainly for in app purchases simply call 
-
 ```swift
 AdMob.sharedInstance.removeAll() 
 ```
 
 NOTE: - These methods will set a removedAds bool to true in the ad helpers. This ensures you only have to call this method to remove Ads and afterwards all the methods such as
- 
 ```swift
 AdMob.sharedInstance.show...
 ```
