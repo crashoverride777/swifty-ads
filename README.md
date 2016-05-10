@@ -20,38 +20,38 @@ When an iAd inter ad fails it will try an AdMob Inter ad but incase that adMob i
 This Helper creates whats called a shared Banner which is the recommended way by apple. The usual way to achieve this is to put the iAd and adMob banner properties into the appDelegate but because this helper is a Singleton there is no need for this because there is only 1 instance of the class and therefore the banner properties anyway. To read more about shared banner ads you can read this documentation from Apple
 https://developer.apple.com/library/ios/technotes/tn2286/_index.html
 
-# AdMob pre set-up
-
-- Step 1:
+# Set up DEBUG flag
 
 Set-Up "-D DEBUG" custom flag. This will reduce the hassle of having to manually change the google ad ids when testing or when releasing. This step is important as google ads will otherwise not work automatically.
 This is a good idea in general for other things such as hiding print statements.
 Go to Targets (left project sideBar, right at the top) -> BuildSettings. Than underneath buildSettings next to the search bar on the left there should be buttons called Basic, All, Combined and Level. 
 Click on All and than you should be able to scroll down in buildSettings and find the section called SwiftCompiler-CustomFlags. Click on other flags and than debug and add a custom flag named -D DEBUG (see the sample project or http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
 
-- Step 2: 
+# Set up required AdMob SDK and frameworks
+
+- Step 1: 
 
 Copy the Google framework folder found in the sample project into your projects folder on your computer. Its best to copy it to your projects root folder because if you just reference the file (next Step) from a random location on your computer it could cause issues when that file gets deleted/moved. You can download the latest version from Googles website (https://developers.google.com/admob/ios/download)
 
-- Step 3: 
+- Step 2: 
 
 Add the Google framework to your project. Go to Targets -> BuildPhases -> LinkedBinaries and click the + button. Than press the "Add Other" button and search your computer for the folder you copied at Step 3 containing the googleframework file and add that file. Your linkedBinaries should now say 1.
 
 NOTE: - If you ever update the frameworks, you will need delete the old framework from your project siderbar and the framework folder from your projects root folder on your computer. You need to than go to Targets-BuildSettings-SearchPaths and under FrameworkSearchPaths you should see a link to your old folder. Delete this link to ensure there are no warnings when you add an updated version and than redo step 4.
 
-- Step 4: 
+- Step 3: 
 
 Add the other frameworks needed. Click the + button again and search for and than add each of these frameworks: AdSupport, AudioToolbox, AVFoundation, CoreGraphics, CoreMedia, CoreTelephony, EventKit, EventKitUI, MessageUI, StoreKit, SystemConfiguration. (https://developers.google.com/admob/ios/quick-start?hl=en). 
 
 You might want to consider putting all the added frameworks you now see in your projects sidebar into a folder called Frameworks, similar to the sample project, to keep it clean.
 
-# Set up using multiple adProviders with/without custom ads
+# Set up using multiple Ad providers with custom ads
 
 - Step1: 
 
 Copy the Ads folder into your project. This should include the files
 
-AdsManager.swift (This will handle showing ads when using multiple Ad providers). 
+AdsManager.swift 
 
 IAds.swift
 
@@ -69,8 +69,6 @@ AdsManager.sharedInstance.setUp(viewController: self, customAdsCount: 2, customA
 This sets the viewController property in the helpers to your viewController.
 In this example there is 2 custom ads in total. The interval means that every 4th time an Inter ad is shown it will show a custom one, randomised between the total ads count. 
 
-If you do not want to include custom ads set that the easiest way is to still include the file CustomAds.swift and just set both these values to 0.
-
 To add more custom adds go to the struct CustomAds in CustomAds.swift and add more. Than go to the method 
 
 ```swift
@@ -79,30 +77,30 @@ func showInter() { ....
 
 and add more cases to the switch statement to match your total custom Ads you want to show. 
 
+# Set up using multiple Ad providers no custom ads
+
+Follow the same steps as above but exclude the CustomAds.swift file. Than in AdsManager.swift you should see some errors which you need to delete. This should be fairly straight forward, simply remove all the errors that relate to custom Ads.
+
+Than in your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
+```swift
+AdsManager.sharedInstance.setUp(viewController: self, customAdsCount: 0, customAdsInterval: 0)
+```
+
 # Set up using single Ad provider and custom ads
 
-If you would like to use a single ad provider and custom ads than the easiest way is to follow the setUp of multiple ads as outline above. 
-Copy the ads folder into your project minus the adProvider that you do not wish to use. Than you should see some errors in AdsManager.swift that you need to delete. This should be fairly straight forward, simply delete the lines of code that relate to the Ad provider that you are not using.
+Follow the same steps as above. Copy the ads folder into your project minus the adProvider that you do not wish to use. Than again delete all the errors in AdsManager.swift.
 
 # Set up using single adProvider
 
 - Step 1:
 
 Copy the relevant file from the Ads folder into your project (e.g AdMob.swift). 
-Than from the AdsManager.swift file you will need to copy these
-
-```swift
-struct Debug {...
-protocol AdsDelegate {...
-```
-
-into the file you just copied into your project.
 
 - Step 2:
 
 In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups
 ```swift
-AdMob.sharedInstance.presentingViewController = self
+AdMob.setUp(viewController: self)
 ```
 
 # Supporting both landscape and portrait orientation
@@ -197,7 +195,7 @@ extension GameScene: AdsDelegate {
 NOTE: For adMob these only get called when in release mode and not when in test mode.
 
 
-# How to use with single adProvider (e.g AdMob)
+# How to use with single adProvider only (e.g AdMob)
 
 - To show a supported Ad simply call these anywhere you like in your project
 ```swift
@@ -237,11 +235,11 @@ AdMob.sharedInstance.delegate = self
 
 Than create an extension conforming to the protocol (this helps with clean code as well) 
 ```swift
-extension GameScene: AdsDelegate {
-    func pauseTasks() {
+extension GameScene: AdMobDelegate {
+    func adMobPause() {
         // pause your game/app
     }
-    func resumeTasks() { 
+    func adMobResume() { 
        // resume your game/app
     }
 }
