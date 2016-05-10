@@ -38,7 +38,7 @@ class GameScene: SKScene {
         
         // Remove ads after 3 clicks
         touchCounter -= 1
-        if touchCounter <= 0 {
+        if touchCounter == 0 {
             AdsManager.sharedInstance.removeAll()
         }
     }
