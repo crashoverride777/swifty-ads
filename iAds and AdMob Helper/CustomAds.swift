@@ -101,8 +101,8 @@ class CustomAd: NSObject {
     private var image: UIImageView?
     private var URL: NSURL?
     
-    /// Inter ads close button (iAd and customAd)
-    private var interAdCloseButton: UIButton!
+    /// Inter ads close button
+    private var interAdCloseButton = UIButton(type: .System)
     
     // MARK: - Init
     private override init() {

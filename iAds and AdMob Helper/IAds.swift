@@ -89,8 +89,8 @@ class IAd: NSObject {
     private var interAd: ADInterstitialAd?
     private var interAdView = UIView()
     
-    /// Inter ads close button (iAd and customAd)
-    private var interAdCloseButton = UIButton(type: UIButtonType.System)
+    /// Inter ads close button
+    private var interAdCloseButton = UIButton(type: .System)
     
     // MARK: - Init
     private override init() {

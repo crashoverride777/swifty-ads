@@ -87,11 +87,12 @@ class AdsManager: NSObject {
         customAdInterval = customAdsInterval
     }
     
-    /// Show banner ads
+    /// Show banner ad with delay
     func showBannerWithDelay(delay: NSTimeInterval) {
         NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: #selector(showBanner), userInfo: nil, repeats: false)
     }
     
+    /// Show banner ad
     func showBanner() {
         if iAdsAreSupported {
             iAds.showBanner()
@@ -100,13 +101,14 @@ class AdsManager: NSObject {
         }
     }
     
-    /// Show inter ads
+    /// Show inter ad randomly
     func showInterRandomly(randomness randomness: UInt32) {
         let randomInterAd = Int(arc4random_uniform(randomness)) // get a random number between 0 and 2, so 33%
         guard randomInterAd == 0 else { return }
         showInter()
     }
     
+    /// Show inter
     func showInter() {
         
         // Check if custom ads are included
@@ -162,34 +164,36 @@ class AdsManager: NSObject {
     }
 }
 
-// MARK: - Game paused delegates
+// MARK: - Delegates
 extension AdsManager: IAdDelegate, AdMobDelegate, CustomAdDelegate {
  
-    // Pause
+    // iAds
     func iAdPause() {
         delegate?.pauseTasks()
     }
-    func adMobPause() {
-        delegate?.pauseTasks()
-    }
-    func customAdPause() {
-        delegate?.pauseTasks()
-    }
-    
-    // Resume
     func iAdResume() {
         delegate?.resumeTasks()
     }
+    
+    // AdMob
+    func adMobPause() {
+        delegate?.pauseTasks()
+    }
     func adMobResume() {
         delegate?.resumeTasks()
+    }
+    
+    /// Custom ads
+    func customAdPause() {
+        delegate?.pauseTasks()
     }
     func customAdResume() {
         delegate?.resumeTasks()
     }
 }
 
-// MARK: - iAd Error Delegates
-extension AdsManager: IAdErrorDelegate {
+// MARK: - Error Delegates
+extension AdsManager: IAdErrorDelegate, AdMobErrorDelegate {
     
     /// iAds
     func iAdBannerFail() {
@@ -199,11 +203,8 @@ extension AdsManager: IAdErrorDelegate {
     func iAdInterFail() {
         adMob.showInter()
     }
-}
-
-// MARK: - AdMob Error Delegates
-extension AdsManager: AdMobErrorDelegate {
     
+    /// AdMob
     func adMobBannerFail() {
         guard iAdsAreSupported else { return }
         adMob.removeBanner()
