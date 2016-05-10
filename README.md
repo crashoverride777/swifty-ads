@@ -98,6 +98,14 @@ Copy the relevant file from the Ads folder into your project (e.g AdMob.swift).
 
 - Step 2:
 
+Copy the struct 
+```swift
+struct Debug {...
+```
+right at the top of AdsManager.swift into the file your copied at step 1.
+
+- Step 2:
+
 In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups
 ```swift
 AdMob.setUp(viewController: self)
