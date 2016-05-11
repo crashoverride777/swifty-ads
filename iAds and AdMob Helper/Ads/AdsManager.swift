@@ -53,9 +53,6 @@ class AdsManager: NSObject {
     private var customAdInterval = 0
     private var customAdIntervalCounter = 0
     
-    /// iAds are supported
-    private var iAdsAreSupported = false
-    
     /// Ads helpers
     private let adMob = AdMob.sharedInstance
     private let customAd = CustomAd.sharedInstance

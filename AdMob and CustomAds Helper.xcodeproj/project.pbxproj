@@ -46,7 +46,7 @@
 		B435FFE01CE14C2A00A678AA /* AdMob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdMob.swift; sourceTree = "<group>"; };
 		B435FFE41CE14D1900A678AA /* CustomAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAd.swift; sourceTree = "<group>"; };
 		B452EFD81CDBF7FE009A69B5 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "GoogleMobileAdsSdkiOS-7.8.0/GoogleMobileAds.framework"; sourceTree = SOURCE_ROOT; };
-		B4B01A131B9A0AF500F9A8EA /* iAds and AdMob Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iAds and AdMob Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4B01A131B9A0AF500F9A8EA /* AdMob and CustomAds Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AdMob and CustomAds Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4B01A171B9A0AF500F9A8EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B4B01A181B9A0AF500F9A8EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B4B01A1A1B9A0AF500F9A8EA /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -55,7 +55,7 @@
 		B4B01A211B9A0AF500F9A8EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B4B01A231B9A0AF500F9A8EA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B4B01A261B9A0AF500F9A8EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		B4B01A2C1B9A0AF500F9A8EA /* iAds and AdMob HelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iAds and AdMob HelperTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4B01A2C1B9A0AF500F9A8EA /* AdMob and CustomAds Helper.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AdMob and CustomAds Helper.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4B01A311B9A0AF500F9A8EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B4B01A321B9A0AF500F9A8EA /* iAds_and_AdMob_HelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iAds_and_AdMob_HelperTests.swift; sourceTree = "<group>"; };
 		B4B01A3C1B9A0B0700F9A8EA /* AdsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdsManager.swift; sourceTree = "<group>"; };
@@ -116,7 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				B4B01A3E1B9A0B3500F9A8EA /* Frameworks */,
-				B4B01A151B9A0AF500F9A8EA /* iAds and AdMob Helper */,
+				B4B01A151B9A0AF500F9A8EA /* AdMob and CustomAds Helper */,
 				B4B01A2F1B9A0AF500F9A8EA /* iAds and AdMob HelperTests */,
 				B4B01A141B9A0AF500F9A8EA /* Products */,
 			);
@@ -125,13 +125,13 @@
 		B4B01A141B9A0AF500F9A8EA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B4B01A131B9A0AF500F9A8EA /* iAds and AdMob Helper.app */,
-				B4B01A2C1B9A0AF500F9A8EA /* iAds and AdMob HelperTests.xctest */,
+				B4B01A131B9A0AF500F9A8EA /* AdMob and CustomAds Helper.app */,
+				B4B01A2C1B9A0AF500F9A8EA /* AdMob and CustomAds Helper.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B4B01A151B9A0AF500F9A8EA /* iAds and AdMob Helper */ = {
+		B4B01A151B9A0AF500F9A8EA /* AdMob and CustomAds Helper */ = {
 			isa = PBXGroup;
 			children = (
 				B435FFE61CE14DAF00A678AA /* Ads */,
@@ -144,6 +144,7 @@
 				B4B01A251B9A0AF500F9A8EA /* LaunchScreen.xib */,
 				B4B01A161B9A0AF500F9A8EA /* Supporting Files */,
 			);
+			name = "AdMob and CustomAds Helper";
 			path = "iAds and AdMob Helper";
 			sourceTree = "<group>";
 		};
@@ -195,9 +196,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B4B01A121B9A0AF500F9A8EA /* iAds and AdMob Helper */ = {
+		B4B01A121B9A0AF500F9A8EA /* AdMob and CustomAds Helper */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B4B01A361B9A0AF500F9A8EA /* Build configuration list for PBXNativeTarget "iAds and AdMob Helper" */;
+			buildConfigurationList = B4B01A361B9A0AF500F9A8EA /* Build configuration list for PBXNativeTarget "AdMob and CustomAds Helper" */;
 			buildPhases = (
 				B4B01A0F1B9A0AF500F9A8EA /* Sources */,
 				B4B01A101B9A0AF500F9A8EA /* Frameworks */,
@@ -207,14 +208,14 @@
 			);
 			dependencies = (
 			);
-			name = "iAds and AdMob Helper";
+			name = "AdMob and CustomAds Helper";
 			productName = "iAds and AdMob Helper";
-			productReference = B4B01A131B9A0AF500F9A8EA /* iAds and AdMob Helper.app */;
+			productReference = B4B01A131B9A0AF500F9A8EA /* AdMob and CustomAds Helper.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B4B01A2B1B9A0AF500F9A8EA /* iAds and AdMob HelperTests */ = {
+		B4B01A2B1B9A0AF500F9A8EA /* AdMob and CustomAds HelperTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B4B01A391B9A0AF500F9A8EA /* Build configuration list for PBXNativeTarget "iAds and AdMob HelperTests" */;
+			buildConfigurationList = B4B01A391B9A0AF500F9A8EA /* Build configuration list for PBXNativeTarget "AdMob and CustomAds HelperTests" */;
 			buildPhases = (
 				B4B01A281B9A0AF500F9A8EA /* Sources */,
 				B4B01A291B9A0AF500F9A8EA /* Frameworks */,
@@ -225,9 +226,9 @@
 			dependencies = (
 				B4B01A2E1B9A0AF500F9A8EA /* PBXTargetDependency */,
 			);
-			name = "iAds and AdMob HelperTests";
+			name = "AdMob and CustomAds HelperTests";
 			productName = "iAds and AdMob HelperTests";
-			productReference = B4B01A2C1B9A0AF500F9A8EA /* iAds and AdMob HelperTests.xctest */;
+			productReference = B4B01A2C1B9A0AF500F9A8EA /* AdMob and CustomAds Helper.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -250,7 +251,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B4B01A0E1B9A0AF500F9A8EA /* Build configuration list for PBXProject "iAds and AdMob Helper" */;
+			buildConfigurationList = B4B01A0E1B9A0AF500F9A8EA /* Build configuration list for PBXProject "AdMob and CustomAds Helper" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -263,8 +264,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B4B01A121B9A0AF500F9A8EA /* iAds and AdMob Helper */,
-				B4B01A2B1B9A0AF500F9A8EA /* iAds and AdMob HelperTests */,
+				B4B01A121B9A0AF500F9A8EA /* AdMob and CustomAds Helper */,
+				B4B01A2B1B9A0AF500F9A8EA /* AdMob and CustomAds HelperTests */,
 			);
 		};
 /* End PBXProject section */
@@ -317,7 +318,7 @@
 /* Begin PBXTargetDependency section */
 		B4B01A2E1B9A0AF500F9A8EA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B4B01A121B9A0AF500F9A8EA /* iAds and AdMob Helper */;
+			target = B4B01A121B9A0AF500F9A8EA /* AdMob and CustomAds Helper */;
 			targetProxy = B4B01A2D1B9A0AF500F9A8EA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -444,7 +445,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "AdMob-CustomAds-Helpers";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "AdMob and CustomAds Helper";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Debug;
@@ -464,7 +465,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "AdMob-CustomAds-Helpers";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "AdMob and CustomAds Helper";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
@@ -480,8 +481,8 @@
 				INFOPLIST_FILE = "iAds and AdMob HelperTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Helper.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iAds and AdMob Helper.app/iAds and AdMob Helper";
+				PRODUCT_NAME = "AdMob and CustomAds Helper";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AdMob and CustomAds Helper.app/AdMob and CustomAds Helper";
 			};
 			name = Debug;
 		};
@@ -492,15 +493,15 @@
 				INFOPLIST_FILE = "iAds and AdMob HelperTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Helper.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iAds and AdMob Helper.app/iAds and AdMob Helper";
+				PRODUCT_NAME = "AdMob and CustomAds Helper";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AdMob and CustomAds Helper.app/AdMob and CustomAds Helper";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B4B01A0E1B9A0AF500F9A8EA /* Build configuration list for PBXProject "iAds and AdMob Helper" */ = {
+		B4B01A0E1B9A0AF500F9A8EA /* Build configuration list for PBXProject "AdMob and CustomAds Helper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B4B01A341B9A0AF500F9A8EA /* Debug */,
@@ -509,7 +510,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B4B01A361B9A0AF500F9A8EA /* Build configuration list for PBXNativeTarget "iAds and AdMob Helper" */ = {
+		B4B01A361B9A0AF500F9A8EA /* Build configuration list for PBXNativeTarget "AdMob and CustomAds Helper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B4B01A371B9A0AF500F9A8EA /* Debug */,
@@ -518,7 +519,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B4B01A391B9A0AF500F9A8EA /* Build configuration list for PBXNativeTarget "iAds and AdMob HelperTests" */ = {
+		B4B01A391B9A0AF500F9A8EA /* Build configuration list for PBXNativeTarget "AdMob and CustomAds HelperTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B4B01A3A1B9A0AF500F9A8EA /* Debug */,

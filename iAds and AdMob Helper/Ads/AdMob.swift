@@ -82,7 +82,7 @@ class AdMob: NSObject {
     weak var delegate: AdMobDelegate?
     weak var errorDelegate: AdMobErrorDelegate?
     
-    /// Check if reward video is ready
+    /// Check if reward video is ready (e.g for your button)
     var rewardVideoIsReady: Bool {
         guard let rewardVideoAd = rewardVideoAd else { return false }
         return rewardVideoAd.ready
