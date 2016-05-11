@@ -211,7 +211,7 @@ to integrate mediation partners such as iAd or Chartboost.
 
 # Reward Videos
 
-Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. To use reward videos follow the steps above to intergrate your mediation network(s) of choice. Read the AdMob guidlines and your 3rd party ad provider guidliness to set this up correctly. Once everything is setUp you can show reward videos by calling
+Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. To use reward videos follow the steps above to intergrate your mediation network(s) of choice. Than read the AdMob guidlines and your 3rd party ad provider guidliness to set this reward videos correctly. Once everything is setUp you can show reward videos by calling
 
 ```swift
 AdsManager.sharedInstance.showRewardVideo()
@@ -223,7 +223,7 @@ or
 AdMob.sharedInstance.showRewardVideo()
 ```
 
-Once a reward video is finished use this method in the extension you created above to unlock the reward (e.g coins)
+Use this method in the extension you created above to unlock the reward (e.g coins)
 
 ```swift
 func adDidRewardUser(rewardAmount rewardAmount: Int) {
