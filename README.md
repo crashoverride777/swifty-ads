@@ -11,12 +11,12 @@ I will add reward videos from AdMob very soon, I am just in the final test stage
 The main enefit of mediation is
 
 1) You can just use the existing adMob code to show ads and AdMob behind the scenes will fetch ads from AdMob or your mediation partners depending on fill rate etc. 
-This means I dont have to add any extra code for any 3rd party provider, I will only have to import their SDKs and framewworks and adapters. 
+This means you dont have to add any extra code for any 3rd party provider, you will only have to import their SDKs and framewworks and adapters. 
 
 2) Better fill rates and smaller chances of no ads showing.
 
-
-https://developer.apple.com/news/?id=01152016a&1452895272
+To read more about mediation check out this article
+https://support.google.com/admob/answer/3063564?rd=1
 
 # iAds, AdMob and CustomAds Helpers
 
@@ -39,7 +39,7 @@ Click on All and than you should be able to scroll down in buildSettings and fin
 
 # Set up AdMob SDK and frameworks if included, either using CocoaPods or manually.
 
-https://developers.google.com/admob/ios/quick-start#manually_using_the_sdk_download
+https://developers.google.com/admob/ios/quick-start#prerequisites
 
 # Full helper with all ads
 
