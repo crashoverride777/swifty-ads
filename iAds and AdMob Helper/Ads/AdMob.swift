@@ -27,7 +27,7 @@
 
 /*
     Abstract:
-    A Singleton class to manage banner and interstitial adverts from AdMob. This class is only included in the iOS version of the project.
+    A Singleton class to manage adverts from AdMob. This class is only included in the iOS version of the project.
 */
 
 import GoogleMobileAds
@@ -63,11 +63,6 @@ protocol AdMobDelegate: class {
     func adMobDidRewardUser(rewardAmount rewardAmount: Int)
 }
 
-protocol AdMobErrorDelegate: class {
-    func adMobBannerFail()
-    func adMobInterFail()
-}
-
 /// Ads singleton class
 class AdMob: NSObject {
     
@@ -80,7 +75,6 @@ class AdMob: NSObject {
     
     /// Delegates
     weak var delegate: AdMobDelegate?
-    weak var errorDelegate: AdMobErrorDelegate?
     
     /// Check if reward video is ready (e.g for your button)
     var rewardVideoIsReady: Bool {
@@ -308,9 +302,7 @@ extension AdMob: GADBannerViewDelegate {
         UIView.setAnimationDuration(1.5)
         bannerView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (bannerView.frame.size.height / 2))
         bannerView.hidden = true
-        
-        errorDelegate?.adMobBannerFail()
-        
+   
         UIView.commitAnimations()
     }
 }
@@ -342,7 +334,7 @@ extension AdMob: GADInterstitialDelegate {
     
     func interstitial(ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
         Debug.print("AdMob inter error")
-        errorDelegate?.adMobInterFail()
+        Debug.print(error.localizedDescription)
     }
 }
 
@@ -375,7 +367,6 @@ extension AdMob: GADRewardBasedVideoAdDelegate {
     func rewardBasedVideoAd(rewardBasedVideoAd: GADRewardBasedVideoAd!, didFailToLoadWithError error: NSError!) {
         Debug.print("AdMob reward video ad did fail to load")
         Debug.print(error.localizedDescription)
-        errorDelegate?.adMobInterFail()
         // try reloading new ad and see if it causes issues
     }
     
