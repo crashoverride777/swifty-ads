@@ -25,7 +25,7 @@
 
 /*
     Abstract:
-    A Singleton class to manage banner and interstitial adverts from iAd and AdMob as well as custom ads. This class is only included in the iOS version of the project.
+    A Singleton class to manage banner and interstitial adverts from AdMob as well as your own custom ads. This class is only included in the iOS version of the project.
 */
 
 import UIKit
