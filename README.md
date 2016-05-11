@@ -14,11 +14,11 @@ This will reduce the hassle of having to manually change the google ad ids when 
 Click on Targets (left project sideBar, at the top) -> BuildSettings. Than underneath buildSettings next to the search bar on the left there should be buttons called Basic, All, Combined and Level. 
 Click on All and than you should be able to scroll down in buildSettings and find the section called SwiftCompiler-CustomFlags. Click on other flags and than debug and add a custom flag named -D DEBUG (see the sample project or http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
 
-# Set up AdMob SDK and frameworks if included, either using CocoaPods or manually.
+# Set up AdMob SDK and frameworks
 
 https://developers.google.com/admob/ios/quick-start#prerequisites
 
-# With custom ads
+# Use helper with custom ads
 
 SETUP
 
@@ -103,7 +103,7 @@ extension GameScene: AdsDelegate {
 NOTE: These only get called when in release mode and not when in test mode.
 
 
-# No custom ads
+# Use helper without custom ads
 
 SETUP
 
@@ -205,11 +205,11 @@ To add mediation networks please follow the instructions
 
 https://developers.google.com/admob/ios/mediation
 
-to integrate mediation partners such as iAd (until closed) or Chartboost.
+to integrate mediation partners such as iAd or Chartboost.
 
 # Reward Videos
 
-Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. To use reward videos follow the steps above to intergrate your mediation network(s) of choice. Read AdMob guidlines and your 3rd party guidliness to set this up correctly. Once everything is setUp you can show reward videos by calling
+Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. To use reward videos follow the steps above to intergrate your mediation network(s) of choice. Read the AdMob guidlines and your 3rd party ad provider guidliness to set this up correctly. Once everything is setUp you can show reward videos by calling
 
 ```swift
 AdsManager.sharedInstance.showRewardVideo()
@@ -225,7 +225,7 @@ Once a reward video is finished use this method in the extension you created abo
 
 ```swift
 func adDidRewardUser(rewardAmount rewardAmount: Int) {
-    self.coints += rewardAmount
+    self.coins += rewardAmount
 }
 ```
 
@@ -233,16 +233,17 @@ or
 
 ```swift
 func adMobDidRewardUser(rewardAmount rewardAmount: Int) {
-    self.coints += rewardAmount
+    self.coins += rewardAmount
 }
 ```
 
-Reward amount is an Int. You can ignore this and hardcore the value if you would like. However you cannot than edit the rewardAmount without having to send out a newUpdate.
+Reward amount is an Int which is fetched from the adProvider where you set up the reward video and reward amount. 
+You can ignore this and hardcore the value if you would like.
 
 
 # When you go Live 
 
-- Step 1: Sign up for a Google AdMob account and create your real adUnitIDs depending on the ad types you use (Banner, Inter Reward Ads).  You will need to do this for each app that will use adMob. 
+- Step 1: Sign up for a Google AdMob account and create your real adUnitIDs depending on the ad types you use (Banner, Inter Reward Ads).
 
 (https://support.google.com/admob/answer/2784575?hl=en-GB)
 
@@ -252,7 +253,7 @@ private enum AdUnitID: String {...
 ```
 enter your real AdUnitIDs.
 
-- Step 3: When you submit your app on iTunes Connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected. If you only use iAds and no 3rd party ad provider make sure you select NO, otherwise your app will also get rejected.
+- Step 3: When you submit your app on iTunes Connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected.
 
 NOTE: - Dont forget to setup the "-D DEBUG" custom flag or the helper will not work correctly with adMob.
 
