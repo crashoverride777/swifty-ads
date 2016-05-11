@@ -1,30 +1,7 @@
 
-NOTE: Apple is shutting down the iAd App Network on June the 30th. 
-The news on this are very vague so far. Some articles say its closing down completly, some say its only developers that want to advertise their own ads that are affected, others say it will get replaced with an automated service.
+# AdMob and CustomAds Helpers
 
-I am not sure if you can still submit apps or what will happen to the APIs. Also WWDC is around the corner so maybe we get some further news.
-
-NOTE: Future update
-
-I will add reward videos from AdMob very soon, I am just in the final test stages. To use AdMob to show reward video ads you will need to use a 3rd party mediation partner such as Chartboost. This will be my strategy going forward with this helper as mediation seems to be the best way to handle multiple ad providers. 
-
-The main benefit of mediation is
-
-1) You can just use the existing adMob code to show ads and AdMob behind the scenes will fetch ads from AdMob or your mediation partners depending on fill rate etc. 
-This means you dont have to add any extra code for any 3rd party provider, you will only have to import their SDKs and framewworks and adapters. 
-
-2) Better fill rates and smaller chances of no ads showing.
-
-To read more about mediation check out this article
-https://support.google.com/admob/answer/3063564?rd=1
-
-# iAds, AdMob and CustomAds Helpers
-
-A collection of helper classes to integrate Ads from Apple and Google as well as your own custom Ads. This helper has been been made while making my 1st SpriteKit game but should work for any kind of app. 
-
-The cool thing is that iAds will be used when they are supported in the region of the device, otherwise AdMob will be used. iAds tend to have a better impressions and are usually prefered as default ads.
-Whats really cool is that if iAd banners are having an error it will automatically load an AdMob banner and if that AdMob banner is than having an error it will try loading an iAd banner again. 
-When an iAd inter ad fails it will try an AdMob Inter ad but incase that adMob inter ad also fails it will not try iAd again because you obviously dont want a full screen ad showing at the wrong time.
+A collection of helper classes to integrate Ads from Google as well as your own custom Ads. This helper has been been made while making my 1st SpriteKit game but should work for any kind of app. 
 
 This Helper creates whats called a shared Banner which is the recommended way by apple. To read more about shared banner ads you can read this documentation from Apple
 https://developer.apple.com/library/ios/technotes/tn2286/_index.html
@@ -41,7 +18,7 @@ Click on All and than you should be able to scroll down in buildSettings and fin
 
 https://developers.google.com/admob/ios/quick-start#prerequisites
 
-# Full helper with all ads
+# With custom ads
 
 SETUP
 
@@ -50,8 +27,6 @@ SETUP
 Copy the Ads folder into your project. This should include the files
 
 AdsManager.swift 
-
-IAds.swift
 
 AdMob.swift
 
@@ -76,12 +51,7 @@ and add more cases to the switch statement to match your total custom Ads you wa
 
 HOW TO USE
 
-- If you are using multiple Ad providers than iAds are always shown by default unless they are not supported. If you want to manually test Google ads comment out this line in the init method of AdsManager.swift.
-```swift
-iAdsAreSupported = iAdTimeZoneSupported()
-```
-
-- To show a supported Ad simply call these anywhere you like in your project
+- To show an Ad simply call these anywhere you like in your project
 ```swift
 AdsManager.sharedInstance.showBanner() 
 AdsManager.sharedInstance.showBannerWithDelay(1) // delay showing banner slightly eg when transitioning to new scene/view
@@ -108,7 +78,7 @@ will not fire anymore and therefore require no further editing.
 
 For permanent storage you will need to create your own "removedAdsProduct" bool and save it in something like NSUserDefaults, Keychain or a class using NSCoding and than call this method when your app launches.
 
-- To pause/resume tasks in your app/game when Ads are viewed you can implement the delegate methods if needed
+- Implement the delegate methods from the helpers
 
 Set the delegate in your GameScenes "didMoveToView" (init) method like so
 ```swift
@@ -124,32 +94,22 @@ extension GameScene: AdsDelegate {
     func adClosed() { 
        // resume your game/app
     }
+    func adDidRewardUser(rewardAmount rewardAmount: Int) {
+       // code for reward videos, see instructions below
+    }
 }
 ```
 
-NOTE: For adMob these only get called when in release mode and not when in test mode.
+NOTE: These only get called when in release mode and not when in test mode.
 
 
-# Multiple Ad providers without custom ads
-
-Follow the same steps as above but exclude the CustomAds.swift file. Than in AdsManager.swift you should see some errors which you need to delete. This should be fairly straight forward, simply remove all the errors that relate to custom Ads.
-
-Than in your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
-```swift
-AdsManager.sharedInstance.setUp(viewController: self, customAdsCount: 0, customAdsInterval: 0)
-```
-
-# Single Ad provider with custom ads
-
-Follow the same steps as above. Copy the ads folder into your project minus the adProvider that you do not wish to use. Than again delete all the errors in AdsManager.swift.
-
-# Single Ad provider without custom ads
+# No custom ads
 
 SETUP
 
 - Step 1:
 
-Copy the relevant file from the Ads folder into your project (e.g AdMob.swift). 
+Copy AdMob.swift into your project 
 
 - Step 2:
 
@@ -195,7 +155,7 @@ will not fire anymore and therefore require no further editing.
 
 For permanent storage you will need to create your own "removedAdsProduct" bool and save it in something like NSUserDefaults, Keychain or a class using NSCoding and than call this method when your app launches.
 
-- To pause/resume tasks in your app/game when Ads are viewed you can implement the delegate methods if needed
+- Implement the delegate methods from the helpers
 
 Set the delegate in your GameScenes "didMoveToView" (init) method like so
 
@@ -211,6 +171,9 @@ extension GameScene: AdMobDelegate {
     }
     func adMobAdClosed() { 
        // resume your game/app
+    }
+    func adMobDidRewardUser(rewardAmount rewardAmount: Int) {
+       // code for reward videos, see instructions below
     }
 }
 ```
@@ -243,15 +206,53 @@ NOTE: This is an ios 8 method, if your app supports ios 7 or below you maybe wan
 NSNotificationCenter UIDeviceOrientationDidChangeNotification Observer
 ```
 
+# Mediation
+
+I think mediation is the best way forward with this helper if you would like to use multiple ad providers. This means you can use the AdMob APIs to show ads from multiple providers without having to write extra code. 
+To add mediation networks please follow the instructions 
+
+https://developers.google.com/admob/ios/mediation
+
+to integrate mediation partners such as iAd (until closed) or Chartboost.
+
+# Reward Videos
+
+Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. To use reward videos follow the steps above to intergrate your mediation network(s) of choice. Read AdMob guidlines and your 3rd party guidliness to set this up correctly. Once everything is setUp you can show reward videos by calling
+
+```swift
+AdsManager.sharedInstance.showRewardVideo()
+```
+
+or 
+
+```swift
+AdMob.sharedInstance.showRewardVideo()
+```
+
+Once a reward video is finished use this method in the extension you created above to unlock the reward (e.g coins)
+
+```swift
+func adDidRewardUser(rewardAmount rewardAmount: Int) {
+    self.coints += rewardAmount
+}
+```
+
+or
+
+```swift
+func adMobDidRewardUser(rewardAmount rewardAmount: Int) {
+    self.coints += rewardAmount
+}
+```
+
+Reward amount is an Int. You can ignore this and hardcore the value if you would like. However you cannot than edit the rewardAmount without having to send out a newUpdate.
+
+
 # When you go Live 
 
-iAd 
+- Step 1: Sign up for a Google AdMob account and create your real adUnitIDs depending on the ad types you use (Banner, Inter Reward Ads).  You will need to do this for each app that will use adMob. 
 
-- Step 1: If you havent used iAds before make sure your account is set up for iAds. You mainly have to sign an agreement in your developer account. (https://developer.apple.com/iad/)
-
-AdMob
-
-- Step 1: Sign up for a Google AdMob account and create your real adUnitIDs, 1 for banner and 1 for inter Ads. You will need to do this for each app that will use adMob. (https://support.google.com/admob/answer/2784575?hl=en-GB)
+(https://support.google.com/admob/answer/2784575?hl=en-GB)
 
 - Step 2: In AdMob.swift in 
 ```swift
@@ -262,21 +263,6 @@ enter your real AdUnitIDs.
 - Step 3: When you submit your app on iTunes Connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected. If you only use iAds and no 3rd party ad provider make sure you select NO, otherwise your app will also get rejected.
 
 NOTE: - Dont forget to setup the "-D DEBUG" custom flag or the helper will not work correctly with adMob.
-
-# Resize view for banner ads
-
-This only works for iAds, I am not sure if you can achieve the same effect with AdMob.
-In SpriteKit games you normally dont want the view to resize when showing banner ads, however in UIKit apps this might be prefered. To resize your views when iAd banners are shown you need to let apple create the banners. You can use the canDisplayBannerAds bool property to achieve this. You should change the showBannerAd method in IAds.swift so it looks like this
-
-```swift
-  func showBanner(...) {
-        ...
-        presentingViewController.canDisplayBannerAds = true
-        //iAdLoadBannerAd()
-    }
-```
-NOTE:
-This might not create a sharedBanner ad that can be used accross multiple viewControllers.
 
 # Final Info
 
@@ -289,6 +275,13 @@ Please let me know about any bugs or improvements, I am by no means an expert.
 Enjoy
 
 # Release Notes
+
+- v4.1
+
+Removed IAd.swift as you can get iAds by using AdMob mediation. (if you still need it download v4.0)
+Included AdMob reward videos.
+
+Please read the instructions again if you are stuck.
 
 - v4.0
 
