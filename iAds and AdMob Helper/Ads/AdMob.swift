@@ -367,7 +367,6 @@ extension AdMob: GADRewardBasedVideoAdDelegate {
     func rewardBasedVideoAd(rewardBasedVideoAd: GADRewardBasedVideoAd!, didFailToLoadWithError error: NSError!) {
         Debug.print("AdMob reward video ad did fail to load")
         Debug.print(error.localizedDescription)
-        // try reloading new ad and see if it causes issues
     }
     
     func rewardBasedVideoAd(rewardBasedVideoAd: GADRewardBasedVideoAd!, didRewardUserWithReward reward: GADAdReward!) {
