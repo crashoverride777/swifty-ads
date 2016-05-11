@@ -1,3 +1,5 @@
+NOTE: iAd is shutting down on June the 30th. I have removed all the iAd APIs from this project because iAds can easily be intergrated using AdMob mediation.
+
 
 # AdMob and CustomAds Helpers
 
