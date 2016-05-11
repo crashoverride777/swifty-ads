@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		B435FFE11CE14C2A00A678AA /* AdMob.swift in Sources */ = {isa = PBXBuildFile; fileRef = B435FFE01CE14C2A00A678AA /* AdMob.swift */; };
-		B435FFE31CE14C3400A678AA /* IAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = B435FFE21CE14C3400A678AA /* IAd.swift */; };
 		B435FFE51CE14D1900A678AA /* CustomAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = B435FFE41CE14D1900A678AA /* CustomAd.swift */; };
 		B452EFD91CDBF7FE009A69B5 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B452EFD81CDBF7FE009A69B5 /* GoogleMobileAds.framework */; };
 		B4B01A191B9A0AF500F9A8EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B01A181B9A0AF500F9A8EA /* AppDelegate.swift */; };
@@ -45,7 +44,6 @@
 
 /* Begin PBXFileReference section */
 		B435FFE01CE14C2A00A678AA /* AdMob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdMob.swift; sourceTree = "<group>"; };
-		B435FFE21CE14C3400A678AA /* IAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAd.swift; sourceTree = "<group>"; };
 		B435FFE41CE14D1900A678AA /* CustomAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAd.swift; sourceTree = "<group>"; };
 		B452EFD81CDBF7FE009A69B5 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "GoogleMobileAdsSdkiOS-7.8.0/GoogleMobileAds.framework"; sourceTree = SOURCE_ROOT; };
 		B4B01A131B9A0AF500F9A8EA /* iAds and AdMob Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iAds and AdMob Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,7 +106,6 @@
 			isa = PBXGroup;
 			children = (
 				B4B01A3C1B9A0B0700F9A8EA /* AdsManager.swift */,
-				B435FFE21CE14C3400A678AA /* IAd.swift */,
 				B435FFE01CE14C2A00A678AA /* AdMob.swift */,
 				B435FFE41CE14D1900A678AA /* CustomAd.swift */,
 			);
@@ -300,7 +297,6 @@
 			files = (
 				B4B01A3D1B9A0B0700F9A8EA /* AdsManager.swift in Sources */,
 				B4B01A1D1B9A0AF500F9A8EA /* GameScene.swift in Sources */,
-				B435FFE31CE14C3400A678AA /* IAd.swift in Sources */,
 				B4B01A1F1B9A0AF500F9A8EA /* GameViewController.swift in Sources */,
 				B435FFE11CE14C2A00A678AA /* AdMob.swift in Sources */,
 				B4B01A191B9A0AF500F9A8EA /* AppDelegate.swift in Sources */,
@@ -441,13 +437,15 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GoogleMobileAdsSdkiOS-7.8.0",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "iAds and AdMob Helper/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = "iAds-AdMob-CustomAds-Helpers";
+				PRODUCT_BUNDLE_IDENTIFIER = "AdMob-CustomAds-Helpers";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Debug;
 		};
@@ -460,12 +458,14 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GoogleMobileAdsSdkiOS-7.8.0",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "iAds and AdMob Helper/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "iAds-AdMob-CustomAds-Helpers";
+				PRODUCT_BUNDLE_IDENTIFIER = "AdMob-CustomAds-Helpers";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
 		};

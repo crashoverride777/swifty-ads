@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v4.0
+//    v4.1
 
 /*
     Abstract:
@@ -29,6 +29,15 @@
 */
 
 import UIKit
+
+/// Hide print statements for release
+private struct Debug {
+    static func print(object: Any) {
+        #if DEBUG
+            Swift.print("DEBUG", object) //, terminator: "")
+        #endif
+    }
+}
 
 /// Custom ad settings
 private struct CustomAds {

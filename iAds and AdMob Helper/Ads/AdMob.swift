@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v4.0
+//    v4.1
 
 //    Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
@@ -32,16 +32,27 @@
 
 import GoogleMobileAds
 
+/// Hide print statements for release
+private struct Debug {
+    static func print(object: Any) {
+        #if DEBUG
+            Swift.print("DEBUG", object) //, terminator: "")
+        #endif
+    }
+}
+
 /// Admob ad unit IDs
 private enum AdUnitID: String {
     // Real IDs
     #if !DEBUG
-    case Banner = "ca-app-pub-2427795328331194/3512503063"
-    case Inter = "ca-app-pub-2427795328331194/4989236269"
+    case Banner = "Enter your real banner adUnitID"
+    case Inter = "Enter your real inter adUnitID"
+    case RewardVideo = "Enter your real reward video adUnitID"
     // Test IDs
     #else
     case Banner = "ca-app-pub-3940256099942544/2934735716"
     case Inter = "ca-app-pub-3940256099942544/4411468910"
+    case RewardVideo = "ca-app-pub-1234567890123456/1234567890"
     #endif
 }
 
@@ -49,6 +60,7 @@ private enum AdUnitID: String {
 protocol AdMobDelegate: class {
     func adMobAdClicked()
     func adMobAdClosed()
+    func adMobDidRewardUser(rewardAmount rewardAmount: Int)
 }
 
 protocol AdMobErrorDelegate: class {
@@ -70,6 +82,12 @@ class AdMob: NSObject {
     weak var delegate: AdMobDelegate?
     weak var errorDelegate: AdMobErrorDelegate?
     
+    /// Check if reward video is ready
+    var rewardVideoIsReady: Bool {
+        guard let rewardVideoAd = rewardVideoAd else { return false }
+        return rewardVideoAd.ready
+    }
+    
     /// Presenting view controller
     private var presentingViewController: UIViewController?
     
@@ -79,6 +97,8 @@ class AdMob: NSObject {
     /// Ads
     private var bannerAdView: GADBannerView?
     private var interAd: GADInterstitial?
+    private var rewardVideoAd: GADRewardBasedVideoAd?
+    
     
     // MARK: - Init
     
@@ -86,8 +106,9 @@ class AdMob: NSObject {
         super.init()
         Debug.print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
         
-        // Preload first inter ad
+        // Preload inter and reward ads first time
         interAd = loadInterAd()
+        rewardVideoAd = loadRewardAd()
     }
     
     // MARK: - User Methods
@@ -124,6 +145,12 @@ class AdMob: NSObject {
         showInterAd()
     }
     
+    /// Show reward video ad
+    func showRewardVideo() {
+        guard !removedAds else { return }
+        showRewardAd()
+    }
+    
     /// Remove banner ads
     func removeBanner() {
         bannerAdView?.delegate = nil
@@ -145,6 +172,7 @@ class AdMob: NSObject {
         removedAds = true
         removeBanner()
         interAd?.delegate = nil
+        rewardVideoAd?.delegate = nil
     }
     
     /// Orientation changed
@@ -163,7 +191,7 @@ class AdMob: NSObject {
 // MARK: - Private Methods
 private extension AdMob {
     
-    /// Admob banner
+    /// Banner
     func loadBannerAd() {
         guard let presentingViewController = presentingViewController else { return }
         Debug.print("AdMob banner loading...")
@@ -188,12 +216,12 @@ private extension AdMob {
         bannerAdView?.loadRequest(request)
     }
     
-    /// Admob inter
+    /// Inter
     func loadInterAd() -> GADInterstitial {
         Debug.print("AdMob inter loading...")
         
-        let googleInterAd = GADInterstitial(adUnitID: AdUnitID.Inter.rawValue)
-        googleInterAd.delegate = self
+        let interAd = GADInterstitial(adUnitID: AdUnitID.Inter.rawValue)
+        interAd.delegate = self
         
         let request = GADRequest()
         
@@ -201,14 +229,13 @@ private extension AdMob {
             request.testDevices = [kGADSimulatorID]
         #endif
         
-        googleInterAd.loadRequest(request)
+        interAd.loadRequest(request)
         
-        return googleInterAd
+        return interAd
     }
     
-    /// Admob show inter
     func showInterAd() {
-        guard interAd != nil && interAd!.isReady else { // calls interDidReceiveAd
+        guard interAd != nil && interAd!.isReady else {
             Debug.print("AdMob inter is not ready, reloading")
             interAd = loadInterAd() // do not try iAd again incase of error with both and than they show at the wrong time
             return
@@ -218,12 +245,41 @@ private extension AdMob {
         guard let rootViewController = presentingViewController?.view?.window?.rootViewController else { return }
         interAd?.presentFromRootViewController(rootViewController)
     }
+    
+    /// Reward video
+    func loadRewardAd() -> GADRewardBasedVideoAd {
+        
+        let rewardVideoAd = GADRewardBasedVideoAd.sharedInstance()
+        
+        rewardVideoAd.delegate = self
+        let request = GADRequest()
+        
+        #if DEBUG
+            request.testDevices = [kGADSimulatorID]
+        #endif
+        
+        rewardVideoAd.loadRequest(request, withAdUnitID: AdUnitID.RewardVideo.rawValue)
+        
+        return rewardVideoAd
+    }
+    
+    func showRewardAd() {
+        guard rewardVideoAd != nil && rewardVideoAd!.ready else {
+            Debug.print("AdMob reward video is not ready, reloading")
+            rewardVideoAd = loadRewardAd()
+            return
+        }
+        
+        guard let rootViewController = presentingViewController else { return }
+        rewardVideoAd?.presentFromRootViewController(rootViewController)
+    }
 }
 
-// MARK: - AdMob Banner Delegates
+// MARK: - Banner Delegates
 extension AdMob: GADBannerViewDelegate {
     
     func adViewDidReceiveAd(bannerView: GADBannerView!) {
+        Debug.print("Banner adapter class name: \(bannerView.adNetworkClassName)")
         guard let presentingViewController = presentingViewController else { return }
         Debug.print("AdMob banner did load, showing")
         
@@ -259,10 +315,11 @@ extension AdMob: GADBannerViewDelegate {
     }
 }
 
-// MARK: - AdMob Inter Delegates
+// MARK: - Inter Delegates
 extension AdMob: GADInterstitialDelegate {
     
     func interstitialDidReceiveAd(ad: GADInterstitial!) {
+        Debug.print("Interstitial adapter class name: \(ad.adNetworkClassName)")
         Debug.print("AdMob inter did load")
     }
     
@@ -286,5 +343,44 @@ extension AdMob: GADInterstitialDelegate {
     func interstitial(ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
         Debug.print("AdMob inter error")
         errorDelegate?.adMobInterFail()
+    }
+}
+
+// MARK: - Reward Video Delegates
+extension AdMob: GADRewardBasedVideoAdDelegate {
+    
+    func rewardBasedVideoAdDidOpen(rewardBasedVideoAd: GADRewardBasedVideoAd!) {
+        Debug.print("AdMob reward video ad  did open")
+    }
+    
+    func rewardBasedVideoAdDidClose(rewardBasedVideoAd: GADRewardBasedVideoAd!) {
+        Debug.print("AdMob reward video ad  did close")
+        delegate?.adMobAdClosed()
+        rewardVideoAd = loadRewardAd()
+    }
+    
+    func rewardBasedVideoAdDidReceiveAd(rewardBasedVideoAd: GADRewardBasedVideoAd!) {
+        Debug.print("AdMob reward video ad  did receive ad")
+    }
+    
+    func rewardBasedVideoAdDidStartPlaying(rewardBasedVideoAd: GADRewardBasedVideoAd!) {
+        Debug.print("AdMob reward video ad  did start playing")
+    }
+    
+    func rewardBasedVideoAdWillLeaveApplication(rewardBasedVideoAd: GADRewardBasedVideoAd!) {
+        Debug.print("AdMob reward video ad will leave application")
+        delegate?.adMobAdClicked()
+    }
+    
+    func rewardBasedVideoAd(rewardBasedVideoAd: GADRewardBasedVideoAd!, didFailToLoadWithError error: NSError!) {
+        Debug.print("AdMob reward video ad did fail to load")
+        Debug.print(error.localizedDescription)
+        errorDelegate?.adMobInterFail()
+        // try reloading new ad and see if it causes issues
+    }
+    
+    func rewardBasedVideoAd(rewardBasedVideoAd: GADRewardBasedVideoAd!, didRewardUserWithReward reward: GADAdReward!) {
+        Debug.print("AdMob reward video ad did reward user")
+        delegate?.adMobDidRewardUser(rewardAmount: Int(reward.amount))
     }
 }

@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v4.0
+//    v4.1
 
 /*
     Abstract:
@@ -30,19 +30,11 @@
 
 import UIKit
 
-/// Hide print statements for release
-struct Debug {
-    static func print(object: Any) {
-        #if DEBUG
-            Swift.print("DEBUG", object) //, terminator: "")
-        #endif
-    }
-}
-
 /// Delegate
 protocol AdsDelegate: class {
     func adClicked()
     func adClosed()
+    func adDidRewardUser(rewardAmount rewardAmount: Int)
 }
 
 /// Ads manager class
@@ -65,7 +57,6 @@ class AdsManager: NSObject {
     private var iAdsAreSupported = false
     
     /// Ads helpers
-    private let iAd = IAd.sharedInstance
     private let adMob = AdMob.sharedInstance
     private let customAd = CustomAd.sharedInstance
     
@@ -74,35 +65,14 @@ class AdsManager: NSObject {
         super.init()
         
         // Delegates
-        iAd.delegate = self
         adMob.delegate = self
         customAd.delegate = self
-        
-        iAd.errorDelegate = self
-        adMob.errorDelegate = self
-        
-        // Check iAd time zone support
-        var iAdTimeZoneSupport: Bool {
-            let iAdTimeZones = "America/;US/;Pacific/;Asia/Tokyo;Europe/".componentsSeparatedByString(";")
-            let myTimeZone = NSTimeZone.localTimeZone().name
-            for zone in iAdTimeZones {
-                if (myTimeZone.hasPrefix(zone)) {
-                    Debug.print("iAds supported")
-                    return true
-                }
-            }
-            Debug.print("iAds not supported")
-            return false
-        }
-        
-        iAdsAreSupported = iAdTimeZoneSupport
     }
     
     // MARK: - User Methods
     
     /// SetUp
     func setUp(viewController viewController: UIViewController, customAdsCount: Int, customAdsInterval: Int) {
-        iAd.setUp(viewController: viewController)
         adMob.setUp(viewController: viewController)
         customAd.setUp(viewController: viewController)
         
@@ -117,11 +87,7 @@ class AdsManager: NSObject {
     
     /// Show banner ad
     func showBanner() {
-        if iAdsAreSupported {
-            iAd.showBanner()
-        } else {
-            adMob.showBanner()
-        }
+        adMob.showBanner()
     }
     
     /// Show inter ad randomly
@@ -136,7 +102,7 @@ class AdsManager: NSObject {
         
         // Check if custom ads are included
         guard customAd.totalCount > 0 else {
-            showingInterAd()
+            adMob.showInter()
             return
         }
         
@@ -151,59 +117,43 @@ class AdsManager: NSObject {
             customAd.showInter()
             
         default:
-            showingInterAd()
+            adMob.showInter()
         }
         
         // Increase custom ad interval
         customAdIntervalCounter += 1
     }
     
-    private func showingInterAd() {
-        if iAdsAreSupported {
-            iAd.showInter()
-        } else {
-            adMob.showInter()
-        }
-    }
-    
     /// Remove banner
     func removeBanner() {
-        iAd.removeBanner()
         adMob.removeBanner()
     }
     
     /// Remove all
     func removeAll() {
-        iAd.removeAll()
         adMob.removeAll()
         customAd.removeAll()
     }
     
     /// Orientation changed
     func orientationChanged() {
-        iAd.orientationChanged()
         adMob.orientationChanged()
         customAd.orientationChanged()
     }
 }
 
 // MARK: - Action Delegates
-extension AdsManager: IAdDelegate, AdMobDelegate, CustomAdDelegate {
+extension AdsManager: AdMobDelegate, CustomAdDelegate {
  
-    // iAds
-    func iAdAdClicked() {
-        delegate?.adClicked()
-    }
-    func iAdAdClosed() {
-        delegate?.adClosed()
-    }
-    
     // AdMob
     func adMobAdClicked() {
         delegate?.adClicked()
     }
     func adMobAdClosed() {
         delegate?.adClosed()
+    }
+    func adMobDidRewardUser(rewardAmount rewardAmount: Int) {
+        delegate?.adDidRewardUser(rewardAmount: rewardAmount)
     }
     
     /// Custom ads
@@ -213,26 +163,4 @@ extension AdsManager: IAdDelegate, AdMobDelegate, CustomAdDelegate {
     func customAdClosed() {
         delegate?.adClosed()
     }
-}
-
-// MARK: - Error Delegates
-extension AdsManager: IAdErrorDelegate, AdMobErrorDelegate {
-    
-    /// iAds
-    func iAdBannerFail() {
-        adMob.showBanner()
-    }
-    
-    func iAdInterFail() {
-        adMob.showInter()
-    }
-    
-    /// AdMob
-    func adMobBannerFail() {
-        guard iAdsAreSupported else { return }
-        adMob.removeBanner()
-        iAd.showBanner()
-    }
-    
-    func adMobInterFail() { }
 }
