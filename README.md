@@ -4,7 +4,17 @@ The news on this are very vague so far. Some articles say its closing down compl
 
 I am not sure if you can still submit apps or what will happen to the APIs. Also WWDC is around the corner so maybe we get some further news.
 
-I will include another 3rd party ad provider (most likely RevMob and/or Chartboost) very soon.
+NOTE: Future update
+
+I will add reward videos from AdMob very soon, I am just in the final test stages. To use AdMob to show reward video ads you will need to use a 3rd party mediation partner such as Chartboost. This will be my strategy going forward with this helper as mediation seems to be the best way to handle multiple ad providers. 
+
+The main enefit of mediation is
+
+1) You can just use the existing adMob code to show ads and AdMob behind the scenes will fetch ads from AdMob or your mediation partners depending on fill rate etc. 
+This means I dont have to add any extra code for any 3rd party provider, I will only have to import their SDKs and framewworks and adapters. 
+
+2) Better fill rates and smaller chances of no ads showing.
+
 
 https://developer.apple.com/news/?id=01152016a&1452895272
 
@@ -27,23 +37,9 @@ This will reduce the hassle of having to manually change the google ad ids when 
 Click on Targets (left project sideBar, at the top) -> BuildSettings. Than underneath buildSettings next to the search bar on the left there should be buttons called Basic, All, Combined and Level. 
 Click on All and than you should be able to scroll down in buildSettings and find the section called SwiftCompiler-CustomFlags. Click on other flags and than debug and add a custom flag named -D DEBUG (see the sample project or http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
 
-# Set up AdMob SDK and frameworks if included
+# Set up AdMob SDK and frameworks if included, either using CocoaPods or manually.
 
-- Step 1: 
-
-Copy the Google framework folder found in the sample project into your projects folder on your computer. Its best to copy it to your projects root folder because if you just reference the file (next Step) from a random location on your computer it could cause issues when that file gets deleted/moved. You can download the latest version from Googles website (https://developers.google.com/admob/ios/download)
-
-- Step 2: 
-
-Add the Google framework to your project. Go to Targets -> BuildPhases -> LinkedBinaries and click the + button. Than press the "Add Other" button and search your computer for the folder you copied at Step 3 containing the googleframework file and add that file. Your linkedBinaries should now say 1.
-
-NOTE: - If you ever update the frameworks, you will need delete the old framework from your project siderbar and the framework folder from your projects root folder on your computer. You need to than go to Targets-BuildSettings-SearchPaths and under FrameworkSearchPaths you should see a link to your old folder. Delete this link to ensure there are no warnings when you add an updated version and than redo step 4.
-
-- Step 3: 
-
-Add the other frameworks needed. Click the + button again and search for and than add each of these frameworks: AdSupport, AudioToolbox, AVFoundation, CoreGraphics, CoreMedia, CoreTelephony, EventKit, EventKitUI, MessageUI, StoreKit, SystemConfiguration. (https://developers.google.com/admob/ios/quick-start?hl=en). 
-
-You might want to consider putting all the added frameworks you now see in your projects sidebar into a folder called Frameworks, similar to the sample project, to keep it clean.
+https://developers.google.com/admob/ios/quick-start#manually_using_the_sdk_download
 
 # Full helper with all ads
 
