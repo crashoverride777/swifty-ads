@@ -8,7 +8,7 @@ NOTE: Future update
 
 I will add reward videos from AdMob very soon, I am just in the final test stages. To use AdMob to show reward video ads you will need to use a 3rd party mediation partner such as Chartboost. This will be my strategy going forward with this helper as mediation seems to be the best way to handle multiple ad providers. 
 
-The main enefit of mediation is
+The main benefit of mediation is
 
 1) You can just use the existing adMob code to show ads and AdMob behind the scenes will fetch ads from AdMob or your mediation partners depending on fill rate etc. 
 This means you dont have to add any extra code for any 3rd party provider, you will only have to import their SDKs and framewworks and adapters. 
