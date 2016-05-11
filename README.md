@@ -274,6 +274,7 @@ Enjoy
 - v4.1
 
 Removed IAd.swift as you can get iAds by using AdMob mediation. (if you still need it download v4.0)
+
 Included AdMob reward videos.
 
 Please read the instructions again if you are stuck.
