@@ -7,6 +7,24 @@
 
 import SpriteKit
 
+extension GameScene: AdsDelegate {
+    
+    func adClicked() {
+        print("Ads clicked")
+    }
+    
+    func adClosed() {
+        print("Ads closed")
+    }
+    
+    func adDidRewardUserWithAmount(rewardAmount: Int) {
+        // e.g self.coins += rewardAmount
+        
+        // Will not really work with this sample project, adMob just shows a black banner in test mode
+        // Also it only works with 3rd party mediation partners you set up through your adMob account
+    }
+}
+
 class GameScene: SKScene {
     
     var myLabel: SKLabelNode!
@@ -18,13 +36,17 @@ class GameScene: SKScene {
     }
     
     override func didMoveToView(view: SKView) {
-        /* Setup your scene here */
         myLabel = SKLabelNode(fontNamed:"Chalkduster")
         myLabel.text = "Remove ads in \(touchCounter) clicks"
         myLabel.fontSize = 25;
         myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
         
         self.addChild(myLabel)
+        
+        
+        
+        /// Set ads helper delegate
+        AdsManager.sharedInstance.delegate = self
         
         // Show banner ad
         AdsManager.sharedInstance.showBanner()
@@ -34,7 +56,7 @@ class GameScene: SKScene {
         /* Called when a touch begins */
         
         // Show inter ad
-        AdsManager.sharedInstance.showInterRandomly(randomness: 3)
+        AdsManager.sharedInstance.showInterstitialRandomly(randomness: 3)
         
         // Remove ads after 3 clicks
         touchCounter -= 1

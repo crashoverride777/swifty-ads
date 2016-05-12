@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v4.1
+//    v4.1.1
 
 /*
     Abstract:
@@ -34,7 +34,7 @@ import UIKit
 protocol AdsDelegate: class {
     func adClicked()
     func adClosed()
-    func adDidRewardUser(rewardAmount rewardAmount: Int)
+    func adDidRewardUserWithAmount(rewardAmount: Int)
 }
 
 /// Ads manager class
@@ -66,9 +66,9 @@ class AdsManager: NSObject {
         customAd.delegate = self
     }
     
-    // MARK: - User Methods
+    // MARK: - Set Up
     
-    /// SetUp
+    /// Set up ads helpers
     func setUp(viewController viewController: UIViewController, customAdsCount: Int, customAdsInterval: Int) {
         adMob.setUp(viewController: viewController)
         customAd.setUp(viewController: viewController)
@@ -76,6 +76,8 @@ class AdsManager: NSObject {
         customAd.totalCount = customAdsCount
         customAdInterval = customAdsInterval
     }
+    
+    // MARK: - Show Banners
     
     /// Show banner ad with delay
     func showBannerWithDelay(delay: NSTimeInterval) {
@@ -87,19 +89,20 @@ class AdsManager: NSObject {
         adMob.showBanner()
     }
     
+    // MARK: - Show Interstitial Ads
+    
     /// Show inter ad randomly
-    func showInterRandomly(randomness randomness: UInt32) {
-        let randomInterAd = Int(arc4random_uniform(randomness)) // get a random number between 0 and 2, so 33%
-        guard randomInterAd == 0 else { return }
-        showInter()
+    func showInterstitialRandomly(randomness randomness: UInt32) {
+        guard Int(arc4random_uniform(randomness)) == 0 else { return }
+        showInterstitial()
     }
     
-    /// Show inter
-    func showInter() {
+    /// Show inter ad
+    func showInterstitial() {
         
         // Check if custom ads are included
         guard customAd.totalCount > 0 else {
-            adMob.showInter()
+            adMob.showInterstitial()
             return
         }
         
@@ -107,19 +110,34 @@ class AdsManager: NSObject {
         switch customAdIntervalCounter {
             
         case 0:
-            customAd.showInter()
+            customAd.show()
             
         case customAdInterval:
             customAdIntervalCounter = 0
-            customAd.showInter()
+            customAd.show()
             
         default:
-            adMob.showInter()
+            adMob.showInterstitial()
         }
         
         // Increase custom ad interval
         customAdIntervalCounter += 1
     }
+    
+    // MARK: - Show Reward Video
+    
+    /// Show reward video ad randomly
+    func showRewardVideoRandomly(randomness randomness: UInt32) {
+        guard Int(arc4random_uniform(randomness)) == 0 else { return }
+        showRewardVideo()
+    }
+    
+    /// Show reward video ad
+    func showRewardVideo() {
+        adMob.showRewardVideo()
+    }
+    
+    // MARK: - Remove
     
     /// Remove banner
     func removeBanner() {
@@ -129,8 +147,10 @@ class AdsManager: NSObject {
     /// Remove all
     func removeAll() {
         adMob.removeAll()
-        customAd.removeAll()
+        customAd.remove()
     }
+    
+    // MARK: - Orientation Changed
     
     /// Orientation changed
     func orientationChanged() {
@@ -139,24 +159,27 @@ class AdsManager: NSObject {
     }
 }
 
-// MARK: - Action Delegates
+// MARK: - Delegates
 extension AdsManager: AdMobDelegate, CustomAdDelegate {
- 
+    
     // AdMob
     func adMobAdClicked() {
         delegate?.adClicked()
     }
+    
     func adMobAdClosed() {
         delegate?.adClosed()
     }
-    func adMobDidRewardUser(rewardAmount rewardAmount: Int) {
-        delegate?.adDidRewardUser(rewardAmount: rewardAmount)
+    
+    func adMobDidRewardUserWithAmount(rewardAmount: Int) {
+        delegate?.adDidRewardUserWithAmount(rewardAmount)
     }
     
     /// Custom ads
     func customAdClicked() {
         delegate?.adClicked()
     }
+    
     func customAdClosed() {
         delegate?.adClosed()
     }
