@@ -77,7 +77,7 @@ class AdsManager: NSObject {
         customAdInterval = customAdsInterval
     }
     
-    // MARK: - Show Banners
+    // MARK: - Show Banner
     
     /// Show banner ad with delay
     func showBannerWithDelay(delay: NSTimeInterval) {
