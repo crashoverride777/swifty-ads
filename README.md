@@ -212,8 +212,6 @@ To add mediation networks please follow the instructions
 
 https://developers.google.com/admob/ios/mediation
 
-to integrate mediation partners such as iAd or Chartboost.
-
 # Reward Videos
 
 Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. To use reward videos follow the steps above to intergrate your mediation network(s) of choice. Than read the AdMob guidlines and your 3rd party ad network guidlines to set up reward videos correctly. Once everything is set you can show reward videos by calling
