@@ -53,7 +53,7 @@ This sets the viewController property in the helpers to your viewController. In 
 To add more custom adds go to the struct CustomAds in CustomAd.swift and add more properties. Than go to the method 
 
 ```swift
-func showInterAd() { ....
+func showInterstitialAd() { ....
 ```
 
 and add more cases to the switch statement to match your total custom Ads you want to show. 
@@ -64,8 +64,8 @@ HOW TO USE
 ```swift
 AdsManager.sharedInstance.showBanner() 
 AdsManager.sharedInstance.showBannerWithDelay(1) // delay showing banner slightly eg when transitioning to new scene/view
-AdsManager.sharedInstance.showInter()
-AdsManager.sharedInstance.showInterRandomly(randomness: 4) // 25% chance of showing inter ads (1/4)
+AdsManager.sharedInstance.showInterstitial()
+AdsManager.sharedInstance.showInterstitialRandomly(randomness: 4) // 25% chance of showing inter ads (1/4)
 ```
 
 - To remove Banner Ads, for example during gameplay 
@@ -100,8 +100,8 @@ extension GameScene: AdsDelegate {
     func adClosed() { 
        // resume your game/app
     }
-    func adDidRewardUser(rewardAmount rewardAmount: Int) {
-       // code for reward videos, see instructions below
+    func adDidRewardUserWithAmount(rewardAmount: Int) {
+       // code for reward videos, see instructions below or leave empty
     }
 }
 ```
@@ -130,8 +130,8 @@ HOW TO USE
 ```swift
 AdMob.sharedInstance.showBanner() 
 AdMob.sharedInstance.showBannerWithDelay(1) // delay showing banner slightly eg when transitioning to new scene/view
-AdMob.sharedInstance.showInter()
-AdMob.sharedInstance.showInterRandomly(randomness: 4) // 25% chance of showing inter ads (1/4)
+AdMob.sharedInstance.showInterstitial()
+AdMob.sharedInstance.showInterstitialRandomly(randomness: 4) // 25% chance of showing inter ads (1/4)
 ```
 
 - To remove Banner Ads, for example during gameplay 
@@ -167,8 +167,8 @@ extension GameScene: AdMobDelegate {
     func adMobAdClosed() { 
        // resume your game/app
     }
-    func adMobDidRewardUser(rewardAmount rewardAmount: Int) {
-       // code for reward videos, see instructions below
+    func adMobDidRewardUserWithAmount(rewardAmount: Int) {
+       // code for reward videos, see instructions below or leave empty
     }
 }
 ```
@@ -185,10 +185,10 @@ override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator c
         
         coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) -> Void in
             
-            // Multiple ad providers
+            // AdMob and custom Ads
             AdsManager.sharedInstance.orientationChanged()
             
-            // Single ad provider (e.g AdMob)
+            // AdMob Only
             AdMob.sharedInstance.orientationChanged()
             
             }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
@@ -212,7 +212,7 @@ to integrate mediation partners such as iAd or Chartboost.
 
 # Reward Videos
 
-Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. To use reward videos follow the steps above to intergrate your mediation network(s) of choice. Than read the AdMob guidlines and your 3rd party ad provider guidliness to set up reward videos correctly. Once everything is set you can show reward videos by calling
+Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. To use reward videos follow the steps above to intergrate your mediation network(s) of choice. Than read the AdMob guidlines and your ad network guidliness to set up reward videos correctly. Once everything is set you can show reward videos by calling
 
 ```swift
 AdsManager.sharedInstance.showRewardVideo()
@@ -227,7 +227,7 @@ AdMob.sharedInstance.showRewardVideo()
 Use this method in the extension you created above to unlock the reward (e.g coins)
 
 ```swift
-func adDidRewardUser(rewardAmount rewardAmount: Int) {
+func adDidRewardUserWithAmount(rewardAmount: Int) {
     self.coins += rewardAmount
 }
 ```
@@ -235,7 +235,7 @@ func adDidRewardUser(rewardAmount rewardAmount: Int) {
 or
 
 ```swift
-func adMobDidRewardUser(rewardAmount rewardAmount: Int) {
+func adMobDidRewardUserWithAmount(rewardAmount: Int) {
     self.coins += rewardAmount
 }
 ```
