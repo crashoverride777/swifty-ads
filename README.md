@@ -21,9 +21,11 @@ Click on All and than you should be able to scroll down in buildSettings and fin
 
 (see the sample project or http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
 
-# Set up AdMob SDK and frameworks (Cocoal Pods is the recommended way)
+# Set up AdMob SDK and frameworks
 
 https://developers.google.com/admob/ios/quick-start#prerequisites
+
+I would recommend using Cocoa Pods.
 
 # Use helper with custom ads
 
