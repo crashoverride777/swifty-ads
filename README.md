@@ -269,21 +269,21 @@ Enjoy
 
 # Release Notes
 
+- v4.1.1
+
+Clean-up
+
 - v4.1
 
-Removed IAd.swift as you can get iAds by using AdMob mediation. (if you still need it download v4.0)
+Removed iAd APIs from the project as you can get iAds very easily by using AdMob mediation. (if you still need it download v4.0)
 
 Included AdMob reward videos.
 
-Please read the instructions again if you are stuck.
-
 - v4.0
 
-Complete redesign of the helper. The project was getting too big for my liking and since I am planning on adding another Ad provider soon I decided to split the helper into individual files.
+Complete redesign of the helper.
 
 This should make code cleaner and better to maintain as well as easier to understand. I also think this way is more flexible because you can decide to just use a single Ad provider without having to edit the whole project. 
-
-Please re-read the instructions again for the new setUp.
 
 
 
