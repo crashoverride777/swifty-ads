@@ -23,23 +23,27 @@ Click on All and than you should be able to scroll down in buildSettings and fin
 
 # Set up AdMob SDK and frameworks
 
-https://developers.google.com/admob/ios/quick-start#prerequisites
+// Cocoa Pods
+https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods
 
-I would recommend using Cocoa Pods.
+// Manually
+https://developers.google.com/admob/ios/quick-start#manually_using_the_sdk_download
+
+I would recommend using Cocoa Pods to avoid having to update the SDK manually all the time. Its a bit more complicated but once you understand and do it a few times its a breeze.
 
 # Use helper with custom ads
 
 SETUP
 
-- Step1: 
+- Step 1: 
 
 Copy the Ads folder into your project. This should include the files
 
+```swift
 AdsManager.swift 
-
 AdMob.swift
-
 CustomAds.swift
+```
 
 - Step 2:
 
@@ -80,13 +84,13 @@ AdsManager.sharedInstance.removeAll()
 
 NOTE:
 
-This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method to remove Ads and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
+This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
 
-For permanent storage you will need to create your own "removedAdsProduct" bool and save it in something like NSUserDefaults, Keychain or a class using NSCoding and than call this method when your app launches.
+For permanent storage you will need to create your own "removedAdsProduct" bool and save it in something like NSUserDefaults, Keychain or a class using NSCoding. Than call this method when your app launches.
 
 - Implement the delegate methods
 
-Set the delegate in your GameScenes "didMoveToView" (init) method like so
+Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
 ```swift
 AdsManager.sharedInstance.delegate = self 
 ```
@@ -152,7 +156,7 @@ For permanent storage you will need to create your own "removedAdsProduct" bool 
 
 - Implement the delegate methods
 
-Set the delegate in your GameScenes "didMoveToView" (init) method like so
+Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
 
 ```swift
 AdMob.sharedInstance.delegate = self
@@ -177,7 +181,7 @@ NOTE: For adMob these only get called when in release mode and not when in test 
 
 # Supporting both landscape and portrait orientation
 
-- If your app supports both portrait and landscape orientation go to the ViewController add the following method.
+- If your app supports both portrait and landscape orientation go to the ViewController and add the following method.
 
 ```swift
 override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
@@ -212,7 +216,7 @@ to integrate mediation partners such as iAd or Chartboost.
 
 # Reward Videos
 
-Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. To use reward videos follow the steps above to intergrate your mediation network(s) of choice. Than read the AdMob guidlines and your ad network guidliness to set up reward videos correctly. Once everything is set you can show reward videos by calling
+Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. To use reward videos follow the steps above to intergrate your mediation network(s) of choice. Than read the AdMob guidlines and your 3rd party ad network guidlines to set up reward videos correctly. Once everything is set you can show reward videos by calling
 
 ```swift
 AdsManager.sharedInstance.showRewardVideo()
@@ -240,7 +244,7 @@ func adMobDidRewardUserWithAmount(rewardAmount: Int) {
 }
 ```
 
-Reward amount is an DecimelNumber I converted to an Int for convenience. You can ignore this and hardcore the value if you would like but than you cannot change the value dynamically in your adMob account (if you use adMob for reward settings)
+Reward amount is a DecimelNumber I converted to an Int for convenience. You can ignore this and hardcore the value if you would like but than you cannot change the value dynamically in your adMob account (if you use adMob for reward settings)
 
 
 # When you go Live 
@@ -257,7 +261,9 @@ enter your real AdUnitIDs.
 
 - Step 3: When you submit your app on iTunes Connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected.
 
-NOTE: - Dont forget to setup the "-D DEBUG" custom flag or the helper will not work correctly with adMob.
+# Set the DEBUG flag?
+
+Dont forget to setup the "-D DEBUG" custom flag or the helper will not work as it will not fetch the correct AdUnitIDs.
 
 # Final Info
 
@@ -265,7 +271,7 @@ The sample project is the basic Apple spritekit template. It now shows a banner 
 
 Like I mentioned above I primarly focused on SpriteKit to make it easy to call Ads from your SKScenes without having to use NSNotificationCenter or Delegates to constantly communicate with the viewController. Also this should help keep your viewController clean as mine became a mess after integrating AdMob.
 
-Please let me know about any bugs or improvements, I am by no means an expert. 
+Please feel free to let me know about any bugs or improvements, I am by no means an expert. 
 
 Enjoy
 
