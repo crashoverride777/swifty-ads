@@ -1,22 +1,27 @@
-NOTE: iAd is shutting down on June the 30th. I have removed all the iAd APIs from this project because iAds can easily be intergrated using AdMob mediation.
+NOTE: iAd is shutting down on June the 30th. I have removed all the iAd APIs from this project because iAds can easily be intergrated using AdMob mediation. Mediation is a much better way to handle multiple adProviders mainly due to not having to integrate extra code apart from AdMob APIs.
 
 
 # AdMob and CustomAds Helpers
 
 A collection of helper classes to integrate Ads from Google as well as your own custom Ads. This helper has been been made while making my 1st SpriteKit game but should work for any kind of app. 
 
-This Helper creates whats called a shared Banner which is the recommended way by apple. To read more about shared banner ads you can read this documentation from Apple
+With this helper you can easily show Banner Ads, Interstitial Ads, RewardVideoAds and your own custom Ads anywhere from your projet with 1 line of code.
+
+This Helper creates whats called a shared Banner which is the recommended way by apple to show banners. To read more about shared banner ads you can read this documentation from Apple which should be used for banner ads by all providers.
 https://developer.apple.com/library/ios/technotes/tn2286/_index.html
+
+This helper should also correctly preload Interstitial Ads and RewardVideo ads automatically so that they are always ready to be shown instantly when requested.  
 
 # Set up DEBUG flag
 
-Set-Up "-D DEBUG" custom flag. 
-This will reduce the hassle of having to manually change the google ad ids when testing or when releasing. This step is important as google ads will otherwise not work automatically. This is a good idea in general for other things such as hiding print statements.
+This will reduce the hassle of having to manually change the google ad ids when testing or when releasing. This step is important as google ads will otherwise not work automatically. This is a good idea in general for other things such as hiding print statements such as in this project.
 
 Click on Targets (left project sideBar, at the top) -> BuildSettings. Than underneath buildSettings next to the search bar on the left there should be buttons called Basic, All, Combined and Level. 
-Click on All and than you should be able to scroll down in buildSettings and find the section called SwiftCompiler-CustomFlags. Click on other flags and than debug and add a custom flag named -D DEBUG (see the sample project or http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
+Click on All and than you should be able to scroll down in buildSettings and find the section called SwiftCompiler-CustomFlags. Click on other flags and than debug and add a custom flag named -D DEBUG 
 
-# Set up AdMob SDK and frameworks
+(see the sample project or http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
+
+# Set up AdMob SDK and frameworks (Cocoal Pods is the recommended way)
 
 https://developers.google.com/admob/ios/quick-start#prerequisites
 
@@ -41,7 +46,7 @@ In your ViewController write the following in ```ViewDidLoad``` before doing any
 AdsManager.sharedInstance.setUp(viewController: self, customAdsCount: 2, customAdsInterval: 5)
 ```
 
-This sets the viewController property in the helpers to your viewController. In this example there is 2 custom ads in total. The first interAd will be a custom one. The interval means that every 4th time an Inter ad is shown it will show a custom one, randomised between the total ads count.
+This sets the viewController property in the helpers to your viewController. In this example there is 2 custom ads in total. The first interAd will be a custom one and than every 4th time an Inter ad is shown it will show another custom one (randomised between the total ads count)
 
 To add more custom adds go to the struct CustomAds in CustomAd.swift and add more properties. Than go to the method 
 
@@ -71,23 +76,20 @@ AdsManager.sharedInstance.removeBanner()
 AdsManager.sharedInstance.removeAll() 
 ```
 
-NOTE: - This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method to remove Ads and afterwards all the show methods such as
-```swift
-AdsManager.sharedInstance.show...
-```
+NOTE:
 
-will not fire anymore and therefore require no further editing.
+This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method to remove Ads and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
 
 For permanent storage you will need to create your own "removedAdsProduct" bool and save it in something like NSUserDefaults, Keychain or a class using NSCoding and than call this method when your app launches.
 
-- Implement the delegate methods from the helpers
+- Implement the delegate methods
 
 Set the delegate in your GameScenes "didMoveToView" (init) method like so
 ```swift
 AdsManager.sharedInstance.delegate = self 
 ```
 
-Than create an extension in your SKScene or ViewController conforming to the protocol.
+Than create an extension conforming to the protocol.
 ```swift
 extension GameScene: AdsDelegate {
     func adClicked() {
@@ -102,7 +104,7 @@ extension GameScene: AdsDelegate {
 }
 ```
 
-NOTE: These only get called when in release mode and not when in test mode.
+NOTE: These seem to only get called when in release mode and not when in test mode.
 
 
 # Use helper without custom ads
@@ -140,16 +142,13 @@ AdMob.sharedInstance.removeBanner()
 AdMob.sharedInstance.removeAll() 
 ```
 
-NOTE: - This method will set a removedAds bool to true in the ad helper. This ensures you only have to call this method to remove Ads and afterwards all the show methods such as
-```swift
-AdMob.sharedInstance.show...
-```
+NOTE:
 
-will not fire anymore and therefore require no further editing.
+This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method to remove Ads and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
 
 For permanent storage you will need to create your own "removedAdsProduct" bool and save it in something like NSUserDefaults, Keychain or a class using NSCoding and than call this method when your app launches.
 
-- Implement the delegate methods from the helpers
+- Implement the delegate methods
 
 Set the delegate in your GameScenes "didMoveToView" (init) method like so
 
@@ -157,7 +156,7 @@ Set the delegate in your GameScenes "didMoveToView" (init) method like so
 AdMob.sharedInstance.delegate = self
 ```
 
-Than create an extension conforming to the protocol (this helps with clean code as well) 
+Than create an extension conforming to the protocol
 ```swift
 extension GameScene: AdMobDelegate {
     func adMobAdClicked() {
@@ -211,7 +210,7 @@ to integrate mediation partners such as iAd or Chartboost.
 
 # Reward Videos
 
-Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. To use reward videos follow the steps above to intergrate your mediation network(s) of choice. Than read the AdMob guidlines and your 3rd party ad provider guidliness to set this reward videos correctly. Once everything is setUp you can show reward videos by calling
+Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. To use reward videos follow the steps above to intergrate your mediation network(s) of choice. Than read the AdMob guidlines and your 3rd party ad provider guidliness to set up reward videos correctly. Once everything is set you can show reward videos by calling
 
 ```swift
 AdsManager.sharedInstance.showRewardVideo()
@@ -239,8 +238,7 @@ func adMobDidRewardUser(rewardAmount rewardAmount: Int) {
 }
 ```
 
-Reward amount is an Int which is fetched from the adProvider where you set up the reward video and reward amount. 
-You can ignore this and hardcore the value if you would like.
+Reward amount is an DecimelNumber I converted to an Int for convenience. You can ignore this and hardcore the value if you would like but than you cannot change the value dynamically in your adMob account (if you use adMob for reward settings)
 
 
 # When you go Live 
