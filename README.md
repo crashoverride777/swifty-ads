@@ -5,7 +5,7 @@ NOTE: iAd is shutting down on June the 30th. I have removed all the iAd APIs fro
 
 A collection of helper classes to integrate Ads from Google as well as your own custom Ads. This helper has been been made while making my 1st SpriteKit game but should work for any kind of app. 
 
-With this helper you can easily show Banner Ads, Interstitial Ads, RewardVideoAds and your own custom Ads anywhere from your projet with 1 line of code.
+With this helper you can easily show Banner Ads, Interstitial Ads, RewardVideoAds and your own custom Ads anywhere in your project
 
 This Helper creates whats called a shared Banner which is the recommended way by apple to show banners. To read more about shared banner ads you can read this documentation from Apple which should be used for banner ads by all providers.
 https://developer.apple.com/library/ios/technotes/tn2286/_index.html
