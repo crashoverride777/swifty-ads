@@ -1,4 +1,6 @@
-NOTE: iAd is shutting down on June the 30th. I have removed all the iAd APIs from this project because iAds can easily be intergrated using AdMob mediation. Mediation is a much better way to handle multiple adProviders mainly due to not having to integrate extra code apart from AdMob APIs.
+NOTE: iAd is shutting down on June the 30th. The news on this are very vague and nobody knows exactly what is happening.
+
+I have removed all the iAd APIs from this project because iAds can easily be intergrated using AdMob mediation. Mediation is a much better way to handle multiple adProviders mainly due to not having to integrate extra code apart from AdMob APIs and will be my strategy going forward with this project.
 
 
 # AdMob and CustomAds Helpers
