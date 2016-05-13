@@ -29,7 +29,7 @@ https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods
 // Manually
 https://developers.google.com/admob/ios/quick-start#manually_using_the_sdk_download
 
-I would recommend using Cocoa Pods to avoid having to update the SDK manually all the time. Its a bit more complicated but once you understand and do it a few times its a breeze.
+I would recommend using Cocoa Pods especially if you will add more SDKs down the line from other ad networks. Its a bit more complicated but once you understand and do it once or twice its a breeze.
 
 # Use helper with custom ads
 
