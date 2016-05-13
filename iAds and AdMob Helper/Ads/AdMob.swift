@@ -224,7 +224,7 @@ class AdMob: NSObject {
     }
 }
 
-// MARK: - Request Ad
+// MARK: - Requesting Ad
 
 private extension AdMob {
     
