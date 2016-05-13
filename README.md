@@ -275,7 +275,7 @@ I have tested this code with a real reward video ad from Chartboost, so I know e
 
 Dont forget to setup the "-D DEBUG" custom flag or the helper will not work as it will not fetch the correct AdUnitIDs.
 
-# When you send your app to Apple
+# When you submit your app to Apple
 
 When you submit your app to Apple on iTunes connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected. All apps that use an ad provider and their SDKs, exept iAd, require this to be Yes.
 
