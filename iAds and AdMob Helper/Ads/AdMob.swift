@@ -187,10 +187,10 @@ class AdMob: NSObject {
         bannerAd?.removeFromSuperview()
         
         guard let view = presentingViewController?.view else { return }
-        for subview in view.subviews {
-            if let bannerAdView = subview as? GADBannerView {
-                bannerAdView.delegate = nil
-                bannerAdView.removeFromSuperview()
+        for subview in view.subviews { // Just incase there are multiple instances of a banner
+            if let bannerAd = subview as? GADBannerView {
+                bannerAd.delegate = nil
+                bannerAd.removeFromSuperview()
             }
         }
     }
@@ -210,17 +210,17 @@ class AdMob: NSObject {
     /// Orientation changed
     func orientationChanged() {
         guard let presentingViewController = presentingViewController else { return }
-        guard let bannerAdView = bannerAd else { return }
+        guard let bannerAd = bannerAd else { return }
         
         Debug.print("AdMob banner orientation adjusted")
         
         if UIApplication.sharedApplication().statusBarOrientation.isLandscape {
-            bannerAdView.adSize = kGADAdSizeSmartBannerLandscape
+            bannerAd.adSize = kGADAdSizeSmartBannerLandscape
         } else {
-            bannerAdView.adSize = kGADAdSizeSmartBannerPortrait
+            bannerAd.adSize = kGADAdSizeSmartBannerPortrait
         }
         
-        bannerAdView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (bannerAdView.frame.size.height / 2))
+        bannerAd.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (bannerAd.frame.size.height / 2))
     }
 }
 
