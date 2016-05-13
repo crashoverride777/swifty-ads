@@ -285,7 +285,8 @@ func adMobDidRewardUserWithAmount(rewardAmount: Int) {
 }
 ```
 
-Reward amount is a DecimelNumber I converted to an Int for convenience. You can ignore this and hardcore the value if you would like but than you cannot change the value dynamically in your adMob account (if you use adMob for reward settings)
+Reward amount is a DecimelNumber I converted to an Int for convenience. 
+You can ignore this and hardcore the value if you would like but than you cannot change the value dynamically without having to update your app.
 
 Note: 
 
