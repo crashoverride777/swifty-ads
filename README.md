@@ -70,7 +70,7 @@ This sets the viewController property in the helpers to your viewController. In 
 
 Step 3: 
 
-Set up your custom ads by going to ```CustomAd.swift```. Than enter the information you would like to display (title, picture, URL etc) in the struct 
+Set up your custom ads by going to ```CustomAd.swift``` and entering the correct information in the struct 
  ```
  struct Settings {....
  ``` 
