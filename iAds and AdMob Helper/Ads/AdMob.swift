@@ -224,7 +224,8 @@ class AdMob: NSObject {
     }
 }
 
-// MARK: - Load Ads
+// MARK: - Request Ad
+
 private extension AdMob {
     
     func loadBannerAd() {
@@ -372,6 +373,7 @@ extension AdMob: GADInterstitialDelegate {
 }
 
 // MARK: - Reward Video Delegates
+
 extension AdMob: GADRewardBasedVideoAdDelegate {
     
     func rewardBasedVideoAdDidOpen(rewardBasedVideoAd: GADRewardBasedVideoAd!) {
