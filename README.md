@@ -94,7 +94,7 @@ AdsManager.sharedInstance.removeBanner()
 AdsManager.sharedInstance.removeAll() 
 ```
 
-NOTE:
+NOTE: 
 
 This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
 
@@ -128,7 +128,9 @@ extension GameScene: AdsDelegate {
 }
 ```
 
-NOTE: These seem to only get called when in release mode and not when in test mode.
+NOTE: 
+
+These seem to only get called when in release mode and not when in test mode.
 
 
 # Use helper without custom ads
@@ -201,7 +203,9 @@ extension GameScene: AdMobDelegate {
 }
 ```
 
-NOTE: For adMob these only get called when in release mode and not when in test mode.
+NOTE: 
+
+For adMob these only get called when in release mode and not when in test mode.
 
 # Supporting both landscape and portrait orientation
 
@@ -276,12 +280,14 @@ func adMobDidRewardUserWithAmount(rewardAmount: Int) {
 
 Reward amount is a DecimelNumber I converted to an Int for convenience. You can ignore this and hardcore the value if you would like but than you cannot change the value dynamically in your adMob account (if you use adMob for reward settings)
 
-Note: - Reward videos will show a black full screen ad using the test AdUnit ID. I have not figured out yet how to test ads on AdMob that come from 3rd party mediation networks.
-I have tested this code with a real reward video ad from Chartboost, so I know everything works (This is not recommended, always try to avoid using real ads when testing)
+Note: 
+
+Reward videos will show a black full screen ad using the test AdUnitID. I have not figured out yet how to test ads on AdMob that come from 3rd party mediation networks.
+I have tested this code with a real reward video ad from Chartboost, so I know everything works. (This is not recommended, always try to avoid using real ads when testing)
 
 # Set the DEBUG flag?
 
-Dont forget to setup the "-D DEBUG" custom flag or the helper will not work as it will not fetch the correct AdUnitIDs.
+Dont forget to setup the "-D DEBUG" custom flag or the helper will not work as it will not use the AdUnitIDs.
 
 # When you submit your app to Apple
 
