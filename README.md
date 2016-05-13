@@ -242,11 +242,11 @@ https://developers.google.com/admob/ios/mediation-networks
 
 # Reward Videos
 
-Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. To use reward videos follow the steps above to intergrate your mediation network(s) of choice. Than read the AdMob 
+Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. To use reward videos follow the steps above to intergrate your mediation network(s) of choice. Than read the AdMob rewarded video guidlines
 
 https://developers.google.com/admob/ios/rewarded-video
 
-and your 3rd party ad network guidlines to set up reward videos correctly. Once everything is set you can show reward videos by calling
+and your 3rd party mediation ad network guidlines to set up reward videos correctly. Once everything is set you can show reward videos by calling
 
 ```swift
 AdsManager.sharedInstance.showRewardVideo()
@@ -277,7 +277,7 @@ func adMobDidRewardUserWithAmount(rewardAmount: Int) {
 Reward amount is a DecimelNumber I converted to an Int for convenience. You can ignore this and hardcore the value if you would like but than you cannot change the value dynamically in your adMob account (if you use adMob for reward settings)
 
 Note: - Reward videos will show a black full screen ad using the test AdUnit ID. I have not figured out yet how to test ads on AdMob that come from 3rd party mediation networks.
-I have tested this code with a real reward video ad from Chartboost, so I know everything works.
+I have tested this code with a real reward video ad from Chartboost, so I know everything works (This is not recommended, always try to avoid using real ads when testing)
 
 # Set the DEBUG flag?
 
