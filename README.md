@@ -66,13 +66,20 @@ AdsManager.sharedInstance.setUp(viewController: self, customAdsCount: 2, customA
 
 This sets the viewController property in the helpers to your viewController. In this example there is 2 custom ads in total. The first interAd will be a custom one and than every 4th time an Inter ad is shown it will show another custom one (randomised between the total ads count)
 
-To add more custom adds go to the struct CustomAds in CustomAd.swift and add more properties. Than go to the method 
+Step 3: 
+
+Set up your custom ads by going to ```CustomAd.swift```. Than enter the information you would like to display (title, picture, URL etc) in the struct 
+ ```
+ struct Settings {....
+ ``` 
+
+To add more than the 2 default custom ads simply ad more structs and than go to the method 
 
 ```swift
-func showInterstitialAd() { ....
+func showAd() { ....
 ```
 
-and add more cases to the switch statement to match your total custom Ads you want to show. 
+and add more cases to the switch statement. 
 
 HOW TO USE
 
