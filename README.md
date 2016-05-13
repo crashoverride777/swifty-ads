@@ -307,7 +307,7 @@ Complete redesign of the helper.
  
 This should make code cleaner and better to maintain as well as easier to understand. I also think this way is more flexible because you can decide to just use a single Ad provider without having to edit the whole project. 
 
-Will remove iAd APIs on next update as mediation is a much better way to handle multiple ad providers and will be my strategy going forward.
+I will remove the iAd APIs on the next update as AdMob mediation is a much better way to handle multiple ad providers and will be my strategy going forward.
 
 
 
