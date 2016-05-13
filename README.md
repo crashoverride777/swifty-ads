@@ -21,6 +21,18 @@ Click on All and than you should be able to scroll down in buildSettings and fin
 
 (see the sample project or http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
 
+# Create your AdMob account and adUnitIDs
+
+- Step 1: Sign up for a Google AdMob account and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
+
+https://support.google.com/admob/answer/3052638?hl=en-GB&ref_topic=3052726
+
+- Step 2: In AdMob.swift in 
+```swift
+private enum AdUnitID: String {...
+```
+enter your real AdUnitIDs you just created.
+
 # Set up AdMob SDK and frameworks
 
 // Cocoa Pods
@@ -86,7 +98,13 @@ NOTE:
 
 This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
 
-For permanent storage you will need to create your own "removedAdsProduct" bool and save it in something like NSUserDefaults, Keychain or a class using NSCoding. Than call this method when your app launches.
+For permanent storage you will need to create your own "removedAdsProduct" property and save it in something in NSUserDefaults, or preferably ios Keychain. Than call this method when your app launches after you have set up the helper.
+
+Check out this awesome Keychain Wrapper 
+
+https://github.com/jrendel/SwiftKeychainWrapper
+
+which makes using keychain as easy as NSUserDefaults.
 
 - Implement the delegate methods
 
@@ -150,9 +168,15 @@ AdMob.sharedInstance.removeAll()
 
 NOTE:
 
-This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method to remove Ads and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
+This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
 
-For permanent storage you will need to create your own "removedAdsProduct" bool and save it in something like NSUserDefaults, Keychain or a class using NSCoding and than call this method when your app launches.
+For permanent storage you will need to create your own "removedAdsProduct" property and save it in something in NSUserDefaults, or preferably ios Keychain. Than call this method when your app launches after you have set up the helper.
+
+Check out this awesome Keychain Wrapper 
+
+https://github.com/jrendel/SwiftKeychainWrapper
+
+which makes using keychain as easy as NSUserDefaults.
 
 - Implement the delegate methods
 
@@ -207,8 +231,8 @@ NSNotificationCenter UIDeviceOrientationDidChangeNotification Observer
 
 # Mediation
 
-I think mediation is the best way forward with this helper if you would like to use multiple ad providers. This means you can use the AdMob APIs to show ads from multiple providers without having to write extra code. 
-To add mediation networks please follow the instructions 
+I think mediation is the best way forward with this helper if you would like to use multiple ad providers. This means you can use the AdMob APIs to show ads from multiple providers, including iAds, without having to write extra code. 
+To add mediation networks please follow these instructions 
 
 https://developers.google.com/admob/ios/mediation
 
@@ -244,30 +268,22 @@ func adMobDidRewardUserWithAmount(rewardAmount: Int) {
 
 Reward amount is a DecimelNumber I converted to an Int for convenience. You can ignore this and hardcore the value if you would like but than you cannot change the value dynamically in your adMob account (if you use adMob for reward settings)
 
-
-# When you go Live 
-
-- Step 1: Sign up for a Google AdMob account and create your real adUnitIDs depending on the ad types you use (Banner, Inter Reward Ads).
-
-(https://support.google.com/admob/answer/2784575?hl=en-GB)
-
-- Step 2: In AdMob.swift in 
-```swift
-private enum AdUnitID: String {...
-```
-enter your real AdUnitIDs.
-
-- Step 3: When you submit your app on iTunes Connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected.
+Note: - Reward videos will show a black full screen ad using the test AdUnit ID. I have not figured out yet how to test ads on AdMob that come from 3rd party mediation networks.
+I have tested this code with a real reward video ad from Chartboost, so I know everything works.
 
 # Set the DEBUG flag?
 
 Dont forget to setup the "-D DEBUG" custom flag or the helper will not work as it will not fetch the correct AdUnitIDs.
 
+# When you send your app to Apple
+
+When you submit your app to Apple on iTunes connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected. All apps that use an ad provider and their SDKs, exept iAd, require this to be Yes.
+
 # Final Info
 
-The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and an inter ad randomly when touching the screen. After 5 clicks all ads will be removed to simulate what a removeAds button would do. 
+The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and an interstitial ad randomly when touching the screen. After 5 clicks all ads will be removed to simulate what a removeAds button would do. 
 
-Like I mentioned above I primarly focused on SpriteKit to make it easy to call Ads from your SKScenes without having to use NSNotificationCenter or Delegates to constantly communicate with the viewController. Also this should help keep your viewController clean as mine became a mess after integrating AdMob.
+Like I mentioned above I primarly focused on SpriteKit to make it easy to call Ads from your SKScenes without having to use NSNotificationCenter or Delegates to constantly communicate with the viewController. Also this should help keep your viewController nice and clean.
 
 Please feel free to let me know about any bugs or improvements, I am by no means an expert. 
 
@@ -281,15 +297,17 @@ Clean-up
 
 - v4.1
 
-Removed iAd APIs from the project as you can get iAds very easily by using AdMob mediation. (if you still need it download v4.0)
+Removed iAd APIs from the project as you can get iAds very easily by using AdMob mediation. (if you still need them, download v4.0)
 
 Included AdMob reward videos.
 
 - v4.0
 
 Complete redesign of the helper.
-
+ 
 This should make code cleaner and better to maintain as well as easier to understand. I also think this way is more flexible because you can decide to just use a single Ad provider without having to edit the whole project. 
+
+Will remove iAd APIs on next update as mediation is a much better way to handle multiple ad providers and will be my strategy going forward.
 
 
 
