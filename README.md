@@ -234,11 +234,19 @@ NSNotificationCenter UIDeviceOrientationDidChangeNotification Observer
 I think mediation is the best way forward with this helper if you would like to use multiple ad providers. This means you can use the AdMob APIs to show ads from multiple providers, including iAds, without having to write extra code. 
 To add mediation networks please follow these instructions 
 
+https://support.google.com/admob/bin/answer.py?answer=2413211
+
 https://developers.google.com/admob/ios/mediation
+
+https://developers.google.com/admob/ios/mediation-networks
 
 # Reward Videos
 
-Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. To use reward videos follow the steps above to intergrate your mediation network(s) of choice. Than read the AdMob guidlines and your 3rd party ad network guidlines to set up reward videos correctly. Once everything is set you can show reward videos by calling
+Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. To use reward videos follow the steps above to intergrate your mediation network(s) of choice. Than read the AdMob 
+
+https://developers.google.com/admob/ios/rewarded-video
+
+and your 3rd party ad network guidlines to set up reward videos correctly. Once everything is set you can show reward videos by calling
 
 ```swift
 AdsManager.sharedInstance.showRewardVideo()
