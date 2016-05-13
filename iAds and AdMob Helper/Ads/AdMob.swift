@@ -227,7 +227,6 @@ class AdMob: NSObject {
 // MARK: - Load Ads
 private extension AdMob {
     
-    /// Load banner ad
     func loadBannerAd() {
         guard let presentingViewController = presentingViewController else { return }
         Debug.print("AdMob banner loading...")
@@ -251,8 +250,7 @@ private extension AdMob {
         
         bannerAd?.loadRequest(request)
     }
-    
-    /// Load interstitial ad
+
     func loadInterstitialAd() -> GADInterstitial {
         Debug.print("AdMob interstitial loading...")
         
@@ -270,7 +268,6 @@ private extension AdMob {
         return interstitialAd
     }
     
-    /// Load reward video ad
     func loadRewardVideoAd() -> GADRewardBasedVideoAd {
         
         let rewardVideoAd = GADRewardBasedVideoAd.sharedInstance()
