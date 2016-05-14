@@ -193,7 +193,6 @@ private extension CustomAd {
         
         // Image
         imageView.image = UIImage(named: imageName)
-        imageView.contentMode = .ScaleAspectFit
         imageView.center = CGPoint(x: 0 + (imageView.frame.size.width / 2), y: 0 + (imageView.frame.size.height / 2))
         view.addSubview(imageView)
         
@@ -275,6 +274,7 @@ private extension CustomAd {
         
         // Landscape
         if UIDevice.currentDevice().orientation.isLandscape {
+            imageView.contentMode = .ScaleToFill
             headerLabel.center.x = CGRectGetMidX(imageView.frame)
             
             if DeviceType.iPhone4 || DeviceType.iPhone5 {
@@ -290,19 +290,13 @@ private extension CustomAd {
                 headerLabel.center.y = 0 + 35
             }
             
-            closeButton.center.y = headerLabel.center.y / 1.15
-            
-            if DeviceType.iPadAll {
-                closeButton.center.x = CGRectGetMinX(imageView.frame) + (closeButton.frame.size.width * 1.4)
-            } else {
-                closeButton.center.x = CGRectGetMinX(imageView.frame) + (closeButton.frame.size.width * 3)
-            }
-            
+            closeButton.center = CGPoint(x: CGRectGetMinX(imageView.frame) + (closeButton.frame.size.width * 1.5), y: headerLabel.center.y / 1.15)
             downloadButton.frame = CGRect(x: 0, y: 0, width: imageView.frame.size.width, height: imageView.frame.size.height)
         }
             
             /// Portrait
         else {
+            imageView.contentMode = .ScaleAspectFit
             headerLabel.center.x = CGRectGetMidX(imageView.frame)
             
             if DeviceType.iPhone4 || DeviceType.iPhone5 {
