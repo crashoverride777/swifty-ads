@@ -63,25 +63,20 @@ CustomAds.swift
 
 In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 ```swift
-AdsManager.sharedInstance.setUp(viewController: self, customAdsCount: 2, customAdsInterval: 5)
+AdsManager.sharedInstance.setUp(viewController: self, customAdsInterval: 5)
 ```
 
-This sets the viewController property in the helpers to your viewController. In this example there is 2 custom ads in total. The first interAd will be a custom one and than every 4th time an Inter ad is shown it will show another custom one (randomised between the total ads count)
+This sets the viewController property in the helpers to your viewController. The first interAd will be a custom one and than every 4th time an Inter ad is shown it will show another custom one (randomised between the total count in the ad settings arrays)
 
 Step 3: 
 
-Set up your custom ads by going to ```CustomAd.swift``` and entering the correct information in the struct 
+Set up/add your custom ads by going to ```CustomAd.swift``` and entering the correct information in the struct 
  ```
  struct Settings {....
  ``` 
+ 
+ By default the project uses 2 custom ads.
 
-To add more than the 2 default custom ads simply ad more structs and than go to the method 
-
-```swift
-func showAd() { ....
-```
-
-and add more cases to the switch statement. 
 
 HOW TO USE
 
@@ -314,6 +309,10 @@ Please feel free to let me know about any bugs or improvements, I am by no means
 Enjoy
 
 # Release Notes
+
+- 4.2
+
+Custom ads improvments
 
 - v4.1.1
 
