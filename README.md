@@ -312,7 +312,13 @@ Enjoy
 
 - 4.2
 
-Custom ads improvments
+Custom ads redesign and improvments.
+
+It is recommended to read these apple guidlines
+
+https://developer.apple.com/app-store/marketing/guidelines/#images
+
+when using your own ads.
 
 - v4.1.1
 
