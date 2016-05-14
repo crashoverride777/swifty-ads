@@ -47,6 +47,10 @@ I would recommend using Cocoa Pods especially if you will add more SDKs down the
 
 # Use helper with custom ads
 
+If you are including your own ads it is recommended to read apples markting guidlines
+
+https://developer.apple.com/app-store/marketing/guidelines/#images
+
 SETUP
 
 - Step 1: 
