@@ -45,6 +45,10 @@ https://developers.google.com/admob/ios/quick-start#manually_using_the_sdk_downl
 
 I would recommend using Cocoa Pods especially if you will add more SDKs down the line from other ad networks. Its a bit more complicated but once you understand and do it once or twice its a breeze.
 
+They have an app now which should make this alot easier
+
+https://cocoapods.org/app
+
 # Use helper with custom ads
 
 If you are including your own ads it is recommended to read apples markting guidlines
