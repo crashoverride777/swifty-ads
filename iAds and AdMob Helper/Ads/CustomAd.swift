@@ -101,7 +101,7 @@ class CustomAd: NSObject {
     var interval = 0
     
     var isFinishedForSession: Bool {
-        return sessionCounter == Settings.images.count * 2
+        return sessionCounter == Settings.images.count * 2 // loop through inventory twice
     }
     
     private var inventoryCounter = 0
