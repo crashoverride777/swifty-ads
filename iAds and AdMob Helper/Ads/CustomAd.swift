@@ -39,8 +39,8 @@ private struct Settings {
     ]
     
     static var titles = [
-        "Try our other game!",
-        "Try our new game!"
+        "Try our new game!",
+        "Try our other game!"
     ]
     
     static var appURLs = [
