@@ -20,15 +20,15 @@ extension GameScene: AdsDelegate {
     func adDidRewardUserWithAmount(rewardAmount: Int) {
         // e.g self.coins += rewardAmount
         
-        // Will not really work with this sample project, adMob just shows a black banner in test mode
-        // Also it only works with 3rd party mediation partners you set up through your adMob account
+        // Will not work with this sample project, adMob just shows a black banner in test mode
+        // It only works with 3rd party mediation partners you set up through your adMob account
     }
 }
 
 class GameScene: SKScene {
     
     var myLabel: SKLabelNode!
-    var touchCounter = 5 {
+    var touchCounter = 10 {
         didSet {
            guard touchCounter >= 0 else {return }
            myLabel.text = "Remove ads in \(touchCounter) clicks"

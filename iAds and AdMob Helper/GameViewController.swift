@@ -14,7 +14,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         // Set up helpers
-        AdsManager.sharedInstance.setUp(viewController: self, customAdsCount: 2, customAdsInterval: 3)
+        AdsManager.sharedInstance.setUp(viewController: self, customAdsInterval: 3)
         
         if let scene = GameScene(fileNamed: "GameScene") {
             // Configure the view.

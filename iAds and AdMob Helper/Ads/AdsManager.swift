@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v4.1.1
+//    v4.2
 
 /*
     Abstract:
@@ -34,7 +34,7 @@ import UIKit
 protocol AdsDelegate: class {
     func adClicked()
     func adClosed()
-    func adDidRewardUserWithAmount(rewardAmount: Int)
+    func adDidRewardUserWithAmount(amount: Int)
 }
 
 /// Ads manager class
@@ -48,10 +48,6 @@ class AdsManager: NSObject {
     
     /// Delegate
     weak var delegate: AdsDelegate?
-    
-    /// Custom ads controls
-    private var customAdInterval = 0
-    private var customAdIntervalCounter = 0
     
     /// Ads helpers
     private let adMob = AdMob.sharedInstance
@@ -69,12 +65,9 @@ class AdsManager: NSObject {
     // MARK: - Set Up
     
     /// Set up ads helpers
-    func setUp(viewController viewController: UIViewController, customAdsCount: Int, customAdsInterval: Int) {
+    func setUp(viewController viewController: UIViewController, customAdsInterval: Int) {
         adMob.setUp(viewController: viewController)
-        customAd.setUp(viewController: viewController)
-        
-        customAd.totalCount = customAdsCount
-        customAdInterval = customAdsInterval
+        customAd.setUp(viewController: viewController, interval: customAdsInterval)
     }
     
     // MARK: - Show Banner
@@ -100,28 +93,21 @@ class AdsManager: NSObject {
     /// Show inter ad
     func showInterstitial() {
         
-        // Check if custom ads are included
-        guard customAd.totalCount > 0 else {
+        guard !customAd.isFinishedForSession else {
             adMob.showInterstitial()
             return
         }
         
-        // Check custom ads
-        switch customAdIntervalCounter {
+        switch customAd.intervalCounter {
             
-        case 0:
-            customAd.show()
-            
-        case customAdInterval:
-            customAdIntervalCounter = 0
+        case 0, customAd.interval:
             customAd.show()
             
         default:
             adMob.showInterstitial()
         }
         
-        // Increase custom ad interval
-        customAdIntervalCounter += 1
+        customAd.intervalCounter += 1
     }
     
     // MARK: - Show Reward Video
@@ -171,8 +157,8 @@ extension AdsManager: AdMobDelegate, CustomAdDelegate {
         delegate?.adClosed()
     }
     
-    func adMobDidRewardUserWithAmount(rewardAmount: Int) {
-        delegate?.adDidRewardUserWithAmount(rewardAmount)
+    func adMobDidRewardUserWithAmount(amount: Int) {
+        delegate?.adDidRewardUserWithAmount(amount)
     }
     
     /// Custom ads

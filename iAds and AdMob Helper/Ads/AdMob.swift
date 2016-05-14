@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v4.1.1
+//    v4.2
 
 //    Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
@@ -60,7 +60,7 @@ private enum AdUnitID: String {
 protocol AdMobDelegate: class {
     func adMobAdClicked()
     func adMobAdClosed()
-    func adMobDidRewardUserWithAmount(rewardAmount: Int)
+    func adMobDidRewardUserWithAmount(amount: Int)
 }
 
 /// Ads singleton class
