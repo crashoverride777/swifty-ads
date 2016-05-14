@@ -68,6 +68,10 @@ AdsManager.sharedInstance.setUp(viewController: self, customAdsInterval: 5)
 
 This sets the viewController property in the helpers to your viewController. The first interAd will be a custom one and than every 4th time an Inter ad is shown it will show another custom one (randomised between the total count in the ad settings arrays)
 
+ ```
+ struct Settings {....
+ ``` 
+
 Step 3: 
 
 Set up/add your custom ads by going to ```CustomAd.swift``` and entering the correct information in the struct 
@@ -75,7 +79,12 @@ Set up/add your custom ads by going to ```CustomAd.swift``` and entering the cor
  struct Settings {....
  ``` 
  
- By default the project uses 2 custom ads.
+By default the helper will loop through your total custom ad invertory twice and than not show custom ads until your app relaunches. To change this simply go to this properpty
+ ```
+ var isFinishedForSession....
+ ``` 
+ 
+and adjust the settings.
 
 
 HOW TO USE
