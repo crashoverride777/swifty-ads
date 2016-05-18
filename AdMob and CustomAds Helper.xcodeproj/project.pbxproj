@@ -10,6 +10,25 @@
 		B435FFE11CE14C2A00A678AA /* AdMob.swift in Sources */ = {isa = PBXBuildFile; fileRef = B435FFE01CE14C2A00A678AA /* AdMob.swift */; };
 		B435FFE51CE14D1900A678AA /* CustomAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = B435FFE41CE14D1900A678AA /* CustomAd.swift */; };
 		B452EFD91CDBF7FE009A69B5 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B452EFD81CDBF7FE009A69B5 /* GoogleMobileAds.framework */; };
+		B4A0065E1CECFCF100A44575 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A0065D1CECFCF100A44575 /* AppDelegate.swift */; };
+		B4A006601CECFCF100A44575 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B4A0065F1CECFCF100A44575 /* GameScene.sks */; };
+		B4A006621CECFCF100A44575 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A006611CECFCF100A44575 /* GameScene.swift */; };
+		B4A006641CECFCF100A44575 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A006631CECFCF100A44575 /* GameViewController.swift */; };
+		B4A006661CECFCF100A44575 /* Game.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4A006651CECFCF100A44575 /* Game.xcassets */; };
+		B4A006691CECFCF100A44575 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4A006671CECFCF100A44575 /* Main.storyboard */; };
+		B4A0066B1CECFCF100A44575 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4A0066A1CECFCF100A44575 /* Assets.xcassets */; };
+		B4A006761CECFCF100A44575 /* AppLovin_HelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A006751CECFCF100A44575 /* AppLovin_HelperTests.swift */; };
+		B4A006811CECFCF100A44575 /* AppLovin_HelperUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A006801CECFCF100A44575 /* AppLovin_HelperUITests.swift */; };
+		B4A0068F1CECFD4000A44575 /* applovin-tvos-sdk-3.2.0 in Resources */ = {isa = PBXBuildFile; fileRef = B4A0068E1CECFD4000A44575 /* applovin-tvos-sdk-3.2.0 */; };
+		B4A006911CECFD4A00A44575 /* libAppLovinTVOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A006901CECFD4A00A44575 /* libAppLovinTVOS.a */; };
+		B4A006931CECFD5400A44575 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A006921CECFD5400A44575 /* AdSupport.framework */; };
+		B4A006951CECFD5F00A44575 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A006941CECFD5F00A44575 /* AVFoundation.framework */; };
+		B4A006971CECFD6900A44575 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A006961CECFD6900A44575 /* CoreGraphics.framework */; };
+		B4A006991CECFD6F00A44575 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A006981CECFD6F00A44575 /* CoreMedia.framework */; };
+		B4A0069B1CECFD7A00A44575 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A0069A1CECFD7A00A44575 /* StoreKit.framework */; };
+		B4A0069D1CECFD8400A44575 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A0069C1CECFD8400A44575 /* SystemConfiguration.framework */; };
+		B4A0069F1CECFD8B00A44575 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A0069E1CECFD8B00A44575 /* UIKit.framework */; };
+		B4A006A11CECFDF400A44575 /* AppLovin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A006A01CECFDF400A44575 /* AppLovin.swift */; };
 		B4B01A191B9A0AF500F9A8EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B01A181B9A0AF500F9A8EA /* AppDelegate.swift */; };
 		B4B01A1B1B9A0AF500F9A8EA /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B4B01A1A1B9A0AF500F9A8EA /* GameScene.sks */; };
 		B4B01A1D1B9A0AF500F9A8EA /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B01A1C1B9A0AF500F9A8EA /* GameScene.swift */; };
@@ -33,6 +52,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B4A006721CECFCF100A44575 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B4B01A0B1B9A0AF500F9A8EA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B4A0065A1CECFCF100A44575;
+			remoteInfo = "AppLovin Helper";
+		};
+		B4A0067D1CECFCF100A44575 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B4B01A0B1B9A0AF500F9A8EA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B4A0065A1CECFCF100A44575;
+			remoteInfo = "AppLovin Helper";
+		};
 		B4B01A2D1B9A0AF500F9A8EA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B4B01A0B1B9A0AF500F9A8EA /* Project object */;
@@ -46,6 +79,32 @@
 		B435FFE01CE14C2A00A678AA /* AdMob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdMob.swift; sourceTree = "<group>"; };
 		B435FFE41CE14D1900A678AA /* CustomAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAd.swift; sourceTree = "<group>"; };
 		B452EFD81CDBF7FE009A69B5 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "GoogleMobileAdsSdkiOS-7.8.0/GoogleMobileAds.framework"; sourceTree = SOURCE_ROOT; };
+		B4A0065B1CECFCF100A44575 /* AppLovin Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AppLovin Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4A0065D1CECFCF100A44575 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B4A0065F1CECFCF100A44575 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		B4A006611CECFCF100A44575 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		B4A006631CECFCF100A44575 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		B4A006651CECFCF100A44575 /* Game.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Game.xcassets; sourceTree = "<group>"; };
+		B4A006681CECFCF100A44575 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B4A0066A1CECFCF100A44575 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B4A0066C1CECFCF100A44575 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B4A006711CECFCF100A44575 /* AppLovin HelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AppLovin HelperTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4A006751CECFCF100A44575 /* AppLovin_HelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLovin_HelperTests.swift; sourceTree = "<group>"; };
+		B4A006771CECFCF100A44575 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B4A0067C1CECFCF100A44575 /* AppLovin HelperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AppLovin HelperUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4A006801CECFCF100A44575 /* AppLovin_HelperUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLovin_HelperUITests.swift; sourceTree = "<group>"; };
+		B4A006821CECFCF100A44575 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B4A0068C1CECFD0B00A44575 /* HeaderTV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderTV.h; sourceTree = "<group>"; };
+		B4A0068E1CECFD4000A44575 /* applovin-tvos-sdk-3.2.0 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "applovin-tvos-sdk-3.2.0"; sourceTree = "<group>"; };
+		B4A006901CECFD4A00A44575 /* libAppLovinTVOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAppLovinTVOS.a; sourceTree = "<group>"; };
+		B4A006921CECFD5400A44575 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.2.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = DEVELOPER_DIR; };
+		B4A006941CECFD5F00A44575 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.2.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		B4A006961CECFD6900A44575 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.2.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		B4A006981CECFD6F00A44575 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.2.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = DEVELOPER_DIR; };
+		B4A0069A1CECFD7A00A44575 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.2.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
+		B4A0069C1CECFD8400A44575 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.2.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		B4A0069E1CECFD8B00A44575 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.2.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		B4A006A01CECFDF400A44575 /* AppLovin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppLovin.swift; path = "AppLovin Helper/AppLovin.swift"; sourceTree = "<group>"; };
 		B4B01A131B9A0AF500F9A8EA /* AdMob and CustomAds Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AdMob and CustomAds Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4B01A171B9A0AF500F9A8EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B4B01A181B9A0AF500F9A8EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +132,35 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B4A006581CECFCF100A44575 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B4A0069F1CECFD8B00A44575 /* UIKit.framework in Frameworks */,
+				B4A0069D1CECFD8400A44575 /* SystemConfiguration.framework in Frameworks */,
+				B4A0069B1CECFD7A00A44575 /* StoreKit.framework in Frameworks */,
+				B4A006991CECFD6F00A44575 /* CoreMedia.framework in Frameworks */,
+				B4A006971CECFD6900A44575 /* CoreGraphics.framework in Frameworks */,
+				B4A006951CECFD5F00A44575 /* AVFoundation.framework in Frameworks */,
+				B4A006931CECFD5400A44575 /* AdSupport.framework in Frameworks */,
+				B4A006911CECFD4A00A44575 /* libAppLovinTVOS.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B4A0066E1CECFCF100A44575 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B4A006791CECFCF100A44575 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B4B01A101B9A0AF500F9A8EA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -109,15 +197,88 @@
 				B435FFE01CE14C2A00A678AA /* AdMob.swift */,
 				B435FFE41CE14D1900A678AA /* CustomAd.swift */,
 			);
-			path = Ads;
+			name = Ads;
+			path = "iAds and AdMob Helper/Ads";
+			sourceTree = "<group>";
+		};
+		B4A006551CECFCC100A44575 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				B435FFE61CE14DAF00A678AA /* Ads */,
+				B4B01A151B9A0AF500F9A8EA /* AdMob and CustomAds Helper */,
+				B4B01A3E1B9A0B3500F9A8EA /* Frameworks */,
+				B4B01A2F1B9A0AF500F9A8EA /* iAds and AdMob HelperTests */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		B4A006561CECFCC800A44575 /* tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				B4A006A01CECFDF400A44575 /* AppLovin.swift */,
+				B4A0065C1CECFCF100A44575 /* AppLovin Helper */,
+				B4A0068D1CECFD1500A44575 /* Frameworks */,
+				B4A006741CECFCF100A44575 /* AppLovin HelperTests */,
+				B4A0067F1CECFCF100A44575 /* AppLovin HelperUITests */,
+			);
+			name = tvOS;
+			sourceTree = "<group>";
+		};
+		B4A0065C1CECFCF100A44575 /* AppLovin Helper */ = {
+			isa = PBXGroup;
+			children = (
+				B4A0065D1CECFCF100A44575 /* AppDelegate.swift */,
+				B4A0065F1CECFCF100A44575 /* GameScene.sks */,
+				B4A006611CECFCF100A44575 /* GameScene.swift */,
+				B4A006631CECFCF100A44575 /* GameViewController.swift */,
+				B4A006651CECFCF100A44575 /* Game.xcassets */,
+				B4A006671CECFCF100A44575 /* Main.storyboard */,
+				B4A0066A1CECFCF100A44575 /* Assets.xcassets */,
+				B4A0066C1CECFCF100A44575 /* Info.plist */,
+			);
+			path = "AppLovin Helper";
+			sourceTree = "<group>";
+		};
+		B4A006741CECFCF100A44575 /* AppLovin HelperTests */ = {
+			isa = PBXGroup;
+			children = (
+				B4A006751CECFCF100A44575 /* AppLovin_HelperTests.swift */,
+				B4A006771CECFCF100A44575 /* Info.plist */,
+			);
+			path = "AppLovin HelperTests";
+			sourceTree = "<group>";
+		};
+		B4A0067F1CECFCF100A44575 /* AppLovin HelperUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B4A006801CECFCF100A44575 /* AppLovin_HelperUITests.swift */,
+				B4A006821CECFCF100A44575 /* Info.plist */,
+			);
+			path = "AppLovin HelperUITests";
+			sourceTree = "<group>";
+		};
+		B4A0068D1CECFD1500A44575 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B4A006901CECFD4A00A44575 /* libAppLovinTVOS.a */,
+				B4A0068E1CECFD4000A44575 /* applovin-tvos-sdk-3.2.0 */,
+				B4A0069E1CECFD8B00A44575 /* UIKit.framework */,
+				B4A0069C1CECFD8400A44575 /* SystemConfiguration.framework */,
+				B4A0069A1CECFD7A00A44575 /* StoreKit.framework */,
+				B4A006981CECFD6F00A44575 /* CoreMedia.framework */,
+				B4A006961CECFD6900A44575 /* CoreGraphics.framework */,
+				B4A006941CECFD5F00A44575 /* AVFoundation.framework */,
+				B4A006921CECFD5400A44575 /* AdSupport.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		B4B01A0A1B9A0AF500F9A8EA = {
 			isa = PBXGroup;
 			children = (
-				B4B01A3E1B9A0B3500F9A8EA /* Frameworks */,
-				B4B01A151B9A0AF500F9A8EA /* AdMob and CustomAds Helper */,
-				B4B01A2F1B9A0AF500F9A8EA /* iAds and AdMob HelperTests */,
+				B4A0068C1CECFD0B00A44575 /* HeaderTV.h */,
+				B4A006551CECFCC100A44575 /* iOS */,
+				B4A006561CECFCC800A44575 /* tvOS */,
 				B4B01A141B9A0AF500F9A8EA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -127,6 +288,9 @@
 			children = (
 				B4B01A131B9A0AF500F9A8EA /* AdMob and CustomAds Helper.app */,
 				B4B01A2C1B9A0AF500F9A8EA /* AdMob and CustomAds Helper.xctest */,
+				B4A0065B1CECFCF100A44575 /* AppLovin Helper.app */,
+				B4A006711CECFCF100A44575 /* AppLovin HelperTests.xctest */,
+				B4A0067C1CECFCF100A44575 /* AppLovin HelperUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -134,7 +298,6 @@
 		B4B01A151B9A0AF500F9A8EA /* AdMob and CustomAds Helper */ = {
 			isa = PBXGroup;
 			children = (
-				B435FFE61CE14DAF00A678AA /* Ads */,
 				B4B01A181B9A0AF500F9A8EA /* AppDelegate.swift */,
 				B4B01A1A1B9A0AF500F9A8EA /* GameScene.sks */,
 				B4B01A1C1B9A0AF500F9A8EA /* GameScene.swift */,
@@ -196,6 +359,59 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B4A0065A1CECFCF100A44575 /* AppLovin Helper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B4A006831CECFCF100A44575 /* Build configuration list for PBXNativeTarget "AppLovin Helper" */;
+			buildPhases = (
+				B4A006571CECFCF100A44575 /* Sources */,
+				B4A006581CECFCF100A44575 /* Frameworks */,
+				B4A006591CECFCF100A44575 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "AppLovin Helper";
+			productName = "AppLovin Helper";
+			productReference = B4A0065B1CECFCF100A44575 /* AppLovin Helper.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B4A006701CECFCF100A44575 /* AppLovin HelperTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B4A006861CECFCF100A44575 /* Build configuration list for PBXNativeTarget "AppLovin HelperTests" */;
+			buildPhases = (
+				B4A0066D1CECFCF100A44575 /* Sources */,
+				B4A0066E1CECFCF100A44575 /* Frameworks */,
+				B4A0066F1CECFCF100A44575 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B4A006731CECFCF100A44575 /* PBXTargetDependency */,
+			);
+			name = "AppLovin HelperTests";
+			productName = "AppLovin HelperTests";
+			productReference = B4A006711CECFCF100A44575 /* AppLovin HelperTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B4A0067B1CECFCF100A44575 /* AppLovin HelperUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B4A006891CECFCF100A44575 /* Build configuration list for PBXNativeTarget "AppLovin HelperUITests" */;
+			buildPhases = (
+				B4A006781CECFCF100A44575 /* Sources */,
+				B4A006791CECFCF100A44575 /* Frameworks */,
+				B4A0067A1CECFCF100A44575 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B4A0067E1CECFCF100A44575 /* PBXTargetDependency */,
+			);
+			name = "AppLovin HelperUITests";
+			productName = "AppLovin HelperUITests";
+			productReference = B4A0067C1CECFCF100A44575 /* AppLovin HelperUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		B4B01A121B9A0AF500F9A8EA /* AdMob and CustomAds Helper */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B4B01A361B9A0AF500F9A8EA /* Build configuration list for PBXNativeTarget "AdMob and CustomAds Helper" */;
@@ -238,10 +454,21 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 0700;
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Dominik Ringler";
 				TargetAttributes = {
+					B4A0065A1CECFCF100A44575 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					B4A006701CECFCF100A44575 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = B4A0065A1CECFCF100A44575;
+					};
+					B4A0067B1CECFCF100A44575 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = B4A0065A1CECFCF100A44575;
+					};
 					B4B01A121B9A0AF500F9A8EA = {
 						CreatedOnToolsVersion = 6.4;
 					};
@@ -266,11 +493,40 @@
 			targets = (
 				B4B01A121B9A0AF500F9A8EA /* AdMob and CustomAds Helper */,
 				B4B01A2B1B9A0AF500F9A8EA /* AdMob and CustomAds HelperTests */,
+				B4A0065A1CECFCF100A44575 /* AppLovin Helper */,
+				B4A006701CECFCF100A44575 /* AppLovin HelperTests */,
+				B4A0067B1CECFCF100A44575 /* AppLovin HelperUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B4A006591CECFCF100A44575 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B4A006691CECFCF100A44575 /* Main.storyboard in Resources */,
+				B4A0068F1CECFD4000A44575 /* applovin-tvos-sdk-3.2.0 in Resources */,
+				B4A006601CECFCF100A44575 /* GameScene.sks in Resources */,
+				B4A0066B1CECFCF100A44575 /* Assets.xcassets in Resources */,
+				B4A006661CECFCF100A44575 /* Game.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B4A0066F1CECFCF100A44575 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B4A0067A1CECFCF100A44575 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B4B01A111B9A0AF500F9A8EA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -292,6 +548,33 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B4A006571CECFCF100A44575 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B4A006621CECFCF100A44575 /* GameScene.swift in Sources */,
+				B4A006641CECFCF100A44575 /* GameViewController.swift in Sources */,
+				B4A006A11CECFDF400A44575 /* AppLovin.swift in Sources */,
+				B4A0065E1CECFCF100A44575 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B4A0066D1CECFCF100A44575 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B4A006761CECFCF100A44575 /* AppLovin_HelperTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B4A006781CECFCF100A44575 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B4A006811CECFCF100A44575 /* AppLovin_HelperUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B4B01A0F1B9A0AF500F9A8EA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -316,6 +599,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B4A006731CECFCF100A44575 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B4A0065A1CECFCF100A44575 /* AppLovin Helper */;
+			targetProxy = B4A006721CECFCF100A44575 /* PBXContainerItemProxy */;
+		};
+		B4A0067E1CECFCF100A44575 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B4A0065A1CECFCF100A44575 /* AppLovin Helper */;
+			targetProxy = B4A0067D1CECFCF100A44575 /* PBXContainerItemProxy */;
+		};
 		B4B01A2E1B9A0AF500F9A8EA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B4B01A121B9A0AF500F9A8EA /* AdMob and CustomAds Helper */;
@@ -324,6 +617,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		B4A006671CECFCF100A44575 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B4A006681CECFCF100A44575 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		B4B01A201B9A0AF500F9A8EA /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -343,6 +644,113 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B4A006841CECFCF100A44575 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ANALYZER_NONNULL = YES;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/applovin-tvos-sdk-3.2.0/headers";
+				INFOPLIST_FILE = "AppLovin Helper/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.AppLovin-Helper";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_OBJC_BRIDGING_HEADER = HeaderTV.h;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Debug;
+		};
+		B4A006851CECFCF100A44575 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ANALYZER_NONNULL = YES;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/applovin-tvos-sdk-3.2.0/headers";
+				INFOPLIST_FILE = "AppLovin Helper/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.AppLovin-Helper";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_OBJC_BRIDGING_HEADER = HeaderTV.h;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Release;
+		};
+		B4A006871CECFCF100A44575 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = "AppLovin HelperTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.AppLovin-HelperTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AppLovin Helper.app/AppLovin Helper";
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Debug;
+		};
+		B4A006881CECFCF100A44575 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				INFOPLIST_FILE = "AppLovin HelperTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.AppLovin-HelperTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AppLovin Helper.app/AppLovin Helper";
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Release;
+		};
+		B4A0068A1CECFCF100A44575 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = "AppLovin HelperUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.AppLovin-HelperUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TEST_TARGET_NAME = "AppLovin Helper";
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Debug;
+		};
+		B4A0068B1CECFCF100A44575 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				INFOPLIST_FILE = "AppLovin HelperUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.AppLovin-HelperUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TEST_TARGET_NAME = "AppLovin Helper";
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Release;
+		};
 		B4B01A341B9A0AF500F9A8EA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -501,6 +909,30 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B4A006831CECFCF100A44575 /* Build configuration list for PBXNativeTarget "AppLovin Helper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B4A006841CECFCF100A44575 /* Debug */,
+				B4A006851CECFCF100A44575 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		B4A006861CECFCF100A44575 /* Build configuration list for PBXNativeTarget "AppLovin HelperTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B4A006871CECFCF100A44575 /* Debug */,
+				B4A006881CECFCF100A44575 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		B4A006891CECFCF100A44575 /* Build configuration list for PBXNativeTarget "AppLovin HelperUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B4A0068A1CECFCF100A44575 /* Debug */,
+				B4A0068B1CECFCF100A44575 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		B4B01A0E1B9A0AF500F9A8EA /* Build configuration list for PBXProject "AdMob and CustomAds Helper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

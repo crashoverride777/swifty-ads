@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v4.2
+//    v5.0
 
 /*
     Abstract:
@@ -34,7 +34,7 @@ import UIKit
 protocol AdsDelegate: class {
     func adClicked()
     func adClosed()
-    func adDidRewardUserWithAmount(amount: Int)
+    func adDidRewardUser(rewardAmount rewardAmount: Int)
 }
 
 /// Ads manager class
@@ -157,8 +157,8 @@ extension AdsManager: AdMobDelegate, CustomAdDelegate {
         delegate?.adClosed()
     }
     
-    func adMobDidRewardUserWithAmount(amount: Int) {
-        delegate?.adDidRewardUserWithAmount(amount)
+    func adMobDidRewardUser(rewardAmount rewardAmount: Int) {
+        delegate?.adDidRewardUser(rewardAmount: rewardAmount)
     }
     
     /// Custom ads
