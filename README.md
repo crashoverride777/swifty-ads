@@ -353,6 +353,28 @@ If you read through this you may be wondering why Interstitial ads and Reward ad
 
 If I would not split the helper into 2 classes than you would get a reward when watching a regular interstitial ad because the delegates are the same. Basically you need 2 instanes of delegates, as per AppLovin support.
 
+- Step 4: 
+
+Create an objC bridging header. Go to File-New-File and create a new header file. Call it something like HeaderTV and save.
+
+Than add the app lovin swift libraries in the header file
+```swift
+#import "ALSwiftHeaders.h"
+```
+
+
+The whole header file should look like this 
+
+```swift
+#ifndef HeaderTV_h
+#define HeaderTV_h
+
+#import "ALSwiftHeaders.h"
+
+
+#endif /* HeaderTV_h */
+```
+
 HOW TO USE
 
 - To show a supported Ad simply call these anywhere you like in your project
@@ -404,6 +426,9 @@ extension GameScene: AdMobDelegate {
     }
 }
 ```
+
+
+Note: If you are only using RewardVideos and not Interstitial ads make sure you are uncomment the code in the init method that setsUp the SDK.
 
 # Set the DEBUG flag?
 
