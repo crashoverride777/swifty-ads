@@ -223,7 +223,7 @@ extension GameScene: AdMobDelegate {
     func adMobAdClosed() { 
        // resume your game/app
     }
-    func adMobDidRewardUserWithAmount(rewardAmount: Int) {
+    func adMobDidRewardUser(rewardAmount rewardAmount: Int) {
        // code for reward videos, see instructions below or leave empty
     }
 }
@@ -270,6 +270,8 @@ https://developers.google.com/admob/ios/mediation
 
 https://developers.google.com/admob/ios/mediation-networks
 
+Note: Mediation will not work on tvOS because the AdMob SDK does not support it, please read the instructions below for tvOS integration.
+
 # Reward Videos
 
 Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. To use reward videos follow the steps above to intergrate your mediation network(s) of choice. Than read the AdMob rewarded video guidlines
@@ -291,7 +293,7 @@ AdMob.sharedInstance.showRewardVideo()
 Use this method in the extension you created above to unlock the reward (e.g coins)
 
 ```swift
-func adDidRewardUserWithAmount(rewardAmount: Int) {
+func adDidRewardUser(rewardAmount rewardAmount: Int) {
     self.coins += rewardAmount
 }
 ```
@@ -299,7 +301,7 @@ func adDidRewardUserWithAmount(rewardAmount: Int) {
 or
 
 ```swift
-func adMobDidRewardUserWithAmount(rewardAmount: Int) {
+func adMobDidRewardUser(rewardAmount rewardAmount: Int) {
     self.coins += rewardAmount
 }
 ```
@@ -311,6 +313,97 @@ Note:
 
 Reward videos will show a black full screen ad using the test AdUnitID. I have not figured out yet how to test ads on AdMob that come from 3rd party mediation networks.
 I have tested this code with a real reward video ad from Chartboost, so I know everything works. (This is not recommended, always try to avoid using real ads when testing)
+
+
+# AppLovin (tvOS)
+
+Mediation will not work on tvOS because the AdMob SDK does not support it.
+Although these instructions can also be applied to iOS I prefer to use mediation on iOS to avoid extra code. AppLovin does work with AdMob though mediation so I would recommend you only follow these steps for tvOS.
+
+SETUP
+
+- Step 1:
+
+Create an AppLovin account at
+
+https://applovin.com
+
+- Step 2: 
+
+Log into your account and click on Doc (top right next to account) and tvOS and tvOS SDK integration and follow the steps to install the SDK.
+
+This should include
+
+1) Downloading the SDK folder that includes the headers and lib file and copy it into your project.
+
+Note: I was having some issues with this for ages (Step 3) because I was copying the whole folder from the website into my project. Do NOT do this. 
+Make sure you copy/drag the lib file serperatly into your project and than copy the headers folder into your project (select copy if needed and your tvTarget both times)
+
+2) Linking the correct frameworks (AdSupport, UIKit etc)
+
+3) Adding your appLovin SDK key (you can use your key and add it in this sample project to test out ads)
+
+4) Enabling the -ObjC flag in other linkers.
+
+- Step 3:
+
+Copy the AppLovin.swift file into your project. 
+
+If you read through this you may be wondering why Interstitial ads and Reward ads are split into 2 classes. The way AppLovin handles reward videos is different than AdMob. They do not have a delegate that gets called when the reward video was watched, they rather have a delegate that gets called when the video starts playing. You than need to save the reward amount passed from the delegate and than use the another delegate, adVideoPlayback, to check if a video was fully watched.
+
+If I would not split the helper into 2 classes than you would get a reward when watching a regular interstitial ad because the delegates are the same. Basically you need 2 instanes of delegates, as per AppLovin support.
+
+HOW TO USE
+
+- To show a supported Ad simply call these anywhere you like in your project
+```swift
+AppLovinInter.sharedInstance.show() 
+AppLovinInter.sharedInstance.showRandomly(randomness: 4)  // 25% chance of showing inter ads (1/4)
+
+AppLovinReward.sharedInstance.show() 
+AppLovinReward.sharedInstance.showRandomly(randomness: 4) // 25% chance of showing inter ads (1/4)
+```
+- To remove all Ads, mainly for in app purchases simply call 
+```swift
+AppLovinInter.sharedInstance.remove() 
+AppLovinReward.sharedInstance.remove()
+```
+
+NOTE:
+
+This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
+
+For permanent storage you will need to create your own "removedAdsProduct" property and save it in something in NSUserDefaults, or preferably ios Keychain. Than call this method when your app launches after you have set up the helper.
+
+Check out this awesome Keychain Wrapper 
+
+https://github.com/jrendel/SwiftKeychainWrapper
+
+which makes using keychain as easy as NSUserDefaults.
+
+- Implement the delegate methods
+
+Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
+
+```swift
+AppLovinInter.sharedInstance.delegate = self
+AppLovinReward.sharedInstance.delegate = self
+```
+
+Than create an extension conforming to the protocol
+```swift
+extension GameScene: AdMobDelegate {
+    func appLovinAdClicked() {
+        // pause your game/app
+    }
+    func appLovinAdClosed() { 
+       // resume your game/app
+    }
+    func appLovinDidRewardUser(rewardAmount rewardAmount: Int) {
+       // code for reward videos, see instructions below or leave empty
+    }
+}
+```
 
 # Set the DEBUG flag?
 
@@ -332,7 +425,14 @@ Enjoy
 
 # Release Notes
 
-- 4.2
+- v5.0
+
+Included AppLovin for tvOS 
+The adMob SDK does not work on tvOS so you will have to use AppLovins code if you want to show ads on appleTV (AppLovin works with mediation on iOS)
+
+Other fixes and improvements
+
+- v4.2
 
 Custom ads redesign and improvments.
 
