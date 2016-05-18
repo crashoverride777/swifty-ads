@@ -39,7 +39,7 @@ private enum AdUnitID: String {...
 ```
 enter your real AdUnitIDs you just created.
 
-# Set up AdMob SDK and frameworks
+- Step 3: Install SDK
 
 // Cocoa Pods
 https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods
