@@ -2,15 +2,10 @@ NOTE: iAd is shutting down on June the 30th. The news on this are very vague and
 
 I have removed all the iAd APIs from this project because iAds can easily be intergrated using AdMob mediation. Mediation is a much better way to handle multiple adProviders mainly due to not having to integrate extra code apart from AdMob APIs. This will be my strategy going forward as it makes this project easier to maintain and requires much less code.
 
-Future Update:
 
-I am just finishing the next update which will include revMob ads for the Apple TV. As I mentioned above mediation is my preferred way going forward showing ads from multiple providers on iOS. However on the Apple TV there is hardly any ad support and revMob seems to be the best choice. Admob does not support tvOS or has RevMob listed as a mediation partner.
-Update should be out soon
+# AdMob and CustomAds Helpers for iOS and AppLovin for tvOS.
 
-
-# AdMob and CustomAds Helpers
-
-A collection of helper classes to integrate Ads from Google as well as your own custom Ads. This helper has been been made while making my 1st SpriteKit game but should work for any kind of app. 
+A collection of helper classes to integrate Ads from AdMob, AppLovin (tvOS) as well as your own custom Ads. This helper has been been made while making my 1st SpriteKit game but should work for any kind of app. 
 
 With this helper you can easily show Banner Ads, Interstitial Ads, RewardVideoAds and your own custom Ads anywhere in your project
 
