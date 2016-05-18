@@ -57,7 +57,6 @@ private struct Settings {
 /// Device type
 private struct DeviceType {
     static let maxLength = max(UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height)
-    
     static let iPhone4     = UIDevice.currentDevice().userInterfaceIdiom == .Phone && maxLength < 568.0
     static let iPhone5     = UIDevice.currentDevice().userInterfaceIdiom == .Phone && maxLength == 568.0
     static let iPhone6     = UIDevice.currentDevice().userInterfaceIdiom == .Phone && maxLength == 667.0

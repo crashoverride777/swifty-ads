@@ -916,6 +916,7 @@
 				B4A006851CECFCF100A44575 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B4A006861CECFCF100A44575 /* Build configuration list for PBXNativeTarget "AppLovin HelperTests" */ = {
 			isa = XCConfigurationList;
@@ -924,6 +925,7 @@
 				B4A006881CECFCF100A44575 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B4A006891CECFCF100A44575 /* Build configuration list for PBXNativeTarget "AppLovin HelperUITests" */ = {
 			isa = XCConfigurationList;
@@ -932,6 +934,7 @@
 				B4A0068B1CECFCF100A44575 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B4B01A0E1B9A0AF500F9A8EA /* Build configuration list for PBXProject "AdMob and CustomAds Helper" */ = {
 			isa = XCConfigurationList;
