@@ -316,8 +316,8 @@ I have tested this code with a real reward video ad from Chartboost, so I know e
 
 # AppLovin (tvOS)
 
-Mediation will not work on tvOS because the AdMob SDK does not support it.
-Although these instructions can also be applied to iOS I prefer to use mediation on iOS to avoid extra code. AppLovin does work with AdMob though mediation so I would recommend you only follow these steps for tvOS.
+Mediation will not work on tvOS because the AdMob SDK does not tvOS.
+Although these instructions can also be applied to iOS I prefer to use mediation on iOS to avoid extra code so I would recommend you only follow these steps for tvOS.
 
 SETUP
 
@@ -361,20 +361,23 @@ Than add the app lovin swift libraries in the header file
 #import "ALSwiftHeaders.h"
 ```
 
-
 The whole header file should look like this 
-
 ```swift
 #ifndef HeaderTV_h
 #define HeaderTV_h
 
 #import "ALSwiftHeaders.h"
 
-
 #endif /* HeaderTV_h */
 ```
 
 HOW TO USE
+
+- Init the helper(s) as soon as possible e.g ViewController or AppDelegate to load the SDK.
+```swift
+AppLovinInter.sharedInstance
+AppLovinReward.sharedInstance
+```
 
 - To show a supported Ad simply call these anywhere you like in your project
 ```swift
@@ -392,7 +395,7 @@ AppLovinReward.sharedInstance.remove()
 
 NOTE:
 
-This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
+This method will set a removedAds bool to true in all the app lovin helpers. This ensures you only have to call this method and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
 
 For permanent storage you will need to create your own "removedAdsProduct" property and save it in something in NSUserDefaults, or preferably ios Keychain. Than call this method when your app launches after you have set up the helper.
 
@@ -427,11 +430,11 @@ extension GameScene: AdMobDelegate {
 ```
 
 
-Note: If you are only using RewardVideos and not Interstitial ads make sure you are uncomment the code in the init method that setsUp the SDK.
+Note: If you are only using RewardVideos and not Interstitial ads make sure you are uncomment the code in the init method that setsUp the SDK in AppLovinReward.swift.
 
 # Set the DEBUG flag?
 
-Dont forget to setup the "-D DEBUG" custom flag or the helper will not work as it will not use the AdUnitIDs.
+Dont forget to setup the "-D DEBUG" custom flag or the helper will not work as it will not use the AdUnitIDs or hide print statements.
 
 # When you submit your app to Apple
 
