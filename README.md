@@ -451,10 +451,7 @@ Enjoy
 
 - v5.0
 
-Included AppLovin for tvOS 
-The adMob SDK does not work on tvOS so you will have to use AppLovins code if you want to show ads on appleTV (AppLovin works with mediation on iOS)
-
-Other fixes and improvements
+Included AppLovin helper for tvOS. The adMob SDK does not work on tvOS so you will have to use AppLovin code if you want to show ads (AppLovin works with mediation on iOS)
 
 - v4.2
 
