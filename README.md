@@ -23,7 +23,7 @@ Click on All and than you should be able to scroll down in buildSettings and fin
 
 (see the sample project or http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
 
-# Create your AdMob account and adUnitIDs
+# AdMob/CustomAds (iOS)
 
 - Step 1: Sign up for a Google AdMob account and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
 
