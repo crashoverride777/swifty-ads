@@ -23,7 +23,9 @@ Click on All and than you should be able to scroll down in buildSettings and fin
 
 (see the sample project or http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
 
-# AdMob/CustomAds (iOS)
+# iOS
+
+# AdMob/CustomAds
 
 - Step 1: Sign up for a Google AdMob account and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
 
@@ -310,7 +312,9 @@ Reward videos will show a black full screen ad using the test AdUnitID. I have n
 I have tested this code with a real reward video ad from Chartboost, so I know everything works. (This is not recommended, always try to avoid using real ads when testing)
 
 
-# AppLovin (tvOS)
+# tvOS
+
+# AppLovin
 
 Mediation will not work on tvOS because the AdMob SDK does not support it.
 Although these instructions can also be applied to iOS I prefer to use mediation on iOS to avoid extra code. AppLovin does work with AdMob though mediation so I would recommend you only follow these steps for tvOS.
