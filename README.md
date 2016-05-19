@@ -351,9 +351,9 @@ Make sure you copy/drag the lib file serperatly into your project and than copy 
 
 Copy the AppLovin.swift file into your project. 
 
-If you read through this you may be wondering why Interstitial ads and Reward ads are split into 2 classes. The way AppLovin handles reward videos is different than AdMob. They do not have a delegate that gets called when the reward video was watched, they rather have a delegate that gets called when the video starts playing. You than need to save the reward amount passed from the delegate and than use the another delegate, adVideoPlayback, to check if a video was fully watched.
+If you read through this you may be wondering why Interstitial ads and Reward ads are split into 2 classes. The way AppLovin handles reward videos is different than AdMob. They do not have a delegate that gets called when the reward video was watched, they rather have a delegate that gets called when the video starts playing. You than need to save the reward amount passed from the delegate and than use another delegate, adVideoPlayback, to check if a video was fully watched.
 
-If I would not split the helper into 2 classes than you would get a reward when watching a regular interstitial ad because the delegates are the same. Basically you need 2 instanes of delegates, as per AppLovin support.
+If I would not split the helper into 2 classes than you would get a reward when watching a regular interstitial ad because the delegates would the same. Basically you need 2 instanes of delegates, as per AppLovin support.
 
 - Step 4: 
 
@@ -373,6 +373,8 @@ The whole header file should look like this
 
 #endif /* HeaderTV_h */
 ```
+
+Than go to Targets-BuildSettings and search for "bridging". Double click on "Objective C Bridging Header" and enter the name of the header file followed by .h, for example HeaderTV.h
 
 HOW TO USE
 
