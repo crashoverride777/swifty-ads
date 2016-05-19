@@ -338,7 +338,7 @@ This should include
 
 1) Downloading the SDK folder that includes the headers and lib file and copy it into your project.
 
-Note: I was having some issues with this for ages (Step 3) because I was copying the whole folder from the website into my project. Do NOT do this. 
+Note: I was having some issues with this for ages because I was copying the whole folder from the website into my project. Do NOT do this. 
 Make sure you copy/drag the lib file serperatly into your project and than copy the headers folder into your project (select copy if needed and your tvTarget both times)
 
 2) Linking the correct frameworks (AdSupport, UIKit etc)
