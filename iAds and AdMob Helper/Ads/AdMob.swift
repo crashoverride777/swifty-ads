@@ -84,13 +84,13 @@ class AdMob: NSObject {
     
     /// Ad Unit IDs
     #if DEBUG
-    private var bannerAdUnitID = "ca-app-pub-3940256099942544/2934735716"
-    private var interstitialAdUnitID = "ca-app-pub-3940256099942544/4411468910"
-    private var rewardVideoAdUnitID = "ca-app-pub-1234567890123456/1234567890"
+    private let bannerAdUnitID = "ca-app-pub-3940256099942544/2934735716"
+    private let interstitialAdUnitID = "ca-app-pub-3940256099942544/4411468910"
+    private let rewardVideoAdUnitID = "ca-app-pub-1234567890123456/1234567890"
     #else
-    private var bannerAdUnitID = AdMobAdUnitID.banner
-    private var interstitialAdUnitID = AdMobAdUnitID.interstitial
-    private var rewardVideoAdUnitID = AdMobAdUnitID.rewardVideo
+    private let bannerAdUnitID = AdMobAdUnitID.banner
+    private let interstitialAdUnitID = AdMobAdUnitID.interstitial
+    private let rewardVideoAdUnitID = AdMobAdUnitID.rewardVideo
     #endif
     
     /// Removed ads
