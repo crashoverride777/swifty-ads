@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.0
+//    v5.1
 
 //    Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG)
 
@@ -42,18 +42,10 @@ private struct Debug {
 }
 
 /// Admob ad unit IDs
-private enum AdUnitID: String {
-    // Real IDs
-    #if !DEBUG
-    case Banner = "Enter your real adUnitID"
-    case Inter = "Enter your real adUnitID"
-    case RewardVideo = "Enter your real adUnitID"
-    // Test IDs
-    #else
-    case Banner = "ca-app-pub-3940256099942544/2934735716"
-    case Inter = "ca-app-pub-3940256099942544/4411468910"
-    case RewardVideo = "ca-app-pub-1234567890123456/1234567890" // will show a black full screen ad in test mode
-    #endif
+struct AdMobAdUnitID {
+    static var banner = ""
+    static var interstitial = ""
+    static var rewardVideo = ""
 }
 
 /// Delegates
@@ -89,6 +81,17 @@ class AdMob: NSObject {
     private var bannerAd: GADBannerView?
     private var interstitialAd: GADInterstitial?
     private var rewardVideoAd: GADRewardBasedVideoAd?
+    
+    /// Ad Unit IDs
+    #if DEBUG
+    private var bannerAdUnitID = "ca-app-pub-3940256099942544/2934735716"
+    private var interstitialAdUnitID = "ca-app-pub-3940256099942544/4411468910"
+    private var rewardVideoAdUnitID = "ca-app-pub-1234567890123456/1234567890"
+    #else
+    private var bannerAdUnitID = AdMobAdUnitID.banner
+    private var interstitialAdUnitID = AdMobAdUnitID.interstitial
+    private var rewardVideoAdUnitID = AdMobAdUnitID.rewardVideo
+    #endif
     
     /// Removed ads
     private var removedAds = false
@@ -238,7 +241,7 @@ private extension AdMob {
             bannerAd = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
         }
         
-        bannerAd?.adUnitID = AdUnitID.Banner.rawValue
+        bannerAd?.adUnitID = bannerAdUnitID
         bannerAd?.delegate = self
         bannerAd?.rootViewController = presentingViewController
         bannerAd?.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (bannerAd!.frame.size.height / 2))
@@ -255,7 +258,7 @@ private extension AdMob {
     func loadInterstitialAd() -> GADInterstitial {
         Debug.print("AdMob interstitial loading...")
         
-        let interstitialAd = GADInterstitial(adUnitID: AdUnitID.Inter.rawValue)
+        let interstitialAd = GADInterstitial(adUnitID: interstitialAdUnitID)
         interstitialAd.delegate = self
         
         let request = GADRequest()
@@ -280,7 +283,7 @@ private extension AdMob {
             request.testDevices = [kGADSimulatorID]
         #endif
         
-        rewardVideoAd.loadRequest(request, withAdUnitID: AdUnitID.RewardVideo.rawValue)
+        rewardVideoAd.loadRequest(request, withAdUnitID: rewardVideoAdUnitID)
         
         return rewardVideoAd
     }

@@ -16,6 +16,10 @@ class GameViewController: UIViewController {
         // Set up helpers
         AdsManager.sharedInstance.setUp(viewController: self, customAdsInterval: 3)
         
+        AdMobAdUnitID.banner = "Enter your real id"
+        AdMobAdUnitID.interstitial = "Enter your real id"
+        AdMobAdUnitID.rewardVideo = "Enter your real id"
+        
         if let scene = GameScene(fileNamed: "GameScene") {
             // Configure the view.
             let skView = self.view as! SKView
