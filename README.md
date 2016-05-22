@@ -36,13 +36,7 @@ If you will use AppLovin for tvOS you will have to do these steps for your tvOS 
 
 https://support.google.com/admob/answer/3052638?hl=en-GB&ref_topic=3052726
 
-- Step 2: In AdMob.swift in 
-```swift
-private enum AdUnitID: String {...
-```
-enter your real AdUnitIDs you just created.
-
-- Step 3: Install SDK
+- Step 2: Install SDK
 
 // Cocoa Pods
 https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods
@@ -78,10 +72,15 @@ CustomAds.swift
 
 In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 ```swift
-AdsManager.sharedInstance.setUp(viewController: self, customAdsInterval: 5)
+AdMobAdUnitID.banner = "Enter your real id"
+AdMobAdUnitID.interstitial = "Enter your real id"
+AdMobAdUnitID.rewardVideo = "Enter your real id"
+
+AdsManager.sharedInstance.setUp(viewController: self, customAdsInterval: 5) // call after setting real IDs
 ```
 
-This sets the viewController property in the helpers to your viewController. The first interAd will be a custom one and than every 4th time an Inter ad is shown it will show another custom one (randomised between the total count in the ad settings arrays)
+This sets the viewController property in the helpers to your viewController. You are also setting your adMobAdUnitIDs for when you relase (You can leave until you release). 
+The first interAd will be a custom one and than every 4th time an Inter ad is shown it will show another custom one (randomised between the total count in the ad settings arrays)
 
  ```
  struct Settings {....
@@ -456,6 +455,10 @@ Please feel free to let me know about any bugs or improvements, I am by no means
 Enjoy
 
 # Release Notes
+
+- v5.1
+
+Small changes to adMobAdUnitID set up.
 
 - v5.0
 
