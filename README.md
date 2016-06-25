@@ -64,42 +64,44 @@ Copy the Ads folder into your project. This should include the files
 
 ```swift
 AdsManager.swift 
-AdMob.swift
+AdMob(iOS).swift
 CustomAds.swift
+AppLovin(tvOS).swift
 ```
 
-- Step 2:
+- Step 1: SetUp AdsManager
+
+
+AdsManager.sharedInstance.setUp(viewController: self, customAdsInterval: 3, maxCustomAdsPerSession: 3)
+
+- Step 2: SetUp AdMob
 
 In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 ```swift
-AdMobAdUnitID.banner = "Enter your real id"
-AdMobAdUnitID.interstitial = "Enter your real id"
-AdMobAdUnitID.rewardVideo = "Enter your real id"
+let bannerID = "Enter your real id"
+let interstitialID = "Enter your real id"
+let rewardVideoID = "Enter your real id"
 
-AdsManager.sharedInstance.setUp(viewController: self, customAdsInterval: 5) // call after setting real IDs
+AdMob.sharedInstance.setUp(viewController: self, bannerID: bannerID, interID: interstitialID, rewardVideoID: rewardVideoID)
 ```
 
-This sets the viewController property in the helpers to your viewController. You are also setting your adMobAdUnitIDs for when you relase (You can leave until you release). 
-The first interAd will be a custom one and than every 4th time an Inter ad is shown it will show another custom one (randomised between the total count in the ad settings arrays)
+This sets the viewController property in the helpers to your viewController. You are also setting your adMobAdUnitIDs for when you relase (You can leave them empty until you release or if you do not choose a certain type of ad). 
 
+Step 3: CustomAdSetUp
+
+Still in didMoveToView set up your custom ads inventory and init the helper with your custom ads interval and maxAdsPerSession
  ```
- struct Settings {....
+  let customAdsInventory = [
+            (image: "AdImageVertigus", storeURL: "Enter app store link"),
+            (image:"AdImageAngryFlappies", storeURL: "Enter app store link")
+        ]
+        
+        CustomAd.sharedInstance.setUp(viewController: self, inventory: customAdsInventory)
+        
+        AdsManager.sharedInstance.setUp(viewController: self, customAdsInterval: 3, maxCustomAdsPerSession: 3)
  ``` 
 
-Step 3: 
-
-Set up/add your custom ads by going to ```CustomAd.swift``` and entering the correct information in the struct 
- ```
- struct Settings {....
- ``` 
- 
-By default the helper will loop through your total custom ad invertory twice and than not show custom ads until your app relaunches. To change this simply go to this properpty
- ```
- var isFinishedForSession....
- ``` 
- 
-and adjust the settings.
-
+Note: Step 2 and 3 will have
 
 HOW TO USE
 
