@@ -456,6 +456,12 @@ Enjoy
 
 # Release Notes
 
+- 5.2
+
+Custom ad improvements (read instructions for setUp)
+
+Clean-up
+
 - v5.1
 
 Small changes to adMobAdUnitID set up.
