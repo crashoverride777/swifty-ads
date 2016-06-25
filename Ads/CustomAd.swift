@@ -36,21 +36,21 @@ private struct Device {
 }
 
 /// Delegate
-public protocol CustomAdDelegate: class {
+protocol CustomAdDelegate: class {
     func customAdClicked()
     func customAdClosed()
 }
 
 /// Custom ads video class
-public class CustomAd: NSObject {
+class CustomAd: NSObject {
     
     // MARK: - Static Properties
-    public static let sharedInstance = CustomAd()
+    static let sharedInstance = CustomAd()
     
     // MARK: - Properties
     
     /// Delegate
-    public weak var delegate: CustomAdDelegate?
+    weak var delegate: CustomAdDelegate?
     
     /// View controller
     private var presentingViewController: UIViewController?

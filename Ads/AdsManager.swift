@@ -183,7 +183,7 @@ class AdsManager: NSObject {
     }
 }
 
-// MARK: - AdMob Delegates
+// MARK: -  Delegates
 extension AdsManager: CustomAdDelegate {
     
     /// Custom ads
@@ -213,7 +213,6 @@ extension AdsManager: CustomAdDelegate {
     }
 #endif
 
-// MARK: - AppLovin and Custom Ads Delegates
 #if os(tvOS)
     extension AdsManager: AppLovinDelegate {
         
