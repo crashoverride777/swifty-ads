@@ -69,7 +69,7 @@ CustomAds.swift
 AppLovin(tvOS).swift // only add this to tvOS target
 ```
 
-- Step 2: SetUp Ad Manager (both targets if needed)
+- Step 2: SetUp Ads Manager (both targets if needed)
 
 In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 
