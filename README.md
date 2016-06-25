@@ -64,17 +64,17 @@ Copy the Ads folder into your project. This should include the files
 
 ```swift
 AdsManager.swift 
-AdMob(iOS).swift
+AdMob(iOS).swift // only add this to iOS target
 CustomAds.swift
-AppLovin(tvOS).swift
+AppLovin(tvOS).swift // only add this to tvOS target
 ```
 
-- Step 1: SetUp AdsManager
+- Step 2: SetUp AdsManager
 
 
 AdsManager.sharedInstance.setUp(viewController: self, customAdsInterval: 3, maxCustomAdsPerSession: 3)
 
-- Step 2: SetUp AdMob
+- Step 3: SetUp AdMob (iOS target only)
 
 In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 ```swift
