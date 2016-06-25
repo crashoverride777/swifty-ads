@@ -90,7 +90,7 @@ AdMob.sharedInstance.setUp(viewController: self, bannerID: bannerID, interID: in
 
 Step 3: CustomAdSetUp (both targets if needed)
 
-Still in didMoveToView set up your custom ads inventory and init the helper with your custom ads interval and maxAdsPerSession
+Still in didMoveToView set up your custom ads inventory and init the helper
  ```
 let customAdsInventory = [
     (image: "AdImageVertigus", storeURL: "Enter app store link"),
