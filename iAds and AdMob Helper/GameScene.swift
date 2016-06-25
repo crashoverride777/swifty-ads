@@ -28,7 +28,7 @@ extension GameScene: AdsDelegate {
 class GameScene: SKScene {
     
     var myLabel: SKLabelNode!
-    var touchCounter = 10 {
+    var touchCounter = 25 {
         didSet {
            guard touchCounter >= 0 else {return }
            myLabel.text = "Remove ads in \(touchCounter) clicks"
@@ -49,13 +49,13 @@ class GameScene: SKScene {
         AdsManager.sharedInstance.delegate = self
         
         // Show banner ad
-        AdsManager.sharedInstance.showBanner()
+        AdMob.sharedInstance.showBanner()
     } 
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
         
-        // Show inter ad
+        // Show inter
         AdsManager.sharedInstance.showInterstitialRandomly(randomness: 3)
         
         // Remove ads after 3 clicks
@@ -63,6 +63,9 @@ class GameScene: SKScene {
         if touchCounter == 0 {
             AdsManager.sharedInstance.removeAll()
         }
+    }
+    
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
     }
    
     override func update(currentTime: CFTimeInterval) {

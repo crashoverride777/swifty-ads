@@ -21,9 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.1
-
-//    Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG) for your tvOS target
+//    v5.2
 
 /*
     Abstract:
@@ -33,12 +31,11 @@
 import Foundation
 
 /// Hide print statements for release
-private struct Debug {
-    static func print(object: Any) {
-        #if DEBUG
-            Swift.print("DEBUG", object) //, terminator: "")
-        #endif
-    }
+/// Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG) for your tvOS target)
+func print(items: Any..., separator: String = " ", terminator: String = "\n") {
+    #if DEBUG
+        Swift.print(items[0], separator: separator, terminator: terminator)
+    #endif
 }
 
 /// Delegate
@@ -86,7 +83,7 @@ class AppLovinInter: NSObject {
         guard !removedAds else { return }
         
         guard ALInterstitialAd.isReadyForDisplay() else {
-            Debug.print("AppLovin interstitial ad not ready, reloading...")
+            print("AppLovin interstitial ad not ready, reloading...")
             return
         }
         
@@ -107,11 +104,11 @@ class AppLovinInter: NSObject {
 extension AppLovinInter: ALAdLoadDelegate {
     
     func adService(adService: ALAdService, didLoadAd ad: ALAd) {
-        Debug.print("AppLovin interstitial did load ad")
+        print("AppLovin interstitial did load ad")
     }
     
     func adService(adService: ALAdService, didFailToLoadAdWithError code: Int32) {
-        Debug.print("AppLovin interstitial did fail to load ad, error code: \(code)")
+        print("AppLovin interstitial did fail to load ad, error code: \(code)")
     }
 }
 
@@ -120,17 +117,17 @@ extension AppLovinInter: ALAdLoadDelegate {
 extension AppLovinInter: ALAdDisplayDelegate {
     
     func ad(ad: ALAd, wasDisplayedIn view: UIView) {
-        Debug.print("AppLovin interstitial ad was displayed")
+        print("AppLovin interstitial ad was displayed")
         delegate?.appLovinAdClicked()
     }
     
     func ad(ad: ALAd, wasClickedIn view: UIView) {
-        Debug.print("AppLovin interstitial ad was clicked")
+        print("AppLovin interstitial ad was clicked")
         delegate?.appLovinAdClicked()
     }
     
     func ad(ad: ALAd, wasHiddenIn view: UIView) {
-        Debug.print("AppLovin interstitial ad was hidden")
+        print("AppLovin interstitial ad was hidden")
         delegate?.appLovinAdClosed()
     }
 }
@@ -140,14 +137,14 @@ extension AppLovinInter: ALAdDisplayDelegate {
 extension AppLovinInter: ALAdVideoPlaybackDelegate {
     
     func videoPlaybackBeganInAd(ad: ALAd) {
-        Debug.print("AppLovin interstitial video playback began in ad \(ad)")
+        print("AppLovin interstitial video playback began in ad \(ad)")
     }
     
     func videoPlaybackEndedInAd(ad: ALAd, atPlaybackPercent percentPlayed: NSNumber, fullyWatched wasFullyWatched: Bool) {
-        Debug.print("AppLovin interstitial video playback ended in ad \(ad) at percentage \(percentPlayed)")
+        print("AppLovin interstitial video playback ended in ad \(ad) at percentage \(percentPlayed)")
         
         guard wasFullyWatched else { return }
-        Debug.print("AppLovin interstitial user declined to view ad")
+        print("AppLovin interstitial user declined to view ad")
     }
 }
 
@@ -172,7 +169,7 @@ class AppLovinReward: NSObject {
     private var removedAds = false
     
     /// Check if reward video is ready (e.g to hide a reward video button)
-    var rewardVideoIsReady: Bool {
+    var isReady: Bool {
         return ALIncentivizedInterstitialAd.isReadyForDisplay()
     }
     
@@ -202,7 +199,7 @@ class AppLovinReward: NSObject {
         guard !removedAds else { return }
         
         guard ALIncentivizedInterstitialAd.isReadyForDisplay() else {
-            Debug.print("AppLovin reward video not ready, reloading...")
+            print("AppLovin reward video not ready, reloading...")
             preload()
             return
         }
@@ -228,11 +225,11 @@ class AppLovinReward: NSObject {
 extension AppLovinReward: ALAdLoadDelegate {
     
     func adService(adService: ALAdService, didLoadAd ad: ALAd) {
-        Debug.print("AppLovin reward video did load ad")
+        print("AppLovin reward video did load ad")
     }
     
     func adService(adService: ALAdService, didFailToLoadAdWithError code: Int32) {
-        Debug.print("AppLovin reward video did fail to load ad, error code: \(code)")
+        print("AppLovin reward video did fail to load ad, error code: \(code)")
     }
 }
 
@@ -241,17 +238,17 @@ extension AppLovinReward: ALAdLoadDelegate {
 extension AppLovinReward: ALAdDisplayDelegate {
     
     func ad(ad: ALAd, wasDisplayedIn view: UIView) {
-        Debug.print("AppLovin reward video ad was displayed")
+        print("AppLovin reward video ad was displayed")
         delegate?.appLovinAdClicked()
     }
     
     func ad(ad: ALAd, wasClickedIn view: UIView) {
-        Debug.print("AppLovin reward video ad was clicked")
+        print("AppLovin reward video ad was clicked")
         delegate?.appLovinAdClicked()
     }
     
     func ad(ad: ALAd, wasHiddenIn view: UIView) {
-        Debug.print("AppLovin reward video ad was hidden")
+        print("AppLovin reward video ad was hidden")
         delegate?.appLovinAdClosed()
         
         preload()
@@ -263,14 +260,14 @@ extension AppLovinReward: ALAdDisplayDelegate {
 extension AppLovinReward: ALAdVideoPlaybackDelegate {
     
     func videoPlaybackBeganInAd(ad: ALAd) {
-        Debug.print("AppLovin reward video playback began in ad \(ad)")
+        print("AppLovin reward video playback began in ad \(ad)")
     }
     
     func videoPlaybackEndedInAd(ad: ALAd, atPlaybackPercent percentPlayed: NSNumber, fullyWatched wasFullyWatched: Bool) {
-        Debug.print("AppLovin reward video playback ended in ad \(ad) at percentage \(percentPlayed)")
+        print("AppLovin reward video playback ended in ad \(ad) at percentage \(percentPlayed)")
         
         guard wasFullyWatched else { return }
-        Debug.print("AppLovin reward video was fully watched, rewarding...")
+        print("AppLovin reward video was fully watched, rewarding...")
         
         delegate?.appLovinAdDidRewardUser(rewardAmount: rewardAmount)
     }
@@ -281,7 +278,7 @@ extension AppLovinReward: ALAdVideoPlaybackDelegate {
 extension AppLovinReward: ALAdRewardDelegate {
     
     func rewardValidationRequestForAd(ad: ALAd, didSucceedWithResponse response: [NSObject : AnyObject]) {
-        Debug.print("AppLovin reward video did succeed with response \(response)")
+        print("AppLovin reward video did succeed with response \(response)")
         
         /* AppLovin servers validated the reward. Refresh user balance from your server.  We will also pass the number of coins
          awarded and the name of the currency.  However, ideally, you should verify this with your server before granting it. */
@@ -298,7 +295,7 @@ extension AppLovinReward: ALAdRewardDelegate {
         
         // Do something with this information.
         // MYCurrencyManagerClass.updateUserCurrency(currencyName withChange: amountGiven)
-        Debug.print("Rewarded \(amountGiven) \(currencyName)")
+        print("Rewarded \(amountGiven) \(currencyName)")
         
         // By default we'll show a UIAlertView informing your user of the currency & amount earned.
         // If you don't want this, you can turn it off in the Manage Apps UI.
@@ -309,7 +306,7 @@ extension AppLovinReward: ALAdRewardDelegate {
     }
     
     func rewardValidationRequestForAd(ad: ALAd, didExceedQuotaWithResponse response: [NSObject : AnyObject]) {
-        Debug.print("AppLovin reward video did exceed quota with reponse \(response)")
+        print("AppLovin reward video did exceed quota with reponse \(response)")
         
         // Your user has already earned the max amount you allowed for the day at this point, so
         // don't give them any more money. By default we'll show them a UIAlertView explaining this,
@@ -317,7 +314,7 @@ extension AppLovinReward: ALAdRewardDelegate {
     }
     
     func rewardValidationRequestForAd(ad: ALAd, wasRejectedWithResponse response: [NSObject : AnyObject]) {
-        Debug.print("AppLovin reward video was rejected with response \(response)")
+        print("AppLovin reward video was rejected with response \(response)")
         
         // Your user couldn't be granted a reward for this view. This could happen if you've blacklisted
         // them, for example. Don't grant them any currency. By default we'll show them a UIAlertView explaining this,
@@ -325,7 +322,7 @@ extension AppLovinReward: ALAdRewardDelegate {
     }
     
     func rewardValidationRequestForAd(ad: ALAd, didFailWithError responseCode: Int) {
-        Debug.print("AppLovin reward video did fail with error code \(responseCode)")
+        print("AppLovin reward video did fail with error code \(responseCode)")
         
         switch responseCode {
             
@@ -354,6 +351,6 @@ extension AppLovinReward: ALAdRewardDelegate {
     }
     
     func userDeclinedToViewAd(ad: ALAd) {
-        Debug.print("AppLovin reward video user declined to view ad")
+        print("AppLovin reward video user declined to view ad")
     }
 }

@@ -25,39 +25,38 @@ extension GameScene: AppLovinDelegate {
 }
 
 class GameScene: SKScene {
+    
+    var myLabel: SKLabelNode!
+    var touchCounter = 25 {
+        didSet {
+            guard touchCounter >= 0 else {return }
+            myLabel.text = "Remove ads in \(touchCounter) clicks"
+        }
+    }
+    
     override func didMoveToView(view: SKView) {
-        /* Setup your scene here */
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!"
-        myLabel.fontSize = 65
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame))
+        myLabel = SKLabelNode(fontNamed:"Chalkduster")
+        myLabel.text = "Remove ads in \(touchCounter) clicks"
+        myLabel.fontSize = 25;
+        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
         
         self.addChild(myLabel)
         
         
         AppLovinInter.sharedInstance.delegate = self
         AppLovinReward.sharedInstance.delegate = self
-        
-        AppLovinInter.sharedInstance.showRandomly(randomness: 3)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
         
-        for touch in touches {
-            let location = touch.locationInNode(self)
-            
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
-            
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
-            sprite.position = location
-            
-            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-            
-            sprite.runAction(SKAction.repeatActionForever(action))
-            
-            self.addChild(sprite)
+        // Show inter
+        AdsManager.sharedInstance.showInterstitialRandomly(randomness: 3)
+        
+        // Remove ads after 3 clicks
+        touchCounter -= 1
+        if touchCounter == 0 {
+            AdsManager.sharedInstance.removeAll()
         }
     }
    

@@ -14,12 +14,20 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         // Set up helpers
-        AdMobAdUnitID.banner = "Enter your real id"
-        AdMobAdUnitID.interstitial = "Enter your real id"
-        AdMobAdUnitID.rewardVideo = "Enter your real id"
+        let bannerID = "Enter your real ID"
+        let interstitialID = "Enter your real ID"
+        let rewardVideoID = "Enter your real ID"
+        AdMob.sharedInstance.setUp(viewController: self, bannerID: bannerID, interID: interstitialID, rewardVideoID: rewardVideoID)
         
         
-        AdsManager.sharedInstance.setUp(viewController: self, customAdsInterval: 3)
+        let customAdsInventory = [
+            (image: "AdImageVertigus", storeURL: "Enter app store link"),
+            (image:"AdImageAngryFlappies", storeURL: "Enter app store link")
+        ]
+        
+        CustomAd.sharedInstance.setUp(viewController: self, inventory: customAdsInventory)
+        
+        AdsManager.sharedInstance.setUp(viewController: self, customAdsInterval: 3, maxCustomAdsPerSession: 3)
         
         if let scene = GameScene(fileNamed: "GameScene") {
             // Configure the view.

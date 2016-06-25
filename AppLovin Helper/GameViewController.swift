@@ -14,8 +14,14 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        AppLovinInter.sharedInstance
-        AppLovinReward.sharedInstance
+        let customAdsInventory = [
+            (image: "AdImageVertigus", storeURL: "Enter your app store link"),
+            (image:"AdImageAngryFlappies", storeURL: "Enter your app store link")
+        ]
+        
+        CustomAd.sharedInstance.setUp(viewController: self, inventory: customAdsInventory)
+       
+        AdsManager.sharedInstance.setUp(viewController: self, customAdsInterval: 3, maxCustomAdsPerSession: 3)
         
 
         if let scene = GameScene(fileNamed: "GameScene") {
