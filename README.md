@@ -60,7 +60,7 @@ SETUP
 
 - Step 1: 
 
-Copy the Ads folder into your project. This should include the files
+Copy the follwing swift files into your project. This should include the files
 
 ```swift
 AdsManager.swift 
@@ -69,10 +69,13 @@ CustomAds.swift
 AppLovin(tvOS).swift // only add this to tvOS target
 ```
 
-- Step 2: SetUp AdsManager
+- Step 2: SetUp Ad Manager (both targets if needed)
 
+In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 
+```swift
 AdsManager.sharedInstance.setUp(viewController: self, customAdsInterval: 3, maxCustomAdsPerSession: 3)
+```
 
 - Step 3: SetUp AdMob (iOS target only)
 
@@ -85,23 +88,17 @@ let rewardVideoID = "Enter your real id"
 AdMob.sharedInstance.setUp(viewController: self, bannerID: bannerID, interID: interstitialID, rewardVideoID: rewardVideoID)
 ```
 
-This sets the viewController property in the helpers to your viewController. You are also setting your adMobAdUnitIDs for when you relase (You can leave them empty until you release or if you do not choose a certain type of ad). 
-
-Step 3: CustomAdSetUp
+Step 3: CustomAdSetUp (both targets if needed)
 
 Still in didMoveToView set up your custom ads inventory and init the helper with your custom ads interval and maxAdsPerSession
  ```
-  let customAdsInventory = [
-            (image: "AdImageVertigus", storeURL: "Enter app store link"),
-            (image:"AdImageAngryFlappies", storeURL: "Enter app store link")
-        ]
-        
-        CustomAd.sharedInstance.setUp(viewController: self, inventory: customAdsInventory)
-        
-        AdsManager.sharedInstance.setUp(viewController: self, customAdsInterval: 3, maxCustomAdsPerSession: 3)
- ``` 
+let customAdsInventory = [
+    (image: "AdImageVertigus", storeURL: "Enter app store link"),
+    (image:"AdImageAngryFlappies", storeURL: "Enter app store link")
+]
 
-Note: Step 2 and 3 will have
+CustomAd.sharedInstance.setUp(viewController: self, inventory: customAdsInventory)
+ ``` 
 
 HOW TO USE
 
@@ -219,15 +216,21 @@ AdMob.sharedInstance.delegate = self
 
 Than create an extension conforming to the protocol
 ```swift
-extension GameScene: AdMobDelegate {
-    func adMobAdClicked() {
-        // pause your game/app
+extension GameScene: AdsDelegate {
+    
+    func adClicked() {
+        print("Ads clicked")
     }
-    func adMobAdClosed() { 
-       // resume your game/app
+    
+    func adClosed() {
+        print("Ads closed")
     }
-    func adMobDidRewardUser(rewardAmount rewardAmount: Int) {
-       // code for reward videos, see instructions below or leave empty
+    
+    func adDidRewardUser(rewardAmount rewardAmount: Int) {
+        // e.g self.coins += rewardAmount
+        
+        // Will not work with this sample project, adMob just shows a black banner in test mode
+        // It only works with 3rd party mediation partners you set up through your adMob account
     }
 }
 ```
@@ -320,7 +323,7 @@ I have tested this code with a real reward video ad from Chartboost, so I know e
 
 # AppLovin (tvOS)
 
-Mediation will not work on tvOS because the AdMob SDK does not tvOS.
+Mediation will not work on tvOS because the AdMob SDK does not work with tvOS yet.
 Although these instructions can also be applied to iOS I prefer to use mediation on iOS to avoid extra code so I would recommend you only follow these steps for tvOS.
 
 SETUP
