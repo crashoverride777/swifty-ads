@@ -50,14 +50,14 @@ class GameScene: SKScene {
         
         // Show banner ad
         AdMob.sharedInstance.showBanner()
-    } 
+    }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
         
         // Show inter
         AdsManager.sharedInstance.showInterstitialRandomly(randomness: 3)
-        
+       
         // Remove ads after 3 clicks
         touchCounter -= 1
         if touchCounter == 0 {

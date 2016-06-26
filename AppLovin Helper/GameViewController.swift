@@ -15,8 +15,8 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         let customAdsInventory = [
-            (image: "AdImageVertigus", storeURL: "Enter your app store link"),
-            (image:"AdImageAngryFlappies", storeURL: "Enter your app store link")
+            CustomAdInventory(imageName: "AdImageVertigus", storeURL: getAppStoreURL(forAppID: "991933749")),
+            CustomAdInventory(imageName:"AdImageAngryFlappies", storeURL: getAppStoreURL(forAppID: "1051292772"))
         ]
         
         CustomAd.sharedInstance.setUp(viewController: self, inventory: customAdsInventory)

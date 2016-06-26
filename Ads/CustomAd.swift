@@ -30,15 +30,26 @@
 
 import UIKit
 
-/// Device type
-private struct Device {
-    static let iPad = UIDevice.currentDevice().userInterfaceIdiom == .Pad
+/// Get app store url for app ID
+func getAppStoreURL(forAppID id: String) -> String {
+    #if os(iOS)
+        return "itms-apps://itunes.apple.com/app/id" + id
+    #endif
+    #if os(tvOS)
+        return "com.apple.TVAppStore://itunes.apple.com/app/id" + id
+    #endif
 }
 
 /// Delegate
 protocol CustomAdDelegate: class {
     func customAdClicked()
     func customAdClosed()
+}
+
+/// Inventory
+struct CustomAdInventory {
+    let imageName: String
+    let storeURL: String
 }
 
 /// Custom ads video class
@@ -56,28 +67,28 @@ class CustomAd: NSObject {
     private var presentingViewController: UIViewController?
     
     /// Ad creation
-    private let view = UIView()
-    private let imageView = UIImageView()
+    private var view = UIView()
+    private var imageView = UIImageView()
     private var closeButton = UIButton()
-    private var downloadButton = UIButton()
     
     /// Inventory
-    private var inventory = [(image: String, storeURL: String)]()
+    private var inventory = [CustomAdInventory]()
     
     /// Inventory tracking
     private var inventoryCounter = 0 {
         didSet {
-            guard inventory.count < inventoryCounter else { return }
-            inventoryCounter = 0
+            if inventory.count == inventoryCounter {
+                inventoryCounter = 0
+            }
         }
     }
     
     private var image: String {
-        return inventory.count > inventoryCounter ? inventory[inventoryCounter].image : ""
+        return inventory[inventoryCounter].imageName
     }
     
     private var storeURL: String {
-        return inventory.count > inventoryCounter ? inventory[inventoryCounter].storeURL : ""
+        return inventory[inventoryCounter].storeURL
     }
     
     /// Removed ads
@@ -90,7 +101,7 @@ class CustomAd: NSObject {
     }
     
     /// SetUp
-    func setUp(viewController viewController: UIViewController, inventory: [(image: String, storeURL: String)]) {
+    func setUp(viewController viewController: UIViewController, inventory: [CustomAdInventory]) {
         self.presentingViewController = viewController
         self.inventory = inventory
     }
@@ -132,21 +143,24 @@ private extension CustomAd {
         setImageForOrientation()
         view.addSubview(imageView)
         
-        // Buttons
         #if os(iOS)
-            downloadButton.backgroundColor = UIColor.clearColor()
-            downloadButton.addTarget(self, action: #selector(pressedDownloadButton), forControlEvents: .TouchDown)
             
+            // Download tap gesture
+            let downloadTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handelDownload))
+            downloadTapGestureRecognizer.delaysTouchesBegan = true
+            imageView.userInteractionEnabled = true
+            imageView.addGestureRecognizer(downloadTapGestureRecognizer)
+            
+            // Close button
             closeButton.setTitle("X", forState: .Normal)
             closeButton.setTitleColor(UIColor.grayColor(), forState: .Normal)
             closeButton.backgroundColor = UIColor.whiteColor()
             closeButton.layer.borderColor = UIColor.grayColor().CGColor
             closeButton.layer.borderWidth = 2
-            closeButton.layer.cornerRadius = (Device.iPad ? 15 : 11.5)
+            let iPad = UIDevice.currentDevice().userInterfaceIdiom == .Pad
+            closeButton.layer.cornerRadius = (iPad ? 15 : 11.5)
             closeButton.addTarget(self, action: #selector(pressedCloseButton), forControlEvents: .TouchDown)
-            
             setButtonsForOrientation()
-            view.addSubview(downloadButton)
             view.addSubview(closeButton)
         #endif
         
@@ -172,8 +186,11 @@ private extension CustomAd {
     }
     
     func removeFromSuperview() {
+        for gestureRecognizer in imageView.gestureRecognizers ?? [] {
+            imageView.removeGestureRecognizer(gestureRecognizer)
+        }
+        
         closeButton.removeFromSuperview()
-        downloadButton.removeFromSuperview()
         imageView.removeFromSuperview()
         view.removeFromSuperview()
     }
@@ -183,11 +200,12 @@ private extension CustomAd {
 
 extension CustomAd {
     
-    func pressedDownloadButton() {
-        pressedCloseButton()
-        if let url = NSURL(string: storeURL) {
-            UIApplication.sharedApplication().openURL(url)
-        }
+    func handelDownload() {
+        print("Pressed download button")
+        //pressedCloseButton()
+//        if let url = NSURL(string: storeURL) {
+//            UIApplication.sharedApplication().openURL(url)
+//        }
     }
     
     func pressedCloseButton() {
@@ -209,7 +227,8 @@ private extension CustomAd {
             if UIDevice.currentDevice().orientation.isLandscape {
                 imageView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width / 1.2, height: view.frame.size.height / 1.1)
             } else {
-                let height = Device.iPad ? view.frame.size.height / 2 : view.frame.size.height / 2.5
+                let iPad = UIDevice.currentDevice().userInterfaceIdiom == .Pad
+                let height = iPad ? view.frame.size.height / 2 : view.frame.size.height / 2.5
                 imageView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width / 1.05, height: height)
             }
         #endif
@@ -222,10 +241,8 @@ private extension CustomAd {
     }
     
     func setButtonsForOrientation() {
-        downloadButton.frame = CGRect(x: 0, y: 0, width: imageView.frame.size.width, height: imageView.frame.size.height)
-        downloadButton.center = CGPoint(x: CGRectGetMidX(imageView.frame), y: CGRectGetMidY(imageView.frame))
-        
-        let closeButtonSize: CGFloat = Device.iPad ? 30 : 22
+        let iPad = UIDevice.currentDevice().userInterfaceIdiom == .Pad
+        let closeButtonSize: CGFloat = iPad ? 30 : 22
         closeButton.frame = CGRect(x: 0, y: 0, width: closeButtonSize, height: closeButtonSize)
         closeButton.center = CGPoint(x: CGRectGetMinX(imageView.frame) + (closeButtonSize / 1.5), y: CGRectGetMinY(imageView.frame) + (closeButtonSize / 1.5))
     }
