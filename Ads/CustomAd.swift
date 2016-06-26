@@ -146,7 +146,7 @@ private extension CustomAd {
         #if os(iOS)
             
             // Download tap gesture
-            let downloadTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handelDownload))
+            let downloadTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDownload))
             downloadTapGestureRecognizer.delaysTouchesBegan = true
             imageView.userInteractionEnabled = true
             imageView.addGestureRecognizer(downloadTapGestureRecognizer)
@@ -174,7 +174,7 @@ private extension CustomAd {
             rootViewController?.view.addGestureRecognizer(tapMenu)
             
             let tapMain = UITapGestureRecognizer()
-            tapMain.addTarget(self, action: #selector(pressedDownloadButton))
+            tapMain.addTarget(self, action: #selector(handleDownload))
             tapMain.allowedPressTypes = [NSNumber (integer: UIPressType.Select.rawValue)]
             rootViewController?.view.addGestureRecognizer(tapMain)
         #endif
@@ -200,7 +200,7 @@ private extension CustomAd {
 
 extension CustomAd {
     
-    func handelDownload() {
+    func handleDownload() {
         print("Pressed download button")
         pressedCloseButton()
         if let url = NSURL(string: storeURL) {
