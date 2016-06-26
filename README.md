@@ -93,8 +93,8 @@ Step 3: CustomAdSetUp (both targets if needed)
 Still in didMoveToView set up your custom ads inventory and init the helper
  ```
 let customAdsInventory = [
-    (image: "AdImageVertigus", storeURL: "Enter app store link"),
-    (image:"AdImageAngryFlappies", storeURL: "Enter app store link")
+    (image: "AdImageVertigus", storeURL: getAppStoreURL(forAppID: "Enter your app ID")),
+    (image:"AdImageAngryFlappies", storeURL: getAppStoreURL(forAppID: "Enter your app ID"))
 ]
 
 CustomAd.sharedInstance.setUp(viewController: self, inventory: customAdsInventory)
@@ -153,11 +153,6 @@ extension GameScene: AdsDelegate {
     }
 }
 ```
-
-NOTE: 
-
-These seem to only get called when in release mode and not when in test mode.
-
 
 # Use helper without custom ads
 
@@ -474,38 +469,3 @@ Small changes to adMobAdUnitID set up.
 - v5.0
 
 Included AppLovin helper for tvOS. The adMob SDK does not work on tvOS so you will have to use AppLovin code if you want to show ads (AppLovin works with mediation on iOS)
-
-- v4.2
-
-Custom ads redesign and improvments.
-
-It is recommended to read these apple guidlines
-
-https://developer.apple.com/app-store/marketing/guidelines/#images
-
-when using your own ads.
-
-- v4.1.1
-
-Clean-up
-
-- v4.1
-
-Removed iAd APIs from the project as you can get iAds very easily by using AdMob mediation. (if you still need them, download v4.0)
-
-Included AdMob reward videos.
-
-- v4.0
-
-Complete redesign of the helper.
- 
-This should make code cleaner and better to maintain as well as easier to understand. I also think this way is more flexible because you can decide to just use a single Ad provider without having to edit the whole project. 
-
-I will remove the iAd APIs on the next update as AdMob mediation is a much better way to handle multiple ad providers and will be my strategy going forward.
-
-
-
-
-
-
- 
