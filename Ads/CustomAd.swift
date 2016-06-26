@@ -184,9 +184,10 @@ private extension CustomAd {
 extension CustomAd {
     
     func pressedDownloadButton() {
-        guard let url = NSURL(string: storeURL) else { return }
-        UIApplication.sharedApplication().openURL(url)
         pressedCloseButton()
+        if let url = NSURL(string: storeURL) {
+            UIApplication.sharedApplication().openURL(url)
+        }
     }
     
     func pressedCloseButton() {
