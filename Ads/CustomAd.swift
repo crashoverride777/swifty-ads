@@ -202,10 +202,10 @@ extension CustomAd {
     
     func handelDownload() {
         print("Pressed download button")
-        //pressedCloseButton()
-//        if let url = NSURL(string: storeURL) {
-//            UIApplication.sharedApplication().openURL(url)
-//        }
+        pressedCloseButton()
+        if let url = NSURL(string: storeURL) {
+            UIApplication.sharedApplication().openURL(url)
+        }
     }
     
     func pressedCloseButton() {
