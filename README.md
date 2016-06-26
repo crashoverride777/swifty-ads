@@ -93,8 +93,8 @@ Step 3: CustomAdSetUp (both targets if needed)
 Still in didMoveToView set up your custom ads inventory and init the helper
  ```
 let customAdsInventory = [
-    (image: "AdImageVertigus", storeURL: getAppStoreURL(forAppID: "Enter your app ID")),
-    (image:"AdImageAngryFlappies", storeURL: getAppStoreURL(forAppID: "Enter your app ID"))
+    CustomAdInventory(imageName: "AdImageVertigus", storeURL: getAppStoreURL(forAppID: "Enter your app ID")),
+    CustomAdInventory(imageName:"AdImageAngryFlappies", storeURL: getAppStoreURL(forAppID: "Enter your app ID"))
 ]
 
 CustomAd.sharedInstance.setUp(viewController: self, inventory: customAdsInventory)
