@@ -1,11 +1,3 @@
-NOTE: iAd is shutting down on June the 30th. It has now been confirmed that all of iAd will close and the APIs will be depreciated. 
-
-https://developer.apple.com/support/iad/
-
-
-I have removed all the iAd APIs from this project because iAds can easily be intergrated using AdMob mediation. Mediation is a much better way to handle multiple adProviders mainly due to not having to integrate extra code apart from AdMob APIs. This will be my strategy going forward as it makes this project easier to maintain and requires much less code.
-
-
 # AdMob and CustomAds Helpers for iOS and AppLovin for tvOS.
 
 A collection of helper classes to integrate Ads from AdMob, AppLovin (tvOS) as well as your own custom Ads. This helper has been been made while making my 1st SpriteKit game but should work for any kind of app. 
