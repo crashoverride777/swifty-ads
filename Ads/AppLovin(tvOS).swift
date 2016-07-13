@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.2
+//    v5.2.1
 
 /*
     Abstract:
@@ -71,16 +71,12 @@ class AppLovinInter: NSObject {
     }
     
     /// Show interstitial ad randomly
-    func showRandomly(randomness randomness: UInt32) {
+    func show(withRandomness randomness: UInt32 = 0) {
         guard !removedAds else { return }
         
-        guard Int(arc4random_uniform(randomness)) == 0 else { return }
-        show()
-    }
-    
-    /// Show
-    func show() {
-        guard !removedAds else { return }
+        if randomness != 0 {
+            guard Int(arc4random_uniform(randomness)) == 0 else { return }
+        }
         
         guard ALInterstitialAd.isReadyForDisplay() else {
             print("AppLovin interstitial ad not ready, reloading...")
@@ -187,16 +183,12 @@ class AppLovinReward: NSObject {
     }
     
     /// Show randomly
-    func showRandomly(randomness randomness: UInt32) {
+    func show(withRandomness randomness: UInt32 = 0) {
         guard !removedAds else { return }
         
-        guard Int(arc4random_uniform(randomness)) == 0 else { return }
-        show()
-    }
-    
-    /// Show
-    func show() {
-        guard !removedAds else { return }
+        if randomness != 0 {
+            guard Int(arc4random_uniform(randomness)) == 0 else { return }
+        }
         
         guard ALIncentivizedInterstitialAd.isReadyForDisplay() else {
             print("AppLovin reward video not ready, reloading...")

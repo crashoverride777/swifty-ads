@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.2
+//    v5.2.1
 
 /*
     Abstract:
@@ -108,14 +108,14 @@ class AdMob: NSObject {
     // MARK: - Show Banner
     
     /// Show banner ad with delay
-    func showBannerWithDelay(delay: NSTimeInterval) {
+    func showBanner(withDelay delay: NSTimeInterval = 0.1) {
         guard !removedAds else { return }
         
-        NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: #selector(showBanner), userInfo: nil, repeats: false)
+        NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: #selector(showingBanner), userInfo: nil, repeats: false)
     }
     
     /// Show banner ad
-    func showBanner() {
+    @objc private func showingBanner() {
         guard !removedAds else { return }
         
         loadBannerAd()
@@ -124,16 +124,12 @@ class AdMob: NSObject {
     // MARK: - Show Interstitial
     
     /// Show interstitial ad randomly
-    func showInterstitialRandomly(randomness randomness: UInt32) {
+    func showInterstitial(withRandomness randomness: UInt32 = 0) {
         guard !removedAds else { return }
     
-        guard Int(arc4random_uniform(randomness)) == 0 else { return }
-        showInterstitial()
-    }
-    
-    /// Show interstitial ad
-    func showInterstitial() {
-        guard !removedAds else { return }
+        if randomness != 0 {
+            guard Int(arc4random_uniform(randomness)) == 0 else { return }
+        }
         
         guard let interstitialAd = interstitialAd where interstitialAd.isReady else {
             print("AdMob interstitial is not ready, reloading...")
@@ -149,16 +145,12 @@ class AdMob: NSObject {
     // MARK: - Show Reward Video
     
     /// Show reward video ad randomly
-    func showRewardVideoRandomly(randomness randomness: UInt32) {
+    func showRewardVideo(withRandomness randomness: UInt32 = 0) {
         guard !removedAds else { return }
         
-        guard Int(arc4random_uniform(randomness)) == 0 else { return }
-        showRewardVideo()
-    }
-    
-    /// Show reward video ad
-    func showRewardVideo() {
-        guard !removedAds else { return }
+        if randomness != 0 {
+            guard Int(arc4random_uniform(randomness)) == 0 else { return }
+        }
         
         guard let rewardVideoAd = rewardVideoAd where rewardVideoAd.ready else {
             print("AdMob reward video is not ready, reloading...")
@@ -166,7 +158,7 @@ class AdMob: NSObject {
             return
         }
         
-         print("AdMob reward video is showing")
+        print("AdMob reward video is showing")
         guard let rootViewController = presentingViewController else { return }
         rewardVideoAd.presentFromRootViewController(rootViewController)
     }

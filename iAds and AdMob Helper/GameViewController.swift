@@ -25,9 +25,9 @@ class GameViewController: UIViewController {
             CustomAdInventory(imageName:"AdImageAngryFlappies", storeURL: getAppStoreURL(forAppID: "1051292772"))
         ]
         
-        CustomAd.sharedInstance.setUp(viewController: self, inventory: customAdsInventory)
+        CustomAd.sharedInstance.setup(viewController: self, inventory: customAdsInventory)
         
-        AdsManager.sharedInstance.setUp(viewController: self, customAdsInterval: 3, maxCustomAdsPerSession: 3)
+        AdsManager.sharedInstance.setup(viewController: self, customAdsInterval: 3, maxCustomAdsPerSession: 3)
         
         if let scene = GameScene(fileNamed: "GameScene") {
             // Configure the view.

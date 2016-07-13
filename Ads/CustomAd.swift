@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.2
+//    v5.2.1
 
 /*
     Abstract:
@@ -101,7 +101,7 @@ class CustomAd: NSObject {
     }
     
     /// SetUp
-    func setUp(viewController viewController: UIViewController, inventory: [CustomAdInventory]) {
+    func setup(viewController viewController: UIViewController, inventory: [CustomAdInventory]) {
         self.presentingViewController = viewController
         self.inventory = inventory
     }
@@ -123,7 +123,7 @@ class CustomAd: NSObject {
     }
     
     /// Orientation changed
-    func  orientationChanged() {
+    func orientationChanged() {
         setImageForOrientation()
         setButtonsForOrientation()
     }

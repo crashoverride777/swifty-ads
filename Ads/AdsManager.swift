@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.2
+//    v5.2.1
 
 /*
     Abstract:
@@ -90,7 +90,7 @@ class AdsManager: NSObject {
     // MARK: - Set Up
     
     /// Set up ads helpers
-    func setUp(viewController viewController: UIViewController, customAdsInterval: Int, maxCustomAdsPerSession: Int) {
+    func setup(viewController viewController: UIViewController, customAdsInterval: Int, maxCustomAdsPerSession: Int) {
         self.customAdInterval = customAdsInterval
         self.customAdMaxPerSession = maxCustomAdsPerSession
     }
@@ -98,13 +98,11 @@ class AdsManager: NSObject {
     // MARK: - Show Interstitial Ads
     
     /// Show inter ad randomly
-    func showInterstitialRandomly(randomness randomness: UInt32) {
-        guard Int(arc4random_uniform(randomness)) == 0 else { return }
-        showInterstitial()
-    }
-    
-    /// Show interstitial ad
-    func showInterstitial() {
+    func showInterstitial(withRandomness randomness: UInt32 = 0) {
+        
+        if randomness != 0 {
+            guard Int(arc4random_uniform(randomness)) == 0 else { return }
+        }
         
         guard customAdShownCounter < customAdMaxPerSession else {
             showRealInterstitialAd()
@@ -137,13 +135,12 @@ class AdsManager: NSObject {
     // MARK: - Show Reward Video
     
     /// Show reward video ad randomly
-    func showRewardVideoRandomly(randomness randomness: UInt32) {
-        guard Int(arc4random_uniform(randomness)) == 0 else { return }
-        showRewardVideo()
-    }
-    
-    /// Show reward video ad
-    func showRewardVideo() {
+    func showRewardVideo(withRandomness randomness: UInt32 = 0) {
+        
+        if randomness != 0 {
+            guard Int(arc4random_uniform(randomness)) == 0 else { return }
+        }
+        
         #if os(iOS)
             AdMob.sharedInstance.showRewardVideo()
         #endif
