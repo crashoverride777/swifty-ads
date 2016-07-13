@@ -66,7 +66,7 @@ AppLovin(tvOS).swift // only add this to tvOS target
 In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 
 ```swift
-AdsManager.sharedInstance.setUp(viewController: self, customAdsInterval: 3, maxCustomAdsPerSession: 3)
+AdsManager.sharedInstance.setup(viewController: self, customAdsInterval: 3, maxCustomAdsPerSession: 3)
 ```
 
 - Step 3: SetUp AdMob (iOS target only)
@@ -97,9 +97,9 @@ HOW TO USE
 - To show an Ad simply call these anywhere you like in your project
 ```swift
 AdsManager.sharedInstance.showBanner() 
-AdsManager.sharedInstance.showBannerWithDelay(1) // delay showing banner slightly eg when transitioning to new scene/view
+AdsManager.sharedInstance.showBanner(withDelay: 1) // delay showing banner slightly eg when transitioning to new scene/view
 AdsManager.sharedInstance.showInterstitial()
-AdsManager.sharedInstance.showInterstitialRandomly(randomness: 4) // 25% chance of showing inter ads (1/4)
+AdsManager.sharedInstance.showInterstitial(withRandomness: 4) // 25% chance of showing inter ads (1/4)
 ```
 
 - To remove Banner Ads, for example during gameplay 
@@ -158,7 +158,7 @@ Copy AdMob.swift into your project
 
 In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups
 ```swift
-AdMob.setUp(viewController: self)
+AdMob.setup(viewController: self)
 ```
 
 HOW TO USE
@@ -166,9 +166,9 @@ HOW TO USE
 - To show a supported Ad simply call these anywhere you like in your project
 ```swift
 AdMob.sharedInstance.showBanner() 
-AdMob.sharedInstance.showBannerWithDelay(1) // delay showing banner slightly eg when transitioning to new scene/view
+AdMob.sharedInstance.showBanner(withDelay: 1) // delay showing banner slightly eg when transitioning to new scene/view
 AdMob.sharedInstance.showInterstitial()
-AdMob.sharedInstance.showInterstitialRandomly(randomness: 4) // 25% chance of showing inter ads (1/4)
+AdMob.sharedInstance.showInterstitial(withRandomness: 4) // 25% chance of showing inter ads (1/4)
 ```
 
 - To remove Banner Ads, for example during gameplay 
@@ -447,6 +447,10 @@ Please feel free to let me know about any bugs or improvements, I am by no means
 Enjoy
 
 # Release Notes
+
+- 5.2.1
+
+Tweaks and improvements
 
 - 5.2
 
