@@ -77,7 +77,7 @@ let bannerID = "Enter your real id"
 let interstitialID = "Enter your real id"
 let rewardVideoID = "Enter your real id"
 
-AdMob.sharedInstance.setUp(viewController: self, bannerID: bannerID, interID: interstitialID, rewardVideoID: rewardVideoID)
+AdMob.sharedInstance.setup(viewController: self, bannerID: bannerID, interID: interstitialID, rewardVideoID: rewardVideoID)
 ```
 
 Step 3: CustomAdSetUp (both targets if needed)
@@ -89,7 +89,7 @@ let customAdsInventory = [
     CustomAdInventory(imageName:"AdImageAngryFlappies", storeURL: getAppStoreURL(forAppID: "Enter your app ID"))
 ]
 
-CustomAd.sharedInstance.setUp(viewController: self, inventory: customAdsInventory)
+CustomAd.sharedInstance.setup(viewController: self, inventory: customAdsInventory)
  ``` 
 
 HOW TO USE
@@ -378,10 +378,10 @@ AppLovinReward.sharedInstance
 - To show a supported Ad simply call these anywhere you like in your project
 ```swift
 AppLovinInter.sharedInstance.show() 
-AppLovinInter.sharedInstance.showRandomly(randomness: 4)  // 25% chance of showing inter ads (1/4)
+AppLovinInter.sharedInstance.show(withRandomness: 4)  // 25% chance of showing inter ads (1/4)
 
 AppLovinReward.sharedInstance.show() 
-AppLovinReward.sharedInstance.showRandomly(randomness: 4) // 25% chance of showing inter ads (1/4)
+AppLovinReward.sharedInstance.show(withRandomness: 4) // 25% chance of showing inter ads (1/4)
 ```
 - To remove all Ads, mainly for in app purchases simply call 
 ```swift
