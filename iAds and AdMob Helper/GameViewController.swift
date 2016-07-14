@@ -17,7 +17,7 @@ class GameViewController: UIViewController {
         let bannerID = "Enter your real ID"
         let interstitialID = "Enter your real ID"
         let rewardVideoID = "Enter your real ID"
-        AdMob.sharedInstance.setUp(viewController: self, bannerID: bannerID, interID: interstitialID, rewardVideoID: rewardVideoID)
+        AdMob.sharedInstance.setup(viewController: self, bannerID: bannerID, interID: interstitialID, rewardVideoID: rewardVideoID)
         
         
         let customAdsInventory = [

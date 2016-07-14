@@ -91,7 +91,7 @@ class AdMob: NSObject {
     // MARK: - Set-Up
     
     /// Set up ads helper
-    func setUp(viewController viewController: UIViewController, bannerID: String, interID: String, rewardVideoID: String) {
+    func setup(viewController viewController: UIViewController, bannerID: String, interID: String, rewardVideoID: String) {
         presentingViewController = viewController
         
         #if !DEBUG
