@@ -448,11 +448,16 @@ Enjoy
 
 # Release Notes
 
-- 5.2.1
+- v5.2.2
+
+Instead of optionally showing ads randomly you now can optionally show ads after a set interval e.g. show ad every 4 times the show method is called. 
+I prefer this instead of showing ads randomly because occasionally ads would show behind each other or show the first time they are called. I don't think is a good user experience as you dont want users to see ads immediatly after launching/using the app/game.
+
+- v5.2.1
 
 Tweaks and improvements
 
-- 5.2
+- v5.2
 
 Custom ad improvements (read instructions for setUp)
 
