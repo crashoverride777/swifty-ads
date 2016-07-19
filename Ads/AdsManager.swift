@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.2.1
+//    v5.2.2
 
 /*
     Abstract:
@@ -71,6 +71,9 @@ class AdsManager: NSObject {
     private var customAdShownCounter = 0
     private var customAdMaxPerSession = 0
     
+    /// Interval counter
+    private var intervalCounter = 0
+    
     // MARK: - Init
     private override init() {
         super.init()
@@ -97,11 +100,13 @@ class AdsManager: NSObject {
     
     // MARK: - Show Interstitial Ads
     
-    /// Show inter ad randomly
-    func showInterstitial(withRandomness randomness: UInt32 = 0) {
+    /// Show interstitial ad
+    func showInterstitial(withInterval interval: Int = 0) {
         
-        if randomness != 0 {
-            guard Int(arc4random_uniform(randomness)) == 0 else { return }
+        if interval != 0 {
+            intervalCounter += 1
+            guard intervalCounter == interval else { return }
+            intervalCounter = 0
         }
         
         guard customAdShownCounter < customAdMaxPerSession else {
@@ -134,11 +139,13 @@ class AdsManager: NSObject {
     
     // MARK: - Show Reward Video
     
-    /// Show reward video ad randomly
-    func showRewardVideo(withRandomness randomness: UInt32 = 0) {
+    /// Show reward video ad
+    func showRewardVideo(withInterval interval: Int = 0) {
         
-        if randomness != 0 {
-            guard Int(arc4random_uniform(randomness)) == 0 else { return }
+        if interval != 0 {
+            intervalCounter += 1
+            guard intervalCounter == interval else { return }
+            intervalCounter = 0
         }
         
         #if os(iOS)

@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.2.1
+//    v5.2.2
 
 /*
     Abstract:
@@ -58,6 +58,9 @@ class AppLovinInter: NSObject {
     /// Delegate
     weak var delegate: AppLovinDelegate?
     
+    /// Interval counter
+    private var intervalCounter = 0
+    
     /// Removed ads
     private var removedAds = false
     
@@ -71,11 +74,13 @@ class AppLovinInter: NSObject {
     }
     
     /// Show interstitial ad randomly
-    func show(withRandomness randomness: UInt32 = 0) {
+    func show(withInterval interval: Int = 0) {
         guard !removedAds else { return }
         
-        if randomness != 0 {
-            guard Int(arc4random_uniform(randomness)) == 0 else { return }
+        if interval != 0 {
+            intervalCounter += 1
+            guard intervalCounter == interval else { return }
+            intervalCounter = 0
         }
         
         guard ALInterstitialAd.isReadyForDisplay() else {
@@ -161,6 +166,9 @@ class AppLovinReward: NSObject {
     /// This will be updated once a reward video started playing
     private var rewardAmount = 1
     
+    /// Interval counter
+    private var intervalCounter = 0
+    
     /// Removed ads
     private var removedAds = false
     
@@ -183,11 +191,13 @@ class AppLovinReward: NSObject {
     }
     
     /// Show randomly
-    func show(withRandomness randomness: UInt32 = 0) {
+    func show(withInterval interval: Int = 0) {
         guard !removedAds else { return }
         
-        if randomness != 0 {
-            guard Int(arc4random_uniform(randomness)) == 0 else { return }
+        if interval != 0 {
+            intervalCounter += 1
+            guard intervalCounter == interval else { return }
+            intervalCounter = 0
         }
         
         guard ALIncentivizedInterstitialAd.isReadyForDisplay() else {

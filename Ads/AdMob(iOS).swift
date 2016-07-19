@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.2.1
+//    v5.2.2
 
 /*
     Abstract:
@@ -78,6 +78,9 @@ class AdMob: NSObject {
     private var interstitialAdUnitID = "ca-app-pub-3940256099942544/4411468910"
     private var rewardVideoAdUnitID = "ca-app-pub-1234567890123456/1234567890"
     
+    /// Interval counter
+    private var intervalCounter = 0
+    
     /// Removed ads
     private var removedAds = false
     
@@ -124,11 +127,13 @@ class AdMob: NSObject {
     // MARK: - Show Interstitial
     
     /// Show interstitial ad randomly
-    func showInterstitial(withRandomness randomness: UInt32 = 0) {
+    func showInterstitial(withInterval interval: Int = 0) {
         guard !removedAds else { return }
     
-        if randomness != 0 {
-            guard Int(arc4random_uniform(randomness)) == 0 else { return }
+        if interval != 0 {
+            intervalCounter += 1
+            guard intervalCounter == interval else { return }
+            intervalCounter = 0
         }
         
         guard let interstitialAd = interstitialAd where interstitialAd.isReady else {
@@ -145,11 +150,13 @@ class AdMob: NSObject {
     // MARK: - Show Reward Video
     
     /// Show reward video ad randomly
-    func showRewardVideo(withRandomness randomness: UInt32 = 0) {
+    func showRewardVideo(withInterval interval: Int = 0) {
         guard !removedAds else { return }
         
-        if randomness != 0 {
-            guard Int(arc4random_uniform(randomness)) == 0 else { return }
+        if interval != 0 {
+            intervalCounter += 1
+            guard intervalCounter == interval else { return }
+            intervalCounter = 0
         }
         
         guard let rewardVideoAd = rewardVideoAd where rewardVideoAd.ready else {

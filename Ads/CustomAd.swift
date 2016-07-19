@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.2.1
+//    v5.2.2
 
 /*
     Abstract:
@@ -91,6 +91,9 @@ class CustomAd: NSObject {
         return inventory[inventoryCounter].storeURL
     }
     
+    /// Interval counter
+    private var intervalCounter = 0
+    
     /// Removed ads
     private var removedAds = false
     
@@ -107,7 +110,14 @@ class CustomAd: NSObject {
     }
     
     /// Show
-    func show() {
+    func show(withInterval interval: Int = 0) {
+        
+        if interval != 0 {
+            intervalCounter += 1
+            guard intervalCounter == interval else { return }
+            intervalCounter = 0
+        }
+        
         guard !removedAds && !inventory.isEmpty else { return }
         guard let validAd = createAd() else { return }
         validAd.layer.zPosition = 5000
