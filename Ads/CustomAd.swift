@@ -111,6 +111,8 @@ class CustomAd: NSObject {
     
     /// Show
     func show(withInterval interval: Int = 0) {
+        guard !removedAds && !inventory.isEmpty else { return }
+        guard let validAd = createAd() else { return }
         
         if interval != 0 {
             intervalCounter += 1
@@ -118,8 +120,6 @@ class CustomAd: NSObject {
             intervalCounter = 0
         }
         
-        guard !removedAds && !inventory.isEmpty else { return }
-        guard let validAd = createAd() else { return }
         validAd.layer.zPosition = 5000
         presentingViewController?.view?.window?.rootViewController?.view?.addSubview(validAd)
         

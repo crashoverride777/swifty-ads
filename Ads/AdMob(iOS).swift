@@ -129,17 +129,17 @@ class AdMob: NSObject {
     /// Show interstitial ad randomly
     func showInterstitial(withInterval interval: Int = 0) {
         guard !removedAds else { return }
-    
-        if interval != 0 {
-            intervalCounter += 1
-            guard intervalCounter == interval else { return }
-            intervalCounter = 0
-        }
         
         guard let interstitialAd = interstitialAd where interstitialAd.isReady else {
             print("AdMob interstitial is not ready, reloading...")
             self.interstitialAd = loadInterstitialAd()
             return
+        }
+        
+        if interval != 0 {
+            intervalCounter += 1
+            guard intervalCounter == interval else { return }
+            intervalCounter = 0
         }
         
         print("AdMob interstitial is showing")
@@ -153,16 +153,16 @@ class AdMob: NSObject {
     func showRewardVideo(withInterval interval: Int = 0) {
         guard !removedAds else { return }
         
-        if interval != 0 {
-            intervalCounter += 1
-            guard intervalCounter == interval else { return }
-            intervalCounter = 0
-        }
-        
         guard let rewardVideoAd = rewardVideoAd where rewardVideoAd.ready else {
             print("AdMob reward video is not ready, reloading...")
             self.rewardVideoAd = loadRewardVideoAd()
             return
+        }
+        
+        if interval != 0 {
+            intervalCounter += 1
+            guard intervalCounter == interval else { return }
+            intervalCounter = 0
         }
         
         print("AdMob reward video is showing")

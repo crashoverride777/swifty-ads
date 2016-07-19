@@ -77,15 +77,15 @@ class AppLovinInter: NSObject {
     func show(withInterval interval: Int = 0) {
         guard !removedAds else { return }
         
+        guard ALInterstitialAd.isReadyForDisplay() else {
+            print("AppLovin interstitial ad not ready, reloading...")
+            return
+        }
+        
         if interval != 0 {
             intervalCounter += 1
             guard intervalCounter == interval else { return }
             intervalCounter = 0
-        }
-        
-        guard ALInterstitialAd.isReadyForDisplay() else {
-            print("AppLovin interstitial ad not ready, reloading...")
-            return
         }
         
         ALInterstitialAd.shared().adLoadDelegate = self
@@ -194,16 +194,16 @@ class AppLovinReward: NSObject {
     func show(withInterval interval: Int = 0) {
         guard !removedAds else { return }
         
-        if interval != 0 {
-            intervalCounter += 1
-            guard intervalCounter == interval else { return }
-            intervalCounter = 0
-        }
-        
         guard ALIncentivizedInterstitialAd.isReadyForDisplay() else {
             print("AppLovin reward video not ready, reloading...")
             preload()
             return
+        }
+        
+        if interval != 0 {
+            intervalCounter += 1
+            guard intervalCounter == interval else { return }
+            intervalCounter = 0
         }
         
         ALIncentivizedInterstitialAd.shared().adDisplayDelegate = self
