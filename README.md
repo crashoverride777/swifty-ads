@@ -22,13 +22,13 @@ Note:
 
 If you will use AppLovin for tvOS you will have to do these steps for your tvOS target as well
 
-# AdMob pre-setup
+# Pre-setup
 
 - Step 1: Sign up for a Google AdMob account and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
 
 https://support.google.com/admob/answer/3052638?hl=en-GB&ref_topic=3052726
 
-- Step 2: Install SDK
+- Step 2: Install AdMob SDK
 
 // Cocoa Pods
 https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods
@@ -41,6 +41,14 @@ I would recommend using Cocoa Pods especially if you will add more SDKs down the
 They have an app now which should make this alot easier
 
 https://cocoapods.org/app
+
+- Step 3: If you will use custom ads and your app/game is only in landscape mode add this code in your AppDelegate. The SKProductViewController only supports portrait and will crash if this is not on included for landscape only apps.
+
+```swift
+func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.AllButUpsideDown
+    }
+```
 
 # Use helper with custom ads
 
@@ -59,14 +67,6 @@ AdsManager.swift
 AdMob(iOS).swift // only add this to iOS target
 CustomAds.swift
 AppLovin(tvOS).swift // only add this to tvOS target
-```
-
-NOTE: If your app/game is only in landscape mode add this code in your AppDelegate. The SKProductViewController only supports portrait and will crash if this is not on included for landscape only apps.
-
-```swift
-func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.AllButUpsideDown
-    }
 ```
 
 - Step 2: SetUp Ads Manager (both targets if needed)
