@@ -466,7 +466,7 @@ Enjoy
 - v5.3
 
 Custom ad improvements. 
-AppStoreProductViewController now used to link to app on ios.
+AppStoreProductViewController now used to link to app store on ios.
 
 Please read the instructions again.
 
