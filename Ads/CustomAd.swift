@@ -44,7 +44,8 @@ private func getAppStoreURL(forAppID id: String) -> String {
 public enum Inventory: Int {
     
     // Convinience
-    case angryFlappies = 0
+    case random = -1
+    case angryFlappies
     case vertigus
     
     /// All ads
@@ -108,7 +109,12 @@ public class CustomAd: NSObject {
         
         var adInInventory: Int
         if let selectedAd = selectedAd {
-            adInInventory = selectedAd.rawValue
+            if selectedAd == .random {
+                let range = UInt32(Inventory.all.count)
+                adInInventory = Int(arc4random_uniform(range))
+            } else {
+                adInInventory = selectedAd.rawValue
+            }
         } else {
             adInInventory = Inventory.current
         }
