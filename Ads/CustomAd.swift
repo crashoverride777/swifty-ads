@@ -76,10 +76,52 @@ public class CustomAd: NSObject {
     /// Delegate
     public weak var delegate: CustomAdDelegate?
     
-    /// Ad creation
+    /// View
     private var view = UIView()
-    private var imageView = UIImageView()
-    private var closeButton = UIButton()
+
+    /// Image view
+    private lazy var imageView: UIImageView = {
+        let view = UIImageView()
+        view.userInteractionEnabled = true
+        return view
+    }()
+    
+    /// Font style
+    private let font = "HelveticaNeue"
+    private let fontBold = "HelveticaNeue-Bold"
+    
+    /// Header label
+    private lazy var headerLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Override Interactive"
+        label.textAlignment = .Center
+        label.textColor = UIColor.blackColor()
+        return label
+    }()
+    
+    /// New game label
+    private lazy var newGameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "New"
+        label.textAlignment = .Center
+        label.textColor = UIColor.redColor()
+        label.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_4))
+        return label
+    }()
+    
+    /// Close button
+    private lazy var closeButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("X", forState: .Normal)
+        button.setTitleColor(UIColor.grayColor(), forState: .Normal)
+        button.backgroundColor = UIColor.whiteColor()
+        button.layer.borderColor = UIColor.grayColor().CGColor
+        button.layer.borderWidth = 2
+        let iPad = UIDevice.currentDevice().userInterfaceIdiom == .Pad
+        button.layer.cornerRadius = (iPad ? 15 : 11.5)
+        button.addTarget(self, action: #selector(handleClose), forControlEvents: .TouchDown)
+        return button
+    }()
     
     /// Image and store url
     private var imageName = ""
@@ -98,7 +140,7 @@ public class CustomAd: NSObject {
     }
     
     /// Show
-    public func show(selectedAd selectedAd: Inventory? = nil, withInterval interval: Int = 0) {
+    public func show(selectedAd selectedAd: Inventory? = nil, isNewGame: Bool = false, withInterval interval: Int = 0) {
         guard !removedAds && !Inventory.all.isEmpty else { return }
         
         if interval != 0 {
@@ -138,7 +180,7 @@ public class CustomAd: NSObject {
             Inventory.current = 0
         }
         
-        guard let validAd = createAd(selectedAd: adInInventory) else { return }
+        guard let validAd = createAd(selectedAd: adInInventory, isNewGame: isNewGame) else { return }
         
         validAd.layer.zPosition = 5000
         let rootViewController = UIApplication.sharedApplication().keyWindow?.rootViewController
@@ -155,8 +197,7 @@ public class CustomAd: NSObject {
     
     /// Orientation changed
     public func adjustForOrientation() {
-        setImageForOrientation()
-        setButtonsForOrientation()
+        setupForOrientation()
     }
 }
 
@@ -165,7 +206,7 @@ public class CustomAd: NSObject {
 private extension CustomAd {
     
     /// Create ad
-    func createAd(selectedAd selectedAd: Int) -> UIView? {
+    func createAd(selectedAd selectedAd: Int, isNewGame: Bool) -> UIView? {
         
         // Set ad properties
         imageName = Inventory.all[selectedAd].imageName
@@ -176,27 +217,21 @@ private extension CustomAd {
         
         // Image
         imageView.image = UIImage(named: imageName)
-        imageView.userInteractionEnabled = true
-        setImageForOrientation()
         view.addSubview(imageView)
         
+        // Labels
+        view.addSubview(headerLabel)
+        newGameLabel.hidden = !isNewGame
+        view.addSubview(newGameLabel)
+        
+        // Button
         #if os(iOS)
             
             // Download tap gesture
             let downloadTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDownload))
             downloadTapGestureRecognizer.delaysTouchesBegan = true
             imageView.addGestureRecognizer(downloadTapGestureRecognizer)
-            
-            // Close button
-            closeButton.setTitle("X", forState: .Normal)
-            closeButton.setTitleColor(UIColor.grayColor(), forState: .Normal)
-            closeButton.backgroundColor = UIColor.whiteColor()
-            closeButton.layer.borderColor = UIColor.grayColor().CGColor
-            closeButton.layer.borderWidth = 2
-            let iPad = UIDevice.currentDevice().userInterfaceIdiom == .Pad
-            closeButton.layer.cornerRadius = (iPad ? 15 : 11.5)
-            closeButton.addTarget(self, action: #selector(handleClose), forControlEvents: .TouchDown)
-            setButtonsForOrientation()
+
             view.addSubview(closeButton)
         #endif
         
@@ -216,6 +251,8 @@ private extension CustomAd {
         // Delegate
         delegate?.customAdClicked()
         
+        setupForOrientation()
+        
         return view
     }
     
@@ -227,6 +264,50 @@ private extension CustomAd {
         closeButton.removeFromSuperview()
         imageView.removeFromSuperview()
         view.removeFromSuperview()
+    }
+}
+
+// MARK: - Set up for orientation
+
+private extension CustomAd {
+    
+    func setupForOrientation() {
+        guard let rootViewController = UIApplication.sharedApplication().keyWindow?.rootViewController else { return }
+        
+        /// View
+        view.frame = rootViewController.view.frame
+        
+        /// Image view
+        #if os(iOS)
+            if UIScreen.mainScreen().bounds.height < UIScreen.mainScreen().bounds.width { // check if in landscape, works at startup
+                imageView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width / 1.2, height: view.frame.size.height / 1.1)
+            } else {
+                let iPad = UIDevice.currentDevice().userInterfaceIdiom == .Pad
+                let height = iPad ? view.frame.size.height / 2 : view.frame.size.height / 2.5
+                imageView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width / 1.05, height: height)
+            }
+        #endif
+        
+        #if os(tvOS)
+            imageView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width / 1.2, height: view.frame.size.height / 1.1)
+        #endif
+        
+        imageView.center = rootViewController.view.center
+        
+        /// Labels
+        headerLabel.font = UIFont(name: font, size: self.imageView.frame.size.height / 13)
+        headerLabel.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height)
+        headerLabel.center = CGPoint(x: 0 + (view.frame.size.width / 2), y: CGRectGetMinY(imageView.frame) + 24)
+        
+        newGameLabel.font = UIFont(name: fontBold, size: self.imageView.frame.size.height / 17)
+        newGameLabel.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height)
+        newGameLabel.center = CGPoint(x: CGRectGetMaxX(imageView.frame) - 20, y: CGRectGetMinY(imageView.frame) + 20)
+        
+        /// Buttons
+        let iPad = UIDevice.currentDevice().userInterfaceIdiom == .Pad
+        let closeButtonSize: CGFloat = iPad ? 30 : 22
+        closeButton.frame = CGRect(x: 0, y: 0, width: closeButtonSize, height: closeButtonSize)
+        closeButton.center = CGPoint(x: CGRectGetMinX(imageView.frame) + (closeButtonSize / 1.5), y: CGRectGetMinY(imageView.frame) + (closeButtonSize / 1.5))
     }
 }
 
@@ -254,39 +335,6 @@ extension CustomAd {
     }
 }
 
-/// Set For Orientation
-private extension CustomAd {
-    
-    func setImageForOrientation() {
-        guard let rootViewController = UIApplication.sharedApplication().keyWindow?.rootViewController else { return }
-        
-        view.frame = rootViewController.view.frame
-        
-        #if os(iOS)
-            if UIScreen.mainScreen().bounds.height < UIScreen.mainScreen().bounds.width { // check if in landscape, works at startup
-                imageView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width / 1.2, height: view.frame.size.height / 1.1)
-            } else {
-                let iPad = UIDevice.currentDevice().userInterfaceIdiom == .Pad
-                let height = iPad ? view.frame.size.height / 2 : view.frame.size.height / 2.5
-                imageView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width / 1.05, height: height)
-            }
-        #endif
-        
-        #if os(tvOS)
-            imageView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width / 1.2, height: view.frame.size.height / 1.1)
-        #endif
-        
-        imageView.center = rootViewController.view.center
-    }
-    
-    func setButtonsForOrientation() {
-        let iPad = UIDevice.currentDevice().userInterfaceIdiom == .Pad
-        let closeButtonSize: CGFloat = iPad ? 30 : 22
-        closeButton.frame = CGRect(x: 0, y: 0, width: closeButtonSize, height: closeButtonSize)
-        closeButton.center = CGPoint(x: CGRectGetMinX(imageView.frame) + (closeButtonSize / 1.5), y: CGRectGetMinY(imageView.frame) + (closeButtonSize / 1.5))
-    }
-}
-
 // MARK: - SKStoreProductViewController
 
 class AppStoreViewController: NSObject {
@@ -294,12 +342,12 @@ class AppStoreViewController: NSObject {
     // MARK: - Static Properties
     
     /// Shared instance
-    static let sharedInstance = AppStoreViewController()
+    private static let sharedInstance = AppStoreViewController()
     
     // MARK: - Methods
     
     /// Open app store controller for app ID
-    func open(forAppID appID: String) {
+    private func open(forAppID appID: String) {
         let storeViewController = SKStoreProductViewController()
         storeViewController.delegate = self
         
