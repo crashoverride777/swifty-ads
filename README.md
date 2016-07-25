@@ -66,7 +66,7 @@ AppLovin(tvOS).swift // only add this to tvOS target
 In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 
 ```swift
-AdsManager.sharedInstance.setup(viewController: self, customAdsInterval: 3, maxCustomAdsPerSession: 3)
+AdsManager.sharedInstance.setup(customAdsInterval: 3, maxCustomAdsPerSession: 3)
 ```
 
 - Step 3: SetUp AdMob (iOS target only)
@@ -82,15 +82,11 @@ AdMob.sharedInstance.setup(viewController: self, bannerID: bannerID, interID: in
 
 Step 3: CustomAdSetUp (both targets if needed)
 
-Still in didMoveToView set up your custom ads inventory and init the helper
- ```
-let customAdsInventory = [
-    CustomAdInventory(imageName: "AdImageVertigus", storeURL: getAppStoreURL(forAppID: "Enter your app ID")),
-    CustomAdInventory(imageName:"AdImageAngryFlappies", storeURL: getAppStoreURL(forAppID: "Enter your app ID"))
-]
+Go to the CustomAd.swift file and right at the top in the Inventory struct create all the  case names for the app/games you would like to advertise. Than enter them into the "all" array as done in the sample project.
 
-CustomAd.sharedInstance.setup(viewController: self, inventory: customAdsInventory)
- ``` 
+To make this as reusable as possible e.g if you have multiple projects and share the same file, you can inlude all your custom ads, including for the current app/game that is used. The helper will automatically compare the bundle ID name to the ad image (including whitespaces and -) to see if they are the same and if so will move onto the next ad in the inventory.
+Please follow the image naming conventions for this  to work. In your asset catalogue the images should look like this
+"AdImageYourAppName". 
 
 HOW TO USE
 
@@ -144,6 +140,25 @@ extension GameScene: AdsDelegate {
        // code for reward videos, see instructions below or leave empty
     }
 }
+```
+
+# Use helper only with custom ads
+
+SETUP
+
+- Step 1:
+
+HOW TO USE
+
+Copy CustomAd.swift into your project 
+
+- To show an Ad simply call this method
+```swift
+CustomAd.sharedInstance.show() // will show an ad in the inventory and than move on to next one
+CustomAd.sharedInstance.show(withInterval: 4) // will show an ad in the inventory and than move on to next one, every 4 times
+
+CustomAd.sharedInstance.show(selectedAd: .vertigus) // will show the selected custom ad
+CustomAd.sharedInstance.show(selectedAd: .vertigus, withInterval: 4) // will show the selected custom ad, every 4 times
 ```
 
 # Use helper without custom ads
@@ -447,6 +462,10 @@ Please feel free to let me know about any bugs or improvements, I am by no means
 Enjoy
 
 # Release Notes
+
+- v5.3
+
+Cleanup and custom ads improvements.
 
 - v5.2.2
 
