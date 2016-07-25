@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.2.2
+//    v5.3
 
 /*
     Abstract:
@@ -84,7 +84,7 @@ class AppLovinInter: NSObject {
         
         if interval != 0 {
             intervalCounter += 1
-            guard intervalCounter == interval else { return }
+            guard intervalCounter >= interval else { return }
             intervalCounter = 0
         }
         
@@ -202,7 +202,7 @@ class AppLovinReward: NSObject {
         
         if interval != 0 {
             intervalCounter += 1
-            guard intervalCounter == interval else { return }
+            guard intervalCounter >= interval else { return }
             intervalCounter = 0
         }
         

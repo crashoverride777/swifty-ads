@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.2.2
+//    v5.3
 
 /*
     Abstract:
@@ -93,7 +93,7 @@ class AdsManager: NSObject {
     // MARK: - Set Up
     
     /// Set up ads helpers
-    func setup(viewController viewController: UIViewController, customAdsInterval: Int, maxCustomAdsPerSession: Int) {
+    func setup(customAdsInterval customAdsInterval: Int, maxCustomAdsPerSession: Int) {
         self.customAdInterval = customAdsInterval
         self.customAdMaxPerSession = maxCustomAdsPerSession
     }
@@ -105,7 +105,7 @@ class AdsManager: NSObject {
         
         if interval != 0 {
             intervalCounter += 1
-            guard intervalCounter == interval else { return }
+            guard intervalCounter >= interval else { return }
             intervalCounter = 0
         }
         
@@ -144,7 +144,7 @@ class AdsManager: NSObject {
         
         if interval != 0 {
             intervalCounter += 1
-            guard intervalCounter == interval else { return }
+            guard intervalCounter >= interval else { return }
             intervalCounter = 0
         }
         
@@ -179,7 +179,7 @@ class AdsManager: NSObject {
     /// Orientation changed
     func orientationChanged() {
         
-        CustomAd.sharedInstance.orientationChanged()
+        CustomAd.sharedInstance.adjustForOrientation()
         
         #if os(iOS)
             AdMob.sharedInstance.orientationChanged()

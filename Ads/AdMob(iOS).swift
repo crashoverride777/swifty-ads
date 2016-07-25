@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.2.2
+//    v5.3
 
 /*
     Abstract:
@@ -138,13 +138,13 @@ class AdMob: NSObject {
         
         if interval != 0 {
             intervalCounter += 1
-            guard intervalCounter == interval else { return }
+            guard intervalCounter >= interval else { return }
             intervalCounter = 0
         }
         
         print("AdMob interstitial is showing")
-        guard let rootViewController = presentingViewController?.view?.window?.rootViewController else { return }
-        interstitialAd.presentFromRootViewController(rootViewController)
+        guard let presentingViewController = presentingViewController?.view?.window?.rootViewController else { return }
+        interstitialAd.presentFromRootViewController(presentingViewController)
     }
     
     // MARK: - Show Reward Video
@@ -161,12 +161,12 @@ class AdMob: NSObject {
         
         if interval != 0 {
             intervalCounter += 1
-            guard intervalCounter == interval else { return }
+            guard intervalCounter >= interval else { return }
             intervalCounter = 0
         }
         
         print("AdMob reward video is showing")
-        guard let rootViewController = presentingViewController else { return }
+        guard let rootViewController = presentingViewController?.view?.window?.rootViewController else { return }
         rewardVideoAd.presentFromRootViewController(rootViewController)
     }
     
@@ -233,7 +233,7 @@ private extension AdMob {
         
         bannerAd?.adUnitID = bannerAdUnitID
         bannerAd?.delegate = self
-        bannerAd?.rootViewController = presentingViewController
+        bannerAd?.rootViewController = presentingViewController.view?.window?.rootViewController
         bannerAd?.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (bannerAd!.frame.size.height / 2))
         
         let request = GADRequest()
@@ -287,7 +287,7 @@ extension AdMob: GADBannerViewDelegate {
         guard let presentingViewController = presentingViewController else { return }
         print("AdMob banner did receive ad from: \(bannerView.adNetworkClassName)")
         
-        presentingViewController.view?.window?.rootViewController?.view.addSubview(bannerView)
+        presentingViewController.view?.addSubview(bannerView)
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(1.5)
         bannerView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (bannerView.frame.size.height / 2))

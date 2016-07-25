@@ -1,0 +1,978 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		04246C5360BFFD089452DE4BCF58B717 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1704D3301AB26219B2489F5CBCFEAF53 /* Foundation.framework */; };
+		118FB6AAB975DF2411FB02A3ACAFD597 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870C602EDDC4CB6D519310BC9C946A54 /* Foundation.framework */; };
+		301446AA6EE49C051ABE46D82E19A62A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870C602EDDC4CB6D519310BC9C946A54 /* Foundation.framework */; };
+		343444A4E08C641B7D50CC62716FABC4 /* Pods-AppLovin HelperTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EFE1EA6033B5EB2EC4DB39A2CDF6D38 /* Pods-AppLovin HelperTests-dummy.m */; };
+		523A81CF073A8DDA3CE3113C36247FCB /* Pods-AppLovin HelperTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D2DCFBF0278C057BC932B8CEBB02D63 /* Pods-AppLovin HelperTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		525E0805862DDE36D55564EE84755C77 /* Pods-AdMob and CustomAds Helper-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 194906C09CD6679036B727E211E93C91 /* Pods-AdMob and CustomAds Helper-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5BE59303A539A91F38D164DC4776965E /* Pods-AdMob and CustomAds HelperTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E97D720CDC25D2E4520849A8A9E2AB /* Pods-AdMob and CustomAds HelperTests-dummy.m */; };
+		6E58ADD0C31149709B1BFCDE59DF19D5 /* Pods-AppLovin Helper-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FB17C01AD1B8290A1BAF57D83A61EE /* Pods-AppLovin Helper-dummy.m */; };
+		9D10E556D82269816A98DC29C7B08DC2 /* Pods-AppLovin Helper-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A565B06161E0B5973C68C8E73E9DA4B /* Pods-AppLovin Helper-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ADB3CB3F3E69877999908D0F274449AD /* Pods-AdMob and CustomAds HelperTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E11E3271AAD426BAE7C04118527DEF9 /* Pods-AdMob and CustomAds HelperTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B37759FB781869856330C2BF8AA3A4BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1704D3301AB26219B2489F5CBCFEAF53 /* Foundation.framework */; };
+		B94CC966F20B066C0082B8FA3D5D5595 /* Pods-AdMob and CustomAds Helper-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FA72270CB3361A01B7453A51D78976F /* Pods-AdMob and CustomAds Helper-dummy.m */; };
+		D7032E4E712BF3E0425AD1B78710DAB1 /* Pods-AppLovin HelperUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6BC57C0DA3C0ABB7DD1B7991E12F74AE /* Pods-AppLovin HelperUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D8866DA17E3A4A8C5DCE40B119A7952F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870C602EDDC4CB6D519310BC9C946A54 /* Foundation.framework */; };
+		ECE79339A07B7B60A94510EFEF9D9890 /* Pods-AppLovin HelperUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A60E8F1528CE7A11DF5A592A0DFE5FD8 /* Pods-AppLovin HelperUITests-dummy.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		021F9BC4E13399303627BAF60988F0E4 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		03BA3DDF462E7A09490A4A12E6BD1836 /* Pods-AppLovin HelperTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AppLovin HelperTests-frameworks.sh"; sourceTree = "<group>"; };
+		05CF1B443EC690F55C4DF4A7BFA0B6B6 /* Pods_AppLovin_HelperUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppLovin_HelperUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		08B11416CBC2A60B5E4F3938B26A450C /* Pods-AdMob and CustomAds HelperTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-AdMob and CustomAds HelperTests.modulemap"; sourceTree = "<group>"; };
+		131CFB1BF77F337CFB986D6E1E063857 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1704D3301AB26219B2489F5CBCFEAF53 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		194906C09CD6679036B727E211E93C91 /* Pods-AdMob and CustomAds Helper-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AdMob and CustomAds Helper-umbrella.h"; sourceTree = "<group>"; };
+		19F13E67B4BAF00C576F06837724E752 /* Pods-AppLovin HelperUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AppLovin HelperUITests-acknowledgements.plist"; sourceTree = "<group>"; };
+		1FC23C06C4C9712B7904166E0F22F49E /* Pods-AdMob and CustomAds Helper-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AdMob and CustomAds Helper-resources.sh"; sourceTree = "<group>"; };
+		2090D933BDE388D39AE19B2E1A24A96D /* Pods-AppLovin HelperUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AppLovin HelperUITests-frameworks.sh"; sourceTree = "<group>"; };
+		2A565B06161E0B5973C68C8E73E9DA4B /* Pods-AppLovin Helper-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AppLovin Helper-umbrella.h"; sourceTree = "<group>"; };
+		2A72F39887288535C71DE08BE67D87FC /* Pods-AppLovin Helper-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AppLovin Helper-acknowledgements.plist"; sourceTree = "<group>"; };
+		2C7BA28C4DC2742AFFE58147942C1A83 /* Pods-AdMob and CustomAds HelperTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AdMob and CustomAds HelperTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		2D2DCFBF0278C057BC932B8CEBB02D63 /* Pods-AppLovin HelperTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AppLovin HelperTests-umbrella.h"; sourceTree = "<group>"; };
+		2DF15EBB3EF9911408F9955BD5D1D686 /* Pods-AdMob and CustomAds Helper-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AdMob and CustomAds Helper-acknowledgements.plist"; sourceTree = "<group>"; };
+		35C69B18EE2324BE5F237D4535A2568A /* Pods-AppLovin HelperTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AppLovin HelperTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		3A15E35E8BE025F219440E8C0B427E17 /* Pods_AdMob_and_CustomAds_Helper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdMob_and_CustomAds_Helper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E11E3271AAD426BAE7C04118527DEF9 /* Pods-AdMob and CustomAds HelperTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AdMob and CustomAds HelperTests-umbrella.h"; sourceTree = "<group>"; };
+		424F335488ABE72FB77FCF535A95C882 /* Pods-AdMob and CustomAds HelperTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AdMob and CustomAds HelperTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		449C87696C6A6AF1E292F00CFB8C9E15 /* Pods_AppLovin_HelperTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppLovin_HelperTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		490DDE74990D84098771594DBD6B184F /* Pods-AppLovin Helper-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AppLovin Helper-frameworks.sh"; sourceTree = "<group>"; };
+		4CA38A5105907FB6E35D711EB525A063 /* Pods-AppLovin Helper-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AppLovin Helper-resources.sh"; sourceTree = "<group>"; };
+		5A87B2C135B02A41D5FF52C41809CDDB /* Pods-AppLovin HelperTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AppLovin HelperTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		6017667C7957F4F58794401D457E58D1 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6285E0096A330972E14F88998C9637A6 /* Pods-AdMob and CustomAds Helper.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-AdMob and CustomAds Helper.modulemap"; sourceTree = "<group>"; };
+		649D35BBC08D5DE4C4F12F18D8E79B2E /* Pods-AppLovin HelperUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AppLovin HelperUITests.release.xcconfig"; sourceTree = "<group>"; };
+		68EFB5924E3BDC3317222AF0D5DC0B55 /* Pods-AppLovin Helper.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-AppLovin Helper.modulemap"; sourceTree = "<group>"; };
+		6A2B34BADA1BC420321CCA920D161961 /* Pods-AdMob and CustomAds HelperTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AdMob and CustomAds HelperTests-frameworks.sh"; sourceTree = "<group>"; };
+		6BC57C0DA3C0ABB7DD1B7991E12F74AE /* Pods-AppLovin HelperUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AppLovin HelperUITests-umbrella.h"; sourceTree = "<group>"; };
+		6C66B05FE28B43FC68F1AEC99DCD8DB0 /* Pods-AdMob and CustomAds Helper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AdMob and CustomAds Helper.debug.xcconfig"; sourceTree = "<group>"; };
+		7006E6AE5FE8F0AB388A605C3285B254 /* Pods-AdMob and CustomAds HelperTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AdMob and CustomAds HelperTests.release.xcconfig"; sourceTree = "<group>"; };
+		7B98FCEF641AF383C5645891CFDEC3BF /* Pods-AppLovin HelperTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AppLovin HelperTests.release.xcconfig"; sourceTree = "<group>"; };
+		7BF91788E7CAA2DCB0640284AF017385 /* Pods-AppLovin Helper-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AppLovin Helper-acknowledgements.markdown"; sourceTree = "<group>"; };
+		870C602EDDC4CB6D519310BC9C946A54 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		891C52C425A70EEA095DC49DC997D9B6 /* Pods-AppLovin HelperTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AppLovin HelperTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8EFE1EA6033B5EB2EC4DB39A2CDF6D38 /* Pods-AppLovin HelperTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AppLovin HelperTests-dummy.m"; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93B192166B4F775C18D748D174C67041 /* Pods-AppLovin HelperUITests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AppLovin HelperUITests-resources.sh"; sourceTree = "<group>"; };
+		9CD961BE1A53F7DF76AF0DEDA30F31E2 /* Pods-AdMob and CustomAds Helper-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AdMob and CustomAds Helper-acknowledgements.markdown"; sourceTree = "<group>"; };
+		9FA72270CB3361A01B7453A51D78976F /* Pods-AdMob and CustomAds Helper-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AdMob and CustomAds Helper-dummy.m"; sourceTree = "<group>"; };
+		A60E8F1528CE7A11DF5A592A0DFE5FD8 /* Pods-AppLovin HelperUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AppLovin HelperUITests-dummy.m"; sourceTree = "<group>"; };
+		ACAA970EFF5D9329468DDB04AE393F42 /* Pods-AdMob and CustomAds Helper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AdMob and CustomAds Helper.release.xcconfig"; sourceTree = "<group>"; };
+		B25C71D7DB69D25A1A2527F91F53F82A /* Pods-AppLovin Helper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AppLovin Helper.debug.xcconfig"; sourceTree = "<group>"; };
+		B552725693328EE769C0D3F43EA28AC4 /* Pods-AppLovin HelperTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AppLovin HelperTests-resources.sh"; sourceTree = "<group>"; };
+		B5FB17C01AD1B8290A1BAF57D83A61EE /* Pods-AppLovin Helper-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AppLovin Helper-dummy.m"; sourceTree = "<group>"; };
+		B7E97D720CDC25D2E4520849A8A9E2AB /* Pods-AdMob and CustomAds HelperTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AdMob and CustomAds HelperTests-dummy.m"; sourceTree = "<group>"; };
+		C2373476DCD685B5F0E20BE4A57652C4 /* Pods_AppLovin_Helper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppLovin_Helper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4ED48612F5EAE0BD7832EC23CD290F1 /* Pods_AdMob_and_CustomAds_HelperTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdMob_and_CustomAds_HelperTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5A4623B15C46E6EC9BD41E71B1A6682 /* Pods-AppLovin HelperUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-AppLovin HelperUITests.modulemap"; sourceTree = "<group>"; };
+		C64BF8A017D636FAAC8D7824D2DEE0CE /* Pods-AppLovin HelperTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-AppLovin HelperTests.modulemap"; sourceTree = "<group>"; };
+		C76F4A610CE7195712D1FCE2C6C1B9E7 /* Pods-AppLovin HelperUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AppLovin HelperUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		C9E785D0699F89BB23F4FB00EB060114 /* Pods-AdMob and CustomAds HelperTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AdMob and CustomAds HelperTests-resources.sh"; sourceTree = "<group>"; };
+		CE6B7ECAEB922AC1A4A60C3FD202192C /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = Frameworks/GoogleMobileAds.framework; sourceTree = "<group>"; };
+		D0242E1DFFA4665A0BE89BB8B84935F7 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D217838ADBEAA133C0C1B729C0244599 /* Pods-AdMob and CustomAds HelperTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AdMob and CustomAds HelperTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D77A13F5D13E377084AF6463721B9FF7 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D7AC9F1CB3EF1BDF34A19DF5BD50A24B /* Pods-AppLovin Helper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AppLovin Helper.release.xcconfig"; sourceTree = "<group>"; };
+		D8A266C79164F3DBAE3A764CCFD07E10 /* Pods-AppLovin HelperUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AppLovin HelperUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		FD1D2FD037F60542F2B0308BE02C14A8 /* Pods-AdMob and CustomAds Helper-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AdMob and CustomAds Helper-frameworks.sh"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2A435FEC0B5DF39740EA6C209E5DE3F6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B37759FB781869856330C2BF8AA3A4BD /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		95DFAAB4C3933C79481F84629AAE5F07 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04246C5360BFFD089452DE4BCF58B717 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BAA963795CF0DE5BF7EFEB17BFB9CEBF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				301446AA6EE49C051ABE46D82E19A62A /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CF882C2B48166FC9FB32A768949CBF8B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				118FB6AAB975DF2411FB02A3ACAFD597 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF8D77BF02A95D8F1CAFA816467F1591 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8866DA17E3A4A8C5DCE40B119A7952F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1BBE838409288F95CEDE27751375850D /* Pods-AdMob and CustomAds HelperTests */ = {
+			isa = PBXGroup;
+			children = (
+				021F9BC4E13399303627BAF60988F0E4 /* Info.plist */,
+				08B11416CBC2A60B5E4F3938B26A450C /* Pods-AdMob and CustomAds HelperTests.modulemap */,
+				2C7BA28C4DC2742AFFE58147942C1A83 /* Pods-AdMob and CustomAds HelperTests-acknowledgements.markdown */,
+				424F335488ABE72FB77FCF535A95C882 /* Pods-AdMob and CustomAds HelperTests-acknowledgements.plist */,
+				B7E97D720CDC25D2E4520849A8A9E2AB /* Pods-AdMob and CustomAds HelperTests-dummy.m */,
+				6A2B34BADA1BC420321CCA920D161961 /* Pods-AdMob and CustomAds HelperTests-frameworks.sh */,
+				C9E785D0699F89BB23F4FB00EB060114 /* Pods-AdMob and CustomAds HelperTests-resources.sh */,
+				3E11E3271AAD426BAE7C04118527DEF9 /* Pods-AdMob and CustomAds HelperTests-umbrella.h */,
+				D217838ADBEAA133C0C1B729C0244599 /* Pods-AdMob and CustomAds HelperTests.debug.xcconfig */,
+				7006E6AE5FE8F0AB388A605C3285B254 /* Pods-AdMob and CustomAds HelperTests.release.xcconfig */,
+			);
+			name = "Pods-AdMob and CustomAds HelperTests";
+			path = "Target Support Files/Pods-AdMob and CustomAds HelperTests";
+			sourceTree = "<group>";
+		};
+		3D831502A03070884DD15E64051F5F27 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CE6B7ECAEB922AC1A4A60C3FD202192C /* GoogleMobileAds.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		421F9516460EDA2D7E089F3EE06D7599 /* Pods-AppLovin HelperTests */ = {
+			isa = PBXGroup;
+			children = (
+				131CFB1BF77F337CFB986D6E1E063857 /* Info.plist */,
+				C64BF8A017D636FAAC8D7824D2DEE0CE /* Pods-AppLovin HelperTests.modulemap */,
+				5A87B2C135B02A41D5FF52C41809CDDB /* Pods-AppLovin HelperTests-acknowledgements.markdown */,
+				35C69B18EE2324BE5F237D4535A2568A /* Pods-AppLovin HelperTests-acknowledgements.plist */,
+				8EFE1EA6033B5EB2EC4DB39A2CDF6D38 /* Pods-AppLovin HelperTests-dummy.m */,
+				03BA3DDF462E7A09490A4A12E6BD1836 /* Pods-AppLovin HelperTests-frameworks.sh */,
+				B552725693328EE769C0D3F43EA28AC4 /* Pods-AppLovin HelperTests-resources.sh */,
+				2D2DCFBF0278C057BC932B8CEBB02D63 /* Pods-AppLovin HelperTests-umbrella.h */,
+				891C52C425A70EEA095DC49DC997D9B6 /* Pods-AppLovin HelperTests.debug.xcconfig */,
+				7B98FCEF641AF383C5645891CFDEC3BF /* Pods-AppLovin HelperTests.release.xcconfig */,
+			);
+			name = "Pods-AppLovin HelperTests";
+			path = "Target Support Files/Pods-AppLovin HelperTests";
+			sourceTree = "<group>";
+		};
+		4DEB334CB34410CDBF4DFAE59EECA92C /* Pods-AppLovin Helper */ = {
+			isa = PBXGroup;
+			children = (
+				6017667C7957F4F58794401D457E58D1 /* Info.plist */,
+				68EFB5924E3BDC3317222AF0D5DC0B55 /* Pods-AppLovin Helper.modulemap */,
+				7BF91788E7CAA2DCB0640284AF017385 /* Pods-AppLovin Helper-acknowledgements.markdown */,
+				2A72F39887288535C71DE08BE67D87FC /* Pods-AppLovin Helper-acknowledgements.plist */,
+				B5FB17C01AD1B8290A1BAF57D83A61EE /* Pods-AppLovin Helper-dummy.m */,
+				490DDE74990D84098771594DBD6B184F /* Pods-AppLovin Helper-frameworks.sh */,
+				4CA38A5105907FB6E35D711EB525A063 /* Pods-AppLovin Helper-resources.sh */,
+				2A565B06161E0B5973C68C8E73E9DA4B /* Pods-AppLovin Helper-umbrella.h */,
+				B25C71D7DB69D25A1A2527F91F53F82A /* Pods-AppLovin Helper.debug.xcconfig */,
+				D7AC9F1CB3EF1BDF34A19DF5BD50A24B /* Pods-AppLovin Helper.release.xcconfig */,
+			);
+			name = "Pods-AppLovin Helper";
+			path = "Target Support Files/Pods-AppLovin Helper";
+			sourceTree = "<group>";
+		};
+		6788458F3A34722A119F20FAD05952AB /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				1704D3301AB26219B2489F5CBCFEAF53 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				A42F72DC1D780481325DD00969B19BB6 /* Frameworks */,
+				820FBBDA65C5B1A6A4C379A893C27235 /* Pods */,
+				8FAC268E9B795DF3110611634B9E9C7C /* Products */,
+				EEAA6415D469AD9A86D213A0497AD57D /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		7E19246DA5FF3D4FB35065B9E340260E /* tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				870C602EDDC4CB6D519310BC9C946A54 /* Foundation.framework */,
+			);
+			name = tvOS;
+			sourceTree = "<group>";
+		};
+		820FBBDA65C5B1A6A4C379A893C27235 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E91D6015731707498AAA5817D350B87B /* Google-Mobile-Ads-SDK */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		8FAC268E9B795DF3110611634B9E9C7C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3A15E35E8BE025F219440E8C0B427E17 /* Pods_AdMob_and_CustomAds_Helper.framework */,
+				C4ED48612F5EAE0BD7832EC23CD290F1 /* Pods_AdMob_and_CustomAds_HelperTests.framework */,
+				C2373476DCD685B5F0E20BE4A57652C4 /* Pods_AppLovin_Helper.framework */,
+				449C87696C6A6AF1E292F00CFB8C9E15 /* Pods_AppLovin_HelperTests.framework */,
+				05CF1B443EC690F55C4DF4A7BFA0B6B6 /* Pods_AppLovin_HelperUITests.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A42F72DC1D780481325DD00969B19BB6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6788458F3A34722A119F20FAD05952AB /* iOS */,
+				7E19246DA5FF3D4FB35065B9E340260E /* tvOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E8F52EE31011063678C8840D4E17A551 /* Pods-AppLovin HelperUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D77A13F5D13E377084AF6463721B9FF7 /* Info.plist */,
+				C5A4623B15C46E6EC9BD41E71B1A6682 /* Pods-AppLovin HelperUITests.modulemap */,
+				C76F4A610CE7195712D1FCE2C6C1B9E7 /* Pods-AppLovin HelperUITests-acknowledgements.markdown */,
+				19F13E67B4BAF00C576F06837724E752 /* Pods-AppLovin HelperUITests-acknowledgements.plist */,
+				A60E8F1528CE7A11DF5A592A0DFE5FD8 /* Pods-AppLovin HelperUITests-dummy.m */,
+				2090D933BDE388D39AE19B2E1A24A96D /* Pods-AppLovin HelperUITests-frameworks.sh */,
+				93B192166B4F775C18D748D174C67041 /* Pods-AppLovin HelperUITests-resources.sh */,
+				6BC57C0DA3C0ABB7DD1B7991E12F74AE /* Pods-AppLovin HelperUITests-umbrella.h */,
+				D8A266C79164F3DBAE3A764CCFD07E10 /* Pods-AppLovin HelperUITests.debug.xcconfig */,
+				649D35BBC08D5DE4C4F12F18D8E79B2E /* Pods-AppLovin HelperUITests.release.xcconfig */,
+			);
+			name = "Pods-AppLovin HelperUITests";
+			path = "Target Support Files/Pods-AppLovin HelperUITests";
+			sourceTree = "<group>";
+		};
+		E91D6015731707498AAA5817D350B87B /* Google-Mobile-Ads-SDK */ = {
+			isa = PBXGroup;
+			children = (
+				3D831502A03070884DD15E64051F5F27 /* Frameworks */,
+			);
+			path = "Google-Mobile-Ads-SDK";
+			sourceTree = "<group>";
+		};
+		EEAA6415D469AD9A86D213A0497AD57D /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				FAEBF55268312CFD6F6726EC6200B72C /* Pods-AdMob and CustomAds Helper */,
+				1BBE838409288F95CEDE27751375850D /* Pods-AdMob and CustomAds HelperTests */,
+				4DEB334CB34410CDBF4DFAE59EECA92C /* Pods-AppLovin Helper */,
+				421F9516460EDA2D7E089F3EE06D7599 /* Pods-AppLovin HelperTests */,
+				E8F52EE31011063678C8840D4E17A551 /* Pods-AppLovin HelperUITests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		FAEBF55268312CFD6F6726EC6200B72C /* Pods-AdMob and CustomAds Helper */ = {
+			isa = PBXGroup;
+			children = (
+				D0242E1DFFA4665A0BE89BB8B84935F7 /* Info.plist */,
+				6285E0096A330972E14F88998C9637A6 /* Pods-AdMob and CustomAds Helper.modulemap */,
+				9CD961BE1A53F7DF76AF0DEDA30F31E2 /* Pods-AdMob and CustomAds Helper-acknowledgements.markdown */,
+				2DF15EBB3EF9911408F9955BD5D1D686 /* Pods-AdMob and CustomAds Helper-acknowledgements.plist */,
+				9FA72270CB3361A01B7453A51D78976F /* Pods-AdMob and CustomAds Helper-dummy.m */,
+				FD1D2FD037F60542F2B0308BE02C14A8 /* Pods-AdMob and CustomAds Helper-frameworks.sh */,
+				1FC23C06C4C9712B7904166E0F22F49E /* Pods-AdMob and CustomAds Helper-resources.sh */,
+				194906C09CD6679036B727E211E93C91 /* Pods-AdMob and CustomAds Helper-umbrella.h */,
+				6C66B05FE28B43FC68F1AEC99DCD8DB0 /* Pods-AdMob and CustomAds Helper.debug.xcconfig */,
+				ACAA970EFF5D9329468DDB04AE393F42 /* Pods-AdMob and CustomAds Helper.release.xcconfig */,
+			);
+			name = "Pods-AdMob and CustomAds Helper";
+			path = "Target Support Files/Pods-AdMob and CustomAds Helper";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		504FF49EE1E18B818DE64B1C91BB2523 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				525E0805862DDE36D55564EE84755C77 /* Pods-AdMob and CustomAds Helper-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A3DF08BED9F4EA31E0254DFC9944F3C9 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADB3CB3F3E69877999908D0F274449AD /* Pods-AdMob and CustomAds HelperTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BCF2B0FFC89C20B0B064B7707616B8C5 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7032E4E712BF3E0425AD1B78710DAB1 /* Pods-AppLovin HelperUITests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F26F77534A4A032A8C82F591701A660A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9D10E556D82269816A98DC29C7B08DC2 /* Pods-AppLovin Helper-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEB68E1D696F8FC7F0019D62334F4B3B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				523A81CF073A8DDA3CE3113C36247FCB /* Pods-AppLovin HelperTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		B6B5188FE1F80D0011DC88906CB10084 /* Pods-AppLovin Helper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 71E6071186EBAC31D858133B7A78BE13 /* Build configuration list for PBXNativeTarget "Pods-AppLovin Helper" */;
+			buildPhases = (
+				8194A5A0F02572E28ADB2AF87184A665 /* Sources */,
+				BAA963795CF0DE5BF7EFEB17BFB9CEBF /* Frameworks */,
+				F26F77534A4A032A8C82F591701A660A /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-AppLovin Helper";
+			productName = "Pods-AppLovin Helper";
+			productReference = C2373476DCD685B5F0E20BE4A57652C4 /* Pods_AppLovin_Helper.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		BA1DF97627335AF490DB29150697D03B /* Pods-AdMob and CustomAds Helper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6B1E58622859352D1FBF7EDD8CE85613 /* Build configuration list for PBXNativeTarget "Pods-AdMob and CustomAds Helper" */;
+			buildPhases = (
+				E2E76E6A6C9F79AB76F4CBBCF8C625C1 /* Sources */,
+				2A435FEC0B5DF39740EA6C209E5DE3F6 /* Frameworks */,
+				504FF49EE1E18B818DE64B1C91BB2523 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-AdMob and CustomAds Helper";
+			productName = "Pods-AdMob and CustomAds Helper";
+			productReference = 3A15E35E8BE025F219440E8C0B427E17 /* Pods_AdMob_and_CustomAds_Helper.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		E20E217817EBB96CE6F710FC3A95CB4C /* Pods-AdMob and CustomAds HelperTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0521C28DE8AC52C239FE5FC9F9ACB2C2 /* Build configuration list for PBXNativeTarget "Pods-AdMob and CustomAds HelperTests" */;
+			buildPhases = (
+				19C0D59AE7CBF65C572B1A2CCBB6B345 /* Sources */,
+				95DFAAB4C3933C79481F84629AAE5F07 /* Frameworks */,
+				A3DF08BED9F4EA31E0254DFC9944F3C9 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-AdMob and CustomAds HelperTests";
+			productName = "Pods-AdMob and CustomAds HelperTests";
+			productReference = C4ED48612F5EAE0BD7832EC23CD290F1 /* Pods_AdMob_and_CustomAds_HelperTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		F64E372E2879AD3D579F519AC47BBB04 /* Pods-AppLovin HelperTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9B8721FA74B10CDEEC7F246F060AA8D2 /* Build configuration list for PBXNativeTarget "Pods-AppLovin HelperTests" */;
+			buildPhases = (
+				52AD2A07E1327FA7E0814C346A0E1798 /* Sources */,
+				CF882C2B48166FC9FB32A768949CBF8B /* Frameworks */,
+				FEB68E1D696F8FC7F0019D62334F4B3B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-AppLovin HelperTests";
+			productName = "Pods-AppLovin HelperTests";
+			productReference = 449C87696C6A6AF1E292F00CFB8C9E15 /* Pods_AppLovin_HelperTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		FCEDFEDE87551C98B37C1E61E99F9C3D /* Pods-AppLovin HelperUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 15C40CB7D1A15220EF4A6A9C2AE92DE5 /* Build configuration list for PBXNativeTarget "Pods-AppLovin HelperUITests" */;
+			buildPhases = (
+				7E6F4EE7142A3F953DDA03FE2FC54457 /* Sources */,
+				EF8D77BF02A95D8F1CAFA816467F1591 /* Frameworks */,
+				BCF2B0FFC89C20B0B064B7707616B8C5 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-AppLovin HelperUITests";
+			productName = "Pods-AppLovin HelperUITests";
+			productReference = 05CF1B443EC690F55C4DF4A7BFA0B6B6 /* Pods_AppLovin_HelperUITests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0700;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = 8FAC268E9B795DF3110611634B9E9C7C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BA1DF97627335AF490DB29150697D03B /* Pods-AdMob and CustomAds Helper */,
+				E20E217817EBB96CE6F710FC3A95CB4C /* Pods-AdMob and CustomAds HelperTests */,
+				B6B5188FE1F80D0011DC88906CB10084 /* Pods-AppLovin Helper */,
+				F64E372E2879AD3D579F519AC47BBB04 /* Pods-AppLovin HelperTests */,
+				FCEDFEDE87551C98B37C1E61E99F9C3D /* Pods-AppLovin HelperUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		19C0D59AE7CBF65C572B1A2CCBB6B345 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5BE59303A539A91F38D164DC4776965E /* Pods-AdMob and CustomAds HelperTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52AD2A07E1327FA7E0814C346A0E1798 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				343444A4E08C641B7D50CC62716FABC4 /* Pods-AppLovin HelperTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E6F4EE7142A3F953DDA03FE2FC54457 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ECE79339A07B7B60A94510EFEF9D9890 /* Pods-AppLovin HelperUITests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8194A5A0F02572E28ADB2AF87184A665 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6E58ADD0C31149709B1BFCDE59DF19D5 /* Pods-AppLovin Helper-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2E76E6A6C9F79AB76F4CBBCF8C625C1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B94CC966F20B066C0082B8FA3D5D5595 /* Pods-AdMob and CustomAds Helper-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		0941B1407075255BFC709093A9F4F793 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 649D35BBC08D5DE4C4F12F18D8E79B2E /* Pods-AppLovin HelperUITests.release.xcconfig */;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-AppLovin HelperUITests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-AppLovin HelperUITests/Pods-AppLovin HelperUITests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_AppLovin_HelperUITests;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		3E0D18DCBCCA63312581207DB1F9D628 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5B8F38BB27EE13CE1BAAAEE398A1694A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ACAA970EFF5D9329468DDB04AE393F42 /* Pods-AdMob and CustomAds Helper.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-AdMob and CustomAds Helper/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-AdMob and CustomAds Helper/Pods-AdMob and CustomAds Helper.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_AdMob_and_CustomAds_Helper;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		632E1081C4FAB80ECE81E4890E3C5B1C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B25C71D7DB69D25A1A2527F91F53F82A /* Pods-AppLovin Helper.debug.xcconfig */;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-AppLovin Helper/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-AppLovin Helper/Pods-AppLovin Helper.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_AppLovin_Helper;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		7D761572A4CC0F21DDF27E1381BFA4A5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7B98FCEF641AF383C5645891CFDEC3BF /* Pods-AppLovin HelperTests.release.xcconfig */;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-AppLovin HelperTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-AppLovin HelperTests/Pods-AppLovin HelperTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_AppLovin_HelperTests;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		8A85083028A97A196DF82B7D9EBAC195 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D7AC9F1CB3EF1BDF34A19DF5BD50A24B /* Pods-AppLovin Helper.release.xcconfig */;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-AppLovin Helper/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-AppLovin Helper/Pods-AppLovin Helper.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_AppLovin_Helper;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		8FC3A2A13D6E7180567F34C61AE1CFDA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7006E6AE5FE8F0AB388A605C3285B254 /* Pods-AdMob and CustomAds HelperTests.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-AdMob and CustomAds HelperTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-AdMob and CustomAds HelperTests/Pods-AdMob and CustomAds HelperTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_AdMob_and_CustomAds_HelperTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		9169B7489FC2508E2F4BFC8E4DA5A59B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D8A266C79164F3DBAE3A764CCFD07E10 /* Pods-AppLovin HelperUITests.debug.xcconfig */;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-AppLovin HelperUITests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-AppLovin HelperUITests/Pods-AppLovin HelperUITests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_AppLovin_HelperUITests;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		9B86650B4E8A1F85694066D818B0AFA3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 891C52C425A70EEA095DC49DC997D9B6 /* Pods-AppLovin HelperTests.debug.xcconfig */;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-AppLovin HelperTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-AppLovin HelperTests/Pods-AppLovin HelperTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_AppLovin_HelperTests;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		C8985E38F3DC0E0887ABEA2829240359 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6C66B05FE28B43FC68F1AEC99DCD8DB0 /* Pods-AdMob and CustomAds Helper.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-AdMob and CustomAds Helper/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-AdMob and CustomAds Helper/Pods-AdMob and CustomAds Helper.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_AdMob_and_CustomAds_Helper;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		EF73D6A31FB8E61A20E97D02CEF60BBD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				ONLY_ACTIVE_ARCH = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Debug;
+		};
+		F132EFBB6267AD52444502AA4788213E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D217838ADBEAA133C0C1B729C0244599 /* Pods-AdMob and CustomAds HelperTests.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-AdMob and CustomAds HelperTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-AdMob and CustomAds HelperTests/Pods-AdMob and CustomAds HelperTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_AdMob_and_CustomAds_HelperTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0521C28DE8AC52C239FE5FC9F9ACB2C2 /* Build configuration list for PBXNativeTarget "Pods-AdMob and CustomAds HelperTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F132EFBB6267AD52444502AA4788213E /* Debug */,
+				8FC3A2A13D6E7180567F34C61AE1CFDA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		15C40CB7D1A15220EF4A6A9C2AE92DE5 /* Build configuration list for PBXNativeTarget "Pods-AppLovin HelperUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9169B7489FC2508E2F4BFC8E4DA5A59B /* Debug */,
+				0941B1407075255BFC709093A9F4F793 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF73D6A31FB8E61A20E97D02CEF60BBD /* Debug */,
+				3E0D18DCBCCA63312581207DB1F9D628 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6B1E58622859352D1FBF7EDD8CE85613 /* Build configuration list for PBXNativeTarget "Pods-AdMob and CustomAds Helper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C8985E38F3DC0E0887ABEA2829240359 /* Debug */,
+				5B8F38BB27EE13CE1BAAAEE398A1694A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		71E6071186EBAC31D858133B7A78BE13 /* Build configuration list for PBXNativeTarget "Pods-AppLovin Helper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				632E1081C4FAB80ECE81E4890E3C5B1C /* Debug */,
+				8A85083028A97A196DF82B7D9EBAC195 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9B8721FA74B10CDEEC7F246F060AA8D2 /* Build configuration list for PBXNativeTarget "Pods-AppLovin HelperTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9B86650B4E8A1F85694066D818B0AFA3 /* Debug */,
+				7D761572A4CC0F21DDF27E1381BFA4A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}

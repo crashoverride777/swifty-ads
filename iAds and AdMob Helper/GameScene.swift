@@ -57,7 +57,8 @@ class GameScene: SKScene {
         
         // Show inter
         AdsManager.sharedInstance.showInterstitial(withInterval: 3)
-       
+        //CustomAd.sharedInstance.show(selectedAd: 0)
+        
         // Remove ads after 3 clicks
         touchCounter -= 1
         if touchCounter == 0 {

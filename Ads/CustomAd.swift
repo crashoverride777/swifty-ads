@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.2.2
+//    v5.3
 
 /*
     Abstract:
@@ -31,7 +31,7 @@
 import UIKit
 
 /// Get app store url for app ID
-func getAppStoreURL(forAppID id: String) -> String {
+private func getAppStoreURL(forAppID id: String) -> String {
     #if os(iOS)
         return "itms-apps://itunes.apple.com/app/id" + id
     #endif
@@ -40,56 +40,55 @@ func getAppStoreURL(forAppID id: String) -> String {
     #endif
 }
 
+/// Inventory
+public enum Inventory: Int {
+    
+    // Convinience
+    case angryFlappies = 0
+    case vertigus
+    
+    /// All ads
+    private static let adImagePrefix = "AdImage"
+    private static var all = [
+        (imageName: adImagePrefix + "AngryFlappies", storeURL: getAppStoreURL(forAppID: "991933749")),
+        (imageName: adImagePrefix + "Vertigus", storeURL: getAppStoreURL(forAppID: "1051292772"))
+    ]
+    
+    /// Tracking
+    private static var current = 0 {
+        didSet {
+            if all.count == current {
+                current = 0
+            }
+        }
+    }
+}
+
 /// Delegate
-protocol CustomAdDelegate: class {
+public protocol CustomAdDelegate: class {
     func customAdClicked()
     func customAdClosed()
 }
 
-/// Inventory
-struct CustomAdInventory {
-    let imageName: String
-    let storeURL: String
-}
-
 /// Custom ads video class
-class CustomAd: NSObject {
+public class CustomAd: NSObject {
     
     // MARK: - Static Properties
-    static let sharedInstance = CustomAd()
+    public static let sharedInstance = CustomAd()
     
     // MARK: - Properties
     
     /// Delegate
-    weak var delegate: CustomAdDelegate?
-    
-    /// View controller
-    private var presentingViewController: UIViewController?
+    public weak var delegate: CustomAdDelegate?
     
     /// Ad creation
     private var view = UIView()
     private var imageView = UIImageView()
     private var closeButton = UIButton()
     
-    /// Inventory
-    private var inventory = [CustomAdInventory]()
-    
-    /// Inventory tracking
-    private var inventoryCounter = 0 {
-        didSet {
-            if inventory.count == inventoryCounter {
-                inventoryCounter = 0
-            }
-        }
-    }
-    
-    private var image: String {
-        return inventory[inventoryCounter].imageName
-    }
-    
-    private var storeURL: String {
-        return inventory[inventoryCounter].storeURL
-    }
+    /// Image and store url
+    private var imageName = ""
+    private var appStoreURL = ""
     
     /// Interval counter
     private var intervalCounter = 0
@@ -103,37 +102,34 @@ class CustomAd: NSObject {
         super.init()
     }
     
-    /// SetUp
-    func setup(viewController viewController: UIViewController, inventory: [CustomAdInventory]) {
-        self.presentingViewController = viewController
-        self.inventory = inventory
-    }
-    
     /// Show
-    func show(withInterval interval: Int = 0) {
-        guard !removedAds && !inventory.isEmpty else { return }
-        guard let validAd = createAd() else { return }
+    public func show(selectedAd selectedAd: Inventory? = nil, withInterval interval: Int = 0) {
+        guard !removedAds && !Inventory.all.isEmpty else { return }
         
         if interval != 0 {
             intervalCounter += 1
-            guard intervalCounter == interval else { return }
+            guard intervalCounter >= interval else { return }
             intervalCounter = 0
         }
         
-        validAd.layer.zPosition = 5000
-        presentingViewController?.view?.window?.rootViewController?.view?.addSubview(validAd)
+        let adInInventory = getAdInInventory(selectedAd: selectedAd)
+        guard let validAd = createAd(selectedAd: adInInventory) else { return }
         
-        inventoryCounter += 1
+        validAd.layer.zPosition = 5000
+        let rootViewController = UIApplication.sharedApplication().keyWindow?.rootViewController
+        rootViewController?.view?.addSubview(validAd)
+        
+        Inventory.current += 1
     }
     
     /// Remove
-    func remove() {
+    public func remove() {
         removedAds = true
         removeFromSuperview()
     }
     
     /// Orientation changed
-    func orientationChanged() {
+    public func adjustForOrientation() {
         setImageForOrientation()
         setButtonsForOrientation()
     }
@@ -143,13 +139,44 @@ class CustomAd: NSObject {
 
 private extension CustomAd {
     
-    func createAd() -> UIView? {
+    /// Get ad in inventory
+    func getAdInInventory(selectedAd selectedAd: Inventory?) -> Int {
+        var adInInventory: Int
+        if let selectedAd = selectedAd {
+            adInInventory = selectedAd.rawValue
+        } else {
+            adInInventory = Inventory.current
+        }
+        
+        if adInInventory > Inventory.all.count {
+            adInInventory = 0
+        }
+        
+        let appName = NSBundle.mainBundle().infoDictionary?["CFBundleName"] as? String ?? "NoAppNameFound"
+        let appNameNoWhiteSpaces = appName.stringByReplacingOccurrencesOfString(" ", withString: "")
+        let appNameNoWhiteSpacesAndDash = appNameNoWhiteSpaces.stringByReplacingOccurrencesOfString("-", withString: "")
+        
+        if let _ = Inventory.all[adInInventory].imageName.rangeOfString(appNameNoWhiteSpacesAndDash, options: .CaseInsensitiveSearch) {
+            adInInventory += 1
+            Inventory.current += 1
+        }
+        
+        return adInInventory
+    }
+    
+    /// Create ad
+    func createAd(selectedAd selectedAd: Int) -> UIView? {
+        
+        // Set ad properties
+        imageName = Inventory.all[selectedAd].imageName
+        appStoreURL = Inventory.all[selectedAd].storeURL
         
         // Remove previous ad just incase
         removeFromSuperview()
         
         // Image
-        imageView.image = UIImage(named: image)
+        imageView.image = UIImage(named: imageName)
+        imageView.userInteractionEnabled = true
         setImageForOrientation()
         view.addSubview(imageView)
         
@@ -158,7 +185,6 @@ private extension CustomAd {
             // Download tap gesture
             let downloadTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDownload))
             downloadTapGestureRecognizer.delaysTouchesBegan = true
-            imageView.userInteractionEnabled = true
             imageView.addGestureRecognizer(downloadTapGestureRecognizer)
             
             // Close button
@@ -176,17 +202,15 @@ private extension CustomAd {
         
         // TV controls
         #if os(tvOS)
-            let rootViewController = presentingViewController?.view?.window?.rootViewController
-            
-            let tapMenu = UITapGestureRecognizer()
-            tapMenu.addTarget(self, action: #selector(pressedCloseButton))
+            let tapMenu = UITapGestureRecognizer(target: self, action: #selector(pressedCloseButton))
+            tapMenu.delaysTouchesBegan = true
             tapMenu.allowedPressTypes = [NSNumber (integer: UIPressType.Menu.rawValue)]
-            rootViewController?.view.addGestureRecognizer(tapMenu)
+            imageView.addGestureRecognizer(tapMenu)
             
-            let tapMain = UITapGestureRecognizer()
-            tapMain.addTarget(self, action: #selector(handleDownload))
+            let tapMain = UITapGestureRecognizer(target: self, action: #selector(handleDownload))
+            tapMain.delaysTouchesBegan = true
             tapMain.allowedPressTypes = [NSNumber (integer: UIPressType.Select.rawValue)]
-            rootViewController?.view.addGestureRecognizer(tapMain)
+            imageView.addGestureRecognizer(tapMain)
         #endif
         
         // Delegate
@@ -210,15 +234,15 @@ private extension CustomAd {
 
 extension CustomAd {
     
-    func handleDownload() {
+    @objc private func handleDownload() {
         print("Pressed download button")
         pressedCloseButton()
-        if let url = NSURL(string: storeURL) {
+        if let url = NSURL(string: appStoreURL) {
             UIApplication.sharedApplication().openURL(url)
         }
     }
     
-    func pressedCloseButton() {
+    @objc private func pressedCloseButton() {
         removeFromSuperview()
         delegate?.customAdClosed()
     }
@@ -229,12 +253,12 @@ extension CustomAd {
 private extension CustomAd {
     
     func setImageForOrientation() {
-        guard let rootViewController = presentingViewController?.view?.window?.rootViewController else { return }
+        guard let rootViewController = UIApplication.sharedApplication().keyWindow?.rootViewController else { return }
         
         view.frame = rootViewController.view.frame
         
         #if os(iOS)
-            if UIDevice.currentDevice().orientation.isLandscape {
+            if UIScreen.mainScreen().bounds.height < UIScreen.mainScreen().bounds.width { // check if in landscape, works at startup
                 imageView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width / 1.2, height: view.frame.size.height / 1.1)
             } else {
                 let iPad = UIDevice.currentDevice().userInterfaceIdiom == .Pad

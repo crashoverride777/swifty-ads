@@ -1,0 +1,6 @@
+framework module Pods_AppLovin_HelperTests {
+  umbrella header "Pods-AppLovin HelperTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
