@@ -112,7 +112,30 @@ public class CustomAd: NSObject {
             intervalCounter = 0
         }
         
-        let adInInventory = getAdInInventory(selectedAd: selectedAd)
+        var adInInventory: Int
+        if let selectedAd = selectedAd {
+            adInInventory = selectedAd.rawValue
+        } else {
+            adInInventory = Inventory.current
+        }
+        
+        if adInInventory > Inventory.all.count {
+            adInInventory = 0
+        }
+        
+        let appName = NSBundle.mainBundle().infoDictionary?["CFBundleName"] as? String ?? "NoAppNameFound"
+        let appNameNoWhiteSpaces = appName.stringByReplacingOccurrencesOfString(" ", withString: "")
+        let appNameNoWhiteSpacesAndDash = appNameNoWhiteSpaces.stringByReplacingOccurrencesOfString("-", withString: "")
+        
+        if let _ = Inventory.all[adInInventory].imageName.rangeOfString(appNameNoWhiteSpacesAndDash, options: .CaseInsensitiveSearch) {
+            adInInventory += 1
+            Inventory.current += 1
+        }
+        
+        if adInInventory > Inventory.all.count {
+            adInInventory = 0
+        }
+        
         guard let validAd = createAd(selectedAd: adInInventory) else { return }
         
         validAd.layer.zPosition = 5000
@@ -138,31 +161,6 @@ public class CustomAd: NSObject {
 // MARK: - Ad Management
 
 private extension CustomAd {
-    
-    /// Get ad in inventory
-    func getAdInInventory(selectedAd selectedAd: Inventory?) -> Int {
-        var adInInventory: Int
-        if let selectedAd = selectedAd {
-            adInInventory = selectedAd.rawValue
-        } else {
-            adInInventory = Inventory.current
-        }
-        
-        if adInInventory > Inventory.all.count {
-            adInInventory = 0
-        }
-        
-        let appName = NSBundle.mainBundle().infoDictionary?["CFBundleName"] as? String ?? "NoAppNameFound"
-        let appNameNoWhiteSpaces = appName.stringByReplacingOccurrencesOfString(" ", withString: "")
-        let appNameNoWhiteSpacesAndDash = appNameNoWhiteSpaces.stringByReplacingOccurrencesOfString("-", withString: "")
-        
-        if let _ = Inventory.all[adInInventory].imageName.rangeOfString(appNameNoWhiteSpacesAndDash, options: .CaseInsensitiveSearch) {
-            adInInventory += 1
-            Inventory.current += 1
-        }
-        
-        return adInInventory
-    }
     
     /// Create ad
     func createAd(selectedAd selectedAd: Int) -> UIView? {
