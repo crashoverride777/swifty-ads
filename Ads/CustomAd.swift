@@ -119,14 +119,14 @@ public class CustomAd: NSObject {
             adInInventory = Inventory.current
         }
         
-        let appName = NSBundle.mainBundle().infoDictionary?["CFBundleName"] as? String ?? "NoAppNameFound"
-        let appNameNoWhiteSpaces = appName.stringByReplacingOccurrencesOfString(" ", withString: "")
-        let appNameNoWhiteSpacesAndDash = appNameNoWhiteSpaces.stringByReplacingOccurrencesOfString("-", withString: "")
-        
         if adInInventory >= Inventory.all.count {
             adInInventory = 0
             Inventory.current = 0
         }
+        
+        let appName = NSBundle.mainBundle().infoDictionary?["CFBundleName"] as? String ?? "NoAppNameFound"
+        let appNameNoWhiteSpaces = appName.stringByReplacingOccurrencesOfString(" ", withString: "")
+        let appNameNoWhiteSpacesAndDash = appNameNoWhiteSpaces.stringByReplacingOccurrencesOfString("-", withString: "")
         
         if let _ = Inventory.all[adInInventory].imageName.rangeOfString(appNameNoWhiteSpacesAndDash, options: .CaseInsensitiveSearch) {
             adInInventory += 1
