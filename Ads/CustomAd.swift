@@ -55,13 +55,7 @@ public enum Inventory: Int {
     ]
     
     /// Tracking
-    private static var current = 0 {
-        didSet {
-            if all.count == current {
-                current = 0
-            }
-        }
-    }
+    private static var current = 0
 }
 
 /// Delegate
@@ -119,21 +113,23 @@ public class CustomAd: NSObject {
             adInInventory = Inventory.current
         }
         
-        if adInInventory > Inventory.all.count {
-            adInInventory = 0
-        }
-        
         let appName = NSBundle.mainBundle().infoDictionary?["CFBundleName"] as? String ?? "NoAppNameFound"
         let appNameNoWhiteSpaces = appName.stringByReplacingOccurrencesOfString(" ", withString: "")
         let appNameNoWhiteSpacesAndDash = appNameNoWhiteSpaces.stringByReplacingOccurrencesOfString("-", withString: "")
+        
+        if adInInventory >= Inventory.all.count {
+            adInInventory = 0
+            Inventory.current = 0
+        }
         
         if let _ = Inventory.all[adInInventory].imageName.rangeOfString(appNameNoWhiteSpacesAndDash, options: .CaseInsensitiveSearch) {
             adInInventory += 1
             Inventory.current += 1
         }
         
-        if adInInventory > Inventory.all.count {
+        if adInInventory >= Inventory.all.count {
             adInInventory = 0
+            Inventory.current = 0
         }
         
         guard let validAd = createAd(selectedAd: adInInventory) else { return }
