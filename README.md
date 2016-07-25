@@ -465,7 +465,10 @@ Enjoy
 
 - v5.3
 
-Custom ad improvements and cleanup. Please read the instructions again.
+Custom ad improvements. 
+AppStoreProductViewController now used to link to app on ios.
+
+Please read the instructions again.
 
 - v5.2.2
 
