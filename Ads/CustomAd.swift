@@ -229,7 +229,6 @@ private extension CustomAd {
 extension CustomAd {
     
     @objc private func handleDownload() {
-        print("Pressed download button")
         handleClose()
         
         #if os(iOS)
