@@ -281,19 +281,19 @@ private extension CustomAd {
     }
 }
 
-// MARK: - App store view controller
+// MARK: - SKStoreProductViewController
 
-public class AppStoreViewController: NSObject {
+class AppStoreViewController: NSObject {
     
     // MARK: - Static Properties
     
     /// Shared instance
-    public static let sharedInstance = AppStoreViewController()
+    static let sharedInstance = AppStoreViewController()
     
     // MARK: - Methods
     
     /// Open app store controller for app ID
-    public func open(forAppID appID: String) {
+    func open(forAppID appID: String) {
         let storeViewController = SKStoreProductViewController()
         storeViewController.delegate = self
         
@@ -315,7 +315,7 @@ public class AppStoreViewController: NSObject {
 /// SKStoreProductViewControllerDelegate
 extension AppStoreViewController: SKStoreProductViewControllerDelegate {
     
-    public func productViewControllerDidFinish(viewController: SKStoreProductViewController) {
+    func productViewControllerDidFinish(viewController: SKStoreProductViewController) {
         viewController.dismissViewControllerAnimated(true, completion: nil)
     }
 }
