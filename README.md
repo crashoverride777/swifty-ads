@@ -92,7 +92,7 @@ Step 3: CustomAdSetUp (both targets if needed)
 
 Go to the CustomAd.swift file and right at the top in the Inventory struct create all the  case names for the app/games you would like to advertise. Than enter them into the "all" array as done in the sample project.
 
-To make this as reusable as possible e.g if you have multiple projects and share the same file, you can inlude all your custom ads, including for the current app/game that is used. The helper will automatically compare the bundle ID name to the ad image (including whitespaces and -) to see if they are the same and if so will move onto the next ad in the inventory.
+To make this as reusable as possible e.g if you have multiple projects and share the same file, you can inlude all your custom ads. The helper will automatically compare the bundle ID name to the ad image (including whitespaces and -) to see if they are the same and if so will move onto the next ad in the inventory.
 Please follow the image naming conventions for this  to work. In your asset catalogue the images should look like this
 "AdImageYourAppName". 
 
