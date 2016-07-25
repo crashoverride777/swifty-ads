@@ -465,7 +465,7 @@ Enjoy
 
 - v5.3
 
-Cleanup and custom ads improvements.
+Custom ad improvements and cleanup. Please read the instructions again.
 
 - v5.2.2
 
