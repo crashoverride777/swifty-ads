@@ -61,6 +61,14 @@ CustomAds.swift
 AppLovin(tvOS).swift // only add this to tvOS target
 ```
 
+NOTE: If your app/game is only in landscape mode add this code in your AppDelegate. The SKProductViewController only supports portrait and will crash if this is not on included for landscape only apps.
+
+```swift
+func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.AllButUpsideDown
+    }
+```
+
 - Step 2: SetUp Ads Manager (both targets if needed)
 
 In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
