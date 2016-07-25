@@ -28,7 +28,7 @@
     A Singleton class to manage custom interstitial adverts.
 */
 
-import UIKit
+import StoreKit
 
 /// Get app store url for app ID
 private func getAppStoreURL(forAppID id: String) -> String {
@@ -50,8 +50,8 @@ public enum Inventory: Int {
     /// All ads
     private static let adImagePrefix = "AdImage"
     private static var all = [
-        (imageName: adImagePrefix + "AngryFlappies", storeURL: getAppStoreURL(forAppID: "991933749")),
-        (imageName: adImagePrefix + "Vertigus", storeURL: getAppStoreURL(forAppID: "1051292772"))
+        (imageName: adImagePrefix + "AngryFlappies", appID: "991933749"),
+        (imageName: adImagePrefix + "Vertigus", appID: "1051292772")
     ]
     
     /// Tracking
@@ -82,7 +82,7 @@ public class CustomAd: NSObject {
     
     /// Image and store url
     private var imageName = ""
-    private var appStoreURL = ""
+    private var appID = ""
     
     /// Interval counter
     private var intervalCounter = 0
@@ -163,7 +163,7 @@ private extension CustomAd {
         
         // Set ad properties
         imageName = Inventory.all[selectedAd].imageName
-        appStoreURL = Inventory.all[selectedAd].storeURL
+        appID = Inventory.all[selectedAd].appID
         
         // Remove previous ad just incase
         removeFromSuperview()
@@ -189,14 +189,14 @@ private extension CustomAd {
             closeButton.layer.borderWidth = 2
             let iPad = UIDevice.currentDevice().userInterfaceIdiom == .Pad
             closeButton.layer.cornerRadius = (iPad ? 15 : 11.5)
-            closeButton.addTarget(self, action: #selector(pressedCloseButton), forControlEvents: .TouchDown)
+            closeButton.addTarget(self, action: #selector(handleClose), forControlEvents: .TouchDown)
             setButtonsForOrientation()
             view.addSubview(closeButton)
         #endif
         
         // TV controls
         #if os(tvOS)
-            let tapMenu = UITapGestureRecognizer(target: self, action: #selector(pressedCloseButton))
+            let tapMenu = UITapGestureRecognizer(target: self, action: #selector(handleClose))
             tapMenu.delaysTouchesBegan = true
             tapMenu.allowedPressTypes = [NSNumber (integer: UIPressType.Menu.rawValue)]
             imageView.addGestureRecognizer(tapMenu)
@@ -230,20 +230,26 @@ extension CustomAd {
     
     @objc private func handleDownload() {
         print("Pressed download button")
-        pressedCloseButton()
-        if let url = NSURL(string: appStoreURL) {
+        handleClose()
+        
+        #if os(iOS)
+            AppStoreViewController.sharedInstance.open(forAppID: appID)
+        #endif
+        
+        #if os(tvOS)
+        if let url = NSURL(string: getAppStoreURL(forAppID: appID)) {
             UIApplication.sharedApplication().openURL(url)
         }
+        #endif
     }
     
-    @objc private func pressedCloseButton() {
+    @objc private func handleClose() {
         removeFromSuperview()
         delegate?.customAdClosed()
     }
 }
 
-// MARK: - Set For Orientation
-
+/// Set For Orientation
 private extension CustomAd {
     
     func setImageForOrientation() {
@@ -273,5 +279,44 @@ private extension CustomAd {
         let closeButtonSize: CGFloat = iPad ? 30 : 22
         closeButton.frame = CGRect(x: 0, y: 0, width: closeButtonSize, height: closeButtonSize)
         closeButton.center = CGPoint(x: CGRectGetMinX(imageView.frame) + (closeButtonSize / 1.5), y: CGRectGetMinY(imageView.frame) + (closeButtonSize / 1.5))
+    }
+}
+
+// MARK: - App store view controller
+
+public class AppStoreViewController: NSObject {
+    
+    // MARK: - Static Properties
+    
+    /// Shared instance
+    public static let sharedInstance = AppStoreViewController()
+    
+    // MARK: - Methods
+    
+    /// Open app store controller for app ID
+    public func open(forAppID appID: String) {
+        let storeViewController = SKStoreProductViewController()
+        storeViewController.delegate = self
+        
+        let parameters = [SKStoreProductParameterITunesItemIdentifier: appID]
+        storeViewController.loadProductWithParameters(parameters) { (result, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            
+            guard result else { return }
+            
+            let rootViewController = UIApplication.sharedApplication().keyWindow?.rootViewController
+            rootViewController?.presentViewController(storeViewController, animated: true, completion: nil)
+        }
+    }
+}
+
+/// SKStoreProductViewControllerDelegate
+extension AppStoreViewController: SKStoreProductViewControllerDelegate {
+    
+    public func productViewControllerDidFinish(viewController: SKStoreProductViewController) {
+        viewController.dismissViewControllerAnimated(true, completion: nil)
     }
 }
