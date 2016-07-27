@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.3
+//    v5.3.1
 
 /*
     Abstract:
@@ -40,6 +40,20 @@ private func getAppStoreURL(forAppID id: String) -> String {
     #endif
 }
 
+/// Keys
+private enum Key: String {
+    case image
+    case appID
+    case isNewGame
+}
+
+/// Custom ad
+private struct Ad {
+    let imageName: String
+    let appID: String
+    let isNewGame: Bool
+}
+
 /// Inventory
 public enum Inventory: Int {
     
@@ -51,8 +65,8 @@ public enum Inventory: Int {
     /// All ads
     private static let adImagePrefix = "AdImage"
     private static var all = [
-        (imageName: adImagePrefix + "AngryFlappies", appID: "991933749"),
-        (imageName: adImagePrefix + "Vertigus", appID: "1051292772")
+        Ad(imageName: adImagePrefix + "AngryFlappies", appID: "991933749", isNewGame: false),
+        Ad(imageName: adImagePrefix + "Vertigus", appID: "1051292772", isNewGame: true)
     ]
     
     /// Tracking
@@ -126,6 +140,7 @@ public class CustomAd: NSObject {
     /// Image and store url
     private var imageName = ""
     private var appID = ""
+    private var isNewGame = false
     
     /// Interval counter
     private var intervalCounter = 0
@@ -140,7 +155,7 @@ public class CustomAd: NSObject {
     }
     
     /// Show
-    public func show(selectedAd selectedAd: Inventory? = nil, isNewGame: Bool = false, withInterval interval: Int = 0) {
+    public func show(selectedAd selectedAd: Inventory? = nil, withInterval interval: Int = 0) {
         guard !removedAds && !Inventory.all.isEmpty else { return }
         
         if interval != 0 {
@@ -180,7 +195,7 @@ public class CustomAd: NSObject {
             Inventory.current = 0
         }
         
-        guard let validAd = createAd(selectedAd: adInInventory, isNewGame: isNewGame) else { return }
+        guard let validAd = createAd(selectedAd: adInInventory) else { return }
         
         validAd.layer.zPosition = 5000
         let rootViewController = UIApplication.sharedApplication().keyWindow?.rootViewController
@@ -206,11 +221,12 @@ public class CustomAd: NSObject {
 private extension CustomAd {
     
     /// Create ad
-    func createAd(selectedAd selectedAd: Int, isNewGame: Bool) -> UIView? {
+    func createAd(selectedAd selectedAd: Int) -> UIView? {
         
         // Set ad properties
         imageName = Inventory.all[selectedAd].imageName
         appID = Inventory.all[selectedAd].appID
+        isNewGame = Inventory.all[selectedAd].isNewGame
         
         // Remove previous ad just incase
         removeFromSuperview()
@@ -226,7 +242,6 @@ private extension CustomAd {
         
         // Button
         #if os(iOS)
-            
             // Download tap gesture
             let downloadTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDownload))
             downloadTapGestureRecognizer.delaysTouchesBegan = true
@@ -248,10 +263,11 @@ private extension CustomAd {
             imageView.addGestureRecognizer(tapMain)
         #endif
         
+        // Set up for orientation
+        setupForOrientation()
+        
         // Delegate
         delegate?.customAdClicked()
-        
-        setupForOrientation()
         
         return view
     }
