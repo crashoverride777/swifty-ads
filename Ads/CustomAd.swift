@@ -295,13 +295,14 @@ private extension CustomAd {
         imageView.center = rootViewController.view.center
         
         /// Labels
-        headerLabel.font = UIFont(name: font, size: self.imageView.frame.size.height / 13)
+        let headerFontSize = imageView.frame.size.height / 13
+        headerLabel.font = UIFont(name: font, size: headerFontSize)
         headerLabel.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height)
-        headerLabel.center = CGPoint(x: 0 + (view.frame.size.width / 2), y: CGRectGetMinY(imageView.frame) + 24)
+        headerLabel.center = CGPoint(x: 0 + (view.frame.size.width / 2), y: CGRectGetMinY(imageView.frame) + headerFontSize / 1.1)
         
         newGameLabel.font = UIFont(name: fontBold, size: self.imageView.frame.size.height / 17)
         newGameLabel.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height)
-        newGameLabel.center = CGPoint(x: CGRectGetMaxX(imageView.frame) - 20, y: CGRectGetMinY(imageView.frame) + 20)
+        newGameLabel.center = CGPoint(x: CGRectGetMaxX(imageView.frame) - (headerFontSize / 1.1), y: CGRectGetMinY(imageView.frame) + headerFontSize / 1.05)
         
         /// Buttons
         let iPad = UIDevice.currentDevice().userInterfaceIdiom == .Pad
