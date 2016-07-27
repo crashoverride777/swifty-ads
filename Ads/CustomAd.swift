@@ -357,12 +357,11 @@ class AppStoreViewController: NSObject {
                 print(error.localizedDescription)
                 return
             }
-            
-            guard result else { return }
-            
-            let rootViewController = UIApplication.sharedApplication().keyWindow?.rootViewController
-            rootViewController?.presentViewController(storeViewController, animated: true, completion: nil)
         }
+        
+        /// Present, call outside loadProductsWithParemeter so there is no delay. VC has own loading indicator
+        let rootViewController = UIApplication.sharedApplication().keyWindow?.rootViewController
+        rootViewController?.presentViewController(storeViewController, animated: true, completion: nil)
     }
 }
 
