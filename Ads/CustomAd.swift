@@ -40,20 +40,6 @@ private func getAppStoreURL(forAppID id: String) -> String {
     #endif
 }
 
-/// Keys
-private enum Key: String {
-    case image
-    case appID
-    case isNewGame
-}
-
-/// Custom ad
-private struct Ad {
-    let imageName: String
-    let appID: String
-    let isNewGame: Bool
-}
-
 /// Inventory
 public enum Inventory: Int {
     
@@ -71,6 +57,13 @@ public enum Inventory: Int {
     
     /// Tracking
     private static var current = 0
+}
+
+/// Custom ad
+private struct Ad {
+    let imageName: String
+    let appID: String
+    let isNewGame: Bool
 }
 
 /// Delegate
