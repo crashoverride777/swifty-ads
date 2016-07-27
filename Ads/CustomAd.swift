@@ -252,15 +252,17 @@ private extension CustomAd {
         
         // TV controls
         #if os(tvOS)
+            let rootViewController = UIApplication.sharedApplication().keyWindow?.rootViewController
+            
             let tapMenu = UITapGestureRecognizer(target: self, action: #selector(handleClose))
             tapMenu.delaysTouchesBegan = true
             tapMenu.allowedPressTypes = [NSNumber (integer: UIPressType.Menu.rawValue)]
-            imageView.addGestureRecognizer(tapMenu)
+            rootViewController?.view.addGestureRecognizer(tapMenu)
             
             let tapMain = UITapGestureRecognizer(target: self, action: #selector(handleDownload))
             tapMain.delaysTouchesBegan = true
             tapMain.allowedPressTypes = [NSNumber (integer: UIPressType.Select.rawValue)]
-            imageView.addGestureRecognizer(tapMain)
+            rootViewController?.view.addGestureRecognizer(tapMain)
         #endif
         
         // Set up for orientation
