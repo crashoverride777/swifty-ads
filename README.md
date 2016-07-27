@@ -42,7 +42,7 @@ They have an app now which should make this alot easier
 
 https://cocoapods.org/app
 
-- Step 3: If you will use custom ads and your app/game is only in landscape mode add this code in your AppDelegate. The SKProductViewController only supports portrait and will crash if this is not on included for landscape only apps.
+- Step 3: If you will use custom ads and your app/game is only in landscape mode add this code in your AppDelegate. The SKProductViewController now used for iOS only supports portrait and will crash if this is not on included for landscape only apps.
 
 ```swift
 func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
@@ -475,6 +475,7 @@ Enjoy
 - v5.3
 
 Custom ad improvements. 
+
 AppStoreProductViewController now used to link to app store on ios.
 
 Please read the instructions again.
