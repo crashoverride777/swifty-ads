@@ -164,10 +164,9 @@ Copy CustomAd.swift into your project
 ```swift
 CustomAd.sharedInstance.show() // will show an ad in the inventory and than move on to next one
 
-Method has 3 optional paramameters
-1) slectedAd = show ad for identifier
-2) isNewGame = if set to true will show new label
-3) withInterval = e.g 4, if set will than show an ad every 4 times
+Method has 2 optional paramameters
+1) slectedAd = show ad for an identifier, if not selected it will loop through inventory
+2) withInterval = e.g 4, if set will than show an ad every 4 times
 ```
 
 # Use helper without custom ads
