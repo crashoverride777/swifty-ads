@@ -50,7 +50,7 @@ func application(application: UIApplication, supportedInterfaceOrientationsForWi
     }
 ```
 
-# Use helper with custom ads
+# How to use
 
 If you are including your own ads it is recommended to read apples markting guidlines
 
@@ -69,7 +69,7 @@ CustomAds.swift
 AppLovin(tvOS).swift // only add this to tvOS target
 ```
 
-- Step 2: SetUp Ads Manager (both targets if needed)
+- Step 2: Setup Ads Manager (both targets if needed)
 
 In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 
@@ -116,7 +116,7 @@ AdsManager.sharedInstance.removeBanner()
 AdsManager.sharedInstance.removeAll() 
 ```
 
-NOTE: 
+NOTE: Remove Ads bool 
 
 This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
 
@@ -152,17 +152,18 @@ extension GameScene: AdsDelegate {
 
 # Helper other methods
 
-If you dont use the ads manager and just want to use a particular helper(s) than you can call the follwing methods
+If you dont use the ads manager and just want to use a particular helper(s) than you can call the following methods
 
 - CustomAds.swift methods
 
 ```swift
 CustomAd.sharedInstance.show() // will show an ad in the inventory and than move on to next one
+```
 
-Method has 2 optional paramameters
+Note: Method has 2 optional paramameters
 1) slectedAd = show ad for an identifier, if not selected it will loop through inventory
 2) withInterval = e.g 4, if set will than show an ad every 4 times
-```
+
 
 - AdMob.swift
 
@@ -171,29 +172,13 @@ AdMob.sharedInstance.showBanner()
 AdMob.sharedInstance.showBanner(withDelay: 1) // delay showing banner slightly eg when transitioning to new scene/view
 AdMob.sharedInstance.showInterstitial()
 AdMob.sharedInstance.showInterstitial(withRandomness: 4) // 25% chance of showing inter ads (1/4)
-```
-
-- To remove Banner Ads, for example during gameplay 
-```swift
-AdMob.sharedInstance.removeBanner() 
+AdMob.sharedInstance.removeBanner() // e.g during gameplay
 ```
 
 - To remove all Ads, mainly for in app purchases simply call 
 ```swift
-AdMob.sharedInstance.removeAll() 
+AdMob.sharedInstance.removeAll() // See Notes above of what this does
 ```
-
-NOTE:
-
-This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
-
-For permanent storage you will need to create your own "removedAdsProduct" property and save it in something in NSUserDefaults, or preferably ios Keychain. Than call this method when your app launches after you have set up the helper.
-
-Check out this awesome Keychain Wrapper 
-
-https://github.com/jrendel/SwiftKeychainWrapper
-
-which makes using keychain as easy as NSUserDefaults.
 
 - Implement the delegate methods
 
