@@ -92,7 +92,7 @@ Step 3: CustomAdSetUp (both targets if needed)
 
 Go to the CustomAd.swift file and right at the top in the Inventory struct create all the  case names for the app/games you would like to advertise. Than enter them into the "all" array as done in the sample project.
 
-To make this as reusable as possible e.g if you have multiple projects and share the same file, you can inlude all your custom ads. The helper will automatically compare the bundle ID name to the ad image (including whitespaces and -) to see if they are the same and if so will move onto the next ad in the inventory.
+To make this as reusable as possible e.g if you have multiple projects and share the same file, you can inlude all your custom ads in the array. The helper will automatically compare the bundle ID name to the ad image (including whitespaces and -) to see if they are the same and if so will move onto the next ad in the inventory.
 Please follow the image naming conventions for this  to work. In your asset catalogue the images should look like this
 "AdImageYourAppName". 
 
@@ -150,17 +150,12 @@ extension GameScene: AdsDelegate {
 }
 ```
 
-# Use helper only with custom ads
+# Helper other methods
 
-SETUP
+If you dont use the ads manager and just want to use a particular helper(s) than you can call the follwing methods
 
-- Step 1:
+- CustomAds.swift methods
 
-HOW TO USE
-
-Copy CustomAd.swift into your project 
-
-- To show an Ad simply call this method
 ```swift
 CustomAd.sharedInstance.show() // will show an ad in the inventory and than move on to next one
 
@@ -169,24 +164,8 @@ Method has 2 optional paramameters
 2) withInterval = e.g 4, if set will than show an ad every 4 times
 ```
 
-# Use helper without custom ads
+- AdMob.swift
 
-SETUP
-
-- Step 1:
-
-Copy AdMob.swift into your project 
-
-- Step 2:
-
-In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups
-```swift
-AdMob.setup(viewController: self)
-```
-
-HOW TO USE
-
-- To show a supported Ad simply call these anywhere you like in your project
 ```swift
 AdMob.sharedInstance.showBanner() 
 AdMob.sharedInstance.showBanner(withDelay: 1) // delay showing banner slightly eg when transitioning to new scene/view
@@ -244,10 +223,6 @@ extension GameScene: AdsDelegate {
     }
 }
 ```
-
-NOTE: 
-
-For adMob these only get called when in release mode and not when in test mode.
 
 # Supporting both landscape and portrait orientation
 
