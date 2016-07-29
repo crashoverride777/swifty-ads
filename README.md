@@ -88,7 +88,55 @@ let rewardVideoID = "Enter your real id"
 AdMob.sharedInstance.setup(viewController: self, bannerID: bannerID, interID: interstitialID, rewardVideoID: rewardVideoID)
 ```
 
-Step 3: CustomAdSetUp (both targets if needed)
+Step 3: Set up app lovin (tvOS)
+
+# AppLovin (tvOS)
+
+Mediation will not work on tvOS because the AdMob SDK does not work with tvOS yet.
+Although these instructions can also be applied to iOS I prefer to use mediation on iOS to avoid extra code so I would recommend you only follow these steps when you plan to use ads on tvOS.
+
+SETUP
+
+1) Create an AppLovin account at
+
+https://applovin.com
+
+2) Log into your account and click on Doc (top right next to account) and tvOS and tvOS SDK integration and follow the steps to install the SDK.
+
+This should include
+
+a) Downloading the SDK folder that includes the headers and lib file and copy it into your project.
+
+Note: I was having some issues with this for ages because I was copying the whole folder from the website into my project. Do NOT do this. 
+Make sure you copy/drag the lib file serperatly into your project and than copy the headers folder into your project (select copy if needed and your tvTarget both times)
+
+b) Linking the correct frameworks (AdSupport, UIKit etc)
+
+c) Adding your appLovin SDK key (you can use your key and add it in this sample project to test out ads)
+
+d) Enabling the -ObjC flag in other linkers.
+
+
+4) Create an objC bridging header. Go to File-New-File and create a new header file. Call it something like HeaderTV and save.
+
+Than add the app lovin swift libraries in the header file
+```swift
+#import "ALSwiftHeaders.h"
+```
+
+The whole header file should look like this 
+```swift
+#ifndef HeaderTV_h
+#define HeaderTV_h
+
+#import "ALSwiftHeaders.h"
+
+#endif /* HeaderTV_h */
+```
+
+Than go to Targets-BuildSettings and search for "bridging". Double click on "Objective C Bridging Header" and enter the name of the header file followed by .h, for example HeaderTV.h
+
+Step 4: CustomAdSetUp (both targets if needed)
 
 Go to the CustomAd.swift file and right at the top in the Inventory struct create all the  case names for the app/games you would like to advertise. Than enter them into the "all" array as done in the sample project.
 
@@ -150,7 +198,7 @@ extension GameScene: AdsDelegate {
 }
 ```
 
-# Helper other methods
+# Helper other methods (iOS)
 
 If you dont use the ads manager and just want to use a particular helper(s) than you can call the following methods
 
@@ -210,6 +258,69 @@ extension GameScene: AdsDelegate {
     }
 }
 ```
+
+# Helper other methods (tvOS)
+
+To manually show ads do the following...
+
+- Init the helper(s) as soon as possible e.g ViewController or AppDelegate to load the SDK.
+```swift
+AppLovinInter.sharedInstance
+AppLovinReward.sharedInstance
+```
+
+- To show a supported Ad simply call these anywhere you like in your project
+```swift
+AppLovinInter.sharedInstance.show() 
+AppLovinInter.sharedInstance.show(withRandomness: 4)  // 25% chance of showing inter ads (1/4)
+
+AppLovinReward.sharedInstance.show() 
+AppLovinReward.sharedInstance.show(withRandomness: 4) // 25% chance of showing inter ads (1/4)
+```
+- To remove all Ads, mainly for in app purchases simply call 
+```swift
+AppLovinInter.sharedInstance.remove() 
+AppLovinReward.sharedInstance.remove()
+```
+
+NOTE:
+
+This method will set a removedAds bool to true in all the app lovin helpers. This ensures you only have to call this method and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
+
+For permanent storage you will need to create your own "removedAdsProduct" property and save it in something in NSUserDefaults, or preferably ios Keychain. Than call this method when your app launches after you have set up the helper.
+
+Check out this awesome Keychain Wrapper 
+
+https://github.com/jrendel/SwiftKeychainWrapper
+
+which makes using keychain as easy as NSUserDefaults.
+
+- Implement the delegate methods
+
+Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
+
+```swift
+AppLovinInter.sharedInstance.delegate = self
+AppLovinReward.sharedInstance.delegate = self
+```
+
+Than create an extension conforming to the protocol
+```swift
+extension GameScene: AdMobDelegate {
+    func appLovinAdClicked() {
+        // pause your game/app
+    }
+    func appLovinAdClosed() { 
+       // resume your game/app
+    }
+    func appLovinDidRewardUser(rewardAmount rewardAmount: Int) {
+       // code for reward videos, see instructions below or leave empty
+    }
+}
+```
+
+
+Note: If you are only using RewardVideos and not Interstitial ads make sure you are uncomment the code in the init method that setsUp the SDK in AppLovinReward.swift.
 
 # Supporting both landscape and portrait orientation
 
@@ -291,132 +402,6 @@ Note:
 
 Reward videos will show a black full screen ad using the test AdUnitID. I have not figured out yet how to test ads on AdMob that come from 3rd party mediation networks.
 I have tested this code with a real reward video ad from Chartboost, so I know everything works. (This is not recommended, always try to avoid using real ads when testing)
-
-
-# AppLovin (tvOS)
-
-Mediation will not work on tvOS because the AdMob SDK does not work with tvOS yet.
-Although these instructions can also be applied to iOS I prefer to use mediation on iOS to avoid extra code so I would recommend you only follow these steps for tvOS.
-
-SETUP
-
-- Step 1:
-
-Create an AppLovin account at
-
-https://applovin.com
-
-- Step 2: 
-
-Log into your account and click on Doc (top right next to account) and tvOS and tvOS SDK integration and follow the steps to install the SDK.
-
-This should include
-
-1) Downloading the SDK folder that includes the headers and lib file and copy it into your project.
-
-Note: I was having some issues with this for ages because I was copying the whole folder from the website into my project. Do NOT do this. 
-Make sure you copy/drag the lib file serperatly into your project and than copy the headers folder into your project (select copy if needed and your tvTarget both times)
-
-2) Linking the correct frameworks (AdSupport, UIKit etc)
-
-3) Adding your appLovin SDK key (you can use your key and add it in this sample project to test out ads)
-
-4) Enabling the -ObjC flag in other linkers.
-
-- Step 3:
-
-Copy the AppLovin.swift file into your project. 
-
-If you read through this you may be wondering why Interstitial ads and Reward ads are split into 2 classes. The way AppLovin handles reward videos is different than AdMob. They do not have a delegate that gets called when the reward video was watched, they rather have a delegate that gets called when the video starts playing. You than need to save the reward amount passed from the delegate and than use another delegate, adVideoPlayback, to check if a video was fully watched.
-
-If I would not split the helper into 2 classes than you would get a reward when watching a regular interstitial ad because the delegates would the same. Basically you need 2 instanes of delegates, as per AppLovin support.
-
-- Step 4: 
-
-Create an objC bridging header. Go to File-New-File and create a new header file. Call it something like HeaderTV and save.
-
-Than add the app lovin swift libraries in the header file
-```swift
-#import "ALSwiftHeaders.h"
-```
-
-The whole header file should look like this 
-```swift
-#ifndef HeaderTV_h
-#define HeaderTV_h
-
-#import "ALSwiftHeaders.h"
-
-#endif /* HeaderTV_h */
-```
-
-Than go to Targets-BuildSettings and search for "bridging". Double click on "Objective C Bridging Header" and enter the name of the header file followed by .h, for example HeaderTV.h
-
-HOW TO USE
-
-Use the AdsManager.swift methods to show ads for tv.
-
-
-To manually show ads do the following...
-
-- Init the helper(s) as soon as possible e.g ViewController or AppDelegate to load the SDK.
-```swift
-AppLovinInter.sharedInstance
-AppLovinReward.sharedInstance
-```
-
-- To show a supported Ad simply call these anywhere you like in your project
-```swift
-AppLovinInter.sharedInstance.show() 
-AppLovinInter.sharedInstance.show(withRandomness: 4)  // 25% chance of showing inter ads (1/4)
-
-AppLovinReward.sharedInstance.show() 
-AppLovinReward.sharedInstance.show(withRandomness: 4) // 25% chance of showing inter ads (1/4)
-```
-- To remove all Ads, mainly for in app purchases simply call 
-```swift
-AppLovinInter.sharedInstance.remove() 
-AppLovinReward.sharedInstance.remove()
-```
-
-NOTE:
-
-This method will set a removedAds bool to true in all the app lovin helpers. This ensures you only have to call this method and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
-
-For permanent storage you will need to create your own "removedAdsProduct" property and save it in something in NSUserDefaults, or preferably ios Keychain. Than call this method when your app launches after you have set up the helper.
-
-Check out this awesome Keychain Wrapper 
-
-https://github.com/jrendel/SwiftKeychainWrapper
-
-which makes using keychain as easy as NSUserDefaults.
-
-- Implement the delegate methods
-
-Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
-
-```swift
-AppLovinInter.sharedInstance.delegate = self
-AppLovinReward.sharedInstance.delegate = self
-```
-
-Than create an extension conforming to the protocol
-```swift
-extension GameScene: AdMobDelegate {
-    func appLovinAdClicked() {
-        // pause your game/app
-    }
-    func appLovinAdClosed() { 
-       // resume your game/app
-    }
-    func appLovinDidRewardUser(rewardAmount rewardAmount: Int) {
-       // code for reward videos, see instructions below or leave empty
-    }
-}
-```
-
-
-Note: If you are only using RewardVideos and not Interstitial ads make sure you are uncomment the code in the init method that setsUp the SDK in AppLovinReward.swift.
 
 # Set the DEBUG flag?
 
