@@ -354,6 +354,11 @@ Than go to Targets-BuildSettings and search for "bridging". Double click on "Obj
 
 HOW TO USE
 
+Use the AdsManager.swift methods to show ads for tv.
+
+
+To manually show ads do the following...
+
 - Init the helper(s) as soon as possible e.g ViewController or AppDelegate to load the SDK.
 ```swift
 AppLovinInter.sharedInstance
