@@ -217,7 +217,7 @@ class AppLovinRewarded: NSObject {
 
 /// Loading Delegates
 
-extension AppLovinReward: ALAdLoadDelegate {
+extension AppLovinRewarded: ALAdLoadDelegate {
     
     func adService(adService: ALAdService, didLoadAd ad: ALAd) {
         print("AppLovin reward video did load ad")
@@ -230,7 +230,7 @@ extension AppLovinReward: ALAdLoadDelegate {
 
 /// Display Delegates
 
-extension AppLovinReward: ALAdDisplayDelegate {
+extension AppLovinRewarded: ALAdDisplayDelegate {
     
     func ad(ad: ALAd, wasDisplayedIn view: UIView) {
         print("AppLovin reward video ad was displayed")
@@ -252,7 +252,7 @@ extension AppLovinReward: ALAdDisplayDelegate {
 
 /// Video Playback Delegates
 
-extension AppLovinReward: ALAdVideoPlaybackDelegate {
+extension AppLovinRewarded: ALAdVideoPlaybackDelegate {
     
     func videoPlaybackBeganInAd(ad: ALAd) {
         print("AppLovin reward video playback began in ad \(ad)")
@@ -270,7 +270,7 @@ extension AppLovinReward: ALAdVideoPlaybackDelegate {
 
 /// Reward Delegates
 
-extension AppLovinReward: ALAdRewardDelegate {
+extension AppLovinRewarded: ALAdRewardDelegate {
     
     func rewardValidationRequestForAd(ad: ALAd, didSucceedWithResponse response: [NSObject : AnyObject]) {
         print("AppLovin reward video did succeed with response \(response)")
