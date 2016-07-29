@@ -431,6 +431,10 @@ Enjoy
 
 # Release Notes
 
+- v5.3.2
+
+Cleanup and small improvements
+
 - v5.3.1
 
 Small fixes and improvements to custom ads
