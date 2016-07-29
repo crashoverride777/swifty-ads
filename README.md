@@ -22,7 +22,7 @@ Note:
 
 If you will use AppLovin for tvOS you will have to do these steps for your tvOS target as well
 
-# Pre-setup
+# Pre-setup (iOS)
 
 - Step 1: Sign up for a Google AdMob account and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
 
@@ -41,6 +41,56 @@ I would recommend using Cocoa Pods especially if you will add more SDKs down the
 They have an app now which should make this alot easier
 
 https://cocoapods.org/app
+
+# Pre-setup tvOS
+
+Step 3: Set up app lovin (tvOS)
+
+# AppLovin (tvOS)
+
+Mediation will not work on tvOS because the AdMob SDK does not work with tvOS yet.
+Although these instructions can also be applied to iOS I prefer to use mediation on iOS to avoid extra code so I would recommend you only follow these steps when you plan to use ads on tvOS.
+
+SETUP
+
+Step 1: Create an AppLovin account at
+
+https://applovin.com
+
+Step 2: Log into your account and click on Doc (top right next to account) and tvOS and tvOS SDK integration and follow the steps to install the SDK.
+
+This should include
+
+1) Downloading the SDK folder that includes the headers and lib file and copy it into your project.
+
+Note: I was having some issues with this for ages because I was copying the whole folder from the website into my project. Do NOT do this. 
+Make sure you copy/drag the lib file serperatly into your project and than copy the headers folder into your project (select copy if needed and your tvTarget both times)
+
+2) Linking the correct frameworks (AdSupport, UIKit etc)
+
+3) Adding your appLovin SDK key (you can use your key and add it in this sample project to test out ads)
+
+4) Enabling the -ObjC flag in other linkers.
+
+
+- Step 4: Create an objC bridging header. Go to File-New-File and create a new header file. Call it something like HeaderTV and save.
+
+Than add the app lovin swift libraries in the header file
+```swift
+#import "ALSwiftHeaders.h"
+```
+
+The whole header file should look like this 
+```swift
+#ifndef HeaderTV_h
+#define HeaderTV_h
+
+#import "ALSwiftHeaders.h"
+
+#endif /* HeaderTV_h */
+```
+
+Than go to Targets-BuildSettings and search for "bridging". Double click on "Objective C Bridging Header" and enter the name of the header file followed by .h, for example HeaderTV.h
 
 - Step 3: If you will use custom ads and your app/game is only in landscape mode add this code in your AppDelegate. The SKProductViewController now used for iOS only supports portrait and will crash if this is not on included for landscape only apps.
 
@@ -88,55 +138,7 @@ let rewardVideoID = "Enter your real id"
 AdMob.sharedInstance.setup(viewController: self, bannerID: bannerID, interID: interstitialID, rewardVideoID: rewardVideoID)
 ```
 
-Step 3: Set up app lovin (tvOS)
-
-# AppLovin (tvOS)
-
-Mediation will not work on tvOS because the AdMob SDK does not work with tvOS yet.
-Although these instructions can also be applied to iOS I prefer to use mediation on iOS to avoid extra code so I would recommend you only follow these steps when you plan to use ads on tvOS.
-
-SETUP
-
-1) Create an AppLovin account at
-
-https://applovin.com
-
-2) Log into your account and click on Doc (top right next to account) and tvOS and tvOS SDK integration and follow the steps to install the SDK.
-
-This should include
-
-a) Downloading the SDK folder that includes the headers and lib file and copy it into your project.
-
-Note: I was having some issues with this for ages because I was copying the whole folder from the website into my project. Do NOT do this. 
-Make sure you copy/drag the lib file serperatly into your project and than copy the headers folder into your project (select copy if needed and your tvTarget both times)
-
-b) Linking the correct frameworks (AdSupport, UIKit etc)
-
-c) Adding your appLovin SDK key (you can use your key and add it in this sample project to test out ads)
-
-d) Enabling the -ObjC flag in other linkers.
-
-
-4) Create an objC bridging header. Go to File-New-File and create a new header file. Call it something like HeaderTV and save.
-
-Than add the app lovin swift libraries in the header file
-```swift
-#import "ALSwiftHeaders.h"
-```
-
-The whole header file should look like this 
-```swift
-#ifndef HeaderTV_h
-#define HeaderTV_h
-
-#import "ALSwiftHeaders.h"
-
-#endif /* HeaderTV_h */
-```
-
-Than go to Targets-BuildSettings and search for "bridging". Double click on "Objective C Bridging Header" and enter the name of the header file followed by .h, for example HeaderTV.h
-
-Step 4: CustomAdSetUp (both targets if needed)
+Step 3: CustomAdSetUp (both targets if needed)
 
 Go to the CustomAd.swift file and right at the top in the Inventory struct create all the  case names for the app/games you would like to advertise. Than enter them into the "all" array as done in the sample project.
 
