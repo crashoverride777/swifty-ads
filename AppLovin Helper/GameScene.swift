@@ -8,17 +8,17 @@
 
 import SpriteKit
 
-extension GameScene: AppLovinDelegate {
+extension GameScene: AdsDelegate {
     
-    func appLovinAdClicked() {
+    func adClicked() {
         print("Ads clicked")
     }
     
-    func appLovinAdClosed() {
+    func adClosed() {
         print("Ads closed")
     }
     
-    func appLovinAdDidRewardUser(rewardAmount rewardAmount: Int) {
+    func adDidRewardUser(rewardAmount rewardAmount: Int) {
         // e.g self.coins += rewardAmount
         
     }
@@ -44,14 +44,14 @@ class GameScene: SKScene {
         
         
         AppLovinInter.sharedInstance.delegate = self
-        AppLovinReward.sharedInstance.delegate = self
+        AppLovinRewarded.sharedInstance.delegate = self
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
         
         // Show inter
-        AdsManager.sharedInstance.showInterstitialRandomly(randomness: 3)
+        AdsManager.sharedInstance.showInterstitial(withInterval: 2)
         
         // Remove ads after 3 clicks
         touchCounter -= 1

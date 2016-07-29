@@ -49,7 +49,7 @@ class AdsManager: NSObject {
             
             #if os(tvOS)
                 AppLovinInter.sharedInstance.delegate = delegate
-                AppLovinReward.sharedInstance.delegate = delegate
+                AppLovinRewarded.sharedInstance.delegate = delegate
             #endif
         }
     }
@@ -60,7 +60,7 @@ class AdsManager: NSObject {
             return AdMob.sharedInstance.rewardedVideoIsReady
         #endif
         #if os(tvOS)
-            return AppLovinReward.sharedInstance.isReady
+            return AppLovinRewarded.sharedInstance.isReady
         #endif
     }
     
@@ -93,7 +93,7 @@ class AdsManager: NSObject {
         
         #if os(tvOS)
             AppLovinInter.sharedInstance
-            AppLovinReward.sharedInstance
+            AppLovinRewarded.sharedInstance
         #endif
     }
     
@@ -152,7 +152,7 @@ class AdsManager: NSObject {
         #endif
         
         #if os(tvOS)
-            AppLovinReward.sharedInstance.show()
+            AppLovinRewarded.sharedInstance.show()
         #endif
     }
     
@@ -169,7 +169,7 @@ class AdsManager: NSObject {
         
         #if os(tvOS)
             AppLovinInter.sharedInstance.remove()
-            AppLovinReward.sharedInstance.remove()
+            AppLovinRewarded.sharedInstance.remove()
         #endif
     }
     

@@ -342,7 +342,7 @@ extension CustomAd {
 }
 
 // MARK: - SKStoreProductViewController
-
+#if os(iOS)
 class AppStoreViewController: NSObject {
     
     // MARK: - Static Properties
@@ -378,3 +378,4 @@ extension AppStoreViewController: SKStoreProductViewControllerDelegate {
         viewController.dismissViewControllerAnimated(true, completion: nil)
     }
 }
+#endif

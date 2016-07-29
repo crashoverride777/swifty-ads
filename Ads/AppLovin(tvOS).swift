@@ -112,12 +112,12 @@ extension AppLovinInter: ALAdDisplayDelegate {
     
     func ad(ad: ALAd, wasDisplayedIn view: UIView) {
         print("AppLovin interstitial ad was displayed")
-        delegate?.appLovinAdClicked()
+        delegate?.adClicked()
     }
     
     func ad(ad: ALAd, wasClickedIn view: UIView) {
         print("AppLovin interstitial ad was clicked")
-        delegate?.appLovinAdClicked()
+        delegate?.adClicked()
     }
     
     func ad(ad: ALAd, wasHiddenIn view: UIView) {
@@ -234,17 +234,17 @@ extension AppLovinRewarded: ALAdDisplayDelegate {
     
     func ad(ad: ALAd, wasDisplayedIn view: UIView) {
         print("AppLovin reward video ad was displayed")
-        delegate?.appLovinAdClicked()
+        delegate?.adClicked()
     }
     
     func ad(ad: ALAd, wasClickedIn view: UIView) {
         print("AppLovin reward video ad was clicked")
-        delegate?.appLovinAdClicked()
+        delegate?.adClicked()
     }
     
     func ad(ad: ALAd, wasHiddenIn view: UIView) {
         print("AppLovin reward video ad was hidden")
-        delegate?.appLovinAdClosed()
+        delegate?.adClosed()
         
         preload()
     }
@@ -264,7 +264,7 @@ extension AppLovinRewarded: ALAdVideoPlaybackDelegate {
         guard wasFullyWatched else { return }
         print("AppLovin reward video was fully watched, rewarding...")
         
-        delegate?.appLovinAdDidRewardUser(rewardAmount: rewardAmount)
+        delegate?.adDidRewardUser(rewardAmount: rewardAmount)
     }
 }
 
