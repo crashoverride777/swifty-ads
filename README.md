@@ -433,7 +433,7 @@ Enjoy
 
 - v5.3.2
 
-Cleanup and small improvements
+Cleanup and small improvements. Please make sure your projects includes the new file AdsDelegate.swift.
 
 - v5.3.1
 
