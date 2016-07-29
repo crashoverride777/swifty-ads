@@ -157,6 +157,8 @@ If you dont use the ads manager and just want to use a particular helper(s) than
 - CustomAds.swift methods
 
 ```swift
+CustomAd.sharedInstance.delegate = self // set delegate
+
 CustomAd.sharedInstance.show() // will show an ad in the inventory and than move on to next one
 ```
 
