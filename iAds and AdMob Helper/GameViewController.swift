@@ -16,8 +16,8 @@ class GameViewController: UIViewController {
         // Set up helpers
         let bannerID = "Enter your real ID"
         let interstitialID = "Enter your real ID"
-        let rewardVideoID = "Enter your real ID"
-        AdMob.sharedInstance.setup(viewController: self, bannerID: bannerID, interID: interstitialID, rewardVideoID: rewardVideoID)
+        let rewardedVideoID = "Enter your real ID"
+        AdMob.sharedInstance.setup(viewController: self, bannerID: bannerID, interID: interstitialID, rewardedVideoID: rewardedVideoID)
         
         AdsManager.sharedInstance.setup(customAdsInterval: 3, maxCustomAdsPerSession: 3)
         

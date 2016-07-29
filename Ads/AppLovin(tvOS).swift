@@ -144,11 +144,11 @@ extension AppLovinInter: ALAdVideoPlaybackDelegate {
 
 // MARK: - Reward Videos
 
-class AppLovinReward: NSObject {
+class AppLovinRewarded: NSObject {
     
     // MARK: - Static Properties
     
-    static let sharedInstance = AppLovinReward()
+    static let sharedInstance = AppLovinRewarded()
     
     // MARK: - Properties
     

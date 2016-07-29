@@ -52,9 +52,9 @@ class AdMob: NSObject {
     weak var delegate: AdsDelegate?
     
     /// Check if reward video is ready (e.g to hide a reward video button)
-    var rewardVideoIsReady: Bool {
-        guard let rewardVideoAd = rewardVideoAd else { return false }
-        return rewardVideoAd.ready
+    var rewardedVideoIsReady: Bool {
+        guard let rewardedVideoAd = rewardedVideoAd else { return false }
+        return rewardedVideoAd.ready
     }
     
     /// Presenting view controller
@@ -63,13 +63,13 @@ class AdMob: NSObject {
     /// Ads
     private var bannerAd: GADBannerView?
     private var interstitialAd: GADInterstitial?
-    private var rewardVideoAd: GADRewardBasedVideoAd?
+    private var rewardedVideoAd: GADRewardBasedVideoAd?
     
     /// Test Ad Unit IDs
     /// Will get set to real ID in setUp method
     private var bannerAdUnitID = "ca-app-pub-3940256099942544/2934735716"
     private var interstitialAdUnitID = "ca-app-pub-3940256099942544/4411468910"
-    private var rewardVideoAdUnitID = "ca-app-pub-1234567890123456/1234567890"
+    private var rewardedVideoAdUnitID = "ca-app-pub-1234567890123456/1234567890"
     
     /// Interval counter
     private var intervalCounter = 0
@@ -87,18 +87,18 @@ class AdMob: NSObject {
     // MARK: - Set-Up
     
     /// Set up ads helper
-    func setup(viewController viewController: UIViewController, bannerID: String, interID: String, rewardVideoID: String) {
+    func setup(viewController viewController: UIViewController, bannerID: String, interID: String, rewardedVideoID: String) {
         presentingViewController = viewController
         
         #if !DEBUG
         bannerAdUnitID = bannerID
         interstitialAdUnitID = interID
-        rewardVideoAdUnitID = rewardVideoID
+        rewardedVideoAdUnitID = rewardedVideoID
         #endif
         
         // Preload inter and reward ads first time
         interstitialAd = loadInterstitialAd()
-        rewardVideoAd = loadRewardVideoAd()
+        rewardedVideoAd = loadRewardedVideoAd()
     }
     
     // MARK: - Show Banner
@@ -143,12 +143,12 @@ class AdMob: NSObject {
     // MARK: - Show Reward Video
     
     /// Show reward video ad randomly
-    func showRewardVideo(withInterval interval: Int = 0) {
+    func showRewardedVideo(withInterval interval: Int = 0) {
         guard !removedAds else { return }
         
-        guard let rewardVideoAd = rewardVideoAd where rewardVideoAd.ready else {
+        guard let rewardedVideoAd = rewardedVideoAd where rewardedVideoAd.ready else {
             print("AdMob reward video is not ready, reloading...")
-            self.rewardVideoAd = loadRewardVideoAd()
+            self.rewardedVideoAd = loadRewardedVideoAd()
             return
         }
         
@@ -160,7 +160,7 @@ class AdMob: NSObject {
         
         print("AdMob reward video is showing")
         guard let rootViewController = presentingViewController?.view?.window?.rootViewController else { return }
-        rewardVideoAd.presentFromRootViewController(rootViewController)
+        rewardedVideoAd.presentFromRootViewController(rootViewController)
     }
     
     // MARK: - Remove
@@ -188,7 +188,7 @@ class AdMob: NSObject {
         removedAds = true
         removeBanner()
         interstitialAd?.delegate = nil
-        rewardVideoAd?.delegate = nil
+        rewardedVideoAd?.delegate = nil
     }
     
     // MARK: - Orientation Changed
@@ -255,20 +255,20 @@ private extension AdMob {
         return interstitialAd
     }
     
-    func loadRewardVideoAd() -> GADRewardBasedVideoAd {
+    func loadRewardedVideoAd() -> GADRewardBasedVideoAd {
         
-        let rewardVideoAd = GADRewardBasedVideoAd.sharedInstance()
+        let rewardedVideoAd = GADRewardBasedVideoAd.sharedInstance()
         
-        rewardVideoAd.delegate = self
+        rewardedVideoAd.delegate = self
         let request = GADRequest()
         
         #if DEBUG
             request.testDevices = [kGADSimulatorID]
         #endif
         
-        rewardVideoAd.loadRequest(request, withAdUnitID: rewardVideoAdUnitID)
+        rewardedVideoAd.loadRequest(request, withAdUnitID: rewardedVideoAdUnitID)
         
-        return rewardVideoAd
+        return rewardedVideoAd
     }
 }
 
@@ -369,7 +369,7 @@ extension AdMob: GADRewardBasedVideoAdDelegate {
     func rewardBasedVideoAdDidClose(rewardBasedVideoAd: GADRewardBasedVideoAd!) {
         print("AdMob reward video closed, reloading...")
         delegate?.adClosed()
-        rewardVideoAd = loadRewardVideoAd()
+        rewardedVideoAd = loadRewardedVideoAd()
     }
     
     func rewardBasedVideoAdDidReceiveAd(rewardBasedVideoAd: GADRewardBasedVideoAd!) {

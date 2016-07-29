@@ -55,9 +55,9 @@ class AdsManager: NSObject {
     }
     
     /// Reward video check
-    var rewardVideoIsReady: Bool {
+    var rewardedVideoIsReady: Bool {
         #if os(iOS)
-            return AdMob.sharedInstance.rewardVideoIsReady
+            return AdMob.sharedInstance.rewardedVideoIsReady
         #endif
         #if os(tvOS)
             return AppLovinReward.sharedInstance.isReady
@@ -139,7 +139,7 @@ class AdsManager: NSObject {
     // MARK: - Show Reward Video
     
     /// Show reward video ad
-    func showRewardVideo(withInterval interval: Int = 0) {
+    func showRewardedVideo(withInterval interval: Int = 0) {
         
         if interval != 0 {
             intervalCounter += 1
@@ -148,7 +148,7 @@ class AdsManager: NSObject {
         }
         
         #if os(iOS)
-            AdMob.sharedInstance.showRewardVideo()
+            AdMob.sharedInstance.showRewardedVideo()
         #endif
         
         #if os(tvOS)
