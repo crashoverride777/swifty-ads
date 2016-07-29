@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.3.1
+//    v5.3.2
 
 /*
     Abstract:
@@ -38,13 +38,6 @@ func print(items: Any..., separator: String = " ", terminator: String = "\n") {
     #endif
 }
 
-/// Delegates
-protocol AdMobDelegate: class {
-    func adMobAdClicked()
-    func adMobAdClosed()
-    func adMobAdDidRewardUser(rewardAmount rewardAmount: Int)
-}
-
 /// Ads singleton class
 class AdMob: NSObject {
     
@@ -56,7 +49,7 @@ class AdMob: NSObject {
     // MARK: - Properties
     
     /// Delegates
-    weak var delegate: AdMobDelegate?
+    weak var delegate: AdsDelegate?
     
     /// Check if reward video is ready (e.g to hide a reward video button)
     var rewardVideoIsReady: Bool {
@@ -296,7 +289,7 @@ extension AdMob: GADBannerViewDelegate {
     
     func adViewWillPresentScreen(bannerView: GADBannerView!) { // gets called only in release mode
         print("AdMob banner clicked")
-        delegate?.adMobAdClicked()
+        delegate?.adClicked()
     }
     
     func adViewWillDismissScreen(bannerView: GADBannerView!) {
@@ -305,12 +298,12 @@ extension AdMob: GADBannerViewDelegate {
     
     func adViewDidDismissScreen(bannerView: GADBannerView!) { // gets called in only release mode
         print("AdMob banner closed")
-        delegate?.adMobAdClosed()
+        delegate?.adClosed()
     }
     
     func adViewWillLeaveApplication(bannerView: GADBannerView!) {
         print("AdMob banner will leave application")
-        delegate?.adMobAdClicked()
+        delegate?.adClicked()
     }
     
     func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
@@ -337,7 +330,7 @@ extension AdMob: GADInterstitialDelegate {
     
     func interstitialWillPresentScreen(ad: GADInterstitial!) {
         print("AdMob interstitial will present")
-        delegate?.adMobAdClicked()
+        delegate?.adClicked()
     }
     
     func interstitialWillDismissScreen(ad: GADInterstitial!) {
@@ -346,13 +339,13 @@ extension AdMob: GADInterstitialDelegate {
     
     func interstitialDidDismissScreen(ad: GADInterstitial!) {
         print("AdMob interstitial closed, reloading...")
-        delegate?.adMobAdClosed()
+        delegate?.adClosed()
         interstitialAd = loadInterstitialAd()
     }
     
     func interstitialWillLeaveApplication(ad: GADInterstitial!) {
         print("AdMob interstitial will leave application")
-        delegate?.adMobAdClicked()
+        delegate?.adClicked()
     }
     
     func interstitialDidFailToPresentScreen(ad: GADInterstitial!) {
@@ -375,7 +368,7 @@ extension AdMob: GADRewardBasedVideoAdDelegate {
     
     func rewardBasedVideoAdDidClose(rewardBasedVideoAd: GADRewardBasedVideoAd!) {
         print("AdMob reward video closed, reloading...")
-        delegate?.adMobAdClosed()
+        delegate?.adClosed()
         rewardVideoAd = loadRewardVideoAd()
     }
     
@@ -385,12 +378,12 @@ extension AdMob: GADRewardBasedVideoAdDelegate {
     
     func rewardBasedVideoAdDidStartPlaying(rewardBasedVideoAd: GADRewardBasedVideoAd!) {
         print("AdMob reward video did start playing")
-        delegate?.adMobAdClicked()
+        delegate?.adClicked()
     }
     
     func rewardBasedVideoAdWillLeaveApplication(rewardBasedVideoAd: GADRewardBasedVideoAd!) {
         print("AdMob reward video will leave application")
-        delegate?.adMobAdClicked()
+        delegate?.adClicked()
     }
     
     func rewardBasedVideoAd(rewardBasedVideoAd: GADRewardBasedVideoAd!, didFailToLoadWithError error: NSError!) {
@@ -399,6 +392,6 @@ extension AdMob: GADRewardBasedVideoAdDelegate {
     
     func rewardBasedVideoAd(rewardBasedVideoAd: GADRewardBasedVideoAd!, didRewardUserWithReward reward: GADAdReward!) {
         print("AdMob reward video did reward user")
-        delegate?.adMobAdDidRewardUser(rewardAmount: Int(reward.amount))
+        delegate?.adDidRewardUser(rewardAmount: Int(reward.amount))
     }
 }

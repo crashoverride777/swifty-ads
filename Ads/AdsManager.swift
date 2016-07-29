@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.3.1
+//    v5.3.2
 
 /*
     Abstract:
@@ -30,14 +30,6 @@
 
 import UIKit
 
-/// Delegate
-protocol AdsDelegate: class {
-    func adClicked()
-    func adClosed()
-    func adDidRewardUser(rewardAmount rewardAmount: Int)
-}
-
-/// Ads manager class
 class AdsManager: NSObject {
     
     // MARK: - Static Properties
@@ -47,7 +39,20 @@ class AdsManager: NSObject {
     // MARK: - Properties
     
     /// Delegate
-    weak var delegate: AdsDelegate?
+    weak var delegate: AdsDelegate? {
+        didSet {
+            CustomAd.sharedInstance.delegate = delegate
+            
+            #if os(iOS)
+                AdMob.sharedInstance.delegate = delegate
+            #endif
+            
+            #if os(tvOS)
+                AppLovinInter.sharedInstance.delegate = delegate
+                AppLovinReward.sharedInstance.delegate = delegate
+            #endif
+        }
+    }
     
     /// Reward video check
     var rewardVideoIsReady: Bool {
@@ -76,18 +81,7 @@ class AdsManager: NSObject {
     
     // MARK: - Init
     private override init() {
-        super.init()
         
-        CustomAd.sharedInstance.delegate = self
-        
-        #if os(iOS)
-            AdMob.sharedInstance.delegate = self
-        #endif
-        
-        #if os(tvOS)
-            AppLovinInter.sharedInstance.delegate = self
-            AppLovinReward.sharedInstance.delegate = self
-        #endif
     }
     
     // MARK: - Set Up
@@ -186,50 +180,3 @@ class AdsManager: NSObject {
         #endif
     }
 }
-
-// MARK: -  Delegates
-extension AdsManager: CustomAdDelegate {
-    
-    /// Custom ads
-    func customAdClicked() {
-        delegate?.adClicked()
-    }
-    
-    func customAdClosed() {
-        delegate?.adClosed()
-    }
-}
-
-#if os(iOS)
-    extension AdsManager: AdMobDelegate {
-        
-        func adMobAdClicked() {
-            delegate?.adClicked()
-        }
-        
-        func adMobAdClosed() {
-            delegate?.adClosed()
-        }
-        
-        func adMobAdDidRewardUser(rewardAmount rewardAmount: Int) {
-            delegate?.adDidRewardUser(rewardAmount: rewardAmount)
-        }
-    }
-#endif
-
-#if os(tvOS)
-    extension AdsManager: AppLovinDelegate {
-        
-        func appLovinAdClicked() {
-            delegate?.adClicked()
-        }
-        
-        func appLovinAdClosed() {
-            delegate?.adClosed()
-        }
-        
-        func appLovinAdDidRewardUser(rewardAmount rewardAmount: Int) {
-            delegate?.adDidRewardUser(rewardAmount: rewardAmount)
-        }
-    }
-#endif

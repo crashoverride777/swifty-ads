@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.3.1
+//    v5.3.2
 
 /*
     Abstract:
@@ -66,12 +66,6 @@ private struct Ad {
     let isNewGame: Bool
 }
 
-/// Delegate
-public protocol CustomAdDelegate: class {
-    func customAdClicked()
-    func customAdClosed()
-}
-
 /// Custom ads video class
 public class CustomAd: NSObject {
     
@@ -81,7 +75,7 @@ public class CustomAd: NSObject {
     // MARK: - Properties
     
     /// Delegate
-    public weak var delegate: CustomAdDelegate?
+    public weak var delegate: AdsDelegate?
     
     /// View
     private var view = UIView()
@@ -262,7 +256,7 @@ private extension CustomAd {
         setupForOrientation()
         
         // Delegate
-        delegate?.customAdClicked()
+        delegate?.adClicked()
         
         return view
     }
@@ -343,7 +337,7 @@ extension CustomAd {
     
     @objc private func handleClose() {
         removeFromSuperview()
-        delegate?.customAdClosed()
+        delegate?.adClosed()
     }
 }
 

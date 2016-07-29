@@ -15,6 +15,8 @@
 		B41E34C41D023B420034C444 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4B01A231B9A0AF500F9A8EA /* Images.xcassets */; };
 		B435FFE11CE14C2A00A678AA /* AdMob(iOS).swift in Sources */ = {isa = PBXBuildFile; fileRef = B435FFE01CE14C2A00A678AA /* AdMob(iOS).swift */; };
 		B435FFE51CE14D1900A678AA /* CustomAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = B435FFE41CE14D1900A678AA /* CustomAd.swift */; };
+		B43B34CD1D4AD2E50064F364 /* AdsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43B34CC1D4AD2E50064F364 /* AdsDelegate.swift */; };
+		B43B34CE1D4AD2E50064F364 /* AdsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43B34CC1D4AD2E50064F364 /* AdsDelegate.swift */; };
 		B452EFD91CDBF7FE009A69B5 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B452EFD81CDBF7FE009A69B5 /* GoogleMobileAds.framework */; };
 		B4A0065E1CECFCF100A44575 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A0065D1CECFCF100A44575 /* AppDelegate.swift */; };
 		B4A006601CECFCF100A44575 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B4A0065F1CECFCF100A44575 /* GameScene.sks */; };
@@ -96,6 +98,7 @@
 		77BAC99D7C3D9FFB9A654341 /* Pods-AppLovin HelperTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppLovin HelperTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppLovin HelperTests/Pods-AppLovin HelperTests.release.xcconfig"; sourceTree = "<group>"; };
 		B435FFE01CE14C2A00A678AA /* AdMob(iOS).swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AdMob(iOS).swift"; sourceTree = "<group>"; };
 		B435FFE41CE14D1900A678AA /* CustomAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAd.swift; sourceTree = "<group>"; };
+		B43B34CC1D4AD2E50064F364 /* AdsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdsDelegate.swift; sourceTree = "<group>"; };
 		B452EFD81CDBF7FE009A69B5 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "GoogleMobileAdsSdkiOS-7.8.0/GoogleMobileAds.framework"; sourceTree = SOURCE_ROOT; };
 		B4A0065B1CECFCF100A44575 /* AppLovin Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AppLovin Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4A0065D1CECFCF100A44575 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -400,6 +403,7 @@
 		B4C060D51D1EB676004A3BA8 /* Ads */ = {
 			isa = PBXGroup;
 			children = (
+				B43B34CC1D4AD2E50064F364 /* AdsDelegate.swift */,
 				B4B01A3C1B9A0B0700F9A8EA /* AdsManager.swift */,
 				B435FFE41CE14D1900A678AA /* CustomAd.swift */,
 				B435FFE01CE14C2A00A678AA /* AdMob(iOS).swift */,
@@ -830,6 +834,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B43B34CE1D4AD2E50064F364 /* AdsDelegate.swift in Sources */,
 				B4A006621CECFCF100A44575 /* GameScene.swift in Sources */,
 				B4A006641CECFCF100A44575 /* GameViewController.swift in Sources */,
 				B41E34C21D0236950034C444 /* CustomAd.swift in Sources */,
@@ -859,6 +864,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B43B34CD1D4AD2E50064F364 /* AdsDelegate.swift in Sources */,
 				B4B01A3D1B9A0B0700F9A8EA /* AdsManager.swift in Sources */,
 				B4B01A1D1B9A0AF500F9A8EA /* GameScene.swift in Sources */,
 				B4B01A1F1B9A0AF500F9A8EA /* GameViewController.swift in Sources */,

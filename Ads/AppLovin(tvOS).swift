@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.3.1
+//    v5.3.2
 
 /*
     Abstract:
@@ -38,13 +38,6 @@ func print(items: Any..., separator: String = " ", terminator: String = "\n") {
     #endif
 }
 
-/// Delegate
-protocol AppLovinDelegate: class {
-    func appLovinAdClicked()
-    func appLovinAdClosed()
-    func appLovinAdDidRewardUser(rewardAmount rewardAmount: Int)
-}
-
 // MARK: - Interstitial
 
 class AppLovinInter: NSObject {
@@ -56,7 +49,7 @@ class AppLovinInter: NSObject {
     // MARK: - Properties
     
     /// Delegate
-    weak var delegate: AppLovinDelegate?
+    weak var delegate: AdsDelegate?
     
     /// Interval counter
     private var intervalCounter = 0
@@ -129,7 +122,7 @@ extension AppLovinInter: ALAdDisplayDelegate {
     
     func ad(ad: ALAd, wasHiddenIn view: UIView) {
         print("AppLovin interstitial ad was hidden")
-        delegate?.appLovinAdClosed()
+        delegate?.adClosed()
     }
 }
 
@@ -160,7 +153,7 @@ class AppLovinReward: NSObject {
     // MARK: - Properties
     
     /// Delegate
-    weak var delegate: AppLovinDelegate?
+    weak var delegate: AdsDelegate?
     
     /// Reward amount
     /// This will be updated once a reward video started playing
