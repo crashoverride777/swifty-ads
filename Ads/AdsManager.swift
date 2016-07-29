@@ -90,6 +90,11 @@ class AdsManager: NSObject {
     func setup(customAdsInterval customAdsInterval: Int, maxCustomAdsPerSession: Int) {
         self.customAdInterval = customAdsInterval
         self.customAdMaxPerSession = maxCustomAdsPerSession
+        
+        #if os(tvOS)
+            AppLovinInter.sharedInstance
+            AppLovinReward.sharedInstance
+        #endif
     }
     
     // MARK: - Show Interstitial Ads
