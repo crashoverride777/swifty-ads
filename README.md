@@ -44,14 +44,8 @@ https://cocoapods.org/app
 
 # Pre-setup tvOS
 
-Step 3: Set up app lovin (tvOS)
-
-# AppLovin (tvOS)
-
 Mediation will not work on tvOS because the AdMob SDK does not work with tvOS yet.
 Although these instructions can also be applied to iOS I prefer to use mediation on iOS to avoid extra code so I would recommend you only follow these steps when you plan to use ads on tvOS.
-
-SETUP
 
 Step 1: Create an AppLovin account at
 
@@ -73,7 +67,7 @@ Make sure you copy/drag the lib file serperatly into your project and than copy 
 4) Enabling the -ObjC flag in other linkers.
 
 
-- Step 4: Create an objC bridging header. Go to File-New-File and create a new header file. Call it something like HeaderTV and save.
+- Step 3: Create an objC bridging header. Go to File-New-File and create a new header file. Call it something like HeaderTV and save.
 
 Than add the app lovin swift libraries in the header file
 ```swift
@@ -92,7 +86,9 @@ The whole header file should look like this
 
 Than go to Targets-BuildSettings and search for "bridging". Double click on "Objective C Bridging Header" and enter the name of the header file followed by .h, for example HeaderTV.h
 
-- Step 3: If you will use custom ads and your app/game is only in landscape mode add this code in your AppDelegate. The SKProductViewController now used for iOS only supports portrait and will crash if this is not on included for landscape only apps.
+# Pre-setup custom ads
+
+If you will use custom ads and your app/game is only in landscape mode add this code in your AppDelegate. The SKProductViewController now used for iOS only supports portrait and will crash if this is not on included for landscape only apps.
 
 ```swift
 func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
