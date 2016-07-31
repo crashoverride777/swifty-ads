@@ -109,6 +109,7 @@ SETUP
 Copy the follwing swift files into your project. This should include the files
 
 ```swift
+AdsDelegate.swift
 AdsManager.swift 
 AdMob(iOS).swift // only add this to iOS target
 CustomAds.swift
