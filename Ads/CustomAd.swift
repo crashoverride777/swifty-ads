@@ -78,7 +78,7 @@ public class CustomAd: NSObject {
     public weak var delegate: AdsDelegate?
     
     /// View
-    private var view = UIView()
+    private let view = UIView()
 
     /// Image view
     private lazy var imageView: UIImageView = {
