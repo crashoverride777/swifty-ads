@@ -146,6 +146,13 @@ class AdsManager {
     
     // MARK: - Remove
     
+    /// Remove banner
+    func removeBanner() {
+        #if os(iOS)
+            AdMob.sharedInstance.removeBanner()
+        #endif
+    }
+    
     /// Remove all
     func removeAll() {
         CustomAd.sharedInstance.remove()
