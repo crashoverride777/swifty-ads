@@ -69,7 +69,7 @@ class AppLovin: NSObject {
         ALSdk.initializeSdk()
         
         // Preload reward video first time
-        loadRewardedVideo()
+        ALIncentivizedInterstitialAd.shared().preloadAndNotify(self)
     }
     
     /// Show interstitial ad
@@ -103,7 +103,7 @@ class AppLovin: NSObject {
     func showRewardedVideo(withInterval interval: Int = 0) {
         guard ALIncentivizedInterstitialAd.isReadyForDisplay() else {
             print("AppLovin reward video not ready, reloading...")
-            loadRewardedVideo()
+            ALIncentivizedInterstitialAd.shared().preloadAndNotify(self)
             return
         }
         
@@ -123,11 +123,6 @@ class AppLovin: NSObject {
     /// Remove
     func removeAll() {
         removedAds = true
-    }
-    
-    /// Load Rewarded Video
-    private func loadRewardedVideo() {
-        ALIncentivizedInterstitialAd.shared().preloadAndNotify(self)
     }
 }
 
@@ -164,7 +159,7 @@ extension AppLovin: ALAdDisplayDelegate {
         
         // Preload next rewarded video if watching rewarded video ad
         guard watchingRewardedVideo else { return }
-        loadRewardedVideo()
+        ALIncentivizedInterstitialAd.shared().preloadAndNotify(self)
     }
 }
 
@@ -216,8 +211,11 @@ extension AppLovin: ALAdRewardDelegate {
         // By default we'll show a UIAlertView informing your user of the currency & amount earned.
         // If you don't want this, you can turn it off in the Manage Apps UI.
         
-        // Save reward amount as INT when not 0 and use when video full watched
-        guard amountGiven != 0 else { return }
+        // Save reward amount as INT. If amount is for some reason 0 or lower set to 1
+        guard amountGiven > 0 else {
+            rewardAmount = 1
+            return
+        }
         rewardAmount = Int(amountGiven)
     }
     
