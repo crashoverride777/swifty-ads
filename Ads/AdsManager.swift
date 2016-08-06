@@ -24,7 +24,7 @@
 //    v5.4
 
 /*
-    Abstract:
+    Abstract: 
     A Singleton class to manage adverts from AdMob, AppLovin and your own custom ads.
 */
 
