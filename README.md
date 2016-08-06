@@ -2,7 +2,7 @@
 
 A collection of helper classes to integrate Ads from AdMob, AppLovin (tvOS) as well as your own custom Ads. This helper has been been made while making my 1st SpriteKit game but should work for any kind of app. 
 
-With this helper you can easily show Banner Ads, Interstitial Ads, RewardVideoAds and your own custom Ads anywhere in your project
+With these helpers you can easily show Banner Ads, Interstitial Ads, RewardVideoAds and your own custom Ads anywhere in your project
 
 This Helper creates whats called a shared Banner which is the recommended way by apple to show banners. To read more about shared banner ads you can read this documentation from Apple which should be used for banner ads by all providers.
 https://developer.apple.com/library/ios/technotes/tn2286/_index.html
@@ -11,7 +11,7 @@ This helper should also correctly preload Interstitial Ads and RewardVideo ads a
 
 # Mediation
 
-I think mediation is the best way forward with this helper if you would like to use multiple ad providers. This means you can use the AdMob APIs to show ads from multiple providers, including iAds, without having to write extra code. 
+I think mediation via AdMob is the best way forward with this helper if you would like to use multiple ad networks. This means you can use the AdMob APIs to show ads from multiple providers,without having to write extra code. 
 To add mediation networks please follow these instructions 
 
 https://support.google.com/admob/bin/answer.py?answer=2413211
@@ -20,28 +20,27 @@ https://developers.google.com/admob/ios/mediation
 
 https://developers.google.com/admob/ios/mediation-networks
 
-Note: Mediation will not work on tvOS because the AdMob SDK does not support it, which is why I included AppLovin.
+Note: Mediation will not work on tvOS because the AdMob SDK does not support it, which is why I included AppLovin for tvOS.
 
 # Rewarded Videos
 
-Admob reward videos will only work when using a 3rd party mediation network such as Chartboost.Read the AdMob rewarded video guidlines
+Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. Read the AdMob rewarded video guidlines
 
 https://developers.google.com/admob/ios/rewarded-video
 
-and your 3rd party mediation ad network guidlines to set up reward videos correctly.
+and your 3rd party mediation of choice ad network guidlines to set up reward videos correctly.
 
 Note: 
 
-Reward videos will show a black full screen ad using the test AdUnitID. I have not figured out yet how to test ads on AdMob that come from 3rd party mediation networks.
-I have tested this code with a real reward video ad from Chartboost, so I know everything works. (This is not recommended, always try to avoid using real ads when testing)
+Reward videos will show a black full screen ad using the test AdUnitID. I have not figured out yet how to test ads on AdMob that come from 3rd party mediation networks without using the real AdUnitID.
 
-# Set-Up "-D DEBUG" custom flag.
+# Setup -D DEBUG" custom flag.
 
 Click on Targets (left project sideBar, at the top) -> BuildSettings. Than underneath buildSettings next to the search bar on the left there should be buttons called Basic, All, Combined and Level. Click on All and than you should be able to scroll down in buildSettings and find the section called SwiftCompiler-CustomFlags. Click on other flags and than debug and add a custom flag named -D DEBUG
 
 http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
 
-# Pre-setup (iOS)
+# Pre-setup iOS
 
 - Step 1: Sign up for a Google AdMob account and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
 
