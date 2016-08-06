@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.3.2
+//    v5.4
 
 /*
     Abstract:
@@ -38,6 +38,13 @@ private func getAppStoreURL(forAppID id: String) -> String {
     #if os(tvOS)
         return "com.apple.TVAppStore://itunes.apple.com/app/id" + id
     #endif
+}
+
+/// Custom ad
+private struct Ad {
+    let imageName: String
+    let appID: String
+    let isNewGame: Bool
 }
 
 /// Inventory
@@ -59,15 +66,8 @@ public enum Inventory: Int {
     private static var current = 0
 }
 
-/// Custom ad
-private struct Ad {
-    let imageName: String
-    let appID: String
-    let isNewGame: Bool
-}
-
 /// Custom ads video class
-public class CustomAd: NSObject {
+public class CustomAd {
     
     // MARK: - Static Properties
     public static let sharedInstance = CustomAd()
@@ -137,11 +137,12 @@ public class CustomAd: NSObject {
     
     // MARK: - Init
     
-    private override init() {
-        super.init()
-    }
+    private init() { }
     
-    /// Show
+    /// Show custom ad
+    ///
+    /// - parameter selectedAd: Show ad for inventory identifier, if set to nil will loop through inventory.
+    /// - parameter withInterval: The interval when to show the ad, e.g when set to 4 ad will be shown every 4th time. Defaults to 0.
     public func show(selectedAd selectedAd: Inventory? = nil, withInterval interval: Int = 0) {
         guard !removedAds && !Inventory.all.isEmpty else { return }
         
@@ -208,6 +209,9 @@ public class CustomAd: NSObject {
 private extension CustomAd {
     
     /// Create ad
+    ///
+    /// - parameter selectedAd: The int for the selected ad in the inventory.
+    /// - returns: Optional UIView.
     func createAd(selectedAd selectedAd: Int) -> UIView? {
         
         // Set ad properties
@@ -261,6 +265,7 @@ private extension CustomAd {
         return view
     }
     
+    /// Remove custom ad
     func removeFromSuperview() {
         for gestureRecognizer in imageView.gestureRecognizers ?? [] {
             imageView.removeGestureRecognizer(gestureRecognizer)
@@ -276,6 +281,7 @@ private extension CustomAd {
 
 private extension CustomAd {
     
+    /// Setup for orientation
     func setupForOrientation() {
         guard let rootViewController = UIApplication.sharedApplication().keyWindow?.rootViewController else { return }
         
@@ -321,6 +327,7 @@ private extension CustomAd {
 
 extension CustomAd {
     
+    /// Handle download
     @objc private func handleDownload() {
         handleClose()
         
@@ -335,6 +342,7 @@ extension CustomAd {
         #endif
     }
     
+    /// Handle close
     @objc private func handleClose() {
         removeFromSuperview()
         delegate?.adClosed()
@@ -342,6 +350,7 @@ extension CustomAd {
 }
 
 // MARK: - SKStoreProductViewController
+
 #if os(iOS)
 class AppStoreViewController: NSObject {
     

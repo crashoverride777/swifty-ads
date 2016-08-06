@@ -18,7 +18,7 @@ extension GameScene: AdsDelegate {
         print("Ads closed")
     }
     
-    func adDidRewardUser(rewardAmount rewardAmount: Int) {
+    func adDidRewardUser(withAmount rewardAmount: Int) {
         // e.g self.coins += rewardAmount
         
     }
@@ -43,8 +43,7 @@ class GameScene: SKScene {
         self.addChild(myLabel)
         
         
-        AppLovinInter.sharedInstance.delegate = self
-        AppLovinRewarded.sharedInstance.delegate = self
+        AdsManager.sharedInstance.delegate = self
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.3.2
+//    v5.4
 
 /*
     Abstract:
@@ -30,26 +30,29 @@
 
 import Foundation
 
-/// Hide print statements for release
-/// Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG) for your tvOS target)
-func print(items: Any..., separator: String = " ", terminator: String = "\n") {
-    #if DEBUG
-        Swift.print(items[0], separator: separator, terminator: terminator)
-    #endif
-}
-
-// MARK: - Interstitial
-
-class AppLovinInter: NSObject {
+class AppLovin: NSObject {
     
     // MARK: - Static Properties
     
-    static let sharedInstance = AppLovinInter()
+    /// Shared instance
+    static let sharedInstance = AppLovin()
     
     // MARK: - Properties
     
     /// Delegate
     weak var delegate: AdsDelegate?
+    
+    /// Check if reward video is ready (e.g to hide a reward video button)
+    var rewardedVideoIsReady: Bool {
+        return ALIncentivizedInterstitialAd.isReadyForDisplay()
+    }
+    
+    /// Is watching reward video
+    private var watchingRewardedVideo = false
+    
+    /// Reward amount
+    /// This will be updated once a reward video started playing
+    private var rewardAmount = 1
     
     /// Interval counter
     private var intervalCounter = 0
@@ -64,10 +67,15 @@ class AppLovinInter: NSObject {
         
         // Load SDK
         ALSdk.initializeSdk()
+        
+        // Preload reward video first time
+        loadRewardedVideo()
     }
     
-    /// Show interstitial ad randomly
-    func show(withInterval interval: Int = 0) {
+    /// Show interstitial ad
+    ///
+    /// - parameter withInterval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
+    func showInterstitial(withInterval interval: Int = 0) {
         guard !removedAds else { return }
         
         guard ALInterstitialAd.isReadyForDisplay() else {
@@ -81,115 +89,21 @@ class AppLovinInter: NSObject {
             intervalCounter = 0
         }
         
+        watchingRewardedVideo = false
+        
         ALInterstitialAd.shared().adLoadDelegate = self
         ALInterstitialAd.shared().adDisplayDelegate = self
         ALInterstitialAd.shared().adVideoPlaybackDelegate = self // This will only ever be used if you have video ads enabled.
         ALInterstitialAd.shared().show()
     }
     
-    /// Remove
-    func remove() {
-        removedAds = true
-    }
-}
-
-/// Loading Delegates
-
-extension AppLovinInter: ALAdLoadDelegate {
-    
-    func adService(adService: ALAdService, didLoadAd ad: ALAd) {
-        print("AppLovin interstitial did load ad")
-    }
-    
-    func adService(adService: ALAdService, didFailToLoadAdWithError code: Int32) {
-        print("AppLovin interstitial did fail to load ad, error code: \(code)")
-    }
-}
-
-/// Display Delegates
-
-extension AppLovinInter: ALAdDisplayDelegate {
-    
-    func ad(ad: ALAd, wasDisplayedIn view: UIView) {
-        print("AppLovin interstitial ad was displayed")
-        delegate?.adClicked()
-    }
-    
-    func ad(ad: ALAd, wasClickedIn view: UIView) {
-        print("AppLovin interstitial ad was clicked")
-        delegate?.adClicked()
-    }
-    
-    func ad(ad: ALAd, wasHiddenIn view: UIView) {
-        print("AppLovin interstitial ad was hidden")
-        delegate?.adClosed()
-    }
-}
-
-/// Video Playback Delegates
-
-extension AppLovinInter: ALAdVideoPlaybackDelegate {
-    
-    func videoPlaybackBeganInAd(ad: ALAd) {
-        print("AppLovin interstitial video playback began in ad \(ad)")
-    }
-    
-    func videoPlaybackEndedInAd(ad: ALAd, atPlaybackPercent percentPlayed: NSNumber, fullyWatched wasFullyWatched: Bool) {
-        print("AppLovin interstitial video playback ended in ad \(ad) at percentage \(percentPlayed)")
-        
-        guard wasFullyWatched else { return }
-        print("AppLovin interstitial user declined to view ad")
-    }
-}
-
-// MARK: - Reward Videos
-
-class AppLovinRewarded: NSObject {
-    
-    // MARK: - Static Properties
-    
-    static let sharedInstance = AppLovinRewarded()
-    
-    // MARK: - Properties
-    
-    /// Delegate
-    weak var delegate: AdsDelegate?
-    
-    /// Reward amount
-    /// This will be updated once a reward video started playing
-    private var rewardAmount = 1
-    
-    /// Interval counter
-    private var intervalCounter = 0
-    
-    /// Removed ads
-    private var removedAds = false
-    
-    /// Check if reward video is ready (e.g to hide a reward video button)
-    var isReady: Bool {
-        return ALIncentivizedInterstitialAd.isReadyForDisplay()
-    }
-    
-    // MARK: - Init
-    
-    private override init() {
-        super.init()
-        
-        // Load SDK
-        // Uncomment this if you are only using this class and not regular inter ads as well
-        //ALSdk.initializeSdk()
-        
-        // Preload first video
-        preload()
-    }
-    
-    /// Show randomly
-    func show(withInterval interval: Int = 0) {
-        guard !removedAds else { return }
-        
+    /// Show rewarded video ad
+    ///
+    /// - parameter withInterval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
+    func showRewardedVideo(withInterval interval: Int = 0) {
         guard ALIncentivizedInterstitialAd.isReadyForDisplay() else {
             print("AppLovin reward video not ready, reloading...")
-            preload()
+            loadRewardedVideo()
             return
         }
         
@@ -199,78 +113,85 @@ class AppLovinRewarded: NSObject {
             intervalCounter = 0
         }
         
+        watchingRewardedVideo = true
+        
         ALIncentivizedInterstitialAd.shared().adDisplayDelegate = self
         ALIncentivizedInterstitialAd.shared().adVideoPlaybackDelegate = self
         ALIncentivizedInterstitialAd.shared().showAndNotify(self) // Shared not used here in tvOS demo, check if different
     }
     
     /// Remove
-    func remove() {
+    func removeAll() {
         removedAds = true
     }
     
-    /// Preload
-    private func preload() {
+    /// Load Rewarded Video
+    private func loadRewardedVideo() {
         ALIncentivizedInterstitialAd.shared().preloadAndNotify(self)
     }
 }
 
-/// Loading Delegates
+// MARK: ALAdLoadDelegate
 
-extension AppLovinRewarded: ALAdLoadDelegate {
+extension AppLovin: ALAdLoadDelegate {
     
     func adService(adService: ALAdService, didLoadAd ad: ALAd) {
-        print("AppLovin reward video did load ad")
+        print("AppLovin video did load ad")
     }
     
     func adService(adService: ALAdService, didFailToLoadAdWithError code: Int32) {
-        print("AppLovin reward video did fail to load ad, error code: \(code)")
+        print("AppLovin video did fail to load ad, error code: \(code)")
     }
 }
 
-/// Display Delegates
+// MARK: ALAdDisplayDelegate
 
-extension AppLovinRewarded: ALAdDisplayDelegate {
+extension AppLovin: ALAdDisplayDelegate {
     
     func ad(ad: ALAd, wasDisplayedIn view: UIView) {
-        print("AppLovin reward video ad was displayed")
+        print("AppLovin video ad was displayed")
         delegate?.adClicked()
     }
     
     func ad(ad: ALAd, wasClickedIn view: UIView) {
-        print("AppLovin reward video ad was clicked")
+        print("AppLovin video ad was clicked")
         delegate?.adClicked()
     }
     
     func ad(ad: ALAd, wasHiddenIn view: UIView) {
-        print("AppLovin reward video ad was hidden")
+        print("AppLovin video ad was hidden")
         delegate?.adClosed()
         
-        preload()
+        // Preload next rewarded video if watching rewarded video ad
+        guard watchingRewardedVideo else { return }
+        loadRewardedVideo()
     }
 }
 
-/// Video Playback Delegates
+// MARK: ALAdVideoPlaybackDelegate
 
-extension AppLovinRewarded: ALAdVideoPlaybackDelegate {
+extension AppLovin: ALAdVideoPlaybackDelegate {
     
     func videoPlaybackBeganInAd(ad: ALAd) {
-        print("AppLovin reward video playback began in ad \(ad)")
+        print("AppLovin video playback began in ad \(ad)")
     }
     
     func videoPlaybackEndedInAd(ad: ALAd, atPlaybackPercent percentPlayed: NSNumber, fullyWatched wasFullyWatched: Bool) {
-        print("AppLovin reward video playback ended in ad \(ad) at percentage \(percentPlayed)")
+        print("AppLovin video playback ended in ad \(ad) at percentage \(percentPlayed)")
         
         guard wasFullyWatched else { return }
-        print("AppLovin reward video was fully watched, rewarding...")
+        print("AppLovin video ad was fully watched")
         
-        delegate?.adDidRewardUser(rewardAmount: rewardAmount)
+        // Reward if ad was a rewarded video
+        guard watchingRewardedVideo else { return }
+        print("AppLovin video ad was rewarded video, rewarding...")
+        delegate?.adDidRewardUser(withAmount: rewardAmount)
     }
 }
 
-/// Reward Delegates
+// MARK: ALAdRewardDelegate
 
-extension AppLovinRewarded: ALAdRewardDelegate {
+extension AppLovin: ALAdRewardDelegate {
     
     func rewardValidationRequestForAd(ad: ALAd, didSucceedWithResponse response: [NSObject : AnyObject]) {
         print("AppLovin reward video did succeed with response \(response)")

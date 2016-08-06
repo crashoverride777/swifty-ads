@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.3.2
+//    v5.4
 
 /*
     Abstract:
@@ -30,15 +30,6 @@
 
 import GoogleMobileAds
 
-/// Hide print statements for release
-/// Dont forget to add the custom "-D DEBUG" flag in Targets -> BuildSettings -> SwiftCompiler-CustomFlags -> DEBUG) for your tvOS target
-func print(items: Any..., separator: String = " ", terminator: String = "\n") {
-    #if DEBUG
-        Swift.print(items[0], separator: separator, terminator: terminator)
-    #endif
-}
-
-/// Ads singleton class
 class AdMob: NSObject {
     
     // MARK: - Static Properties
@@ -86,7 +77,12 @@ class AdMob: NSObject {
     
     // MARK: - Set-Up
     
-    /// Set up ads helper
+    /// Set up admob helper
+    ///
+    /// - parameter viewController: The view controller reference to present ads.
+    /// - parameter bannerID: The banner adUnitID for this app.
+    /// - parameter interID: The interstitial adUnitID for this app.
+    /// - parameter rewardedVideoID: The rewarded video adUnitID for this app.
     func setup(viewController viewController: UIViewController, bannerID: String, interID: String, rewardedVideoID: String) {
         presentingViewController = viewController
         
@@ -104,6 +100,8 @@ class AdMob: NSObject {
     // MARK: - Show Banner
     
     /// Show banner ad with delay
+    ///
+    /// - parameter withDelay: The delay until showing the ad. Defaults to 0.
     func showBanner(withDelay delay: NSTimeInterval = 0.1) {
         guard !removedAds else { return }
         
@@ -120,6 +118,8 @@ class AdMob: NSObject {
     // MARK: - Show Interstitial
     
     /// Show interstitial ad randomly
+    ///
+    /// - parameter withInterval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
     func showInterstitial(withInterval interval: Int = 0) {
         guard !removedAds else { return }
         
@@ -142,7 +142,9 @@ class AdMob: NSObject {
     
     // MARK: - Show Reward Video
     
-    /// Show reward video ad randomly
+    /// Show rewarded video ad
+    ///
+    /// - parameter withInterval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
     func showRewardedVideo(withInterval interval: Int = 0) {
         guard !removedAds else { return }
         
@@ -194,7 +196,7 @@ class AdMob: NSObject {
     // MARK: - Orientation Changed
     
     /// Orientation changed
-    func orientationChanged() {
+    func adjustForOrientation() {
         guard let presentingViewController = presentingViewController else { return }
         guard let bannerAd = bannerAd else { return }
         
@@ -214,6 +216,7 @@ class AdMob: NSObject {
 
 private extension AdMob {
     
+    /// Load banner ad
     func loadBannerAd() {
         guard let presentingViewController = presentingViewController else { return }
         print("AdMob banner loading...")
@@ -238,6 +241,7 @@ private extension AdMob {
         bannerAd?.loadRequest(request)
     }
 
+    /// Load interstitial ad
     func loadInterstitialAd() -> GADInterstitial {
         print("AdMob interstitial loading...")
         
@@ -255,6 +259,7 @@ private extension AdMob {
         return interstitialAd
     }
     
+    /// Load rewarded video ad
     func loadRewardedVideoAd() -> GADRewardBasedVideoAd {
         
         let rewardedVideoAd = GADRewardBasedVideoAd.sharedInstance()
@@ -272,7 +277,7 @@ private extension AdMob {
     }
 }
 
-// MARK: - Banner Delegates
+// MARK: - GADBannerViewDelegate
 
 extension AdMob: GADBannerViewDelegate {
     
@@ -320,7 +325,7 @@ extension AdMob: GADBannerViewDelegate {
     }
 }
 
-// MARK: - Interstitial Delegates
+// MARK: - GADInterstitialDelegate
 
 extension AdMob: GADInterstitialDelegate {
     
@@ -358,7 +363,7 @@ extension AdMob: GADInterstitialDelegate {
     }
 }
 
-// MARK: - Reward Video Delegates
+// MARK: - GADRewardBasedVideoAdDelegate
 
 extension AdMob: GADRewardBasedVideoAdDelegate {
     
@@ -392,6 +397,6 @@ extension AdMob: GADRewardBasedVideoAdDelegate {
     
     func rewardBasedVideoAd(rewardBasedVideoAd: GADRewardBasedVideoAd!, didRewardUserWithReward reward: GADAdReward!) {
         print("AdMob reward video did reward user")
-        delegate?.adDidRewardUser(rewardAmount: Int(reward.amount))
+        delegate?.adDidRewardUser(withAmount: Int(reward.amount))
     }
 }

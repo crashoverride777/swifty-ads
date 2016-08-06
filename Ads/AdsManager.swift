@@ -21,19 +21,20 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.3.2
+//    v5.4
 
 /*
     Abstract:
-    A Singleton class to manage adverts from AdMob as well as your own custom ads.
+    A Singleton class to manage adverts from AdMob, AppLovin and your own custom ads.
 */
 
-import UIKit
+import Foundation
 
-class AdsManager: NSObject {
+class AdsManager {
     
     // MARK: - Static Properties
     
+    /// Shared instance
     static let sharedInstance = AdsManager()
     
     // MARK: - Properties
@@ -42,14 +43,11 @@ class AdsManager: NSObject {
     weak var delegate: AdsDelegate? {
         didSet {
             CustomAd.sharedInstance.delegate = delegate
-            
             #if os(iOS)
                 AdMob.sharedInstance.delegate = delegate
             #endif
-            
             #if os(tvOS)
-                AppLovinInter.sharedInstance.delegate = delegate
-                AppLovinRewarded.sharedInstance.delegate = delegate
+                AppLovin.sharedInstance.delegate = delegate
             #endif
         }
     }
@@ -60,7 +58,7 @@ class AdsManager: NSObject {
             return AdMob.sharedInstance.rewardedVideoIsReady
         #endif
         #if os(tvOS)
-            return AppLovinRewarded.sharedInstance.isReady
+            return AppLovin.sharedInstance.rewardedVideoIsReady
         #endif
     }
     
@@ -80,26 +78,28 @@ class AdsManager: NSObject {
     private var intervalCounter = 0
     
     // MARK: - Init
-    private override init() {
-        
+    
+    /// Init
+    private init() {
+    
     }
     
     // MARK: - Set Up
     
     /// Set up ads helpers
+    ///
+    /// - parameter customAdsInterval: The interval of how often to show a custom ad mixed in between real ads.
+    /// - parameter maxCustomAdsPerSession: The max number of custom ads to show per session.
     func setup(customAdsInterval customAdsInterval: Int, maxCustomAdsPerSession: Int) {
         self.customAdInterval = customAdsInterval
         self.customAdMaxPerSession = maxCustomAdsPerSession
-        
-        #if os(tvOS)
-            AppLovinInter.sharedInstance
-            AppLovinRewarded.sharedInstance
-        #endif
     }
     
-    // MARK: - Show Interstitial Ads
+    // MARK: - Show Interstitial Ad
     
-    /// Show interstitial ad
+    /// Show inter ad
+    ///
+    /// - parameter withInterval: The interval of when to show the ad. Defaults to 0.
     func showInterstitial(withInterval interval: Int = 0) {
         
         if interval != 0 {
@@ -108,39 +108,28 @@ class AdsManager: NSObject {
             intervalCounter = 0
         }
         
-        guard customAdShownCounter < customAdMaxPerSession else {
-            showRealInterstitialAd()
-            return
-        }
-        
-        switch customAdCounter {
-            
-        case 0, customAdInterval:
+        if (customAdCounter == 0 || customAdCounter == customAdInterval) && customAdShownCounter < customAdMaxPerSession {
             customAdShownCounter += 1
             CustomAd.sharedInstance.show()
-            
-        default:
-            showRealInterstitialAd()
+        }
+        else {
+            #if os(iOS)
+                AdMob.sharedInstance.showInterstitial()
+            #endif
+            #if os(tvOS)
+                AppLovin.sharedInstance.showInterstitial()
+            #endif
         }
         
         customAdCounter += 1
     }
     
-    /// Show real interstitial ad
-    private func showRealInterstitialAd() {
-        #if os(iOS)
-            AdMob.sharedInstance.showInterstitial()
-        #endif
-        #if os(tvOS)
-            AppLovinInter.sharedInstance.show()
-        #endif
-    }
-    
     // MARK: - Show Reward Video
     
-    /// Show reward video ad
+    /// Show rewarded video ad
+    ///
+    /// - parameter withInterval: The interval of when to show the ad. Defaults to 0.
     func showRewardedVideo(withInterval interval: Int = 0) {
-        
         if interval != 0 {
             intervalCounter += 1
             guard intervalCounter >= interval else { return }
@@ -150,9 +139,8 @@ class AdsManager: NSObject {
         #if os(iOS)
             AdMob.sharedInstance.showRewardedVideo()
         #endif
-        
         #if os(tvOS)
-            AppLovinRewarded.sharedInstance.show()
+            AppLovin.sharedInstance.showRewardedVideo()
         #endif
     }
     
@@ -160,28 +148,23 @@ class AdsManager: NSObject {
     
     /// Remove all
     func removeAll() {
-        
         CustomAd.sharedInstance.remove()
-        
         #if os(iOS)
             AdMob.sharedInstance.removeAll()
         #endif
-        
         #if os(tvOS)
-            AppLovinInter.sharedInstance.remove()
-            AppLovinRewarded.sharedInstance.remove()
+            AppLovin.sharedInstance.removeAll()
         #endif
     }
     
     // MARK: - Orientation Changed
     
     /// Orientation changed
-    func orientationChanged() {
-        
+    /// Call this when an orientation change (e.g landscape->portrait happended)
+    func adjustForOrientation() {
         CustomAd.sharedInstance.adjustForOrientation()
-        
         #if os(iOS)
-            AdMob.sharedInstance.orientationChanged()
+            AdMob.sharedInstance.adjustForOrientation()
         #endif
     }
 }

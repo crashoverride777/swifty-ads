@@ -17,7 +17,7 @@ extension GameScene: AdsDelegate {
         print("Ads closed")
     }
     
-    func adDidRewardUser(rewardAmount rewardAmount: Int) {
+    func adDidRewardUser(withAmount rewardAmount: Int) {
         // e.g self.coins += rewardAmount
         
         // Will not work with this sample project, adMob just shows a black banner in test mode
