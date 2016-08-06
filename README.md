@@ -9,6 +9,25 @@ https://developer.apple.com/library/ios/technotes/tn2286/_index.html
 
 This helper should also correctly preload Interstitial Ads and RewardVideo ads automatically so that they are always ready to be shown instantly when requested.  
 
+# Mediation
+
+I think mediation is the best way forward with this helper if you would like to use multiple ad providers. This means you can use the AdMob APIs to show ads from multiple providers, including iAds, without having to write extra code. 
+To add mediation networks please follow these instructions 
+
+https://support.google.com/admob/bin/answer.py?answer=2413211
+
+https://developers.google.com/admob/ios/mediation
+
+https://developers.google.com/admob/ios/mediation-networks
+
+Note: Mediation will not work on tvOS because the AdMob SDK does not support it, which is why I included AppLovin.
+
+# Set-Up "-D DEBUG" custom flag.
+
+Click on Targets (left project sideBar, at the top) -> BuildSettings. Than underneath buildSettings next to the search bar on the left there should be buttons called Basic, All, Combined and Level. Click on All and than you should be able to scroll down in buildSettings and find the section called SwiftCompiler-CustomFlags. Click on other flags and than debug and add a custom flag named -D DEBUG
+
+http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
+
 # Pre-setup (iOS)
 
 - Step 1: Sign up for a Google AdMob account and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
@@ -63,6 +82,10 @@ Than go to Targets-BuildSettings and search for "bridging". Double click on "Obj
 
 # Pre-setup custom ads
 
+If you are including your own ads it is recommended to read apples marketing guidlines
+
+https://developer.apple.com/app-store/marketing/guidelines/#images
+
 If you will use custom ads and your app/game is only in landscape mode add this code in your AppDelegate. The SKProductViewController used for iOS only supports portrait and will crash if this is not on included for landscape only apps.
 
 ```swift
@@ -73,15 +96,11 @@ func application(application: UIApplication, supportedInterfaceOrientationsForWi
 
 # How to use
 
-If you are including your own ads it is recommended to read apples marketing guidlines
-
-https://developer.apple.com/app-store/marketing/guidelines/#images
-
 SETUP
 
 - Step 1: 
 
-Copy the Ads into your project. This should include the files
+Copy the Ads folder into your project. This should include the files
 
 ```swift
 AdsDelegate.swift
@@ -144,157 +163,58 @@ This method will set a removedAds bool to true in all the ad helpers. This ensur
 
 For permanent storage you will need to create your own "removedAdsProduct" property and save it in something in NSUserDefaults, or preferably ios Keychain. Than call this method when your app launches after you have set up the helper.
 
-Check out this awesome Keychain Wrapper 
-
-https://github.com/jrendel/SwiftKeychainWrapper
-
-which makes using keychain as easy as NSUserDefaults.
-
-- Implement the delegate methods
+- Implement the delegate methods.
 
 Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
+to receive delegate callbacks.
 ```swift
 AdsManager.sharedInstance.delegate = self 
 ```
 
-Than create an extension conforming to the protocol.
+Than create an extension conforming to the AdsDelegate protocol.
 ```swift
 extension GameScene: AdsDelegate {
     func adClicked() {
-        // pause your game/app
+        // pause your game/app if needed
     }
     func adClosed() { 
-       // resume your game/app
+       // resume your game/app if needed
     }
-    func adDidRewardUserWithAmount(rewardAmount: Int) {
-       // code for reward videos, see instructions below or leave empty
+    func adDidRewardUser(withAmount rewardAmount: Int) {
+        self.coins += rewardAmount
+       // Reward amount is a DecimelNumber I converted to an Int for convenience. 
+       // You can ignore this and hardcore the value if you would like but than you cannot change the value dynamically without having to update your app.
+       
+       // leave empty if unused
     }
 }
 ```
 
-# Helper other methods (iOS)
+# Helper without AdsManager
 
-If you dont use the ads manager and just want to use a particular helper(s) than you can call the following methods
+If you dont use the ads manager and just want to use a particular helper(s) than you can follow the same set up steps as above (HowToUse). All the helpers have the same method calls.
 
-- CustomAds.swift methods
-
-```swift
-CustomAd.sharedInstance.delegate = self // set delegate
-
-CustomAd.sharedInstance.show() // will show an ad in the inventory and than move on to next one
-```
-
-Note: Method has 2 optional paramameters
-1) slectedAd = show ad for an identifier, if not selected it will loop through inventory
-2) withInterval = e.g 4, if set will than show an ad every 4 times
-
-
-- AdMob.swift
-
-```swift
-AdMob.sharedInstance.showBanner() 
-AdMob.sharedInstance.showBanner(withDelay: 1) // delay showing banner slightly eg when transitioning to new scene/view
-AdMob.sharedInstance.showInterstitial()
-AdMob.sharedInstance.showInterstitial(withRandomness: 4) // 25% chance of showing inter ads (1/4)
-AdMob.sharedInstance.removeBanner() // e.g during gameplay
-```
-
-- To remove all Ads, mainly for in app purchases simply call 
-```swift
-AdMob.sharedInstance.removeAll() // See Notes above of what this does
-```
-
-- Implement the delegate methods
-
-Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
+e.g
 
 ```swift
 AdMob.sharedInstance.delegate = self
+AdMob.sharedInstance.showRewardedVideo()
+AppLovin.sharedInstance.showRewardedVideo()
+CustomAd.sharedInstance.show() // will show an ad in the inventory and than move on to next one
 ```
 
-Than create an extension conforming to the protocol
-```swift
-extension GameScene: AdsDelegate {
-    
-    func adClicked() {
-        print("Ads clicked")
-    }
-    
-    func adClosed() {
-        print("Ads closed")
-    }
-    
-    func adDidRewardUser(rewardAmount rewardAmount: Int) {
-        // e.g self.coins += rewardAmount
-        
-        // Will not work with this sample project, adMob just shows a black banner in test mode
-        // It only works with 3rd party mediation partners you set up through your adMob account
-    }
-}
-```
+# Rewarded Videos
 
-# Helper other methods (tvOS)
+Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. To use reward videos follow the steps above to intergrate your mediation network(s) of choice. Than read the AdMob rewarded video guidlines
 
-To manually show ads do the following...
+https://developers.google.com/admob/ios/rewarded-video
 
-- Init the helper(s) as soon as possible e.g ViewController or AppDelegate to load the SDK.
-```swift
-AppLovinInter.sharedInstance
-AppLovinReward.sharedInstance
-```
+and your 3rd party mediation ad network guidlines to set up reward videos correctly. Once everything is set you can show reward videos by calling
 
-- To show a supported Ad simply call these anywhere you like in your project
-```swift
-AppLovinInter.sharedInstance.show() 
-AppLovinInter.sharedInstance.show(withRandomness: 4)  // 25% chance of showing inter ads (1/4)
+Note: 
 
-AppLovinReward.sharedInstance.show() 
-AppLovinReward.sharedInstance.show(withRandomness: 4) // 25% chance of showing inter ads (1/4)
-```
-- To remove all Ads, mainly for in app purchases simply call 
-```swift
-AppLovinInter.sharedInstance.remove() 
-AppLovinReward.sharedInstance.remove()
-```
-
-NOTE:
-
-This method will set a removedAds bool to true in all the app lovin helpers. This ensures you only have to call this method and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
-
-For permanent storage you will need to create your own "removedAdsProduct" property and save it in something in NSUserDefaults, or preferably ios Keychain. Than call this method when your app launches after you have set up the helper.
-
-Check out this awesome Keychain Wrapper 
-
-https://github.com/jrendel/SwiftKeychainWrapper
-
-which makes using keychain as easy as NSUserDefaults.
-
-- Implement the delegate methods
-
-Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
-
-```swift
-AppLovinInter.sharedInstance.delegate = self
-AppLovinReward.sharedInstance.delegate = self
-```
-
-Than create an extension conforming to the protocol
-```swift
-extension GameScene: AdMobDelegate {
-    func appLovinAdClicked() {
-        // pause your game/app
-    }
-    func appLovinAdClosed() { 
-       // resume your game/app
-    }
-    func appLovinDidRewardUser(rewardAmount rewardAmount: Int) {
-       // code for reward videos, see instructions below or leave empty
-    }
-}
-```
-
-
-Note: If you are only using RewardVideos and not Interstitial ads make sure you are uncomment the code in the init method that setsUp the SDK in AppLovinReward.swift.
+Reward videos will show a black full screen ad using the test AdUnitID. I have not figured out yet how to test ads on AdMob that come from 3rd party mediation networks.
+I have tested this code with a real reward video ad from Chartboost, so I know everything works. (This is not recommended, always try to avoid using real ads when testing)
 
 # Supporting both landscape and portrait orientation
 
@@ -321,61 +241,6 @@ NOTE: This is an ios 8 method, if your app supports ios 7 or below you maybe wan
 ```swift
 NSNotificationCenter UIDeviceOrientationDidChangeNotification Observer
 ```
-
-# Mediation
-
-I think mediation is the best way forward with this helper if you would like to use multiple ad providers. This means you can use the AdMob APIs to show ads from multiple providers, including iAds, without having to write extra code. 
-To add mediation networks please follow these instructions 
-
-https://support.google.com/admob/bin/answer.py?answer=2413211
-
-https://developers.google.com/admob/ios/mediation
-
-https://developers.google.com/admob/ios/mediation-networks
-
-Note: Mediation will not work on tvOS because the AdMob SDK does not support it, please read the instructions below for tvOS integration.
-
-# Reward Videos
-
-Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. To use reward videos follow the steps above to intergrate your mediation network(s) of choice. Than read the AdMob rewarded video guidlines
-
-https://developers.google.com/admob/ios/rewarded-video
-
-and your 3rd party mediation ad network guidlines to set up reward videos correctly. Once everything is set you can show reward videos by calling
-
-```swift
-AdsManager.sharedInstance.showRewardVideo()
-```
-
-or 
-
-```swift
-AdMob.sharedInstance.showRewardVideo()
-```
-
-Use this method in the extension you created above to unlock the reward (e.g coins)
-
-```swift
-func adDidRewardUser(rewardAmount rewardAmount: Int) {
-    self.coins += rewardAmount
-}
-```
-
-or
-
-```swift
-func adMobDidRewardUser(rewardAmount rewardAmount: Int) {
-    self.coins += rewardAmount
-}
-```
-
-Reward amount is a DecimelNumber I converted to an Int for convenience. 
-You can ignore this and hardcore the value if you would like but than you cannot change the value dynamically without having to update your app.
-
-Note: 
-
-Reward videos will show a black full screen ad using the test AdUnitID. I have not figured out yet how to test ads on AdMob that come from 3rd party mediation networks.
-I have tested this code with a real reward video ad from Chartboost, so I know everything works. (This is not recommended, always try to avoid using real ads when testing)
 
 # Set the DEBUG flag?
 
