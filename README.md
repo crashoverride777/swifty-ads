@@ -34,12 +34,6 @@ Note:
 
 Reward videos will show a black full screen ad using the test AdUnitID. I have not figured out yet how to test ads on AdMob that come from 3rd party mediation networks without using the real AdUnitID.
 
-# Setup -D DEBUG" custom flag.
-
-Click on Targets (left project sideBar, at the top) -> BuildSettings. Than underneath buildSettings next to the search bar on the left there should be buttons called Basic, All, Combined and Level. Click on All and than you should be able to scroll down in buildSettings and find the section called SwiftCompiler-CustomFlags. Click on other flags and than debug and add a custom flag named -D DEBUG
-
-http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
-
 # Pre-setup iOS
 
 - Step 1: Sign up for a Google AdMob account and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
@@ -105,6 +99,15 @@ func application(application: UIApplication, supportedInterfaceOrientationsForWi
         return UIInterfaceOrientationMask.AllButUpsideDown
     }
 ```
+
+# Setup -D DEBUG" custom flag.
+
+This step is important because AdMob will otherwise not change AdUnitID from test to release automatically.
+This is also useful for things such as hiding print statments.
+
+Click on Targets (left project sideBar, at the top) -> BuildSettings. Than underneath buildSettings next to the search bar, on the left there should be buttons called Basic, All, Combined and Level. Click on All and than you should be able to scroll down in buildSettings and find the section called SwiftCompiler-CustomFlags. Click on other flags and than debug and add a custom flag named -D DEBUG
+
+http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
 
 # How to use
 
