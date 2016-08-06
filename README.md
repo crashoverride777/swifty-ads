@@ -22,6 +22,19 @@ https://developers.google.com/admob/ios/mediation-networks
 
 Note: Mediation will not work on tvOS because the AdMob SDK does not support it, which is why I included AppLovin.
 
+# Rewarded Videos
+
+Admob reward videos will only work when using a 3rd party mediation network such as Chartboost.Read the AdMob rewarded video guidlines
+
+https://developers.google.com/admob/ios/rewarded-video
+
+and your 3rd party mediation ad network guidlines to set up reward videos correctly.
+
+Note: 
+
+Reward videos will show a black full screen ad using the test AdUnitID. I have not figured out yet how to test ads on AdMob that come from 3rd party mediation networks.
+I have tested this code with a real reward video ad from Chartboost, so I know everything works. (This is not recommended, always try to avoid using real ads when testing)
+
 # Set-Up "-D DEBUG" custom flag.
 
 Click on Targets (left project sideBar, at the top) -> BuildSettings. Than underneath buildSettings next to the search bar on the left there should be buttons called Basic, All, Combined and Level. Click on All and than you should be able to scroll down in buildSettings and find the section called SwiftCompiler-CustomFlags. Click on other flags and than debug and add a custom flag named -D DEBUG
@@ -190,6 +203,28 @@ extension GameScene: AdsDelegate {
 }
 ```
 
+# Supporting both landscape and portrait orientation
+
+- If your app supports both portrait and landscape orientation go to the ViewController and add the following method.
+
+```swift
+override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        
+        coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) -> Void in
+           
+            AdsManager.sharedInstance.adjustForOrientation()
+            
+            }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
+                print("Device rotation completed")
+        })
+    }
+```
+NOTE: This is an ios 8 method, if your app supports ios 7 or below you maybe want to use something like a
+```swift
+NSNotificationCenter UIDeviceOrientationDidChangeNotification Observer
+```
+
 # Helper without AdsManager
 
 If you dont use the ads manager and just want to use a particular helper(s) than you can follow the same set up steps as above (HowToUse). All the helpers have the same method calls.
@@ -201,45 +236,7 @@ AdMob.sharedInstance.delegate = self
 AdMob.sharedInstance.showRewardedVideo()
 AppLovin.sharedInstance.showRewardedVideo()
 CustomAd.sharedInstance.show() // will show an ad in the inventory and than move on to next one
-```
-
-# Rewarded Videos
-
-Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. To use reward videos follow the steps above to intergrate your mediation network(s) of choice. Than read the AdMob rewarded video guidlines
-
-https://developers.google.com/admob/ios/rewarded-video
-
-and your 3rd party mediation ad network guidlines to set up reward videos correctly. Once everything is set you can show reward videos by calling
-
-Note: 
-
-Reward videos will show a black full screen ad using the test AdUnitID. I have not figured out yet how to test ads on AdMob that come from 3rd party mediation networks.
-I have tested this code with a real reward video ad from Chartboost, so I know everything works. (This is not recommended, always try to avoid using real ads when testing)
-
-# Supporting both landscape and portrait orientation
-
-- If your app supports both portrait and landscape orientation go to the ViewController and add the following method.
-
-```swift
-override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
-        
-        coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) -> Void in
-            
-            // AdMob and custom Ads
-            AdsManager.sharedInstance.orientationChanged()
-            
-            // AdMob Only
-            AdMob.sharedInstance.orientationChanged()
-            
-            }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
-                print("Device rotation completed")
-        })
-    }
-```
-NOTE: This is an ios 8 method, if your app supports ios 7 or below you maybe want to use something like a
-```swift
-NSNotificationCenter UIDeviceOrientationDidChangeNotification Observer
+AdMob.sharedInstance.adjustForOrientation()
 ```
 
 # Set the DEBUG flag?
@@ -264,7 +261,7 @@ Enjoy
 
 - v5.4
 
-Merged AppLovinInter and AppLovinReward into a single class called AppLovin. Call showInterstitial or showRewardedVideo to show ads
+Merged AppLovinInter and AppLovinReward into a single class called AppLovin.
 Clean up and improvements
 
 - v5.3.2
