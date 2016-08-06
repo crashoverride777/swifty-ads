@@ -197,12 +197,14 @@ extension AppLovin: ALAdRewardDelegate {
         // i.e. - "Coins", "Gold", whatever you set in the dashboard.
         let currencyName = response["currency"]
         
-        // For example, "5" or "5.00" if you've specified an amount in the UI.
+        // For example, "5" or "5.00" if you've specified an amount in the UI. If error return 1
         let amountGivenString = response["amount"]
-        guard let amount = amountGivenString as? NSString else { return }
+        guard let amount = amountGivenString as? NSString else {
+            rewardAmount = 1
+            return
+        }
         
         let amountGiven = amount.floatValue
-        
         
         // Do something with this information.
         // MYCurrencyManagerClass.updateUserCurrency(currencyName withChange: amountGiven)
@@ -216,6 +218,7 @@ extension AppLovin: ALAdRewardDelegate {
             rewardAmount = 1
             return
         }
+        
         rewardAmount = Int(amountGiven)
     }
     
