@@ -9,19 +9,6 @@ https://developer.apple.com/library/ios/technotes/tn2286/_index.html
 
 This helper should also correctly preload Interstitial Ads and RewardVideo ads automatically so that they are always ready to be shown instantly when requested.  
 
-# Set up DEBUG flag
-
-This will reduce the hassle of having to manually change the google ad ids when testing or when releasing. This step is important as google ads will otherwise not work automatically. This is a good idea in general for other things such as hiding print statements such as in this project.
-
-Click on Targets (left project sideBar, at the top) -> BuildSettings. Than underneath buildSettings next to the search bar on the left there should be buttons called Basic, All, Combined and Level. 
-Click on All and than you should be able to scroll down in buildSettings and find the section called SwiftCompiler-CustomFlags. Click on other flags and than debug and add a custom flag named -D DEBUG 
-
-(see the sample project or http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
-
-Note:
-
-If you will use AppLovin for tvOS you will have to do these steps for your tvOS target as well
-
 # Pre-setup (iOS)
 
 - Step 1: Sign up for a Google AdMob account and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
@@ -42,7 +29,7 @@ They have an app now which should make this alot easier
 
 https://cocoapods.org/app
 
-# Pre-setup tvOS
+# Pre-setup (tvOS)
 
 Mediation will not work on tvOS because the AdMob SDK does not work with tvOS yet.
 Although these instructions can also be applied to iOS I prefer to use mediation on iOS to avoid extra code so I would recommend you only follow these steps when you plan to use ads on tvOS.
@@ -61,34 +48,22 @@ Note: I was having some issues with this for ages because I was copying the whol
 Make sure you copy/drag the lib file serperatly into your project and than copy the headers folder into your project (select copy if needed and your tvTarget both times)
 
 2) Linking the correct frameworks (AdSupport, UIKit etc)
-
 3) Adding your appLovin SDK key (you can use your key and add it in this sample project to test out ads)
-
 4) Enabling the -ObjC flag in other linkers.
 
 
 - Step 3: Create an objC bridging header. Go to File-New-File and create a new header file. Call it something like HeaderTV and save.
 
-Than add the app lovin swift libraries in the header file
+Than add the app lovin swift libraries in the header file (see sample project if needed)
 ```swift
 #import "ALSwiftHeaders.h"
-```
-
-The whole header file should look like this 
-```swift
-#ifndef HeaderTV_h
-#define HeaderTV_h
-
-#import "ALSwiftHeaders.h"
-
-#endif /* HeaderTV_h */
 ```
 
 Than go to Targets-BuildSettings and search for "bridging". Double click on "Objective C Bridging Header" and enter the name of the header file followed by .h, for example HeaderTV.h
 
 # Pre-setup custom ads
 
-If you will use custom ads and your app/game is only in landscape mode add this code in your AppDelegate. The SKProductViewController now used for iOS only supports portrait and will crash if this is not on included for landscape only apps.
+If you will use custom ads and your app/game is only in landscape mode add this code in your AppDelegate. The SKProductViewController used for iOS only supports portrait and will crash if this is not on included for landscape only apps.
 
 ```swift
 func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
@@ -98,7 +73,7 @@ func application(application: UIApplication, supportedInterfaceOrientationsForWi
 
 # How to use
 
-If you are including your own ads it is recommended to read apples markting guidlines
+If you are including your own ads it is recommended to read apples marketing guidlines
 
 https://developer.apple.com/app-store/marketing/guidelines/#images
 
@@ -106,7 +81,7 @@ SETUP
 
 - Step 1: 
 
-Copy the follwing swift files into your project. This should include the files
+Copy the Ads into your project. This should include the files
 
 ```swift
 AdsDelegate.swift
@@ -421,6 +396,11 @@ Please feel free to let me know about any bugs or improvements, I am by no means
 Enjoy
 
 # Release Notes
+
+- v5.4
+
+Merged AppLovinInter and AppLovinReward into a single class called AppLovin. Call showInterstitial or showRewardedVideo to show ads
+Clean up and improvements
 
 - v5.3.2
 
