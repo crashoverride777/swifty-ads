@@ -291,28 +291,28 @@ private extension CustomAd {
         /// Image view
         #if os(iOS)
             if UIScreen.mainScreen().bounds.height < UIScreen.mainScreen().bounds.width { // check if in landscape, works at startup
-                imageView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width / 1.2, height: view.frame.size.height / 1.1)
+                imageView.frame = CGRect(x: 0, y: 0, width: view.frame.width / 1.2, height: view.frame.height / 1.1)
             } else {
                 let iPad = UIDevice.currentDevice().userInterfaceIdiom == .Pad
-                let height = iPad ? view.frame.size.height / 2 : view.frame.size.height / 2.5
-                imageView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width / 1.05, height: height)
+                let height = iPad ? view.frame.height / 2 : view.frame.height / 2.5
+                imageView.frame = CGRect(x: 0, y: 0, width: view.frame.width / 1.05, height: height)
             }
         #endif
         
         #if os(tvOS)
-            imageView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width / 1.2, height: view.frame.size.height / 1.1)
+            imageView.frame = CGRect(x: 0, y: 0, width: view.frame.width / 1.2, height: view.frame.height / 1.1)
         #endif
         
         imageView.center = rootViewController.view.center
         
         /// Labels
-        let headerFontSize = imageView.frame.size.height / 13
+        let headerFontSize = imageView.frame.height / 13
         headerLabel.font = UIFont(name: font, size: headerFontSize)
-        headerLabel.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height)
-        headerLabel.center = CGPoint(x: 0 + (view.frame.size.width / 2), y: imageView.frame.minY + headerFontSize / 1.1)
+        headerLabel.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        headerLabel.center = CGPoint(x: 0 + (view.frame.width / 2), y: imageView.frame.minY + headerFontSize / 1.1)
         
-        newGameLabel.font = UIFont(name: fontBold, size: self.imageView.frame.size.height / 17)
-        newGameLabel.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height)
+        newGameLabel.font = UIFont(name: fontBold, size: imageView.frame.height / 17)
+        newGameLabel.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         newGameLabel.center = CGPoint(x: imageView.frame.maxX - (headerFontSize / 1.1), y: imageView.frame.minY + headerFontSize / 1.05)
         
         /// Buttons
