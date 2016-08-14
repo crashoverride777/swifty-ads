@@ -208,7 +208,7 @@ class AdMob: NSObject {
             bannerAd.adSize = kGADAdSizeSmartBannerPortrait
         }
         
-        bannerAd.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (bannerAd.frame.size.height / 2))
+        bannerAd.center = CGPoint(x: presentingViewController.view.frame.midX, y: presentingViewController.view.frame.maxY - (bannerAd.frame.size.height / 2))
     }
 }
 
@@ -230,7 +230,7 @@ private extension AdMob {
         bannerAd?.adUnitID = bannerAdUnitID
         bannerAd?.delegate = self
         bannerAd?.rootViewController = presentingViewController.view?.window?.rootViewController
-        bannerAd?.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (bannerAd!.frame.size.height / 2))
+        bannerAd?.center = CGPoint(x: presentingViewController.view.frame.midX, y: presentingViewController.view.frame.maxY + (bannerAd!.frame.size.height / 2))
         
         let request = GADRequest()
         
@@ -288,7 +288,7 @@ extension AdMob: GADBannerViewDelegate {
         presentingViewController.view?.addSubview(bannerView)
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(1.5)
-        bannerView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) - (bannerView.frame.size.height / 2))
+        bannerView.center = CGPoint(x: presentingViewController.view.frame.midX, y: presentingViewController.view.frame.maxY - (bannerView.frame.size.height / 2))
         UIView.commitAnimations()
     }
     
@@ -318,7 +318,7 @@ extension AdMob: GADBannerViewDelegate {
         
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(1.5)
-        bannerView.center = CGPoint(x: CGRectGetMidX(presentingViewController.view.frame), y: CGRectGetMaxY(presentingViewController.view.frame) + (bannerView.frame.size.height / 2))
+        bannerView.center = CGPoint(x: presentingViewController.view.frame.midX, y: presentingViewController.view.frame.maxY + (bannerView.frame.size.height / 2))
         bannerView.hidden = true
    
         UIView.commitAnimations()

@@ -38,7 +38,7 @@ class GameScene: SKScene {
         myLabel = SKLabelNode(fontNamed:"Chalkduster")
         myLabel.text = "Remove ads in \(touchCounter) clicks"
         myLabel.fontSize = 25;
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
+        myLabel.position = CGPoint(x: frame.midX, y: frame.midY)
         
         self.addChild(myLabel)
         

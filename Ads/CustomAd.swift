@@ -309,17 +309,17 @@ private extension CustomAd {
         let headerFontSize = imageView.frame.size.height / 13
         headerLabel.font = UIFont(name: font, size: headerFontSize)
         headerLabel.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height)
-        headerLabel.center = CGPoint(x: 0 + (view.frame.size.width / 2), y: CGRectGetMinY(imageView.frame) + headerFontSize / 1.1)
+        headerLabel.center = CGPoint(x: 0 + (view.frame.size.width / 2), y: imageView.frame.minY + headerFontSize / 1.1)
         
         newGameLabel.font = UIFont(name: fontBold, size: self.imageView.frame.size.height / 17)
         newGameLabel.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height)
-        newGameLabel.center = CGPoint(x: CGRectGetMaxX(imageView.frame) - (headerFontSize / 1.1), y: CGRectGetMinY(imageView.frame) + headerFontSize / 1.05)
+        newGameLabel.center = CGPoint(x: imageView.frame.maxX - (headerFontSize / 1.1), y: imageView.frame.minY + headerFontSize / 1.05)
         
         /// Buttons
         let iPad = UIDevice.currentDevice().userInterfaceIdiom == .Pad
         let closeButtonSize: CGFloat = iPad ? 30 : 22
         closeButton.frame = CGRect(x: 0, y: 0, width: closeButtonSize, height: closeButtonSize)
-        closeButton.center = CGPoint(x: CGRectGetMinX(imageView.frame) + (closeButtonSize / 1.5), y: CGRectGetMinY(imageView.frame) + (closeButtonSize / 1.5))
+        closeButton.center = CGPoint(x: imageView.frame.minX + (closeButtonSize / 1.5), y: imageView.frame.minY + (closeButtonSize / 1.5))
     }
 }
 
