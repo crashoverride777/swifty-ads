@@ -30,7 +30,7 @@
 
 import Foundation
 
-class AppLovin: NSObject {
+final class AppLovin: NSObject {
     
     // MARK: - Static Properties
     

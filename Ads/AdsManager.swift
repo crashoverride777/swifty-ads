@@ -30,7 +30,7 @@
 
 import Foundation
 
-class AdsManager {
+final class AdsManager {
     
     // MARK: - Static Properties
     

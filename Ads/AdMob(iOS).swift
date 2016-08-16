@@ -30,7 +30,7 @@
 
 import GoogleMobileAds
 
-class AdMob: NSObject {
+final class AdMob: NSObject {
     
     // MARK: - Static Properties
     

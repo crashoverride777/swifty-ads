@@ -67,7 +67,7 @@ public enum Inventory: Int {
 }
 
 /// Custom ads video class
-public class CustomAd {
+final public class CustomAd {
     
     // MARK: - Static Properties
     public static let sharedInstance = CustomAd()
