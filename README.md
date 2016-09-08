@@ -130,7 +130,7 @@ AppLovin(tvOS).swift // only add this to tvOS target
 In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 
 ```swift
-AdsManager.sharedInstance.setup(customAdsInterval: 3, maxCustomAdsPerSession: 3)
+AdsManager.shared.setup(customAdsInterval: 3, maxCustomAdsPerSession: 3)
 ```
 
 - Step 3: SetUp AdMob (iOS target only)
@@ -141,7 +141,7 @@ let bannerID = "Enter your real id"
 let interstitialID = "Enter your real id"
 let rewardVideoID = "Enter your real id"
 
-AdMob.sharedInstance.setup(viewController: self, bannerID: bannerID, interID: interstitialID, rewardVideoID: rewardVideoID)
+AdMob.shared.setup(viewController: self, bannerID: bannerID, interID: interstitialID, rewardVideoID: rewardVideoID)
 ```
 
 Step 3: CustomAdSetUp (both targets if needed)
@@ -156,20 +156,20 @@ HOW TO USE
 
 - To show an Ad simply call these anywhere you like in your project
 ```swift
-AdsManager.sharedInstance.showBanner() 
-AdsManager.sharedInstance.showBanner(withDelay: 1) // delay showing banner slightly eg when transitioning to new scene/view
-AdsManager.sharedInstance.showInterstitial()
-AdsManager.sharedInstance.showInterstitial(withRandomness: 4) // 25% chance of showing inter ads (1/4)
+AdsManager.shared.showBanner() 
+AdsManager.shared.showBanner(withDelay: 1) // delay showing banner slightly eg when transitioning to new scene/view
+AdsManager.shared.showInterstitial()
+AdsManager.shared.showInterstitial(withRandomness: 4) // 25% chance of showing inter ads (1/4)
 ```
 
 - To remove Banner Ads, for example during gameplay 
 ```swift
-AdsManager.sharedInstance.removeBanner() 
+AdsManager.shared.removeBanner() 
 ```
 
 - To remove all Ads, mainly for in app purchases simply call 
 ```swift
-AdsManager.sharedInstance.removeAll() 
+AdsManager.shared.removeAll() 
 ```
 
 NOTE: Remove Ads bool 
@@ -183,7 +183,7 @@ For permanent storage you will need to create your own "removedAdsProduct" prope
 Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
 to receive delegate callbacks.
 ```swift
-AdsManager.sharedInstance.delegate = self 
+AdsManager.shared.delegate = self 
 ```
 
 Than create an extension conforming to the AdsDelegate protocol.
@@ -215,7 +215,7 @@ override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator c
         
         coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) -> Void in
            
-            AdsManager.sharedInstance.adjustForOrientation()
+            AdsManager.shared.adjustForOrientation()
             
             }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
                 print("Device rotation completed")
@@ -234,11 +234,11 @@ If you dont use the ads manager and just want to use a particular helper(s) than
 e.g
 
 ```swift
-AdMob.sharedInstance.delegate = self
-AdMob.sharedInstance.showRewardedVideo()
-AppLovin.sharedInstance.showRewardedVideo()
-CustomAd.sharedInstance.show() // will show an ad in the inventory and than move on to next one
-AdMob.sharedInstance.adjustForOrientation()
+AdMob.shared.delegate = self
+AdMob.shared.showRewardedVideo()
+AppLovin.shared.showRewardedVideo()
+CustomAd.shared.show() // will show an ad in the inventory and than move on to next one
+AdMob.shared.adjustForOrientation()
 ```
 
 # Set the DEBUG flag?
