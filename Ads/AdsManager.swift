@@ -35,19 +35,19 @@ final class AdsManager {
     // MARK: - Static Properties
     
     /// Shared instance
-    static let sharedInstance = AdsManager()
+    static let shared = AdsManager()
     
     // MARK: - Properties
     
     /// Delegate
     weak var delegate: AdsDelegate? {
         didSet {
-            CustomAd.sharedInstance.delegate = delegate
+            CustomAd.shared.delegate = delegate
             #if os(iOS)
-                AdMob.sharedInstance.delegate = delegate
+                AdMob.shared.delegate = delegate
             #endif
             #if os(tvOS)
-                AppLovin.sharedInstance.delegate = delegate
+                AppLovin.shared.delegate = delegate
             #endif
         }
     }
@@ -55,10 +55,10 @@ final class AdsManager {
     /// Reward video check
     var rewardedVideoIsReady: Bool {
         #if os(iOS)
-            return AdMob.sharedInstance.rewardedVideoIsReady
+            return AdMob.shared.rewardedVideoIsReady
         #endif
         #if os(tvOS)
-            return AppLovin.sharedInstance.rewardedVideoIsReady
+            return AppLovin.shared.rewardedVideoIsReady
         #endif
     }
     
@@ -110,14 +110,14 @@ final class AdsManager {
         
         if (customAdCounter == 0 || customAdCounter == customAdInterval) && customAdShownCounter < customAdMaxPerSession {
             customAdShownCounter += 1
-            CustomAd.sharedInstance.show()
+            CustomAd.shared.show()
         }
         else {
             #if os(iOS)
-                AdMob.sharedInstance.showInterstitial()
+                AdMob.shared.showInterstitial()
             #endif
             #if os(tvOS)
-                AppLovin.sharedInstance.showInterstitial()
+                AppLovin.shared.showInterstitial()
             #endif
         }
         
@@ -137,10 +137,10 @@ final class AdsManager {
         }
         
         #if os(iOS)
-            AdMob.sharedInstance.showRewardedVideo()
+            AdMob.shared.showRewardedVideo()
         #endif
         #if os(tvOS)
-            AppLovin.sharedInstance.showRewardedVideo()
+            AppLovin.shared.showRewardedVideo()
         #endif
     }
     
@@ -149,18 +149,18 @@ final class AdsManager {
     /// Remove banner
     func removeBanner() {
         #if os(iOS)
-            AdMob.sharedInstance.removeBanner()
+            AdMob.shared.removeBanner()
         #endif
     }
     
     /// Remove all
     func removeAll() {
-        CustomAd.sharedInstance.remove()
+        CustomAd.shared.remove()
         #if os(iOS)
-            AdMob.sharedInstance.removeAll()
+            AdMob.shared.removeAll()
         #endif
         #if os(tvOS)
-            AppLovin.sharedInstance.removeAll()
+            AppLovin.shared.removeAll()
         #endif
     }
     
@@ -169,9 +169,9 @@ final class AdsManager {
     /// Orientation changed
     /// Call this when an orientation change (e.g landscape->portrait happended)
     func adjustForOrientation() {
-        CustomAd.sharedInstance.adjustForOrientation()
+        CustomAd.shared.adjustForOrientation()
         #if os(iOS)
-            AdMob.sharedInstance.adjustForOrientation()
+            AdMob.shared.adjustForOrientation()
         #endif
     }
 }

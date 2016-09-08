@@ -17,9 +17,9 @@ class GameViewController: UIViewController {
         let bannerID = "Enter your real ID"
         let interstitialID = "Enter your real ID"
         let rewardedVideoID = "Enter your real ID"
-        AdMob.sharedInstance.setup(self, bannerID: bannerID, interID: interstitialID, rewardedVideoID: rewardedVideoID)
+        AdMob.shared.setup(self, bannerID: bannerID, interID: interstitialID, rewardedVideoID: rewardedVideoID)
         
-        AdsManager.sharedInstance.setup(customAdsInterval: 3, maxCustomAdsPerSession: 3)
+        AdsManager.shared.setup(customAdsInterval: 3, maxCustomAdsPerSession: 3)
         
         if let scene = GameScene(fileNamed: "GameScene") {
             // Configure the view.
@@ -43,7 +43,7 @@ class GameViewController: UIViewController {
         
         coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) -> Void in
             
-            AdsManager.sharedInstance.adjustForOrientation()
+            AdsManager.shared.adjustForOrientation()
             
 //            let orientation = UIApplication.sharedApplication().statusBarOrientation
 //            switch orientation {

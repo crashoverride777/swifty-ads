@@ -35,7 +35,7 @@ final class AppLovin: NSObject {
     // MARK: - Static Properties
     
     /// Shared instance
-    static let sharedInstance = AppLovin()
+    static let shared = AppLovin()
     
     // MARK: - Properties
     

@@ -43,19 +43,19 @@ class GameScene: SKScene {
         self.addChild(myLabel)
         
         
-        AdsManager.sharedInstance.delegate = self
+        AdsManager.shared.delegate = self
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         /* Called when a touch begins */
         
         // Show inter
-        AdsManager.sharedInstance.showInterstitial(withInterval: 2)
+        AdsManager.shared.showInterstitial(withInterval: 2)
         
         // Remove ads after 3 clicks
         touchCounter -= 1
         if touchCounter == 0 {
-            AdsManager.sharedInstance.removeAll()
+            AdsManager.shared.removeAll()
         }
     }
    

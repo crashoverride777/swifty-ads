@@ -70,7 +70,7 @@ public enum Inventory: Int {
 final public class CustomAd {
     
     // MARK: - Static Properties
-    public static let sharedInstance = CustomAd()
+    public static let shared = CustomAd()
     
     // MARK: - Properties
     
@@ -332,7 +332,7 @@ extension CustomAd {
         handleClose()
         
         #if os(iOS)
-            AppStoreViewController.sharedInstance.open(forAppID: appID)
+            AppStoreViewController.shared.open(forAppID: appID)
         #endif
         
         #if os(tvOS)
@@ -357,7 +357,7 @@ class AppStoreViewController: NSObject {
     // MARK: - Static Properties
     
     /// Shared instance
-    fileprivate static let sharedInstance = AppStoreViewController()
+    fileprivate static let shared = AppStoreViewController()
     
     // MARK: - Methods
     

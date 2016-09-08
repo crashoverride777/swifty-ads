@@ -35,7 +35,7 @@ final class AdMob: NSObject {
     // MARK: - Static Properties
     
     /// Shared instance
-    static let sharedInstance = AdMob()
+    static let shared = AdMob()
     
     // MARK: - Properties
     

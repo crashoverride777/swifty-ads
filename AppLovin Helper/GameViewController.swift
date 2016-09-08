@@ -14,7 +14,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
      
-        AdsManager.sharedInstance.setup(customAdsInterval: 3, maxCustomAdsPerSession: 3)
+        AdsManager.shared.setup(customAdsInterval: 3, maxCustomAdsPerSession: 3)
         _ = AppLovin.sharedInstance
 
         if let scene = GameScene(fileNamed: "GameScene") {

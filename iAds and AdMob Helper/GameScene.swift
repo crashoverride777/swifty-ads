@@ -44,10 +44,10 @@ class GameScene: SKScene {
         self.addChild(myLabel)
         
         /// Set ads helper delegate
-        AdsManager.sharedInstance.delegate = self
+        AdsManager.shared.delegate = self
         
         // Show banner ad
-        AdMob.sharedInstance.showBanner()
+        AdMob.shared.showBanner()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -55,13 +55,13 @@ class GameScene: SKScene {
         /* Called when a touch begins */
         
         // Show inter
-        AdsManager.sharedInstance.showInterstitial(withInterval: 2)
-        //CustomAd.sharedInstance.show()
+        AdsManager.shared.showInterstitial(withInterval: 2)
+        //CustomAd.shared.show()
         
         // Remove ads after 3 clicks
         touchCounter -= 1
         if touchCounter == 0 {
-            AdsManager.sharedInstance.removeAll()
+            AdsManager.shared.removeAll()
         }
     }
     
