@@ -243,16 +243,16 @@ fileprivate extension CustomAd {
         
         // TV controls
         #if os(tvOS)
-            let rootViewController = UIApplication.sharedApplication().keyWindow?.rootViewController
+            let rootViewController = UIApplication.shared.keyWindow?.rootViewController
             
             let tapMenu = UITapGestureRecognizer(target: self, action: #selector(handleClose))
             tapMenu.delaysTouchesBegan = true
-            tapMenu.allowedPressTypes = [NSNumber (integer: UIPressType.Menu.rawValue)]
+            tapMenu.allowedPressTypes = [NSNumber (value: UIPressType.menu.rawValue)]
             rootViewController?.view.addGestureRecognizer(tapMenu)
             
             let tapMain = UITapGestureRecognizer(target: self, action: #selector(handleDownload))
             tapMain.delaysTouchesBegan = true
-            tapMain.allowedPressTypes = [NSNumber (integer: UIPressType.Select.rawValue)]
+            tapMain.allowedPressTypes = [NSNumber (value: UIPressType.select.rawValue)]
             rootViewController?.view.addGestureRecognizer(tapMain)
         #endif
         
@@ -337,7 +337,7 @@ extension CustomAd {
         
         #if os(tvOS)
         if let url = NSURL(string: getAppStoreURL(forAppID: appID)) {
-            UIApplication.sharedApplication().openURL(url)
+            UIApplication.shared.openURL(url as URL)
         }
         #endif
     }

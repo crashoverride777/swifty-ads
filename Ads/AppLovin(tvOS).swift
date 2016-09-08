@@ -62,6 +62,7 @@ final class AppLovin: NSObject {
     
     // MARK: - Init
     
+    /// Init
     fileprivate override init() {
         super.init()
         
@@ -101,6 +102,8 @@ final class AppLovin: NSObject {
     ///
     /// - parameter withInterval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
     func showRewardedVideo(withInterval interval: Int = 0) {
+        //guard !removedAds else { return }
+        
         guard ALIncentivizedInterstitialAd.isReadyForDisplay() else {
             print("AppLovin reward video not ready, reloading...")
             ALIncentivizedInterstitialAd.shared().preloadAndNotify(self)
@@ -120,7 +123,7 @@ final class AppLovin: NSObject {
         ALIncentivizedInterstitialAd.shared().showAndNotify(self) // Shared not used here in tvOS demo, check if different
     }
     
-    /// Remove
+    /// Remove ads (in app purchases)
     func removeAll() {
         removedAds = true
     }
@@ -130,11 +133,11 @@ final class AppLovin: NSObject {
 
 extension AppLovin: ALAdLoadDelegate {
     
-    func adService(adService: ALAdService, didLoadAd ad: ALAd) {
+    func adService(_ adService: ALAdService, didLoad ad: ALAd) {
         print("AppLovin video did load ad")
     }
     
-    func adService(adService: ALAdService, didFailToLoadAdWithError code: Int32) {
+    func adService(_ adService: ALAdService, didFailToLoadAdWithError code: Int32) {
         print("AppLovin video did fail to load ad, error code: \(code)")
     }
 }
@@ -143,17 +146,17 @@ extension AppLovin: ALAdLoadDelegate {
 
 extension AppLovin: ALAdDisplayDelegate {
     
-    func ad(ad: ALAd, wasDisplayedIn view: UIView) {
+    func ad(_ ad: ALAd, wasDisplayedIn view: UIView) {
         print("AppLovin video ad was displayed")
         delegate?.adClicked()
     }
     
-    func ad(ad: ALAd, wasClickedIn view: UIView) {
+    func ad(_ ad: ALAd, wasClickedIn view: UIView) {
         print("AppLovin video ad was clicked")
         delegate?.adClicked()
     }
     
-    func ad(ad: ALAd, wasHiddenIn view: UIView) {
+    func ad(_ ad: ALAd, wasHiddenIn view: UIView) {
         print("AppLovin video ad was hidden")
         delegate?.adClosed()
         
@@ -167,11 +170,11 @@ extension AppLovin: ALAdDisplayDelegate {
 
 extension AppLovin: ALAdVideoPlaybackDelegate {
     
-    func videoPlaybackBeganInAd(ad: ALAd) {
+    func videoPlaybackBegan(in ad: ALAd) {
         print("AppLovin video playback began in ad \(ad)")
     }
     
-    func videoPlaybackEndedInAd(ad: ALAd, atPlaybackPercent percentPlayed: NSNumber, fullyWatched wasFullyWatched: Bool) {
+    func videoPlaybackEnded(in ad: ALAd, atPlaybackPercent percentPlayed: NSNumber, fullyWatched wasFullyWatched: Bool) {
         print("AppLovin video playback ended in ad \(ad) at percentage \(percentPlayed)")
         
         guard wasFullyWatched else { return }
@@ -188,7 +191,7 @@ extension AppLovin: ALAdVideoPlaybackDelegate {
 
 extension AppLovin: ALAdRewardDelegate {
     
-    func rewardValidationRequestForAd(ad: ALAd, didSucceedWithResponse response: [NSObject : AnyObject]) {
+    func rewardValidationRequest(for ad: ALAd, didSucceedWithResponse response: [AnyHashable: Any]) {
         print("AppLovin reward video did succeed with response \(response)")
         
         /* AppLovin servers validated the reward. Refresh user balance from your server.  We will also pass the number of coins
@@ -197,7 +200,7 @@ extension AppLovin: ALAdRewardDelegate {
         // i.e. - "Coins", "Gold", whatever you set in the dashboard.
         let currencyName = response["currency"]
         
-        // For example, "5" or "5.00" if you've specified an amount in the UI. If error return 1
+        // For example, "5" or "5.00" if you've specified an amount in the UI.
         let amountGivenString = response["amount"]
         guard let amount = amountGivenString as? NSString else {
             rewardAmount = 1
@@ -222,7 +225,7 @@ extension AppLovin: ALAdRewardDelegate {
         rewardAmount = Int(amountGiven)
     }
     
-    func rewardValidationRequestForAd(ad: ALAd, didExceedQuotaWithResponse response: [NSObject : AnyObject]) {
+    func rewardValidationRequest(for ad: ALAd, didExceedQuotaWithResponse response: [AnyHashable: Any]) {
         print("AppLovin reward video did exceed quota with reponse \(response)")
         
         // Your user has already earned the max amount you allowed for the day at this point, so
@@ -230,7 +233,7 @@ extension AppLovin: ALAdRewardDelegate {
         // though you can change that from the Manage Apps UI.
     }
     
-    func rewardValidationRequestForAd(ad: ALAd, wasRejectedWithResponse response: [NSObject : AnyObject]) {
+    func rewardValidationRequest(for ad: ALAd, wasRejectedWithResponse response: [AnyHashable: Any]) {
         print("AppLovin reward video was rejected with response \(response)")
         
         // Your user couldn't be granted a reward for this view. This could happen if you've blacklisted
@@ -238,7 +241,7 @@ extension AppLovin: ALAdRewardDelegate {
         // though you can change that from the Manage Apps UI.
     }
     
-    func rewardValidationRequestForAd(ad: ALAd, didFailWithError responseCode: Int) {
+    func rewardValidationRequest(for ad: ALAd, didFailWithError responseCode: Int) {
         print("AppLovin reward video did fail with error code \(responseCode)")
         
         switch responseCode {
@@ -267,7 +270,7 @@ extension AppLovin: ALAdRewardDelegate {
         }
     }
     
-    func userDeclinedToViewAd(ad: ALAd) {
+    func userDeclined(toViewAd ad: ALAd) {
         print("AppLovin reward video user declined to view ad")
     }
 }

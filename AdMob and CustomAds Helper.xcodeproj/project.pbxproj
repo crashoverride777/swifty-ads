@@ -530,13 +530,16 @@
 				TargetAttributes = {
 					B4A0065A1CECFCF100A44575 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 					B4A006701CECFCF100A44575 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = B4A0065A1CECFCF100A44575;
 					};
 					B4A0067B1CECFCF100A44575 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = B4A0065A1CECFCF100A44575;
 					};
 					B4B01A121B9A0AF500F9A8EA = {
@@ -950,6 +953,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_OBJC_BRIDGING_HEADER = HeaderTV.h;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
@@ -973,6 +977,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_OBJC_BRIDGING_HEADER = HeaderTV.h;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
@@ -990,6 +995,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.AppLovin-HelperTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AppLovin Helper.app/AppLovin Helper";
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
@@ -1006,6 +1012,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.AppLovin-HelperTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AppLovin Helper.app/AppLovin Helper";
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
@@ -1022,6 +1029,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.AppLovin-HelperUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = "AppLovin Helper";
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
@@ -1037,6 +1045,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.AppLovin-HelperUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = "AppLovin Helper";
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};

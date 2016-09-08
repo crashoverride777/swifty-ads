@@ -15,7 +15,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
      
         AdsManager.sharedInstance.setup(customAdsInterval: 3, maxCustomAdsPerSession: 3)
-        AppLovin.sharedInstance
+        _ = AppLovin.sharedInstance
 
         if let scene = GameScene(fileNamed: "GameScene") {
             // Configure the view.
@@ -27,7 +27,7 @@ class GameViewController: UIViewController {
             skView.ignoresSiblingOrder = true
             
             /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .AspectFill
+            scene.scaleMode = .aspectFill
             
             skView.presentScene(scene)
         }
