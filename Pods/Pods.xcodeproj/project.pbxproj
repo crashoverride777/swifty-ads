@@ -1,978 +1,2447 @@
-// !$*UTF8*$!
-{
-	archiveVersion = 1;
-	classes = {
-	};
-	objectVersion = 46;
-	objects = {
-
-/* Begin PBXBuildFile section */
-		04246C5360BFFD089452DE4BCF58B717 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1704D3301AB26219B2489F5CBCFEAF53 /* Foundation.framework */; };
-		118FB6AAB975DF2411FB02A3ACAFD597 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870C602EDDC4CB6D519310BC9C946A54 /* Foundation.framework */; };
-		301446AA6EE49C051ABE46D82E19A62A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870C602EDDC4CB6D519310BC9C946A54 /* Foundation.framework */; };
-		343444A4E08C641B7D50CC62716FABC4 /* Pods-AppLovin HelperTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EFE1EA6033B5EB2EC4DB39A2CDF6D38 /* Pods-AppLovin HelperTests-dummy.m */; };
-		523A81CF073A8DDA3CE3113C36247FCB /* Pods-AppLovin HelperTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D2DCFBF0278C057BC932B8CEBB02D63 /* Pods-AppLovin HelperTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		525E0805862DDE36D55564EE84755C77 /* Pods-AdMob and CustomAds Helper-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 194906C09CD6679036B727E211E93C91 /* Pods-AdMob and CustomAds Helper-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5BE59303A539A91F38D164DC4776965E /* Pods-AdMob and CustomAds HelperTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E97D720CDC25D2E4520849A8A9E2AB /* Pods-AdMob and CustomAds HelperTests-dummy.m */; };
-		6E58ADD0C31149709B1BFCDE59DF19D5 /* Pods-AppLovin Helper-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FB17C01AD1B8290A1BAF57D83A61EE /* Pods-AppLovin Helper-dummy.m */; };
-		9D10E556D82269816A98DC29C7B08DC2 /* Pods-AppLovin Helper-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A565B06161E0B5973C68C8E73E9DA4B /* Pods-AppLovin Helper-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ADB3CB3F3E69877999908D0F274449AD /* Pods-AdMob and CustomAds HelperTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E11E3271AAD426BAE7C04118527DEF9 /* Pods-AdMob and CustomAds HelperTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B37759FB781869856330C2BF8AA3A4BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1704D3301AB26219B2489F5CBCFEAF53 /* Foundation.framework */; };
-		B94CC966F20B066C0082B8FA3D5D5595 /* Pods-AdMob and CustomAds Helper-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FA72270CB3361A01B7453A51D78976F /* Pods-AdMob and CustomAds Helper-dummy.m */; };
-		D7032E4E712BF3E0425AD1B78710DAB1 /* Pods-AppLovin HelperUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6BC57C0DA3C0ABB7DD1B7991E12F74AE /* Pods-AppLovin HelperUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D8866DA17E3A4A8C5DCE40B119A7952F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870C602EDDC4CB6D519310BC9C946A54 /* Foundation.framework */; };
-		ECE79339A07B7B60A94510EFEF9D9890 /* Pods-AppLovin HelperUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A60E8F1528CE7A11DF5A592A0DFE5FD8 /* Pods-AppLovin HelperUITests-dummy.m */; };
-/* End PBXBuildFile section */
-
-/* Begin PBXFileReference section */
-		021F9BC4E13399303627BAF60988F0E4 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		03BA3DDF462E7A09490A4A12E6BD1836 /* Pods-AppLovin HelperTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AppLovin HelperTests-frameworks.sh"; sourceTree = "<group>"; };
-		05CF1B443EC690F55C4DF4A7BFA0B6B6 /* Pods_AppLovin_HelperUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppLovin_HelperUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		08B11416CBC2A60B5E4F3938B26A450C /* Pods-AdMob and CustomAds HelperTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-AdMob and CustomAds HelperTests.modulemap"; sourceTree = "<group>"; };
-		131CFB1BF77F337CFB986D6E1E063857 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1704D3301AB26219B2489F5CBCFEAF53 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		194906C09CD6679036B727E211E93C91 /* Pods-AdMob and CustomAds Helper-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AdMob and CustomAds Helper-umbrella.h"; sourceTree = "<group>"; };
-		19F13E67B4BAF00C576F06837724E752 /* Pods-AppLovin HelperUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AppLovin HelperUITests-acknowledgements.plist"; sourceTree = "<group>"; };
-		1FC23C06C4C9712B7904166E0F22F49E /* Pods-AdMob and CustomAds Helper-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AdMob and CustomAds Helper-resources.sh"; sourceTree = "<group>"; };
-		2090D933BDE388D39AE19B2E1A24A96D /* Pods-AppLovin HelperUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AppLovin HelperUITests-frameworks.sh"; sourceTree = "<group>"; };
-		2A565B06161E0B5973C68C8E73E9DA4B /* Pods-AppLovin Helper-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AppLovin Helper-umbrella.h"; sourceTree = "<group>"; };
-		2A72F39887288535C71DE08BE67D87FC /* Pods-AppLovin Helper-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AppLovin Helper-acknowledgements.plist"; sourceTree = "<group>"; };
-		2C7BA28C4DC2742AFFE58147942C1A83 /* Pods-AdMob and CustomAds HelperTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AdMob and CustomAds HelperTests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		2D2DCFBF0278C057BC932B8CEBB02D63 /* Pods-AppLovin HelperTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AppLovin HelperTests-umbrella.h"; sourceTree = "<group>"; };
-		2DF15EBB3EF9911408F9955BD5D1D686 /* Pods-AdMob and CustomAds Helper-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AdMob and CustomAds Helper-acknowledgements.plist"; sourceTree = "<group>"; };
-		35C69B18EE2324BE5F237D4535A2568A /* Pods-AppLovin HelperTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AppLovin HelperTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		3A15E35E8BE025F219440E8C0B427E17 /* Pods_AdMob_and_CustomAds_Helper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdMob_and_CustomAds_Helper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3E11E3271AAD426BAE7C04118527DEF9 /* Pods-AdMob and CustomAds HelperTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AdMob and CustomAds HelperTests-umbrella.h"; sourceTree = "<group>"; };
-		424F335488ABE72FB77FCF535A95C882 /* Pods-AdMob and CustomAds HelperTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AdMob and CustomAds HelperTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		449C87696C6A6AF1E292F00CFB8C9E15 /* Pods_AppLovin_HelperTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppLovin_HelperTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		490DDE74990D84098771594DBD6B184F /* Pods-AppLovin Helper-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AppLovin Helper-frameworks.sh"; sourceTree = "<group>"; };
-		4CA38A5105907FB6E35D711EB525A063 /* Pods-AppLovin Helper-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AppLovin Helper-resources.sh"; sourceTree = "<group>"; };
-		5A87B2C135B02A41D5FF52C41809CDDB /* Pods-AppLovin HelperTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AppLovin HelperTests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		6017667C7957F4F58794401D457E58D1 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6285E0096A330972E14F88998C9637A6 /* Pods-AdMob and CustomAds Helper.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-AdMob and CustomAds Helper.modulemap"; sourceTree = "<group>"; };
-		649D35BBC08D5DE4C4F12F18D8E79B2E /* Pods-AppLovin HelperUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AppLovin HelperUITests.release.xcconfig"; sourceTree = "<group>"; };
-		68EFB5924E3BDC3317222AF0D5DC0B55 /* Pods-AppLovin Helper.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-AppLovin Helper.modulemap"; sourceTree = "<group>"; };
-		6A2B34BADA1BC420321CCA920D161961 /* Pods-AdMob and CustomAds HelperTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AdMob and CustomAds HelperTests-frameworks.sh"; sourceTree = "<group>"; };
-		6BC57C0DA3C0ABB7DD1B7991E12F74AE /* Pods-AppLovin HelperUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AppLovin HelperUITests-umbrella.h"; sourceTree = "<group>"; };
-		6C66B05FE28B43FC68F1AEC99DCD8DB0 /* Pods-AdMob and CustomAds Helper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AdMob and CustomAds Helper.debug.xcconfig"; sourceTree = "<group>"; };
-		7006E6AE5FE8F0AB388A605C3285B254 /* Pods-AdMob and CustomAds HelperTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AdMob and CustomAds HelperTests.release.xcconfig"; sourceTree = "<group>"; };
-		7B98FCEF641AF383C5645891CFDEC3BF /* Pods-AppLovin HelperTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AppLovin HelperTests.release.xcconfig"; sourceTree = "<group>"; };
-		7BF91788E7CAA2DCB0640284AF017385 /* Pods-AppLovin Helper-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AppLovin Helper-acknowledgements.markdown"; sourceTree = "<group>"; };
-		870C602EDDC4CB6D519310BC9C946A54 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		891C52C425A70EEA095DC49DC997D9B6 /* Pods-AppLovin HelperTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AppLovin HelperTests.debug.xcconfig"; sourceTree = "<group>"; };
-		8EFE1EA6033B5EB2EC4DB39A2CDF6D38 /* Pods-AppLovin HelperTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AppLovin HelperTests-dummy.m"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		93B192166B4F775C18D748D174C67041 /* Pods-AppLovin HelperUITests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AppLovin HelperUITests-resources.sh"; sourceTree = "<group>"; };
-		9CD961BE1A53F7DF76AF0DEDA30F31E2 /* Pods-AdMob and CustomAds Helper-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AdMob and CustomAds Helper-acknowledgements.markdown"; sourceTree = "<group>"; };
-		9FA72270CB3361A01B7453A51D78976F /* Pods-AdMob and CustomAds Helper-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AdMob and CustomAds Helper-dummy.m"; sourceTree = "<group>"; };
-		A60E8F1528CE7A11DF5A592A0DFE5FD8 /* Pods-AppLovin HelperUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AppLovin HelperUITests-dummy.m"; sourceTree = "<group>"; };
-		ACAA970EFF5D9329468DDB04AE393F42 /* Pods-AdMob and CustomAds Helper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AdMob and CustomAds Helper.release.xcconfig"; sourceTree = "<group>"; };
-		B25C71D7DB69D25A1A2527F91F53F82A /* Pods-AppLovin Helper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AppLovin Helper.debug.xcconfig"; sourceTree = "<group>"; };
-		B552725693328EE769C0D3F43EA28AC4 /* Pods-AppLovin HelperTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AppLovin HelperTests-resources.sh"; sourceTree = "<group>"; };
-		B5FB17C01AD1B8290A1BAF57D83A61EE /* Pods-AppLovin Helper-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AppLovin Helper-dummy.m"; sourceTree = "<group>"; };
-		B7E97D720CDC25D2E4520849A8A9E2AB /* Pods-AdMob and CustomAds HelperTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AdMob and CustomAds HelperTests-dummy.m"; sourceTree = "<group>"; };
-		C2373476DCD685B5F0E20BE4A57652C4 /* Pods_AppLovin_Helper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppLovin_Helper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C4ED48612F5EAE0BD7832EC23CD290F1 /* Pods_AdMob_and_CustomAds_HelperTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdMob_and_CustomAds_HelperTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5A4623B15C46E6EC9BD41E71B1A6682 /* Pods-AppLovin HelperUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-AppLovin HelperUITests.modulemap"; sourceTree = "<group>"; };
-		C64BF8A017D636FAAC8D7824D2DEE0CE /* Pods-AppLovin HelperTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-AppLovin HelperTests.modulemap"; sourceTree = "<group>"; };
-		C76F4A610CE7195712D1FCE2C6C1B9E7 /* Pods-AppLovin HelperUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AppLovin HelperUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		C9E785D0699F89BB23F4FB00EB060114 /* Pods-AdMob and CustomAds HelperTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AdMob and CustomAds HelperTests-resources.sh"; sourceTree = "<group>"; };
-		CE6B7ECAEB922AC1A4A60C3FD202192C /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = Frameworks/GoogleMobileAds.framework; sourceTree = "<group>"; };
-		D0242E1DFFA4665A0BE89BB8B84935F7 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D217838ADBEAA133C0C1B729C0244599 /* Pods-AdMob and CustomAds HelperTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AdMob and CustomAds HelperTests.debug.xcconfig"; sourceTree = "<group>"; };
-		D77A13F5D13E377084AF6463721B9FF7 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D7AC9F1CB3EF1BDF34A19DF5BD50A24B /* Pods-AppLovin Helper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AppLovin Helper.release.xcconfig"; sourceTree = "<group>"; };
-		D8A266C79164F3DBAE3A764CCFD07E10 /* Pods-AppLovin HelperUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AppLovin HelperUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		FD1D2FD037F60542F2B0308BE02C14A8 /* Pods-AdMob and CustomAds Helper-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AdMob and CustomAds Helper-frameworks.sh"; sourceTree = "<group>"; };
-/* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		2A435FEC0B5DF39740EA6C209E5DE3F6 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B37759FB781869856330C2BF8AA3A4BD /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		95DFAAB4C3933C79481F84629AAE5F07 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				04246C5360BFFD089452DE4BCF58B717 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BAA963795CF0DE5BF7EFEB17BFB9CEBF /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				301446AA6EE49C051ABE46D82E19A62A /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CF882C2B48166FC9FB32A768949CBF8B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				118FB6AAB975DF2411FB02A3ACAFD597 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		EF8D77BF02A95D8F1CAFA816467F1591 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D8866DA17E3A4A8C5DCE40B119A7952F /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
-/* Begin PBXGroup section */
-		1BBE838409288F95CEDE27751375850D /* Pods-AdMob and CustomAds HelperTests */ = {
-			isa = PBXGroup;
-			children = (
-				021F9BC4E13399303627BAF60988F0E4 /* Info.plist */,
-				08B11416CBC2A60B5E4F3938B26A450C /* Pods-AdMob and CustomAds HelperTests.modulemap */,
-				2C7BA28C4DC2742AFFE58147942C1A83 /* Pods-AdMob and CustomAds HelperTests-acknowledgements.markdown */,
-				424F335488ABE72FB77FCF535A95C882 /* Pods-AdMob and CustomAds HelperTests-acknowledgements.plist */,
-				B7E97D720CDC25D2E4520849A8A9E2AB /* Pods-AdMob and CustomAds HelperTests-dummy.m */,
-				6A2B34BADA1BC420321CCA920D161961 /* Pods-AdMob and CustomAds HelperTests-frameworks.sh */,
-				C9E785D0699F89BB23F4FB00EB060114 /* Pods-AdMob and CustomAds HelperTests-resources.sh */,
-				3E11E3271AAD426BAE7C04118527DEF9 /* Pods-AdMob and CustomAds HelperTests-umbrella.h */,
-				D217838ADBEAA133C0C1B729C0244599 /* Pods-AdMob and CustomAds HelperTests.debug.xcconfig */,
-				7006E6AE5FE8F0AB388A605C3285B254 /* Pods-AdMob and CustomAds HelperTests.release.xcconfig */,
-			);
-			name = "Pods-AdMob and CustomAds HelperTests";
-			path = "Target Support Files/Pods-AdMob and CustomAds HelperTests";
-			sourceTree = "<group>";
-		};
-		3D831502A03070884DD15E64051F5F27 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				CE6B7ECAEB922AC1A4A60C3FD202192C /* GoogleMobileAds.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		421F9516460EDA2D7E089F3EE06D7599 /* Pods-AppLovin HelperTests */ = {
-			isa = PBXGroup;
-			children = (
-				131CFB1BF77F337CFB986D6E1E063857 /* Info.plist */,
-				C64BF8A017D636FAAC8D7824D2DEE0CE /* Pods-AppLovin HelperTests.modulemap */,
-				5A87B2C135B02A41D5FF52C41809CDDB /* Pods-AppLovin HelperTests-acknowledgements.markdown */,
-				35C69B18EE2324BE5F237D4535A2568A /* Pods-AppLovin HelperTests-acknowledgements.plist */,
-				8EFE1EA6033B5EB2EC4DB39A2CDF6D38 /* Pods-AppLovin HelperTests-dummy.m */,
-				03BA3DDF462E7A09490A4A12E6BD1836 /* Pods-AppLovin HelperTests-frameworks.sh */,
-				B552725693328EE769C0D3F43EA28AC4 /* Pods-AppLovin HelperTests-resources.sh */,
-				2D2DCFBF0278C057BC932B8CEBB02D63 /* Pods-AppLovin HelperTests-umbrella.h */,
-				891C52C425A70EEA095DC49DC997D9B6 /* Pods-AppLovin HelperTests.debug.xcconfig */,
-				7B98FCEF641AF383C5645891CFDEC3BF /* Pods-AppLovin HelperTests.release.xcconfig */,
-			);
-			name = "Pods-AppLovin HelperTests";
-			path = "Target Support Files/Pods-AppLovin HelperTests";
-			sourceTree = "<group>";
-		};
-		4DEB334CB34410CDBF4DFAE59EECA92C /* Pods-AppLovin Helper */ = {
-			isa = PBXGroup;
-			children = (
-				6017667C7957F4F58794401D457E58D1 /* Info.plist */,
-				68EFB5924E3BDC3317222AF0D5DC0B55 /* Pods-AppLovin Helper.modulemap */,
-				7BF91788E7CAA2DCB0640284AF017385 /* Pods-AppLovin Helper-acknowledgements.markdown */,
-				2A72F39887288535C71DE08BE67D87FC /* Pods-AppLovin Helper-acknowledgements.plist */,
-				B5FB17C01AD1B8290A1BAF57D83A61EE /* Pods-AppLovin Helper-dummy.m */,
-				490DDE74990D84098771594DBD6B184F /* Pods-AppLovin Helper-frameworks.sh */,
-				4CA38A5105907FB6E35D711EB525A063 /* Pods-AppLovin Helper-resources.sh */,
-				2A565B06161E0B5973C68C8E73E9DA4B /* Pods-AppLovin Helper-umbrella.h */,
-				B25C71D7DB69D25A1A2527F91F53F82A /* Pods-AppLovin Helper.debug.xcconfig */,
-				D7AC9F1CB3EF1BDF34A19DF5BD50A24B /* Pods-AppLovin Helper.release.xcconfig */,
-			);
-			name = "Pods-AppLovin Helper";
-			path = "Target Support Files/Pods-AppLovin Helper";
-			sourceTree = "<group>";
-		};
-		6788458F3A34722A119F20FAD05952AB /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				1704D3301AB26219B2489F5CBCFEAF53 /* Foundation.framework */,
-			);
-			name = iOS;
-			sourceTree = "<group>";
-		};
-		7DB346D0F39D3F0E887471402A8071AB = {
-			isa = PBXGroup;
-			children = (
-				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
-				A42F72DC1D780481325DD00969B19BB6 /* Frameworks */,
-				820FBBDA65C5B1A6A4C379A893C27235 /* Pods */,
-				8FAC268E9B795DF3110611634B9E9C7C /* Products */,
-				EEAA6415D469AD9A86D213A0497AD57D /* Targets Support Files */,
-			);
-			sourceTree = "<group>";
-		};
-		7E19246DA5FF3D4FB35065B9E340260E /* tvOS */ = {
-			isa = PBXGroup;
-			children = (
-				870C602EDDC4CB6D519310BC9C946A54 /* Foundation.framework */,
-			);
-			name = tvOS;
-			sourceTree = "<group>";
-		};
-		820FBBDA65C5B1A6A4C379A893C27235 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				E91D6015731707498AAA5817D350B87B /* Google-Mobile-Ads-SDK */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		8FAC268E9B795DF3110611634B9E9C7C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3A15E35E8BE025F219440E8C0B427E17 /* Pods_AdMob_and_CustomAds_Helper.framework */,
-				C4ED48612F5EAE0BD7832EC23CD290F1 /* Pods_AdMob_and_CustomAds_HelperTests.framework */,
-				C2373476DCD685B5F0E20BE4A57652C4 /* Pods_AppLovin_Helper.framework */,
-				449C87696C6A6AF1E292F00CFB8C9E15 /* Pods_AppLovin_HelperTests.framework */,
-				05CF1B443EC690F55C4DF4A7BFA0B6B6 /* Pods_AppLovin_HelperUITests.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		A42F72DC1D780481325DD00969B19BB6 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				6788458F3A34722A119F20FAD05952AB /* iOS */,
-				7E19246DA5FF3D4FB35065B9E340260E /* tvOS */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		E8F52EE31011063678C8840D4E17A551 /* Pods-AppLovin HelperUITests */ = {
-			isa = PBXGroup;
-			children = (
-				D77A13F5D13E377084AF6463721B9FF7 /* Info.plist */,
-				C5A4623B15C46E6EC9BD41E71B1A6682 /* Pods-AppLovin HelperUITests.modulemap */,
-				C76F4A610CE7195712D1FCE2C6C1B9E7 /* Pods-AppLovin HelperUITests-acknowledgements.markdown */,
-				19F13E67B4BAF00C576F06837724E752 /* Pods-AppLovin HelperUITests-acknowledgements.plist */,
-				A60E8F1528CE7A11DF5A592A0DFE5FD8 /* Pods-AppLovin HelperUITests-dummy.m */,
-				2090D933BDE388D39AE19B2E1A24A96D /* Pods-AppLovin HelperUITests-frameworks.sh */,
-				93B192166B4F775C18D748D174C67041 /* Pods-AppLovin HelperUITests-resources.sh */,
-				6BC57C0DA3C0ABB7DD1B7991E12F74AE /* Pods-AppLovin HelperUITests-umbrella.h */,
-				D8A266C79164F3DBAE3A764CCFD07E10 /* Pods-AppLovin HelperUITests.debug.xcconfig */,
-				649D35BBC08D5DE4C4F12F18D8E79B2E /* Pods-AppLovin HelperUITests.release.xcconfig */,
-			);
-			name = "Pods-AppLovin HelperUITests";
-			path = "Target Support Files/Pods-AppLovin HelperUITests";
-			sourceTree = "<group>";
-		};
-		E91D6015731707498AAA5817D350B87B /* Google-Mobile-Ads-SDK */ = {
-			isa = PBXGroup;
-			children = (
-				3D831502A03070884DD15E64051F5F27 /* Frameworks */,
-			);
-			path = "Google-Mobile-Ads-SDK";
-			sourceTree = "<group>";
-		};
-		EEAA6415D469AD9A86D213A0497AD57D /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				FAEBF55268312CFD6F6726EC6200B72C /* Pods-AdMob and CustomAds Helper */,
-				1BBE838409288F95CEDE27751375850D /* Pods-AdMob and CustomAds HelperTests */,
-				4DEB334CB34410CDBF4DFAE59EECA92C /* Pods-AppLovin Helper */,
-				421F9516460EDA2D7E089F3EE06D7599 /* Pods-AppLovin HelperTests */,
-				E8F52EE31011063678C8840D4E17A551 /* Pods-AppLovin HelperUITests */,
-			);
-			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
-		FAEBF55268312CFD6F6726EC6200B72C /* Pods-AdMob and CustomAds Helper */ = {
-			isa = PBXGroup;
-			children = (
-				D0242E1DFFA4665A0BE89BB8B84935F7 /* Info.plist */,
-				6285E0096A330972E14F88998C9637A6 /* Pods-AdMob and CustomAds Helper.modulemap */,
-				9CD961BE1A53F7DF76AF0DEDA30F31E2 /* Pods-AdMob and CustomAds Helper-acknowledgements.markdown */,
-				2DF15EBB3EF9911408F9955BD5D1D686 /* Pods-AdMob and CustomAds Helper-acknowledgements.plist */,
-				9FA72270CB3361A01B7453A51D78976F /* Pods-AdMob and CustomAds Helper-dummy.m */,
-				FD1D2FD037F60542F2B0308BE02C14A8 /* Pods-AdMob and CustomAds Helper-frameworks.sh */,
-				1FC23C06C4C9712B7904166E0F22F49E /* Pods-AdMob and CustomAds Helper-resources.sh */,
-				194906C09CD6679036B727E211E93C91 /* Pods-AdMob and CustomAds Helper-umbrella.h */,
-				6C66B05FE28B43FC68F1AEC99DCD8DB0 /* Pods-AdMob and CustomAds Helper.debug.xcconfig */,
-				ACAA970EFF5D9329468DDB04AE393F42 /* Pods-AdMob and CustomAds Helper.release.xcconfig */,
-			);
-			name = "Pods-AdMob and CustomAds Helper";
-			path = "Target Support Files/Pods-AdMob and CustomAds Helper";
-			sourceTree = "<group>";
-		};
-/* End PBXGroup section */
-
-/* Begin PBXHeadersBuildPhase section */
-		504FF49EE1E18B818DE64B1C91BB2523 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				525E0805862DDE36D55564EE84755C77 /* Pods-AdMob and CustomAds Helper-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A3DF08BED9F4EA31E0254DFC9944F3C9 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				ADB3CB3F3E69877999908D0F274449AD /* Pods-AdMob and CustomAds HelperTests-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BCF2B0FFC89C20B0B064B7707616B8C5 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D7032E4E712BF3E0425AD1B78710DAB1 /* Pods-AppLovin HelperUITests-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F26F77534A4A032A8C82F591701A660A /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9D10E556D82269816A98DC29C7B08DC2 /* Pods-AppLovin Helper-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FEB68E1D696F8FC7F0019D62334F4B3B /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				523A81CF073A8DDA3CE3113C36247FCB /* Pods-AppLovin HelperTests-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
-/* Begin PBXNativeTarget section */
-		B6B5188FE1F80D0011DC88906CB10084 /* Pods-AppLovin Helper */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 71E6071186EBAC31D858133B7A78BE13 /* Build configuration list for PBXNativeTarget "Pods-AppLovin Helper" */;
-			buildPhases = (
-				8194A5A0F02572E28ADB2AF87184A665 /* Sources */,
-				BAA963795CF0DE5BF7EFEB17BFB9CEBF /* Frameworks */,
-				F26F77534A4A032A8C82F591701A660A /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Pods-AppLovin Helper";
-			productName = "Pods-AppLovin Helper";
-			productReference = C2373476DCD685B5F0E20BE4A57652C4 /* Pods_AppLovin_Helper.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		BA1DF97627335AF490DB29150697D03B /* Pods-AdMob and CustomAds Helper */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6B1E58622859352D1FBF7EDD8CE85613 /* Build configuration list for PBXNativeTarget "Pods-AdMob and CustomAds Helper" */;
-			buildPhases = (
-				E2E76E6A6C9F79AB76F4CBBCF8C625C1 /* Sources */,
-				2A435FEC0B5DF39740EA6C209E5DE3F6 /* Frameworks */,
-				504FF49EE1E18B818DE64B1C91BB2523 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Pods-AdMob and CustomAds Helper";
-			productName = "Pods-AdMob and CustomAds Helper";
-			productReference = 3A15E35E8BE025F219440E8C0B427E17 /* Pods_AdMob_and_CustomAds_Helper.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		E20E217817EBB96CE6F710FC3A95CB4C /* Pods-AdMob and CustomAds HelperTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0521C28DE8AC52C239FE5FC9F9ACB2C2 /* Build configuration list for PBXNativeTarget "Pods-AdMob and CustomAds HelperTests" */;
-			buildPhases = (
-				19C0D59AE7CBF65C572B1A2CCBB6B345 /* Sources */,
-				95DFAAB4C3933C79481F84629AAE5F07 /* Frameworks */,
-				A3DF08BED9F4EA31E0254DFC9944F3C9 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Pods-AdMob and CustomAds HelperTests";
-			productName = "Pods-AdMob and CustomAds HelperTests";
-			productReference = C4ED48612F5EAE0BD7832EC23CD290F1 /* Pods_AdMob_and_CustomAds_HelperTests.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		F64E372E2879AD3D579F519AC47BBB04 /* Pods-AppLovin HelperTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9B8721FA74B10CDEEC7F246F060AA8D2 /* Build configuration list for PBXNativeTarget "Pods-AppLovin HelperTests" */;
-			buildPhases = (
-				52AD2A07E1327FA7E0814C346A0E1798 /* Sources */,
-				CF882C2B48166FC9FB32A768949CBF8B /* Frameworks */,
-				FEB68E1D696F8FC7F0019D62334F4B3B /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Pods-AppLovin HelperTests";
-			productName = "Pods-AppLovin HelperTests";
-			productReference = 449C87696C6A6AF1E292F00CFB8C9E15 /* Pods_AppLovin_HelperTests.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		FCEDFEDE87551C98B37C1E61E99F9C3D /* Pods-AppLovin HelperUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 15C40CB7D1A15220EF4A6A9C2AE92DE5 /* Build configuration list for PBXNativeTarget "Pods-AppLovin HelperUITests" */;
-			buildPhases = (
-				7E6F4EE7142A3F953DDA03FE2FC54457 /* Sources */,
-				EF8D77BF02A95D8F1CAFA816467F1591 /* Frameworks */,
-				BCF2B0FFC89C20B0B064B7707616B8C5 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Pods-AppLovin HelperUITests";
-			productName = "Pods-AppLovin HelperUITests";
-			productReference = 05CF1B443EC690F55C4DF4A7BFA0B6B6 /* Pods_AppLovin_HelperUITests.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-/* End PBXNativeTarget section */
-
-/* Begin PBXProject section */
-		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0700;
-			};
-			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
-			hasScannedForEncodings = 0;
-			knownRegions = (
-				en,
-			);
-			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 8FAC268E9B795DF3110611634B9E9C7C /* Products */;
-			projectDirPath = "";
-			projectRoot = "";
-			targets = (
-				BA1DF97627335AF490DB29150697D03B /* Pods-AdMob and CustomAds Helper */,
-				E20E217817EBB96CE6F710FC3A95CB4C /* Pods-AdMob and CustomAds HelperTests */,
-				B6B5188FE1F80D0011DC88906CB10084 /* Pods-AppLovin Helper */,
-				F64E372E2879AD3D579F519AC47BBB04 /* Pods-AppLovin HelperTests */,
-				FCEDFEDE87551C98B37C1E61E99F9C3D /* Pods-AppLovin HelperUITests */,
-			);
-		};
-/* End PBXProject section */
-
-/* Begin PBXSourcesBuildPhase section */
-		19C0D59AE7CBF65C572B1A2CCBB6B345 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5BE59303A539A91F38D164DC4776965E /* Pods-AdMob and CustomAds HelperTests-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		52AD2A07E1327FA7E0814C346A0E1798 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				343444A4E08C641B7D50CC62716FABC4 /* Pods-AppLovin HelperTests-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7E6F4EE7142A3F953DDA03FE2FC54457 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				ECE79339A07B7B60A94510EFEF9D9890 /* Pods-AppLovin HelperUITests-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8194A5A0F02572E28ADB2AF87184A665 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6E58ADD0C31149709B1BFCDE59DF19D5 /* Pods-AppLovin Helper-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E2E76E6A6C9F79AB76F4CBBCF8C625C1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B94CC966F20B066C0082B8FA3D5D5595 /* Pods-AdMob and CustomAds Helper-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXSourcesBuildPhase section */
-
-/* Begin XCBuildConfiguration section */
-		0941B1407075255BFC709093A9F4F793 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 649D35BBC08D5DE4C4F12F18D8E79B2E /* Pods-AppLovin HelperUITests.release.xcconfig */;
-			buildSettings = {
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-AppLovin HelperUITests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-AppLovin HelperUITests/Pods-AppLovin HelperUITests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_AppLovin_HelperUITests;
-				SDKROOT = appletvos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		3E0D18DCBCCA63312581207DB1F9D628 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"POD_CONFIGURATION_RELEASE=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				STRIP_INSTALLED_PRODUCT = NO;
-				SYMROOT = "${SRCROOT}/../build";
-				TVOS_DEPLOYMENT_TARGET = 9.2;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		5B8F38BB27EE13CE1BAAAEE398A1694A /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = ACAA970EFF5D9329468DDB04AE393F42 /* Pods-AdMob and CustomAds Helper.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-AdMob and CustomAds Helper/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-AdMob and CustomAds Helper/Pods-AdMob and CustomAds Helper.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_AdMob_and_CustomAds_Helper;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		632E1081C4FAB80ECE81E4890E3C5B1C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B25C71D7DB69D25A1A2527F91F53F82A /* Pods-AppLovin Helper.debug.xcconfig */;
-			buildSettings = {
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-AppLovin Helper/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-AppLovin Helper/Pods-AppLovin Helper.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_AppLovin_Helper;
-				SDKROOT = appletvos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		7D761572A4CC0F21DDF27E1381BFA4A5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7B98FCEF641AF383C5645891CFDEC3BF /* Pods-AppLovin HelperTests.release.xcconfig */;
-			buildSettings = {
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-AppLovin HelperTests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-AppLovin HelperTests/Pods-AppLovin HelperTests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_AppLovin_HelperTests;
-				SDKROOT = appletvos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		8A85083028A97A196DF82B7D9EBAC195 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D7AC9F1CB3EF1BDF34A19DF5BD50A24B /* Pods-AppLovin Helper.release.xcconfig */;
-			buildSettings = {
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-AppLovin Helper/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-AppLovin Helper/Pods-AppLovin Helper.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_AppLovin_Helper;
-				SDKROOT = appletvos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		8FC3A2A13D6E7180567F34C61AE1CFDA /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7006E6AE5FE8F0AB388A605C3285B254 /* Pods-AdMob and CustomAds HelperTests.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-AdMob and CustomAds HelperTests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-AdMob and CustomAds HelperTests/Pods-AdMob and CustomAds HelperTests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_AdMob_and_CustomAds_HelperTests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		9169B7489FC2508E2F4BFC8E4DA5A59B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D8A266C79164F3DBAE3A764CCFD07E10 /* Pods-AppLovin HelperUITests.debug.xcconfig */;
-			buildSettings = {
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-AppLovin HelperUITests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-AppLovin HelperUITests/Pods-AppLovin HelperUITests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_AppLovin_HelperUITests;
-				SDKROOT = appletvos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		9B86650B4E8A1F85694066D818B0AFA3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 891C52C425A70EEA095DC49DC997D9B6 /* Pods-AppLovin HelperTests.debug.xcconfig */;
-			buildSettings = {
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-AppLovin HelperTests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-AppLovin HelperTests/Pods-AppLovin HelperTests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_AppLovin_HelperTests;
-				SDKROOT = appletvos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		C8985E38F3DC0E0887ABEA2829240359 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6C66B05FE28B43FC68F1AEC99DCD8DB0 /* Pods-AdMob and CustomAds Helper.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-AdMob and CustomAds Helper/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-AdMob and CustomAds Helper/Pods-AdMob and CustomAds Helper.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_AdMob_and_CustomAds_Helper;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		EF73D6A31FB8E61A20E97D02CEF60BBD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"POD_CONFIGURATION_DEBUG=1",
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				ONLY_ACTIVE_ARCH = YES;
-				STRIP_INSTALLED_PRODUCT = NO;
-				SYMROOT = "${SRCROOT}/../build";
-				TVOS_DEPLOYMENT_TARGET = 9.2;
-			};
-			name = Debug;
-		};
-		F132EFBB6267AD52444502AA4788213E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D217838ADBEAA133C0C1B729C0244599 /* Pods-AdMob and CustomAds HelperTests.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-AdMob and CustomAds HelperTests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-AdMob and CustomAds HelperTests/Pods-AdMob and CustomAds HelperTests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_AdMob_and_CustomAds_HelperTests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-/* End XCBuildConfiguration section */
-
-/* Begin XCConfigurationList section */
-		0521C28DE8AC52C239FE5FC9F9ACB2C2 /* Build configuration list for PBXNativeTarget "Pods-AdMob and CustomAds HelperTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F132EFBB6267AD52444502AA4788213E /* Debug */,
-				8FC3A2A13D6E7180567F34C61AE1CFDA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		15C40CB7D1A15220EF4A6A9C2AE92DE5 /* Build configuration list for PBXNativeTarget "Pods-AppLovin HelperUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9169B7489FC2508E2F4BFC8E4DA5A59B /* Debug */,
-				0941B1407075255BFC709093A9F4F793 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				EF73D6A31FB8E61A20E97D02CEF60BBD /* Debug */,
-				3E0D18DCBCCA63312581207DB1F9D628 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		6B1E58622859352D1FBF7EDD8CE85613 /* Build configuration list for PBXNativeTarget "Pods-AdMob and CustomAds Helper" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C8985E38F3DC0E0887ABEA2829240359 /* Debug */,
-				5B8F38BB27EE13CE1BAAAEE398A1694A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		71E6071186EBAC31D858133B7A78BE13 /* Build configuration list for PBXNativeTarget "Pods-AppLovin Helper" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				632E1081C4FAB80ECE81E4890E3C5B1C /* Debug */,
-				8A85083028A97A196DF82B7D9EBAC195 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		9B8721FA74B10CDEEC7F246F060AA8D2 /* Build configuration list for PBXNativeTarget "Pods-AppLovin HelperTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9B86650B4E8A1F85694066D818B0AFA3 /* Debug */,
-				7D761572A4CC0F21DDF27E1381BFA4A5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-/* End XCConfigurationList section */
-	};
-	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>archiveVersion</key>
+	<string>1</string>
+	<key>classes</key>
+	<dict/>
+	<key>objectVersion</key>
+	<string>46</string>
+	<key>objects</key>
+	<dict>
+		<key>021F9BC4E13399303627BAF60988F0E4</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>03BA3DDF462E7A09490A4A12E6BD1836</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-AppLovin HelperTests-frameworks.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>04246C5360BFFD089452DE4BCF58B717</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1704D3301AB26219B2489F5CBCFEAF53</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>0521C28DE8AC52C239FE5FC9F9ACB2C2</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>F132EFBB6267AD52444502AA4788213E</string>
+				<string>8FC3A2A13D6E7180567F34C61AE1CFDA</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>05CF1B443EC690F55C4DF4A7BFA0B6B6</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>Pods_AppLovin_HelperUITests.framework</string>
+			<key>path</key>
+			<string>Pods-AppLovin HelperUITests.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>08B11416CBC2A60B5E4F3938B26A450C</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Pods-AdMob and CustomAds HelperTests.modulemap</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>0941B1407075255BFC709093A9F4F793</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>649D35BBC08D5DE4C4F12F18D8E79B2E</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf-with-dsym</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Pods-AppLovin HelperUITests/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Pods-AppLovin HelperUITests/Pods-AppLovin HelperUITests.modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>Pods_AppLovin_HelperUITests</string>
+				<key>SDKROOT</key>
+				<string>appletvos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>3</string>
+				<key>TVOS_DEPLOYMENT_TARGET</key>
+				<string>9.2</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>118FB6AAB975DF2411FB02A3ACAFD597</key>
+		<dict>
+			<key>fileRef</key>
+			<string>870C602EDDC4CB6D519310BC9C946A54</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>131CFB1BF77F337CFB986D6E1E063857</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>15C40CB7D1A15220EF4A6A9C2AE92DE5</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>9169B7489FC2508E2F4BFC8E4DA5A59B</string>
+				<string>0941B1407075255BFC709093A9F4F793</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>1704D3301AB26219B2489F5CBCFEAF53</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>Foundation.framework</string>
+			<key>path</key>
+			<string>Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework</string>
+			<key>sourceTree</key>
+			<string>DEVELOPER_DIR</string>
+		</dict>
+		<key>194906C09CD6679036B727E211E93C91</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Pods-AdMob and CustomAds Helper-umbrella.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>19C0D59AE7CBF65C572B1A2CCBB6B345</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>5BE59303A539A91F38D164DC4776965E</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>19F13E67B4BAF00C576F06837724E752</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Pods-AppLovin HelperUITests-acknowledgements.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1BBE838409288F95CEDE27751375850D</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>021F9BC4E13399303627BAF60988F0E4</string>
+				<string>08B11416CBC2A60B5E4F3938B26A450C</string>
+				<string>2C7BA28C4DC2742AFFE58147942C1A83</string>
+				<string>424F335488ABE72FB77FCF535A95C882</string>
+				<string>B7E97D720CDC25D2E4520849A8A9E2AB</string>
+				<string>6A2B34BADA1BC420321CCA920D161961</string>
+				<string>C9E785D0699F89BB23F4FB00EB060114</string>
+				<string>3E11E3271AAD426BAE7C04118527DEF9</string>
+				<string>D217838ADBEAA133C0C1B729C0244599</string>
+				<string>7006E6AE5FE8F0AB388A605C3285B254</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods-AdMob and CustomAds HelperTests</string>
+			<key>path</key>
+			<string>Target Support Files/Pods-AdMob and CustomAds HelperTests</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1FC23C06C4C9712B7904166E0F22F49E</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-AdMob and CustomAds Helper-resources.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>2090D933BDE388D39AE19B2E1A24A96D</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-AppLovin HelperUITests-frameworks.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>2A435FEC0B5DF39740EA6C209E5DE3F6</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>B37759FB781869856330C2BF8AA3A4BD</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>2A565B06161E0B5973C68C8E73E9DA4B</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Pods-AppLovin Helper-umbrella.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>2A72F39887288535C71DE08BE67D87FC</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Pods-AppLovin Helper-acknowledgements.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>2C7BA28C4DC2742AFFE58147942C1A83</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text</string>
+			<key>path</key>
+			<string>Pods-AdMob and CustomAds HelperTests-acknowledgements.markdown</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>2D2DCFBF0278C057BC932B8CEBB02D63</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Pods-AppLovin HelperTests-umbrella.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>2D8E8EC45A3A1A1D94AE762CB5028504</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>EF73D6A31FB8E61A20E97D02CEF60BBD</string>
+				<string>3E0D18DCBCCA63312581207DB1F9D628</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>2DF15EBB3EF9911408F9955BD5D1D686</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Pods-AdMob and CustomAds Helper-acknowledgements.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>301446AA6EE49C051ABE46D82E19A62A</key>
+		<dict>
+			<key>fileRef</key>
+			<string>870C602EDDC4CB6D519310BC9C946A54</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>343444A4E08C641B7D50CC62716FABC4</key>
+		<dict>
+			<key>fileRef</key>
+			<string>8EFE1EA6033B5EB2EC4DB39A2CDF6D38</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>35C69B18EE2324BE5F237D4535A2568A</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Pods-AppLovin HelperTests-acknowledgements.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3A15E35E8BE025F219440E8C0B427E17</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>Pods_AdMob_and_CustomAds_Helper.framework</string>
+			<key>path</key>
+			<string>Pods-AdMob and CustomAds Helper.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>3D831502A03070884DD15E64051F5F27</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>CE6B7ECAEB922AC1A4A60C3FD202192C</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3E0D18DCBCCA63312581207DB1F9D628</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_ANALYZER_NONNULL</key>
+				<string>YES</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>YES</string>
+				<key>ENABLE_NS_ASSERTIONS</key>
+				<string>NO</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>POD_CONFIGURATION_RELEASE=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.0</string>
+				<key>STRIP_INSTALLED_PRODUCT</key>
+				<string>NO</string>
+				<key>SYMROOT</key>
+				<string>${SRCROOT}/../build</string>
+				<key>TVOS_DEPLOYMENT_TARGET</key>
+				<string>9.2</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>3E11E3271AAD426BAE7C04118527DEF9</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Pods-AdMob and CustomAds HelperTests-umbrella.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>421F9516460EDA2D7E089F3EE06D7599</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>131CFB1BF77F337CFB986D6E1E063857</string>
+				<string>C64BF8A017D636FAAC8D7824D2DEE0CE</string>
+				<string>5A87B2C135B02A41D5FF52C41809CDDB</string>
+				<string>35C69B18EE2324BE5F237D4535A2568A</string>
+				<string>8EFE1EA6033B5EB2EC4DB39A2CDF6D38</string>
+				<string>03BA3DDF462E7A09490A4A12E6BD1836</string>
+				<string>B552725693328EE769C0D3F43EA28AC4</string>
+				<string>2D2DCFBF0278C057BC932B8CEBB02D63</string>
+				<string>891C52C425A70EEA095DC49DC997D9B6</string>
+				<string>7B98FCEF641AF383C5645891CFDEC3BF</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods-AppLovin HelperTests</string>
+			<key>path</key>
+			<string>Target Support Files/Pods-AppLovin HelperTests</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>424F335488ABE72FB77FCF535A95C882</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Pods-AdMob and CustomAds HelperTests-acknowledgements.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>449C87696C6A6AF1E292F00CFB8C9E15</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>Pods_AppLovin_HelperTests.framework</string>
+			<key>path</key>
+			<string>Pods-AppLovin HelperTests.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>490DDE74990D84098771594DBD6B184F</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-AppLovin Helper-frameworks.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4CA38A5105907FB6E35D711EB525A063</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-AppLovin Helper-resources.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4DEB334CB34410CDBF4DFAE59EECA92C</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>6017667C7957F4F58794401D457E58D1</string>
+				<string>68EFB5924E3BDC3317222AF0D5DC0B55</string>
+				<string>7BF91788E7CAA2DCB0640284AF017385</string>
+				<string>2A72F39887288535C71DE08BE67D87FC</string>
+				<string>B5FB17C01AD1B8290A1BAF57D83A61EE</string>
+				<string>490DDE74990D84098771594DBD6B184F</string>
+				<string>4CA38A5105907FB6E35D711EB525A063</string>
+				<string>2A565B06161E0B5973C68C8E73E9DA4B</string>
+				<string>B25C71D7DB69D25A1A2527F91F53F82A</string>
+				<string>D7AC9F1CB3EF1BDF34A19DF5BD50A24B</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods-AppLovin Helper</string>
+			<key>path</key>
+			<string>Target Support Files/Pods-AppLovin Helper</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>504FF49EE1E18B818DE64B1C91BB2523</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>525E0805862DDE36D55564EE84755C77</string>
+			</array>
+			<key>isa</key>
+			<string>PBXHeadersBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>523A81CF073A8DDA3CE3113C36247FCB</key>
+		<dict>
+			<key>fileRef</key>
+			<string>2D2DCFBF0278C057BC932B8CEBB02D63</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Public</string>
+				</array>
+			</dict>
+		</dict>
+		<key>525E0805862DDE36D55564EE84755C77</key>
+		<dict>
+			<key>fileRef</key>
+			<string>194906C09CD6679036B727E211E93C91</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Public</string>
+				</array>
+			</dict>
+		</dict>
+		<key>52AD2A07E1327FA7E0814C346A0E1798</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>343444A4E08C641B7D50CC62716FABC4</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>5A87B2C135B02A41D5FF52C41809CDDB</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text</string>
+			<key>path</key>
+			<string>Pods-AppLovin HelperTests-acknowledgements.markdown</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5B8F38BB27EE13CE1BAAAEE398A1694A</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>ACAA970EFF5D9329468DDB04AE393F42</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf-with-dsym</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Pods-AdMob and CustomAds Helper/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.0</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Pods-AdMob and CustomAds Helper/Pods-AdMob and CustomAds Helper.modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>Pods_AdMob_and_CustomAds_Helper</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>5BE59303A539A91F38D164DC4776965E</key>
+		<dict>
+			<key>fileRef</key>
+			<string>B7E97D720CDC25D2E4520849A8A9E2AB</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>6017667C7957F4F58794401D457E58D1</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>6285E0096A330972E14F88998C9637A6</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Pods-AdMob and CustomAds Helper.modulemap</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>632E1081C4FAB80ECE81E4890E3C5B1C</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>B25C71D7DB69D25A1A2527F91F53F82A</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Pods-AppLovin Helper/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Pods-AppLovin Helper/Pods-AppLovin Helper.modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>Pods_AppLovin_Helper</string>
+				<key>SDKROOT</key>
+				<string>appletvos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>3</string>
+				<key>TVOS_DEPLOYMENT_TARGET</key>
+				<string>9.2</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>649D35BBC08D5DE4C4F12F18D8E79B2E</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-AppLovin HelperUITests.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>6788458F3A34722A119F20FAD05952AB</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>1704D3301AB26219B2489F5CBCFEAF53</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>iOS</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>68EFB5924E3BDC3317222AF0D5DC0B55</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Pods-AppLovin Helper.modulemap</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>6A2B34BADA1BC420321CCA920D161961</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-AdMob and CustomAds HelperTests-frameworks.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>6B1E58622859352D1FBF7EDD8CE85613</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>C8985E38F3DC0E0887ABEA2829240359</string>
+				<string>5B8F38BB27EE13CE1BAAAEE398A1694A</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>6BC57C0DA3C0ABB7DD1B7991E12F74AE</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Pods-AppLovin HelperUITests-umbrella.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>6C66B05FE28B43FC68F1AEC99DCD8DB0</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-AdMob and CustomAds Helper.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>6E58ADD0C31149709B1BFCDE59DF19D5</key>
+		<dict>
+			<key>fileRef</key>
+			<string>B5FB17C01AD1B8290A1BAF57D83A61EE</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>7006E6AE5FE8F0AB388A605C3285B254</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-AdMob and CustomAds HelperTests.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>71E6071186EBAC31D858133B7A78BE13</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>632E1081C4FAB80ECE81E4890E3C5B1C</string>
+				<string>8A85083028A97A196DF82B7D9EBAC195</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>7B98FCEF641AF383C5645891CFDEC3BF</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-AppLovin HelperTests.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>7BF91788E7CAA2DCB0640284AF017385</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text</string>
+			<key>path</key>
+			<string>Pods-AppLovin Helper-acknowledgements.markdown</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>7D761572A4CC0F21DDF27E1381BFA4A5</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>7B98FCEF641AF383C5645891CFDEC3BF</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf-with-dsym</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Pods-AppLovin HelperTests/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Pods-AppLovin HelperTests/Pods-AppLovin HelperTests.modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>Pods_AppLovin_HelperTests</string>
+				<key>SDKROOT</key>
+				<string>appletvos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>3</string>
+				<key>TVOS_DEPLOYMENT_TARGET</key>
+				<string>9.2</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>7DB346D0F39D3F0E887471402A8071AB</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>93A4A3777CF96A4AAC1D13BA6DCCEA73</string>
+				<string>A42F72DC1D780481325DD00969B19BB6</string>
+				<string>820FBBDA65C5B1A6A4C379A893C27235</string>
+				<string>8FAC268E9B795DF3110611634B9E9C7C</string>
+				<string>EEAA6415D469AD9A86D213A0497AD57D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>7E19246DA5FF3D4FB35065B9E340260E</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>870C602EDDC4CB6D519310BC9C946A54</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>tvOS</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>7E6F4EE7142A3F953DDA03FE2FC54457</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>ECE79339A07B7B60A94510EFEF9D9890</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>8194A5A0F02572E28ADB2AF87184A665</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>6E58ADD0C31149709B1BFCDE59DF19D5</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>820FBBDA65C5B1A6A4C379A893C27235</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>E91D6015731707498AAA5817D350B87B</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>870C602EDDC4CB6D519310BC9C946A54</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>Foundation.framework</string>
+			<key>path</key>
+			<string>Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.2.sdk/System/Library/Frameworks/Foundation.framework</string>
+			<key>sourceTree</key>
+			<string>DEVELOPER_DIR</string>
+		</dict>
+		<key>891C52C425A70EEA095DC49DC997D9B6</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-AppLovin HelperTests.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>8A85083028A97A196DF82B7D9EBAC195</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>D7AC9F1CB3EF1BDF34A19DF5BD50A24B</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf-with-dsym</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Pods-AppLovin Helper/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Pods-AppLovin Helper/Pods-AppLovin Helper.modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>Pods_AppLovin_Helper</string>
+				<key>SDKROOT</key>
+				<string>appletvos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>3</string>
+				<key>TVOS_DEPLOYMENT_TARGET</key>
+				<string>9.2</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>8EFE1EA6033B5EB2EC4DB39A2CDF6D38</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Pods-AppLovin HelperTests-dummy.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>8FAC268E9B795DF3110611634B9E9C7C</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>3A15E35E8BE025F219440E8C0B427E17</string>
+				<string>C4ED48612F5EAE0BD7832EC23CD290F1</string>
+				<string>C2373476DCD685B5F0E20BE4A57652C4</string>
+				<string>449C87696C6A6AF1E292F00CFB8C9E15</string>
+				<string>05CF1B443EC690F55C4DF4A7BFA0B6B6</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>8FC3A2A13D6E7180567F34C61AE1CFDA</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>7006E6AE5FE8F0AB388A605C3285B254</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf-with-dsym</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Pods-AdMob and CustomAds HelperTests/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.0</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Pods-AdMob and CustomAds HelperTests/Pods-AdMob and CustomAds HelperTests.modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>Pods_AdMob_and_CustomAds_HelperTests</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>9169B7489FC2508E2F4BFC8E4DA5A59B</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>D8A266C79164F3DBAE3A764CCFD07E10</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Pods-AppLovin HelperUITests/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Pods-AppLovin HelperUITests/Pods-AppLovin HelperUITests.modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>Pods_AppLovin_HelperUITests</string>
+				<key>SDKROOT</key>
+				<string>appletvos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>3</string>
+				<key>TVOS_DEPLOYMENT_TARGET</key>
+				<string>9.2</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>93A4A3777CF96A4AAC1D13BA6DCCEA73</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>text.script.ruby</string>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text</string>
+			<key>name</key>
+			<string>Podfile</string>
+			<key>path</key>
+			<string>../Podfile</string>
+			<key>sourceTree</key>
+			<string>SOURCE_ROOT</string>
+			<key>xcLanguageSpecificationIdentifier</key>
+			<string>xcode.lang.ruby</string>
+		</dict>
+		<key>93B192166B4F775C18D748D174C67041</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-AppLovin HelperUITests-resources.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>95DFAAB4C3933C79481F84629AAE5F07</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>04246C5360BFFD089452DE4BCF58B717</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>9B86650B4E8A1F85694066D818B0AFA3</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>891C52C425A70EEA095DC49DC997D9B6</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Pods-AppLovin HelperTests/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Pods-AppLovin HelperTests/Pods-AppLovin HelperTests.modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>Pods_AppLovin_HelperTests</string>
+				<key>SDKROOT</key>
+				<string>appletvos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>3</string>
+				<key>TVOS_DEPLOYMENT_TARGET</key>
+				<string>9.2</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>9B8721FA74B10CDEEC7F246F060AA8D2</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>9B86650B4E8A1F85694066D818B0AFA3</string>
+				<string>7D761572A4CC0F21DDF27E1381BFA4A5</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>9CD961BE1A53F7DF76AF0DEDA30F31E2</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text</string>
+			<key>path</key>
+			<string>Pods-AdMob and CustomAds Helper-acknowledgements.markdown</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>9D10E556D82269816A98DC29C7B08DC2</key>
+		<dict>
+			<key>fileRef</key>
+			<string>2A565B06161E0B5973C68C8E73E9DA4B</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Public</string>
+				</array>
+			</dict>
+		</dict>
+		<key>9FA72270CB3361A01B7453A51D78976F</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Pods-AdMob and CustomAds Helper-dummy.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>A3DF08BED9F4EA31E0254DFC9944F3C9</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>ADB3CB3F3E69877999908D0F274449AD</string>
+			</array>
+			<key>isa</key>
+			<string>PBXHeadersBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>A42F72DC1D780481325DD00969B19BB6</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>6788458F3A34722A119F20FAD05952AB</string>
+				<string>7E19246DA5FF3D4FB35065B9E340260E</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>A60E8F1528CE7A11DF5A592A0DFE5FD8</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Pods-AppLovin HelperUITests-dummy.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ACAA970EFF5D9329468DDB04AE393F42</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-AdMob and CustomAds Helper.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ADB3CB3F3E69877999908D0F274449AD</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3E11E3271AAD426BAE7C04118527DEF9</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Public</string>
+				</array>
+			</dict>
+		</dict>
+		<key>B25C71D7DB69D25A1A2527F91F53F82A</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-AppLovin Helper.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B37759FB781869856330C2BF8AA3A4BD</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1704D3301AB26219B2489F5CBCFEAF53</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B552725693328EE769C0D3F43EA28AC4</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-AppLovin HelperTests-resources.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B5FB17C01AD1B8290A1BAF57D83A61EE</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Pods-AppLovin Helper-dummy.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B6B5188FE1F80D0011DC88906CB10084</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>71E6071186EBAC31D858133B7A78BE13</string>
+			<key>buildPhases</key>
+			<array>
+				<string>8194A5A0F02572E28ADB2AF87184A665</string>
+				<string>BAA963795CF0DE5BF7EFEB17BFB9CEBF</string>
+				<string>F26F77534A4A032A8C82F591701A660A</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>Pods-AppLovin Helper</string>
+			<key>productName</key>
+			<string>Pods-AppLovin Helper</string>
+			<key>productReference</key>
+			<string>C2373476DCD685B5F0E20BE4A57652C4</string>
+			<key>productType</key>
+			<string>com.apple.product-type.framework</string>
+		</dict>
+		<key>B7E97D720CDC25D2E4520849A8A9E2AB</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Pods-AdMob and CustomAds HelperTests-dummy.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B94CC966F20B066C0082B8FA3D5D5595</key>
+		<dict>
+			<key>fileRef</key>
+			<string>9FA72270CB3361A01B7453A51D78976F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BA1DF97627335AF490DB29150697D03B</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>6B1E58622859352D1FBF7EDD8CE85613</string>
+			<key>buildPhases</key>
+			<array>
+				<string>E2E76E6A6C9F79AB76F4CBBCF8C625C1</string>
+				<string>2A435FEC0B5DF39740EA6C209E5DE3F6</string>
+				<string>504FF49EE1E18B818DE64B1C91BB2523</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>Pods-AdMob and CustomAds Helper</string>
+			<key>productName</key>
+			<string>Pods-AdMob and CustomAds Helper</string>
+			<key>productReference</key>
+			<string>3A15E35E8BE025F219440E8C0B427E17</string>
+			<key>productType</key>
+			<string>com.apple.product-type.framework</string>
+		</dict>
+		<key>BAA963795CF0DE5BF7EFEB17BFB9CEBF</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>301446AA6EE49C051ABE46D82E19A62A</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>BCF2B0FFC89C20B0B064B7707616B8C5</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>D7032E4E712BF3E0425AD1B78710DAB1</string>
+			</array>
+			<key>isa</key>
+			<string>PBXHeadersBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>C2373476DCD685B5F0E20BE4A57652C4</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>Pods_AppLovin_Helper.framework</string>
+			<key>path</key>
+			<string>Pods-AppLovin Helper.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>C4ED48612F5EAE0BD7832EC23CD290F1</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>Pods_AdMob_and_CustomAds_HelperTests.framework</string>
+			<key>path</key>
+			<string>Pods-AdMob and CustomAds HelperTests.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>C5A4623B15C46E6EC9BD41E71B1A6682</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Pods-AppLovin HelperUITests.modulemap</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C64BF8A017D636FAAC8D7824D2DEE0CE</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Pods-AppLovin HelperTests.modulemap</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C76F4A610CE7195712D1FCE2C6C1B9E7</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text</string>
+			<key>path</key>
+			<string>Pods-AppLovin HelperUITests-acknowledgements.markdown</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C8985E38F3DC0E0887ABEA2829240359</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>6C66B05FE28B43FC68F1AEC99DCD8DB0</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Pods-AdMob and CustomAds Helper/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.0</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Pods-AdMob and CustomAds Helper/Pods-AdMob and CustomAds Helper.modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>Pods_AdMob_and_CustomAds_Helper</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>C9E785D0699F89BB23F4FB00EB060114</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-AdMob and CustomAds HelperTests-resources.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>CE6B7ECAEB922AC1A4A60C3FD202192C</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>GoogleMobileAds.framework</string>
+			<key>path</key>
+			<string>Frameworks/GoogleMobileAds.framework</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>CF882C2B48166FC9FB32A768949CBF8B</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>118FB6AAB975DF2411FB02A3ACAFD597</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>D0242E1DFFA4665A0BE89BB8B84935F7</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>D217838ADBEAA133C0C1B729C0244599</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-AdMob and CustomAds HelperTests.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>D41D8CD98F00B204E9800998ECF8427E</key>
+		<dict>
+			<key>attributes</key>
+			<dict>
+				<key>LastSwiftUpdateCheck</key>
+				<string>0730</string>
+				<key>LastUpgradeCheck</key>
+				<string>0700</string>
+			</dict>
+			<key>buildConfigurationList</key>
+			<string>2D8E8EC45A3A1A1D94AE762CB5028504</string>
+			<key>compatibilityVersion</key>
+			<string>Xcode 3.2</string>
+			<key>developmentRegion</key>
+			<string>English</string>
+			<key>hasScannedForEncodings</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXProject</string>
+			<key>knownRegions</key>
+			<array>
+				<string>en</string>
+			</array>
+			<key>mainGroup</key>
+			<string>7DB346D0F39D3F0E887471402A8071AB</string>
+			<key>productRefGroup</key>
+			<string>8FAC268E9B795DF3110611634B9E9C7C</string>
+			<key>projectDirPath</key>
+			<string></string>
+			<key>projectReferences</key>
+			<array/>
+			<key>projectRoot</key>
+			<string></string>
+			<key>targets</key>
+			<array>
+				<string>BA1DF97627335AF490DB29150697D03B</string>
+				<string>E20E217817EBB96CE6F710FC3A95CB4C</string>
+				<string>B6B5188FE1F80D0011DC88906CB10084</string>
+				<string>F64E372E2879AD3D579F519AC47BBB04</string>
+				<string>FCEDFEDE87551C98B37C1E61E99F9C3D</string>
+			</array>
+		</dict>
+		<key>D7032E4E712BF3E0425AD1B78710DAB1</key>
+		<dict>
+			<key>fileRef</key>
+			<string>6BC57C0DA3C0ABB7DD1B7991E12F74AE</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>Public</string>
+				</array>
+			</dict>
+		</dict>
+		<key>D77A13F5D13E377084AF6463721B9FF7</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>D7AC9F1CB3EF1BDF34A19DF5BD50A24B</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-AppLovin Helper.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>D8866DA17E3A4A8C5DCE40B119A7952F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>870C602EDDC4CB6D519310BC9C946A54</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>D8A266C79164F3DBAE3A764CCFD07E10</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-AppLovin HelperUITests.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>E20E217817EBB96CE6F710FC3A95CB4C</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>0521C28DE8AC52C239FE5FC9F9ACB2C2</string>
+			<key>buildPhases</key>
+			<array>
+				<string>19C0D59AE7CBF65C572B1A2CCBB6B345</string>
+				<string>95DFAAB4C3933C79481F84629AAE5F07</string>
+				<string>A3DF08BED9F4EA31E0254DFC9944F3C9</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>Pods-AdMob and CustomAds HelperTests</string>
+			<key>productName</key>
+			<string>Pods-AdMob and CustomAds HelperTests</string>
+			<key>productReference</key>
+			<string>C4ED48612F5EAE0BD7832EC23CD290F1</string>
+			<key>productType</key>
+			<string>com.apple.product-type.framework</string>
+		</dict>
+		<key>E2E76E6A6C9F79AB76F4CBBCF8C625C1</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>B94CC966F20B066C0082B8FA3D5D5595</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>E8F52EE31011063678C8840D4E17A551</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>D77A13F5D13E377084AF6463721B9FF7</string>
+				<string>C5A4623B15C46E6EC9BD41E71B1A6682</string>
+				<string>C76F4A610CE7195712D1FCE2C6C1B9E7</string>
+				<string>19F13E67B4BAF00C576F06837724E752</string>
+				<string>A60E8F1528CE7A11DF5A592A0DFE5FD8</string>
+				<string>2090D933BDE388D39AE19B2E1A24A96D</string>
+				<string>93B192166B4F775C18D748D174C67041</string>
+				<string>6BC57C0DA3C0ABB7DD1B7991E12F74AE</string>
+				<string>D8A266C79164F3DBAE3A764CCFD07E10</string>
+				<string>649D35BBC08D5DE4C4F12F18D8E79B2E</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods-AppLovin HelperUITests</string>
+			<key>path</key>
+			<string>Target Support Files/Pods-AppLovin HelperUITests</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>E91D6015731707498AAA5817D350B87B</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>3D831502A03070884DD15E64051F5F27</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Google-Mobile-Ads-SDK</string>
+			<key>path</key>
+			<string>Google-Mobile-Ads-SDK</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ECE79339A07B7B60A94510EFEF9D9890</key>
+		<dict>
+			<key>fileRef</key>
+			<string>A60E8F1528CE7A11DF5A592A0DFE5FD8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>EEAA6415D469AD9A86D213A0497AD57D</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>FAEBF55268312CFD6F6726EC6200B72C</string>
+				<string>1BBE838409288F95CEDE27751375850D</string>
+				<string>4DEB334CB34410CDBF4DFAE59EECA92C</string>
+				<string>421F9516460EDA2D7E089F3EE06D7599</string>
+				<string>E8F52EE31011063678C8840D4E17A551</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Targets Support Files</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>EF73D6A31FB8E61A20E97D02CEF60BBD</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_ANALYZER_NONNULL</key>
+				<string>YES</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>ENABLE_TESTABILITY</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_DYNAMIC_NO_PIC</key>
+				<string>NO</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>POD_CONFIGURATION_DEBUG=1</string>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
+				<string>NO</string>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.0</string>
+				<key>ONLY_ACTIVE_ARCH</key>
+				<string>YES</string>
+				<key>STRIP_INSTALLED_PRODUCT</key>
+				<string>NO</string>
+				<key>SYMROOT</key>
+				<string>${SRCROOT}/../build</string>
+				<key>TVOS_DEPLOYMENT_TARGET</key>
+				<string>9.2</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>EF8D77BF02A95D8F1CAFA816467F1591</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>D8866DA17E3A4A8C5DCE40B119A7952F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>F132EFBB6267AD52444502AA4788213E</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>D217838ADBEAA133C0C1B729C0244599</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Pods-AdMob and CustomAds HelperTests/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.0</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Pods-AdMob and CustomAds HelperTests/Pods-AdMob and CustomAds HelperTests.modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>Pods_AdMob_and_CustomAds_HelperTests</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>F26F77534A4A032A8C82F591701A660A</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>9D10E556D82269816A98DC29C7B08DC2</string>
+			</array>
+			<key>isa</key>
+			<string>PBXHeadersBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>F64E372E2879AD3D579F519AC47BBB04</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>9B8721FA74B10CDEEC7F246F060AA8D2</string>
+			<key>buildPhases</key>
+			<array>
+				<string>52AD2A07E1327FA7E0814C346A0E1798</string>
+				<string>CF882C2B48166FC9FB32A768949CBF8B</string>
+				<string>FEB68E1D696F8FC7F0019D62334F4B3B</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>Pods-AppLovin HelperTests</string>
+			<key>productName</key>
+			<string>Pods-AppLovin HelperTests</string>
+			<key>productReference</key>
+			<string>449C87696C6A6AF1E292F00CFB8C9E15</string>
+			<key>productType</key>
+			<string>com.apple.product-type.framework</string>
+		</dict>
+		<key>FAEBF55268312CFD6F6726EC6200B72C</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>D0242E1DFFA4665A0BE89BB8B84935F7</string>
+				<string>6285E0096A330972E14F88998C9637A6</string>
+				<string>9CD961BE1A53F7DF76AF0DEDA30F31E2</string>
+				<string>2DF15EBB3EF9911408F9955BD5D1D686</string>
+				<string>9FA72270CB3361A01B7453A51D78976F</string>
+				<string>FD1D2FD037F60542F2B0308BE02C14A8</string>
+				<string>1FC23C06C4C9712B7904166E0F22F49E</string>
+				<string>194906C09CD6679036B727E211E93C91</string>
+				<string>6C66B05FE28B43FC68F1AEC99DCD8DB0</string>
+				<string>ACAA970EFF5D9329468DDB04AE393F42</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods-AdMob and CustomAds Helper</string>
+			<key>path</key>
+			<string>Target Support Files/Pods-AdMob and CustomAds Helper</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>FCEDFEDE87551C98B37C1E61E99F9C3D</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>15C40CB7D1A15220EF4A6A9C2AE92DE5</string>
+			<key>buildPhases</key>
+			<array>
+				<string>7E6F4EE7142A3F953DDA03FE2FC54457</string>
+				<string>EF8D77BF02A95D8F1CAFA816467F1591</string>
+				<string>BCF2B0FFC89C20B0B064B7707616B8C5</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>Pods-AppLovin HelperUITests</string>
+			<key>productName</key>
+			<string>Pods-AppLovin HelperUITests</string>
+			<key>productReference</key>
+			<string>05CF1B443EC690F55C4DF4A7BFA0B6B6</string>
+			<key>productType</key>
+			<string>com.apple.product-type.framework</string>
+		</dict>
+		<key>FD1D2FD037F60542F2B0308BE02C14A8</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-AdMob and CustomAds Helper-frameworks.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>FEB68E1D696F8FC7F0019D62334F4B3B</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>523A81CF073A8DDA3CE3113C36247FCB</string>
+			</array>
+			<key>isa</key>
+			<string>PBXHeadersBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+	</dict>
+	<key>rootObject</key>
+	<string>D41D8CD98F00B204E9800998ECF8427E</string>
+</dict>
+</plist>

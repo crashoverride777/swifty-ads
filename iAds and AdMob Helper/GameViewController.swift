@@ -17,7 +17,7 @@ class GameViewController: UIViewController {
         let bannerID = "Enter your real ID"
         let interstitialID = "Enter your real ID"
         let rewardedVideoID = "Enter your real ID"
-        AdMob.sharedInstance.setup(viewController: self, bannerID: bannerID, interID: interstitialID, rewardedVideoID: rewardedVideoID)
+        AdMob.sharedInstance.setup(self, bannerID: bannerID, interID: interstitialID, rewardedVideoID: rewardedVideoID)
         
         AdsManager.sharedInstance.setup(customAdsInterval: 3, maxCustomAdsPerSession: 3)
         
@@ -31,17 +31,17 @@ class GameViewController: UIViewController {
             skView.ignoresSiblingOrder = true
             
             /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .AspectFill
+            scene.scaleMode = .aspectFill
             
             skView.presentScene(scene)
         }
     }
    
     // Check for device orientation changes
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         
-        coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) -> Void in
+        coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) -> Void in
             
             AdsManager.sharedInstance.adjustForOrientation()
             
@@ -60,15 +60,15 @@ class GameViewController: UIViewController {
         })
     }
 
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate: Bool {
         return true
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return UIInterfaceOrientationMask.AllButUpsideDown
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return UIInterfaceOrientationMask.allButUpsideDown
         } else {
-            return UIInterfaceOrientationMask.All
+            return UIInterfaceOrientationMask.all
         }
     }
 
@@ -77,7 +77,7 @@ class GameViewController: UIViewController {
         // Release any cached data, images, etc that aren't in use.
     }
 
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden: Bool {
         return true
     }
 }

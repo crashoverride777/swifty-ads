@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.4
+//    v5.5
 
 /*
     Abstract:
@@ -48,21 +48,21 @@ final class AppLovin: NSObject {
     }
     
     /// Is watching reward video
-    private var watchingRewardedVideo = false
+    fileprivate var watchingRewardedVideo = false
     
     /// Reward amount
     /// This will be updated once a reward video started playing
-    private var rewardAmount = 1
+    fileprivate var rewardAmount = 1
     
     /// Interval counter
-    private var intervalCounter = 0
+    fileprivate var intervalCounter = 0
     
     /// Removed ads
-    private var removedAds = false
+    fileprivate var removedAds = false
     
     // MARK: - Init
     
-    private override init() {
+    fileprivate override init() {
         super.init()
         
         // Load SDK

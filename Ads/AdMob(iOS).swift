@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.4
+//    v5.5
 
 /*
     Abstract:
@@ -45,32 +45,32 @@ final class AdMob: NSObject {
     /// Check if reward video is ready (e.g to hide a reward video button)
     var rewardedVideoIsReady: Bool {
         guard let rewardedVideoAd = rewardedVideoAd else { return false }
-        return rewardedVideoAd.ready
+        return rewardedVideoAd.isReady
     }
     
     /// Presenting view controller
-    private var presentingViewController: UIViewController?
+    fileprivate var presentingViewController: UIViewController?
     
     /// Ads
-    private var bannerAd: GADBannerView?
-    private var interstitialAd: GADInterstitial?
-    private var rewardedVideoAd: GADRewardBasedVideoAd?
+    fileprivate var bannerAd: GADBannerView?
+    fileprivate var interstitialAd: GADInterstitial?
+    fileprivate var rewardedVideoAd: GADRewardBasedVideoAd?
     
     /// Test Ad Unit IDs
     /// Will get set to real ID in setUp method
-    private var bannerAdUnitID = "ca-app-pub-3940256099942544/2934735716"
-    private var interstitialAdUnitID = "ca-app-pub-3940256099942544/4411468910"
-    private var rewardedVideoAdUnitID = "ca-app-pub-1234567890123456/1234567890"
+    fileprivate var bannerAdUnitID = "ca-app-pub-3940256099942544/2934735716"
+    fileprivate var interstitialAdUnitID = "ca-app-pub-3940256099942544/4411468910"
+    fileprivate var rewardedVideoAdUnitID = "ca-app-pub-1234567890123456/1234567890"
     
     /// Interval counter
-    private var intervalCounter = 0
+    fileprivate var intervalCounter = 0
     
     /// Removed ads
-    private var removedAds = false
+    fileprivate var removedAds = false
     
     // MARK: - Init
     
-    private override init() {
+    fileprivate override init() {
         super.init()
         print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
     }
@@ -83,7 +83,7 @@ final class AdMob: NSObject {
     /// - parameter bannerID: The banner adUnitID for this app.
     /// - parameter interID: The interstitial adUnitID for this app.
     /// - parameter rewardedVideoID: The rewarded video adUnitID for this app.
-    func setup(viewController viewController: UIViewController, bannerID: String, interID: String, rewardedVideoID: String) {
+    func setup(_ viewController: UIViewController, bannerID: String, interID: String, rewardedVideoID: String) {
         presentingViewController = viewController
         
         #if !DEBUG
@@ -102,14 +102,14 @@ final class AdMob: NSObject {
     /// Show banner ad with delay
     ///
     /// - parameter withDelay: The delay until showing the ad. Defaults to 0.
-    func showBanner(withDelay delay: NSTimeInterval = 0.1) {
+    func showBanner(withDelay delay: TimeInterval = 0.1) {
         guard !removedAds else { return }
         
-        NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: #selector(showingBanner), userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(showingBanner), userInfo: nil, repeats: false)
     }
     
     /// Show banner ad
-    @objc private func showingBanner() {
+    @objc fileprivate func showingBanner() {
         guard !removedAds else { return }
         
         loadBannerAd()
@@ -123,7 +123,7 @@ final class AdMob: NSObject {
     func showInterstitial(withInterval interval: Int = 0) {
         guard !removedAds else { return }
         
-        guard let interstitialAd = interstitialAd where interstitialAd.isReady else {
+        guard let interstitialAd = interstitialAd , interstitialAd.isReady else {
             print("AdMob interstitial is not ready, reloading...")
             self.interstitialAd = loadInterstitialAd()
             return
@@ -137,7 +137,7 @@ final class AdMob: NSObject {
         
         print("AdMob interstitial is showing")
         guard let presentingViewController = presentingViewController?.view?.window?.rootViewController else { return }
-        interstitialAd.presentFromRootViewController(presentingViewController)
+        interstitialAd.present(fromRootViewController: presentingViewController)
     }
     
     // MARK: - Show Reward Video
@@ -148,7 +148,7 @@ final class AdMob: NSObject {
     func showRewardedVideo(withInterval interval: Int = 0) {
         guard !removedAds else { return }
         
-        guard let rewardedVideoAd = rewardedVideoAd where rewardedVideoAd.ready else {
+        guard let rewardedVideoAd = rewardedVideoAd , rewardedVideoAd.isReady else {
             print("AdMob reward video is not ready, reloading...")
             self.rewardedVideoAd = loadRewardedVideoAd()
             return
@@ -162,7 +162,7 @@ final class AdMob: NSObject {
         
         print("AdMob reward video is showing")
         guard let rootViewController = presentingViewController?.view?.window?.rootViewController else { return }
-        rewardedVideoAd.presentFromRootViewController(rootViewController)
+        rewardedVideoAd.present(fromRootViewController: rootViewController)
     }
     
     // MARK: - Remove
@@ -202,7 +202,7 @@ final class AdMob: NSObject {
         
         print("AdMob banner orientation adjusted")
         
-        if UIApplication.sharedApplication().statusBarOrientation.isLandscape {
+        if UIApplication.shared.statusBarOrientation.isLandscape {
             bannerAd.adSize = kGADAdSizeSmartBannerLandscape
         } else {
             bannerAd.adSize = kGADAdSizeSmartBannerPortrait
@@ -214,14 +214,14 @@ final class AdMob: NSObject {
 
 // MARK: - Requesting Ad
 
-private extension AdMob {
+fileprivate extension AdMob {
     
     /// Load banner ad
     func loadBannerAd() {
         guard let presentingViewController = presentingViewController else { return }
         print("AdMob banner loading...")
         
-        if UIApplication.sharedApplication().statusBarOrientation.isLandscape {
+        if UIApplication.shared.statusBarOrientation.isLandscape {
             bannerAd = GADBannerView(adSize: kGADAdSizeSmartBannerLandscape)
         } else {
             bannerAd = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
@@ -238,7 +238,7 @@ private extension AdMob {
             request.testDevices = [kGADSimulatorID]
         #endif
         
-        bannerAd?.loadRequest(request)
+        bannerAd?.load(request)
     }
 
     /// Load interstitial ad
@@ -254,24 +254,24 @@ private extension AdMob {
             request.testDevices = [kGADSimulatorID]
         #endif
         
-        interstitialAd.loadRequest(request)
+        interstitialAd.load(request)
         
         return interstitialAd
     }
     
     /// Load rewarded video ad
-    func loadRewardedVideoAd() -> GADRewardBasedVideoAd {
+    func loadRewardedVideoAd() -> GADRewardBasedVideoAd? {
         
         let rewardedVideoAd = GADRewardBasedVideoAd.sharedInstance()
         
-        rewardedVideoAd.delegate = self
+        rewardedVideoAd?.delegate = self
         let request = GADRequest()
         
         #if DEBUG
             request.testDevices = [kGADSimulatorID]
         #endif
         
-        rewardedVideoAd.loadRequest(request, withAdUnitID: rewardedVideoAdUnitID)
+        rewardedVideoAd?.load(request, withAdUnitID: rewardedVideoAdUnitID)
         
         return rewardedVideoAd
     }
@@ -281,7 +281,7 @@ private extension AdMob {
 
 extension AdMob: GADBannerViewDelegate {
     
-    func adViewDidReceiveAd(bannerView: GADBannerView!) {
+    func adViewDidReceiveAd(_ bannerView: GADBannerView!) {
         guard let presentingViewController = presentingViewController else { return }
         print("AdMob banner did receive ad from: \(bannerView.adNetworkClassName)")
         
@@ -292,26 +292,26 @@ extension AdMob: GADBannerViewDelegate {
         UIView.commitAnimations()
     }
     
-    func adViewWillPresentScreen(bannerView: GADBannerView!) { // gets called only in release mode
+    func adViewWillPresentScreen(_ bannerView: GADBannerView!) { // gets called only in release mode
         print("AdMob banner clicked")
         delegate?.adClicked()
     }
     
-    func adViewWillDismissScreen(bannerView: GADBannerView!) {
+    func adViewWillDismissScreen(_ bannerView: GADBannerView!) {
         print("AdMob banner about to be closed")
     }
     
-    func adViewDidDismissScreen(bannerView: GADBannerView!) { // gets called in only release mode
+    func adViewDidDismissScreen(_ bannerView: GADBannerView!) { // gets called in only release mode
         print("AdMob banner closed")
         delegate?.adClosed()
     }
     
-    func adViewWillLeaveApplication(bannerView: GADBannerView!) {
+    func adViewWillLeaveApplication(_ bannerView: GADBannerView!) {
         print("AdMob banner will leave application")
         delegate?.adClicked()
     }
     
-    func adView(bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
+    func adView(_ bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
         print(error.localizedDescription)
         
         guard let presentingViewController = presentingViewController else { return }
@@ -319,7 +319,7 @@ extension AdMob: GADBannerViewDelegate {
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(1.5)
         bannerView.center = CGPoint(x: presentingViewController.view.frame.midX, y: presentingViewController.view.frame.maxY + (bannerView.frame.height / 2))
-        bannerView.hidden = true
+        bannerView.isHidden = true
    
         UIView.commitAnimations()
     }
@@ -329,36 +329,36 @@ extension AdMob: GADBannerViewDelegate {
 
 extension AdMob: GADInterstitialDelegate {
     
-    func interstitialDidReceiveAd(ad: GADInterstitial!) {
+    func interstitialDidReceiveAd(_ ad: GADInterstitial!) {
         print("AdMob interstitial did receive ad from: \(ad.adNetworkClassName)")
     }
     
-    func interstitialWillPresentScreen(ad: GADInterstitial!) {
+    func interstitialWillPresentScreen(_ ad: GADInterstitial!) {
         print("AdMob interstitial will present")
         delegate?.adClicked()
     }
     
-    func interstitialWillDismissScreen(ad: GADInterstitial!) {
+    func interstitialWillDismissScreen(_ ad: GADInterstitial!) {
         print("AdMob interstitial about to be closed")
     }
     
-    func interstitialDidDismissScreen(ad: GADInterstitial!) {
+    func interstitialDidDismissScreen(_ ad: GADInterstitial!) {
         print("AdMob interstitial closed, reloading...")
         delegate?.adClosed()
         interstitialAd = loadInterstitialAd()
     }
     
-    func interstitialWillLeaveApplication(ad: GADInterstitial!) {
+    func interstitialWillLeaveApplication(_ ad: GADInterstitial!) {
         print("AdMob interstitial will leave application")
         delegate?.adClicked()
     }
     
-    func interstitialDidFailToPresentScreen(ad: GADInterstitial!) {
+    func interstitialDidFail(toPresentScreen ad: GADInterstitial!) {
         print("AdMob interstitial did fail to present")
         // Not sure if to reload here
     }
     
-    func interstitial(ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
+    func interstitial(_ ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
         print(error.localizedDescription)
     }
 }
@@ -367,35 +367,35 @@ extension AdMob: GADInterstitialDelegate {
 
 extension AdMob: GADRewardBasedVideoAdDelegate {
     
-    func rewardBasedVideoAdDidOpen(rewardBasedVideoAd: GADRewardBasedVideoAd!) {
+    func rewardBasedVideoAdDidOpen(_ rewardBasedVideoAd: GADRewardBasedVideoAd!) {
         print("AdMob reward video ad did open")
     }
     
-    func rewardBasedVideoAdDidClose(rewardBasedVideoAd: GADRewardBasedVideoAd!) {
+    func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd!) {
         print("AdMob reward video closed, reloading...")
         delegate?.adClosed()
         rewardedVideoAd = loadRewardedVideoAd()
     }
     
-    func rewardBasedVideoAdDidReceiveAd(rewardBasedVideoAd: GADRewardBasedVideoAd!) {
+    func rewardBasedVideoAdDidReceive(_ rewardBasedVideoAd: GADRewardBasedVideoAd!) {
         print("AdMob reward video did receive ad")
     }
     
-    func rewardBasedVideoAdDidStartPlaying(rewardBasedVideoAd: GADRewardBasedVideoAd!) {
+    func rewardBasedVideoAdDidStartPlaying(_ rewardBasedVideoAd: GADRewardBasedVideoAd!) {
         print("AdMob reward video did start playing")
         delegate?.adClicked()
     }
     
-    func rewardBasedVideoAdWillLeaveApplication(rewardBasedVideoAd: GADRewardBasedVideoAd!) {
+    func rewardBasedVideoAdWillLeaveApplication(_ rewardBasedVideoAd: GADRewardBasedVideoAd!) {
         print("AdMob reward video will leave application")
         delegate?.adClicked()
     }
     
-    func rewardBasedVideoAd(rewardBasedVideoAd: GADRewardBasedVideoAd!, didFailToLoadWithError error: NSError!) {
+    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd!, didFailToLoadWithError error: Error!) {
         print(error.localizedDescription)
     }
     
-    func rewardBasedVideoAd(rewardBasedVideoAd: GADRewardBasedVideoAd!, didRewardUserWithReward reward: GADAdReward!) {
+    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd!, didRewardUserWith reward: GADAdReward!) {
         print("AdMob reward video did reward user")
         delegate?.adDidRewardUser(withAmount: Int(reward.amount))
     }

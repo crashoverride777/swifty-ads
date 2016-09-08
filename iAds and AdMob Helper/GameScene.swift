@@ -35,7 +35,7 @@ class GameScene: SKScene {
         }
     }
     
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         myLabel = SKLabelNode(fontNamed:"Chalkduster")
         myLabel.text = "Remove ads in \(touchCounter) clicks"
         myLabel.fontSize = 25;
@@ -50,7 +50,8 @@ class GameScene: SKScene {
         AdMob.sharedInstance.showBanner()
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+   
         /* Called when a touch begins */
         
         // Show inter
@@ -64,10 +65,10 @@ class GameScene: SKScene {
         }
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     }
    
-    override func update(currentTime: CFTimeInterval) {
+    override func update(_ currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
     }
 }

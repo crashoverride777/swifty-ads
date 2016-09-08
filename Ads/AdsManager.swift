@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.4
+//    v5.5
 
 /*
     Abstract: 
@@ -63,24 +63,24 @@ final class AdsManager {
     }
     
     /// Our games counter
-    private var customAdInterval = 0
-    private var customAdCounter = 0 {
+    fileprivate var customAdInterval = 0
+    fileprivate var customAdCounter = 0 {
         didSet {
             if customAdCounter == customAdInterval {
                 customAdCounter = 0
             }
         }
     }
-    private var customAdShownCounter = 0
-    private var customAdMaxPerSession = 0
+    fileprivate var customAdShownCounter = 0
+    fileprivate var customAdMaxPerSession = 0
     
     /// Interval counter
-    private var intervalCounter = 0
+    fileprivate var intervalCounter = 0
     
     // MARK: - Init
     
     /// Init
-    private init() {
+    fileprivate init() {
     
     }
     
@@ -90,7 +90,7 @@ final class AdsManager {
     ///
     /// - parameter customAdsInterval: The interval of how often to show a custom ad mixed in between real ads.
     /// - parameter maxCustomAdsPerSession: The max number of custom ads to show per session.
-    func setup(customAdsInterval customAdsInterval: Int, maxCustomAdsPerSession: Int) {
+    func setup(customAdsInterval: Int, maxCustomAdsPerSession: Int) {
         self.customAdInterval = customAdsInterval
         self.customAdMaxPerSession = maxCustomAdsPerSession
     }
