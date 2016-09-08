@@ -15,7 +15,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
      
         AdsManager.shared.setup(customAdsInterval: 3, maxCustomAdsPerSession: 3)
-        _ = AppLovin.sharedInstance
+        _ = AppLovin.shared
 
         if let scene = GameScene(fileNamed: "GameScene") {
             // Configure the view.
