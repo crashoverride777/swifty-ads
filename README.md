@@ -261,6 +261,10 @@ Enjoy
 
 # Release Notes
 
+- v5.5
+
+Updated to Swift 3
+
 - v5.4
 
 Merged AppLovinInter and AppLovinReward into a single class called AppLovin.
