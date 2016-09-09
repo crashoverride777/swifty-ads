@@ -9,22 +9,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-AdMob and CustomAds HelperTests.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-AppLovin Helper.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-AppLovin HelperTests.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-AppLovin HelperUITests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

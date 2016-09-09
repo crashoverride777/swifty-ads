@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A206753488E44F8F4E60C8A /* Pods_AdMob_and_CustomAds_HelperTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A9D3B2F664DEB34A86CDF3F /* Pods_AdMob_and_CustomAds_HelperTests.framework */; };
-		9BD1FB3ADB9EEBBDE5BAC51C /* Pods_AppLovin_HelperTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 429AE1C2DE4E08066BA5472C /* Pods_AppLovin_HelperTests.framework */; };
-		AB52BE5811717DA7F458DBD5 /* Pods_AppLovin_Helper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2001C40DAB640931CBD1B1 /* Pods_AppLovin_Helper.framework */; };
 		B41E34C21D0236950034C444 /* CustomAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = B435FFE41CE14D1900A678AA /* CustomAd.swift */; };
 		B41E34C31D02369C0034C444 /* AdsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B01A3C1B9A0B0700F9A8EA /* AdsManager.swift */; };
 		B41E34C41D023B420034C444 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4B01A231B9A0AF500F9A8EA /* Images.xcassets */; };
@@ -23,8 +20,6 @@
 		B4A006621CECFCF100A44575 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A006611CECFCF100A44575 /* GameScene.swift */; };
 		B4A006641CECFCF100A44575 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A006631CECFCF100A44575 /* GameViewController.swift */; };
 		B4A006691CECFCF100A44575 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4A006671CECFCF100A44575 /* Main.storyboard */; };
-		B4A006761CECFCF100A44575 /* AppLovin_HelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A006751CECFCF100A44575 /* AppLovin_HelperTests.swift */; };
-		B4A006811CECFCF100A44575 /* AppLovin_HelperUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A006801CECFCF100A44575 /* AppLovin_HelperUITests.swift */; };
 		B4A0068F1CECFD4000A44575 /* applovin-tvos-sdk-3.2.0 in Resources */ = {isa = PBXBuildFile; fileRef = B4A0068E1CECFD4000A44575 /* applovin-tvos-sdk-3.2.0 */; };
 		B4A006911CECFD4A00A44575 /* libAppLovinTVOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A006901CECFD4A00A44575 /* libAppLovinTVOS.a */; };
 		B4A006931CECFD5400A44575 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A006921CECFD5400A44575 /* AdSupport.framework */; };
@@ -42,7 +37,6 @@
 		B4B01A221B9A0AF500F9A8EA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4B01A201B9A0AF500F9A8EA /* Main.storyboard */; };
 		B4B01A241B9A0AF500F9A8EA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4B01A231B9A0AF500F9A8EA /* Images.xcassets */; };
 		B4B01A271B9A0AF500F9A8EA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4B01A251B9A0AF500F9A8EA /* LaunchScreen.xib */; };
-		B4B01A331B9A0AF500F9A8EA /* iAds_and_AdMob_HelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B01A321B9A0AF500F9A8EA /* iAds_and_AdMob_HelperTests.swift */; };
 		B4B01A3D1B9A0B0700F9A8EA /* AdsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B01A3C1B9A0B0700F9A8EA /* AdsManager.swift */; };
 		B4B01A401B9A0B7700F9A8EA /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4B01A3F1B9A0B7700F9A8EA /* AdSupport.framework */; };
 		B4B01A421B9A0B8100F9A8EA /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4B01A411B9A0B8100F9A8EA /* AudioToolbox.framework */; };
@@ -56,46 +50,14 @@
 		B4B01A541B9A0BEC00F9A8EA /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4B01A531B9A0BEC00F9A8EA /* StoreKit.framework */; };
 		B4B01A561B9A0BF700F9A8EA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4B01A551B9A0BF700F9A8EA /* SystemConfiguration.framework */; };
 		F47593E3ADC4967ECA7DE73C /* Pods_AdMob_and_CustomAds_Helper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 276E28443E35A1C226A0FF0B /* Pods_AdMob_and_CustomAds_Helper.framework */; };
-		F8B9B4AB1065966C5BB8C07C /* Pods_AppLovin_HelperUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5734A020AA7B5ED620E38505 /* Pods_AppLovin_HelperUITests.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		B4A006721CECFCF100A44575 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B4B01A0B1B9A0AF500F9A8EA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B4A0065A1CECFCF100A44575;
-			remoteInfo = "AppLovin Helper";
-		};
-		B4A0067D1CECFCF100A44575 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B4B01A0B1B9A0AF500F9A8EA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B4A0065A1CECFCF100A44575;
-			remoteInfo = "AppLovin Helper";
-		};
-		B4B01A2D1B9A0AF500F9A8EA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B4B01A0B1B9A0AF500F9A8EA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B4B01A121B9A0AF500F9A8EA;
-			remoteInfo = "iAds and AdMob Helper";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0FA857AA1CBD436FB0366DE2 /* Pods-AdMob and CustomAds Helper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdMob and CustomAds Helper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AdMob and CustomAds Helper/Pods-AdMob and CustomAds Helper.debug.xcconfig"; sourceTree = "<group>"; };
-		1285C7FE0AE01C3ACFAEC9C9 /* Pods-AppLovin HelperUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppLovin HelperUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppLovin HelperUITests/Pods-AppLovin HelperUITests.release.xcconfig"; sourceTree = "<group>"; };
 		141517330A60EF0041482D0E /* Pods-AdMob and CustomAds Helper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdMob and CustomAds Helper.release.xcconfig"; path = "Pods/Target Support Files/Pods-AdMob and CustomAds Helper/Pods-AdMob and CustomAds Helper.release.xcconfig"; sourceTree = "<group>"; };
 		212B8CD56F55CFDA355BC5BE /* Pods-AppLovin Helper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppLovin Helper.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppLovin Helper/Pods-AppLovin Helper.release.xcconfig"; sourceTree = "<group>"; };
 		276E28443E35A1C226A0FF0B /* Pods_AdMob_and_CustomAds_Helper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdMob_and_CustomAds_Helper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2A9D3B2F664DEB34A86CDF3F /* Pods_AdMob_and_CustomAds_HelperTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdMob_and_CustomAds_HelperTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		36C6807AFB9E852551CD5906 /* Pods-AppLovin HelperUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppLovin HelperUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppLovin HelperUITests/Pods-AppLovin HelperUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		429AE1C2DE4E08066BA5472C /* Pods_AppLovin_HelperTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppLovin_HelperTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4D2001C40DAB640931CBD1B1 /* Pods_AppLovin_Helper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppLovin_Helper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5734A020AA7B5ED620E38505 /* Pods_AppLovin_HelperUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppLovin_HelperUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C40ACEE932CFA1B17DCAD39 /* Pods-AppLovin Helper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppLovin Helper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppLovin Helper/Pods-AppLovin Helper.debug.xcconfig"; sourceTree = "<group>"; };
-		77BAC99D7C3D9FFB9A654341 /* Pods-AppLovin HelperTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppLovin HelperTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppLovin HelperTests/Pods-AppLovin HelperTests.release.xcconfig"; sourceTree = "<group>"; };
 		B435FFE01CE14C2A00A678AA /* AdMob(iOS).swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AdMob(iOS).swift"; sourceTree = "<group>"; };
 		B435FFE41CE14D1900A678AA /* CustomAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAd.swift; sourceTree = "<group>"; };
 		B43B34CC1D4AD2E50064F364 /* AdsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdsDelegate.swift; sourceTree = "<group>"; };
@@ -107,12 +69,6 @@
 		B4A006631CECFCF100A44575 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		B4A006681CECFCF100A44575 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B4A0066C1CECFCF100A44575 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B4A006711CECFCF100A44575 /* AppLovin HelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AppLovin HelperTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B4A006751CECFCF100A44575 /* AppLovin_HelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLovin_HelperTests.swift; sourceTree = "<group>"; };
-		B4A006771CECFCF100A44575 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B4A0067C1CECFCF100A44575 /* AppLovin HelperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AppLovin HelperUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B4A006801CECFCF100A44575 /* AppLovin_HelperUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLovin_HelperUITests.swift; sourceTree = "<group>"; };
-		B4A006821CECFCF100A44575 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B4A0068C1CECFD0B00A44575 /* HeaderTV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderTV.h; sourceTree = "<group>"; };
 		B4A0068E1CECFD4000A44575 /* applovin-tvos-sdk-3.2.0 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "applovin-tvos-sdk-3.2.0"; sourceTree = "<group>"; };
 		B4A006901CECFD4A00A44575 /* libAppLovinTVOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAppLovinTVOS.a; sourceTree = "<group>"; };
@@ -133,9 +89,6 @@
 		B4B01A211B9A0AF500F9A8EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B4B01A231B9A0AF500F9A8EA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "iAds and AdMob Helper/Images.xcassets"; sourceTree = "<group>"; };
 		B4B01A261B9A0AF500F9A8EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		B4B01A2C1B9A0AF500F9A8EA /* AdMob and CustomAds Helper.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AdMob and CustomAds Helper.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B4B01A311B9A0AF500F9A8EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B4B01A321B9A0AF500F9A8EA /* iAds_and_AdMob_HelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iAds_and_AdMob_HelperTests.swift; sourceTree = "<group>"; };
 		B4B01A3C1B9A0B0700F9A8EA /* AdsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdsManager.swift; sourceTree = "<group>"; };
 		B4B01A3F1B9A0B7700F9A8EA /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		B4B01A411B9A0B8100F9A8EA /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -148,9 +101,6 @@
 		B4B01A511B9A0BDF00F9A8EA /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		B4B01A531B9A0BEC00F9A8EA /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		B4B01A551B9A0BF700F9A8EA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		DD8ED20888A40EF454057A6D /* Pods-AdMob and CustomAds HelperTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdMob and CustomAds HelperTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AdMob and CustomAds HelperTests/Pods-AdMob and CustomAds HelperTests.debug.xcconfig"; sourceTree = "<group>"; };
-		DFAA1B2901B46E4DB2EE7B2E /* Pods-AdMob and CustomAds HelperTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdMob and CustomAds HelperTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AdMob and CustomAds HelperTests/Pods-AdMob and CustomAds HelperTests.release.xcconfig"; sourceTree = "<group>"; };
-		F01117AF2F27FBDB540AFEE4 /* Pods-AppLovin HelperTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppLovin HelperTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppLovin HelperTests/Pods-AppLovin HelperTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,23 +116,6 @@
 				B4A006951CECFD5F00A44575 /* AVFoundation.framework in Frameworks */,
 				B4A006931CECFD5400A44575 /* AdSupport.framework in Frameworks */,
 				B4A006911CECFD4A00A44575 /* libAppLovinTVOS.a in Frameworks */,
-				AB52BE5811717DA7F458DBD5 /* Pods_AppLovin_Helper.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B4A0066E1CECFCF100A44575 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9BD1FB3ADB9EEBBDE5BAC51C /* Pods_AppLovin_HelperTests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B4A006791CECFCF100A44575 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F8B9B4AB1065966C5BB8C07C /* Pods_AppLovin_HelperUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,14 +139,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B4B01A291B9A0AF500F9A8EA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0A206753488E44F8F4E60C8A /* Pods_AdMob_and_CustomAds_HelperTests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -222,14 +147,8 @@
 			children = (
 				0FA857AA1CBD436FB0366DE2 /* Pods-AdMob and CustomAds Helper.debug.xcconfig */,
 				141517330A60EF0041482D0E /* Pods-AdMob and CustomAds Helper.release.xcconfig */,
-				DD8ED20888A40EF454057A6D /* Pods-AdMob and CustomAds HelperTests.debug.xcconfig */,
-				DFAA1B2901B46E4DB2EE7B2E /* Pods-AdMob and CustomAds HelperTests.release.xcconfig */,
 				6C40ACEE932CFA1B17DCAD39 /* Pods-AppLovin Helper.debug.xcconfig */,
 				212B8CD56F55CFDA355BC5BE /* Pods-AppLovin Helper.release.xcconfig */,
-				F01117AF2F27FBDB540AFEE4 /* Pods-AppLovin HelperTests.debug.xcconfig */,
-				77BAC99D7C3D9FFB9A654341 /* Pods-AppLovin HelperTests.release.xcconfig */,
-				36C6807AFB9E852551CD5906 /* Pods-AppLovin HelperUITests.debug.xcconfig */,
-				1285C7FE0AE01C3ACFAEC9C9 /* Pods-AppLovin HelperUITests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -238,10 +157,6 @@
 			isa = PBXGroup;
 			children = (
 				276E28443E35A1C226A0FF0B /* Pods_AdMob_and_CustomAds_Helper.framework */,
-				2A9D3B2F664DEB34A86CDF3F /* Pods_AdMob_and_CustomAds_HelperTests.framework */,
-				4D2001C40DAB640931CBD1B1 /* Pods_AppLovin_Helper.framework */,
-				429AE1C2DE4E08066BA5472C /* Pods_AppLovin_HelperTests.framework */,
-				5734A020AA7B5ED620E38505 /* Pods_AppLovin_HelperUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -251,7 +166,6 @@
 			children = (
 				B4B01A151B9A0AF500F9A8EA /* AdMob and CustomAds Helper */,
 				B4B01A3E1B9A0B3500F9A8EA /* Frameworks */,
-				B4B01A2F1B9A0AF500F9A8EA /* iAds and AdMob HelperTests */,
 			);
 			name = iOS;
 			sourceTree = "<group>";
@@ -261,8 +175,6 @@
 			children = (
 				B4A0065C1CECFCF100A44575 /* AppLovin Helper */,
 				B4A0068D1CECFD1500A44575 /* Frameworks */,
-				B4A006741CECFCF100A44575 /* AppLovin HelperTests */,
-				B4A0067F1CECFCF100A44575 /* AppLovin HelperUITests */,
 			);
 			name = tvOS;
 			sourceTree = "<group>";
@@ -278,24 +190,6 @@
 				B4A0066C1CECFCF100A44575 /* Info.plist */,
 			);
 			path = "AppLovin Helper";
-			sourceTree = "<group>";
-		};
-		B4A006741CECFCF100A44575 /* AppLovin HelperTests */ = {
-			isa = PBXGroup;
-			children = (
-				B4A006751CECFCF100A44575 /* AppLovin_HelperTests.swift */,
-				B4A006771CECFCF100A44575 /* Info.plist */,
-			);
-			path = "AppLovin HelperTests";
-			sourceTree = "<group>";
-		};
-		B4A0067F1CECFCF100A44575 /* AppLovin HelperUITests */ = {
-			isa = PBXGroup;
-			children = (
-				B4A006801CECFCF100A44575 /* AppLovin_HelperUITests.swift */,
-				B4A006821CECFCF100A44575 /* Info.plist */,
-			);
-			path = "AppLovin HelperUITests";
 			sourceTree = "<group>";
 		};
 		B4A0068D1CECFD1500A44575 /* Frameworks */ = {
@@ -332,10 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				B4B01A131B9A0AF500F9A8EA /* AdMob and CustomAds Helper.app */,
-				B4B01A2C1B9A0AF500F9A8EA /* AdMob and CustomAds Helper.xctest */,
 				B4A0065B1CECFCF100A44575 /* AppLovin Helper.app */,
-				B4A006711CECFCF100A44575 /* AppLovin HelperTests.xctest */,
-				B4A0067C1CECFCF100A44575 /* AppLovin HelperUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -359,23 +250,6 @@
 			isa = PBXGroup;
 			children = (
 				B4B01A171B9A0AF500F9A8EA /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		B4B01A2F1B9A0AF500F9A8EA /* iAds and AdMob HelperTests */ = {
-			isa = PBXGroup;
-			children = (
-				B4B01A321B9A0AF500F9A8EA /* iAds_and_AdMob_HelperTests.swift */,
-				B4B01A301B9A0AF500F9A8EA /* Supporting Files */,
-			);
-			path = "iAds and AdMob HelperTests";
-			sourceTree = "<group>";
-		};
-		B4B01A301B9A0AF500F9A8EA /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				B4B01A311B9A0AF500F9A8EA /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -435,47 +309,6 @@
 			productReference = B4A0065B1CECFCF100A44575 /* AppLovin Helper.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B4A006701CECFCF100A44575 /* AppLovin HelperTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B4A006861CECFCF100A44575 /* Build configuration list for PBXNativeTarget "AppLovin HelperTests" */;
-			buildPhases = (
-				7B3C5443A624F3A2C7CCA4C5 /* 📦 Check Pods Manifest.lock */,
-				B4A0066D1CECFCF100A44575 /* Sources */,
-				B4A0066E1CECFCF100A44575 /* Frameworks */,
-				B4A0066F1CECFCF100A44575 /* Resources */,
-				78BAF796499EA9D3719F1407 /* 📦 Embed Pods Frameworks */,
-				C648F3ECC5733C2A87785BC1 /* 📦 Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B4A006731CECFCF100A44575 /* PBXTargetDependency */,
-			);
-			name = "AppLovin HelperTests";
-			productName = "AppLovin HelperTests";
-			productReference = B4A006711CECFCF100A44575 /* AppLovin HelperTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		B4A0067B1CECFCF100A44575 /* AppLovin HelperUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B4A006891CECFCF100A44575 /* Build configuration list for PBXNativeTarget "AppLovin HelperUITests" */;
-			buildPhases = (
-				6CF888C9EECE11D6027AE15B /* 📦 Check Pods Manifest.lock */,
-				B4A006781CECFCF100A44575 /* Sources */,
-				B4A006791CECFCF100A44575 /* Frameworks */,
-				B4A0067A1CECFCF100A44575 /* Resources */,
-				9F584EBD85FBCB77AC4CFE99 /* 📦 Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B4A0067E1CECFCF100A44575 /* PBXTargetDependency */,
-			);
-			name = "AppLovin HelperUITests";
-			productName = "AppLovin HelperUITests";
-			productReference = B4A0067C1CECFCF100A44575 /* AppLovin HelperUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 		B4B01A121B9A0AF500F9A8EA /* AdMob and CustomAds Helper */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B4B01A361B9A0AF500F9A8EA /* Build configuration list for PBXNativeTarget "AdMob and CustomAds Helper" */;
@@ -496,27 +329,6 @@
 			productReference = B4B01A131B9A0AF500F9A8EA /* AdMob and CustomAds Helper.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B4B01A2B1B9A0AF500F9A8EA /* AdMob and CustomAds HelperTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B4B01A391B9A0AF500F9A8EA /* Build configuration list for PBXNativeTarget "AdMob and CustomAds HelperTests" */;
-			buildPhases = (
-				3D3152F1F746555C334EDD69 /* 📦 Check Pods Manifest.lock */,
-				B4B01A281B9A0AF500F9A8EA /* Sources */,
-				B4B01A291B9A0AF500F9A8EA /* Frameworks */,
-				B4B01A2A1B9A0AF500F9A8EA /* Resources */,
-				F56E0AAF3FE65FF1EF865F8A /* 📦 Embed Pods Frameworks */,
-				19AFD68DC6A489016300C09E /* 📦 Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B4B01A2E1B9A0AF500F9A8EA /* PBXTargetDependency */,
-			);
-			name = "AdMob and CustomAds HelperTests";
-			productName = "iAds and AdMob HelperTests";
-			productReference = B4B01A2C1B9A0AF500F9A8EA /* AdMob and CustomAds Helper.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -532,23 +344,9 @@
 						CreatedOnToolsVersion = 7.3.1;
 						LastSwiftMigration = 0800;
 					};
-					B4A006701CECFCF100A44575 = {
-						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0800;
-						TestTargetID = B4A0065A1CECFCF100A44575;
-					};
-					B4A0067B1CECFCF100A44575 = {
-						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0800;
-						TestTargetID = B4A0065A1CECFCF100A44575;
-					};
 					B4B01A121B9A0AF500F9A8EA = {
 						CreatedOnToolsVersion = 6.4;
 						LastSwiftMigration = 0800;
-					};
-					B4B01A2B1B9A0AF500F9A8EA = {
-						CreatedOnToolsVersion = 6.4;
-						TestTargetID = B4B01A121B9A0AF500F9A8EA;
 					};
 				};
 			};
@@ -566,10 +364,7 @@
 			projectRoot = "";
 			targets = (
 				B4B01A121B9A0AF500F9A8EA /* AdMob and CustomAds Helper */,
-				B4B01A2B1B9A0AF500F9A8EA /* AdMob and CustomAds HelperTests */,
 				B4A0065A1CECFCF100A44575 /* AppLovin Helper */,
-				B4A006701CECFCF100A44575 /* AppLovin HelperTests */,
-				B4A0067B1CECFCF100A44575 /* AppLovin HelperUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -586,20 +381,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B4A0066F1CECFCF100A44575 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B4A0067A1CECFCF100A44575 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B4B01A111B9A0AF500F9A8EA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -611,31 +392,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B4B01A2A1B9A0AF500F9A8EA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		19AFD68DC6A489016300C09E /* 📦 Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AdMob and CustomAds HelperTests/Pods-AdMob and CustomAds HelperTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		350AD974D0FF37BEBBC2C1F7 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -649,66 +408,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AdMob and CustomAds Helper/Pods-AdMob and CustomAds Helper-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3D3152F1F746555C334EDD69 /* 📦 Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		6CF888C9EECE11D6027AE15B /* 📦 Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		78BAF796499EA9D3719F1407 /* 📦 Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppLovin HelperTests/Pods-AppLovin HelperTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7B3C5443A624F3A2C7CCA4C5 /* 📦 Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		7FA0C3DFF24EED0B2ADD0983 /* 📦 Embed Pods Frameworks */ = {
@@ -756,36 +455,6 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		9F584EBD85FBCB77AC4CFE99 /* 📦 Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppLovin HelperUITests/Pods-AppLovin HelperUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C648F3ECC5733C2A87785BC1 /* 📦 Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppLovin HelperTests/Pods-AppLovin HelperTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		D133B35C78DF07D6EB55ADF8 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -816,21 +485,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppLovin Helper/Pods-AppLovin Helper-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F56E0AAF3FE65FF1EF865F8A /* 📦 Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AdMob and CustomAds HelperTests/Pods-AdMob and CustomAds HelperTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -848,22 +502,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B4A0066D1CECFCF100A44575 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B4A006761CECFCF100A44575 /* AppLovin_HelperTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B4A006781CECFCF100A44575 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B4A006811CECFCF100A44575 /* AppLovin_HelperUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B4B01A0F1B9A0AF500F9A8EA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -878,33 +516,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B4B01A281B9A0AF500F9A8EA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B4B01A331B9A0AF500F9A8EA /* iAds_and_AdMob_HelperTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		B4A006731CECFCF100A44575 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B4A0065A1CECFCF100A44575 /* AppLovin Helper */;
-			targetProxy = B4A006721CECFCF100A44575 /* PBXContainerItemProxy */;
-		};
-		B4A0067E1CECFCF100A44575 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B4A0065A1CECFCF100A44575 /* AppLovin Helper */;
-			targetProxy = B4A0067D1CECFCF100A44575 /* PBXContainerItemProxy */;
-		};
-		B4B01A2E1B9A0AF500F9A8EA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B4B01A121B9A0AF500F9A8EA /* AdMob and CustomAds Helper */;
-			targetProxy = B4B01A2D1B9A0AF500F9A8EA /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		B4A006671CECFCF100A44575 /* Main.storyboard */ = {
@@ -979,74 +591,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = HeaderTV.h;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
-			};
-			name = Release;
-		};
-		B4A006871CECFCF100A44575 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = F01117AF2F27FBDB540AFEE4 /* Pods-AppLovin HelperTests.debug.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				INFOPLIST_FILE = "AppLovin HelperTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.AppLovin-HelperTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AppLovin Helper.app/AppLovin Helper";
-				TVOS_DEPLOYMENT_TARGET = 9.2;
-			};
-			name = Debug;
-		};
-		B4A006881CECFCF100A44575 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 77BAC99D7C3D9FFB9A654341 /* Pods-AppLovin HelperTests.release.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				INFOPLIST_FILE = "AppLovin HelperTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.AppLovin-HelperTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AppLovin Helper.app/AppLovin Helper";
-				TVOS_DEPLOYMENT_TARGET = 9.2;
-			};
-			name = Release;
-		};
-		B4A0068A1CECFCF100A44575 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 36C6807AFB9E852551CD5906 /* Pods-AppLovin HelperUITests.debug.xcconfig */;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				INFOPLIST_FILE = "AppLovin HelperUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.AppLovin-HelperUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				SWIFT_VERSION = 3.0;
-				TEST_TARGET_NAME = "AppLovin Helper";
-				TVOS_DEPLOYMENT_TARGET = 9.2;
-			};
-			name = Debug;
-		};
-		B4A0068B1CECFCF100A44575 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1285C7FE0AE01C3ACFAEC9C9 /* Pods-AppLovin HelperUITests.release.xcconfig */;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				INFOPLIST_FILE = "AppLovin HelperUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.AppLovin-HelperUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				SWIFT_VERSION = 3.0;
-				TEST_TARGET_NAME = "AppLovin Helper";
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
 			name = Release;
@@ -1185,36 +729,6 @@
 			};
 			name = Release;
 		};
-		B4B01A3A1B9A0AF500F9A8EA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = DD8ED20888A40EF454057A6D /* Pods-AdMob and CustomAds HelperTests.debug.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "iAds and AdMob HelperTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Helper.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "AdMob and CustomAds Helper";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AdMob and CustomAds Helper.app/AdMob and CustomAds Helper";
-			};
-			name = Debug;
-		};
-		B4B01A3B1B9A0AF500F9A8EA /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = DFAA1B2901B46E4DB2EE7B2E /* Pods-AdMob and CustomAds HelperTests.release.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = "iAds and AdMob HelperTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Helper.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "AdMob and CustomAds Helper";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AdMob and CustomAds Helper.app/AdMob and CustomAds Helper";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1223,24 +737,6 @@
 			buildConfigurations = (
 				B4A006841CECFCF100A44575 /* Debug */,
 				B4A006851CECFCF100A44575 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B4A006861CECFCF100A44575 /* Build configuration list for PBXNativeTarget "AppLovin HelperTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B4A006871CECFCF100A44575 /* Debug */,
-				B4A006881CECFCF100A44575 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B4A006891CECFCF100A44575 /* Build configuration list for PBXNativeTarget "AppLovin HelperUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B4A0068A1CECFCF100A44575 /* Debug */,
-				B4A0068B1CECFCF100A44575 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1259,15 +755,6 @@
 			buildConfigurations = (
 				B4B01A371B9A0AF500F9A8EA /* Debug */,
 				B4B01A381B9A0AF500F9A8EA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B4B01A391B9A0AF500F9A8EA /* Build configuration list for PBXNativeTarget "AdMob and CustomAds HelperTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B4B01A3A1B9A0AF500F9A8EA /* Debug */,
-				B4B01A3B1B9A0AF500F9A8EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
