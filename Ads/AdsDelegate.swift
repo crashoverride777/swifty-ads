@@ -34,6 +34,6 @@ public protocol AdsDelegate: class {
     /// Ad has been closed
     func adClosed()
     
-    /// A rewarded video was completed
+    /// A rewarded video completed, reward
     func adDidRewardUser(withAmount rewardAmount: Int)
 }
