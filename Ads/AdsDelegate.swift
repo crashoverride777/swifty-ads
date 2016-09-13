@@ -25,7 +25,11 @@
 
 import Foundation
 
-/// Ads delegate
+/**
+ Ads delegate
+ 
+ A protocol delegate to handle advertising actions
+ */
 public protocol AdsDelegate: class {
     
     /// Ad has been clicked

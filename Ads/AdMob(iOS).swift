@@ -23,13 +23,13 @@
 
 //    v5.5
 
-/*
-    Abstract:
-    A Singleton class to manage adverts from AdMob. This class is only included in the iOS version of the project.
-*/
-
 import GoogleMobileAds
 
+/**
+ AdMob
+ 
+ Singleton class to manage adverts from AdMob. This class is only included in the iOS version of the project.
+ */
 final class AdMob: NSObject {
     
     // MARK: - Static Properties
@@ -77,12 +77,14 @@ final class AdMob: NSObject {
     
     // MARK: - Set-Up
     
-    /// Set up admob helper
-    ///
-    /// - parameter viewController: The view controller reference to present ads.
-    /// - parameter bannerID: The banner adUnitID for this app.
-    /// - parameter interID: The interstitial adUnitID for this app.
-    /// - parameter rewardedVideoID: The rewarded video adUnitID for this app.
+    /**
+     Set up admob helper
+     
+     - parameter viewController: The view controller reference to present ads.
+     - parameter bannerID: The banner adUnitID for this app.
+     - parameter interID: The interstitial adUnitID for this app.
+     - parameter rewardedVideoID: The rewarded video adUnitID for this app.
+     */
     func setup(_ viewController: UIViewController, bannerID: String, interID: String, rewardedVideoID: String) {
         presentingViewController = viewController
         
@@ -99,9 +101,11 @@ final class AdMob: NSObject {
     
     // MARK: - Show Banner
     
-    /// Show banner ad with delay
-    ///
-    /// - parameter withDelay: The delay until showing the ad. Defaults to 0.
+    /**
+     Show banner ad with delay
+     
+     - parameter delay: The delay until showing the ad. Defaults to 0.
+     */
     func showBanner(withDelay delay: TimeInterval = 0.1) {
         guard !removedAds else { return }
         
@@ -117,9 +121,11 @@ final class AdMob: NSObject {
     
     // MARK: - Show Interstitial
     
-    /// Show interstitial ad randomly
-    ///
-    /// - parameter withInterval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
+    /**
+     Show interstitial ad randomly
+     
+     - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
+     */
     func showInterstitial(withInterval interval: Int = 0) {
         guard !removedAds else { return }
         
@@ -142,9 +148,11 @@ final class AdMob: NSObject {
     
     // MARK: - Show Reward Video
     
-    /// Show rewarded video ad
-    ///
-    /// - parameter withInterval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
+    /**
+     Show rewarded video ad
+     
+     - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
+     */
     func showRewardedVideo(withInterval interval: Int = 0) {
         guard !removedAds else { return }
         

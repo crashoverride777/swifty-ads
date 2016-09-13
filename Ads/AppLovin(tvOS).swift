@@ -23,13 +23,13 @@
 
 //    v5.5
 
-/*
-    Abstract:
-    A Singleton class to manage adverts from AppLovin. This class is only included in the tvOS version of the project.
-*/
-
 import Foundation
 
+/**
+ App lovin
+ 
+ Singleton class to manage adverts from AppLovin. This class is only used in the tvOS version of the project.
+ */
 final class AppLovin: NSObject {
     
     // MARK: - Static Properties
@@ -62,8 +62,8 @@ final class AppLovin: NSObject {
     
     // MARK: - Init
     
-    /// Init
-    fileprivate override init() {
+    /// Private singleton init
+    private override init() {
         super.init()
         
         // Load SDK
@@ -73,9 +73,11 @@ final class AppLovin: NSObject {
         ALIncentivizedInterstitialAd.shared().preloadAndNotify(self)
     }
     
-    /// Show interstitial ad
-    ///
-    /// - parameter withInterval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
+    /**
+     Show interstitial ad
+     
+     - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
+     */
     func showInterstitial(withInterval interval: Int = 0) {
         guard !removedAds else { return }
         
@@ -98,9 +100,11 @@ final class AppLovin: NSObject {
         ALInterstitialAd.shared().show()
     }
     
-    /// Show rewarded video ad
-    ///
-    /// - parameter withInterval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
+    /**
+     Show rewarded video ad
+     
+     - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
+     */
     func showRewardedVideo(withInterval interval: Int = 0) {
         //guard !removedAds else { return }
         

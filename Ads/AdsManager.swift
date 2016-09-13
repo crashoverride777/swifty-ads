@@ -23,13 +23,13 @@
 
 //    v5.5
 
-/*
-    Abstract: 
-    A Singleton class to manage adverts from AdMob, AppLovin and your own custom ads.
-*/
-
 import Foundation
 
+/**
+ Ads manager
+ 
+ Singleton class to manage adverts from AdMob as well as your own custom ads.
+ */
 final class AdsManager {
     
     // MARK: - Static Properties
@@ -86,10 +86,12 @@ final class AdsManager {
     
     // MARK: - Set Up
     
-    /// Set up ads helpers
-    ///
-    /// - parameter customAdsInterval: The interval of how often to show a custom ad mixed in between real ads.
-    /// - parameter maxCustomAdsPerSession: The max number of custom ads to show per session.
+    /**
+     Setup ads helpers
+     
+     - parameter customAdsInterval: The interval of how often to show a custom ad mixed in between real ads.
+     - parameter maxCustomAdsPerSession: The max number of custom ads to show per session.
+     */
     func setup(customAdsInterval: Int, maxCustomAdsPerSession: Int) {
         self.customAdInterval = customAdsInterval
         self.customAdMaxPerSession = maxCustomAdsPerSession
@@ -97,9 +99,11 @@ final class AdsManager {
     
     // MARK: - Show Interstitial Ad
     
-    /// Show inter ad
-    ///
-    /// - parameter withInterval: The interval of when to show the ad. Defaults to 0.
+    /**
+     Show inter ad
+     
+     - parameter interval: The interval of when to show the ad. Defaults to 0.
+     */
     func showInterstitial(withInterval interval: Int = 0) {
         
         if interval != 0 {
@@ -126,9 +130,11 @@ final class AdsManager {
     
     // MARK: - Show Reward Video
     
-    /// Show rewarded video ad
-    ///
-    /// - parameter withInterval: The interval of when to show the ad. Defaults to 0.
+    /**
+     Show rewarded video ad
+     
+     - parameter interval: The interval of when to show the ad. Defaults to 0.
+     */
     func showRewardedVideo(withInterval interval: Int = 0) {
         if interval != 0 {
             intervalCounter += 1
