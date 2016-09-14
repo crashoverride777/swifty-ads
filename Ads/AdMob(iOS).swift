@@ -85,7 +85,7 @@ final class AdMob: NSObject {
      - parameter interID: The interstitial adUnitID for this app.
      - parameter rewardedVideoID: The rewarded video adUnitID for this app.
      */
-    func setup(_ viewController: UIViewController, bannerID: String, interID: String, rewardedVideoID: String) {
+    func setup(viewController: UIViewController, bannerID: String, interID: String, rewardedVideoID: String) {
         presentingViewController = viewController
         
         #if !DEBUG
