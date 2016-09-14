@@ -261,6 +261,10 @@ Enjoy
 
 # Release Notes
 
+- v5.5.1
+
+Cleanup and documentation fixes
+
 - v5.5
 
 Updated to Swift 3
