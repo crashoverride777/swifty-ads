@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.5
+//    v5.5.1
 
 import GoogleMobileAds
 
@@ -43,7 +43,7 @@ final class AdMob: NSObject {
     weak var delegate: AdsDelegate?
     
     /// Check if reward video is ready (e.g to hide a reward video button)
-    var rewardedVideoIsReady: Bool {
+    var isRewardedVideoReady: Bool {
         guard let rewardedVideoAd = rewardedVideoAd else { return false }
         return rewardedVideoAd.isReady
     }
@@ -56,21 +56,21 @@ final class AdMob: NSObject {
     fileprivate var interstitialAd: GADInterstitial?
     fileprivate var rewardedVideoAd: GADRewardBasedVideoAd?
     
-    /// Test Ad Unit IDs
-    /// Will get set to real ID in setUp method
+    /// Test Ad Unit IDs. Will get set to real ID in setup method
     fileprivate var bannerAdUnitID = "ca-app-pub-3940256099942544/2934735716"
     fileprivate var interstitialAdUnitID = "ca-app-pub-3940256099942544/4411468910"
     fileprivate var rewardedVideoAdUnitID = "ca-app-pub-1234567890123456/1234567890"
     
     /// Interval counter
-    fileprivate var intervalCounter = 0
+    private var intervalCounter = 0
     
     /// Removed ads
-    fileprivate var removedAds = false
+    private var removedAds = false
     
     // MARK: - Init
     
-    fileprivate override init() {
+    /// Private singleton init
+    private override init() {
         super.init()
         print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
     }

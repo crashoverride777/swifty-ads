@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.5
+//    v5.5.1
 
 import StoreKit
 
@@ -129,14 +129,15 @@ final public class CustomAd {
     fileprivate var isNewGame = false
     
     /// Interval counter
-    fileprivate var intervalCounter = 0
+    private var intervalCounter = 0
     
     /// Removed ads
-    fileprivate var removedAds = false
+    private var removedAds = false
     
     // MARK: - Init
     
-    fileprivate init() { }
+    /// Private singleton init
+    private init() { }
     
     /**
      Show custom ad
@@ -207,7 +208,7 @@ final public class CustomAd {
 
 // MARK: - Ad Management
 
-fileprivate extension CustomAd {
+private extension CustomAd {
     
     /**
      Create ad
@@ -282,7 +283,7 @@ fileprivate extension CustomAd {
 
 // MARK: - Set up for orientation
 
-fileprivate extension CustomAd {
+private extension CustomAd {
     
     /// Setup for orientation
     func setupForOrientation() {

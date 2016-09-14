@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.5
+//    v5.5.1
 
 import Foundation
 
@@ -43,22 +43,22 @@ final class AppLovin: NSObject {
     weak var delegate: AdsDelegate?
     
     /// Check if reward video is ready (e.g to hide a reward video button)
-    var rewardedVideoIsReady: Bool {
+    var isRewardedVideoReady: Bool {
         return ALIncentivizedInterstitialAd.isReadyForDisplay()
     }
     
     /// Is watching reward video
-    fileprivate var watchingRewardedVideo = false
+    fileprivate var isWatchingRewardedVideo = false
     
     /// Reward amount
     /// This will be updated once a reward video started playing
     fileprivate var rewardAmount = 1
     
     /// Interval counter
-    fileprivate var intervalCounter = 0
+    private var intervalCounter = 0
     
     /// Removed ads
-    fileprivate var removedAds = false
+    private var removedAds = false
     
     // MARK: - Init
     
@@ -92,7 +92,7 @@ final class AppLovin: NSObject {
             intervalCounter = 0
         }
         
-        watchingRewardedVideo = false
+        isWatchingRewardedVideo = false
         
         ALInterstitialAd.shared().adLoadDelegate = self
         ALInterstitialAd.shared().adDisplayDelegate = self
@@ -120,7 +120,7 @@ final class AppLovin: NSObject {
             intervalCounter = 0
         }
         
-        watchingRewardedVideo = true
+        isWatchingRewardedVideo = true
         
         ALIncentivizedInterstitialAd.shared().adDisplayDelegate = self
         ALIncentivizedInterstitialAd.shared().adVideoPlaybackDelegate = self
@@ -165,7 +165,7 @@ extension AppLovin: ALAdDisplayDelegate {
         delegate?.adClosed()
         
         // Preload next rewarded video if watching rewarded video ad
-        guard watchingRewardedVideo else { return }
+        guard isWatchingRewardedVideo else { return }
         ALIncentivizedInterstitialAd.shared().preloadAndNotify(self)
     }
 }
@@ -185,7 +185,7 @@ extension AppLovin: ALAdVideoPlaybackDelegate {
         print("AppLovin video ad was fully watched")
         
         // Reward if ad was a rewarded video
-        guard watchingRewardedVideo else { return }
+        guard isWatchingRewardedVideo else { return }
         print("AppLovin video ad was rewarded video, rewarding...")
         delegate?.adDidRewardUser(withAmount: rewardAmount)
     }

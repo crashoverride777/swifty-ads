@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.5
+//    v5.5.1
 
 import Foundation
 
@@ -53,36 +53,35 @@ final class AdsManager {
     }
     
     /// Reward video check
-    var rewardedVideoIsReady: Bool {
+    var isRewardedVideoReady: Bool {
         #if os(iOS)
-            return AdMob.shared.rewardedVideoIsReady
+            return AdMob.shared.isRewardedVideoReady
         #endif
         #if os(tvOS)
-            return AppLovin.shared.rewardedVideoIsReady
+            return AppLovin.shared.isRewardedVideoReady
         #endif
     }
     
     /// Our games counter
-    fileprivate var customAdInterval = 0
-    fileprivate var customAdCounter = 0 {
+    private var customAdInterval = 0
+    private var customAdCounter = 0 {
         didSet {
             if customAdCounter == customAdInterval {
                 customAdCounter = 0
             }
         }
     }
-    fileprivate var customAdShownCounter = 0
-    fileprivate var customAdMaxPerSession = 0
+    
+    private var customAdShownCounter = 0
+    private var customAdMaxPerSession = 0
     
     /// Interval counter
-    fileprivate var intervalCounter = 0
+    private var intervalCounter = 0
     
     // MARK: - Init
     
-    /// Init
-    fileprivate init() {
-    
-    }
+    /// Private singleton nit
+    private init() { }
     
     // MARK: - Set Up
     
