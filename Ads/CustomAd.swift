@@ -139,12 +139,10 @@ final public class CustomAd {
     /// Private singleton init
     private init() { }
     
-    /**
-     Show custom ad
-     
-     - parameter selectedAd: Show ad for inventory identifier, if set to nil will loop through inventory.
-     - parameter interval: The interval when to show the ad, e.g when set to 4 ad will be shown every 4th time. Defaults to 0.
-     */
+    /// Show custom ad
+    ///
+    /// - parameter selectedAd: Show ad for inventory identifier, if set to nil will loop through inventory.
+    /// - parameter interval: The interval when to show the ad, e.g when set to 4 ad will be shown every 4th time. Defaults to 0.
     public func show(selectedAd: Inventory? = nil, withInterval interval: Int = 0) {
         guard !removedAds && !Inventory.all.isEmpty else { return }
         
@@ -231,12 +229,10 @@ final public class CustomAd {
 
 private extension CustomAd {
     
-    /**
-     Create ad
-     
-     - parameter selectedAd: The int for the selected ad in the inventory.
-     - returns: Optional UIView.
-     */
+    /// Create ad
+    ///
+    /// - parameter selectedAd: The int for the selected ad in the inventory.
+    /// - returns: Optional UIView.
     func createAd(selectedAd: Int) -> UIView? {
         
         // Set ad properties
