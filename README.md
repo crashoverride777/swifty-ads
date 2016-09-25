@@ -172,6 +172,15 @@ AdsManager.shared.removeBanner()
 AdsManager.shared.removeAll() 
 ```
 
+NOTE: TV OS  
+
+On tvOS you will have to manually manage the  dismissal and download button for custom ads. Create your  gesture recognizers  or  other control scheme  and  make sure you  can call these 2 methods when a custom ad is shown. I use the menu button for dismissal and the  main button for downloading.
+
+```swift
+CustomAd.shared.download()
+CustomAd.shared.dismiss()
+```
+      
 NOTE: Remove Ads bool 
 
 This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
