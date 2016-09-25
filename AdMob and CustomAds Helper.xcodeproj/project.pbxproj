@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8BA8521AA012454236A8FEF6 /* Pods_AppLovin_Helper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2CE1129C6F81DBB34E8136A /* Pods_AppLovin_Helper.framework */; };
 		B41E34C21D0236950034C444 /* CustomAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = B435FFE41CE14D1900A678AA /* CustomAd.swift */; };
 		B41E34C31D02369C0034C444 /* AdsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B01A3C1B9A0B0700F9A8EA /* AdsManager.swift */; };
 		B41E34C41D023B420034C444 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4B01A231B9A0AF500F9A8EA /* Images.xcassets */; };
@@ -101,6 +102,7 @@
 		B4B01A511B9A0BDF00F9A8EA /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		B4B01A531B9A0BEC00F9A8EA /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		B4B01A551B9A0BF700F9A8EA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		F2CE1129C6F81DBB34E8136A /* Pods_AppLovin_Helper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppLovin_Helper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 				B4A006951CECFD5F00A44575 /* AVFoundation.framework in Frameworks */,
 				B4A006931CECFD5400A44575 /* AdSupport.framework in Frameworks */,
 				B4A006911CECFD4A00A44575 /* libAppLovinTVOS.a in Frameworks */,
+				8BA8521AA012454236A8FEF6 /* Pods_AppLovin_Helper.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				276E28443E35A1C226A0FF0B /* Pods_AdMob_and_CustomAds_Helper.framework */,
+				F2CE1129C6F81DBB34E8136A /* Pods_AppLovin_Helper.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

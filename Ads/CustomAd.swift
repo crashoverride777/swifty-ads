@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.5.1
+//    v5.5.2
 
 import StoreKit
 
@@ -119,7 +119,7 @@ final public class CustomAd {
         button.layer.borderWidth = 2
         let iPad = UIDevice.current.userInterfaceIdiom == .pad
         button.layer.cornerRadius = (iPad ? 15 : 11.5)
-        button.addTarget(self, action: #selector(handleClose), for: .touchDown)
+        button.addTarget(self, action: #selector(dismiss), for: .touchDown)
         return button
     }()
     
@@ -204,6 +204,27 @@ final public class CustomAd {
     public func adjustForOrientation() {
         setupForOrientation()
     }
+    
+    /// Handle download (tvOS only)
+    @objc public func download() {
+        dismiss()
+        
+        #if os(iOS)
+            AppStoreViewController.shared.open(forAppID: appID)
+        #endif
+        
+        #if os(tvOS)
+            if let url = URL(string: getAppStoreURL(forAppID: appID)) {
+                UIApplication.shared.openURL(url)
+            }
+        #endif
+    }
+    
+    /// Handle close (tvOS only)
+    @objc public func dismiss() {
+        removeFromSuperview()
+        delegate?.adClosed()
+    }
 }
 
 // MARK: - Ad Management
@@ -238,26 +259,11 @@ private extension CustomAd {
         // Button
         #if os(iOS)
             // Download tap gesture
-            let downloadTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDownload))
+            let downloadTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(download))
             downloadTapGestureRecognizer.delaysTouchesBegan = true
             imageView.addGestureRecognizer(downloadTapGestureRecognizer)
 
             view.addSubview(closeButton)
-        #endif
-        
-        // TV controls
-        #if os(tvOS)
-            let rootViewController = UIApplication.shared.keyWindow?.rootViewController
-            
-            let tapMenu = UITapGestureRecognizer(target: self, action: #selector(handleClose))
-            tapMenu.delaysTouchesBegan = true
-            tapMenu.allowedPressTypes = [NSNumber (value: UIPressType.menu.rawValue)]
-            rootViewController?.view.addGestureRecognizer(tapMenu)
-            
-            let tapMain = UITapGestureRecognizer(target: self, action: #selector(handleDownload))
-            tapMain.delaysTouchesBegan = true
-            tapMain.allowedPressTypes = [NSNumber (value: UIPressType.select.rawValue)]
-            rootViewController?.view.addGestureRecognizer(tapMain)
         #endif
         
         // Set up for orientation
@@ -324,32 +330,6 @@ private extension CustomAd {
         let closeButtonSize: CGFloat = iPad ? 30 : 22
         closeButton.frame = CGRect(x: 0, y: 0, width: closeButtonSize, height: closeButtonSize)
         closeButton.center = CGPoint(x: imageView.frame.minX + (closeButtonSize / 1.5), y: imageView.frame.minY + (closeButtonSize / 1.5))
-    }
-}
-
-// MARK: - Buttons Pressed
-
-extension CustomAd {
-    
-    /// Handle download
-    @objc fileprivate func handleDownload() {
-        handleClose()
-        
-        #if os(iOS)
-            AppStoreViewController.shared.open(forAppID: appID)
-        #endif
-        
-        #if os(tvOS)
-        if let url = NSURL(string: getAppStoreURL(forAppID: appID)) {
-            UIApplication.shared.openURL(url as URL)
-        }
-        #endif
-    }
-    
-    /// Handle close
-    @objc fileprivate func handleClose() {
-        removeFromSuperview()
-        delegate?.adClosed()
     }
 }
 
