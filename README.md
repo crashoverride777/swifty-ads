@@ -270,6 +270,12 @@ Enjoy
 
 # Release Notes
 
+- v5.5.2
+
+Slight change to custom ad handling on tvOS, please read the  "How to use section" again
+
+Cleanup and documentation fixes
+
 - v5.5.1
 
 Cleanup and documentation fixes
