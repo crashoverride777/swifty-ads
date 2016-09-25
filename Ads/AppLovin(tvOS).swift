@@ -73,11 +73,9 @@ final class AppLovin: NSObject {
         ALIncentivizedInterstitialAd.shared().preloadAndNotify(self)
     }
     
-    /**
-     Show interstitial ad
-     
-     - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
-     */
+    /// Show interstitial ad
+    ///
+    /// - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
     func showInterstitial(withInterval interval: Int = 0) {
         guard !removedAds else { return }
         
@@ -100,11 +98,9 @@ final class AppLovin: NSObject {
         ALInterstitialAd.shared().show()
     }
     
-    /**
-     Show rewarded video ad
-     
-     - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
-     */
+    /// Show rewarded video ad
+    ///
+    /// - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
     func showRewardedVideo(withInterval interval: Int = 0) {
         //guard !removedAds else { return }
         
