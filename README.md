@@ -102,7 +102,7 @@ func application(_ application: UIApplication, supportedInterfaceOrientationsFor
 
 # Setup -D DEBUG" custom flag.
 
-This step is important because AdMob will otherwise not change AdUnitID from test to release automatically.
+This step is important because otherwise the AdMob helper will not automatically change the AdUnitID from test to release.
 This is also useful for things such as hiding print statments.
 
 Click on Targets (left project sideBar, at the top) -> BuildSettings. Than underneath buildSettings next to the search bar, on the left there should be buttons called Basic, All, Combined and Level. Click on All and than you should be able to scroll down in buildSettings and find the section called SwiftCompiler-CustomFlags. Click on other flags and than debug and add a custom flag named -D DEBUG
