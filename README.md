@@ -205,7 +205,7 @@ extension GameScene: AdsDelegate {
 }
 ```
 
-NOTE: TV OS  
+# TVOS controls for custom ads
 
 On tvOS you will have to manually manage the  dismissal and download button for custom ads. Create your  gesture recognizers  or  other control scheme  and  make sure you  can call these 2 methods when a custom ad is shown. I use the menu button for dismissal and the  main button for downloading.
 
