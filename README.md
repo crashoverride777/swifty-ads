@@ -120,7 +120,7 @@ AdsDelegate.swift
 AdMob(iOS).swift
 ```
 
-into your project and than follow the same steps as below (How to use full helper). Simply ignore the parts that apply to the other helpers.
+into your project and than follow the same steps as below (How to use full helper). Simply ignore the steps that do not apply to AdMob.swift or AdsDelegate.swift.
 
 All the helpers have the same method calls as the AdsManager.swift file.
 
