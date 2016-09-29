@@ -34,7 +34,7 @@ Note:
 
 Reward videos will show a black full screen ad using the test AdUnitID. I have not figured out yet how to test ads on AdMob that come from 3rd party mediation networks without using the real AdUnitID.
 
-# Pre-setup iOS
+# Pre-setup iOS only (only needed if adMob is used)
 
 - Step 1: Sign up for a Google AdMob account and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
 
@@ -54,7 +54,7 @@ They have an app now which should make this alot easier
 
 https://cocoapods.org/app
 
-# Pre-setup (tvOS)
+# Pre-setup tvOS (only needed if AppLovin is used)
 
 Mediation will not work on tvOS because the AdMob SDK does not work with tvOS yet.
 Although these instructions can also be applied to iOS I prefer to use mediation on iOS to avoid extra code so I would recommend you only follow these steps when you plan to use ads on tvOS.
@@ -86,7 +86,7 @@ Than add the app lovin swift libraries in the header file (see sample project if
 
 Than go to Targets-BuildSettings and search for "bridging". Double click on "Objective C Bridging Header" and enter the name of the header file followed by .h, for example HeaderTV.h
 
-# Pre-setup custom ads
+# Pre-setup custom ads (only needed if you want to show your own custom ads)
 
 If you are including your own ads it is recommended to read apples marketing guidlines
 
@@ -109,7 +109,23 @@ Click on Targets (left project sideBar, at the top) -> BuildSettings. Than under
 
 http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
 
-# How to use
+# How to use specific helper only
+
+If you dont wish to use the full helper and just want to use a particular helper(s) e.g only AdMob, than you can follow the same set up steps as below (How to use full helper). Simply ignore the parts that you do not wish to use.
+
+All the helpers have the same method calls as the AdsManager.swift file.
+
+e.g
+
+```swift
+AdMob.shared.delegate = self
+AdMob.shared.showRewardedVideo()
+AppLovin.shared.showRewardedVideo()
+CustomAd.shared.show() // will show an ad in the inventory and than move on to next one
+AdMob.shared.adjustForOrientation()
+```
+
+# How to use full helper (iOS, tvOS and custom ads)
 
 SETUP
 
@@ -234,20 +250,6 @@ override func viewWillTransition(to size: CGSize, with coordinator: UIViewContro
 NOTE: This is an ios 8 method, if your app supports ios 7 or below you maybe want to use something like a
 ```swift
 NSNotificationCenter UIDeviceOrientationDidChangeNotification Observer
-```
-
-# Helper without AdsManager
-
-If you dont use the ads manager and just want to use a particular helper(s) than you can follow the same set up steps as above (HowToUse). All the helpers have the same method calls.
-
-e.g
-
-```swift
-AdMob.shared.delegate = self
-AdMob.shared.showRewardedVideo()
-AppLovin.shared.showRewardedVideo()
-CustomAd.shared.show() // will show an ad in the inventory and than move on to next one
-AdMob.shared.adjustForOrientation()
 ```
 
 # Set the DEBUG flag?
