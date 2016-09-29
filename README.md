@@ -34,7 +34,7 @@ Note:
 
 Reward videos will show a black full screen ad using the test AdUnitID. I have not figured out yet how to test ads on AdMob that come from 3rd party mediation networks without using the real AdUnitID.
 
-# Pre-setup iOS only (only needed if adMob is used)
+# Pre-setup iOS only (only needed if AdMob is used)
 
 - Step 1: Sign up for a Google AdMob account and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
 
@@ -109,9 +109,9 @@ Click on Targets (left project sideBar, at the top) -> BuildSettings. Than under
 
 http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
 
-# How to use specific helper only
+# How to use a specific helper only
 
-If you dont wish to use the full helper and just want to use a particular helper(s) e.g only AdMob.
+If you dont wish to use the full helper and just want to use a particular helper e.g only AdMob.
 
 Copy the .swift files 
 
@@ -120,7 +120,7 @@ AdsDelegate.swift
 AdMob(iOS).swift
 ```
 
-into your project and than follow the same steps as below (How to use full helper). Simply ignore the parts that do not apply to the other helpers.
+into your project and than follow the same steps as below (How to use full helper). Simply ignore the parts that apply to the other helpers.
 
 All the helpers have the same method calls as the AdsManager.swift file.
 
