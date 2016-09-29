@@ -111,7 +111,16 @@ http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for
 
 # How to use specific helper only
 
-If you dont wish to use the full helper and just want to use a particular helper(s) e.g only AdMob, than you can follow the same set up steps as below (How to use full helper). Simply ignore the parts that you do not wish to use.
+If you dont wish to use the full helper and just want to use a particular helper(s) e.g only AdMob.
+
+Copy the .swift files 
+
+```swift
+AdsDelegate.swift
+AdMob(iOS).swift
+```
+
+into your prohect than you can follow the same steps below (How to use full helper). Simply ignore the parts that you do not wish to use.
 
 All the helpers have the same method calls as the AdsManager.swift file.
 
