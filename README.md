@@ -109,32 +109,9 @@ Click on Targets (left project sideBar, at the top) -> BuildSettings. Than under
 
 http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
 
-# How to use a specific helper only
-
-If you dont wish to use the full helper and just want to use a particular helper e.g only AdMob.
-
-Copy the .swift files 
-
-```swift
-AdsDelegate.swift
-AdMob(iOS).swift
-```
-
-into your project and than follow the same steps as below (How to use full helper). Simply ignore the steps that do not apply to AdMob.swift or AdsDelegate.swift.
-
-All the helpers have the same method calls as the AdsManager.swift file.
-
-e.g
-
-```swift
-AdMob.shared.delegate = self
-AdMob.shared.showRewardedVideo()
-AppLovin.shared.showRewardedVideo()
-CustomAd.shared.show() // will show an ad in the inventory and than move on to next one
-AdMob.shared.adjustForOrientation()
-```
-
 # How to use full helper (iOS, tvOS and custom ads)
+
+If you do not wish to use the full helper please skip this part and go to the relevant section after this one (e.g How to use AdMob only)
 
 SETUP
 
@@ -225,6 +202,217 @@ extension GameScene: AdsDelegate {
        // Reward amount is a DecimelNumber I converted to an Int for convenience. 
        // You can ignore this and hardcore the value if you would like but than you cannot change the value dynamically without having to update your app.
        
+       // leave empty if unused
+    }
+}
+```
+
+# How to only use AdMob
+
+If you dont wish to use the full helper and just want to use adMob follow these steps
+
+SETUP
+
+- Step 1: 
+
+Copy the following files into your project
+
+```swift
+AdsDelegate.swift
+AdMob(iOS).swift
+```
+
+- Step 2: 
+
+In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
+```swift
+let bannerID = "Enter your real id"
+let interstitialID = "Enter your real id"
+let rewardVideoID = "Enter your real id"
+
+AdMob.shared.setup(viewController: self, bannerID: bannerID, interID: interstitialID, rewardVideoID: rewardVideoID)
+```
+
+HOW TO USE
+
+- To show an Ad simply call these anywhere you like in your project
+```swift
+AdMob.shared.showBanner() 
+AdMob.shared.showBanner(withDelay: 1) // delay showing banner slightly eg when transitioning to new scene/view
+AdMob.shared.showInterstitial()
+AdMob.shared.showInterstitial(withInterval: 4) // Show an ad every  4th time
+AdMob.shared.showRewardedVideo()
+AdMob.shared.showRewardedVideo(withInterval: 4) // Show an ad every  4th time
+```
+
+- To remove Banner Ads, for example during gameplay 
+```swift
+AdMob.shared.removeBanner() 
+```
+
+- To remove all Ads, mainly for in app purchases simply call 
+```swift
+AdMob.shared.removeAll() 
+```
+
+NOTE: Remove Ads bool 
+
+This method will set a removedAds bool to true in all the adMob helper. This ensures you only have to call this method and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
+
+For permanent storage you will need to create your own "removedAdsProduct" property and save it in something in NSUserDefaults, or preferably ios Keychain. Than call this method when your app launches after you have set up the helper.
+
+- Implement the delegate methods.
+
+Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
+to receive delegate callbacks.
+```swift
+AdMob.shared.delegate = self 
+```
+
+Than create an extension conforming to the AdsDelegate protocol.
+```swift
+extension GameScene: AdsDelegate {
+    func adClicked() {
+        // pause your game/app if needed
+    }
+    func adClosed() { 
+       // resume your game/app if needed
+    }
+    func adDidRewardUser(withAmount rewardAmount: Int) {
+        self.coins += rewardAmount
+       // Reward amount is a DecimelNumber I converted to an Int for convenience. 
+       // You can ignore this and hardcore the value if you would like but than you cannot change the value dynamically without having to update your app.
+       
+       // leave empty if unused
+    }
+}
+```
+
+# How to only use CustomAds
+
+If you dont wish to use the full helper and just want to use custom ads follow these steps
+
+SETUP
+
+- Step 1: 
+
+Copy the following files into your project
+```swift
+AdsDelegate.swift
+CustomAds.swift
+```
+
+Step 2:
+
+Go to the CustomAd.swift file and right at the top in the Inventory struct create all the  case names for the app/games you would like to advertise. Than enter them into the "all" array as done in the sample project.
+
+To make this as reusable as possible e.g if you have multiple projects and share the same file, you can inlude all your custom ads in the array. The helper will automatically compare the bundle ID name to the ad image (including whitespaces and -) to see if they are the same and if so will move onto the next ad in the inventory.
+Please follow the image naming conventions for this  to work. In your asset catalogue the images should look like this
+"AdImageYourAppName". 
+
+HOW TO USE
+
+- To show an Ad simply call these anywhere you like in your project
+```swift
+CustomAd.shared.show()
+```
+
+- To remove all Ads, mainly for in app purchases simply call 
+```swift
+CustomAd.shared.remove() 
+```
+
+NOTE: Remove Ads bool 
+
+This method will set a removedAds bool to true in the custom ads helper. This ensures you only have to call this method and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
+
+For permanent storage you will need to create your own "removedAdsProduct" property and save it in something in NSUserDefaults, or preferably ios Keychain. Than call this method when your app launches after you have set up the helper.
+
+- Implement the delegate methods.
+
+Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
+to receive delegate callbacks.
+```swift
+CustomAd.shared.delegate = self 
+```
+
+Than create an extension conforming to the AdsDelegate protocol.
+```swift
+extension GameScene: AdsDelegate {
+    func adClicked() {
+        // pause your game/app if needed
+    }
+    func adClosed() { 
+       // resume your game/app if needed
+    }
+    func adDidRewardUser(withAmount rewardAmount: Int) {
+       // leave empty if unused
+    }
+}
+```
+
+# How to only use App Lovin 
+
+If you dont wish to use the full helper and just want to use AppLovin follow these steps
+
+SETUP
+
+- Step 1: 
+
+Copy the following files into your project
+
+```swift
+AdsDelegate.swift
+AppLovin(tvOS).swift
+```
+
+Step 2:
+
+In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
+
+```swift
+_ = AppLovin.shared
+```
+
+HOW TO USE
+
+- To show an Ad simply call these anywhere you like in your project
+```swift
+AppLovin.shared.showInterstitial()
+AppLovin.shared.showInterstitial(withInterval: 4) // Show an ad every  4th time
+AppLovin.shared.showRewardedVideo()
+AppLovin.shared.showRewardedVideo(withInterval: 4) // Show an ad every  4th time
+```
+
+- To remove all Ads, mainly for in app purchases simply call 
+```swift
+AdMob.shared.removeAll() 
+```
+
+NOTE: Remove Ads bool 
+
+This method will set a removedAds bool to true in the app lovin helper. This ensures you only have to call this method and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
+
+For permanent storage you will need to create your own "removedAdsProduct" property and save it in something in NSUserDefaults, or preferably ios Keychain. Than call this method when your app launches after you have set up the helper.
+
+- Implement the delegate methods.
+
+Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
+to receive delegate callbacks.
+```swift
+AppLovin.shared.delegate = self 
+```
+
+Than create an extension conforming to the AdsDelegate protocol.
+```swift
+extension GameScene: AdsDelegate {
+    func adClicked() {
+        // pause your game/app if needed
+    }
+    func adClosed() { 
+       // resume your game/app if needed
+    }
+    func adDidRewardUser(withAmount rewardAmount: Int) {
        // leave empty if unused
     }
 }
