@@ -1,4 +1,4 @@
-# AdMob and CustomAds Helpers for iOS and AppLovin for tvOS.
+# Swift Advertising Helper
 
 A collection of helper classes to integrate Ads from AdMob, AppLovin (tvOS) as well as your own custom Ads. 
 With these helpers you can easily show Banner Ads, Interstitial Ads, RewardVideoAds and your own custom Ads anywhere in your project.
