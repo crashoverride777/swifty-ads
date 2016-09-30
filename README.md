@@ -503,6 +503,10 @@ Enjoy
 
 # Release Notes
 
+- v5.6
+
+Cleanup and documentation improvements
+
 - v5.5.2
 
 Slight change to custom ad handling on tvOS, please read the  "How to use section" again
