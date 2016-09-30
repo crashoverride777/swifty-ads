@@ -1,9 +1,9 @@
 # AdMob and CustomAds Helpers for iOS and AppLovin for tvOS.
 
-A collection of helper classes to integrate Ads from AdMob, AppLovin (tvOS) as well as your own custom Ads. This helper has been been made while making my 1st SpriteKit game but should work for any kind of app. 
-With these helpers you can easily show Banner Ads, Interstitial Ads, RewardVideoAds and your own custom Ads anywhere in your project
+A collection of helper classes to integrate Ads from AdMob, AppLovin (tvOS) as well as your own custom Ads. 
+With these helpers you can easily show Banner Ads, Interstitial Ads, RewardVideoAds and your own custom Ads anywhere in your project.
 
-This Helper creates whats called a shared Banner which is the recommended way by apple to show banners. To read more about shared banner ads you can read this documentation from Apple.
+This helper creates whats called a shared Banner which is the recommended way to show banner ads. To read more about shared banner ads you can read this documentation from Apple.
 https://developer.apple.com/library/ios/technotes/tn2286/_index.html
 
 This helper will also correctly preload Interstitial Ads and Rewarded Videos ads automatically so that they are always ready to be shown instantly when requested.  
@@ -14,9 +14,7 @@ I think mediation via AdMob is the best way forward with this helper if you woul
 To add mediation networks please follow these instructions 
 
 https://support.google.com/admob/bin/answer.py?answer=2413211
-
 https://developers.google.com/admob/ios/mediation
-
 https://developers.google.com/admob/ios/mediation-networks
 
 Note: Mediation will not work on tvOS because the AdMob SDK does not support it, which is why I included AppLovin for tvOS.
@@ -35,10 +33,9 @@ https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods
 // Manually
 https://developers.google.com/admob/ios/quick-start#manually_using_the_sdk_download
 
-I would recommend using Cocoa Pods especially if you will add more SDKs down the line from other ad networks. Its a bit more complicated but once you understand and do it once or twice its a breeze.
+I would recommend using Cocoa Pods especially if you will add more SDKs down the line from other ad networks. Its a bit more complicated but once you understand and do it once or twice its a breeze. 
 
-They have an app now which should make this alot easier
-
+They have an app now which should makes managing pods alot easier.
 https://cocoapods.org/app
 
 # Pre-setup tvOS (only needed if AppLovin is used)
@@ -56,8 +53,7 @@ This should include
 
 1) Downloading the SDK folder that includes the headers and lib file and copy it into your project.
 
-Note: I was having some issues with this for ages because I was copying the whole folder from the website into my project. Do NOT do this. 
-Make sure you copy/drag the lib file serperatly into your project and than copy the headers folder into your project (select copy if needed and your tvTarget both times)
+Note: I was having some issues with this for ages because I was copying the whole folder from the website into my project. Do NOT do this. Make sure you copy/drag the lib file serperatly into your project and than copy the headers folder into your project and select copy if needed (Dont forget to do same with the tvOS SDK).
 
 2) Linking the correct frameworks (AdSupport, UIKit etc)
 3) Adding your appLovin SDK key (you can use your key and add it in this sample project to test out ads)
@@ -113,7 +109,7 @@ http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for
 
 # How to use full helper (iOS, tvOS and custom ads)
 
-If you do not wish to use the full helper please skip this part and go to the relevant section after this one (e.g How to use AdMob only)
+If you do not wish to use the full helper please skip this part and go to the relevant section after this one (e.g How to ony use AdMob)
 
 SETUP
 
@@ -395,14 +391,14 @@ HOW TO USE
 - To show an Ad simply call these anywhere you like in your project
 ```swift
 AppLovin.shared.showInterstitial()
-AppLovin.shared.showInterstitial(withInterval: 4) // Show an ad every  4th time
+AppLovin.shared.showInterstitial(withInterval: 4) // Show an ad every 4th time
 AppLovin.shared.showRewardedVideo()
-AppLovin.shared.showRewardedVideo(withInterval: 4) // Show an ad every  4th time
+AppLovin.shared.showRewardedVideo(withInterval: 4) // Show an ad every 4th time
 ```
 
 - To remove all Ads, mainly for in app purchases simply call 
 ```swift
-AdMob.shared.removeAll() 
+AppLovin.shared.removeAll() 
 ```
 
 NOTE: Remove Ads bool 
@@ -436,24 +432,24 @@ extension GameScene: AdsDelegate {
 
 # How to only use 2 helpers 
 
-If you only want to use 2 helpers e.g AdMob.swift and CustomAds.swift than follow the same steps as described in
+If you only want to use 2 helpers, e.g AdMob.swift and CustomAds.swift, than follow the same steps as described in
 
 How to only use AdMob
 How to only use CustomAds
 
-You will than either need to create your own logic to handle showing real ads from adMob and your own custom ads. 
+You will than either need to create your own logic to handle showing real ads from adMob and custom ads. 
 
 Alternatively you could include the AdsManager.swift file. Than Follow the steps as described in 
 
 How to use full helper
 
-ingorning all the parts about the  helper you are not using , in this example AppLovin. 
+ingorning all the parts about the helper you are not using, in this example AppLovin. 
 
-Than go to  AdsManager.swift and delete all the code that shows up as an error, in this example all the code related to AppLovin.
+Than go to AdsManager.swift and delete all the code that shows up as an error, in this example all the code related to AppLovin.
 
 # TVOS controls for custom ads
 
-On tvOS you will have to manually manage the  dismissal and download button for custom ads. Create your  gesture recognizers  or  other control scheme  and  make sure you  can call these 2 methods when a custom ad is shown. I use the menu button for dismissal and the  main button for downloading.
+On tvOS you will have to manually manage the  dismissal and download button for custom ads. Create your gesture recognizers  or  other control scheme  and  make sure you call these 2 methods when a custom ad is shown. I use the menu button for dismissal and the main button for downloading.
 
 ```swift
 CustomAd.shared.download()
@@ -470,16 +466,16 @@ override func viewWillTransition(to size: CGSize, with coordinator: UIViewContro
         
         coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
            
-            AdsManager.shared.adjustForOrientation()
+            AdsManager.shared.adjustForOrientation() // When using Full helper
+            
+            AdMob.shared.adjustForOrientation() // When only using AdMob 
+            
+            CustomAd.shared.adjustForOrientation() // When only using Custom ads 
             
             }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
                 print("Device rotation completed")
         })
     }
-```
-NOTE: This is an ios 8 method, if your app supports ios 7 or below you maybe want to use something like a
-```swift
-NSNotificationCenter UIDeviceOrientationDidChangeNotification Observer
 ```
 
 # Set the DEBUG flag?
