@@ -1,13 +1,12 @@
 # AdMob and CustomAds Helpers for iOS and AppLovin for tvOS.
 
 A collection of helper classes to integrate Ads from AdMob, AppLovin (tvOS) as well as your own custom Ads. This helper has been been made while making my 1st SpriteKit game but should work for any kind of app. 
-
 With these helpers you can easily show Banner Ads, Interstitial Ads, RewardVideoAds and your own custom Ads anywhere in your project
 
-This Helper creates whats called a shared Banner which is the recommended way by apple to show banners. To read more about shared banner ads you can read this documentation from Apple which should be used for banner ads by all providers.
+This Helper creates whats called a shared Banner which is the recommended way by apple to show banners. To read more about shared banner ads you can read this documentation from Apple.
 https://developer.apple.com/library/ios/technotes/tn2286/_index.html
 
-This helper should also correctly preload Interstitial Ads and RewardVideo ads automatically so that they are always ready to be shown instantly when requested.  
+This helper will also correctly preload Interstitial Ads and Rewarded Videos ads automatically so that they are always ready to be shown instantly when requested.  
 
 # Mediation
 
@@ -203,10 +202,10 @@ AdsManager.shared.delegate = self
 Than create an extension conforming to the AdsDelegate protocol.
 ```swift
 extension GameScene: AdsDelegate {
-    func adClicked() {
+    func adDidOpen() {
         // pause your game/app if needed
     }
-    func adClosed() { 
+    func adDidClose() { 
        // resume your game/app if needed
     }
     func adDidRewardUser(withAmount rewardAmount: Int) {
@@ -284,10 +283,10 @@ AdMob.shared.delegate = self
 Than create an extension conforming to the AdsDelegate protocol.
 ```swift
 extension GameScene: AdsDelegate {
-    func adClicked() {
+    func adDidOpen() {
         // pause your game/app if needed
     }
-    func adClosed() { 
+    func adDidClose() { 
        // resume your game/app if needed
     }
     func adDidRewardUser(withAmount rewardAmount: Int) {
@@ -356,10 +355,10 @@ CustomAd.shared.delegate = self
 Than create an extension conforming to the AdsDelegate protocol.
 ```swift
 extension GameScene: AdsDelegate {
-    func adClicked() {
+    func adDidOpen() {
         // pause your game/app if needed
     }
-    func adClosed() { 
+    func adDidClose() { 
        // resume your game/app if needed
     }
     func adDidRewardUser(withAmount rewardAmount: Int) {
@@ -423,10 +422,10 @@ AppLovin.shared.delegate = self
 Than create an extension conforming to the AdsDelegate protocol.
 ```swift
 extension GameScene: AdsDelegate {
-    func adClicked() {
+    func adDidOpen() {
         // pause your game/app if needed
     }
-    func adClosed() { 
+    func adDidClose() { 
        // resume your game/app if needed
     }
     func adDidRewardUser(withAmount rewardAmount: Int) {
@@ -506,6 +505,13 @@ Enjoy
 - v5.6
 
 Cleanup and documentation improvements
+
+Renamed open and close methods in AdsDelegate.swift to
+
+```swift
+func adDidOpen() { }
+func adDidClose() { }
+```
 
 - v5.5.2
 
