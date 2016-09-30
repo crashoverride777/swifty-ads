@@ -127,6 +127,19 @@ CustomAds.swift
 AppLovin(tvOS).swift // only add this to tvOS target
 ```
 
+Step 1: CustomAdSetUp (both project targets if needed)
+
+When your app launches setup your custom ads as soon as possible.
+
+```swift
+CustomAd.Inventory.all = [
+      Ad(imageName: "AdAngryFlappies", appID: "991933749", isNewGame: false),
+      Ad(imageName: "AdVertigus", appID: "1051292772", isNewGame: true)
+]
+```
+
+To make this as reusable as possible e.g if you have multiple projects and share the same file, you can inlude all your custom ads in the array directly in the CustomAds.swift file. The helper will automatically compare the bundle ID name to the ad image (including whitespaces and -) to see if they are the same and if so will move onto the next ad in the inventory.
+
 - Step 2: Setup Ads Manager (both targets if needed)
 
 In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
@@ -146,22 +159,18 @@ let rewardVideoID = "Enter your real id"
 AdMob.shared.setup(viewController: self, bannerID: bannerID, interID: interstitialID, rewardVideoID: rewardVideoID)
 ```
 
-Step 3: CustomAdSetUp (both targets if needed)
-
-Go to the CustomAd.swift file and right at the top in the Inventory struct create all the  case names for the app/games you would like to advertise. Than enter them into the "all" array as done in the sample project.
-
-To make this as reusable as possible e.g if you have multiple projects and share the same file, you can inlude all your custom ads in the array. The helper will automatically compare the bundle ID name to the ad image (including whitespaces and -) to see if they are the same and if so will move onto the next ad in the inventory.
-Please follow the image naming conventions for this  to work. In your asset catalogue the images should look like this
-"AdImageYourAppName". 
-
 HOW TO USE
+
+AdsManager.swift is basically a manager of all the ad helpers to have 1 convinient place to call ads from all helpers. AdsManager.swift will automatically show the correct ad depending on your target (iOS or tvOS) and also mix in custom ads with your preferred settings.
 
 - To show an Ad simply call these anywhere you like in your project
 ```swift
 AdsManager.shared.showBanner() 
-AdsManager.shared.showBanner(withDelay: 1) // delay showing banner slightly eg when transitioning to new scene/view
+AdsManager.shared.showBanner(withDelay: 1) // Delay showing banner slightly eg when transitioning to new scene/view
 AdsManager.shared.showInterstitial()
-AdsManager.shared.showInterstitial(withRandomness: 4) // 25% chance of showing inter ads (1/4)
+AdsManager.shared.showInterstitial(withInterval: 4) // Shows an ad every 4th time
+AdsManager.shared.showRewardedVideo()
+AdsManager.shared.showRewardedVideo(withInterval: 4) // Shows an ad every 4th time
 ```
 
 - To remove Banner Ads, for example during gameplay 
@@ -238,11 +247,11 @@ HOW TO USE
 - To show an Ad simply call these anywhere you like in your project
 ```swift
 AdMob.shared.showBanner() 
-AdMob.shared.showBanner(withDelay: 1) // delay showing banner slightly eg when transitioning to new scene/view
+AdMob.shared.showBanner(withDelay: 1) // Delay showing banner slightly eg when transitioning to new scene/view
 AdMob.shared.showInterstitial()
-AdMob.shared.showInterstitial(withInterval: 4) // Show an ad every  4th time
+AdMob.shared.showInterstitial(withInterval: 4) // Shows an ad every 4th time
 AdMob.shared.showRewardedVideo()
-AdMob.shared.showRewardedVideo(withInterval: 4) // Show an ad every  4th time
+AdMob.shared.showRewardedVideo(withInterval: 4) // Shows an ad every 4th time
 ```
 
 - To remove Banner Ads, for example during gameplay 
@@ -304,11 +313,16 @@ CustomAds.swift
 
 Step 2:
 
-Go to the CustomAd.swift file and right at the top in the Inventory struct create all the  case names for the app/games you would like to advertise. Than enter them into the "all" array as done in the sample project.
+When your app launches setup your custom ads as soon as possible.
 
-To make this as reusable as possible e.g if you have multiple projects and share the same file, you can inlude all your custom ads in the array. The helper will automatically compare the bundle ID name to the ad image (including whitespaces and -) to see if they are the same and if so will move onto the next ad in the inventory.
-Please follow the image naming conventions for this  to work. In your asset catalogue the images should look like this
-"AdImageYourAppName". 
+```swift
+CustomAd.Inventory.all = [
+      Ad(imageName: "AdAngryFlappies", appID: "991933749", isNewGame: false),
+      Ad(imageName: "AdVertigus", appID: "1051292772", isNewGame: true)
+]
+```
+
+To make this as reusable as possible e.g if you have multiple projects and share the same file, you can inlude all your custom ads in the array directly in the CustomAds.swift file. The helper will automatically compare the bundle ID name to the ad image (including whitespaces and -) to see if they are the same and if so will move onto the next ad in the inventory.
 
 HOW TO USE
 
