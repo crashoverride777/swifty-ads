@@ -100,7 +100,7 @@ func application(_ application: UIApplication, supportedInterfaceOrientationsFor
 }
 ```
 
-# Setup -D DEBUG" custom flag.
+# Setup -D DEBUG" custom flag (IMPORTANT)
 
 This step is important because otherwise the AdMob helper will not automatically change the AdUnitID from test to release.
 This is also useful for things such as hiding print statments.
