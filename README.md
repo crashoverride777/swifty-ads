@@ -85,16 +85,15 @@ func application(_ application: UIApplication, supportedInterfaceOrientationsFor
 
 # Rewarded Videos
 
+- AdMob
+
 Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. Read the AdMob rewarded video guidlines
 
 https://developers.google.com/admob/ios/rewarded-video
 
-and your 3rd party mediation of choice ad network guidlines to set up reward videos correctly.
+and your 3rd party mediation of choice ad network guidlines to set up reward videos correctly. AdMob reward videos will show a black full screen ad when using the test AdUnitID. I have not figured out yet how to test ads on AdMob that come from 3rd party mediation networks without using the real AdUnitID.
 
-Note: 
-
-Reward videos will show a black full screen ad using the test AdUnitID. I have not figured out yet how to test ads on AdMob that come from 3rd party mediation networks without using the real AdUnitID.
-
+- AppLovin
 
 AppLovin reward videos on the other hand need to be set up directly via their documentation as we are directly using their APIs. Go to applovin.com and follow the documentation on how to set up rewarded videos.
 
@@ -109,7 +108,7 @@ http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for
 
 # How to use full helper (iOS, tvOS and custom ads)
 
-If you do not wish to use the full helper please skip this part and go to the relevant section after this one (e.g How to ony use AdMob)
+If you do not wish to use the full helper please skip this part and go to the relevant section(s) after this one, e.g How to only use AdMob)
 
 SETUP
 
