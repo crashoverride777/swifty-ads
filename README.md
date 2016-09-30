@@ -19,6 +19,8 @@ http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for
 
 # Pre-setup: AdMob (iOS)
 
+Igore this step if you are not planning to use AdMob.
+
 - Step 1: Sign up for a Google AdMob account and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
 
 https://support.google.com/admob/answer/3052638?hl=en-GB&ref_topic=3052726
@@ -37,6 +39,8 @@ They have an app now which should makes managing pods alot easier.
 https://cocoapods.org/app
 
 # Pre-setup: AppLovin (tvOS)
+
+Igore this step if you are not planning to use AppLovin on tvOS.
 
 Step 1: Create an AppLovin account at
 
@@ -66,17 +70,21 @@ Than go to Targets-BuildSettings and search for "bridging". Double click on "Obj
 
 # Pre-setup: Custom Ads (iOS and tvOS)
 
-If you are including your own ads it is recommended to read apples marketing guidlines
+Igore this step if you are not planning to use Custom ads.
 
+
+If you are including your own ads it is recommended to read apples marketing guidlines
 https://developer.apple.com/app-store/marketing/guidelines/#images
 
-If you will use custom ads and your app/game is only in landscape mode add this code in your AppDelegate. The SKProductViewController used for iOS only supports portrait and will crash if this is not on included for landscape only apps.
+If your app/game is only in landscape mode add this code in your AppDelegate. 
 
 ```swift
 func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.allButUpsideDown
 }
 ```
+
+The SKProductViewController used for iOS only supports portrait and will crash if this is not on included for landscape only apps.
 
 # Mediation
 
