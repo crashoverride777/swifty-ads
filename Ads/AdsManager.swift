@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.5.2
+//    v5.6
 
 import Foundation
 
@@ -94,6 +94,17 @@ final class AdsManager {
         self.customAdMaxPerSession = maxCustomAdsPerSession
     }
     
+    // MARK: - Show Banner Ad
+    
+    /// Show banner ad
+    ///
+    /// - parameter delay: The delay until showing the ad. Defaults to 0.
+    func showBanner(withDelay delay: TimeInterval = 0) {
+        #if os(iOS)
+            AdMob.shared.showBanner(withDelay: delay)
+        #endif
+    }
+    
     // MARK: - Show Interstitial Ad
     
     /// Show inter ad
@@ -115,6 +126,7 @@ final class AdsManager {
             #if os(iOS)
                 AdMob.shared.showInterstitial()
             #endif
+            
             #if os(tvOS)
                 AppLovin.shared.showInterstitial()
             #endif
@@ -128,18 +140,13 @@ final class AdsManager {
     /// Show rewarded video ad
     ///
     /// - parameter interval: The interval of when to show the ad. Defaults to 0.
-    func showRewardedVideo(withInterval interval: Int = 0) {
-        if interval != 0 {
-            intervalCounter += 1
-            guard intervalCounter >= interval else { return }
-            intervalCounter = 0
-        }
-        
+    func showRewardedVideo(withInterval interval: Int = 0) {        
         #if os(iOS)
-            AdMob.shared.showRewardedVideo()
+            AdMob.shared.showRewardedVideo(withInterval: interval)
         #endif
+        
         #if os(tvOS)
-            AppLovin.shared.showRewardedVideo()
+            AppLovin.shared.showRewardedVideo(withInterval: interval)
         #endif
     }
     
@@ -155,9 +162,11 @@ final class AdsManager {
     /// Remove all
     func removeAll() {
         CustomAd.shared.remove()
+        
         #if os(iOS)
             AdMob.shared.removeAll()
         #endif
+        
         #if os(tvOS)
             AppLovin.shared.removeAll()
         #endif
@@ -169,6 +178,7 @@ final class AdsManager {
     /// Call this when an orientation change happens (e.g landscape->portrait happended)
     func adjustForOrientation() {
         CustomAd.shared.adjustForOrientation()
+        
         #if os(iOS)
             AdMob.shared.adjustForOrientation()
         #endif

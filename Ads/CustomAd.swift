@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.5.2
+//    v5.6
 
 import StoreKit
 
@@ -36,29 +36,10 @@ fileprivate func getAppStoreURL(forAppID id: String) -> String {
 }
 
 /// Custom ad
-fileprivate struct Ad {
+struct Ad {
     let imageName: String
     let appID: String
     let isNewGame: Bool
-}
-
-/// Inventory
-public enum Inventory: Int {
-    
-    // Convinience
-    case random = -1
-    case angryFlappies
-    case vertigus
-    
-    /// All ads
-    fileprivate static let adImagePrefix = "AdImage"
-    fileprivate static var all = [
-        Ad(imageName: adImagePrefix + "AngryFlappies", appID: "991933749", isNewGame: false),
-        Ad(imageName: adImagePrefix + "Vertigus", appID: "1051292772", isNewGame: true)
-    ]
-    
-    /// Tracking
-    fileprivate static var current = 0
 }
 
 /**
@@ -72,6 +53,21 @@ final public class CustomAd {
     public static let shared = CustomAd()
     
     // MARK: - Properties
+    
+    /// Inventory
+    public enum Inventory: Int {
+        
+        // Convinience
+        case random = -1
+        case angryFlappies
+        case vertigus
+        
+        /// All ads
+        static var all = [Ad]()
+        
+        /// Tracking
+        fileprivate static var current = 0
+    }
     
     /// Delegate
     public weak var delegate: AdsDelegate?
@@ -221,7 +217,7 @@ final public class CustomAd {
     /// Handle close (tvOS only)
     @objc public func dismiss() {
         removeFromSuperview()
-        delegate?.adClosed()
+        delegate?.adDidClose()
     }
 }
 
@@ -266,7 +262,7 @@ private extension CustomAd {
         setupForOrientation()
         
         // Delegate
-        delegate?.adClicked()
+        delegate?.adDidOpen()
         
         return view
     }

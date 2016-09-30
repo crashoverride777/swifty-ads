@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.5.2
+//    v5.6
 
 import Foundation
 
@@ -148,17 +148,17 @@ extension AppLovin: ALAdDisplayDelegate {
     
     func ad(_ ad: ALAd, wasDisplayedIn view: UIView) {
         print("AppLovin video ad was displayed")
-        delegate?.adClicked()
+        delegate?.adDidOpen()
     }
     
     func ad(_ ad: ALAd, wasClickedIn view: UIView) {
         print("AppLovin video ad was clicked")
-        delegate?.adClicked()
+        delegate?.adDidOpen()
     }
     
     func ad(_ ad: ALAd, wasHiddenIn view: UIView) {
         print("AppLovin video ad was hidden")
-        delegate?.adClosed()
+        delegate?.adDidClose()
         
         // Preload next rewarded video if watching rewarded video ad
         guard isWatchingRewardedVideo else { return }

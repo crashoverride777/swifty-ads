@@ -9,12 +9,12 @@ import SpriteKit
 
 extension GameScene: AdsDelegate {
     
-    func adClicked() {
-        print("Ads clicked")
+    func adDidOpen() {
+        print("Ad did open")
     }
     
-    func adClosed() {
-        print("Ads closed")
+    func adDidClose() {
+        print("Ad did close")
     }
     
     func adDidRewardUser(withAmount rewardAmount: Int) {
@@ -40,14 +40,13 @@ class GameScene: SKScene {
         myLabel.text = "Remove ads in \(touchCounter) clicks"
         myLabel.fontSize = 25;
         myLabel.position = CGPoint(x: frame.midX, y: frame.midY)
-        
         self.addChild(myLabel)
         
         /// Set ads helper delegate
         AdsManager.shared.delegate = self
         
         // Show banner ad
-        AdMob.shared.showBanner()
+        AdsManager.shared.showBanner()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -56,7 +55,6 @@ class GameScene: SKScene {
         
         // Show inter
         AdsManager.shared.showInterstitial(withInterval: 2)
-        //CustomAd.shared.show()
         
         // Remove ads after 3 clicks
         touchCounter -= 1

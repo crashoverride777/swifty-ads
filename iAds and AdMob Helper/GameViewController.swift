@@ -12,13 +12,20 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+     
+        // Custom ad inventory
+        CustomAd.Inventory.all = [
+            Ad(imageName: "AdAngryFlappies", appID: "991933749", isNewGame: false),
+            Ad(imageName: "AdVertigus", appID: "1051292772", isNewGame: true)
+        ]
         
-        // Set up helpers
+        // Set up ad Mob
         let bannerID = "Enter your real ID"
         let interstitialID = "Enter your real ID"
         let rewardedVideoID = "Enter your real ID"
         AdMob.shared.setup(viewController: self, bannerID: bannerID, interID: interstitialID, rewardedVideoID: rewardedVideoID)
         
+        // Set up adsManager
         AdsManager.shared.setup(customAdsInterval: 3, maxCustomAdsPerSession: 3)
         
         if let scene = GameScene(fileNamed: "GameScene") {

@@ -21,23 +21,23 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.5.2
+//    v5.6
 
 import Foundation
 
 /**
  Ads delegate
  
- A protocol delegate to handle advertising actions
+ A delegate to handle advertising actions
  */
 public protocol AdsDelegate: class {
     
-    /// Ad has been clicked
-    func adClicked()
+    /// Ad did open
+    func adDidOpen()
     
-    /// Ad has been closed
-    func adClosed()
+    /// Ad did close
+    func adDidClose()
     
-    /// A rewarded video completed, reward
+    /// Ad did reward user
     func adDidRewardUser(withAmount rewardAmount: Int)
 }

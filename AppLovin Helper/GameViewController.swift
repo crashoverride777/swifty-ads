@@ -13,6 +13,11 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        CustomAd.Inventory.all = [
+            Ad(imageName: "AdAngryFlappies", appID: "991933749", isNewGame: false),
+            Ad(imageName: "AdVertigus", appID: "1051292772", isNewGame: true)
+        ]
      
         AdsManager.shared.setup(customAdsInterval: 3, maxCustomAdsPerSession: 3)
         _ = AppLovin.shared
