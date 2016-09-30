@@ -432,6 +432,23 @@ extension GameScene: AdsDelegate {
 }
 ```
 
+# How to only use 2 helpers 
+
+If you only want to use 2 helpers e.g AdMob.swift and CustomAds.swift than follow the same steps as described in
+
+How to only use AdMob
+How to only use CustomAds
+
+You will than either need to create your own logic to handle showing real ads from adMob and your own custom ads. 
+
+Alternatively you could include the AdsManager.swift file. Than Follow the steps as described in 
+
+How to use full helper
+
+ingorning all the parts about the  helper you are not using , in this example AppLovin. 
+
+Than go to  AdsManager.swift and delete all the code that shows up as an error, in this example all the code related to AppLovin.
+
 # TVOS controls for custom ads
 
 On tvOS you will have to manually manage the  dismissal and download button for custom ads. Create your  gesture recognizers  or  other control scheme  and  make sure you  can call these 2 methods when a custom ad is shown. I use the menu button for dismissal and the  main button for downloading.
