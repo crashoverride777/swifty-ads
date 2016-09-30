@@ -8,17 +8,6 @@ https://developer.apple.com/library/ios/technotes/tn2286/_index.html
 
 This helper will also correctly preload Interstitial Ads and Rewarded Videos ads automatically so that they are always ready to be shown instantly when requested.  
 
-# Mediation
-
-I think mediation via AdMob is the best way forward with this helper if you would like to use multiple ad networks. This means you can use the AdMob APIs to show ads from multiple providers, without having to write extra code. 
-To add mediation networks please follow these instructions 
-
-https://support.google.com/admob/bin/answer.py?answer=2413211
-https://developers.google.com/admob/ios/mediation
-https://developers.google.com/admob/ios/mediation-networks
-
-Note: Mediation will not work on tvOS because the AdMob SDK does not support it, which is why I included AppLovin for tvOS.
-
 # Pre-setup iOS only (only needed if AdMob is used)
 
 - Step 1: Sign up for a Google AdMob account and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
@@ -39,9 +28,6 @@ They have an app now which should makes managing pods alot easier.
 https://cocoapods.org/app
 
 # Pre-setup tvOS (only needed if AppLovin is used)
-
-Mediation will not work on tvOS because the AdMob SDK does not work with tvOS yet.
-Although these instructions can also be applied to iOS I prefer to use mediation on iOS to avoid extra code so I would recommend you only follow these steps when you plan to use ads on tvOS.
 
 Step 1: Create an AppLovin account at
 
@@ -83,6 +69,17 @@ func application(_ application: UIApplication, supportedInterfaceOrientationsFor
 }
 ```
 
+# Mediation
+
+I think mediation via AdMob is the best way forward with this helper if you would like to use multiple ad networks. This means you can use the AdMob APIs to show ads from multiple providers, without having to write extra code. 
+To add mediation networks please follow these instructions 
+
+https://support.google.com/admob/bin/answer.py?answer=2413211
+https://developers.google.com/admob/ios/mediation
+https://developers.google.com/admob/ios/mediation-networks
+
+Note: Mediation will not work on tvOS because the AdMob SDK does not support it, which is why I included AppLovin for tvOS.
+
 # Rewarded Videos
 
 - AdMob
@@ -112,9 +109,7 @@ If you do not wish to use the full helper please skip this part and go to the re
 
 SETUP
 
-- Step 1: 
-
-Copy the Ads folder into your project. This should include the files
+- Step 1: Copy the Ads folder into your project. This should include the files
 
 ```swift
 AdsDelegate.swift
@@ -124,7 +119,7 @@ CustomAds.swift
 AppLovin(tvOS).swift // only add this to tvOS target
 ```
 
-Step 1: CustomAdSetUp (both project targets if needed)
+Step 2: CustomAdSetUp (both project targets if needed)
 
 When your app launches setup your custom ads as soon as possible.
 
@@ -137,7 +132,7 @@ CustomAd.Inventory.all = [
 
 To make this as reusable as possible e.g if you have multiple projects and share the same file, you can inlude all your custom ads in the array directly in the CustomAds.swift file. The helper will automatically compare the bundle ID name to the ad image (including whitespaces and -) to see if they are the same and if so will move onto the next ad in the inventory.
 
-- Step 2: Setup Ads Manager (both targets if needed)
+- Step 3: Setup Ads Manager (both targets if needed)
 
 In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 
@@ -145,7 +140,7 @@ In your ViewController write the following in ```ViewDidLoad``` before doing any
 AdsManager.shared.setup(customAdsInterval: 3, maxCustomAdsPerSession: 3)
 ```
 
-- Step 3: SetUp AdMob (iOS target only)
+- Step 4: SetUp AdMob (iOS target only)
 
 In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 ```swift
@@ -184,7 +179,7 @@ NOTE: Remove Ads bool
 
 This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
 
-For permanent storage you will need to create your own "removedAdsProduct" property and save it in something in NSUserDefaults, or preferably ios Keychain. Than call this method when your app launches after you have set up the helper.
+For permanent storage you will need to create your own "removedAdsProduct" property and save it in something like UserDefaults, or preferably iOS Keychain. Than call this method when your app launches after you have set up the helpers.
 
 - Implement the delegate methods.
 
@@ -219,18 +214,14 @@ If you dont wish to use the full helper and just want to use adMob follow these 
 
 SETUP
 
-- Step 1: 
-
-Copy the following files into your project
+- Step 1: Copy the following files into your project
 
 ```swift
 AdsDelegate.swift
 AdMob(iOS).swift
 ```
 
-- Step 2: 
-
-In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
+- Step 2: In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 ```swift
 let bannerID = "Enter your real id"
 let interstitialID = "Enter your real id"
@@ -265,7 +256,7 @@ NOTE: Remove Ads bool
 
 This method will set a removedAds bool to true in all the adMob helper. This ensures you only have to call this method and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
 
-For permanent storage you will need to create your own "removedAdsProduct" property and save it in something in NSUserDefaults, or preferably ios Keychain. Than call this method when your app launches after you have set up the helper.
+For permanent storage you will need to create your own "removedAdsProduct" property and save it in something like UserDefaults, or preferably iOS Keychain. Than call this method when your app launches after you have set up the helper.
 
 - Implement the delegate methods.
 
@@ -337,7 +328,7 @@ NOTE: Remove Ads bool
 
 This method will set a removedAds bool to true in the custom ads helper. This ensures you only have to call this method and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
 
-For permanent storage you will need to create your own "removedAdsProduct" property and save it in something in NSUserDefaults, or preferably ios Keychain. Than call this method when your app launches after you have set up the helper.
+For permanent storage you will need to create your own "removedAdsProduct" property and save it in something like UserDefaults, or preferably iOS Keychain. Than call this method when your app launches after you have set up the helper.
 
 - Implement the delegate methods.
 
@@ -404,7 +395,7 @@ NOTE: Remove Ads bool
 
 This method will set a removedAds bool to true in the app lovin helper. This ensures you only have to call this method and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
 
-For permanent storage you will need to create your own "removedAdsProduct" property and save it in something in NSUserDefaults, or preferably ios Keychain. Than call this method when your app launches after you have set up the helper.
+For permanent storage you will need to create your own "removedAdsProduct" property and save it in something like UserDefaults, or preferably iOS Keychain. Than call this method when your app launches after you have set up the helper.
 
 - Implement the delegate methods.
 
@@ -432,19 +423,13 @@ extension GameScene: AdsDelegate {
 # How to only use 2 helpers 
 
 If you only want to use 2 helpers, e.g AdMob.swift and CustomAds.swift, than follow the same steps as described in
+"How to only use AdMob" and "How to only use CustomAds".
 
-How to only use AdMob
-How to only use CustomAds
+You will than need to create your own logic to handle showing real ads from adMob and custom ads. 
 
-You will than either need to create your own logic to handle showing real ads from adMob and custom ads. 
-
-Alternatively you could include the AdsManager.swift file. Than Follow the steps as described in 
-
-How to use full helper
-
+Alternatively you could include the AdsManager.swift file. Than Follow the steps as described in "How to use full helper"
 ingorning all the parts about the helper you are not using, in this example AppLovin. 
-
-Than go to AdsManager.swift and delete all the code that shows up as an error, in this example all the code related to AppLovin.
+Than go to AdsManager.swift and delete all the code that are throwing errors, in this example all the code related to AppLovin.
 
 # TVOS controls for custom ads
 
@@ -483,13 +468,11 @@ Dont forget to setup the "-D DEBUG" custom flag or the helper will not work as i
 
 # When you submit your app to Apple
 
-When you submit your app to Apple on iTunes connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected. All apps that use an ad provider and their SDKs, exept iAd, require this to be Yes.
+When you submit your app to Apple on iTunes connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected.
 
 # Final Info
 
 The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and an interstitial ad randomly when touching the screen. After 5 clicks all ads will be removed to simulate what a removeAds button would do. 
-
-Like I mentioned above I primarly focused on SpriteKit to make it easy to call Ads from your SKScenes without having to use NSNotificationCenter or Delegates to constantly communicate with the viewController. Also this should help keep your viewController nice and clean.
 
 Please feel free to let me know about any bugs or improvements, I am by no means an expert. 
 
