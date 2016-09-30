@@ -11,7 +11,7 @@ This helper should also correctly preload Interstitial Ads and RewardVideo ads a
 
 # Mediation
 
-I think mediation via AdMob is the best way forward with this helper if you would like to use multiple ad networks. This means you can use the AdMob APIs to show ads from multiple providers,without having to write extra code. 
+I think mediation via AdMob is the best way forward with this helper if you would like to use multiple ad networks. This means you can use the AdMob APIs to show ads from multiple providers, without having to write extra code. 
 To add mediation networks please follow these instructions 
 
 https://support.google.com/admob/bin/answer.py?answer=2413211
@@ -21,18 +21,6 @@ https://developers.google.com/admob/ios/mediation
 https://developers.google.com/admob/ios/mediation-networks
 
 Note: Mediation will not work on tvOS because the AdMob SDK does not support it, which is why I included AppLovin for tvOS.
-
-# Rewarded Videos
-
-Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. Read the AdMob rewarded video guidlines
-
-https://developers.google.com/admob/ios/rewarded-video
-
-and your 3rd party mediation of choice ad network guidlines to set up reward videos correctly.
-
-Note: 
-
-Reward videos will show a black full screen ad using the test AdUnitID. I have not figured out yet how to test ads on AdMob that come from 3rd party mediation networks without using the real AdUnitID.
 
 # Pre-setup iOS only (only needed if AdMob is used)
 
@@ -99,6 +87,21 @@ func application(_ application: UIApplication, supportedInterfaceOrientationsFor
         return UIInterfaceOrientationMask.allButUpsideDown
 }
 ```
+
+# Rewarded Videos
+
+Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. Read the AdMob rewarded video guidlines
+
+https://developers.google.com/admob/ios/rewarded-video
+
+and your 3rd party mediation of choice ad network guidlines to set up reward videos correctly.
+
+Note: 
+
+Reward videos will show a black full screen ad using the test AdUnitID. I have not figured out yet how to test ads on AdMob that come from 3rd party mediation networks without using the real AdUnitID.
+
+
+AppLovin reward videos on the other hand need to be set up directly via their documentation as we are directly using their APIs. Go to applovin.com and follow the documentation on how to set up rewarded videos.
 
 # Setup -D DEBUG" custom flag (IMPORTANT)
 
