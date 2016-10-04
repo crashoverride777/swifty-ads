@@ -4,12 +4,12 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-AdMob and CustomAds Helper.xcscheme</key>
+		<key>Pods-SwiftyAds (iOS).xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-AppLovin Helper.xcscheme</key>
+		<key>Pods-SwiftyAds (tvOS).xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

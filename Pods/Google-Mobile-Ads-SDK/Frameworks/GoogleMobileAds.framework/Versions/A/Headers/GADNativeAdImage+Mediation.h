@@ -7,6 +7,7 @@
 
 #import "GADNativeAdImage.h"
 
+/// Provides additional GADNativeAdImage initializers.
 @interface GADNativeAdImage (MediationAdditions)
 
 /// Initializes and returns a native ad image object with the provided image.

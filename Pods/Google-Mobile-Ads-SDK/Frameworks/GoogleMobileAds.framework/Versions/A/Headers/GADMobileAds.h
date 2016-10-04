@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
+/// Google Mobile Ads SDK settings.
 @interface GADMobileAds : NSObject
 
 /// Returns the shared GADMobileAds instance.

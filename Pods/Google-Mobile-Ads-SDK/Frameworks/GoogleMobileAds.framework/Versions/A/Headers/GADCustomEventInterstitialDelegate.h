@@ -49,6 +49,8 @@
 - (void)customEventInterstitialWillLeaveApplication:(id<GADCustomEventInterstitial>)customEvent;
 
 #pragma mark Deprecated
+
+/// Deprecated. Use customEventInterstitialDidReceiveAd:.
 - (void)customEventInterstitial:(id<GADCustomEventInterstitial>)customEvent
                    didReceiveAd:(NSObject *)ad
     GAD_DEPRECATED_MSG_ATTRIBUTE("Use customEventInterstitialDidReceiveAd:.");

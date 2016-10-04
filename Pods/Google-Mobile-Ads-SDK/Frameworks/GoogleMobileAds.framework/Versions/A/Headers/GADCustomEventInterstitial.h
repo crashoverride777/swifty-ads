@@ -24,9 +24,9 @@
 /// should start retrieving the interstitial ad. Report execution results to the delegate. You must
 /// wait until -presentFromRootViewController is called before displaying the interstitial ad.
 ///
-/// \param serverParameter Parameter configured in the mediation UI.
-/// \param serverLabel Label configured in the mediation UI.
-/// \param request Contains ad request information.
+/// @param serverParameter Parameter configured in the mediation UI.
+/// @param serverLabel Label configured in the mediation UI.
+/// @param request Contains ad request information.
 - (void)requestInterstitialAdWithParameter:(NSString *)serverParameter
                                      label:(NSString *)serverLabel
                                    request:(GADCustomEventRequest *)request;

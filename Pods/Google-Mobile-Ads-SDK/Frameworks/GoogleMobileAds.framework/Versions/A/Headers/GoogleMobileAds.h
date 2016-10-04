@@ -11,7 +11,7 @@
 #error The Google Mobile Ads SDK requires a deployment target of iOS 6.0 or later.
 #endif
 
-//! Project version string for GoogleMobileAds.
+/// Project version string for GoogleMobileAds.
 FOUNDATION_EXPORT const unsigned char GoogleMobileAdsVersionString[];
 
 // Header files.
@@ -24,6 +24,7 @@ FOUNDATION_EXPORT const unsigned char GoogleMobileAdsVersionString[];
 #import <GoogleMobileAds/GADBannerViewDelegate.h>
 #import <GoogleMobileAds/GADCorrelator.h>
 #import <GoogleMobileAds/GADCorrelatorAdLoaderOptions.h>
+#import <GoogleMobileAds/GADDebugOptionsViewController.h>
 #import <GoogleMobileAds/GADExtras.h>
 #import <GoogleMobileAds/GADInAppPurchase.h>
 #import <GoogleMobileAds/GADInAppPurchaseDelegate.h>
@@ -61,6 +62,7 @@ FOUNDATION_EXPORT const unsigned char GoogleMobileAdsVersionString[];
 #import <GoogleMobileAds/GADNativeCustomTemplateAd.h>
 
 #import <GoogleMobileAds/GADNativeAdImageAdLoaderOptions.h>
+#import <GoogleMobileAds/GADNativeAdViewAdOptions.h>
 
 #import <GoogleMobileAds/GADCustomEventBanner.h>
 #import <GoogleMobileAds/GADCustomEventBannerDelegate.h>

@@ -16,19 +16,17 @@
 /// The view that displays native ads. A minimum implementation to get an ad from within a
 /// UIViewController class is:
 ///
-///   \code
+///   <pre>
 ///   // Create and setup the ad view, specifying the size and origin at {0, 0}.
-///   GADNativeExpressAdView *adView = [[GADNativeExpressAdView alloc]
-///       initWithAdSize:kGADAdSizeBanner];
+///   GADNativeExpressAdView *adView =
+///       [[GADNativeExpressAdView alloc] initWithAdSize:kGADAdSizeBanner];
 ///   adView.rootViewController = self;
 ///   adView.adUnitID = @"ID created when registering your app";
-///
 ///   // Place the ad view onto the screen.
 ///   [self.view addSubview:adView];
-///
 ///   // Request an ad without any additional targeting information.
 ///   [adView loadRequest:[GADRequest request]];
-///   \endcode
+///   </pre>
 @interface GADNativeExpressAdView : UIView
 
 #pragma mark - Initialization
@@ -74,7 +72,7 @@
 
 /// Sets options that configure ad loading.
 ///
-/// \param adOptions An array of GADAdLoaderOptions objects. The array is deep copied and option
+/// @param adOptions An array of GADAdLoaderOptions objects. The array is deep copied and option
 /// objects cannot be modified after calling this method.
 - (void)setAdOptions:(NSArray *)adOptions;
 

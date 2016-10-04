@@ -55,6 +55,7 @@
 
 #pragma mark Deprecated
 
+/// Deprecated. Use customEventBannerWasClicked:.
 - (void)customEventBanner:(id<GADCustomEventBanner>)customEvent
         clickDidOccurInAd:(UIView *)view
     GAD_DEPRECATED_MSG_ATTRIBUTE("Use customEventBannerWasClicked:.");
