@@ -137,7 +137,7 @@ final class SwiftyAdsCustom {
     /// - parameter newestAd: If set to true will show first ad in inventory. Defaults to false.
     /// - parameter random: If set to true will pick random ad from inventory. Defaults to false. Will not work if newestAd is set to true.
     /// - parameter interval: The interval when to show the ad, e.g when set to 4 ad will be shown every 4th time. Defaults to 0.
-    public func show(newestAd: Bool = false, random: Bool = false, withInterval interval: Int = 0) {
+    public func show(newest: Bool = false, random: Bool = false, withInterval interval: Int = 0) {
         guard !removedAds && !Inventory.all.isEmpty else { return }
         
         if interval != 0 {
@@ -147,7 +147,7 @@ final class SwiftyAdsCustom {
         }
         
         var adInInventory: Int
-        if newestAd {
+        if newest {
             adInInventory = 0
         } else if random {
             let range = UInt32(Inventory.all.count)
