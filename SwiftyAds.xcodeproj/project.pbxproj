@@ -255,9 +255,9 @@
 			children = (
 				B43B34CC1D4AD2E50064F364 /* SwiftyAdsDelegate.swift */,
 				B4B01A3C1B9A0B0700F9A8EA /* SwiftyAdsManager.swift */,
-				B435FFE41CE14D1900A678AA /* SwiftyAdsCustom.swift */,
 				B435FFE01CE14C2A00A678AA /* SwiftyAdsAdMob.swift */,
 				B4A006A01CECFDF400A44575 /* SwiftyAdsAppLovin.swift */,
+				B435FFE41CE14D1900A678AA /* SwiftyAdsCustom.swift */,
 				B4F4EE151DA3F7D500C6FEC0 /* Images.xcassets */,
 				B4F4EE0F1DA3F7BC00C6FEC0 /* GameScene.sks */,
 				B4F4EE101DA3F7BC00C6FEC0 /* GameScene.swift */,
