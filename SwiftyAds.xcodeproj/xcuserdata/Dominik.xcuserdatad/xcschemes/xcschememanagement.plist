@@ -4,14 +4,12 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>AdMob and CustomAds Helper.xcscheme</key>
+		<key>SwiftyAds (iOS).xcscheme</key>
 		<dict>
-			<key>isShown</key>
-			<true/>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>AppLovin Helper.xcscheme</key>
+		<key>SwiftyAds (tvOS).xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>

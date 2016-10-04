@@ -8,7 +8,6 @@ target 'AdMob and CustomAds Helper' do
   # Pods for AdMob and CustomAds Helper
   pod 'Google-Mobile-Ads-SDK'
 
-
   #target 'AdMob and CustomAds HelperTests' do
   #  inherit! :search_paths
     # Pods for testing
