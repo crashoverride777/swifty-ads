@@ -35,13 +35,6 @@ fileprivate func getAppStoreURL(forAppID id: String) -> String {
     #endif
 }
 
-/// Custom ad
-struct Ad {
-    let imageName: String
-    let appID: String
-    let isNewGame: Bool
-}
-
 /**
  SwiftyAdsCustom
  
@@ -53,6 +46,13 @@ final public class SwiftyAdsCustom {
     public static let shared = SwiftyAdsCustom()
     
     // MARK: - Properties
+    
+    /// Custom ad
+    struct Ad {
+        let imageName: String
+        let appID: String
+        let isNewGame: Bool
+    }
     
     /// Inventory
     public enum Inventory: Int {
@@ -73,7 +73,7 @@ final public class SwiftyAdsCustom {
     public weak var delegate: SwiftyAdsDelegate?
     
     /// View
-    fileprivate let view = UIView()
+    fileprivate let adView = UIView()
 
     /// Image view
     fileprivate lazy var imageView: UIImageView = {
@@ -130,6 +130,12 @@ final public class SwiftyAdsCustom {
     /// Removed ads
     private var removedAds = false
     
+    /// TV gestures
+    #if os(tvOS)
+    fileprivate var pressedMainGesture: UITapGestureRecognizer?
+    fileprivate var pressedMenuGesture: UITapGestureRecognizer?
+    #endif
+    
     // MARK: - Init
     
     /// Private singleton init
@@ -181,6 +187,25 @@ final public class SwiftyAdsCustom {
         
         guard let validAd = createAd(selectedAd: adInInventory) else { return }
         
+         // Gestures
+        #if os(iOS)
+            let downloadTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(download))
+            downloadTapGestureRecognizer.delaysTouchesBegan = true
+            imageView.addGestureRecognizer(downloadTapGestureRecognizer)
+            adView.addSubview(closeButton)
+        #endif
+        #if os(tvOS)
+            let view = UIApplication.shared.keyWindow?.rootViewController?.view // does not work if adView is used
+            
+            pressedMainGesture = UITapGestureRecognizer(target: self, action: #selector(download))
+            pressedMainGesture?.allowedPressTypes = [NSNumber(value: UIPressType.select.rawValue)]
+            view?.addGestureRecognizer(pressedMainGesture!)
+            
+            pressedMenuGesture = UITapGestureRecognizer(target: self, action: #selector(dismiss))
+            pressedMenuGesture?.allowedPressTypes = [NSNumber(value: UIPressType.menu.rawValue)]
+            view?.addGestureRecognizer(pressedMenuGesture!)
+        #endif
+        
         validAd.layer.zPosition = 5000
         let rootViewController = UIApplication.shared.keyWindow?.rootViewController
         rootViewController?.view?.addSubview(validAd)
@@ -198,9 +223,14 @@ final public class SwiftyAdsCustom {
     public func adjustForOrientation() {
         setupForOrientation()
     }
-    
+}
+
+// MARK: - Download / Dismiss
+
+extension SwiftyAdsCustom {
+
     /// Handle download (tvOS only)
-    @objc public func download() {
+    @objc fileprivate func download() {
         dismiss()
         
         #if os(iOS)
@@ -215,7 +245,7 @@ final public class SwiftyAdsCustom {
     }
     
     /// Handle close (tvOS only)
-    @objc public func dismiss() {
+    @objc fileprivate func dismiss() {
         removeFromSuperview()
         delegate?.adDidClose()
     }
@@ -241,30 +271,20 @@ private extension SwiftyAdsCustom {
         
         // Image
         imageView.image = UIImage(named: imageName)
-        view.addSubview(imageView)
+        adView.addSubview(imageView)
         
         // Labels
-        view.addSubview(headerLabel)
+        adView.addSubview(headerLabel)
         newGameLabel.isHidden = !isNewGame
-        view.addSubview(newGameLabel)
-        
-        // Button
-        #if os(iOS)
-            // Download tap gesture
-            let downloadTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(download))
-            downloadTapGestureRecognizer.delaysTouchesBegan = true
-            imageView.addGestureRecognizer(downloadTapGestureRecognizer)
-
-            view.addSubview(closeButton)
-        #endif
-        
+        adView.addSubview(newGameLabel)
+      
         // Set up for orientation
         setupForOrientation()
         
         // Delegate
         delegate?.adDidOpen()
         
-        return view
+        return adView
     }
     
     /// Remove custom ad
@@ -273,9 +293,22 @@ private extension SwiftyAdsCustom {
             imageView.removeGestureRecognizer(gestureRecognizer)
         }
         
+        #if os(tvOS)
+            let view = UIApplication.shared.keyWindow?.rootViewController?.view
+            
+            if let pressedMainGesture = pressedMainGesture {
+                view?.removeGestureRecognizer(pressedMainGesture)
+                self.pressedMainGesture = nil
+            }
+            if let pressedMenuGesture = pressedMenuGesture {
+                view?.removeGestureRecognizer(pressedMenuGesture)
+                self.pressedMenuGesture = nil
+            }
+        #endif
+        
         closeButton.removeFromSuperview()
         imageView.removeFromSuperview()
-        view.removeFromSuperview()
+        adView.removeFromSuperview()
     }
 }
 
@@ -288,21 +321,21 @@ private extension SwiftyAdsCustom {
         guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
         
         /// View
-        view.frame = rootViewController.view.frame
+        adView.frame = rootViewController.view.frame
         
         /// Image view
         #if os(iOS)
             if UIScreen.main.bounds.height < UIScreen.main.bounds.width { // check if in landscape, works at startup
-                imageView.frame = CGRect(x: 0, y: 0, width: view.frame.width / 1.2, height: view.frame.height / 1.1)
+                imageView.frame = CGRect(x: 0, y: 0, width: adView.frame.width / 1.2, height: adView.frame.height / 1.1)
             } else {
                 let iPad = UIDevice.current.userInterfaceIdiom == .pad
-                let height = iPad ? view.frame.height / 2 : view.frame.height / 2.5
-                imageView.frame = CGRect(x: 0, y: 0, width: view.frame.width / 1.05, height: height)
+                let height = iPad ? adView.frame.height / 2 : adView.frame.height / 2.5
+                imageView.frame = CGRect(x: 0, y: 0, width: adView.frame.width / 1.05, height: height)
             }
         #endif
         
         #if os(tvOS)
-            imageView.frame = CGRect(x: 0, y: 0, width: view.frame.width / 1.2, height: view.frame.height / 1.1)
+            imageView.frame = CGRect(x: 0, y: 0, width: adView.frame.width / 1.2, height: adView.frame.height / 1.1)
         #endif
         
         imageView.center = rootViewController.view.center
@@ -310,11 +343,11 @@ private extension SwiftyAdsCustom {
         /// Labels
         let headerFontSize = imageView.frame.height / 13
         headerLabel.font = UIFont(name: font, size: headerFontSize)
-        headerLabel.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        headerLabel.center = CGPoint(x: 0 + (view.frame.width / 2), y: imageView.frame.minY + headerFontSize / 1.1)
+        headerLabel.frame = CGRect(x: 0, y: 0, width: adView.frame.width, height: adView.frame.height)
+        headerLabel.center = CGPoint(x: 0 + (adView.frame.width / 2), y: imageView.frame.minY + headerFontSize / 1.1)
         
         newGameLabel.font = UIFont(name: fontBold, size: imageView.frame.height / 17)
-        newGameLabel.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        newGameLabel.frame = CGRect(x: 0, y: 0, width: adView.frame.width, height: adView.frame.height)
         newGameLabel.center = CGPoint(x: imageView.frame.maxX - (headerFontSize / 1.1), y: imageView.frame.minY + headerFontSize / 1.05)
         
         /// Buttons

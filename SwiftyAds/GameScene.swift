@@ -43,21 +43,10 @@ class GameScene: SKScene {
         self.addChild(myLabel)
         
         /// Set ads helper delegate
-        SwiftyAdsManager.delegate = self
+        SwiftyAdsManager.shared.delegate = self
         
         // Show banner ad
-        SwiftyAdsManager.showBanner()
-        
-        // TV custom ads controls
-        #if os(tvOS)
-        let tapMain = UITapGestureRecognizer(target: self, action: #selector(pressedMainButtonTVRemote))
-        tapMain.allowedPressTypes = [NSNumber(value: UIPressType.select.rawValue)]
-        view?.addGestureRecognizer(tapMain)
-        
-        let tapMenu = UITapGestureRecognizer(target: self, action: #selector(pressedMenuButtonTVRemote))
-        tapMenu.allowedPressTypes = [NSNumber(value: UIPressType.menu.rawValue)]
-        view?.addGestureRecognizer(tapMenu)
-        #endif
+        SwiftyAdsManager.shared.showBanner()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -65,12 +54,12 @@ class GameScene: SKScene {
         /* Called when a touch begins */
         
         // Show inter
-        SwiftyAdsManager.showInterstitial(withInterval: 2)
+        SwiftyAdsManager.shared.showInterstitial(withInterval: 2)
         
         // Remove ads after 3 clicks
         touchCounter -= 1
         if touchCounter == 0 {
-            SwiftyAdsManager.removeAll()
+            SwiftyAdsManager.shared.removeAll()
         }
     }
     

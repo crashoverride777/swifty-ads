@@ -30,14 +30,20 @@ import Foundation
  
  Enum to manage adverts from AdMob as well as your own custom ads.
  */
-enum SwiftyAdsManager {
+final class SwiftyAdsManager {
+    
+    // MARK: - Static Properties
+    
+    /// Shared Instance
+    static let shared = SwiftyAdsManager()
     
     // MARK: - Properties
     
     /// Delegate
-    static weak var delegate: SwiftyAdsDelegate? {
+    weak var delegate: SwiftyAdsDelegate? {
         didSet {
             SwiftyAdsCustom.shared.delegate = delegate
+            
             #if os(iOS)
                 SwiftyAdsAdMob.shared.delegate = delegate
             #endif
@@ -48,7 +54,7 @@ enum SwiftyAdsManager {
     }
     
     /// Reward video check
-    static var isRewardedVideoReady: Bool {
+    var isRewardedVideoReady: Bool {
         #if os(iOS)
             return SwiftyAdsAdMob.shared.isRewardedVideoReady
         #endif
@@ -58,8 +64,8 @@ enum SwiftyAdsManager {
     }
     
     /// Our games counter
-    private static var customAdInterval = 0
-    private static var customAdCounter = 0 {
+    private var customAdInterval = 0
+    private var customAdCounter = 0 {
         didSet {
             if customAdCounter == customAdInterval {
                 customAdCounter = 0
@@ -67,11 +73,16 @@ enum SwiftyAdsManager {
         }
     }
     
-    private static var customAdShownCounter = 0
-    private static var customAdMaxPerSession = 0
+    private var customAdShownCounter = 0
+    private var customAdMaxPerSession = 0
     
     /// Interval counter
-    private static var intervalCounter = 0
+    private var intervalCounter = 0
+    
+    // MARK: - Init 
+    
+    /// Private singleton init
+    private init() { }
     
     // MARK: - Set Up
     
@@ -79,7 +90,7 @@ enum SwiftyAdsManager {
     ///
     /// - parameter customAdsInterval: The interval of how often to show a custom ad mixed in between real ads.
     /// - parameter maxCustomAdsPerSession: The max number of custom ads to show per session.
-    static func setup(customAdsInterval: Int, maxCustomAdsPerSession: Int) {
+    func setup(customAdsInterval: Int, maxCustomAdsPerSession: Int) {
         self.customAdInterval = customAdsInterval
         self.customAdMaxPerSession = maxCustomAdsPerSession
     }
@@ -89,7 +100,7 @@ enum SwiftyAdsManager {
     /// Show banner ad
     ///
     /// - parameter delay: The delay until showing the ad. Defaults to 0.
-    static func showBanner(withDelay delay: TimeInterval = 0) {
+    func showBanner(withDelay delay: TimeInterval = 0) {
         #if os(iOS)
             SwiftyAdsAdMob.shared.showBanner(withDelay: delay)
         #endif
@@ -100,7 +111,7 @@ enum SwiftyAdsManager {
     /// Show inter ad
     ///
     /// - parameter interval: The interval of when to show the ad. Defaults to 0.
-    static func showInterstitial(withInterval interval: Int = 0) {
+    func showInterstitial(withInterval interval: Int = 0) {
         
         if interval != 0 {
             intervalCounter += 1
@@ -130,7 +141,7 @@ enum SwiftyAdsManager {
     /// Show rewarded video ad
     ///
     /// - parameter interval: The interval of when to show the ad. Defaults to 0.
-    static func showRewardedVideo(withInterval interval: Int = 0) {
+    func showRewardedVideo(withInterval interval: Int = 0) {
         #if os(iOS)
             SwiftyAdsAdMob.shared.showRewardedVideo(withInterval: interval)
         #endif
@@ -143,14 +154,14 @@ enum SwiftyAdsManager {
     // MARK: - Remove
     
     /// Remove banner
-    static func removeBanner() {
+    func removeBanner() {
         #if os(iOS)
             SwiftyAdsAdMob.shared.removeBanner()
         #endif
     }
     
     /// Remove all
-    static func removeAll() {
+    func removeAll() {
         SwiftyAdsCustom.shared.remove()
         
         #if os(iOS)
@@ -166,7 +177,7 @@ enum SwiftyAdsManager {
     
     /// Orientation changed
     /// Call this when an orientation change happens (e.g landscape->portrait happended)
-    static func adjustForOrientation() {
+    func adjustForOrientation() {
         SwiftyAdsCustom.shared.adjustForOrientation()
         
         #if os(iOS)
