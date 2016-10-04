@@ -175,7 +175,7 @@
 			);
 			name = iOS;
 			path = "SwiftyAds (iOS)";
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 		B4A006561CECFCC800A44575 /* tvOS */ = {
 			isa = PBXGroup;
@@ -187,6 +187,7 @@
 				B4A0068D1CECFD1500A44575 /* Frameworks */,
 			);
 			name = tvOS;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		B4A0068D1CECFD1500A44575 /* Frameworks */ = {
@@ -210,8 +211,6 @@
 			children = (
 				B4A0068C1CECFD0B00A44575 /* HeaderTV.h */,
 				B4C060D51D1EB676004A3BA8 /* SwiftyAds */,
-				B4A006551CECFCC100A44575 /* iOS */,
-				B4A006561CECFCC800A44575 /* tvOS */,
 				B4B01A141B9A0AF500F9A8EA /* Products */,
 				50EE868FBF4303E359C69933 /* Pods */,
 				947B71864618DC3F471261D3 /* Frameworks */,
@@ -250,6 +249,8 @@
 		B4C060D51D1EB676004A3BA8 /* SwiftyAds */ = {
 			isa = PBXGroup;
 			children = (
+				B4A006551CECFCC100A44575 /* iOS */,
+				B4A006561CECFCC800A44575 /* tvOS */,
 				B4F4EE101DA3F7BC00C6FEC0 /* GameScene.swift */,
 				B4F4EE0F1DA3F7BC00C6FEC0 /* GameScene.sks */,
 				B4F4EE151DA3F7D500C6FEC0 /* Images.xcassets */,
@@ -544,7 +545,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = HeaderTV.h;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
 		};
@@ -568,7 +569,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = HeaderTV.h;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};
@@ -612,7 +613,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -654,7 +655,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

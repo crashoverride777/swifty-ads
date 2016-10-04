@@ -21,50 +21,45 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v5.6
+//    v6.0
 
 import Foundation
 
 /**
- Ads manager
+ SwiftyAdsManager
  
- Singleton class to manage adverts from AdMob as well as your own custom ads.
+ Enum to manage adverts from AdMob as well as your own custom ads.
  */
-final class AdsManager {
-    
-    // MARK: - Static Properties
-    
-    /// Shared instance
-    static let shared = AdsManager()
+enum SwiftyAdsManager {
     
     // MARK: - Properties
     
     /// Delegate
-    weak var delegate: AdsDelegate? {
+    static weak var delegate: SwiftyAdsDelegate? {
         didSet {
-            CustomAd.shared.delegate = delegate
+            SwiftyAdsCustom.shared.delegate = delegate
             #if os(iOS)
-                AdMob.shared.delegate = delegate
+                SwiftyAdsAdMob.shared.delegate = delegate
             #endif
             #if os(tvOS)
-                AppLovin.shared.delegate = delegate
+                SwiftyAdsAppLovin.shared.delegate = delegate
             #endif
         }
     }
     
     /// Reward video check
-    var isRewardedVideoReady: Bool {
+    static var isRewardedVideoReady: Bool {
         #if os(iOS)
-            return AdMob.shared.isRewardedVideoReady
+            return SwiftyAdsAdMob.shared.isRewardedVideoReady
         #endif
         #if os(tvOS)
-            return AppLovin.shared.isRewardedVideoReady
+            return SwiftyAdsAppLovin.shared.isRewardedVideoReady
         #endif
     }
     
     /// Our games counter
-    private var customAdInterval = 0
-    private var customAdCounter = 0 {
+    private static var customAdInterval = 0
+    private static var customAdCounter = 0 {
         didSet {
             if customAdCounter == customAdInterval {
                 customAdCounter = 0
@@ -72,16 +67,11 @@ final class AdsManager {
         }
     }
     
-    private var customAdShownCounter = 0
-    private var customAdMaxPerSession = 0
+    private static var customAdShownCounter = 0
+    private static var customAdMaxPerSession = 0
     
     /// Interval counter
-    private var intervalCounter = 0
-    
-    // MARK: - Init
-    
-    /// Private singleton nit
-    private init() { }
+    private static var intervalCounter = 0
     
     // MARK: - Set Up
     
@@ -89,7 +79,7 @@ final class AdsManager {
     ///
     /// - parameter customAdsInterval: The interval of how often to show a custom ad mixed in between real ads.
     /// - parameter maxCustomAdsPerSession: The max number of custom ads to show per session.
-    func setup(customAdsInterval: Int, maxCustomAdsPerSession: Int) {
+    static func setup(customAdsInterval: Int, maxCustomAdsPerSession: Int) {
         self.customAdInterval = customAdsInterval
         self.customAdMaxPerSession = maxCustomAdsPerSession
     }
@@ -99,9 +89,9 @@ final class AdsManager {
     /// Show banner ad
     ///
     /// - parameter delay: The delay until showing the ad. Defaults to 0.
-    func showBanner(withDelay delay: TimeInterval = 0) {
+    static func showBanner(withDelay delay: TimeInterval = 0) {
         #if os(iOS)
-            AdMob.shared.showBanner(withDelay: delay)
+            SwiftyAdsAdMob.shared.showBanner(withDelay: delay)
         #endif
     }
     
@@ -110,7 +100,7 @@ final class AdsManager {
     /// Show inter ad
     ///
     /// - parameter interval: The interval of when to show the ad. Defaults to 0.
-    func showInterstitial(withInterval interval: Int = 0) {
+    static func showInterstitial(withInterval interval: Int = 0) {
         
         if interval != 0 {
             intervalCounter += 1
@@ -120,15 +110,15 @@ final class AdsManager {
         
         if (customAdCounter == 0 || customAdCounter == customAdInterval) && customAdShownCounter < customAdMaxPerSession {
             customAdShownCounter += 1
-            CustomAd.shared.show()
+            SwiftyAdsCustom.shared.show()
         }
         else {
             #if os(iOS)
-                AdMob.shared.showInterstitial()
+                SwiftyAdsAdMob.shared.showInterstitial()
             #endif
             
             #if os(tvOS)
-                AppLovin.shared.showInterstitial()
+                SwiftyAdsAppLovin.shared.showInterstitial()
             #endif
         }
         
@@ -140,35 +130,35 @@ final class AdsManager {
     /// Show rewarded video ad
     ///
     /// - parameter interval: The interval of when to show the ad. Defaults to 0.
-    func showRewardedVideo(withInterval interval: Int = 0) {        
+    static func showRewardedVideo(withInterval interval: Int = 0) {
         #if os(iOS)
-            AdMob.shared.showRewardedVideo(withInterval: interval)
+            SwiftyAdsAdMob.shared.showRewardedVideo(withInterval: interval)
         #endif
         
         #if os(tvOS)
-            AppLovin.shared.showRewardedVideo(withInterval: interval)
+            SwiftyAdsAppLovin.shared.showRewardedVideo(withInterval: interval)
         #endif
     }
     
     // MARK: - Remove
     
     /// Remove banner
-    func removeBanner() {
+    static func removeBanner() {
         #if os(iOS)
-            AdMob.shared.removeBanner()
+            SwiftyAdsAdMob.shared.removeBanner()
         #endif
     }
     
     /// Remove all
-    func removeAll() {
-        CustomAd.shared.remove()
+    static func removeAll() {
+        SwiftyAdsCustom.shared.remove()
         
         #if os(iOS)
-            AdMob.shared.removeAll()
+            SwiftyAdsAdMob.shared.removeAll()
         #endif
         
         #if os(tvOS)
-            AppLovin.shared.removeAll()
+            SwiftyAdsAppLovin.shared.removeAll()
         #endif
     }
     
@@ -176,11 +166,11 @@ final class AdsManager {
     
     /// Orientation changed
     /// Call this when an orientation change happens (e.g landscape->portrait happended)
-    func adjustForOrientation() {
-        CustomAd.shared.adjustForOrientation()
+    static func adjustForOrientation() {
+        SwiftyAdsCustom.shared.adjustForOrientation()
         
         #if os(iOS)
-            AdMob.shared.adjustForOrientation()
+            SwiftyAdsAdMob.shared.adjustForOrientation()
         #endif
     }
 }

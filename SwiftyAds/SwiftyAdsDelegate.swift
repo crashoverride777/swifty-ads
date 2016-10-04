@@ -26,7 +26,7 @@
 import Foundation
 
 /**
- Ads delegate
+ SwiftyAdsDelegate
  
  A delegate to handle advertising actions
  */
