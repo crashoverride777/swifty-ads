@@ -1,6 +1,0 @@
-framework module Pods_AdMob_and_CustomAds_Helper {
-  umbrella header "Pods-AdMob and CustomAds Helper-umbrella.h"
-
-  export *
-  module * { export * }
-}

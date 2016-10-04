@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'B6B5188FE1F80D0011DC88906CB10084'
-               BlueprintName = 'Pods-AppLovin Helper'
+               BlueprintIdentifier = 'F3E190AA3913D9E90625A5E755730F8C'
+               BlueprintName = 'Pods-SwiftyAds (tvOS)'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Pods-AppLovin Helper.framework'>
+               BuildableName = 'Pods-SwiftyAds (tvOS).framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'BA1DF97627335AF490DB29150697D03B'
-               BlueprintName = 'Pods-AdMob and CustomAds Helper'
+               BlueprintIdentifier = '144DC50B6AC0A540C38514874DE6B175'
+               BlueprintName = 'Pods-SwiftyAds (iOS)'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Pods-AdMob and CustomAds Helper.framework'>
+               BuildableName = 'Pods-SwiftyAds (iOS).framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
