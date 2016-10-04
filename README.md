@@ -80,6 +80,8 @@ https://developer.apple.com/app-store/marketing/guidelines/#images
 
 If your app/game is only in landscape mode add this code in your AppDelegate. 
 
+NOTE: It seems this is no longer required with iOS 10, so I assume apple made some changes. I am not sure if its still needed for iOS 9 or if its a general fix.
+
 ```swift
 func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.allButUpsideDown
@@ -122,11 +124,11 @@ SETUP
 - Step 1: Copy the Ads folder into your project. This should include the files
 
 ```swift
-AdsDelegate.swift
-AdsManager.swift 
-AdMob(iOS).swift // only add this to iOS target
-CustomAds.swift
-AppLovin(tvOS).swift // only add this to tvOS target
+SwiftyAdsDelegate.swift
+SwiftyAdsManager.swift 
+SwiftyAdsAdMob.swift // only needed for iOS target
+SwiftyAdsCustom.swift
+SwiftyAdsAppLovin.swift // only needed for tvOS target
 ```
 
 Step 2: CustomAdSetUp (both project targets if needed)
@@ -134,7 +136,7 @@ Step 2: CustomAdSetUp (both project targets if needed)
 When your app launches setup your custom ads as soon as possible.
 
 ```swift
-CustomAd.Inventory.all = [
+SwiftyAdsCustom.Inventory.all = [
       Ad(imageName: "AdAngryFlappies", appID: "991933749", isNewGame: false),
       Ad(imageName: "AdVertigus", appID: "1051292772", isNewGame: true)
 ]
@@ -147,7 +149,7 @@ To make this as reusable as possible e.g if you have multiple projects and share
 In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 
 ```swift
-AdsManager.shared.setup(customAdsInterval: 3, maxCustomAdsPerSession: 3)
+SwiftyAdsManager.shared.setup(customAdsInterval: 3, maxCustomAdsPerSession: 3)
 ```
 
 - Step 4: SetUp AdMob (iOS target only)
@@ -158,7 +160,7 @@ let bannerID = "Enter your real id"
 let interstitialID = "Enter your real id"
 let rewardVideoID = "Enter your real id"
 
-AdMob.shared.setup(viewController: self, bannerID: bannerID, interID: interstitialID, rewardVideoID: rewardVideoID)
+SwiftyAdsAdMob.shared.setup(viewController: self, bannerID: bannerID, interID: interstitialID, rewardVideoID: rewardVideoID)
 ```
 
 HOW TO USE
@@ -167,22 +169,22 @@ AdsManager.swift is basically a manager of all the ad helpers to have 1 convinie
 
 - To show an Ad simply call these anywhere you like in your project
 ```swift
-AdsManager.shared.showBanner() 
-AdsManager.shared.showBanner(withDelay: 1) // Delay showing banner slightly eg when transitioning to new scene/view
-AdsManager.shared.showInterstitial()
-AdsManager.shared.showInterstitial(withInterval: 4) // Shows an ad every 4th time
-AdsManager.shared.showRewardedVideo()
-AdsManager.shared.showRewardedVideo(withInterval: 4) // Shows an ad every 4th time
+SwiftyAdsManager.shared.showBanner() 
+SwiftyAdsManager.shared.showBanner(withDelay: 1) // Delay showing banner slightly eg when transitioning to new scene/view
+SwiftyAdsManager.shared.showInterstitial()
+SwiftyAdsManager.shared.showInterstitial(withInterval: 4) // Shows an ad every 4th time
+SwiftyAdsManager.shared.showRewardedVideo()
+SwiftyAdsManager.shared.showRewardedVideo(withInterval: 4) // Shows an ad every 4th time
 ```
 
 - To remove Banner Ads, for example during gameplay 
 ```swift
-AdsManager.shared.removeBanner() 
+SwiftyAdsManager.shared.removeBanner() 
 ```
 
 - To remove all Ads, mainly for in app purchases simply call 
 ```swift
-AdsManager.shared.removeAll() 
+SwiftyAdsManager.shared.removeAll() 
 ```
 
 NOTE: Remove Ads bool 
@@ -196,12 +198,12 @@ For permanent storage you will need to create your own "removedAdsProduct" prope
 Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
 to receive delegate callbacks.
 ```swift
-AdsManager.shared.delegate = self 
+SwiftyAdsManager.shared.delegate = self 
 ```
 
 Than create an extension conforming to the AdsDelegate protocol.
 ```swift
-extension GameScene: AdsDelegate {
+extension GameScene: SwiftyAdsDelegate {
     func adDidOpen() {
         // pause your game/app if needed
     }
@@ -227,8 +229,8 @@ SETUP
 - Step 1: Copy the following files into your project
 
 ```swift
-AdsDelegate.swift
-AdMob(iOS).swift
+SwiftyAdsDelegate.swift
+SwiftyAdsAdMob(iOS).swift
 ```
 
 - Step 2: In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
@@ -237,29 +239,29 @@ let bannerID = "Enter your real id"
 let interstitialID = "Enter your real id"
 let rewardVideoID = "Enter your real id"
 
-AdMob.shared.setup(viewController: self, bannerID: bannerID, interID: interstitialID, rewardVideoID: rewardVideoID)
+SwiftyAdsAdMob.shared.setup(viewController: self, bannerID: bannerID, interID: interstitialID, rewardVideoID: rewardVideoID)
 ```
 
 HOW TO USE
 
 - To show an Ad simply call these anywhere you like in your project
 ```swift
-AdMob.shared.showBanner() 
-AdMob.shared.showBanner(withDelay: 1) // Delay showing banner slightly eg when transitioning to new scene/view
-AdMob.shared.showInterstitial()
-AdMob.shared.showInterstitial(withInterval: 4) // Shows an ad every 4th time
-AdMob.shared.showRewardedVideo()
-AdMob.shared.showRewardedVideo(withInterval: 4) // Shows an ad every 4th time
+SwiftyAdsAdMob.shared.showBanner() 
+SwiftyAdsAdMob.shared.showBanner(withDelay: 1) // Delay showing banner slightly eg when transitioning to new scene/view
+SwiftyAdsAdMob.shared.showInterstitial()
+SwiftyAdsAdMob.shared.showInterstitial(withInterval: 4) // Shows an ad every 4th time
+SwiftyAdsAdMob.shared.showRewardedVideo()
+SwiftyAdsAdMob.shared.showRewardedVideo(withInterval: 4) // Shows an ad every 4th time
 ```
 
 - To remove Banner Ads, for example during gameplay 
 ```swift
-AdMob.shared.removeBanner() 
+SwiftyAdsAdMob.shared.removeBanner() 
 ```
 
 - To remove all Ads, mainly for in app purchases simply call 
 ```swift
-AdMob.shared.removeAll() 
+SwiftyAdsAdMob.shared.removeAll() 
 ```
 
 NOTE: Remove Ads bool 
@@ -273,12 +275,12 @@ For permanent storage you will need to create your own "removedAdsProduct" prope
 Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
 to receive delegate callbacks.
 ```swift
-AdMob.shared.delegate = self 
+SwiftyAdsAdMob.shared.delegate = self 
 ```
 
 Than create an extension conforming to the AdsDelegate protocol.
 ```swift
-extension GameScene: AdsDelegate {
+extension GameScene: SwiftyAdsDelegate {
     func adDidOpen() {
         // pause your game/app if needed
     }
@@ -305,8 +307,8 @@ SETUP
 
 Copy the following files into your project
 ```swift
-AdsDelegate.swift
-CustomAds.swift
+SwiftyAdsAdsDelegate.swift
+SwiftyAdsCustom.swift
 ```
 
 Step 2:
@@ -314,7 +316,7 @@ Step 2:
 When your app launches setup your custom ads as soon as possible.
 
 ```swift
-CustomAd.Inventory.all = [
+SwiftyAdsCustom.Inventory.all = [
       Ad(imageName: "AdAngryFlappies", appID: "991933749", isNewGame: false),
       Ad(imageName: "AdVertigus", appID: "1051292772", isNewGame: true)
 ]
@@ -326,12 +328,12 @@ HOW TO USE
 
 - To show an Ad simply call these anywhere you like in your project
 ```swift
-CustomAd.shared.show()
+SwiftyAdsCustom.shared.show()
 ```
 
 - To remove all Ads, mainly for in app purchases simply call 
 ```swift
-CustomAd.shared.remove() 
+SwiftyAdsCustom.shared.remove() 
 ```
 
 NOTE: Remove Ads bool 
@@ -345,12 +347,12 @@ For permanent storage you will need to create your own "removedAdsProduct" prope
 Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
 to receive delegate callbacks.
 ```swift
-CustomAd.shared.delegate = self 
+SwiftyAdsCustom.shared.delegate = self 
 ```
 
 Than create an extension conforming to the AdsDelegate protocol.
 ```swift
-extension GameScene: AdsDelegate {
+extension GameScene: SwiftyAdsDelegate {
     func adDidOpen() {
         // pause your game/app if needed
     }
@@ -374,8 +376,8 @@ SETUP
 Copy the following files into your project
 
 ```swift
-AdsDelegate.swift
-AppLovin(tvOS).swift
+SwiftyAdsDelegate.swift
+SwiftyAdsAppLovin(tvOS).swift
 ```
 
 Step 2:
@@ -383,22 +385,22 @@ Step 2:
 In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 
 ```swift
-_ = AppLovin.shared
+_ = SwiftyAdsAppLovin.shared
 ```
 
 HOW TO USE
 
 - To show an Ad simply call these anywhere you like in your project
 ```swift
-AppLovin.shared.showInterstitial()
-AppLovin.shared.showInterstitial(withInterval: 4) // Show an ad every 4th time
-AppLovin.shared.showRewardedVideo()
-AppLovin.shared.showRewardedVideo(withInterval: 4) // Show an ad every 4th time
+SwiftyAdsAppLovin.shared.showInterstitial()
+SwiftyAdsAppLovin.shared.showInterstitial(withInterval: 4) // Show an ad every 4th time
+SwiftyAdsAppLovin.shared.showRewardedVideo()
+SwiftyAdsAppLovin.shared.showRewardedVideo(withInterval: 4) // Show an ad every 4th time
 ```
 
 - To remove all Ads, mainly for in app purchases simply call 
 ```swift
-AppLovin.shared.removeAll() 
+SwiftyAdsAppLovin.shared.removeAll() 
 ```
 
 NOTE: Remove Ads bool 
@@ -412,12 +414,12 @@ For permanent storage you will need to create your own "removedAdsProduct" prope
 Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
 to receive delegate callbacks.
 ```swift
-AppLovin.shared.delegate = self 
+SwiftyAdsAppLovin.shared.delegate = self 
 ```
 
 Than create an extension conforming to the AdsDelegate protocol.
 ```swift
-extension GameScene: AdsDelegate {
+extension GameScene: SwiftyAdsDelegate {
     func adDidOpen() {
         // pause your game/app if needed
     }
@@ -441,15 +443,6 @@ Alternatively you could include the AdsManager.swift file. Than Follow the steps
 ingorning all the parts about the helper you are not using, in this example AppLovin. 
 Than go to AdsManager.swift and delete all the code that are throwing errors, in this example all the code related to AppLovin.
 
-# TVOS controls for custom ads
-
-On tvOS you will have to manually manage the  dismissal and download button for custom ads. Create your gesture recognizers  or  other control scheme  and  make sure you call these 2 methods when a custom ad is shown. I use the menu button for dismissal and the main button for downloading.
-
-```swift
-CustomAd.shared.download()
-CustomAd.shared.dismiss()
-```
-
 # Supporting both landscape and portrait orientation
 
 - If your app supports both portrait and landscape orientation go to the ViewController and add the following method.
@@ -460,11 +453,11 @@ override func viewWillTransition(to size: CGSize, with coordinator: UIViewContro
         
         coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
            
-            AdsManager.shared.adjustForOrientation() // When using Full helper
+            SwiftyAdsManager.adjustForOrientation() // When using Full helper
             
-            AdMob.shared.adjustForOrientation() // When only using AdMob 
+            SwiftyAdsAdMob.shared.adjustForOrientation() // When only using AdMob 
             
-            CustomAd.shared.adjustForOrientation() // When only using Custom ads 
+            SwiftyAdsCustom.shared.adjustForOrientation() // When only using Custom ads 
             
             }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
                 print("Device rotation completed")
@@ -490,71 +483,8 @@ Enjoy
 
 # Release Notes
 
-- v5.6
+- v6.0
 
-Cleanup and documentation improvements
+Project has been renamed to SwiftyAds.
 
-Renamed open and close methods in AdsDelegate.swift to
-
-```swift
-func adDidOpen() { }
-func adDidClose() { }
-```
-
-- v5.5.2
-
-Slight change to custom ad handling on tvOS, please read the  "How to use section" again
-
-Cleanup and documentation fixes
-
-- v5.5.1
-
-Cleanup and documentation fixes
-
-- v5.5
-
-Updated to Swift 3
-
-- v5.4
-
-Merged AppLovinInter and AppLovinReward into a single class called AppLovin.
-Clean up and improvements
-
-- v5.3.2
-
-Cleanup and small improvements. Please make sure your projects includes the new file AdsDelegate.swift.
-
-- v5.3.1
-
-Small fixes and improvements to custom ads
-
-- v5.3
-
-Custom ad improvements. 
-
-AppStoreProductViewController now used to link to app store on ios.
-
-Please read the instructions again.
-
-- v5.2.2
-
-Instead of optionally showing ads randomly you now can optionally show ads after a set interval e.g. show ad every 4 times the show method is called. 
-I prefer this instead of showing ads randomly because occasionally ads would show behind each other or show the first time they are called. I don't think is a good user experience as you dont want users to see ads immediatly after launching/using the app/game.
-
-- v5.2.1
-
-Tweaks and improvements
-
-- v5.2
-
-Custom ad improvements (read instructions for setUp)
-
-Clean-up
-
-- v5.1
-
-Small changes to adMobAdUnitID set up.
-
-- v5.0
-
-Included AppLovin helper for tvOS. The adMob SDK does not work on tvOS so you will have to use AppLovin code if you want to show ads (AppLovin works with mediation on iOS)
+No more source breaking changes after this update. All future changes will be handled with deprecated messages.
