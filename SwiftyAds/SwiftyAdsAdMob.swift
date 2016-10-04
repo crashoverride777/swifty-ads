@@ -264,14 +264,14 @@ fileprivate extension SwiftyAdsAdMob {
         
         let rewardedVideoAd = GADRewardBasedVideoAd.sharedInstance()
         
-        rewardedVideoAd?.delegate = self
+        rewardedVideoAd.delegate = self
         let request = GADRequest()
         
         #if DEBUG
             request.testDevices = [kGADSimulatorID]
         #endif
         
-        rewardedVideoAd?.load(request, withAdUnitID: rewardedVideoAdUnitID)
+        rewardedVideoAd.load(request, withAdUnitID: rewardedVideoAdUnitID)
         
         return rewardedVideoAd
     }
@@ -367,35 +367,37 @@ extension SwiftyAdsAdMob: GADInterstitialDelegate {
 
 extension SwiftyAdsAdMob: GADRewardBasedVideoAdDelegate {
     
-    func rewardBasedVideoAdDidOpen(_ rewardBasedVideoAd: GADRewardBasedVideoAd!) {
+    func rewardBasedVideoAdDidOpen(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
         print("AdMob reward video ad did open")
     }
     
-    func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd!) {
+    func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
         print("AdMob reward video closed, reloading...")
         delegate?.adDidClose()
         rewardedVideoAd = loadRewardedVideoAd()
     }
     
-    func rewardBasedVideoAdDidReceive(_ rewardBasedVideoAd: GADRewardBasedVideoAd!) {
+    func rewardBasedVideoAdDidReceive(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
         print("AdMob reward video did receive ad")
     }
     
-    func rewardBasedVideoAdDidStartPlaying(_ rewardBasedVideoAd: GADRewardBasedVideoAd!) {
+    func rewardBasedVideoAdDidStartPlaying(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
         print("AdMob reward video did start playing")
         delegate?.adDidOpen()
     }
     
-    func rewardBasedVideoAdWillLeaveApplication(_ rewardBasedVideoAd: GADRewardBasedVideoAd!) {
+    func rewardBasedVideoAdWillLeaveApplication(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
         print("AdMob reward video will leave application")
         delegate?.adDidOpen()
     }
     
-    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd!, didFailToLoadWithError error: Error!) {
-        print(error.localizedDescription)
+    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didFailToLoadWithError error: Error?) {
+        if let error = error {
+            print(error.localizedDescription)
+        }
     }
     
-    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd!, didRewardUserWith reward: GADAdReward!) {
+    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didRewardUserWith reward: GADAdReward) {
         print("AdMob reward video did reward user")
         delegate?.adDidRewardUser(withAmount: Int(reward.amount))
     }

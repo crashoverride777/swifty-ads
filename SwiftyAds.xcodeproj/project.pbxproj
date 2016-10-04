@@ -57,13 +57,9 @@
 
 /* Begin PBXFileReference section */
 		0DE477628229B17094F186F3 /* Pods-SwiftyAds (tvOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAds (tvOS).release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyAds (tvOS)/Pods-SwiftyAds (tvOS).release.xcconfig"; sourceTree = "<group>"; };
-		0FA857AA1CBD436FB0366DE2 /* Pods-AdMob and CustomAds Helper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdMob and CustomAds Helper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AdMob and CustomAds Helper/Pods-AdMob and CustomAds Helper.debug.xcconfig"; sourceTree = "<group>"; };
-		141517330A60EF0041482D0E /* Pods-AdMob and CustomAds Helper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdMob and CustomAds Helper.release.xcconfig"; path = "Pods/Target Support Files/Pods-AdMob and CustomAds Helper/Pods-AdMob and CustomAds Helper.release.xcconfig"; sourceTree = "<group>"; };
-		212B8CD56F55CFDA355BC5BE /* Pods-AppLovin Helper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppLovin Helper.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppLovin Helper/Pods-AppLovin Helper.release.xcconfig"; sourceTree = "<group>"; };
 		276E28443E35A1C226A0FF0B /* Pods_AdMob_and_CustomAds_Helper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdMob_and_CustomAds_Helper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		523D8F56078957ECDD773241 /* Pods-SwiftyAds (iOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAds (iOS).release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyAds (iOS)/Pods-SwiftyAds (iOS).release.xcconfig"; sourceTree = "<group>"; };
 		5AE1878696E356A11D74AD81 /* Pods_SwiftyAds__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAds__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6C40ACEE932CFA1B17DCAD39 /* Pods-AppLovin Helper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppLovin Helper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppLovin Helper/Pods-AppLovin Helper.debug.xcconfig"; sourceTree = "<group>"; };
 		6F4A84EB61DA087A44D4C687 /* Pods_SwiftyAds__tvOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAds__tvOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B435FFE01CE14C2A00A678AA /* SwiftyAdsAdMob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsAdMob.swift; sourceTree = "<group>"; };
 		B435FFE41CE14D1900A678AA /* SwiftyAdsCustom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsCustom.swift; sourceTree = "<group>"; };
@@ -156,10 +152,6 @@
 		50EE868FBF4303E359C69933 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0FA857AA1CBD436FB0366DE2 /* Pods-AdMob and CustomAds Helper.debug.xcconfig */,
-				141517330A60EF0041482D0E /* Pods-AdMob and CustomAds Helper.release.xcconfig */,
-				6C40ACEE932CFA1B17DCAD39 /* Pods-AppLovin Helper.debug.xcconfig */,
-				212B8CD56F55CFDA355BC5BE /* Pods-AppLovin Helper.release.xcconfig */,
 				FB5FE06D82022761DEF18FC4 /* Pods-SwiftyAds (iOS).debug.xcconfig */,
 				523D8F56078957ECDD773241 /* Pods-SwiftyAds (iOS).release.xcconfig */,
 				FC5C3AF69E7F4EBE3FF8B0EB /* Pods-SwiftyAds (tvOS).debug.xcconfig */,
@@ -267,8 +259,8 @@
 			children = (
 				B4A006551CECFCC100A44575 /* iOS */,
 				B4A006561CECFCC800A44575 /* tvOS */,
-				B4F4EE101DA3F7BC00C6FEC0 /* GameScene.swift */,
 				B4F4EE0F1DA3F7BC00C6FEC0 /* GameScene.sks */,
+				B4F4EE101DA3F7BC00C6FEC0 /* GameScene.swift */,
 				B4F4EE151DA3F7D500C6FEC0 /* Images.xcassets */,
 				B43B34CC1D4AD2E50064F364 /* SwiftyAdsDelegate.swift */,
 				B4B01A3C1B9A0B0700F9A8EA /* SwiftyAdsManager.swift */,
