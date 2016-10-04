@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  AppLovin Helper
+//  SwiftyAds
 //
 //  Created by Dominik on 18/05/2016.
 //  Copyright © 2016 Dominik Ringler. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  GameScene.swift
-//  iAds and AdMob Helper
+//  SwiftyAds
 //
 //  Created by Dominik on 04/09/2015.
 
@@ -28,10 +28,14 @@ extension GameScene: SwiftyAdsDelegate {
 class GameScene: SKScene {
     
     var myLabel: SKLabelNode!
-    var touchCounter = 25 {
+    var touchCounter = 15 {
         didSet {
-           guard touchCounter >= 0 else {return }
-           myLabel.text = "Remove ads in \(touchCounter) clicks"
+            if touchCounter >= 0 {
+                myLabel.text = "Remove ads in \(touchCounter) clicks"
+            }
+            if touchCounter == 0 {
+                SwiftyAdsManager.shared.removeAll()
+            }
         }
     }
     
@@ -54,13 +58,10 @@ class GameScene: SKScene {
         /* Called when a touch begins */
         
         // Show inter
-        SwiftyAdsManager.shared.showInterstitial(withInterval: 2)
+        SwiftyAdsManager.shared.showInterstitial(withInterval: 2) // will not work on tvOs with this demo app because I havent set the SDK key for AppLovin in info.plist. 
         
         // Remove ads after 3 clicks
         touchCounter -= 1
-        if touchCounter == 0 {
-            SwiftyAdsManager.shared.removeAll()
-        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {

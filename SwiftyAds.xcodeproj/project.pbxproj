@@ -259,8 +259,8 @@
 				B4A006A01CECFDF400A44575 /* SwiftyAdsAppLovin.swift */,
 				B435FFE41CE14D1900A678AA /* SwiftyAdsCustom.swift */,
 				B4F4EE151DA3F7D500C6FEC0 /* Images.xcassets */,
-				B4F4EE0F1DA3F7BC00C6FEC0 /* GameScene.sks */,
 				B4F4EE101DA3F7BC00C6FEC0 /* GameScene.swift */,
+				B4F4EE0F1DA3F7BC00C6FEC0 /* GameScene.sks */,
 				B4A006551CECFCC100A44575 /* iOS */,
 				B4A006561CECFCC800A44575 /* tvOS */,
 			);

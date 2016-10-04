@@ -1,6 +1,6 @@
 //
 //  GameViewController.swift
-//  iAds and AdMob Helper
+//  SwiftyAds
 //
 //  Created by Dominik on 04/09/2015.
 
