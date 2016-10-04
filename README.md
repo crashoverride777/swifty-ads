@@ -137,8 +137,8 @@ When your app launches setup your custom ads as soon as possible.
 
 ```swift
 SwiftyAdsCustom.Inventory.all = [
-      Ad(imageName: "AdAngryFlappies", appID: "991933749", isNewGame: false),
-      Ad(imageName: "AdVertigus", appID: "1051292772", isNewGame: true)
+      SwiftyAdsCustom.Ad(imageName: "AdAngryFlappies", appID: "991933749", isNewGame: false),
+      SwiftyAdsCustom.Ad(imageName: "AdVertigus", appID: "1051292772", isNewGame: true)
 ]
 ```
 
