@@ -14,9 +14,9 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        SwiftyAdsCustom.Ad.all = [
-            SwiftyAdsCustom.Ad(imageName: "AdAngryFlappies", appID: "991933749", isNewGame: false),
-            SwiftyAdsCustom.Ad(imageName: "AdVertigus", appID: "1051292772", isNewGame: true)
+        SwiftyAdsCustom.Inventory.all = [
+            SwiftyAdsCustom.Inventory(imageName: "AdAngryFlappies", appID: "991933749", isNewGame: false),
+            SwiftyAdsCustom.Inventory(imageName: "AdVertigus", appID: "1051292772", isNewGame: true)
         ]
      
         SwiftyAdsManager.shared.setup(customAdsInterval: 3, maxCustomAdsPerSession: 3)

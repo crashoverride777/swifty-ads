@@ -48,13 +48,13 @@ final class SwiftyAdsCustom {
     // MARK: - Properties
     
     /// Custom ad
-    struct Ad {
+    struct Inventory {
         let imageName: String
         let appID: String
         let isNewGame: Bool
         
         /// All ads
-        static var all = [Ad]()
+        static var all = [Inventory]()
         
         /// Tracking
         fileprivate static var current = 0
@@ -138,7 +138,7 @@ final class SwiftyAdsCustom {
     /// - parameter random: If set to true will pick random ad from inventory. Defaults to false. Will not work if newestAd is set to true.
     /// - parameter interval: The interval when to show the ad, e.g when set to 4 ad will be shown every 4th time. Defaults to 0.
     public func show(newestAd: Bool = false, random: Bool = false, withInterval interval: Int = 0) {
-        guard !removedAds && !Ad.all.isEmpty else { return }
+        guard !removedAds && !Inventory.all.isEmpty else { return }
         
         if interval != 0 {
             intervalCounter += 1
@@ -150,29 +150,29 @@ final class SwiftyAdsCustom {
         if newestAd {
             adInInventory = 0
         } else if random {
-            let range = UInt32(Ad.all.count)
+            let range = UInt32(Inventory.all.count)
             adInInventory = Int(arc4random_uniform(range))
         } else {
-            adInInventory = Ad.current
+            adInInventory = Inventory.current
         }
         
-        if adInInventory >= Ad.all.count {
+        if adInInventory >= Inventory.all.count {
             adInInventory = 0
-            Ad.current = 0
+            Inventory.current = 0
         }
         
         let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "NoAppNameFound"
         let appNameNoWhiteSpaces = appName.replacingOccurrences(of: " ", with: "")
         let appNameNoWhiteSpacesAndDash = appNameNoWhiteSpaces.replacingOccurrences(of: "-", with: "")
         
-        if let _ = Ad.all[adInInventory].imageName.range(of: appNameNoWhiteSpacesAndDash, options: .caseInsensitive) {
+        if let _ = Inventory.all[adInInventory].imageName.range(of: appNameNoWhiteSpacesAndDash, options: .caseInsensitive) {
             adInInventory += 1
-            Ad.current += 1
+            Inventory.current += 1
         }
         
-        if adInInventory >= Ad.all.count {
+        if adInInventory >= Inventory.all.count {
             adInInventory = 0
-            Ad.current = 0
+            Inventory.current = 0
         }
         
         guard let validAd = createAd(selectedAd: adInInventory) else { return }
@@ -200,7 +200,7 @@ final class SwiftyAdsCustom {
         let rootViewController = UIApplication.shared.keyWindow?.rootViewController
         rootViewController?.view?.addSubview(validAd)
         
-        Ad.current += 1
+        Inventory.current += 1
     }
     
     /// Remove
@@ -252,9 +252,9 @@ private extension SwiftyAdsCustom {
     func createAd(selectedAd: Int) -> UIView? {
         
         // Set ad properties
-        imageName = Ad.all[selectedAd].imageName
-        appID = Ad.all[selectedAd].appID
-        isNewGame = Ad.all[selectedAd].isNewGame
+        imageName = Inventory.all[selectedAd].imageName
+        appID = Inventory.all[selectedAd].appID
+        isNewGame = Inventory.all[selectedAd].isNewGame
         
         // Remove previous ad just incase
         removeFromSuperview()
