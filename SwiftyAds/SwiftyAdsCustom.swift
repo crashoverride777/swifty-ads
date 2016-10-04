@@ -40,7 +40,7 @@ fileprivate func getAppStoreURL(forAppID id: String) -> String {
  
  Singleton class used for creating custom full screen ads.
  */
-final public class SwiftyAdsCustom {
+final class SwiftyAdsCustom {
     
     // MARK: - Static Properties
     public static let shared = SwiftyAdsCustom()
@@ -52,15 +52,6 @@ final public class SwiftyAdsCustom {
         let imageName: String
         let appID: String
         let isNewGame: Bool
-    }
-    
-    /// Inventory
-    public enum Inventory: Int {
-        
-        // Convinience
-        case random = -1
-        case angryFlappies
-        case vertigus
         
         /// All ads
         static var all = [Ad]()
@@ -143,10 +134,11 @@ final public class SwiftyAdsCustom {
     
     /// Show custom ad
     ///
-    /// - parameter selectedAd: Show ad for inventory identifier, if set to nil will loop through inventory.
+    /// - parameter newestAd: If set to true will show first ad in inventory. Defaults to false.
+    /// - parameter random: If set to true will pick random ad from inventory. Defaults to false. Will not work if newestAd is set to true.
     /// - parameter interval: The interval when to show the ad, e.g when set to 4 ad will be shown every 4th time. Defaults to 0.
-    public func show(selectedAd: Inventory? = nil, withInterval interval: Int = 0) {
-        guard !removedAds && !Inventory.all.isEmpty else { return }
+    public func show(newestAd: Bool = false, random: Bool = false, withInterval interval: Int = 0) {
+        guard !removedAds && !Ad.all.isEmpty else { return }
         
         if interval != 0 {
             intervalCounter += 1
@@ -155,34 +147,32 @@ final public class SwiftyAdsCustom {
         }
         
         var adInInventory: Int
-        if let selectedAd = selectedAd {
-            if selectedAd == .random {
-                let range = UInt32(Inventory.all.count)
-                adInInventory = Int(arc4random_uniform(range))
-            } else {
-                adInInventory = selectedAd.rawValue
-            }
+        if newestAd {
+            adInInventory = 0
+        } else if random {
+            let range = UInt32(Ad.all.count)
+            adInInventory = Int(arc4random_uniform(range))
         } else {
-            adInInventory = Inventory.current
+            adInInventory = Ad.current
         }
         
-        if adInInventory >= Inventory.all.count {
+        if adInInventory >= Ad.all.count {
             adInInventory = 0
-            Inventory.current = 0
+            Ad.current = 0
         }
         
         let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "NoAppNameFound"
         let appNameNoWhiteSpaces = appName.replacingOccurrences(of: " ", with: "")
         let appNameNoWhiteSpacesAndDash = appNameNoWhiteSpaces.replacingOccurrences(of: "-", with: "")
         
-        if let _ = Inventory.all[adInInventory].imageName.range(of: appNameNoWhiteSpacesAndDash, options: .caseInsensitive) {
+        if let _ = Ad.all[adInInventory].imageName.range(of: appNameNoWhiteSpacesAndDash, options: .caseInsensitive) {
             adInInventory += 1
-            Inventory.current += 1
+            Ad.current += 1
         }
         
-        if adInInventory >= Inventory.all.count {
+        if adInInventory >= Ad.all.count {
             adInInventory = 0
-            Inventory.current = 0
+            Ad.current = 0
         }
         
         guard let validAd = createAd(selectedAd: adInInventory) else { return }
@@ -210,7 +200,7 @@ final public class SwiftyAdsCustom {
         let rootViewController = UIApplication.shared.keyWindow?.rootViewController
         rootViewController?.view?.addSubview(validAd)
         
-        Inventory.current += 1
+        Ad.current += 1
     }
     
     /// Remove
@@ -262,9 +252,9 @@ private extension SwiftyAdsCustom {
     func createAd(selectedAd: Int) -> UIView? {
         
         // Set ad properties
-        imageName = Inventory.all[selectedAd].imageName
-        appID = Inventory.all[selectedAd].appID
-        isNewGame = Inventory.all[selectedAd].isNewGame
+        imageName = Ad.all[selectedAd].imageName
+        appID = Ad.all[selectedAd].appID
+        isNewGame = Ad.all[selectedAd].isNewGame
         
         // Remove previous ad just incase
         removeFromSuperview()
