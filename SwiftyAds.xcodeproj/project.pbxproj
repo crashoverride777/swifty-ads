@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8BA8521AA012454236A8FEF6 /* Pods_AppLovin_Helper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2CE1129C6F81DBB34E8136A /* Pods_AppLovin_Helper.framework */; };
 		A034F499985EA7041921C3E1 /* Pods_SwiftyAds__tvOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F4A84EB61DA087A44D4C687 /* Pods_SwiftyAds__tvOS_.framework */; };
 		B41E34C21D0236950034C444 /* SwiftyAdsCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = B435FFE41CE14D1900A678AA /* SwiftyAdsCustom.swift */; };
 		B41E34C31D02369C0034C444 /* SwiftyAdsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B01A3C1B9A0B0700F9A8EA /* SwiftyAdsManager.swift */; };
@@ -52,7 +51,6 @@
 		B4F4EE161DA3F7D500C6FEC0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4F4EE151DA3F7D500C6FEC0 /* Images.xcassets */; };
 		B4F4EE171DA3F7D500C6FEC0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4F4EE151DA3F7D500C6FEC0 /* Images.xcassets */; };
 		C88C7923C125B5A8203DA7BA /* Pods_SwiftyAds__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AE1878696E356A11D74AD81 /* Pods_SwiftyAds__iOS_.framework */; };
-		F47593E3ADC4967ECA7DE73C /* Pods_AdMob_and_CustomAds_Helper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 276E28443E35A1C226A0FF0B /* Pods_AdMob_and_CustomAds_Helper.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,7 +118,6 @@
 				B4A006951CECFD5F00A44575 /* AVFoundation.framework in Frameworks */,
 				B4A006931CECFD5400A44575 /* AdSupport.framework in Frameworks */,
 				B4A006911CECFD4A00A44575 /* libAppLovinTVOS.a in Frameworks */,
-				8BA8521AA012454236A8FEF6 /* Pods_AppLovin_Helper.framework in Frameworks */,
 				A034F499985EA7041921C3E1 /* Pods_SwiftyAds__tvOS_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -141,7 +138,6 @@
 				B4B01A441B9A0B8600F9A8EA /* AVFoundation.framework in Frameworks */,
 				B4B01A421B9A0B8100F9A8EA /* AudioToolbox.framework in Frameworks */,
 				B4B01A401B9A0B7700F9A8EA /* AdSupport.framework in Frameworks */,
-				F47593E3ADC4967ECA7DE73C /* Pods_AdMob_and_CustomAds_Helper.framework in Frameworks */,
 				C88C7923C125B5A8203DA7BA /* Pods_SwiftyAds__iOS_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
