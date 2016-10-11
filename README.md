@@ -510,9 +510,9 @@ Enjoy
 
 - v6.0.1
 
-Custom ads on tvOS need to be removed manually again. Please check instructions again
+Custom ads on tvOS need to be removed manually again. Please check instructions.
 
-Cleanup
+Cleanup.
 
 - v6.0
 
