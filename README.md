@@ -218,6 +218,19 @@ extension GameScene: SwiftyAdsDelegate {
 }
 ```
 
+- tvOS controls
+
+On tvOS you need to manually handle the download and dismiss button. Make sure that when a custom ad is showing you are calling these 2 methods. I use the menu button for dismissal and the select button (press touchpad) for download.
+
+```swift
+if SwiftAdsCustom.shared.isShowing {
+   SwiftyAdsCustom.shared.download()
+}
+
+if SwiftAdsCustom.shared.isShowing {
+    SwiftAdsCustom.shared.dismiss()
+}
+```
 # How to only use AdMob
 
 If you dont wish to use the full helper and just want to use adMob follow these steps
@@ -360,6 +373,20 @@ extension GameScene: SwiftyAdsDelegate {
     func adDidRewardUser(withAmount rewardAmount: Int) {
        // leave empty if unused
     }
+}
+```
+
+- tvOS controls
+
+On tvOS you need to manually handle the download and dismiss button. Make sure that when a custom ad is showing you are calling these 2 methods. I use the menu button for dismissal and the select button (press touchpad) for download.
+
+```swift
+if SwiftAdsCustom.shared.isShowing {
+   SwiftyAdsCustom.shared.download()
+}
+
+if SwiftAdsCustom.shared.isShowing {
+    SwiftAdsCustom.shared.dismiss()
 }
 ```
 
