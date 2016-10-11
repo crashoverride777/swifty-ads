@@ -51,6 +51,41 @@ class GameScene: SKScene {
         
         // Show banner ad
         SwiftyAdsManager.shared.showBanner()
+        
+        /// Custom ads tv controls
+        #if os(tvOS)
+            let tapMain = UITapGestureRecognizer(target: self, action: #selector(didPressSelectButtonTV))
+            tapMain.allowedPressTypes = [NSNumber (value: UIPressType.select.rawValue)]
+            view.addGestureRecognizer(tapMain)
+            
+            let tapPlayPauseMenu = UITapGestureRecognizer(target: self, action: #selector(didPressPlayOrMenuButtonTV))
+            tapPlayPauseMenu.allowedPressTypes = [NSNumber(value: UIPressType.playPause.rawValue), NSNumber(value: UIPressType.menu.rawValue)]
+            view.addGestureRecognizer(tapPlayPauseMenu)
+        #endif
+        
+        
+    }
+    
+    /// Menu controls menu/play button pressed
+    @objc private func didPressPlayOrMenuButtonTV() {
+        
+        guard !SwiftyAdsCustom.shared.isShowing else {
+            SwiftyAdsCustom.shared.dismiss()
+            return
+        }
+        
+        // other coded if needed e.g menu navigation
+    }
+    
+    /// Pressed select button
+    @objc private func didPressSelectButtonTV() {
+        
+        guard !SwiftyAdsCustom.shared.isShowing else {
+            SwiftyAdsCustom.shared.download()
+            return
+        }
+        
+        // other coded if needed e.g menu navigation
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

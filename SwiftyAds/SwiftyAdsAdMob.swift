@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v6.0
+//    v6.0.1
 
 import GoogleMobileAds
 
@@ -65,7 +65,7 @@ final class SwiftyAdsAdMob: NSObject {
     private var intervalCounter = 0
     
     /// Removed ads
-    private var removedAds = false
+    private var isRemovedAds = false
     
     // MARK: - Init
     
@@ -103,14 +103,14 @@ final class SwiftyAdsAdMob: NSObject {
     ///
     /// - parameter delay: The delay until showing the ad. Defaults to 0.
     func showBanner(withDelay delay: TimeInterval = 0.1) {
-        guard !removedAds else { return }
+        guard !isRemovedAds else { return }
         
         Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(showingBanner), userInfo: nil, repeats: false)
     }
     
     /// Show banner ad
     @objc fileprivate func showingBanner() {
-        guard !removedAds else { return }
+        guard !isRemovedAds else { return }
         
         loadBannerAd()
     }
@@ -121,7 +121,7 @@ final class SwiftyAdsAdMob: NSObject {
     ///
     /// - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
     func showInterstitial(withInterval interval: Int = 0) {
-        guard !removedAds else { return }
+        guard !isRemovedAds else { return }
         
         guard let interstitialAd = interstitialAd , interstitialAd.isReady else {
             print("AdMob interstitial is not ready, reloading...")
@@ -146,7 +146,7 @@ final class SwiftyAdsAdMob: NSObject {
     ///
     /// - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
     func showRewardedVideo(withInterval interval: Int = 0) {
-        guard !removedAds else { return }
+        guard !isRemovedAds else { return }
         
         guard let rewardedVideoAd = rewardedVideoAd , rewardedVideoAd.isReady else {
             print("AdMob reward video is not ready, reloading...")
@@ -187,7 +187,7 @@ final class SwiftyAdsAdMob: NSObject {
     func removeAll() {
         print("Removed all ads")
         
-        removedAds = true
+        isRemovedAds = true
         removeBanner()
         interstitialAd?.delegate = nil
         rewardedVideoAd?.delegate = nil

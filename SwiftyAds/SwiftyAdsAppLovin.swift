@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v6.0
+//    v6.0.1
 
 import Foundation
 
@@ -58,7 +58,7 @@ final class SwiftyAdsAppLovin: NSObject {
     private var intervalCounter = 0
     
     /// Removed ads
-    private var removedAds = false
+    private var isRemovedAds = false
     
     // MARK: - Init
     
@@ -77,7 +77,7 @@ final class SwiftyAdsAppLovin: NSObject {
     ///
     /// - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
     func showInterstitial(withInterval interval: Int = 0) {
-        guard !removedAds else { return }
+        guard !isRemovedAds else { return }
         
         guard ALInterstitialAd.isReadyForDisplay() else {
             print("AppLovin interstitial ad not ready, reloading...")
@@ -102,7 +102,7 @@ final class SwiftyAdsAppLovin: NSObject {
     ///
     /// - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
     func showRewardedVideo(withInterval interval: Int = 0) {
-        //guard !removedAds else { return }
+        //guard !isRemovedAds else { return }
         
         guard ALIncentivizedInterstitialAd.isReadyForDisplay() else {
             print("AppLovin reward video not ready, reloading...")
@@ -125,7 +125,7 @@ final class SwiftyAdsAppLovin: NSObject {
     
     /// Remove ads (in app purchases)
     func removeAll() {
-        removedAds = true
+        isRemovedAds = true
     }
 }
 

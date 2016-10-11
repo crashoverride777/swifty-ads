@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v6.0
+//    v6.0.1
 
 import StoreKit
 
@@ -62,6 +62,9 @@ final class SwiftyAdsCustom {
     
     /// Delegate
     public weak var delegate: SwiftyAdsDelegate?
+    
+    /// Is showing
+    public var isShowing = false
     
     /// View
     fileprivate let adView = UIView()
@@ -119,13 +122,7 @@ final class SwiftyAdsCustom {
     private var intervalCounter = 0
     
     /// Removed ads
-    private var removedAds = false
-    
-    /// TV gestures
-    #if os(tvOS)
-    fileprivate var pressedMainGesture: UITapGestureRecognizer?
-    fileprivate var pressedMenuGesture: UITapGestureRecognizer?
-    #endif
+    private var isRemovedAds = false
     
     // MARK: - Init
     
@@ -138,7 +135,8 @@ final class SwiftyAdsCustom {
     /// - parameter random: If set to true will pick random ad from inventory. Defaults to false. Will not work if newestAd is set to true.
     /// - parameter interval: The interval when to show the ad, e.g when set to 4 ad will be shown every 4th time. Defaults to 0.
     public func show(newest: Bool = false, random: Bool = false, withInterval interval: Int = 0) {
-        guard !removedAds && !Inventory.all.isEmpty else { return }
+        guard !isRemovedAds && !Inventory.all.isEmpty else { return }
+        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
         
         if interval != 0 {
             intervalCounter += 1
@@ -184,28 +182,17 @@ final class SwiftyAdsCustom {
             imageView.addGestureRecognizer(downloadTapGestureRecognizer)
             adView.addSubview(closeButton)
         #endif
-        #if os(tvOS)
-            let view = UIApplication.shared.keyWindow?.rootViewController?.view // does not work if adView is used
-            
-            pressedMainGesture = UITapGestureRecognizer(target: self, action: #selector(download))
-            pressedMainGesture?.allowedPressTypes = [NSNumber(value: UIPressType.select.rawValue)]
-            view?.addGestureRecognizer(pressedMainGesture!)
-            
-            pressedMenuGesture = UITapGestureRecognizer(target: self, action: #selector(dismiss))
-            pressedMenuGesture?.allowedPressTypes = [NSNumber(value: UIPressType.menu.rawValue)]
-            view?.addGestureRecognizer(pressedMenuGesture!)
-        #endif
         
         validAd.layer.zPosition = 5000
-        let rootViewController = UIApplication.shared.keyWindow?.rootViewController
-        rootViewController?.view?.addSubview(validAd)
+        rootViewController.view?.addSubview(validAd)
         
         Inventory.current += 1
+        isShowing = true
     }
     
-    /// Remove
+    /// Remove (e.g in app purchases)
     public func remove() {
-        removedAds = true
+        isRemovedAds = true
         removeFromSuperview()
     }
     
@@ -220,7 +207,7 @@ final class SwiftyAdsCustom {
 extension SwiftyAdsCustom {
 
     /// Handle download (tvOS only)
-    @objc fileprivate func download() {
+    @objc public func download() {
         dismiss()
         
         #if os(iOS)
@@ -235,7 +222,7 @@ extension SwiftyAdsCustom {
     }
     
     /// Handle close (tvOS only)
-    @objc fileprivate func dismiss() {
+    @objc public func dismiss() {
         removeFromSuperview()
         delegate?.adDidClose()
     }
@@ -279,23 +266,11 @@ private extension SwiftyAdsCustom {
     
     /// Remove custom ad
     func removeFromSuperview() {
+        isShowing = false
         for gestureRecognizer in imageView.gestureRecognizers ?? [] {
             imageView.removeGestureRecognizer(gestureRecognizer)
         }
-        
-        #if os(tvOS)
-            let view = UIApplication.shared.keyWindow?.rootViewController?.view
-            
-            if let pressedMainGesture = pressedMainGesture {
-                view?.removeGestureRecognizer(pressedMainGesture)
-                self.pressedMainGesture = nil
-            }
-            if let pressedMenuGesture = pressedMenuGesture {
-                view?.removeGestureRecognizer(pressedMenuGesture)
-                self.pressedMenuGesture = nil
-            }
-        #endif
-        
+       
         closeButton.removeFromSuperview()
         imageView.removeFromSuperview()
         adView.removeFromSuperview()
