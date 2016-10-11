@@ -220,7 +220,7 @@ extension GameScene: SwiftyAdsDelegate {
 
 - tvOS controls
 
-On tvOS you need to manually handle the download and dismiss button. Make sure that when a custom ad is showing you are calling these 2 methods. I use the menu button for dismissal and the select button (press touchpad) for download.
+On tvOS you need to manually handle the download and dismiss button when showing a custom ad. I use the menu button for dismissal and the select button (press touchpad) for download.
 
 ```swift
 if SwiftAdsCustom.shared.isShowing {
@@ -378,7 +378,7 @@ extension GameScene: SwiftyAdsDelegate {
 
 - tvOS controls
 
-On tvOS you need to manually handle the download and dismiss button. Make sure that when a custom ad is showing you are calling these 2 methods. I use the menu button for dismissal and the select button (press touchpad) for download.
+On tvOS you need to manually handle the download and dismiss button when showing a custom ad. I use the menu button for dismissal and the select button (press touchpad) for download.
 
 ```swift
 if SwiftAdsCustom.shared.isShowing {
