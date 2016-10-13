@@ -8,6 +8,10 @@ https://developer.apple.com/library/ios/technotes/tn2286/_index.html
 
 This helper will also correctly preload Interstitial Ads and Rewarded Videos ads automatically so that they are always ready to be shown instantly when requested.  
 
+# Cocoa Pods
+
+I know that the current way of copying the .swift file(s) into your project sucks and is bad practice, so I am working hard to finally support CocoaPods very soon. The only problem I have with this repository is that it requires 3rd party SDKs, so it will not be as easy to do compared to my other repositories.
+
 # Pre-setup: -D DEBUG" custom flag
 
 This step is important because otherwise the AdMob helper will not automatically change the AdUnitID from test to release.
