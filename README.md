@@ -10,7 +10,7 @@ This helper will also correctly preload Interstitial Ads and Rewarded Videos ads
 
 # Cocoa Pods
 
-I know that the current way of copying the .swift file(s) into your project sucks and is bad practice, so I am working hard to finally support CocoaPods very soon. The only problem I have with this repository is that it requires 3rd party SDKs, so it will not be as easy to do compared to my other repositories.
+I know that the current way of copying the .swift file(s) into your project sucks and is bad practice, so I am working hard to finally support CocoaPods very soon. The only problem I have with this repository is the requirement of 3rd party SDKs, so it will not be as easy to do compared to my other repositories.
 
 # Pre-setup: -D DEBUG" custom flag
 
