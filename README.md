@@ -512,6 +512,10 @@ Enjoy
 
 # Release Notes
 
+- v6.0.2
+
+Cleanup
+
 - v6.0.1
 
 Custom ads on tvOS need to be removed manually again. Please check instructions.
