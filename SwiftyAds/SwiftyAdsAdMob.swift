@@ -43,9 +43,13 @@ final class SwiftyAdsAdMob: NSObject {
     weak var delegate: SwiftyAdsDelegate?
     
     /// Check if reward video is ready (e.g to hide a reward video button)
+    /// Will try to reload an ad if it returns false.
     var isRewardedVideoReady: Bool {
-        guard let rewardedVideoAd = rewardedVideoAd else { return false }
-        return rewardedVideoAd.isReady
+        guard let rewardedVideo = rewardedVideoAd, rewardedVideo.isReady else {
+            rewardedVideoAd = loadRewardedVideoAd()
+            return false
+        }
+        return true
     }
     
     /// Presenting view controller

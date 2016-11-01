@@ -43,8 +43,13 @@ final class SwiftyAdsAppLovin: NSObject {
     weak var delegate: SwiftyAdsDelegate?
     
     /// Check if reward video is ready (e.g to hide a reward video button)
+    /// Will try to reload an ad if it returns false.
     var isRewardedVideoReady: Bool {
-        return ALIncentivizedInterstitialAd.isReadyForDisplay()
+        guard ALIncentivizedInterstitialAd.isReadyForDisplay() else {
+            ALIncentivizedInterstitialAd.shared().preloadAndNotify(self)
+            return false
+        }
+        return true
     }
     
     /// Is watching reward video
