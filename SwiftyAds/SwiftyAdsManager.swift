@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v6.0.1
+//    v6.0.2
 
 import Foundation
 
@@ -79,6 +79,9 @@ final class SwiftyAdsManager {
     /// Interval counter
     private var intervalCounter = 0
     
+    /// Removed ads
+    var isRemovedAds = false
+    
     // MARK: - Init 
     
     /// Private singleton init
@@ -101,6 +104,8 @@ final class SwiftyAdsManager {
     ///
     /// - parameter delay: The delay until showing the ad. Defaults to 0.
     func showBanner(withDelay delay: TimeInterval = 0) {
+        guard !isRemovedAds else { return }
+        
         #if os(iOS)
             SwiftyAdsAdMob.shared.showBanner(withDelay: delay)
         #endif
@@ -112,6 +117,7 @@ final class SwiftyAdsManager {
     ///
     /// - parameter interval: The interval of when to show the ad. Defaults to 0.
     func showInterstitial(withInterval interval: Int = 0) {
+        guard !isRemovedAds else { return }
         
         if interval != 0 {
             intervalCounter += 1
@@ -162,6 +168,8 @@ final class SwiftyAdsManager {
     
     /// Remove all
     func removeAll() {
+        isRemovedAds = true
+        
         SwiftyAdsCustom.shared.remove()
         
         #if os(iOS)

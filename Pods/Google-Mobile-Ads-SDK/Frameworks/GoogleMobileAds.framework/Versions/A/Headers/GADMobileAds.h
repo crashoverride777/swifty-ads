@@ -7,6 +7,10 @@
 
 #import <Foundation/Foundation.h>
 
+#import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+
+GAD_ASSUME_NONNULL_BEGIN
+
 /// Google Mobile Ads SDK settings.
 @interface GADMobileAds : NSObject
 
@@ -47,3 +51,5 @@
 - (BOOL)isSDKVersionAtLeastMajor:(NSInteger)major minor:(NSInteger)minor patch:(NSInteger)patch;
 
 @end
+
+GAD_ASSUME_NONNULL_END

@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v6.0.1
+//    v6.0.2
 
 import GoogleMobileAds
 
@@ -281,7 +281,7 @@ fileprivate extension SwiftyAdsAdMob {
 
 extension SwiftyAdsAdMob: GADBannerViewDelegate {
     
-    func adViewDidReceiveAd(_ bannerView: GADBannerView!) {
+    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
         guard let presentingViewController = presentingViewController else { return }
         print("AdMob banner did receive ad from: \(bannerView.adNetworkClassName)")
         
@@ -292,26 +292,26 @@ extension SwiftyAdsAdMob: GADBannerViewDelegate {
         UIView.commitAnimations()
     }
     
-    func adViewWillPresentScreen(_ bannerView: GADBannerView!) { // gets called only in release mode
+    func adViewWillPresentScreen(_ bannerView: GADBannerView) { // gets called only in release mode
         print("AdMob banner clicked")
         delegate?.adDidOpen()
     }
     
-    func adViewWillDismissScreen(_ bannerView: GADBannerView!) {
+    func adViewWillDismissScreen(_ bannerView: GADBannerView) {
         print("AdMob banner about to be closed")
     }
     
-    func adViewDidDismissScreen(_ bannerView: GADBannerView!) { // gets called in only release mode
+    func adViewDidDismissScreen(_ bannerView: GADBannerView) { // gets called in only release mode
         print("AdMob banner closed")
         delegate?.adDidClose()
     }
     
-    func adViewWillLeaveApplication(_ bannerView: GADBannerView!) {
+    func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
         print("AdMob banner will leave application")
         delegate?.adDidOpen()
     }
     
-    func adView(_ bannerView: GADBannerView!, didFailToReceiveAdWithError error: GADRequestError!) {
+    func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
         print(error.localizedDescription)
         
         guard let presentingViewController = presentingViewController else { return }
@@ -329,36 +329,35 @@ extension SwiftyAdsAdMob: GADBannerViewDelegate {
 
 extension SwiftyAdsAdMob: GADInterstitialDelegate {
     
-    func interstitialDidReceiveAd(_ ad: GADInterstitial!) {
+    func interstitialDidReceiveAd(_ ad: GADInterstitial) {
         print("AdMob interstitial did receive ad from: \(ad.adNetworkClassName)")
     }
     
-    func interstitialWillPresentScreen(_ ad: GADInterstitial!) {
+    func interstitialWillPresentScreen(_ ad: GADInterstitial) {
         print("AdMob interstitial will present")
         delegate?.adDidOpen()
     }
     
-    func interstitialWillDismissScreen(_ ad: GADInterstitial!) {
+    func interstitialWillDismissScreen(_ ad: GADInterstitial) {
         print("AdMob interstitial about to be closed")
     }
     
-    func interstitialDidDismissScreen(_ ad: GADInterstitial!) {
+    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
         print("AdMob interstitial closed, reloading...")
         delegate?.adDidClose()
         interstitialAd = loadInterstitialAd()
     }
     
-    func interstitialWillLeaveApplication(_ ad: GADInterstitial!) {
+    func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
         print("AdMob interstitial will leave application")
         delegate?.adDidOpen()
     }
     
-    func interstitialDidFail(toPresentScreen ad: GADInterstitial!) {
+    func interstitialDidFail(toPresentScreen ad: GADInterstitial) {
         print("AdMob interstitial did fail to present")
-        // Not sure if to reload here
     }
     
-    func interstitial(_ ad: GADInterstitial!, didFailToReceiveAdWithError error: GADRequestError!) {
+    func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
         print(error.localizedDescription)
     }
 }
@@ -391,10 +390,8 @@ extension SwiftyAdsAdMob: GADRewardBasedVideoAdDelegate {
         delegate?.adDidOpen()
     }
     
-    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didFailToLoadWithError error: Error?) {
-        if let error = error {
-            print(error.localizedDescription)
-        }
+    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didFailToLoadWithError error: Error) {
+        print(error.localizedDescription)
     }
     
     func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didRewardUserWith reward: GADAdReward) {

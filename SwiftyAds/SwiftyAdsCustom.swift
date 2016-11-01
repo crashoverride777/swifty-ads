@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v6.0.1
+//    v6.0.2
 
 import StoreKit
 
@@ -285,15 +285,17 @@ private extension SwiftyAdsCustom {
     func setupForOrientation() {
         guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
         
+        let iPad = UIDevice.current.userInterfaceIdiom == .pad
+        
         /// View
         adView.frame = rootViewController.view.frame
         
         /// Image view
         #if os(iOS)
             if UIScreen.main.bounds.height < UIScreen.main.bounds.width { // check if in landscape, works at startup
-                imageView.frame = CGRect(x: 0, y: 0, width: adView.frame.width / 1.2, height: adView.frame.height / 1.1)
+                let height = iPad ? adView.frame.height / 1.4 : adView.frame.height / 1.1
+                imageView.frame = CGRect(x: 0, y: 0, width: adView.frame.width / 1.2, height: height)
             } else {
-                let iPad = UIDevice.current.userInterfaceIdiom == .pad
                 let height = iPad ? adView.frame.height / 2 : adView.frame.height / 2.5
                 imageView.frame = CGRect(x: 0, y: 0, width: adView.frame.width / 1.05, height: height)
             }
@@ -316,7 +318,6 @@ private extension SwiftyAdsCustom {
         newGameLabel.center = CGPoint(x: imageView.frame.maxX - (headerFontSize / 1.1), y: imageView.frame.minY + headerFontSize / 1.05)
         
         /// Buttons
-        let iPad = UIDevice.current.userInterfaceIdiom == .pad
         let closeButtonSize: CGFloat = iPad ? 30 : 22
         closeButton.frame = CGRect(x: 0, y: 0, width: closeButtonSize, height: closeButtonSize)
         closeButton.center = CGPoint(x: imageView.frame.minX + (closeButtonSize / 1.5), y: imageView.frame.minY + (closeButtonSize / 1.5))

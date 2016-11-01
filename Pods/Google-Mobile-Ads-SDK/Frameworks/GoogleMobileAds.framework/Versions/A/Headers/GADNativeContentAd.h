@@ -26,9 +26,9 @@ GAD_ASSUME_NONNULL_BEGIN
 #pragma mark - Must be displayed
 
 /// Primary text headline.
-@property(nonatomic, readonly, copy) NSString *headline;
+@property(nonatomic, readonly, copy, GAD_NULLABLE) NSString *headline;
 /// Secondary text.
-@property(nonatomic, readonly, copy) NSString *body;
+@property(nonatomic, readonly, copy, GAD_NULLABLE) NSString *body;
 
 #pragma mark - Recommended to display
 

@@ -26,11 +26,11 @@ GAD_ASSUME_NONNULL_BEGIN
 #pragma mark - Must be displayed
 
 /// App title.
-@property(nonatomic, readonly, copy) NSString *headline;
+@property(nonatomic, readonly, copy, GAD_NULLABLE) NSString *headline;
 /// Text that encourages user to take some action with the ad. For example "Install".
-@property(nonatomic, readonly, copy) NSString *callToAction;
+@property(nonatomic, readonly, copy, GAD_NULLABLE) NSString *callToAction;
 /// Application icon.
-@property(nonatomic, readonly, strong) GADNativeAdImage *icon;
+@property(nonatomic, readonly, strong, GAD_NULLABLE) GADNativeAdImage *icon;
 
 #pragma mark - Recommended to display
 
