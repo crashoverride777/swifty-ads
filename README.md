@@ -177,6 +177,10 @@ SwiftyAdsManager.shared.showInterstitial()
 SwiftyAdsManager.shared.showInterstitial(withInterval: 4) // Shows an ad every 4th time
 SwiftyAdsManager.shared.showRewardedVideo()
 SwiftyAdsManager.shared.showRewardedVideo(withInterval: 4) // Shows an ad every 4th time
+
+if SwiftyAdsManager.shared.isRewardedVideoReady { // Will try to load an ad if it returns false
+    // add reward video button
+}
 ```
 
 - To remove Banner Ads, for example during gameplay 
@@ -267,6 +271,10 @@ SwiftyAdsAdMob.shared.showInterstitial()
 SwiftyAdsAdMob.shared.showInterstitial(withInterval: 4) // Shows an ad every 4th time
 SwiftyAdsAdMob.shared.showRewardedVideo()
 SwiftyAdsAdMob.shared.showRewardedVideo(withInterval: 4) // Shows an ad every 4th time
+
+if SwiftyAdsAdMob.shared.isRewardedVideoReady { // Will try to load an ad if it returns false
+    // add reward video button
+}
 ```
 
 - To remove Banner Ads, for example during gameplay 
@@ -425,6 +433,10 @@ SwiftyAdsAppLovin.shared.showInterstitial()
 SwiftyAdsAppLovin.shared.showInterstitial(withInterval: 4) // Show an ad every 4th time
 SwiftyAdsAppLovin.shared.showRewardedVideo()
 SwiftyAdsAppLovin.shared.showRewardedVideo(withInterval: 4) // Show an ad every 4th time
+
+if SwiftyAdsAppLovin.shared.isRewardedVideoReady { // Will try to load an ad if it returns false
+    // add reward video button
+}
 ```
 
 - To remove all Ads, mainly for in app purchases simply call 
