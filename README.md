@@ -540,4 +540,4 @@ Cleanup.
 
 Project has been renamed to SwiftyAds.
 
-No more source breaking changes after this update. All future changes will be handled with deprecated messages.
+No more source breaking changes unless after this update. All future changes will be handled with deprecated messages unless the whole API changes.
