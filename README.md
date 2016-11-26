@@ -117,133 +117,7 @@ or not show one at all.
 
 AppLovin reward videos on tvOS on the other hand need to be set up directly via their documentation as we are directly using their APIs. Go to applovin.com and follow the documentation on how to set up rewarded videos.
 
-# How to use full helper (iOS, tvOS and custom ads)
-
-If you do not wish to use the full helper please skip this part and go to the relevant section(s) after this one, e.g "How to only use AdMob".
-
-SETUP
-
-- Step 1: Copy the Ads folder into your project. This should include the files
-
-```swift
-SwiftyAdsDelegate.swift
-SwiftyAdsManager.swift 
-SwiftyAdsAdMob.swift // only needed for iOS target
-SwiftyAdsCustom.swift
-SwiftyAdsAppLovin.swift // only needed for tvOS target
-```
-
-Step 2: CustomAdSetUp (both project targets if needed)
-
-When your app launches setup your custom ads as soon as possible.
-
-```swift
-SwiftyAdsCustom.Inventory.all = [
-      SwiftyAdsCustom.Inventory(imageName: "AdAngryFlappies", appID: "991933749", isNewGame: false),
-      SwiftyAdsCustom.Inventory(imageName: "AdVertigus", appID: "1051292772", isNewGame: true)
-]
-```
-
-To make this as reusable as possible e.g if you have multiple projects and share the same file, you can inlude all your custom ads in the array directly in the CustomAds.swift file. The helper will automatically compare the bundle ID name to the ad image (including whitespaces and -) to see if they are the same and if so will move onto the next ad in the inventory.
-
-- Step 3: Setup Ads Manager (both targets if needed)
-
-In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
-
-```swift
-SwiftyAdsManager.shared.setup(customAdsInterval: 3, maxCustomAdsPerSession: 3)
-```
-
-- Step 4: SetUp AdMob (iOS target only)
-
-In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
-```swift
-let bannerID = "Enter your real id"
-let interstitialID = "Enter your real id"
-let rewardVideoID = "Enter your real id"
-
-SwiftyAdsAdMob.shared.setup(viewController: self, bannerID: bannerID, interID: interstitialID, rewardVideoID: rewardVideoID)
-```
-
-HOW TO USE
-
-AdsManager.swift is basically a manager of all the ad helpers to have 1 convinient place to call ads from all helpers. AdsManager.swift will automatically show the correct ad depending on your target (iOS or tvOS) and also mix in custom ads with your preferred settings.
-
-- To show an Ad simply call these anywhere you like in your project
-```swift
-SwiftyAdsManager.shared.showBanner() 
-SwiftyAdsManager.shared.showBanner(withDelay: 1) // Delay showing banner slightly eg when transitioning to new scene/view
-SwiftyAdsManager.shared.showInterstitial()
-SwiftyAdsManager.shared.showInterstitial(withInterval: 4) // Shows an ad every 4th time
-SwiftyAdsManager.shared.showRewardedVideo()
-SwiftyAdsManager.shared.showRewardedVideo(withInterval: 4) // Shows an ad every 4th time
-
-if SwiftyAdsManager.shared.isRewardedVideoReady { // Will try to load an ad if it returns false
-    // add reward video button
-}
-```
-
-- To remove Banner Ads, for example during gameplay 
-```swift
-SwiftyAdsManager.shared.removeBanner() 
-```
-
-- To remove all Ads, mainly for in app purchases simply call 
-```swift
-SwiftyAdsManager.shared.removeAll() 
-```
-
-NOTE: Remove Ads bool 
-
-This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method and afterwards all the methods to show banner and interstitial ads will not fire anymore and therefore require no further editing. 
-
-This will not stop rewarded videos from showing as they should have a dedicated button. Some reward videos are not skipabble and therefore should never be shown automatically. This way you can remove banner and interstitial ads but still have a rewarded videos button. 
-
-For permanent storage you will need to create your own "removedAdsProduct" property and save it in something like UserDefaults, or preferably iOS Keychain. Than call this method when your app launches after you have set up the helpers.
-
-- Implement the delegate methods.
-
-Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
-to receive delegate callbacks.
-```swift
-SwiftyAdsManager.shared.delegate = self 
-```
-
-Than create an extension conforming to the AdsDelegate protocol.
-```swift
-extension GameScene: SwiftyAdsDelegate {
-    func adDidOpen() {
-        // pause your game/app if needed
-    }
-    func adDidClose() { 
-       // resume your game/app if needed
-    }
-    func adDidRewardUser(withAmount rewardAmount: Int) {
-        self.coins += rewardAmount
-       // Reward amount is a DecimelNumber I converted to an Int for convenience. 
-       // You can ignore this and hardcore the value if you would like but than you cannot change the value dynamically without having to update your app.
-       
-       // leave empty if unused
-    }
-}
-```
-
-- tvOS controls
-
-On tvOS you need to manually handle the download and dismiss button when showing a custom ad. I use the menu button for dismissal and the select button (press touchpad) for download.
-
-```swift
-if SwiftAdsCustom.shared.isShowing {
-   SwiftyAdsCustom.shared.download()
-}
-
-if SwiftAdsCustom.shared.isShowing {
-    SwiftAdsCustom.shared.dismiss()
-}
-```
-# How to only use AdMob
-
-If you dont wish to use the full helper and just want to use adMob follow these steps
+# How to use AdMob
 
 SETUP
 
@@ -324,9 +198,7 @@ extension GameScene: SwiftyAdsDelegate {
 }
 ```
 
-# How to only use CustomAds
-
-If you dont wish to use the full helper and just want to use custom ads follow these steps
+# How to use CustomAds
 
 SETUP
 
@@ -406,9 +278,7 @@ if SwiftAdsCustom.shared.isShowing {
 }
 ```
 
-# How to only use App Lovin 
-
-If you dont wish to use the full helper and just want to use AppLovin follow these steps
+# How to use App Lovin 
 
 SETUP
 
@@ -479,17 +349,6 @@ extension GameScene: SwiftyAdsDelegate {
 }
 ```
 
-# How to only use 2 helpers 
-
-If you only want to use 2 helpers, e.g AdMob.swift and CustomAds.swift, than follow the same steps as described in
-"How to only use AdMob" and "How to only use CustomAds".
-
-You will than need to create your own logic to handle showing real ads from adMob and custom ads. 
-
-Alternatively you could include the AdsManager.swift file. Than Follow the steps as described in "How to use full helper"
-ingorning all the parts about the helper you are not using, in this example AppLovin. 
-Than go to AdsManager.swift and delete all the code that are throwing errors, in this example all the code related to AppLovin.
-
 # Supporting both landscape and portrait orientation
 
 - If your app supports both portrait and landscape orientation go to the ViewController and add the following method.
@@ -529,6 +388,10 @@ Please feel free to let me know about any bugs or improvements, I am by no means
 Enjoy
 
 # Release Notes
+
+- v6.1
+
+Removed the AdsManager class as I felt like it was complicating things uncecessarily. This should also make it easier for people to pick and choose what they need and make the helper more flexible and clearer to understand.
 
 - v6.0.3
 
