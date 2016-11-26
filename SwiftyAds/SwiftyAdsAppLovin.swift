@@ -104,21 +104,13 @@ final class SwiftyAdsAppLovin: NSObject {
     }
     
     /// Show rewarded video ad
-    ///
-    /// - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
-    func showRewardedVideo(withInterval interval: Int = 0) {
+    func showRewardedVideo() {
         guard ALIncentivizedInterstitialAd.isReadyForDisplay() else {
             print("AppLovin reward video not ready, reloading...")
             ALIncentivizedInterstitialAd.shared().preloadAndNotify(self)
             return
         }
-        
-        if interval != 0 {
-            intervalCounter += 1
-            guard intervalCounter >= interval else { return }
-            intervalCounter = 0
-        }
-        
+    
         isWatchingRewardedVideo = true
         
         ALIncentivizedInterstitialAd.shared().adDisplayDelegate = self

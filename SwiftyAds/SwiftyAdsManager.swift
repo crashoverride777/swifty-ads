@@ -145,15 +145,13 @@ final class SwiftyAdsManager {
     // MARK: - Show Reward Video
     
     /// Show rewarded video ad
-    ///
-    /// - parameter interval: The interval of when to show the ad. Defaults to 0.
-    func showRewardedVideo(withInterval interval: Int = 0) {
+    func showRewardedVideo() {
         #if os(iOS)
-            SwiftyAdsAdMob.shared.showRewardedVideo(withInterval: interval)
+            SwiftyAdsAdMob.shared.showRewardedVideo()
         #endif
         
         #if os(tvOS)
-            SwiftyAdsAppLovin.shared.showRewardedVideo(withInterval: interval)
+            SwiftyAdsAppLovin.shared.showRewardedVideo()
         #endif
     }
     

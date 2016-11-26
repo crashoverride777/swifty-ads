@@ -145,20 +145,12 @@ final class SwiftyAdsAdMob: NSObject {
     // MARK: - Show Reward Video
     
     /// Show rewarded video ad
-    ///
-    /// - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
-    func showRewardedVideo(withInterval interval: Int = 0) {
+    func showRewardedVideo() {
         guard let rootViewController = presentingViewController?.view?.window?.rootViewController else { return }
         guard let rewardedVideoAd = rewardedVideoAd , rewardedVideoAd.isReady else {
             print("AdMob reward video is not ready, reloading...")
             self.rewardedVideoAd = loadRewardedVideoAd()
             return
-        }
-        
-        if interval != 0 {
-            intervalCounter += 1
-            guard intervalCounter >= interval else { return }
-            intervalCounter = 0
         }
         
         print("AdMob reward video is showing")
