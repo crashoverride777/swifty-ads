@@ -199,7 +199,7 @@ NOTE: Remove Ads bool
 
 This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method and afterwards all the methods to show banner and interstitial ads will not fire anymore and therefore require no further editing. 
 
-This will not stop rewarded videos from showing as they should have a dedicated button. Some reward videos are not skipabble and therefore should never be shown automatically. This way you can remove banner and interstitial ads, e.g when remove ads button is pressed, but you can still have a rewarded videos button. 
+This will not stop rewarded videos from showing as they should have a dedicated button. Some reward videos are not skipabble and therefore should never be shown automatically. This way you can remove banner and interstitial ads but still have a rewarded videos button. 
 
 For permanent storage you will need to create your own "removedAdsProduct" property and save it in something like UserDefaults, or preferably iOS Keychain. Than call this method when your app launches after you have set up the helpers.
 
@@ -295,7 +295,7 @@ NOTE: Remove Ads bool
 
 This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method and afterwards all the methods to show banner and interstitial ads will not fire anymore and therefore require no further editing. 
 
-This will not stop rewarded videos from showing as they should have a dedicated button. Some reward videos are not skipabble and therefore should never be shown automatically. This way you can remove banner and interstitial ads, e.g when remove ads button is pressed, but you can still have a rewarded videos button. 
+This will not stop rewarded videos from showing as they should have a dedicated button. Some reward videos are not skipabble and therefore should never be shown automatically. This way you can remove banner and interstitial ads but still have a rewarded videos button. 
 
 For permanent storage you will need to create your own "removedAdsProduct" property and save it in something like UserDefaults, or preferably iOS Keychain. Than call this method when your app launches after you have set up the helper.
 
@@ -454,7 +454,7 @@ NOTE: Remove Ads bool
 
 This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method and afterwards all the methods to show banner and interstitial ads will not fire anymore and therefore require no further editing. 
 
-This will not stop rewarded videos from showing as they should have a dedicated button. Some reward videos are not skipabble and therefore should never be shown automatically. This way you can remove banner and interstitial ads, e.g when remove ads button is pressed, but you can still have a rewarded videos button. 
+This will not stop rewarded videos from showing as they should have a dedicated button. Some reward videos are not skipabble and therefore should never be shown automatically. This way you can remove banner and interstitial ads but still have a rewarded videos button. 
 
 For permanent storage you will need to create your own "removedAdsProduct" property and save it in something like UserDefaults, or preferably iOS Keychain. Than call this method when your app launches after you have set up the helper.
 
