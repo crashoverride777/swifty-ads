@@ -3,10 +3,7 @@
 A collection of helper classes to integrate Ads from AdMob, AppLovin (tvOS) as well as your own custom Ads. 
 With these helpers you can easily show Banner Ads, Interstitial Ads, RewardVideoAds and your own custom Ads anywhere in your project.
 
-This helper creates whats called a shared Banner which is the recommended way to show banner ads. To read more about shared banner ads you can read this documentation from Apple.
-https://developer.apple.com/library/ios/technotes/tn2286/_index.html
-
-This helper will also correctly preload Interstitial Ads and Rewarded Videos ads automatically so that they are always ready to be shown instantly when requested.  
+This helper follows all the best practices in regards to ads, like creating shared banners and correctly preloading interstitial and rewarded videos so they are always ready to show.
 
 # Cocoa Pods
 
@@ -16,10 +13,10 @@ In the meantime I would create a folder on your Mac, called something like Share
 
 # Pre-setup: -D DEBUG" custom flag
 
-This step is important because otherwise the AdMob helper will not automatically change the AdUnitID from test to release.
-This is also useful for things such as hiding print statments so you should not forget to include this step.
+AdMob uses 2 types of AdUnit IDs, 1 for testing and 1 for release. You should not test live ads when you are testing your app.
+With this step the helper will not automatically change the AdUnitID from test to release. This is also useful for things such as hiding print statments so you should not forget to include this step.
 
-Click on Targets (left project sideBar, at the top) -> BuildSettings. Than underneath buildSettings next to the search bar, on the left there should be buttons called Basic, All, Combined and Level. Click on All and than you should be able to scroll down in buildSettings and find the section called SwiftCompiler-CustomFlags. Click on other flags and than debug and add a custom flag named -D DEBUG
+Click on Targets (left project sideBar, at the top) -> BuildSettings. Than underneath buildSettings next to the search bar, on the left there should be buttons called Basic, All, Combined and Level. Click on All and than you should be able to scroll down in buildSettings and find the section called SwiftCompiler-CustomFlags (alternatively use the search bar). Click on other flags and than debug and add a custom flag named -D DEBUG.
 
 http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
 
@@ -109,15 +106,16 @@ Note: Mediation will not work on tvOS because the AdMob SDK does not support it,
 
 - AdMob
 
-Admob reward videos will only work when using a 3rd party mediation network such as Chartboost. Read the AdMob rewarded video guidlines 
+Admob reward videos will only work when using a 3rd party mediation network such as Chartboost or Vungle. Read the AdMob rewarded video guidlines 
 
 https://developers.google.com/admob/ios/rewarded-video
 
-and your 3rd party mediation of choice ad network guidlines to set up reward videos correctly. AdMob reward videos will show a black full screen ad when using the test AdUnitID. I have not figured out yet how to test ads on AdMob that come from 3rd party mediation networks without using the real AdUnitID.
+and your 3rd party mediation of choice ad network guidlines to set up reward videos correctly. This will unclude installing their SDK and mediation adapters. AdMob reward videos will either show a black full screen ad when using the test AdUnitID
+or not show one at all.
 
 - AppLovin
 
-AppLovin reward videos on the other hand need to be set up directly via their documentation as we are directly using their APIs. Go to applovin.com and follow the documentation on how to set up rewarded videos.
+AppLovin reward videos on tvOS on the other hand need to be set up directly via their documentation as we are directly using their APIs. Go to applovin.com and follow the documentation on how to set up rewarded videos.
 
 # How to use full helper (iOS, tvOS and custom ads)
 
