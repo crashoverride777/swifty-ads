@@ -2,12 +2,10 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "VertigusAd-Template@1x.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "VertigusAd-Template@2x.png",
       "scale" : "2x"
     },
     {

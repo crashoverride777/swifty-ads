@@ -161,7 +161,9 @@ final class SwiftyAdsCustom {
         
         let noAppNameFound = "NoAppNameFound"
         let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? noAppNameFound
-        if Inventory.all[adInInventory].imageName.contains(appName) || appName == noAppNameFound {
+        let appNameNoSpaces = appName.replacingOccurrences(of: " ", with: "")
+        let appNameNoSpacesAndDash = appNameNoSpaces.replacingOccurrences(of: "-", with: "")
+        if Inventory.all[adInInventory].imageName.contains(appNameNoSpacesAndDash) || appNameNoSpacesAndDash == noAppNameFound {
             adInInventory += 1
             Inventory.current += 1
         }
