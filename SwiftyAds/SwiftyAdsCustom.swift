@@ -35,6 +35,14 @@ fileprivate func getAppStoreURL(forAppID id: String) -> String {
     #endif
 }
 
+/// String helper
+private extension String {
+    var lowerCasedNoSpacesAndHyphens: String {
+        let noSpaces = replacingOccurrences(of: " ", with: "")
+        return noSpaces.replacingOccurrences(of: "-", with: "").lowercased()
+    }
+}
+
 /**
  SwiftyAdsCustom
  
@@ -161,9 +169,9 @@ final class SwiftyAdsCustom {
         
         let noAppNameFound = "NoAppNameFound"
         let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? noAppNameFound
-        let appNameNoSpaces = appName.replacingOccurrences(of: " ", with: "")
-        let appNameNoSpacesAndDash = appNameNoSpaces.replacingOccurrences(of: "-", with: "")
-        if Inventory.all[adInInventory].imageName.contains(appNameNoSpacesAndDash) || appNameNoSpacesAndDash == noAppNameFound {
+        let adName = Inventory.all[adInInventory].imageName
+        
+        if adName.lowerCasedNoSpacesAndHyphens.contains(appName.lowerCasedNoSpacesAndHyphens) || appName == noAppNameFound {
             adInInventory += 1
             Inventory.current += 1
         }
