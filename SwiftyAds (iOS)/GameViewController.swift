@@ -15,8 +15,8 @@ class GameViewController: UIViewController {
      
         // Custom ad inventory
         SwiftyAdsCustom.Inventory.all = [
-            SwiftyAdsCustom.Inventory(imageName: "AdAngryFlappies", appID: "991933749", isNewGame: false),
-            SwiftyAdsCustom.Inventory(imageName: "AdVertigus", appID: "1051292772", isNewGame: true)
+            SwiftyAdsCustom.Inventory(imageName: "AdVertigus", appID: "1051292772", isNewGame: true),
+            SwiftyAdsCustom.Inventory(imageName: "AdAngryFlappies", appID: "991933749", isNewGame: false)
         ]
         
         // Set up ad Mob

@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v6.0.2
+//    v6.0.3
 
 import GoogleMobileAds
 
@@ -114,8 +114,6 @@ final class SwiftyAdsAdMob: NSObject {
     
     /// Show banner ad
     @objc fileprivate func showingBanner() {
-        guard !isRemovedAds else { return }
-        
         loadBannerAd()
     }
     
@@ -126,6 +124,7 @@ final class SwiftyAdsAdMob: NSObject {
     /// - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
     func showInterstitial(withInterval interval: Int = 0) {
         guard !isRemovedAds else { return }
+        guard let presentingViewController = presentingViewController?.view?.window?.rootViewController else { return }
         
         guard let interstitialAd = interstitialAd , interstitialAd.isReady else {
             print("AdMob interstitial is not ready, reloading...")
@@ -140,7 +139,6 @@ final class SwiftyAdsAdMob: NSObject {
         }
         
         print("AdMob interstitial is showing")
-        guard let presentingViewController = presentingViewController?.view?.window?.rootViewController else { return }
         interstitialAd.present(fromRootViewController: presentingViewController)
     }
     
@@ -150,8 +148,7 @@ final class SwiftyAdsAdMob: NSObject {
     ///
     /// - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
     func showRewardedVideo(withInterval interval: Int = 0) {
-        guard !isRemovedAds else { return }
-        
+        guard let rootViewController = presentingViewController?.view?.window?.rootViewController else { return }
         guard let rewardedVideoAd = rewardedVideoAd , rewardedVideoAd.isReady else {
             print("AdMob reward video is not ready, reloading...")
             self.rewardedVideoAd = loadRewardedVideoAd()
@@ -165,7 +162,6 @@ final class SwiftyAdsAdMob: NSObject {
         }
         
         print("AdMob reward video is showing")
-        guard let rootViewController = presentingViewController?.view?.window?.rootViewController else { return }
         rewardedVideoAd.present(fromRootViewController: rootViewController)
     }
     
@@ -201,8 +197,7 @@ final class SwiftyAdsAdMob: NSObject {
     
     /// Orientation changed
     func adjustForOrientation() {
-        guard let presentingViewController = presentingViewController else { return }
-        guard let bannerAd = bannerAd else { return }
+        guard let presentingViewController = presentingViewController, let bannerAd = bannerAd else { return }
         
         print("AdMob banner orientation adjusted")
         

@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v6.0.2
+//    v6.0.3
 
 import Foundation
 
@@ -107,8 +107,6 @@ final class SwiftyAdsAppLovin: NSObject {
     ///
     /// - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
     func showRewardedVideo(withInterval interval: Int = 0) {
-        //guard !isRemovedAds else { return }
-        
         guard ALIncentivizedInterstitialAd.isReadyForDisplay() else {
             print("AppLovin reward video not ready, reloading...")
             ALIncentivizedInterstitialAd.shared().preloadAndNotify(self)

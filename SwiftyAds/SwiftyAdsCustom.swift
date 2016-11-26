@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v6.0.2
+//    v6.0.3
 
 import StoreKit
 
@@ -338,6 +338,8 @@ private class AppStoreViewController: NSObject {
     
     /// Open app store controller for app ID
     fileprivate func open(forAppID appID: String) {
+        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
+        
         let storeViewController = SKStoreProductViewController()
         storeViewController.delegate = self
         
@@ -350,8 +352,7 @@ private class AppStoreViewController: NSObject {
         }
         
         /// Present, call outside loadProductsWithParemeter so there is no delay. VC has own loading indicator
-        let rootViewController = UIApplication.shared.keyWindow?.rootViewController
-        rootViewController?.present(storeViewController, animated: true, completion: nil)
+        rootViewController.present(storeViewController, animated: true, completion: nil)
     }
 }
 
