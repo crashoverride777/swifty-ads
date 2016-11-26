@@ -145,8 +145,7 @@ SwiftyAdsAdMob.shared.showBanner()
 SwiftyAdsAdMob.shared.showBanner(withDelay: 1) // Delay showing banner slightly eg when transitioning to new scene/view
 SwiftyAdsAdMob.shared.showInterstitial()
 SwiftyAdsAdMob.shared.showInterstitial(withInterval: 4) // Shows an ad every 4th time
-SwiftyAdsAdMob.shared.showRewardedVideo()
-SwiftyAdsAdMob.shared.showRewardedVideo(withInterval: 4) // Shows an ad every 4th time
+SwiftyAdsAdMob.shared.showRewardedVideo() // Should be called when pressing dedicated button
 
 if SwiftyAdsAdMob.shared.isRewardedVideoReady { // Will try to load an ad if it returns false
     // add reward video button
@@ -305,8 +304,7 @@ HOW TO USE
 ```swift
 SwiftyAdsAppLovin.shared.showInterstitial()
 SwiftyAdsAppLovin.shared.showInterstitial(withInterval: 4) // Show an ad every 4th time
-SwiftyAdsAppLovin.shared.showRewardedVideo()
-SwiftyAdsAppLovin.shared.showRewardedVideo(withInterval: 4) // Show an ad every 4th time
+SwiftyAdsAppLovin.shared.showRewardedVideo() // Should be called when pressing dedicated button
 
 if SwiftyAdsAppLovin.shared.isRewardedVideoReady { // Will try to load an ad if it returns false
     // add reward video button
