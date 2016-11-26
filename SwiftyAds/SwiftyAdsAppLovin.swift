@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v6.0.3
+//    v6.1
 
 import Foundation
 
@@ -63,7 +63,7 @@ final class SwiftyAdsAppLovin: NSObject {
     private var intervalCounter = 0
     
     /// Removed ads
-    private var isRemovedAds = false
+    private var isRemoved = false
     
     // MARK: - Init
     
@@ -119,7 +119,7 @@ final class SwiftyAdsAppLovin: NSObject {
     }
     
     /// Remove ads (in app purchases)
-    func removeAll() {
+    func remove() {
         isRemovedAds = true
     }
 }

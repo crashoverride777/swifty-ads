@@ -28,13 +28,15 @@ extension GameScene: SwiftyAdsDelegate {
 class GameScene: SKScene {
     
     var myLabel: SKLabelNode!
+    var customAdCounter = 0
     var touchCounter = 15 {
         didSet {
             if touchCounter >= 0 {
                 myLabel.text = "Remove ads in \(touchCounter) clicks"
             }
             if touchCounter == 0 {
-                SwiftyAdsManager.shared.removeAll()
+                SwiftyAdsCustom.shared.remove()
+                SwiftyAdsAdMob.shared.remove()
             }
         }
     }
@@ -47,10 +49,11 @@ class GameScene: SKScene {
         self.addChild(myLabel)
         
         /// Set ads helper delegate
-        SwiftyAdsManager.shared.delegate = self
+        SwiftyAdsCustom.shared.delegate = self
+        SwiftyAdsAdMob.shared.delegate = self
         
         // Show banner ad
-        SwiftyAdsManager.shared.showBanner()
+        SwiftyAdsAdMob.shared.showBanner()
         
         /// Custom ads tv controls
         #if os(tvOS)
@@ -85,17 +88,18 @@ class GameScene: SKScene {
             return
         }
         
-        // other coded if needed e.g menu navigation
+        // other code/rest of code e.g menu navigation
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-   
-        /* Called when a touch begins */
-        
-        // Show inter
-        SwiftyAdsManager.shared.showInterstitial(withInterval: 2) // will not work on tvOs with this demo app because I havent set the SDK key for AppLovin in info.plist. 
-        
-        // Remove ads after 3 clicks
+        if customAdCounter == 0 {
+            customAdCounter += 1
+            SwiftyAdsAdMob.shared.showInterstitial(withInterval: 2)
+        } else {
+            customAdCounter = 0
+            SwiftyAdsCustom.shared.show()
+        }
+    
         touchCounter -= 1
     }
     

@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v6.0.3
+//    v6.1
 
 import GoogleMobileAds
 
@@ -69,7 +69,7 @@ final class SwiftyAdsAdMob: NSObject {
     private var intervalCounter = 0
     
     /// Removed ads
-    private var isRemovedAds = false
+    private var isRemoved = false
     
     // MARK: - Init
     
@@ -107,7 +107,7 @@ final class SwiftyAdsAdMob: NSObject {
     ///
     /// - parameter delay: The delay until showing the ad. Defaults to 0.
     func showBanner(withDelay delay: TimeInterval = 0.1) {
-        guard !isRemovedAds else { return }
+        guard !isRemoved else { return }
         
         Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(showingBanner), userInfo: nil, repeats: false)
     }
@@ -123,7 +123,7 @@ final class SwiftyAdsAdMob: NSObject {
     ///
     /// - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
     func showInterstitial(withInterval interval: Int = 0) {
-        guard !isRemovedAds else { return }
+        guard !isRemoved else { return }
         guard let presentingViewController = presentingViewController?.view?.window?.rootViewController else { return }
         
         guard let interstitialAd = interstitialAd , interstitialAd.isReady else {
@@ -176,10 +176,10 @@ final class SwiftyAdsAdMob: NSObject {
     }
     
     /// Remove all ads (in app purchases)
-    func removeAll() {
+    func remove() {
         print("Removed all ads")
         
-        isRemovedAds = true
+        isRemoved = true
         removeBanner()
         interstitialAd?.delegate = nil
         rewardedVideoAd?.delegate = nil

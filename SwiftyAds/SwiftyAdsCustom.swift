@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v6.0.3
+//    v6.1
 
 import StoreKit
 
@@ -130,7 +130,7 @@ final class SwiftyAdsCustom {
     private var intervalCounter = 0
     
     /// Removed ads
-    private var isRemovedAds = false
+    private var isRemoved = false
     
     // MARK: - Init
     
@@ -143,7 +143,7 @@ final class SwiftyAdsCustom {
     /// - parameter random: If set to true will pick random ad from inventory. Defaults to false. Will not work if newestAd is set to true.
     /// - parameter interval: The interval when to show the ad, e.g when set to 4 ad will be shown every 4th time. Defaults to 0.
     public func show(newest: Bool = false, random: Bool = false, withInterval interval: Int = 0) {
-        guard !isRemovedAds && !Inventory.all.isEmpty else { return }
+        guard !isRemoved && !Inventory.all.isEmpty else { return }
         guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
         
         if interval != 0 {
@@ -200,7 +200,7 @@ final class SwiftyAdsCustom {
     
     /// Remove (e.g in app purchases)
     public func remove() {
-        isRemovedAds = true
+        isRemoved = true
         removeFromSuperview()
     }
     

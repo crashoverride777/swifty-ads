@@ -25,8 +25,6 @@ class GameViewController: UIViewController {
         let rewardedVideoID = "Enter your real ID"
         SwiftyAdsAdMob.shared.setup(viewController: self, bannerID: bannerID, interID: interstitialID, rewardedVideoID: rewardedVideoID)
         
-        // Set up adsManager
-        SwiftyAdsManager.shared.setup(customAdsInterval: 3, maxCustomAdsPerSession: 3)
         
         if let scene = GameScene(fileNamed: "GameScene") {
             // Configure the view.
@@ -50,7 +48,8 @@ class GameViewController: UIViewController {
         
         coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
             
-            SwiftyAdsManager.shared.adjustForOrientation()
+            SwiftyAdsCustom.shared.adjustForOrientation()
+            SwiftyAdsAdMob.shared.adjustForOrientation()
             
 //            let orientation = UIApplication.sharedApplication().statusBarOrientation
 //            switch orientation {
