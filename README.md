@@ -349,7 +349,7 @@ extension GameScene: SwiftyAdsDelegate {
 
 # How to use all helpers
 
-I removed the ads manager class in v6.1 as I felt like it was complicating things unnecessarlily and making the helper(s) less felixble. If you are using all 3 helpers at the same time you will have to implement your own logic for showing ads.
+I removed the AdsManager.swift file in v6.1 as I felt like it was complicating things unnecessarlily and making the helper(s) less flexible. If you are using all 3 helpers at the same time you will have to implement your own logic for showing the correct ad.
 
 To differentiate between targets you can do something like this.
 
@@ -362,9 +362,7 @@ To differentiate between targets you can do something like this.
 #endif
 ```
 
-Note: Do not forget to set up all your helpers
-
-like the delegates 
+Also do not forget things like settings up the delegates 
 
 ```swift
 SwiftyAdsCustom.shared.delegate = self
@@ -372,7 +370,8 @@ SwiftyAdsAdMob.shared.delegate = self
 SwiftyAdsAppLovin.shared.delegate = self
 ```
 
-or call the remove method in all helpers when the remove ads button was pressed
+or calling the remove method in all helpers when the remove ads button was pressed
+
 ```swift
 SwiftyAdsCustom.shared.remove()
 SwiftyAdsAdMob.shared.remove()
