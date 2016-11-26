@@ -526,6 +526,10 @@ Enjoy
 
 # Release Notes
 
+- v6.0.3
+
+Cleanup
+
 - v6.0.2
 
 Cleanup
