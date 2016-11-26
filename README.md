@@ -160,7 +160,7 @@ SwiftyAdsAdMob.shared.removeBanner()
 
 - To remove all Ads, mainly for in app purchases simply call 
 ```swift
-SwiftyAdsAdMob.shared.removeAll() 
+SwiftyAdsAdMob.shared.remove() 
 ```
 
 NOTE: Remove Ads bool 
@@ -315,7 +315,7 @@ if SwiftyAdsAppLovin.shared.isRewardedVideoReady { // Will try to load an ad if 
 
 - To remove all Ads, mainly for in app purchases simply call 
 ```swift
-SwiftyAdsAppLovin.shared.removeAll() 
+SwiftyAdsAppLovin.shared.remove() 
 ```
 
 NOTE: Remove Ads bool 
@@ -358,12 +358,9 @@ override func viewWillTransition(to size: CGSize, with coordinator: UIViewContro
         super.viewWillTransition(to: size, with: coordinator)
         
         coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
-           
-            SwiftyAdsManager.adjustForOrientation() // When using Full helper
-            
-            SwiftyAdsAdMob.shared.adjustForOrientation() // When only using AdMob 
-            
-            SwiftyAdsCustom.shared.adjustForOrientation() // When only using Custom ads 
+          
+            SwiftyAdsAdMob.shared.adjustForOrientation()
+            SwiftyAdsCustom.shared.adjustForOrientation() 
             
             }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
                 print("Device rotation completed")
