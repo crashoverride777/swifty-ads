@@ -172,13 +172,13 @@ final class SwiftyAdsCustom {
         let adName = Inventory.all[adInInventory].imageName
         
         if adName.lowerCasedNoSpacesAndHyphens.contains(appName.lowerCasedNoSpacesAndHyphens) || appName == noAppNameFound {
-            adInInventory += 1
-            Inventory.current += 1
-        }
-        
-        if adInInventory >= Inventory.all.count {
-            adInInventory = 0
-            Inventory.current = 0
+            if adInInventory < Inventory.all.count - 1 {
+                adInInventory += 1
+                Inventory.current += 1
+            } else {
+                adInInventory = 0
+                Inventory.current = 0
+            }
         }
         
         guard let validAd = createAd(selectedAd: adInInventory) else { return }
