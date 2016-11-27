@@ -417,7 +417,7 @@ Enjoy
 
 - v6.1
 
-Removed the AdsManager class as I felt like it was complicating things uncecessarily. This should also make it easier for people to pick and choose what they need and make the helper more flexible and clearer to understand.
+Deprecated the AdsManager as I felt like it was complicating things uncecessarily. This should also make it easier for people to pick and choose what they need and make the helper more flexible and clearer to understand.
 
 - v6.0.3
 
