@@ -19,7 +19,6 @@ class GameViewController: UIViewController {
             SwiftyAdsCustom.Inventory(imageName: "AdAngryFlappies", appID: "991933749", isNewGame: false)
         ]
      
-        SwiftyAdsManager.shared.setup(customAdsInterval: 3, maxCustomAdsPerSession: 3)
         _ = SwiftyAdsAppLovin.shared
 
         if let scene = GameScene(fileNamed: "GameScene") {

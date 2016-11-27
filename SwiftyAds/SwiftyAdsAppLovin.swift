@@ -82,7 +82,7 @@ final class SwiftyAdsAppLovin: NSObject {
     ///
     /// - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
     func showInterstitial(withInterval interval: Int = 0) {
-        guard !isRemovedAds else { return }
+        guard !isRemoved else { return }
         
         guard ALInterstitialAd.isReadyForDisplay() else {
             print("AppLovin interstitial ad not ready, reloading...")
@@ -120,7 +120,7 @@ final class SwiftyAdsAppLovin: NSObject {
     
     /// Remove ads (in app purchases)
     func remove() {
-        isRemovedAds = true
+        isRemoved = true
     }
 }
 

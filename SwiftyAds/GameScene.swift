@@ -36,7 +36,12 @@ class GameScene: SKScene {
             }
             if touchCounter == 0 {
                 SwiftyAdsCustom.shared.remove()
-                SwiftyAdsAdMob.shared.remove()
+                #if os(iOS)
+                    SwiftyAdsAdMob.shared.remove()
+                #endif
+                #if os(tvOS)
+                    SwiftyAdsAppLovin.shared.remove()
+                #endif
             }
         }
     }
@@ -50,10 +55,17 @@ class GameScene: SKScene {
         
         /// Set ads helper delegate
         SwiftyAdsCustom.shared.delegate = self
-        SwiftyAdsAdMob.shared.delegate = self
+        #if os(iOS)
+            SwiftyAdsAdMob.shared.delegate = self
+        #endif
+        #if os(tvOS)
+            SwiftyAdsAppLovin.shared.delegate = self
+        #endif
         
         // Show banner ad
-        SwiftyAdsAdMob.shared.showBanner()
+        #if os(iOS)
+            SwiftyAdsAdMob.shared.showBanner()
+        #endif
         
         /// Custom ads tv controls
         #if os(tvOS)
@@ -94,7 +106,12 @@ class GameScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if customAdCounter == 0 {
             customAdCounter += 1
-            SwiftyAdsAdMob.shared.showInterstitial(withInterval: 2)
+            #if os(iOS)
+                SwiftyAdsAdMob.shared.showInterstitial(withInterval: 2)
+            #endif
+            #if os(tvOS)
+                SwiftyAdsAppLovin.shared.showInterstitial(withInterval: 2)
+            #endif
         } else {
             customAdCounter = 0
             SwiftyAdsCustom.shared.show()
