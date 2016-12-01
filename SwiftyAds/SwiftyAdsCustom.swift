@@ -40,7 +40,7 @@ fileprivate func getAppStoreURL(forAppID id: String) -> String {
  
  Singleton class used for creating custom full screen ads.
  */
-final class SwiftyAdsCustom: NSObject {
+public final class SwiftyAdsCustom: NSObject {
     
     // MARK: - Static Properties
     public static let shared = SwiftyAdsCustom()
@@ -57,7 +57,7 @@ final class SwiftyAdsCustom: NSObject {
     }
     
     /// Custom ad
-    struct Ad {
+    public struct Ad {
         let imageName: String
         let appID: String
         let color: Color
@@ -70,7 +70,7 @@ final class SwiftyAdsCustom: NSObject {
     public var isShowing = false
     
     /// All ads
-    public var ads = [Ad]()
+    public var inventory = [Ad]()
     
     /// Is iPad
     fileprivate var isPad: Bool {
@@ -165,7 +165,7 @@ final class SwiftyAdsCustom: NSObject {
     /// - parameter random: If set to true will pick random ad from inventory. Defaults to false. Will not work if newestAd is set to true.
     /// - parameter interval: The interval when to show the ad, e.g when set to 4 ad will be shown every 4th time. Defaults to nil.
     public func show(newest: Bool = false, random: Bool = false, withInterval interval: Int? = nil) {
-        guard !isRemoved && !ads.isEmpty else { return }
+        guard !isRemoved && !inventory.isEmpty else { return }
         guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
         
         if let interval = interval {
@@ -178,23 +178,23 @@ final class SwiftyAdsCustom: NSObject {
         if newest {
             adInInventory = 0
         } else if random {
-            let range = UInt32(ads.count)
+            let range = UInt32(inventory.count)
             adInInventory = Int(arc4random_uniform(range))
         } else {
             adInInventory = current
         }
         
-        if adInInventory >= ads.count {
+        if adInInventory >= inventory.count {
             adInInventory = 0
             current = 0
         }
         
         let noAppNameFound = "NoAppNameFound"
         let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? noAppNameFound
-        let adName = ads[adInInventory].imageName
+        let adName = inventory[adInInventory].imageName
         
         if adName.lowerCasedNoSpacesAndHyphens.contains(appName.lowerCasedNoSpacesAndHyphens) || appName == noAppNameFound {
-            if adInInventory < ads.count - 1 {
+            if adInInventory < inventory.count - 1 {
                 adInInventory += 1
                 current += 1
             } else {
@@ -229,9 +229,9 @@ private extension SwiftyAdsCustom {
     /// - returns: Optional UIView.
     func createAd(selectedAd: Int) -> UIView? {
         // Set ad properties
-        let selectedColor = ads[selectedAd].color
-        let imageName = ads[selectedAd].imageName
-        appID = ads[selectedAd].appID
+        let selectedColor = inventory[selectedAd].color
+        let imageName = inventory[selectedAd].imageName
+        appID = inventory[selectedAd].appID
         
         // Remove previous ad just incase
         removeFromSuperview()
@@ -398,7 +398,7 @@ private extension UIView {
 #if os(iOS)
     extension SwiftyAdsCustom: SKStoreProductViewControllerDelegate {
         
-        func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
+        public func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
             viewController.dismiss(animated: true, completion: nil)
         }
     }

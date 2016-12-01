@@ -14,7 +14,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        SwiftyAdsCustom.shared.ads = [
+        SwiftyAdsCustom.shared.inventory = [
             SwiftyAdsCustom.Ad(imageName: "AdVertigus", appID: "1051292772", color: .green),
             SwiftyAdsCustom.Ad(imageName: "AdAngryFlappies", appID: "991933749", color: .blue)
         ]
