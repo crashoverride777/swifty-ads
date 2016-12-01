@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v6.1
+//    v6.1.1
 
 import StoreKit
 
@@ -35,37 +35,32 @@ fileprivate func getAppStoreURL(forAppID id: String) -> String {
     #endif
 }
 
-/// String helper
-private extension String {
-    var lowerCasedNoSpacesAndHyphens: String {
-        let noSpaces = replacingOccurrences(of: " ", with: "")
-        return noSpaces.replacingOccurrences(of: "-", with: "").lowercased()
-    }
-}
-
 /**
  SwiftyAdsCustom
  
  Singleton class used for creating custom full screen ads.
  */
-final class SwiftyAdsCustom {
+final class SwiftyAdsCustom: NSObject {
     
     // MARK: - Static Properties
     public static let shared = SwiftyAdsCustom()
     
     // MARK: - Properties
     
+    /// Color
+    enum Color: String {
+        case white
+        case blue
+        case red
+        case yellow
+        case green
+    }
+    
     /// Custom ad
-    struct Inventory {
+    struct Ad {
         let imageName: String
         let appID: String
-        let isNewGame: Bool
-        
-        /// All ads
-        static var all = [Inventory]()
-        
-        /// Tracking
-        fileprivate static var current = 0
+        let color: Color
     }
     
     /// Delegate
@@ -74,57 +69,16 @@ final class SwiftyAdsCustom {
     /// Is showing
     public var isShowing = false
     
-    /// View
-    fileprivate let adView = UIView()
-
-    /// Image view
-    fileprivate lazy var imageView: UIImageView = {
-        let view = UIImageView()
-        view.isUserInteractionEnabled = true
-        return view
-    }()
+    /// All ads
+    public var ads = [Ad]()
     
-    /// Font style
-    fileprivate let font = "HelveticaNeue"
-    fileprivate let fontBold = "HelveticaNeue-Bold"
+    /// Is iPad
+    fileprivate var isPad: Bool {
+        return UIDevice.current.userInterfaceIdiom == .pad
+    }
     
-    /// Header label
-    fileprivate lazy var headerLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Override Interactive"
-        label.textAlignment = .center
-        label.textColor = UIColor.black
-        return label
-    }()
-    
-    /// New game label
-    fileprivate lazy var newGameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "New"
-        label.textAlignment = .center
-        label.textColor = UIColor.red
-        label.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI_4))
-        return label
-    }()
-    
-    /// Close button
-    fileprivate lazy var closeButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("X", for: .normal)
-        button.setTitleColor(UIColor.gray, for: .normal)
-        button.backgroundColor = UIColor.white
-        button.layer.borderColor = UIColor.gray.cgColor
-        button.layer.borderWidth = 2
-        let iPad = UIDevice.current.userInterfaceIdiom == .pad
-        button.layer.cornerRadius = (iPad ? 15 : 11.5)
-        button.addTarget(self, action: #selector(dismiss), for: .touchDown)
-        return button
-    }()
-    
-    /// Image and store url
-    fileprivate var imageName = ""
-    fileprivate var appID = ""
-    fileprivate var isNewGame = false
+    /// App ID
+    fileprivate var appID: String?
     
     /// Interval counter
     private var intervalCounter = 0
@@ -132,21 +86,89 @@ final class SwiftyAdsCustom {
     /// Removed ads
     private var isRemoved = false
     
+    /// Current ad
+    fileprivate var current = 0
+    
+    /// Colors
+    fileprivate var colors: [String: UIColor] = [
+        Color.white.rawValue:   .white,
+        Color.blue.rawValue:    UIColor(red:0.06, green:0.71, blue:0.85, alpha:1.0),
+        Color.red.rawValue:     UIColor(red:0.52, green:0.14, blue:0.29, alpha:1.0),
+        Color.yellow.rawValue:  UIColor(red:0.96, green:0.99, blue:0.06, alpha:1.0),
+        Color.green.rawValue:   UIColor(red:0.16, green:0.69, blue:0.46, alpha:1.0)
+    ]
+    
+    /// View
+    fileprivate let adView = UIView()
+    
+    /// Image view
+    fileprivate lazy var imageView: UIImageView = {
+        let view = UIImageView()
+        view.isUserInteractionEnabled = true
+        return view
+    }()
+    
+    /// Header label
+    fileprivate lazy var headerLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Override Interactive"
+        #if os(iOS)
+            let fontSize: CGFloat = self.isPad ? 35 : 25
+        #endif
+        #if os(tvOS)
+            let fontSize: CGFloat = 62
+        #endif
+        label.font = UIFont(name: "HelveticaNeue", size: fontSize)
+        label.textAlignment = .center
+        label.textColor = .black
+        return label
+    }()
+    
+    /// New game label
+    fileprivate lazy var newGameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "New"
+        #if os(iOS)
+            let fontSize: CGFloat = self.isPad ? 32 : 22
+        #endif
+        #if os(tvOS)
+            let fontSize: CGFloat = 35
+        #endif
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: fontSize)
+        label.textAlignment = .center
+        label.textColor = UIColor.red
+        label.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 4)
+        return label
+    }()
+    
+    /// Close button
+    fileprivate lazy var closeButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("X", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .red
+        button.layer.borderColor = UIColor.white.cgColor
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = self.isPad ? 15 : 11.5
+        button.addTarget(self, action: #selector(dismiss), for: .primaryActionTriggered)
+        return button
+    }()
+    
     // MARK: - Init
     
     /// Private singleton init
-    private init() { }
+    private override init() { }
     
     /// Show custom ad
     ///
     /// - parameter newestAd: If set to true will show first ad in inventory. Defaults to false.
     /// - parameter random: If set to true will pick random ad from inventory. Defaults to false. Will not work if newestAd is set to true.
-    /// - parameter interval: The interval when to show the ad, e.g when set to 4 ad will be shown every 4th time. Defaults to 0.
-    public func show(newest: Bool = false, random: Bool = false, withInterval interval: Int = 0) {
-        guard !isRemoved && !Inventory.all.isEmpty else { return }
+    /// - parameter interval: The interval when to show the ad, e.g when set to 4 ad will be shown every 4th time. Defaults to nil.
+    public func show(newest: Bool = false, random: Bool = false, withInterval interval: Int? = nil) {
+        guard !isRemoved && !ads.isEmpty else { return }
         guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
         
-        if interval != 0 {
+        if let interval = interval {
             intervalCounter += 1
             guard intervalCounter >= interval else { return }
             intervalCounter = 0
@@ -156,45 +178,37 @@ final class SwiftyAdsCustom {
         if newest {
             adInInventory = 0
         } else if random {
-            let range = UInt32(Inventory.all.count)
+            let range = UInt32(ads.count)
             adInInventory = Int(arc4random_uniform(range))
         } else {
-            adInInventory = Inventory.current
+            adInInventory = current
         }
         
-        if adInInventory >= Inventory.all.count {
+        if adInInventory >= ads.count {
             adInInventory = 0
-            Inventory.current = 0
+            current = 0
         }
         
         let noAppNameFound = "NoAppNameFound"
         let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? noAppNameFound
-        let adName = Inventory.all[adInInventory].imageName
+        let adName = ads[adInInventory].imageName
         
         if adName.lowerCasedNoSpacesAndHyphens.contains(appName.lowerCasedNoSpacesAndHyphens) || appName == noAppNameFound {
-            if adInInventory < Inventory.all.count - 1 {
+            if adInInventory < ads.count - 1 {
                 adInInventory += 1
-                Inventory.current += 1
+                current += 1
             } else {
                 adInInventory = 0
-                Inventory.current = 0
+                current = 0
             }
         }
         
         guard let validAd = createAd(selectedAd: adInInventory) else { return }
-        
-         // Gestures
-        #if os(iOS)
-            let downloadTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(download))
-            downloadTapGestureRecognizer.delaysTouchesBegan = true
-            imageView.addGestureRecognizer(downloadTapGestureRecognizer)
-            adView.addSubview(closeButton)
-        #endif
-        
-        validAd.layer.zPosition = 5000
         rootViewController.view?.addSubview(validAd)
+        addConstraints()
+        delegate?.adDidOpen()
         
-        Inventory.current += 1
+        current += 1
         isShowing = true
     }
     
@@ -203,23 +217,85 @@ final class SwiftyAdsCustom {
         isRemoved = true
         removeFromSuperview()
     }
+}
+
+// MARK: - Ad Management
+
+private extension SwiftyAdsCustom {
     
-    /// Orientation changed
-    public func adjustForOrientation() {
-        setupForOrientation()
+    /// Create ad
+    ///
+    /// - parameter selectedAd: The int for the selected ad in the inventory.
+    /// - returns: Optional UIView.
+    func createAd(selectedAd: Int) -> UIView? {
+        // Set ad properties
+        let selectedColor = ads[selectedAd].color
+        let imageName = ads[selectedAd].imageName
+        appID = ads[selectedAd].appID
+        
+        // Remove previous ad just incase
+        removeFromSuperview()
+        
+        // AdView
+        adView.layer.zPosition = 5000
+        if let color = colors[selectedColor.rawValue] {
+            adView.backgroundColor = color.withAlphaComponent(0.9)
+        } else {
+            adView.backgroundColor = UIColor.white.withAlphaComponent(0.9)
+        }
+        
+        // Image
+        imageView.image = UIImage(named: imageName)
+        imageView.contentMode = .scaleAspectFit
+        adView.addSubview(imageView)
+        
+        // Labels
+        adView.addSubview(headerLabel)
+        
+        adView.addSubview(newGameLabel)
+        newGameLabel.isHidden = selectedAd != 0
+        
+        // Button
+        adView.addSubview(closeButton)
+        
+        #if os(iOS)
+            // Gestures
+            let downloadTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(download))
+            downloadTapGestureRecognizer.delaysTouchesBegan = true
+            imageView.addGestureRecognizer(downloadTapGestureRecognizer)
+        #endif
+        #if os(tvOS)
+            closeButton.isHidden = true
+        #endif
+        
+        return adView
     }
 }
 
 // MARK: - Download / Dismiss
 
 extension SwiftyAdsCustom {
-
+    
     /// Handle download (tvOS only)
     @objc public func download() {
         dismiss()
+        guard let appID = appID else { return }
         
         #if os(iOS)
-            AppStoreViewController.shared.open(forAppID: appID)
+            guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
+            
+            let storeViewController = SKStoreProductViewController()
+            storeViewController.delegate = self
+            
+            let parameters = [SKStoreProductParameterITunesItemIdentifier: appID]
+            storeViewController.loadProduct(withParameters: parameters) { (result, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                    return
+                }
+            }
+            /// Present, call outside loadProductsWithParemeter so there is no delay. VC has own loading indicator
+            rootViewController.present(storeViewController, animated: true, completion: nil)
         #endif
         
         #if os(tvOS)
@@ -234,141 +310,96 @@ extension SwiftyAdsCustom {
         removeFromSuperview()
         delegate?.adDidClose()
     }
-}
-
-// MARK: - Ad Management
-
-private extension SwiftyAdsCustom {
     
-    /// Create ad
-    ///
-    /// - parameter selectedAd: The int for the selected ad in the inventory.
-    /// - returns: Optional UIView.
-    func createAd(selectedAd: Int) -> UIView? {
-        
-        // Set ad properties
-        imageName = Inventory.all[selectedAd].imageName
-        appID = Inventory.all[selectedAd].appID
-        isNewGame = Inventory.all[selectedAd].isNewGame
-        
-        // Remove previous ad just incase
-        removeFromSuperview()
-        
-        // Image
-        imageView.image = UIImage(named: imageName)
-        adView.addSubview(imageView)
-        
-        // Labels
-        adView.addSubview(headerLabel)
-        newGameLabel.isHidden = !isNewGame
-        adView.addSubview(newGameLabel)
-      
-        // Set up for orientation
-        setupForOrientation()
-        
-        // Delegate
-        delegate?.adDidOpen()
-        
-        return adView
-    }
-    
-    /// Remove custom ad
-    func removeFromSuperview() {
+    /// Remove from superview
+    fileprivate func removeFromSuperview() {
         isShowing = false
         for gestureRecognizer in imageView.gestureRecognizers ?? [] {
             imageView.removeGestureRecognizer(gestureRecognizer)
         }
-       
-        closeButton.removeFromSuperview()
-        imageView.removeFromSuperview()
+        
         adView.removeFromSuperview()
     }
 }
 
-// MARK: - Set up for orientation
+// MARK: - Add Constraints
 
 private extension SwiftyAdsCustom {
     
-    /// Setup for orientation
-    func setupForOrientation() {
-        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
+    func addConstraints() {
+        guard let view = UIApplication.shared.keyWindow?.rootViewController?.view else { return }
         
-        let iPad = UIDevice.current.userInterfaceIdiom == .pad
-        
-        /// View
-        adView.frame = rootViewController.view.frame
-        
-        /// Image view
         #if os(iOS)
-            if UIScreen.main.bounds.height < UIScreen.main.bounds.width { // check if in landscape, works at startup
-                let height = iPad ? adView.frame.height / 1.4 : adView.frame.height / 1.1
-                imageView.frame = CGRect(x: 0, y: 0, width: adView.frame.width / 1.2, height: height)
+            if UIDevice.current.orientation.isLandscape {
+                setAdViewLandscapeContraints(for: view)
             } else {
-                let height = iPad ? adView.frame.height / 2 : adView.frame.height / 2.5
-                imageView.frame = CGRect(x: 0, y: 0, width: adView.frame.width / 1.05, height: height)
+                // AdView
+                view.addConstraints(withFormat: "V:|-30-[v0]-30-|", views: adView)
+                view.addConstraints(withFormat: "H:|-10-[v0]-10-|", views: adView)
             }
         #endif
         
         #if os(tvOS)
-            imageView.frame = CGRect(x: 0, y: 0, width: adView.frame.width / 1.2, height: adView.frame.height / 1.1)
+            setAdViewLandscapeContraints(for: view)
         #endif
         
-        imageView.center = rootViewController.view.center
+        // Image view
+        adView.addConstraints(withFormat: "H:|[v0]|", views: imageView)
+        adView.addConstraints(withFormat: "V:|[v0]|", views: imageView)
         
-        /// Labels
-        let headerFontSize = imageView.frame.height / 13
-        headerLabel.font = UIFont(name: font, size: headerFontSize)
-        headerLabel.frame = CGRect(x: 0, y: 0, width: adView.frame.width, height: adView.frame.height)
-        headerLabel.center = CGPoint(x: 0 + (adView.frame.width / 2), y: imageView.frame.minY + headerFontSize / 1.1)
+        // Header label
+        adView.addConstraints(withFormat: "H:|[v0]|", views: headerLabel)
+        adView.addConstraints(withFormat: "V:|-15-[v0]", views: headerLabel)
         
-        newGameLabel.font = UIFont(name: fontBold, size: imageView.frame.height / 17)
-        newGameLabel.frame = CGRect(x: 0, y: 0, width: adView.frame.width, height: adView.frame.height)
-        newGameLabel.center = CGPoint(x: imageView.frame.maxX - (headerFontSize / 1.1), y: imageView.frame.minY + headerFontSize / 1.05)
+        // New game label
+        adView.addConstraints(withFormat: "H:[v0]-5-|", views: newGameLabel)
+        adView.addConstraints(withFormat: "V:|-20-[v0]", views: newGameLabel)
         
-        /// Buttons
-        let closeButtonSize: CGFloat = iPad ? 30 : 22
-        closeButton.frame = CGRect(x: 0, y: 0, width: closeButtonSize, height: closeButtonSize)
-        closeButton.center = CGPoint(x: imageView.frame.minX + (closeButtonSize / 1.5), y: imageView.frame.minY + (closeButtonSize / 1.5))
+        // Close button
+        let closeButtonSize: CGFloat = self.isPad ? 30 : 22
+        adView.addConstraints(withFormat: "H:|-5-[v0(\(closeButtonSize))]", views: closeButton)
+        adView.addConstraints(withFormat: "V:|-5-[v0(\(closeButtonSize))]", views: closeButton)
+    }
+    
+    func setAdViewLandscapeContraints(for view: UIView) {
+        view.addConstraints(withFormat: "V:|-10-[v0]-10-|", views: adView)
+        view.addConstraints(withFormat: "H:|-40-[v0]-40-|", views: adView)
     }
 }
 
-// MARK: - SKStoreProductViewController
+// MARK: - String Replacing Occurrences
 
-#if os(iOS)
-private class AppStoreViewController: NSObject {
+private extension String {
+    var lowerCasedNoSpacesAndHyphens: String {
+        let noSpaces = replacingOccurrences(of: " ", with: "")
+        return noSpaces.replacingOccurrences(of: "-", with: "").lowercased()
+    }
+}
+
+// MARK: - Contraints Helper 
+
+private extension UIView {
     
-    // MARK: - Static Properties
-    
-    /// Shared instance
-    fileprivate static let shared = AppStoreViewController()
-    
-    // MARK: - Methods
-    
-    /// Open app store controller for app ID
-    fileprivate func open(forAppID appID: String) {
-        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
-        
-        let storeViewController = SKStoreProductViewController()
-        storeViewController.delegate = self
-        
-        let parameters = [SKStoreProductParameterITunesItemIdentifier: appID]
-        storeViewController.loadProduct(withParameters: parameters) { (result, error) in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
+    func addConstraints(withFormat format: String, views: UIView...) {
+        var viewsDictionary = [String: UIView]()
+        for (index, view) in views.enumerated() {
+            let key = "v\(index)"
+            view.translatesAutoresizingMaskIntoConstraints = false
+            viewsDictionary[key] = view
         }
         
-        /// Present, call outside loadProductsWithParemeter so there is no delay. VC has own loading indicator
-        rootViewController.present(storeViewController, animated: true, completion: nil)
+        let constraint = NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDictionary)
+        addConstraints(constraint)
     }
 }
 
-/// SKStoreProductViewControllerDelegate
-extension AppStoreViewController: SKStoreProductViewControllerDelegate {
-    
-    func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
-        viewController.dismiss(animated: true, completion: nil)
+// MARK: - SKStoreProductViewControllerDelegate
+
+#if os(iOS)
+    extension SwiftyAdsCustom: SKStoreProductViewControllerDelegate {
+        
+        func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
+            viewController.dismiss(animated: true, completion: nil)
+        }
     }
-}
 #endif

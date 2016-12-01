@@ -14,9 +14,9 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
      
         // Custom ad inventory
-        SwiftyAdsCustom.Inventory.all = [
-            SwiftyAdsCustom.Inventory(imageName: "AdVertigus", appID: "1051292772", isNewGame: true),
-            SwiftyAdsCustom.Inventory(imageName: "AdAngryFlappies", appID: "991933749", isNewGame: false)
+        SwiftyAdsCustom.shared.ads = [
+            SwiftyAdsCustom.Ad(imageName: "AdVertigus", appID: "1051292772", color: .green),
+            SwiftyAdsCustom.Ad(imageName: "AdAngryFlappies", appID: "991933749", color: .blue)
         ]
         
         // Set up ad Mob
@@ -48,7 +48,6 @@ class GameViewController: UIViewController {
         
         coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
             
-            SwiftyAdsCustom.shared.adjustForOrientation()
             SwiftyAdsAdMob.shared.adjustForOrientation()
             
 //            let orientation = UIApplication.sharedApplication().statusBarOrientation

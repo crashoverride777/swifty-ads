@@ -117,11 +117,11 @@ final class SwiftyAdsManager {
     
     /// Show inter ad
     ///
-    /// - parameter interval: The interval of when to show the ad. Defaults to 0.
-    func showInterstitial(withInterval interval: Int = 0) {
+    /// - parameter interval: The interval of when to show the ad. Defaults to nil.
+    func showInterstitial(withInterval interval: Int? = nil) {
         guard !isRemoved else { return }
         
-        if interval != 0 {
+        if let interval = interval {
             intervalCounter += 1
             guard intervalCounter >= interval else { return }
             intervalCounter = 0
@@ -186,8 +186,6 @@ final class SwiftyAdsManager {
     /// Orientation changed
     /// Call this when an orientation change happens (e.g landscape->portrait happended)
     func adjustForOrientation() {
-        SwiftyAdsCustom.shared.adjustForOrientation()
-        
         #if os(iOS)
             SwiftyAdsAdMob.shared.adjustForOrientation()
         #endif

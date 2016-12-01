@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v6.1
+//    v6.1.1
 
 import GoogleMobileAds
 
@@ -42,10 +42,22 @@ final class SwiftyAdsAdMob: NSObject {
     /// Delegates
     weak var delegate: SwiftyAdsDelegate?
     
+    /// Check if interstitial ad is ready (e.g to show alternative ad like a custom ad or something)
+    /// Will try to reload an ad if it returns false.
+    var isInterstitialReady: Bool {
+        guard let interAd = interstitialAd, interAd.isReady else {
+            print("AdMob interstitial ad is not ready, reloading...")
+            interstitialAd = loadInterstitialAd()
+            return false
+        }
+        return true
+    }
+    
     /// Check if reward video is ready (e.g to hide a reward video button)
     /// Will try to reload an ad if it returns false.
     var isRewardedVideoReady: Bool {
         guard let rewardedVideo = rewardedVideoAd, rewardedVideo.isReady else {
+            print("AdMob reward video is not ready, reloading...")
             rewardedVideoAd = loadRewardedVideoAd()
             return false
         }
@@ -121,40 +133,30 @@ final class SwiftyAdsAdMob: NSObject {
     
     /// Show interstitial ad randomly
     ///
-    /// - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
-    func showInterstitial(withInterval interval: Int = 0) {
-        guard !isRemoved else { return }
+    /// - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to nil.
+    func showInterstitial(withInterval interval: Int? = nil) {
+        guard !isRemoved, isInterstitialReady else { return }
         guard let presentingViewController = presentingViewController?.view?.window?.rootViewController else { return }
         
-        guard let interstitialAd = interstitialAd , interstitialAd.isReady else {
-            print("AdMob interstitial is not ready, reloading...")
-            self.interstitialAd = loadInterstitialAd()
-            return
-        }
-        
-        if interval != 0 {
+        if let interval = interval {
             intervalCounter += 1
             guard intervalCounter >= interval else { return }
             intervalCounter = 0
         }
         
         print("AdMob interstitial is showing")
-        interstitialAd.present(fromRootViewController: presentingViewController)
+        interstitialAd?.present(fromRootViewController: presentingViewController)
     }
     
     // MARK: - Show Reward Video
     
     /// Show rewarded video ad
     func showRewardedVideo() {
+        guard isRewardedVideoReady else { return }
         guard let rootViewController = presentingViewController?.view?.window?.rootViewController else { return }
-        guard let rewardedVideoAd = rewardedVideoAd , rewardedVideoAd.isReady else {
-            print("AdMob reward video is not ready, reloading...")
-            self.rewardedVideoAd = loadRewardedVideoAd()
-            return
-        }
         
         print("AdMob reward video is showing")
-        rewardedVideoAd.present(fromRootViewController: rootViewController)
+        rewardedVideoAd?.present(fromRootViewController: rootViewController)
     }
     
     // MARK: - Remove

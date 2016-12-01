@@ -21,7 +21,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v6.1
+//    v6.1.1
 
 import Foundation
 
@@ -42,16 +42,27 @@ final class SwiftyAdsAppLovin: NSObject {
     /// Delegate
     weak var delegate: SwiftyAdsDelegate?
     
-    /// Check if reward video is ready (e.g to hide a reward video button)
+    /// Check if interstitial ad is ready (e.g to show alternative ad)
     /// Will try to reload an ad if it returns false.
-    var isRewardedVideoReady: Bool {
-        guard ALIncentivizedInterstitialAd.isReadyForDisplay() else {
-            ALIncentivizedInterstitialAd.shared().preloadAndNotify(self)
+    var isInterstitialReady: Bool {
+        guard ALInterstitialAd.isReadyForDisplay() else {
+            print("AppLovin interstitial ad not ready")
             return false
         }
         return true
     }
     
+    /// Check if reward video is ready (e.g to hide a reward video button)
+    /// Will try to reload an ad if it returns false.
+    var isRewardedVideoReady: Bool {
+        guard ALIncentivizedInterstitialAd.isReadyForDisplay() else {
+            print("AppLovin rewared video not ready, reloading...")
+            ALIncentivizedInterstitialAd.shared().preloadAndNotify(self)
+            return false
+        }
+        return true
+    }
+  
     /// Is watching reward video
     fileprivate var isWatchingRewardedVideo = false
     
@@ -80,16 +91,11 @@ final class SwiftyAdsAppLovin: NSObject {
     
     /// Show interstitial ad
     ///
-    /// - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to 0.
-    func showInterstitial(withInterval interval: Int = 0) {
-        guard !isRemoved else { return }
+    /// - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to nil.
+    func showInterstitial(withInterval interval: Int? = nil) {
+        guard !isRemoved, isInterstitialReady else { return }
         
-        guard ALInterstitialAd.isReadyForDisplay() else {
-            print("AppLovin interstitial ad not ready, reloading...")
-            return
-        }
-        
-        if interval != 0 {
+        if let interval = interval {
             intervalCounter += 1
             guard intervalCounter >= interval else { return }
             intervalCounter = 0
@@ -105,11 +111,7 @@ final class SwiftyAdsAppLovin: NSObject {
     
     /// Show rewarded video ad
     func showRewardedVideo() {
-        guard ALIncentivizedInterstitialAd.isReadyForDisplay() else {
-            print("AppLovin reward video not ready, reloading...")
-            ALIncentivizedInterstitialAd.shared().preloadAndNotify(self)
-            return
-        }
+        guard isRewardedVideoReady else { return }
     
         isWatchingRewardedVideo = true
         
