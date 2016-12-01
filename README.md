@@ -214,12 +214,14 @@ Step 2:
 When your app launches setup your custom ads as soon as possible.
 
 ```swift
-SwiftyAdsCustom.Inventory.all = [
-      SwiftyAdsCustom.Inventory(imageName: "AdAngryFlappies", appID: "991933749", isNewGame: false),
-      SwiftyAdsCustom.Inventory(imageName: "AdVertigus", appID: "1051292772", isNewGame: true)
+SwiftyAdsCustom.shared.ads = [
+      SwiftyAdsCustom.Inventory(imageName: "AdVertigus", appID: "1051292772", color: .green),
+      SwiftyAdsCustom.Inventory(imageName: "AdAngryFlappies", appID: "991933749", color: .blue,
+      
 ]
 ```
 
+The first item in the array will include a new" label at the top right corner.
 To make this as reusable as possible e.g if you have multiple projects and share the same file, you can inlude all your custom ads in the array directly in the CustomAds.swift file. The helper will automatically compare the bundle ID name to the ad image (including whitespaces and -) to see if they are the same and if so will move onto the next ad in the inventory.
 
 HOW TO USE
@@ -389,7 +391,6 @@ override func viewWillTransition(to size: CGSize, with coordinator: UIViewContro
         coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
           
             SwiftyAdsAdMob.shared.adjustForOrientation()
-            SwiftyAdsCustom.shared.adjustForOrientation() 
             
             }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
                 print("Device rotation completed")
@@ -414,6 +415,10 @@ Please feel free to let me know about any bugs or improvements, I am by no means
 Enjoy
 
 # Release Notes
+
+- v6.1.1
+
+Custom ads improvements
 
 - v6.1
 
