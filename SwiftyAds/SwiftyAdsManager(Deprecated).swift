@@ -65,6 +65,23 @@ final class SwiftyAdsManager {
         #endif
     }
     
+    /// Remove ads
+    var isRemoved = false {
+        didSet {
+            guard isRemoved else { return }
+            SwiftyAdsCustom.shared.isRemoved = true
+            
+            #if os(iOS)
+                SwiftyAdsAdMob.shared.isRemoved = true
+            #endif
+            
+            #if os(tvOS)
+                SwiftyAdsAppLovin.shared.isRemoved = true
+            #endif
+        }
+    }
+    
+    
     /// Our games counter
     private var customAdInterval = 0
     private var customAdCounter = 0 {
@@ -80,9 +97,6 @@ final class SwiftyAdsManager {
     
     /// Interval counter
     private var intervalCounter = 0
-    
-    /// Removed ads
-    var isRemoved = false
     
     // MARK: - Init
     
@@ -163,21 +177,6 @@ final class SwiftyAdsManager {
     func removeBanner() {
         #if os(iOS)
             SwiftyAdsAdMob.shared.removeBanner()
-        #endif
-    }
-    
-    /// Remove all
-    func remove() {
-        isRemoved = true
-        
-        SwiftyAdsCustom.shared.remove()
-        
-        #if os(iOS)
-            SwiftyAdsAdMob.shared.remove()
-        #endif
-        
-        #if os(tvOS)
-            SwiftyAdsAppLovin.shared.remove()
         #endif
     }
     

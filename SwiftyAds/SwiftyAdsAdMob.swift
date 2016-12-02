@@ -42,6 +42,17 @@ final class SwiftyAdsAdMob: NSObject {
     /// Delegates
     weak var delegate: SwiftyAdsDelegate?
     
+    /// Removed ads
+    var isRemoved = false {
+        didSet {
+            guard isRemoved else { return }
+            print("Removed all ads")
+            removeBanner()
+            interstitialAd?.delegate = nil
+            rewardedVideoAd?.delegate = nil
+        }
+    }
+    
     /// Check if interstitial ad is ready (e.g to show alternative ad like a custom ad or something)
     /// Will try to reload an ad if it returns false.
     var isInterstitialReady: Bool {
@@ -79,9 +90,6 @@ final class SwiftyAdsAdMob: NSObject {
     
     /// Interval counter
     private var intervalCounter = 0
-    
-    /// Removed ads
-    private var isRemoved = false
     
     // MARK: - Init
     
@@ -175,16 +183,6 @@ final class SwiftyAdsAdMob: NSObject {
                 bannerAd.removeFromSuperview()
             }
         }
-    }
-    
-    /// Remove all ads (in app purchases)
-    func remove() {
-        print("Removed all ads")
-        
-        isRemoved = true
-        removeBanner()
-        interstitialAd?.delegate = nil
-        rewardedVideoAd?.delegate = nil
     }
     
     // MARK: - Orientation Changed

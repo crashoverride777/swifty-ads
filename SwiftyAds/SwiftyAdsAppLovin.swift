@@ -62,6 +62,9 @@ final class SwiftyAdsAppLovin: NSObject {
         }
         return true
     }
+    
+    /// Remove ads
+    var isRemoved = false
   
     /// Is watching reward video
     fileprivate var isWatchingRewardedVideo = false
@@ -72,9 +75,6 @@ final class SwiftyAdsAppLovin: NSObject {
     
     /// Interval counter
     private var intervalCounter = 0
-    
-    /// Removed ads
-    private var isRemoved = false
     
     // MARK: - Init
     
@@ -118,11 +118,6 @@ final class SwiftyAdsAppLovin: NSObject {
         ALIncentivizedInterstitialAd.shared().adDisplayDelegate = self
         ALIncentivizedInterstitialAd.shared().adVideoPlaybackDelegate = self
         ALIncentivizedInterstitialAd.shared().showAndNotify(self) // Shared not used here in tvOS demo, check if different
-    }
-    
-    /// Remove ads (in app purchases)
-    func remove() {
-        isRemoved = true
     }
 }
 

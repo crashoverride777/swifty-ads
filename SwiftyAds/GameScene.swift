@@ -7,6 +7,13 @@
 
 import SpriteKit
 
+func setupAds() {
+    SwiftyAdsCustom.shared.inventory = [
+        SwiftyAdsCustom.Ad(imageName: "AdVertigus", appID: "1051292772", color: .green),
+        SwiftyAdsCustom.Ad(imageName: "AdAngryFlappies", appID: "991933749", color: .blue)
+    ]
+}
+
 extension GameScene: SwiftyAdsDelegate {
     
     func adDidOpen() {
@@ -27,31 +34,29 @@ extension GameScene: SwiftyAdsDelegate {
 
 class GameScene: SKScene {
     
-    var myLabel: SKLabelNode!
+    lazy var label: SKLabelNode? = self.childNode(withName: "textLabel") as? SKLabelNode
+    
     var customAdCounter = 0
+    
     var touchCounter = 15 {
         didSet {
             if touchCounter >= 0 {
-                myLabel.text = "Remove ads in \(touchCounter) clicks"
+                label?.text = "Remove ads in \(touchCounter) clicks"
             }
             if touchCounter == 0 {
-                SwiftyAdsCustom.shared.remove()
+                SwiftyAdsCustom.shared.isRemoved = true
                 #if os(iOS)
-                    SwiftyAdsAdMob.shared.remove()
+                    SwiftyAdsAdMob.shared.isRemoved = true
                 #endif
                 #if os(tvOS)
-                    SwiftyAdsAppLovin.shared.remove()
+                    SwiftyAdsAppLovin.shared.isRemoved = true
                 #endif
             }
         }
     }
     
     override func didMove(to view: SKView) {
-        myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Remove ads in \(touchCounter) clicks"
-        myLabel.fontSize = 25;
-        myLabel.position = CGPoint(x: frame.midX, y: frame.midY)
-        self.addChild(myLabel)
+        label?.text = "Remove ads in \(touchCounter) clicks"
         
         /// Set ads helper delegate
         SwiftyAdsCustom.shared.delegate = self
@@ -60,6 +65,7 @@ class GameScene: SKScene {
         #endif
         #if os(tvOS)
             SwiftyAdsAppLovin.shared.delegate = self
+            loadTVControls()
         #endif
         
         // Show banner ad
@@ -67,41 +73,28 @@ class GameScene: SKScene {
             SwiftyAdsAdMob.shared.showBanner()
         #endif
         
-        /// Custom ads tv controls
-        #if os(tvOS)
-            let tapMain = UITapGestureRecognizer(target: self, action: #selector(didPressSelectButtonTV))
-            tapMain.allowedPressTypes = [NSNumber (value: UIPressType.select.rawValue)]
-            view.addGestureRecognizer(tapMain)
-            
-            let tapPlayPauseMenu = UITapGestureRecognizer(target: self, action: #selector(didPressPlayOrMenuButtonTV))
-            tapPlayPauseMenu.allowedPressTypes = [NSNumber(value: UIPressType.playPause.rawValue), NSNumber(value: UIPressType.menu.rawValue)]
-            view.addGestureRecognizer(tapPlayPauseMenu)
-        #endif
-        
-        
+    
     }
     
-    /// Menu controls menu/play button pressed
-    @objc private func didPressPlayOrMenuButtonTV() {
-        
-        guard !SwiftyAdsCustom.shared.isShowing else {
-            SwiftyAdsCustom.shared.dismiss()
-            return
-        }
-        
-        // other coded if needed e.g menu navigation
+    #if os(tvOS)
+    private func loadTVControls() {
+        let tapMain = UITapGestureRecognizer(target: self, action: #selector(download))
+        tapMain.allowedPressTypes = [NSNumber(value: UIPressType.select.rawValue)]
+        view?.addGestureRecognizer(tapMain)
+    
+        let tapMenu = UITapGestureRecognizer(target: self, action: #selector(remove))
+        tapMenu.allowedPressTypes = [NSNumber(value: UIPressType.menu.rawValue)]
+        view?.addGestureRecognizer(tapMenu)
     }
     
-    /// Pressed select button
-    @objc private func didPressSelectButtonTV() {
-        
-        guard !SwiftyAdsCustom.shared.isShowing else {
-            SwiftyAdsCustom.shared.download()
-            return
-        }
-        
-        // other code/rest of code e.g menu navigation
+    func download() {
+        SwiftyAdsCustom.shared.download()
     }
+    
+    func remove() {
+        SwiftyAdsCustom.shared.dismiss()
+    }
+    #endif
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if customAdCounter == 0 {
@@ -118,12 +111,5 @@ class GameScene: SKScene {
         }
     
         touchCounter -= 1
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-    }
-   
-    override func update(_ currentTime: CFTimeInterval) {
-        /* Called before each frame is rendered */
     }
 }

@@ -13,11 +13,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
      
-        // Custom ad inventory
-        SwiftyAdsCustom.shared.inventory = [
-            SwiftyAdsCustom.Ad(imageName: "AdVertigus", appID: "1051292772", color: .green),
-            SwiftyAdsCustom.Ad(imageName: "AdAngryFlappies", appID: "991933749", color: .blue)
-        ]
+        setupAds()
         
         // Set up ad Mob
         let bannerID = "Enter your real ID"
