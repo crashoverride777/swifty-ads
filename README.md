@@ -216,8 +216,7 @@ When your app launches setup your custom ads as soon as possible.
 ```swift
 SwiftyAdsCustom.shared.ads = [
       SwiftyAdsCustom.Inventory(imageName: "AdVertigus", appID: "1051292772", color: .green),
-      SwiftyAdsCustom.Inventory(imageName: "AdAngryFlappies", appID: "991933749", color: .blue,
-      
+      SwiftyAdsCustom.Inventory(imageName: "AdAngryFlappies", appID: "991933749", color: .blue)
 ]
 ```
 
