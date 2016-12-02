@@ -76,8 +76,11 @@ public final class SwiftyAdsCustom: NSObject {
     /// Delegate
     public weak var delegate: SwiftyAdsDelegate?
     
+    /// Is showing
+    public var isShowing = false
+    
     /// Remove ads
-    var isRemoved = false
+    public var isRemoved = false
     
     /// Interval counter
     private var intervalCounter = 0
@@ -85,8 +88,8 @@ public final class SwiftyAdsCustom: NSObject {
     /// Current ad
     fileprivate var current = 0
     
-    /// Ad view
     #if os(tvOS)
+    /// Ad view
     private var adView: CustomAdView?
     #endif
     
@@ -157,6 +160,7 @@ public final class SwiftyAdsCustom: NSObject {
         #if os(tvOS)
             adView = CustomAdView(frame: frame, color: adColor, image: image, appID: appID, isNew: adInInventory != 0)
             guard let adView = adView else { return }
+            isShowing = true
         #endif
         rootViewController.view?.addSubview(adView)
         
@@ -174,12 +178,14 @@ public final class SwiftyAdsCustom: NSObject {
     public func download() {
         adView?.download()
         adView = nil
+        isShowing = false
     }
     
     /// Dismiss
     public func dismiss() {
         adView?.remove()
         adView = nil
+        isShowing = false
     }
     #endif
 }
@@ -288,7 +294,9 @@ class CustomAdView: UIView {
     }()
     
     // MARK: - Deinit
+    
     deinit {
+        SwiftyAdsCustom.shared.isShowing = false
         print("Deinit custom ad")
     }
     

@@ -88,11 +88,21 @@ class GameScene: SKScene {
     }
     
     func download() {
-        SwiftyAdsCustom.shared.download()
+        guard !SwiftyAdsCustom.shared.isShowing else {
+            SwiftyAdsCustom.shared.download()
+            return
+        }
+        
+        // rest of code
     }
     
     func remove() {
-        SwiftyAdsCustom.shared.dismiss()
+        guard !SwiftyAdsCustom.shared.isShowing else {
+            SwiftyAdsCustom.shared.dismiss()
+            return
+        }
+        
+        // rest of code
     }
     #endif
     
