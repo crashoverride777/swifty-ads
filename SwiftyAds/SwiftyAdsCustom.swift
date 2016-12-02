@@ -160,7 +160,6 @@ public final class SwiftyAdsCustom: NSObject {
         #if os(tvOS)
             adView = CustomAdView(frame: frame, color: adColor, image: image, appID: appID, isNew: adInInventory != 0)
             guard let adView = adView else { return }
-            isShowing = true
         #endif
         rootViewController.view?.addSubview(adView)
         
@@ -169,7 +168,7 @@ public final class SwiftyAdsCustom: NSObject {
         rootViewController.view?.addConstraints(withFormat: "H:|-\(value)-[v0]-\(value)-|", views: adView)
         
         delegate?.adDidOpen()
-        
+        isShowing = true
         current += 1
     }
     
