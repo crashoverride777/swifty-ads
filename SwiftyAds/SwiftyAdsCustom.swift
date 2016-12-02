@@ -383,7 +383,7 @@ class CustomAdView: UIView {
     // MARK: - Download / Remove
     
     /// Download
-    @objc fileprivate func download() {
+    public func download() {
         
         if let appID = appID {
             #if os(iOS)
@@ -401,7 +401,7 @@ class CustomAdView: UIView {
     }
     
     /// Remove from superview
-    @objc fileprivate func remove() {
+    public func remove() {
         blackView.removeFromSuperview()
         removeFromSuperview()
     }
