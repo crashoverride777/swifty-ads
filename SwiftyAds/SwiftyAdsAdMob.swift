@@ -185,6 +185,11 @@ final class SwiftyAdsAdMob: NSObject {
         }
     }
     
+    @available(*, deprecated: 6.1, message: "Use isRemoved = true instead")
+    func remove() {
+        isRemoved = true
+    }
+    
     // MARK: - Orientation Changed
     
     /// Orientation changed

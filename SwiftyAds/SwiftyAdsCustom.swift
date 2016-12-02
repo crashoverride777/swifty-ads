@@ -187,6 +187,11 @@ public final class SwiftyAdsCustom: NSObject {
         isShowing = false
     }
     #endif
+    
+    @available(*, deprecated: 6.1, message: "Use isRemoved = true instead")
+    func remove() {
+        isRemoved = true
+    }
 }
 
 // MARK: - Custom Ad

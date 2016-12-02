@@ -119,6 +119,11 @@ final class SwiftyAdsAppLovin: NSObject {
         ALIncentivizedInterstitialAd.shared().adVideoPlaybackDelegate = self
         ALIncentivizedInterstitialAd.shared().showAndNotify(self) // Shared not used here in tvOS demo, check if different
     }
+    
+    @available(*, deprecated: 6.1, message: "Use isRemoved = true instead")
+    func remove() {
+        isRemoved = true
+    }
 }
 
 // MARK: ALAdLoadDelegate
