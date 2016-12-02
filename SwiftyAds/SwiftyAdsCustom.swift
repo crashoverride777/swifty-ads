@@ -35,6 +35,8 @@ fileprivate func getAppStoreURL(forAppID id: String) -> String {
     #endif
 }
 
+private let mainViewSpacing: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 50 : 10
+
 /**
  SwiftyAdsCustom
  
@@ -162,10 +164,8 @@ public final class SwiftyAdsCustom: NSObject {
             guard let adView = adView else { return }
         #endif
         rootViewController.view?.addSubview(adView)
-        
-        let value: CGFloat = 10
-        rootViewController.view?.addConstraints(withFormat: "V:|-\(value)-[v0]-\(value)-|", views: adView)
-        rootViewController.view?.addConstraints(withFormat: "H:|-\(value)-[v0]-\(value)-|", views: adView)
+        rootViewController.view?.addConstraints(withFormat: "V:|-\(mainViewSpacing)-[v0]-\(mainViewSpacing)-|", views: adView)
+        rootViewController.view?.addConstraints(withFormat: "H:|-\(mainViewSpacing)-[v0]-\(mainViewSpacing)-|", views: adView)
         
         delegate?.adDidOpen()
         isShowing = true
@@ -384,8 +384,8 @@ class CustomAdView: UIView {
     func loadBlackView() {
         blackView.removeFromSuperview()
         UIApplication.shared.keyWindow?.addSubview(blackView)
-        UIApplication.shared.keyWindow?.addConstraints(withFormat: "V:|-10-[v0]-10-|", views: blackView)
-        UIApplication.shared.keyWindow?.addConstraints(withFormat: "H:|-10-[v0]-10-|", views: blackView)
+        UIApplication.shared.keyWindow?.addConstraints(withFormat: "V:|-\(mainViewSpacing)-[v0]-\(mainViewSpacing)-|", views: blackView)
+        UIApplication.shared.keyWindow?.addConstraints(withFormat: "H:|-\(mainViewSpacing)-[v0]-\(mainViewSpacing)-|", views: blackView)
     }
     
     func removeBlackView() {
