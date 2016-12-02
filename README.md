@@ -164,7 +164,7 @@ SwiftyAdsAdMob.shared.isRemoved = true
 
 NOTE: Remove Ads bool 
 
-This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method and afterwards all the methods to show banner and interstitial ads will not fire anymore and therefore require no further editing. 
+If set to true all the methods to show banner and interstitial ads will not fire anymore and therefore require no further editing. 
 
 This will not stop rewarded videos from showing as they should have a dedicated button. Some reward videos are not skipabble and therefore should never be shown automatically. This way you can remove banner and interstitial ads but still have a rewarded videos button. 
 
@@ -238,7 +238,7 @@ SwiftyAdsCustom.shared.isRemoved = true
 
 NOTE: Remove Ads bool 
 
-This method will set a removedAds bool to true in the custom ads helper. This ensures you only have to call this method and afterwards all the methods to show ads will not fire anymore and therefore require no further editing.
+If set to true all the methods to show banner and interstitial ads will not fire anymore and therefore require no further editing. 
 
 For permanent storage you will need to create your own "removedAdsProduct" property and save it in something like UserDefaults, or preferably iOS Keychain. Than call this method when your app launches after you have set up the helper.
 
@@ -320,7 +320,7 @@ SwiftyAdsAppLovin.shared.isRemoved = true
 
 NOTE: Remove Ads bool 
 
-This method will set a removedAds bool to true in all the ad helpers. This ensures you only have to call this method and afterwards all the methods to show banner and interstitial ads will not fire anymore and therefore require no further editing. 
+If set to true all the methods to show banner and interstitial ads will not fire anymore and therefore require no further editing. 
 
 This will not stop rewarded videos from showing as they should have a dedicated button. Some reward videos are not skipabble and therefore should never be shown automatically. This way you can remove banner and interstitial ads but still have a rewarded videos button. 
 
@@ -420,7 +420,7 @@ Enjoy
 
 Custom ads improvements
 
-The remove method is deprecated, use isRemove = true instead
+The remove method is deprecated, use isRemoved = true instead
 
 - v6.1
 
