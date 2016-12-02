@@ -163,7 +163,7 @@ public final class SwiftyAdsCustom: NSObject {
         #endif
         rootViewController.view?.addSubview(adView)
         
-        let value: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 60 : 10
+        let value: CGFloat = 10
         rootViewController.view?.addConstraints(withFormat: "V:|-\(value)-[v0]-\(value)-|", views: adView)
         rootViewController.view?.addConstraints(withFormat: "H:|-\(value)-[v0]-\(value)-|", views: adView)
         
