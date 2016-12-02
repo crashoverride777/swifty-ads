@@ -171,13 +171,13 @@ public final class SwiftyAdsCustom: NSObject {
     
     #if os(tvOS)
     /// Download
-    func download() {
+    public func download() {
         adView?.download()
         adView = nil
     }
     
     /// Dismiss
-    func dismiss() {
+    public func dismiss() {
         adView?.remove()
         adView = nil
     }
@@ -383,7 +383,7 @@ class CustomAdView: UIView {
     // MARK: - Download / Remove
     
     /// Download
-    public func download() {
+    @objc fileprivate func download() {
         
         if let appID = appID {
             #if os(iOS)
@@ -401,7 +401,7 @@ class CustomAdView: UIView {
     }
     
     /// Remove from superview
-    public func remove() {
+    @objc fileprivate func remove() {
         blackView.removeFromSuperview()
         removeFromSuperview()
     }
