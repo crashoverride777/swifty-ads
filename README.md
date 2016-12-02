@@ -159,7 +159,7 @@ SwiftyAdsAdMob.shared.removeBanner()
 
 - To remove all Ads, mainly for in app purchases simply call 
 ```swift
-SwiftyAdsAdMob.shared.remove() 
+SwiftyAdsAdMob.shared.isRemoved = true 
 ```
 
 NOTE: Remove Ads bool 
@@ -233,7 +233,7 @@ SwiftyAdsCustom.shared.show()
 
 - To remove all Ads, mainly for in app purchases simply call 
 ```swift
-SwiftyAdsCustom.shared.remove() 
+SwiftyAdsCustom.shared.isRemoved = true 
 ```
 
 NOTE: Remove Ads bool 
@@ -315,7 +315,7 @@ if SwiftyAdsAppLovin.shared.isRewardedVideoReady { // Will try to load an ad if 
 
 - To remove all Ads, mainly for in app purchases simply call 
 ```swift
-SwiftyAdsAppLovin.shared.remove() 
+SwiftyAdsAppLovin.shared.isRemoved = true 
 ```
 
 NOTE: Remove Ads bool 
@@ -375,9 +375,9 @@ SwiftyAdsAppLovin.shared.delegate = self
 or calling the remove method in all helpers when the remove ads button was pressed
 
 ```swift
-SwiftyAdsCustom.shared.remove()
-SwiftyAdsAdMob.shared.remove()
-SwiftyAdsAppLovin.shared.remove()
+SwiftyAdsCustom.shared.isRemoved = true 
+SwiftyAdsAdMob.shared.isRemoved = true 
+SwiftyAdsAppLovin.shared.isRemoved = true 
 ```
 
 # Supporting both landscape and portrait orientation
