@@ -221,7 +221,7 @@ SwiftyAdsCustom.shared.ads = [
 ```
 
 The first item in the array will include a new" label at the top right corner.
-To make this as reusable as possible e.g if you have multiple projects and share the same file, you can inlude all your custom ads in the array directly in the CustomAds.swift file. The helper will automatically compare the bundle ID name to the ad image (including whitespaces and -) to see if they are the same and if so will move onto the next ad in the inventory.
+To make this as reusable as possible e.g if you have multiple projects and share the same file, you can inlude all your custom ads in the array. The helper will automatically compare the bundle ID name to the ad image to see if they are the same and if so will move onto the next ad in the inventory.
 
 HOW TO USE
 
