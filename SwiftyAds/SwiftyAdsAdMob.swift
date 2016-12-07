@@ -188,6 +188,10 @@ final class SwiftyAdsAdMob: NSObject {
     @available(*, deprecated: 6.1, message: "Use isRemoved = true instead")
     func remove() {
         isRemoved = true
+        print("Removed all ads")
+        removeBanner()
+        interstitialAd?.delegate = nil
+        rewardedVideoAd?.delegate = nil
     }
     
     // MARK: - Orientation Changed

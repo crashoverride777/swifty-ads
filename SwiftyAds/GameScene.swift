@@ -9,8 +9,8 @@ import SpriteKit
 
 func setupAds() {
     SwiftyAdsCustom.shared.inventory = [
-        SwiftyAdsCustom.Ad(imageName: "AdVertigus", appID: "1051292772", color: .green),
-        SwiftyAdsCustom.Ad(imageName: "AdAngryFlappies", appID: "991933749", color: .blue)
+        SwiftyAdsCustom.Ad(imageName: "AdVertigus", appID: "1051292772", color: .green, isFree: true),
+        SwiftyAdsCustom.Ad(imageName: "AdAngryFlappies", appID: "991933749", color: .blue, isFree: false)
     ]
 }
 
@@ -65,7 +65,7 @@ class GameScene: SKScene {
         #endif
         #if os(tvOS)
             SwiftyAdsAppLovin.shared.delegate = self
-            loadTVControls()
+            //loadTVControls()
         #endif
         
         // Show banner ad

@@ -35,6 +35,31 @@ fileprivate func getAppStoreURL(forAppID id: String) -> String {
     #endif
 }
 
+/// String Replacing Occurrences
+private extension String {
+    var lowerCasedNoSpacesAndHyphens: String {
+        let noSpaces = replacingOccurrences(of: " ", with: "")
+        return noSpaces.replacingOccurrences(of: "-", with: "").lowercased()
+    }
+}
+
+/// Contraints Helper
+private extension UIView {
+    
+    func addConstraints(withFormat format: String, views: UIView...) {
+        var viewsDictionary = [String: UIView]()
+        for (index, view) in views.enumerated() {
+            let key = "v\(index)"
+            view.translatesAutoresizingMaskIntoConstraints = false
+            viewsDictionary[key] = view
+        }
+        
+        let constraint = NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDictionary)
+        addConstraints(constraint)
+    }
+}
+
+/// Main View Spacing
 private let mainViewSpacing: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 50 : 10
 
 /**
@@ -55,6 +80,7 @@ public final class SwiftyAdsCustom: NSObject {
         let imageName: String
         let appID: String
         let color: Color
+        let isFree: Bool
     }
     
     /// Color
@@ -92,7 +118,7 @@ public final class SwiftyAdsCustom: NSObject {
     
     #if os(tvOS)
     /// Ad view
-    private var adView: CustomAdView?
+    private var adView: AdView?
     #endif
     
     /// All ads
@@ -153,14 +179,14 @@ public final class SwiftyAdsCustom: NSObject {
         
         guard let image = UIImage(named: inventory[adInInventory].imageName) else { return }
         let appID = inventory[adInInventory].appID
-        
+        let isFree = inventory[adInInventory].isFree
         
         let frame = CGRect(x: 0, y: 0, width: 0, height: 0) // 0, see constraints below
         #if os(iOS)
-        let adView = CustomAdView(frame: frame, color: adColor, image: image, appID: appID, isNew: adInInventory != 0)
+            let adView = AdView(frame: frame, color: adColor, image: image, appID: appID, isFree: isFree, isNew: adInInventory == 0)
             #endif
         #if os(tvOS)
-            adView = CustomAdView(frame: frame, color: adColor, image: image, appID: appID, isNew: adInInventory != 0)
+            adView = AdView(frame: frame, color: adColor, image: image, appID: appID, isFree: isFree, isNew: adInInventory == 0)
             guard let adView = adView else { return }
         #endif
         rootViewController.view?.addSubview(adView)
@@ -194,6 +220,42 @@ public final class SwiftyAdsCustom: NSObject {
     }
 }
 
+/// App Store Product View Controller
+#if os(iOS)
+    extension SwiftyAdsCustom: SKStoreProductViewControllerDelegate {
+        
+        /// Open app store controller for app ID
+        ///
+        /// - parameter appID: The app ID string for the app to present.
+        func openAppStore(forAppID appID: String) {
+            guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
+            
+            let viewController = SKStoreProductViewController()
+            viewController.delegate = self
+            
+            let parameters = [SKStoreProductParameterITunesItemIdentifier: appID]
+            viewController.loadProduct(withParameters: parameters) { (result, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                    viewController.dismiss(animated: true)
+                    return
+                }
+            }
+            
+            /// Present
+            /// Called outside loadProductsWithParemeter so there is no delay. VC has own loading indicator
+            rootViewController.present(viewController, animated: true)
+        }
+        
+        /// SKStoreProductViewControllerDelegate
+        
+        /// Product view controller did finish
+        public func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
+            viewController.dismiss(animated: true)
+        }
+    }
+#endif
+
 // MARK: - Custom Ad
 
 /**
@@ -201,7 +263,7 @@ public final class SwiftyAdsCustom: NSObject {
  
  A UIView class to create a custom ad.
  */
-class CustomAdView: UIView {
+class AdView: UIView {
 
     // MARK: - Properties
     
@@ -255,8 +317,25 @@ class CustomAdView: UIView {
         #endif
         label.font = UIFont(name: "HelveticaNeue-Bold", size: fontSize)
         label.textAlignment = .center
-        label.textColor = UIColor.red
+        label.textColor = .red
         label.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 4)
+        return label
+    }()
+    
+    /// New game label
+    fileprivate lazy var freeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Free"
+        #if os(iOS)
+            let fontSize: CGFloat = self.isPad ? 30 : 22
+        #endif
+        #if os(tvOS)
+            let fontSize: CGFloat = 35
+        #endif
+        label.font = UIFont(name: "HelveticaNeue", size: fontSize)
+        label.textAlignment = .center
+        label.textColor = .black
+        label.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 4)
         return label
     }()
     
@@ -264,12 +343,16 @@ class CustomAdView: UIView {
     fileprivate lazy var closeButton: UIButton = {
         let button = UIButton()
         button.setTitle("X", for: .normal)
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .red
         button.layer.borderColor = UIColor.white.cgColor
         button.layer.borderWidth = 1
         button.layer.cornerRadius = self.isPad ? 15 : 11.5
         button.addTarget(self, action: #selector(remove), for: .primaryActionTriggered)
+        button.addTarget(self, action: #selector(animateCloseButton(_:)), for: .touchDown)
+        button.addTarget(self, action: #selector(resetCloseButton(_:)), for: .touchUpOutside)
+        button.addTarget(self, action: #selector(resetCloseButton(_:)), for: .touchCancel)
         return button
     }()
     
@@ -301,13 +384,14 @@ class CustomAdView: UIView {
     
     deinit {
         SwiftyAdsCustom.shared.isShowing = false
+        SwiftyAdsCustom.shared.delegate?.adDidClose()
         print("Deinit custom ad")
     }
     
     // MARK: - Init
     
     /// Private singleton init
-    init(frame: CGRect, color: UIColor, image: UIImage, appID: String, isNew: Bool) {
+    init(frame: CGRect, color: UIColor, image: UIImage, appID: String, isFree: Bool, isNew: Bool) {
         self.appID = appID
         super.init(frame: frame)
       
@@ -322,9 +406,10 @@ class CustomAdView: UIView {
         
         // Labels
         addSubview(headerLabel)
-        
+        addSubview(freeLabel)
+        freeLabel.isHidden = !isFree
         addSubview(newGameLabel)
-        newGameLabel.isHidden = isNew
+        newGameLabel.isHidden = !isNew
         
         // Button
         addSubview(downloadButton)
@@ -356,6 +441,10 @@ class CustomAdView: UIView {
         addConstraints(withFormat: "H:[v0]-2-|", views: newGameLabel)
         addConstraints(withFormat: "V:|-15-[v0]", views: newGameLabel)
         
+        // Free label
+        addConstraints(withFormat: "H:[v0]-2-|", views: freeLabel)
+        addConstraints(withFormat: "V:[v0]-15-|", views: freeLabel)
+        
         // Close button
         let closeButtonSize: CGFloat = self.isPad ? 30 : 22
         addConstraints(withFormat: "H:|-5-[v0(\(closeButtonSize))]", views: closeButton)
@@ -378,38 +467,55 @@ class CustomAdView: UIView {
         let xConstraint = NSLayoutConstraint(item: downloadButton, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0)
         addConstraint(xConstraint)
     }
+}
 
-    // MARK: - Black View
+// MARK: - Black View
+
+extension AdView {
     
-    func loadBlackView() {
+    @objc fileprivate func loadBlackView() {
         blackView.removeFromSuperview()
         UIApplication.shared.keyWindow?.addSubview(blackView)
         UIApplication.shared.keyWindow?.addConstraints(withFormat: "V:|-\(mainViewSpacing)-[v0]-\(mainViewSpacing)-|", views: blackView)
         UIApplication.shared.keyWindow?.addConstraints(withFormat: "H:|-\(mainViewSpacing)-[v0]-\(mainViewSpacing)-|", views: blackView)
     }
     
-    func removeBlackView() {
+    @objc fileprivate func removeBlackView() {
         blackView.removeFromSuperview()
     }
+}
+
+// MARK: - Close Button Animation
+
+extension AdView {
     
-    // MARK: - Download / Remove
+    @objc fileprivate func animateCloseButton(_ sender: UIButton) {
+        sender.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+    }
+    
+    @objc fileprivate func resetCloseButton(_ sender: UIButton) {
+        sender.backgroundColor = .red
+    }
+}
+
+// MARK: - Download / Remove
+
+extension AdView {
     
     /// Download
     @objc fileprivate func download() {
-        
-        if let appID = appID {
-            #if os(iOS)
-                SwiftyAdsCustom.shared.openAppStore(forAppID: appID)
-            #endif
-            
-            #if os(tvOS)
-                if let url = URL(string: getAppStoreURL(forAppID: appID)) {
-                    UIApplication.shared.open(url, options: [:])
-                }
-            #endif
-        }
-        
         remove()
+        
+        guard let appID = appID else { return }
+        #if os(iOS)
+            SwiftyAdsCustom.shared.openAppStore(forAppID: appID)
+        #endif
+        
+        #if os(tvOS)
+            if let url = URL(string: getAppStoreURL(forAppID: appID)) {
+                UIApplication.shared.open(url, options: [:])
+            }
+        #endif
     }
     
     /// Remove from superview
@@ -418,65 +524,3 @@ class CustomAdView: UIView {
         removeFromSuperview()
     }
 }
-
-// MARK: - String Replacing Occurrences
-
-private extension String {
-    var lowerCasedNoSpacesAndHyphens: String {
-        let noSpaces = replacingOccurrences(of: " ", with: "")
-        return noSpaces.replacingOccurrences(of: "-", with: "").lowercased()
-    }
-}
-
-// MARK: - Contraints Helper
-
-private extension UIView {
-    
-    func addConstraints(withFormat format: String, views: UIView...) {
-        var viewsDictionary = [String: UIView]()
-        for (index, view) in views.enumerated() {
-            let key = "v\(index)"
-            view.translatesAutoresizingMaskIntoConstraints = false
-            viewsDictionary[key] = view
-        }
-        
-        let constraint = NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDictionary)
-        addConstraints(constraint)
-    }
-}
-
-// MARK: - App Store Product View Controller
-#if os(iOS)
-extension SwiftyAdsCustom: SKStoreProductViewControllerDelegate {
-    
-    /// Open app store controller for app ID
-    ///
-    /// - parameter appID: The app ID string for the app to present.
-    func openAppStore(forAppID appID: String) {
-        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
-        
-        let viewController = SKStoreProductViewController()
-        viewController.delegate = self
-        
-        let parameters = [SKStoreProductParameterITunesItemIdentifier: appID]
-        viewController.loadProduct(withParameters: parameters) { (result, error) in
-            if let error = error {
-                print(error.localizedDescription)
-                viewController.dismiss(animated: true)
-                return
-            }
-        }
-        
-        /// Present
-        /// Called outside loadProductsWithParemeter so there is no delay. VC has own loading indicator
-        rootViewController.present(viewController, animated: true)
-    }
-    
-    /// SKStoreProductViewControllerDelegate
-    
-    /// Product view controller did finish
-    public func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
-        viewController.dismiss(animated: true)
-    }
-}
-#endif
