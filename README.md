@@ -407,9 +407,9 @@ When you submit your app to Apple on iTunes connect do not forget to select YES 
 
 # Final Info
 
-The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and an interstitial ad randomly when touching the screen. After 5 clicks all ads will be removed to simulate what a removeAds button would do. 
+The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and an interstitial ad randomly when touching the screen. After a certain amount of clicks all ads will be removed to simulate what a removeAds button would do. 
 
-Please feel free to let me know about any bugs or improvements, I am by no means an expert. 
+Please feel free to let me know about any bugs or improvements. 
 
 Enjoy
 
