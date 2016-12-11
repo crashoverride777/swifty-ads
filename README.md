@@ -11,12 +11,12 @@ I know that the current way of copying the .swift file(s) into your project suck
 
 In the meantime I would create a folder on your Mac, called something like SharedFiles, and drag the swift file(s) into this folder. Than drag the files from this folder into your project, making sure that "copy if needed" is not selected. This way its easier to update the files and to share them between projects.
 
-# Pre-setup: -D DEBUG" custom flag
+# Pre-setup: "DEBUG" custom flag
 
 AdMob uses 2 types of AdUnit IDs, 1 for testing and 1 for release. You should not test live ads when you are testing your app.
 With this step the helper will not automatically change the AdUnitID from test to release. This is also useful for things such as hiding print statments so you should not forget to include this step.
 
-Click on Targets (left project sideBar, at the top) -> BuildSettings. Than underneath buildSettings next to the search bar, on the left there should be buttons called Basic, All, Combined and Level. Click on All and than you should be able to scroll down in buildSettings and find the section called SwiftCompiler-CustomFlags (alternatively use the search bar). Click on other flags and than debug and add a custom flag named -D DEBUG.
+Click on Targets (left project sideBar, at the top) -> BuildSettings. Than underneath buildSettings next to the search bar, on the left there should be buttons called Basic, All, Combined and Level. Click on All and than you should be able to scroll down in buildSettings and find the section called SwiftCompiler-CustomFlags (alternatively use the search bar). Click on Active Compilation Conditions and add an entry under the Debug section called DEBUG.
 
 http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
 
