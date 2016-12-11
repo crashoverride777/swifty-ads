@@ -18,6 +18,8 @@ With this step the helper will not automatically change the AdUnitID from test t
 
 Click on Targets (left project sideBar, at the top) -> BuildSettings. Than underneath buildSettings next to the search bar, on the left there should be buttons called Basic, All, Combined and Level. Click on All and than you should be able to scroll down in buildSettings and find the section called SwiftCompiler-CustomFlags (alternatively use the search bar). Click on Active Compilation Conditions and add an entry under the Debug section called DEBUG.
 
+I think by default this is added in xCode 8 automatically.
+
 http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
 
 # Pre-setup: AdMob (iOS)
