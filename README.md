@@ -352,7 +352,7 @@ extension GameScene: SwiftyAdsDelegate {
 
 # How to use all helpers
 
-I removed the AdsManager.swift file in v6.1 as I felt like it was complicating things unnecessarlily and making the helper(s) less flexible. If you are using all 3 helpers at the same time you will have to implement your own logic for showing the correct ad.
+I deprecated the AdsManager.swift file in v6.1 as I felt like it was complicating things unnecessarlily and making the helper(s) less flexible and more confusing to beginners. If you are using all 3 helpers at the same time you will have to implement your own logic for showing the correct ad, similar to the deprecated AdsManager class.
 
 To differentiate between targets you can do something like this.
 
@@ -401,7 +401,7 @@ override func viewWillTransition(to size: CGSize, with coordinator: UIViewContro
 
 # Set the DEBUG flag?
 
-Dont forget to setup the "-D DEBUG" custom flag or the helper will not work as it will not use the AdUnitIDs or hide print statements.
+Dont forget to setup the "DEBUG" flag or the helper will not work as it will not use correct AdUnitIDs.
 
 # When you submit your app to Apple
 
@@ -421,7 +421,7 @@ Enjoy
 
 Custom ads improvements
 
-The remove method is deprecated, use isRemoved = true instead
+The remove methods are deprecated, use "...shared.isRemoved = true" instead
 
 - v6.1
 
