@@ -8,14 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		A034F499985EA7041921C3E1 /* Pods_SwiftyAds__tvOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F4A84EB61DA087A44D4C687 /* Pods_SwiftyAds__tvOS_.framework */; };
-		B41E34C21D0236950034C444 /* SwiftyAdsCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = B435FFE41CE14D1900A678AA /* SwiftyAdsCustom.swift */; };
 		B435FFE11CE14C2A00A678AA /* SwiftyAdsAdMob.swift in Sources */ = {isa = PBXBuildFile; fileRef = B435FFE01CE14C2A00A678AA /* SwiftyAdsAdMob.swift */; };
-		B435FFE51CE14D1900A678AA /* SwiftyAdsCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = B435FFE41CE14D1900A678AA /* SwiftyAdsCustom.swift */; };
 		B43B34CD1D4AD2E50064F364 /* SwiftyAdsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43B34CC1D4AD2E50064F364 /* SwiftyAdsDelegate.swift */; };
 		B43B34CE1D4AD2E50064F364 /* SwiftyAdsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43B34CC1D4AD2E50064F364 /* SwiftyAdsDelegate.swift */; };
 		B452EFD91CDBF7FE009A69B5 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B452EFD81CDBF7FE009A69B5 /* GoogleMobileAds.framework */; };
-		B48652471DEA585F006EC73D /* SwiftyAdsManager(Deprecated).swift in Sources */ = {isa = PBXBuildFile; fileRef = B48652461DEA585F006EC73D /* SwiftyAdsManager(Deprecated).swift */; };
-		B48652481DEA585F006EC73D /* SwiftyAdsManager(Deprecated).swift in Sources */ = {isa = PBXBuildFile; fileRef = B48652461DEA585F006EC73D /* SwiftyAdsManager(Deprecated).swift */; };
 		B4A0065E1CECFCF100A44575 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A0065D1CECFCF100A44575 /* AppDelegate.swift */; };
 		B4A006641CECFCF100A44575 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A006631CECFCF100A44575 /* GameViewController.swift */; };
 		B4A006691CECFCF100A44575 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4A006671CECFCF100A44575 /* Main.storyboard */; };
@@ -60,10 +56,8 @@
 		5AE1878696E356A11D74AD81 /* Pods_SwiftyAds__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAds__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F4A84EB61DA087A44D4C687 /* Pods_SwiftyAds__tvOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAds__tvOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B435FFE01CE14C2A00A678AA /* SwiftyAdsAdMob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsAdMob.swift; sourceTree = "<group>"; };
-		B435FFE41CE14D1900A678AA /* SwiftyAdsCustom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsCustom.swift; sourceTree = "<group>"; };
 		B43B34CC1D4AD2E50064F364 /* SwiftyAdsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsDelegate.swift; sourceTree = "<group>"; };
 		B452EFD81CDBF7FE009A69B5 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "GoogleMobileAdsSdkiOS-7.8.0/GoogleMobileAds.framework"; sourceTree = SOURCE_ROOT; };
-		B48652461DEA585F006EC73D /* SwiftyAdsManager(Deprecated).swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SwiftyAdsManager(Deprecated).swift"; sourceTree = "<group>"; };
 		B4A0065B1CECFCF100A44575 /* SwiftyAds (tvOS).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftyAds (tvOS).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4A0065D1CECFCF100A44575 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "SwiftyAds (tvOS)/AppDelegate.swift"; sourceTree = "<group>"; };
 		B4A006631CECFCF100A44575 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameViewController.swift; path = "SwiftyAds (tvOS)/GameViewController.swift"; sourceTree = "<group>"; };
@@ -256,8 +250,6 @@
 				B43B34CC1D4AD2E50064F364 /* SwiftyAdsDelegate.swift */,
 				B435FFE01CE14C2A00A678AA /* SwiftyAdsAdMob.swift */,
 				B4A006A01CECFDF400A44575 /* SwiftyAdsAppLovin.swift */,
-				B435FFE41CE14D1900A678AA /* SwiftyAdsCustom.swift */,
-				B48652461DEA585F006EC73D /* SwiftyAdsManager(Deprecated).swift */,
 				B4F4EE151DA3F7D500C6FEC0 /* Images.xcassets */,
 				B4F4EE101DA3F7BC00C6FEC0 /* GameScene.swift */,
 				B4F4EE0F1DA3F7BC00C6FEC0 /* GameScene.sks */,
@@ -477,11 +469,9 @@
 			files = (
 				B43B34CE1D4AD2E50064F364 /* SwiftyAdsDelegate.swift in Sources */,
 				B4A006641CECFCF100A44575 /* GameViewController.swift in Sources */,
-				B41E34C21D0236950034C444 /* SwiftyAdsCustom.swift in Sources */,
 				B4A006A11CECFDF400A44575 /* SwiftyAdsAppLovin.swift in Sources */,
 				B4F4EE141DA3F7BC00C6FEC0 /* GameScene.swift in Sources */,
 				B4A0065E1CECFCF100A44575 /* AppDelegate.swift in Sources */,
-				B48652481DEA585F006EC73D /* SwiftyAdsManager(Deprecated).swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,8 +484,6 @@
 				B435FFE11CE14C2A00A678AA /* SwiftyAdsAdMob.swift in Sources */,
 				B4B01A191B9A0AF500F9A8EA /* AppDelegate.swift in Sources */,
 				B4F4EE131DA3F7BC00C6FEC0 /* GameScene.swift in Sources */,
-				B435FFE51CE14D1900A678AA /* SwiftyAdsCustom.swift in Sources */,
-				B48652471DEA585F006EC73D /* SwiftyAdsManager(Deprecated).swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
