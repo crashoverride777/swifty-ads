@@ -316,7 +316,7 @@ Enjoy
 
 - v6.2
 
-Removed Custom ads
+Removed Custom ads to further simplify this project
 
 Cleanup
 
