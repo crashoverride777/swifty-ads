@@ -14,7 +14,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupAds()
+        SwiftyAdsCustom.shared.setup()
      
         _ = SwiftyAdsAppLovin.shared
 

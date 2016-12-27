@@ -21,8 +21,6 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v6.1
-
 import Foundation
 
 /**
@@ -36,7 +34,7 @@ final class SwiftyAdsManager {
     // MARK: - Static Properties
     
     /// Shared Instance
-    @available(*, deprecated: 6.1, message: "This class is deprecated and will be removed in a future update. Please use the class specific calls instead, e.g SwiftAdsAdMob.shared. Create your own logic, like this class, when using all helpers.")
+    @available(*, deprecated: 6.1, message: "This class is deprecated and will be removed in a future update. Please use the class specific calls instead, e.g SwiftAdsAdMob.shared... . Create your own logic, like this class, when using all helpers.")
     static let shared = SwiftyAdsManager()
     
     // MARK: - Properties

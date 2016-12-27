@@ -21,17 +21,15 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-//    v6.1.1
-
 import StoreKit
 
 /// Get app store url for app ID
 fileprivate func getAppStoreURL(forAppID id: String) -> String {
     #if os(iOS)
-        return "itms-apps://itunes.apple.com/app/id" + id
+        return "itms-apps://itunes.apple.com/app/id\(id)"
     #endif
     #if os(tvOS)
-        return "com.apple.TVAppStore://itunes.apple.com/app/id" + id
+        return "com.apple.TVAppStore://itunes.apple.com/app/id\(id)"
     #endif
 }
 
@@ -124,12 +122,20 @@ public final class SwiftyAdsCustom: NSObject {
     /// All ads
     public var inventory = [Ad]()
     
+    /// Setup
+    public func setup() {
+        SwiftyAdsCustom.shared.inventory = [
+            SwiftyAdsCustom.Ad(imageName: "AdVertigus", appID: "1051292772", color: .green, isFree: true),
+            SwiftyAdsCustom.Ad(imageName: "AdAngryFlappies", appID: "991933749", color: .blue, isFree: false)
+        ]
+    }
+    
     /// Show custom ad
     ///
     /// - parameter newestAd: If set to true will show first ad in inventory. Defaults to false.
     /// - parameter random: If set to true will pick random ad from inventory. Defaults to false. Will not work if newestAd is set to true.
     /// - parameter interval: The interval when to show the ad, e.g when set to 4 ad will be shown every 4th time. Defaults to nil.
-    public func show(newest: Bool = false, random: Bool = false, withInterval interval: Int? = nil) {
+    public func show(random: Bool = false, withInterval interval: Int? = nil) {
         guard !isRemoved && !inventory.isEmpty else { return }
         guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
         
@@ -139,16 +145,7 @@ public final class SwiftyAdsCustom: NSObject {
             intervalCounter = 0
         }
         
-        var adInInventory: Int
-        if newest {
-            adInInventory = 0
-        } else if random {
-            let range = UInt32(inventory.count)
-            adInInventory = Int(arc4random_uniform(range))
-        } else {
-            adInInventory = current
-        }
-        
+        var adInInventory = random ? Int(arc4random_uniform(UInt32(inventory.count))) : current
         if adInInventory >= inventory.count {
             adInInventory = 0
             current = 0

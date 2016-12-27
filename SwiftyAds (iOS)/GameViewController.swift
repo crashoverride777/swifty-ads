@@ -13,7 +13,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
      
-        setupAds()
+        SwiftyAdsCustom.shared.setup()
         
         // Set up ad Mob
         let bannerID = "Enter your real ID"

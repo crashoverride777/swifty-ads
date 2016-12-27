@@ -212,60 +212,7 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>2D8E8EC45A3A1A1D94AE762CB5028504</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>6E30D0A83A6747DD81375534624017CD</string>
-				<string>3F184ACC5D8764E3CA50732280130C49</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>36BFED3A384F3D9461D6CE090EDFE682</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>D944B39C06C805DA586BB76E2867AF89</string>
-			</array>
-			<key>isa</key>
-			<string>PBXHeadersBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>3D831502A03070884DD15E64051F5F27</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>CE6B7ECAEB922AC1A4A60C3FD202192C</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Frameworks</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3E0B45391E4A17374DC79C72B8125743</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.script.sh</string>
-			<key>path</key>
-			<string>Pods-SwiftyAds (tvOS)-frameworks.sh</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3F184ACC5D8764E3CA50732280130C49</key>
+		<key>2CCE25DEB6FC1685F19363892AF09703</key>
 		<dict>
 			<key>buildSettings</key>
 			<dict>
@@ -329,7 +276,7 @@
 				<key>SYMROOT</key>
 				<string>${SRCROOT}/../build</string>
 				<key>TVOS_DEPLOYMENT_TARGET</key>
-				<string>9.0</string>
+				<string>10.0</string>
 				<key>VALIDATE_PRODUCT</key>
 				<string>YES</string>
 			</dict>
@@ -337,6 +284,46 @@
 			<string>XCBuildConfiguration</string>
 			<key>name</key>
 			<string>Release</string>
+		</dict>
+		<key>2D8E8EC45A3A1A1D94AE762CB5028504</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>44A7F8D10631755B4F80A373E13D352C</string>
+				<string>2CCE25DEB6FC1685F19363892AF09703</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>36BFED3A384F3D9461D6CE090EDFE682</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>D944B39C06C805DA586BB76E2867AF89</string>
+			</array>
+			<key>isa</key>
+			<string>PBXHeadersBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>3E0B45391E4A17374DC79C72B8125743</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-SwiftyAds (tvOS)-frameworks.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>3F97EC936829F864CF19550195BC888F</key>
 		<dict>
@@ -358,72 +345,7 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>4BF286F6A55CEEB890D2396CC8A45BEC</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>path</key>
-			<string>Info.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>51594F4C3C53A39D47936DC3FA650CDC</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>0BD0739213F0A3DF27E6E6FC2C1F9FE5</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>607A68FB72DD7259743CFC3455260BE5</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>Pods-SwiftyAds (iOS)-dummy.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>623113D5304D85291246C2B708F9E992</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text</string>
-			<key>path</key>
-			<string>Pods-SwiftyAds (tvOS)-acknowledgements.markdown</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>6788458F3A34722A119F20FAD05952AB</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>1704D3301AB26219B2489F5CBCFEAF53</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>iOS</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>6E30D0A83A6747DD81375534624017CD</key>
+		<key>44A7F8D10631755B4F80A373E13D352C</key>
 		<dict>
 			<key>buildSettings</key>
 			<dict>
@@ -496,12 +418,143 @@
 				<key>SYMROOT</key>
 				<string>${SRCROOT}/../build</string>
 				<key>TVOS_DEPLOYMENT_TARGET</key>
-				<string>9.0</string>
+				<string>10.0</string>
 			</dict>
 			<key>isa</key>
 			<string>XCBuildConfiguration</string>
 			<key>name</key>
 			<string>Debug</string>
+		</dict>
+		<key>4BF286F6A55CEEB890D2396CC8A45BEC</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>51594F4C3C53A39D47936DC3FA650CDC</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>0BD0739213F0A3DF27E6E6FC2C1F9FE5</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>607A68FB72DD7259743CFC3455260BE5</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Pods-SwiftyAds (iOS)-dummy.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>623113D5304D85291246C2B708F9E992</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text</string>
+			<key>path</key>
+			<string>Pods-SwiftyAds (tvOS)-acknowledgements.markdown</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>66E1745DD02DEBCE9F2E189E1C525FEA</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>B64E21BCB181D3CC1D8D6A18F1AC2B25</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CURRENT_PROJECT_VERSION</key>
+				<string>1</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf</string>
+				<key>DEFINES_MODULE</key>
+				<string>YES</string>
+				<key>DYLIB_COMPATIBILITY_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_CURRENT_VERSION</key>
+				<string>1</string>
+				<key>DYLIB_INSTALL_NAME_BASE</key>
+				<string>@rpath</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Target Support Files/Pods-SwiftyAds (tvOS)/Info.plist</string>
+				<key>INSTALL_PATH</key>
+				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>@executable_path/Frameworks</string>
+					<string>@loader_path/Frameworks</string>
+				</array>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MODULEMAP_FILE</key>
+				<string>Target Support Files/Pods-SwiftyAds (tvOS)/Pods-SwiftyAds (tvOS).modulemap</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>Pods_SwiftyAds__tvOS_</string>
+				<key>SDKROOT</key>
+				<string>appletvos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>3</string>
+				<key>TVOS_DEPLOYMENT_TARGET</key>
+				<string>10.0</string>
+				<key>VERSIONING_SYSTEM</key>
+				<string>apple-generic</string>
+				<key>VERSION_INFO_PREFIX</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>6788458F3A34722A119F20FAD05952AB</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>1704D3301AB26219B2489F5CBCFEAF53</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>iOS</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>70732FECD34AB871D64C72E1D57AB421</key>
 		<dict>
@@ -583,16 +636,16 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>8F86EE1988C832BFED6194A001C64347</key>
+		<key>8BEA08482DC2CC44694506076EA6FE35</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>B64E21BCB181D3CC1D8D6A18F1AC2B25</string>
+			<string>C7B835AF0B040F8A5A47F8CADB10B01D</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>CURRENT_PROJECT_VERSION</key>
 				<string>1</string>
 				<key>DEBUG_INFORMATION_FORMAT</key>
-				<string>dwarf</string>
+				<string>dwarf-with-dsym</string>
 				<key>DEFINES_MODULE</key>
 				<string>YES</string>
 				<key>DYLIB_COMPATIBILITY_VERSION</key>
@@ -620,7 +673,7 @@
 				<key>MODULEMAP_FILE</key>
 				<string>Target Support Files/Pods-SwiftyAds (tvOS)/Pods-SwiftyAds (tvOS).modulemap</string>
 				<key>MTL_ENABLE_DEBUG_INFO</key>
-				<string>YES</string>
+				<string>NO</string>
 				<key>OTHER_LDFLAGS</key>
 				<string></string>
 				<key>OTHER_LIBTOOLFLAGS</key>
@@ -638,7 +691,7 @@
 				<key>TARGETED_DEVICE_FAMILY</key>
 				<string>3</string>
 				<key>TVOS_DEPLOYMENT_TARGET</key>
-				<string>9.0</string>
+				<string>10.0</string>
 				<key>VERSIONING_SYSTEM</key>
 				<string>apple-generic</string>
 				<key>VERSION_INFO_PREFIX</key>
@@ -647,7 +700,7 @@
 			<key>isa</key>
 			<string>XCBuildConfiguration</string>
 			<key>name</key>
-			<string>Debug</string>
+			<string>Release</string>
 		</dict>
 		<key>93A4A3777CF96A4AAC1D13BA6DCCEA73</key>
 		<dict>
@@ -667,6 +720,19 @@
 			<string>SOURCE_ROOT</string>
 			<key>xcLanguageSpecificationIdentifier</key>
 			<string>xcode.lang.ruby</string>
+		</dict>
+		<key>953FD61A3CECC96530CB5CA297A086C1</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>F87BBE855D70C2F87C02A1CCA30E262D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>A42F72DC1D780481325DD00969B19BB6</key>
 		<dict>
@@ -753,72 +819,6 @@
 			<string>Info.plist</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B870826E150B3C7223D77DA3F61E6A2E</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>C7B835AF0B040F8A5A47F8CADB10B01D</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>CURRENT_PROJECT_VERSION</key>
-				<string>1</string>
-				<key>DEBUG_INFORMATION_FORMAT</key>
-				<string>dwarf-with-dsym</string>
-				<key>DEFINES_MODULE</key>
-				<string>YES</string>
-				<key>DYLIB_COMPATIBILITY_VERSION</key>
-				<string>1</string>
-				<key>DYLIB_CURRENT_VERSION</key>
-				<string>1</string>
-				<key>DYLIB_INSTALL_NAME_BASE</key>
-				<string>@rpath</string>
-				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
-				<string>YES</string>
-				<key>GCC_NO_COMMON_BLOCKS</key>
-				<string>YES</string>
-				<key>INFOPLIST_FILE</key>
-				<string>Target Support Files/Pods-SwiftyAds (tvOS)/Info.plist</string>
-				<key>INSTALL_PATH</key>
-				<string>$(LOCAL_LIBRARY_DIR)/Frameworks</string>
-				<key>LD_RUNPATH_SEARCH_PATHS</key>
-				<array>
-					<string>$(inherited)</string>
-					<string>@executable_path/Frameworks</string>
-					<string>@loader_path/Frameworks</string>
-				</array>
-				<key>MACH_O_TYPE</key>
-				<string>staticlib</string>
-				<key>MODULEMAP_FILE</key>
-				<string>Target Support Files/Pods-SwiftyAds (tvOS)/Pods-SwiftyAds (tvOS).modulemap</string>
-				<key>MTL_ENABLE_DEBUG_INFO</key>
-				<string>NO</string>
-				<key>OTHER_LDFLAGS</key>
-				<string></string>
-				<key>OTHER_LIBTOOLFLAGS</key>
-				<string></string>
-				<key>PODS_ROOT</key>
-				<string>$(SRCROOT)</string>
-				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
-				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
-				<key>PRODUCT_NAME</key>
-				<string>Pods_SwiftyAds__tvOS_</string>
-				<key>SDKROOT</key>
-				<string>appletvos</string>
-				<key>SKIP_INSTALL</key>
-				<string>YES</string>
-				<key>TARGETED_DEVICE_FAMILY</key>
-				<string>3</string>
-				<key>TVOS_DEPLOYMENT_TARGET</key>
-				<string>9.0</string>
-				<key>VERSIONING_SYSTEM</key>
-				<string>apple-generic</string>
-				<key>VERSION_INFO_PREFIX</key>
-				<string></string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
 		</dict>
 		<key>BA76335047A7B4D7A5F6A5CC41772C64</key>
 		<dict>
@@ -983,19 +983,6 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>CE6B7ECAEB922AC1A4A60C3FD202192C</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>GoogleMobileAds.framework</string>
-			<key>path</key>
-			<string>Frameworks/GoogleMobileAds.framework</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
 		<key>CED89FC079C3614533446C4C43216F3D</key>
 		<dict>
 			<key>buildActionMask</key>
@@ -1079,7 +1066,7 @@
 		<dict>
 			<key>children</key>
 			<array>
-				<string>3D831502A03070884DD15E64051F5F27</string>
+				<string>953FD61A3CECC96530CB5CA297A086C1</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -1123,8 +1110,8 @@
 		<dict>
 			<key>buildConfigurations</key>
 			<array>
-				<string>8F86EE1988C832BFED6194A001C64347</string>
-				<string>B870826E150B3C7223D77DA3F61E6A2E</string>
+				<string>66E1745DD02DEBCE9F2E189E1C525FEA</string>
+				<string>8BEA08482DC2CC44694506076EA6FE35</string>
 			</array>
 			<key>defaultConfigurationIsVisible</key>
 			<string>0</string>
@@ -1183,6 +1170,19 @@
 			<string>text.script.sh</string>
 			<key>path</key>
 			<string>Pods-SwiftyAds (iOS)-resources.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F87BBE855D70C2F87C02A1CCA30E262D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>GoogleMobileAds.framework</string>
+			<key>path</key>
+			<string>Frameworks/frameworks/GoogleMobileAds.framework</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>

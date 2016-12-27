@@ -7,13 +7,6 @@
 
 import SpriteKit
 
-func setupAds() {
-    SwiftyAdsCustom.shared.inventory = [
-        SwiftyAdsCustom.Ad(imageName: "AdVertigus", appID: "1051292772", color: .green, isFree: true),
-        SwiftyAdsCustom.Ad(imageName: "AdAngryFlappies", appID: "991933749", color: .blue, isFree: false)
-    ]
-}
-
 extension GameScene: SwiftyAdsDelegate {
     
     func adDidOpen() {
