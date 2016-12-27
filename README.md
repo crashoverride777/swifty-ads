@@ -417,6 +417,12 @@ Enjoy
 
 # Release Notes
 
+- v6.2
+
+Removed Custom ads
+
+Cleanup
+
 - v6.1.1
 
 Custom ads improvements
