@@ -1,7 +1,7 @@
 # SwiftyAds
 
 A collection of helper classes to integrate Ads from AdMob and AppLovin (tvOS). 
-With these helpers you can easily show Banner Ads, Interstitial Ads, RewardVideoAds and your own custom Ads anywhere in your project.
+With these helpers you can easily show Banner Ads, Interstitial Ads and RewardVideoAds anywhere in your project.
 
 This helper follows all the best practices in regards to ads, like creating shared banners and correctly preloading interstitial and rewarded videos so they are always ready to show.
 
