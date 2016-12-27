@@ -1,6 +1,6 @@
 # SwiftyAds
 
-A collection of helper classes to integrate Ads from AdMob, AppLovin (tvOS) as well as your own custom Ads. 
+A collection of helper classes to integrate Ads from AdMob and AppLovin (tvOS). 
 With these helpers you can easily show Banner Ads, Interstitial Ads, RewardVideoAds and your own custom Ads anywhere in your project.
 
 This helper follows all the best practices in regards to ads, like creating shared banners and correctly preloading interstitial and rewarded videos so they are always ready to show.
@@ -72,26 +72,6 @@ Than add the app lovin swift libraries in the header file (see sample project if
 ```
 
 Than go to Targets-BuildSettings and search for "bridging". Double click on "Objective C Bridging Header" and enter the name of the header file followed by .h, for example HeaderTV.h
-
-# Pre-setup: Custom Ads (iOS and tvOS)
-
-Igore this step if you are not planning to use Custom ads.
-
-
-If you are including your own ads it is recommended to read apples marketing guidlines
-https://developer.apple.com/app-store/marketing/guidelines/#images
-
-If your app/game is only in landscape mode add this code in your AppDelegate. 
-
-NOTE: It seems this is no longer required with iOS 10, so I assume apple made some changes. I am not sure if its still needed for iOS 9 or if its a general fix.
-
-```swift
-func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.allButUpsideDown
-}
-```
-
-The SKProductViewController used for iOS only supports portrait and will crash if this is not on included for landscape only apps.
 
 # Mediation
 
@@ -199,87 +179,6 @@ extension GameScene: SwiftyAdsDelegate {
 }
 ```
 
-# How to use CustomAds
-
-SETUP
-
-- Step 1: 
-
-Copy the following files into your project
-```swift
-SwiftyAdsAdsDelegate.swift
-SwiftyAdsCustom.swift
-```
-
-Step 2:
-
-When your app launches setup your custom ads as soon as possible.
-
-```swift
-SwiftyAdsCustom.shared.ads = [
-      SwiftyAdsCustom.Inventory(imageName: "AdVertigus", appID: "1051292772", color: .green),
-      SwiftyAdsCustom.Inventory(imageName: "AdAngryFlappies", appID: "991933749", color: .blue)
-]
-```
-
-The first item in the array will include a new" label at the top right corner.
-To make this as reusable as possible e.g if you have multiple projects and share the same file, you can inlude all your custom ads in the array. The helper will automatically compare the bundle ID name to the ad image to see if they are the same and if so will move onto the next ad in the inventory.
-
-HOW TO USE
-
-- To show an Ad simply call these anywhere you like in your project
-```swift
-SwiftyAdsCustom.shared.show()
-```
-
-- To remove all Ads, mainly for in app purchases simply call 
-```swift
-SwiftyAdsCustom.shared.isRemoved = true 
-```
-
-NOTE: Remove Ads bool 
-
-If set to true all the methods to show banner and interstitial ads will not fire anymore and therefore require no further editing. 
-
-For permanent storage you will need to create your own "removedAdsProduct" property and save it in something like UserDefaults, or preferably iOS Keychain. Than call this method when your app launches after you have set up the helper.
-
-- Implement the delegate methods.
-
-Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
-to receive delegate callbacks.
-```swift
-SwiftyAdsCustom.shared.delegate = self 
-```
-
-Than create an extension conforming to the AdsDelegate protocol.
-```swift
-extension GameScene: SwiftyAdsDelegate {
-    func adDidOpen() {
-        // pause your game/app if needed
-    }
-    func adDidClose() { 
-       // resume your game/app if needed
-    }
-    func adDidRewardUser(withAmount rewardAmount: Int) {
-       // leave empty if unused
-    }
-}
-```
-
-- tvOS controls
-
-On tvOS you need to manually handle the download and dismiss button when showing a custom ad. I use the menu button for dismissal and the select button (press touchpad) for download.
-
-```swift
-if SwiftAdsCustom.shared.isShowing {
-   SwiftyAdsCustom.shared.download()
-}
-
-if SwiftAdsCustom.shared.isShowing {
-    SwiftAdsCustom.shared.dismiss()
-}
-```
-
 # How to use App Lovin 
 
 SETUP
@@ -352,7 +251,7 @@ extension GameScene: SwiftyAdsDelegate {
 
 # How to use all helpers
 
-I deprecated the AdsManager.swift file in v6.1 as I felt like it was complicating things unnecessarlily and making the helper(s) less flexible and more confusing to beginners. If you are using all 3 helpers at the same time you will have to implement your own logic for showing the correct ad, similar to the deprecated AdsManager class.
+I deprecated the AdsManager.swift file in v6.1 as I felt like it was complicating things unnecessarlily and making the helper(s) less flexible and more confusing to beginners. If you are using both helpers at the same time you will have to implement your own logic for showing the correct ad, similar to the deprecated AdsManager class.
 
 To differentiate between targets you can do something like this.
 
@@ -368,7 +267,6 @@ To differentiate between targets you can do something like this.
 Also do not forget things like settings up the delegates 
 
 ```swift
-SwiftyAdsCustom.shared.delegate = self
 SwiftyAdsAdMob.shared.delegate = self
 SwiftyAdsAppLovin.shared.delegate = self
 ```
@@ -376,7 +274,6 @@ SwiftyAdsAppLovin.shared.delegate = self
 or calling the remove method in all helpers when the remove ads button was pressed
 
 ```swift
-SwiftyAdsCustom.shared.isRemoved = true 
 SwiftyAdsAdMob.shared.isRemoved = true 
 SwiftyAdsAppLovin.shared.isRemoved = true 
 ```
