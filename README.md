@@ -112,11 +112,13 @@ SwiftyAdsAdMob(iOS).swift
 
 - Step 2: In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 ```swift
-let bannerID = "Enter your real id"
-let interstitialID = "Enter your real id"
-let rewardVideoID = "Enter your real id"
 
-SwiftyAdsAdMob.shared.setup(viewController: self, bannerID: bannerID, interID: interstitialID, rewardVideoID: rewardVideoID)
+SwiftyAdsAdMob.shared.setup(
+      viewController: self, 
+      bannerID:      "Enter your real id", 
+      interID:       "Enter your real id", 
+      rewardVideoID: "Enter your real id"
+)
 ```
 
 HOW TO USE
