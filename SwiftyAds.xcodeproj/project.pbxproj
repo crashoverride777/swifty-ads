@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A034F499985EA7041921C3E1 /* Pods_SwiftyAds__tvOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F4A84EB61DA087A44D4C687 /* Pods_SwiftyAds__tvOS_.framework */; };
+		B418D9E11E44B42000DD6C15 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B418D9E01E44B42000DD6C15 /* Images.xcassets */; };
+		B418D9E21E44B42000DD6C15 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B418D9E01E44B42000DD6C15 /* Images.xcassets */; };
 		B435FFE11CE14C2A00A678AA /* SwiftyAdsAdMob.swift in Sources */ = {isa = PBXBuildFile; fileRef = B435FFE01CE14C2A00A678AA /* SwiftyAdsAdMob.swift */; };
 		B43B34CD1D4AD2E50064F364 /* SwiftyAdsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43B34CC1D4AD2E50064F364 /* SwiftyAdsDelegate.swift */; };
 		B43B34CE1D4AD2E50064F364 /* SwiftyAdsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43B34CC1D4AD2E50064F364 /* SwiftyAdsDelegate.swift */; };
@@ -44,8 +46,6 @@
 		B4F4EE121DA3F7BC00C6FEC0 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B4F4EE0F1DA3F7BC00C6FEC0 /* GameScene.sks */; };
 		B4F4EE131DA3F7BC00C6FEC0 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F4EE101DA3F7BC00C6FEC0 /* GameScene.swift */; };
 		B4F4EE141DA3F7BC00C6FEC0 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F4EE101DA3F7BC00C6FEC0 /* GameScene.swift */; };
-		B4F4EE161DA3F7D500C6FEC0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4F4EE151DA3F7D500C6FEC0 /* Images.xcassets */; };
-		B4F4EE171DA3F7D500C6FEC0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4F4EE151DA3F7D500C6FEC0 /* Images.xcassets */; };
 		C88C7923C125B5A8203DA7BA /* Pods_SwiftyAds__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AE1878696E356A11D74AD81 /* Pods_SwiftyAds__iOS_.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +55,7 @@
 		523D8F56078957ECDD773241 /* Pods-SwiftyAds (iOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAds (iOS).release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyAds (iOS)/Pods-SwiftyAds (iOS).release.xcconfig"; sourceTree = "<group>"; };
 		5AE1878696E356A11D74AD81 /* Pods_SwiftyAds__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAds__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F4A84EB61DA087A44D4C687 /* Pods_SwiftyAds__tvOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAds__tvOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B418D9E01E44B42000DD6C15 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B435FFE01CE14C2A00A678AA /* SwiftyAdsAdMob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsAdMob.swift; sourceTree = "<group>"; };
 		B43B34CC1D4AD2E50064F364 /* SwiftyAdsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsDelegate.swift; sourceTree = "<group>"; };
 		B452EFD81CDBF7FE009A69B5 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "GoogleMobileAdsSdkiOS-7.8.0/GoogleMobileAds.framework"; sourceTree = SOURCE_ROOT; };
@@ -93,7 +94,6 @@
 		B4F4EE0C1DA3F6C300C6FEC0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B4F4EE0F1DA3F7BC00C6FEC0 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		B4F4EE101DA3F7BC00C6FEC0 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		B4F4EE151DA3F7D500C6FEC0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F2CE1129C6F81DBB34E8136A /* Pods_AppLovin_Helper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppLovin_Helper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB5FE06D82022761DEF18FC4 /* Pods-SwiftyAds (iOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAds (iOS).debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyAds (iOS)/Pods-SwiftyAds (iOS).debug.xcconfig"; sourceTree = "<group>"; };
 		FC5C3AF69E7F4EBE3FF8B0EB /* Pods-SwiftyAds (tvOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAds (tvOS).debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyAds (tvOS)/Pods-SwiftyAds (tvOS).debug.xcconfig"; sourceTree = "<group>"; };
@@ -250,9 +250,9 @@
 				B43B34CC1D4AD2E50064F364 /* SwiftyAdsDelegate.swift */,
 				B435FFE01CE14C2A00A678AA /* SwiftyAdsAdMob.swift */,
 				B4A006A01CECFDF400A44575 /* SwiftyAdsAppLovin.swift */,
-				B4F4EE151DA3F7D500C6FEC0 /* Images.xcassets */,
 				B4F4EE101DA3F7BC00C6FEC0 /* GameScene.swift */,
 				B4F4EE0F1DA3F7BC00C6FEC0 /* GameScene.sks */,
+				B418D9E01E44B42000DD6C15 /* Images.xcassets */,
 				B4A006551CECFCC100A44575 /* iOS */,
 				B4A006561CECFCC800A44575 /* tvOS */,
 			);
@@ -350,7 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4F4EE121DA3F7BC00C6FEC0 /* GameScene.sks in Resources */,
-				B4F4EE171DA3F7D500C6FEC0 /* Images.xcassets in Resources */,
+				B418D9E21E44B42000DD6C15 /* Images.xcassets in Resources */,
 				B4A006691CECFCF100A44575 /* Main.storyboard in Resources */,
 				B4A0068F1CECFD4000A44575 /* applovin-tvos-sdk-3.2.0 in Resources */,
 			);
@@ -361,7 +361,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4F4EE111DA3F7BC00C6FEC0 /* GameScene.sks in Resources */,
-				B4F4EE161DA3F7D500C6FEC0 /* Images.xcassets in Resources */,
+				B418D9E11E44B42000DD6C15 /* Images.xcassets in Resources */,
 				B4F4EE0D1DA3F6C300C6FEC0 /* LaunchScreen.xib in Resources */,
 				B4F4EE0E1DA3F6C300C6FEC0 /* Main.storyboard in Resources */,
 			);

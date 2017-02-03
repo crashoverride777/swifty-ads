@@ -23,6 +23,13 @@
 
 import Foundation
 
+// Localized text (todo)
+private enum LocalizedText {
+    static let ok = "OK"
+    static let sorry = "Sorry"
+    static let noVideo = "No video available at the moment."
+}
+
 /**
  SwiftyAdsAppLovin
  
@@ -108,19 +115,18 @@ final class SwiftyAdsAppLovin: NSObject {
     }
     
     /// Show rewarded video ad
+    /// Do not show automatically, use a dedicated reward video button
     func showRewardedVideo() {
-        guard isRewardedVideoReady else { return }
+        guard isRewardedVideoReady else {
+            showAlert(message: LocalizedText.noVideo)
+            return
+        }
     
         isWatchingRewardedVideo = true
         
         ALIncentivizedInterstitialAd.shared().adDisplayDelegate = self
         ALIncentivizedInterstitialAd.shared().adVideoPlaybackDelegate = self
         ALIncentivizedInterstitialAd.shared().showAndNotify(self) // Shared not used here in tvOS demo, check if different
-    }
-    
-    @available(*, deprecated: 6.1, message: "Use isRemoved = true instead")
-    func remove() {
-        isRemoved = true
     }
 }
 
@@ -267,5 +273,27 @@ extension SwiftyAdsAppLovin: ALAdRewardDelegate {
     
     func userDeclined(toViewAd ad: ALAd) {
         print("AppLovin reward video user declined to view ad")
+    }
+}
+
+// MARK: - Alert
+
+private extension SwiftyAdsAppLovin {
+    
+    func showAlert(message: String) {
+        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else { return }
+        
+        let alertController = UIAlertController(title: LocalizedText.sorry, message: message, preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: LocalizedText.ok, style: .cancel)
+        alertController.addAction(okAction)
+        
+        /*
+         `Ad` event handlers may be called on a background queue. Ensure
+         this alert is presented on the main queue.
+         */
+        DispatchQueue.main.async {
+            rootViewController.present(alertController, animated: true)
+        }
     }
 }
