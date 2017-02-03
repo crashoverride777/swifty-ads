@@ -321,7 +321,7 @@ Enjoy
 - v6.2.1
 
 Added a UIAlertController when the "showRewardedVideo" method is called but the video is not ready. Remember you should only show reward videos with a dedicated button and you should only show that reward video button when a video is loaded. 
-However when the user the presses the reward video button and watches a video it might take a few seconds for the next video to reload. It is easier to just show an alert incase the user immediately tries to watch another video afterwards instead of trying to hide the button for example via delegation  
+However when the user the presses the reward video button and watches a video it might take a few seconds for the next video to reload. If the user immediately tries to watch another video afterwards IMO the easiest and cleanest way is to just show an alert "No video available at the moment"
 
 Removed deprecated methods
 
