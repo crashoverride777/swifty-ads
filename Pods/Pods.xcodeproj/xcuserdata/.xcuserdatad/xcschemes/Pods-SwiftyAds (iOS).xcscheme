@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '144DC50B6AC0A540C38514874DE6B175'
+               BlueprintIdentifier = '6810981A40B0D7432E1708333AFFE654'
                BlueprintName = 'Pods-SwiftyAds (iOS)'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'Pods-SwiftyAds (iOS).framework'>
