@@ -86,7 +86,7 @@ Note: Mediation will not work on tvOS because the AdMob SDK does not support it,
 
 # Rewarded Videos
 
-You should only show reward videos with a dedicated button and you should only show that reward video button when a video is loaded (see instructions below). If the user presses the reward video button and watches a video it might take a few seconds for the next video to reload afterwards. Incase the user immediately tries to watch another video afterwards this helper will show an alert informing the user that no video is available at the moment. 
+You should only show reward videos with a dedicated button and you should only show that reward video button when a video is loaded (see instructions below). If the user presses the reward video button and watches a video it might take a few seconds for the next video to reload afterwards. Incase the user immediately tries to watch another video this helper will show an alert informing the user that no video is available at the moment. 
 
 - AdMob
 
