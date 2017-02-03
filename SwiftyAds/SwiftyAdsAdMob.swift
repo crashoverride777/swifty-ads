@@ -47,14 +47,14 @@ final class SwiftyAdsAdMob: NSObject {
     /// Delegates
     weak var delegate: SwiftyAdsDelegate?
     
-    /// Removed ads
+    /// Remove ads
     var isRemoved = false {
         didSet {
             guard isRemoved else { return }
             print("Removed all ads")
             removeBanner()
             interstitialAd?.delegate = nil
-            rewardedVideoAd?.delegate = nil
+            interstitialAd = nil
         }
     }
     
@@ -189,6 +189,7 @@ final class SwiftyAdsAdMob: NSObject {
         
         bannerAd?.delegate = nil
         bannerAd?.removeFromSuperview()
+        bannerAd = nil
         
         guard let view = presentingViewController?.view else { return }
         for subview in view.subviews { // Just incase there are multiple instances of a banner
