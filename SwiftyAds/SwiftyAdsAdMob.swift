@@ -139,12 +139,7 @@ final class SwiftyAdsAdMob: NSObject {
     func showBanner(withDelay delay: TimeInterval = 0.1) {
         guard !isRemoved else { return }
         
-        Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(showingBanner), userInfo: nil, repeats: false)
-    }
-    
-    /// Show banner ad
-    @objc fileprivate func showingBanner() {
-        loadBannerAd()
+        Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(loadBannerAd), userInfo: nil, repeats: false)
     }
     
     // MARK: - Show Interstitial
@@ -212,10 +207,10 @@ final class SwiftyAdsAdMob: NSObject {
 
 // MARK: - Requesting Ad
 
-fileprivate extension SwiftyAdsAdMob {
+private extension SwiftyAdsAdMob {
     
     /// Load banner ad
-    func loadBannerAd() {
+    @objc func loadBannerAd() {
         guard let viewController = presentingViewController else { return }
         print("AdMob banner loading...")
         
