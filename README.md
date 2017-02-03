@@ -325,6 +325,8 @@ However when the user the presses the reward video button and watches a video it
 
 Removed deprecated methods
 
+Cleanup
+
 - v6.2
 
 Removed Custom ads to further simplify this project
