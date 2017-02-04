@@ -22,7 +22,9 @@ Admob reward videos will only work when using a 3rd party mediation network such
 Read the AdMob mediation guidlines 
 
 https://support.google.com/admob/bin/answer.py?answer=2413211
+
 https://developers.google.com/admob/ios/mediation
+
 https://developers.google.com/admob/ios/mediation-networks
 
 and rewarded video guidlines 
