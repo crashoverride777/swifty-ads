@@ -40,7 +40,7 @@ NOTE: AdMob reward videos will either show a black full screen ad when using the
 
 AppLovin reward videos on tvOS on the other hand need to be set up directly via their documentation as we are directly using their APIs. Go to applovin.com and follow the documentation on how to set up rewarded videos.
 
-# Pre-setup: "DEBUG" custom flag
+# "DEBUG" custom flag
 
 AdMob uses 2 types of AdUnit IDs, 1 for testing and 1 for release. You should not test live ads when you are testing your app.
 This helper will automatically change the AdUnitID from test to release mode and vice versa. 
