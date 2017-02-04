@@ -11,28 +11,25 @@ I know that the current way of copying the .swift file(s) into your project suck
 
 In the meantime I would create a folder on your Mac, called something like SharedFiles, and drag the swift file(s) into this folder. Than drag the files from this folder into your project, making sure that "copy if needed" is not selected. This way its easier to update the files and to share them between projects.
 
-# Mediation
-
-I think mediation via AdMob is the best way forward with this helper if you would like to use multiple ad networks. This means you can use the AdMob APIs to show ads from multiple providers, without having to write extra code. 
-To add mediation networks please follow these instructions 
-
-https://support.google.com/admob/bin/answer.py?answer=2413211
-https://developers.google.com/admob/ios/mediation
-https://developers.google.com/admob/ios/mediation-networks
-
-Note: Mediation will not work on tvOS because the AdMob SDK does not support it, which is why I included AppLovin which is 1 of the only networks that works on tvOS.
-
 # Rewarded Videos
 
 You should only show rewarded videos with a dedicated button and you should only show that button when a video is loaded (see instructions below). If the user presses the reward video button and watches a video it might take a few seconds for the next video to reload afterwards. Incase the user immediately tries to watch another video this helper will show an alert informing the user that no video is available at the moment. 
 
 - AdMob
 
-Admob reward videos will only work when using a 3rd party mediation network such as Chartboost or Vungle. Read the AdMob rewarded video guidlines 
+Admob reward videos will only work when using a 3rd party mediation network such as Chartboost or Vungle. 
+
+Read the AdMob mediation guidlines 
+
+https://support.google.com/admob/bin/answer.py?answer=2413211
+https://developers.google.com/admob/ios/mediation
+https://developers.google.com/admob/ios/mediation-networks
+
+and rewarded video guidlines 
 
 https://developers.google.com/admob/ios/rewarded-video
 
-and your 3rd party mediation of choice ad network guidlines to set up reward videos correctly. This will unclude installing their SDK and mediation adapters. 
+Than read your 3rd party ad network(s) of choice mediation guidlines to set up reward videos correctly. This will unclude installing their SDK and mediation adapters. 
 
 NOTE: AdMob reward videos will either show a black full screen ad when using the test AdUnitID or not show one at all.
 
@@ -75,9 +72,7 @@ SwiftyAdsDelegate.swift
 SwiftyAdsAdMob.swift
 ```
 
-# AdMob: How to use (iOS)
-
-- Setup up the helper when your app launches. 
+- Step 4: Setup up the helper when your app launches. 
 
 ```swift
 SwiftyAdsAdMob.shared.setup(
@@ -88,12 +83,14 @@ SwiftyAdsAdMob.shared.setup(
 )
 ```
 
+# AdMob: How to use (iOS)
+
 - To show an Ad simply call these anywhere you like in your project
 ```swift
 SwiftyAdsAdMob.shared.showBanner() 
 SwiftyAdsAdMob.shared.showBanner(withDelay: 1) // Delay showing banner slightly eg when transitioning to new scene/view
 SwiftyAdsAdMob.shared.showInterstitial()
-SwiftyAdsAdMob.shared.showInterstitial(withInterval: 4) // Shows an ad every 4th time
+SwiftyAdsAdMob.shared.showInterstitial(withInterval: 4) // Shows an ad every 4th time method is called
 SwiftyAdsAdMob.shared.showRewardedVideo() // Should be called when pressing dedicated button
 
 if SwiftyAdsAdMob.shared.isRewardedVideoReady { // Will try to load an ad if it returns false
@@ -182,19 +179,18 @@ Than go to Targets-BuildSettings and search for "bridging". Double click on "Obj
 SwiftyAdsDelegate.swift
 SwiftyAdsAppLovin.swift
 ```
-
-# App Lovin: How to use (tvOS)
-
-- Setup the helper when your app launches. 
+- Step 5: Setup the helper when your app launches. 
 
 ```swift
 SwiftyAdsAppLovin.shared.setup()
 ```
 
+# App Lovin: How to use (tvOS)
+
 - To show an Ad simply call these anywhere you like in your project
 ```swift
 SwiftyAdsAppLovin.shared.showInterstitial()
-SwiftyAdsAppLovin.shared.showInterstitial(withInterval: 4) // Show an ad every 4th time
+SwiftyAdsAppLovin.shared.showInterstitial(withInterval: 4) // Show an ad every 4th time method is called
 SwiftyAdsAppLovin.shared.showRewardedVideo() // Should be called when pressing dedicated button
 
 if SwiftyAdsAppLovin.shared.isRewardedVideoReady { // Will try to load an ad if it returns false
