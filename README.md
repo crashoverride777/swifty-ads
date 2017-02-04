@@ -197,7 +197,7 @@ Step 2:
 In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
 
 ```swift
-_ = SwiftyAdsAppLovin.shared
+SwiftyAdsAppLovin.shared.setup()
 ```
 
 HOW TO USE
@@ -315,6 +315,8 @@ Enjoy
 # Release Notes
 
 - v6.2.2
+
+Added AppLovin setup method (see instructions)
 
 Cleanup
 
