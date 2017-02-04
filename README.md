@@ -14,7 +14,7 @@ In the meantime I would create a folder on your Mac, called something like Share
 # Pre-setup: "DEBUG" custom flag
 
 AdMob uses 2 types of AdUnit IDs, 1 for testing and 1 for release. You should not test live ads when you are testing your app.
-The helper will not automatically change the AdUnitID from test to release mode. 
+This helper will automatically change the AdUnitID from test to release mode and vice versa. 
 
 With the latest xCode it is no longer necessary to setup the DEBUG flag manually.
 
@@ -38,6 +38,13 @@ I would recommend using Cocoa Pods especially if you will add more SDKs down the
 
 They have an app now which should makes managing pods alot easier.
 https://cocoapods.org/app
+
+- Step 3: Copy the following files into your project (see CocoaPods above for reference trick on multiple projects)
+
+```swift
+SwiftyAdsDelegate.swift
+SwiftyAdsAdMob(iOS).swift
+```
 
 # Pre-setup: AppLovin (tvOS)
 
@@ -69,6 +76,13 @@ Than add the app lovin swift libraries in the header file (see sample project if
 
 Than go to Targets-BuildSettings and search for "bridging". Double click on "Objective C Bridging Header" and enter the name of the header file followed by .h, for example HeaderTV.h
 
+- Step 4: Copy the following files into your project (see CocoaPods above for reference trick on multiple projects)
+
+```swift
+SwiftyAdsDelegate.swift
+SwiftyAdsAppLovin(tvOS).swift
+```
+
 # Mediation
 
 I think mediation via AdMob is the best way forward with this helper if you would like to use multiple ad networks. This means you can use the AdMob APIs to show ads from multiple providers, without having to write extra code. 
@@ -78,11 +92,11 @@ https://support.google.com/admob/bin/answer.py?answer=2413211
 https://developers.google.com/admob/ios/mediation
 https://developers.google.com/admob/ios/mediation-networks
 
-Note: Mediation will not work on tvOS because the AdMob SDK does not support it, which is why I included AppLovin for tvOS.
+Note: Mediation will not work on tvOS because the AdMob SDK does not support it, which is why I included AppLovin which is 1 of the only networks that works on tvOS.
 
 # Rewarded Videos
 
-You should only show reward videos with a dedicated button and you should only show that reward video button when a video is loaded (see instructions below). If the user presses the reward video button and watches a video it might take a few seconds for the next video to reload afterwards. Incase the user immediately tries to watch another video this helper will show an alert informing the user that no video is available at the moment. 
+You should only show rewarded videos with a dedicated button and you should only show that button when a video is loaded (see instructions below). If the user presses the reward video button and watches a video it might take a few seconds for the next video to reload afterwards. Incase the user immediately tries to watch another video this helper will show an alert informing the user that no video is available at the moment. 
 
 - AdMob
 
@@ -90,8 +104,9 @@ Admob reward videos will only work when using a 3rd party mediation network such
 
 https://developers.google.com/admob/ios/rewarded-video
 
-and your 3rd party mediation of choice ad network guidlines to set up reward videos correctly. This will unclude installing their SDK and mediation adapters. AdMob reward videos will either show a black full screen ad when using the test AdUnitID
-or not show one at all.
+and your 3rd party mediation of choice ad network guidlines to set up reward videos correctly. This will unclude installing their SDK and mediation adapters. 
+
+NOTE: AdMob reward videos will either show a black full screen ad when using the test AdUnitID or not show one at all.
 
 - AppLovin
 
@@ -99,18 +114,9 @@ AppLovin reward videos on tvOS on the other hand need to be set up directly via 
 
 # How to use AdMob
 
-SETUP
-
-- Step 1: Copy the following files into your project
+- Setup up the helper when your app launches. 
 
 ```swift
-SwiftyAdsDelegate.swift
-SwiftyAdsAdMob(iOS).swift
-```
-
-- Step 2: In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
-```swift
-
 SwiftyAdsAdMob.shared.setup(
       viewController: self, 
       bannerID:      "Enter your real id", 
@@ -118,8 +124,6 @@ SwiftyAdsAdMob.shared.setup(
       rewardVideoID: "Enter your real id"
 )
 ```
-
-HOW TO USE
 
 - To show an Ad simply call these anywhere you like in your project
 ```swift
@@ -181,26 +185,11 @@ extension GameScene: SwiftyAdsDelegate {
 
 # How to use App Lovin 
 
-SETUP
-
-- Step 1: 
-
-Copy the following files into your project
-
-```swift
-SwiftyAdsDelegate.swift
-SwiftyAdsAppLovin(tvOS).swift
-```
-
-Step 2:
-
-In your ViewController write the following in ```ViewDidLoad``` before doing any other app set-ups. 
+- Setup the helper when your app launches. 
 
 ```swift
 SwiftyAdsAppLovin.shared.setup()
 ```
-
-HOW TO USE
 
 - To show an Ad simply call these anywhere you like in your project
 ```swift
