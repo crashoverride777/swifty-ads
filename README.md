@@ -48,8 +48,6 @@ With the latest xCode it is no longer necessary to setup the DEBUG flag manually
 
 # AdMob: Pre-setup (iOS)
 
-Igore this step if you are not planning to use AdMob.
-
 - Step 1: Sign up for a Google AdMob account and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
 
 https://support.google.com/admob/answer/3052638?hl=en-GB&ref_topic=3052726
@@ -146,8 +144,6 @@ extension GameScene: SwiftyAdsDelegate {
 ```
 
 # AppLovin: Pre-setup (tvOS)
-
-Igore this step if you are not planning to use AppLovin on tvOS.
 
 Step 1: Create an AppLovin account at
 
