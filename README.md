@@ -255,7 +255,7 @@ extension GameScene: SwiftyAdsDelegate {
 
 # How to use all helpers
 
-I deprecated the AdsManager.swift file in v6.1 as I felt like it was complicating things unnecessarlily and making the helper(s) less flexible and more confusing to beginners. If you are using both helpers at the same time you will have to implement your own logic for showing the correct ad, similar to the deprecated AdsManager class.
+I deprecated the AdsManager.swift file in v6.1 as I felt like it was complicating things unnecessarlily and making the helper(s) less flexible and more confusing to beginners. If you are using both helpers at the same time you will have to implement your own logic for showing the correct ad.
 
 To differentiate between targets you can do something like this.
 
@@ -317,6 +317,10 @@ Please feel free to let me know about any bugs or improvements.
 Enjoy
 
 # Release Notes
+
+- v6.2.2
+
+Cleanup
 
 - v6.2.1
 
