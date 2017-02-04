@@ -14,7 +14,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
      
-        _ = SwiftyAdsAppLovin.shared
+        SwiftyAdsAppLovin.shared.setup()
 
         if let scene = GameScene(fileNamed: "GameScene") {
             // Configure the view.

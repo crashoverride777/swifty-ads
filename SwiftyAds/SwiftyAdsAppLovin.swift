@@ -27,7 +27,7 @@ import Foundation
 private enum LocalizedText {
     static let ok = "OK"
     static let sorry = "Sorry"
-    static let noVideo = "No video available at the moment."
+    static let noVideo = "No video available to watch at the moment."
 }
 
 /**
@@ -83,10 +83,11 @@ final class SwiftyAdsAppLovin: NSObject {
     
     // MARK: - Init
     
-    /// Private singleton init
-    private override init() {
-        super.init()
-        
+    /// Init
+    private override init() { }
+    
+    /// Setup
+    func setup() {
         // Load SDK
         ALSdk.initializeSdk()
         
@@ -209,9 +210,6 @@ extension SwiftyAdsAppLovin: ALAdRewardDelegate {
         }
         
         let amountGiven = amount.floatValue
-        
-        // Do something with this information.
-        // MYCurrencyManagerClass.updateUserCurrency(currencyName withChange: amountGiven)
         print("Rewarded \(amountGiven) \(currencyName)")
         
         // By default we'll show a UIAlertView informing your user of the currency & amount earned.
