@@ -11,78 +11,6 @@ I know that the current way of copying the .swift file(s) into your project suck
 
 In the meantime I would create a folder on your Mac, called something like SharedFiles, and drag the swift file(s) into this folder. Than drag the files from this folder into your project, making sure that "copy if needed" is not selected. This way its easier to update the files and to share them between projects.
 
-# Pre-setup: "DEBUG" custom flag
-
-AdMob uses 2 types of AdUnit IDs, 1 for testing and 1 for release. You should not test live ads when you are testing your app.
-This helper will automatically change the AdUnitID from test to release mode and vice versa. 
-
-With the latest xCode it is no longer necessary to setup the DEBUG flag manually.
-
-# Pre-setup: AdMob (iOS)
-
-Igore this step if you are not planning to use AdMob.
-
-- Step 1: Sign up for a Google AdMob account and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
-
-https://support.google.com/admob/answer/3052638?hl=en-GB&ref_topic=3052726
-
-- Step 2: Install AdMob SDK
-
-// Cocoa Pods
-https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods
-
-// Manually
-https://developers.google.com/admob/ios/quick-start#manually_using_the_sdk_download
-
-I would recommend using Cocoa Pods especially if you will add more SDKs down the line from other ad networks. Its a bit more complicated but once you understand and do it once or twice its a breeze. 
-
-They have an app now which should makes managing pods alot easier.
-https://cocoapods.org/app
-
-- Step 3: Copy the following files into your project (see CocoaPods above for reference trick on multiple projects)
-
-```swift
-SwiftyAdsDelegate.swift
-SwiftyAdsAdMob(iOS).swift
-```
-
-# Pre-setup: AppLovin (tvOS)
-
-Igore this step if you are not planning to use AppLovin on tvOS.
-
-Step 1: Create an AppLovin account at
-
-https://applovin.com
-
-Step 2: Log into your account and click on Doc (top right next to account) and tvOS and tvOS SDK integration and follow the steps to install the SDK.
-
-This should include
-
-1) Downloading the SDK folder that includes the headers and lib file and copy it into your project.
-
-Note: I was having some issues with this for ages because I was copying the whole folder from the website into my project. Do NOT do this. Make sure you copy/drag the lib file serperatly into your project and than copy the headers folder into your project and select copy if needed (Dont forget to do same with the tvOS SDK).
-
-2) Linking the correct frameworks (AdSupport, UIKit etc)
-3) Adding your appLovin SDK key (you can use your key and add it in this sample project to test out ads)
-4) Enabling the -ObjC flag in other linkers.
-
-
-- Step 3: Create an objC bridging header. Go to File-New-File and create a new header file. Call it something like HeaderTV and save.
-
-Than add the app lovin swift libraries in the header file (see sample project if needed)
-```swift
-#import "ALSwiftHeaders.h"
-```
-
-Than go to Targets-BuildSettings and search for "bridging". Double click on "Objective C Bridging Header" and enter the name of the header file followed by .h, for example HeaderTV.h
-
-- Step 4: Copy the following files into your project (see CocoaPods above for reference trick on multiple projects)
-
-```swift
-SwiftyAdsDelegate.swift
-SwiftyAdsAppLovin(tvOS).swift
-```
-
 # Mediation
 
 I think mediation via AdMob is the best way forward with this helper if you would like to use multiple ad networks. This means you can use the AdMob APIs to show ads from multiple providers, without having to write extra code. 
@@ -112,7 +40,42 @@ NOTE: AdMob reward videos will either show a black full screen ad when using the
 
 AppLovin reward videos on tvOS on the other hand need to be set up directly via their documentation as we are directly using their APIs. Go to applovin.com and follow the documentation on how to set up rewarded videos.
 
-# How to use AdMob
+# Pre-setup: "DEBUG" custom flag
+
+AdMob uses 2 types of AdUnit IDs, 1 for testing and 1 for release. You should not test live ads when you are testing your app.
+This helper will automatically change the AdUnitID from test to release mode and vice versa. 
+
+With the latest xCode it is no longer necessary to setup the DEBUG flag manually.
+
+# AdMob: Pre-setup (iOS)
+
+Igore this step if you are not planning to use AdMob.
+
+- Step 1: Sign up for a Google AdMob account and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
+
+https://support.google.com/admob/answer/3052638?hl=en-GB&ref_topic=3052726
+
+- Step 2: Install AdMob SDK
+
+// Cocoa Pods
+https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods
+
+// Manually
+https://developers.google.com/admob/ios/quick-start#manually_using_the_sdk_download
+
+I would recommend using Cocoa Pods especially if you will add more SDKs down the line from other ad networks. Its a bit more complicated but once you understand and do it once or twice its a breeze. 
+
+They have an app now which should makes managing pods alot easier.
+https://cocoapods.org/app
+
+- Step 3: Copy the following files into your project (see CocoaPods above for reference trick on multiple projects)
+
+```swift
+SwiftyAdsDelegate.swift
+SwiftyAdsAdMob.swift
+```
+
+# AdMob: How to use (iOS)
 
 - Setup up the helper when your app launches. 
 
@@ -183,7 +146,44 @@ extension GameScene: SwiftyAdsDelegate {
 }
 ```
 
-# How to use App Lovin 
+# AppLovin: Pre-setup (tvOS)
+
+Igore this step if you are not planning to use AppLovin on tvOS.
+
+Step 1: Create an AppLovin account at
+
+https://applovin.com
+
+Step 2: Log into your account and click on Doc (top right next to account) and tvOS and tvOS SDK integration and follow the steps to install the SDK.
+
+This should include
+
+1) Downloading the SDK folder that includes the headers and lib file and copy it into your project.
+
+Note: I was having some issues with this for ages because I was copying the whole folder from the website into my project. Do NOT do this. Make sure you copy/drag the lib file serperatly into your project and than copy the headers folder into your project and select copy if needed (Dont forget to do same with the tvOS SDK).
+
+2) Linking the correct frameworks (AdSupport, UIKit etc)
+3) Adding your appLovin SDK key (you can use your key and add it in this sample project to test out ads)
+4) Enabling the -ObjC flag in other linkers.
+
+
+- Step 3: Create an objC bridging header. Go to File-New-File and create a new header file. Call it something like HeaderTV and save.
+
+Than add the app lovin swift libraries in the header file (see sample project if needed)
+```swift
+#import "ALSwiftHeaders.h"
+```
+
+Than go to Targets-BuildSettings and search for "bridging". Double click on "Objective C Bridging Header" and enter the name of the header file followed by .h, for example HeaderTV.h
+
+- Step 4: Copy the following files into your project (see CocoaPods above for reference trick on multiple projects)
+
+```swift
+SwiftyAdsDelegate.swift
+SwiftyAdsAppLovin.swift
+```
+
+# App Lovin: How to use (tvOS)
 
 - Setup the helper when your app launches. 
 
