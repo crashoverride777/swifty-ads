@@ -14,13 +14,9 @@ In the meantime I would create a folder on your Mac, called something like Share
 # Pre-setup: "DEBUG" custom flag
 
 AdMob uses 2 types of AdUnit IDs, 1 for testing and 1 for release. You should not test live ads when you are testing your app.
-With this step the helper will not automatically change the AdUnitID from test to release. This is also useful for things such as hiding print statments so you should not forget to include this step.
+The helper will not automatically change the AdUnitID from test to release mode. 
 
-Click on Targets (left project sideBar, at the top) -> BuildSettings. Than underneath buildSettings next to the search bar, on the left there should be buttons called Basic, All, Combined and Level. Click on All and than you should be able to scroll down in buildSettings and find the section called SwiftCompiler-CustomFlags (alternatively use the search bar). Click on Active Compilation Conditions and add an entry under the Debug section called DEBUG.
-
-NOTE: I think this is added in xCode 8 automatically.
-
-http://stackoverflow.com/questions/26913799/ios-swift-xcode-6-remove-println-for-release-version)
+With the latest xCode it is no longer necessary to setup the DEBUG flag manually.
 
 # Pre-setup: AdMob (iOS)
 
@@ -292,7 +288,7 @@ override func viewWillTransition(to size: CGSize, with coordinator: UIViewContro
         
         coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
           
-            SwiftyAdsAdMob.shared.adjustForOrientation()
+            SwiftyAdsAdMob.shared.updateForOrientation()
             
             }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
                 print("Device rotation completed")
