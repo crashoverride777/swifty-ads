@@ -279,10 +279,6 @@ override func viewWillTransition(to size: CGSize, with coordinator: UIViewContro
     }
 ```
 
-# Set the DEBUG flag?
-
-Dont forget to setup the "DEBUG" flag or the helper will not work as it will not use correct AdUnitIDs.
-
 # When you submit your app to Apple
 
 When you submit your app to Apple on iTunes connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected.
