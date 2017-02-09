@@ -39,7 +39,7 @@ This helper will automatically change the AdUnitID from test to release mode and
 
 With the latest xCode it is no longer necessary to setup the DEBUG flag manually.
 
-# AdMob: Pre-setup (iOS)
+# Pre-setup
 
 - Step 1: Sign up for a Google AdMob account and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
 
@@ -75,7 +75,7 @@ SwiftyAds.shared.setup(
 )
 ```
 
-# AdMob: How to use (iOS)
+# How to use
 
 - To show an Ad simply call these anywhere you like in your project
 ```swift
