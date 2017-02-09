@@ -5,6 +5,8 @@ With these helpers you can easily show Banner Ads, Interstitial Ads and RewardVi
 
 This helper follows all the best practices in regards to ads, like creating shared banners and correctly preloading interstitial and rewarded videos so they are always ready to show.
 
+NOTE: I recently spoke to app lovin support and it seems that they do not support tvOS anymore. I only included the app lovon code for tvOS because adMob does not support it. I will remove the code in the next uodate.
+
 # Cocoa Pods
 
 I know that the current way of copying the .swift file(s) into your project sucks and is bad practice, so I am working hard to finally support CocoaPods very soon. The only problem I have with this repository is the requirement of 3rd party SDKs, so it will not be as easy to do compared to my other repositories.
