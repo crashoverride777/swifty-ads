@@ -23,8 +23,8 @@
 		B4B01A521B9A0BDF00F9A8EA /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4B01A511B9A0BDF00F9A8EA /* MessageUI.framework */; };
 		B4B01A541B9A0BEC00F9A8EA /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4B01A531B9A0BEC00F9A8EA /* StoreKit.framework */; };
 		B4B01A561B9A0BF700F9A8EA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4B01A551B9A0BF700F9A8EA /* SystemConfiguration.framework */; };
-		B4F4EE0D1DA3F6C300C6FEC0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4F4EE091DA3F6C300C6FEC0 /* LaunchScreen.xib */; };
-		B4F4EE0E1DA3F6C300C6FEC0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4F4EE0B1DA3F6C300C6FEC0 /* Main.storyboard */; };
+		B4DA75771E4CBEDA00A52B0E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4DA75731E4CBEDA00A52B0E /* LaunchScreen.xib */; };
+		B4DA75781E4CBEDA00A52B0E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4DA75751E4CBEDA00A52B0E /* Main.storyboard */; };
 		B4F4EE111DA3F7BC00C6FEC0 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B4F4EE0F1DA3F7BC00C6FEC0 /* GameScene.sks */; };
 		B4F4EE131DA3F7BC00C6FEC0 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F4EE101DA3F7BC00C6FEC0 /* GameScene.swift */; };
 /* End PBXBuildFile section */
@@ -35,11 +35,10 @@
 		B418D9E01E44B42000DD6C15 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B435FFE01CE14C2A00A678AA /* SwiftyAds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyAds.swift; path = SwiftyAds/SwiftyAds.swift; sourceTree = "<group>"; };
 		B452EFD81CDBF7FE009A69B5 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "GoogleMobileAdsSdkiOS-7.8.0/GoogleMobileAds.framework"; sourceTree = SOURCE_ROOT; };
-		B4A0068C1CECFD0B00A44575 /* HeaderTV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderTV.h; sourceTree = "<group>"; };
 		B4B01A131B9A0AF500F9A8EA /* SwiftyAds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyAds.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B4B01A171B9A0AF500F9A8EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "SwiftyAds (iOS)/Info.plist"; sourceTree = SOURCE_ROOT; };
-		B4B01A181B9A0AF500F9A8EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "SwiftyAds (iOS)/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
-		B4B01A1E1B9A0AF500F9A8EA /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameViewController.swift; path = "SwiftyAds (iOS)/GameViewController.swift"; sourceTree = SOURCE_ROOT; };
+		B4B01A171B9A0AF500F9A8EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = SwiftyAds/Info.plist; sourceTree = SOURCE_ROOT; };
+		B4B01A181B9A0AF500F9A8EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = SwiftyAds/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
+		B4B01A1E1B9A0AF500F9A8EA /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameViewController.swift; path = SwiftyAds/GameViewController.swift; sourceTree = SOURCE_ROOT; };
 		B4B01A3F1B9A0B7700F9A8EA /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		B4B01A411B9A0B8100F9A8EA /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		B4B01A431B9A0B8600F9A8EA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -51,8 +50,8 @@
 		B4B01A511B9A0BDF00F9A8EA /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		B4B01A531B9A0BEC00F9A8EA /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		B4B01A551B9A0BF700F9A8EA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		B4F4EE0A1DA3F6C300C6FEC0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		B4F4EE0C1DA3F6C300C6FEC0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B4DA75741E4CBEDA00A52B0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		B4DA75761E4CBEDA00A52B0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B4F4EE0F1DA3F7BC00C6FEC0 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		B4F4EE101DA3F7BC00C6FEC0 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		FB5FE06D82022761DEF18FC4 /* Pods-SwiftyAds (iOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAds (iOS).debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyAds (iOS)/Pods-SwiftyAds (iOS).debug.xcconfig"; sourceTree = "<group>"; };
@@ -103,7 +102,6 @@
 		B4B01A0A1B9A0AF500F9A8EA = {
 			isa = PBXGroup;
 			children = (
-				B4A0068C1CECFD0B00A44575 /* HeaderTV.h */,
 				B435FFE01CE14C2A00A678AA /* SwiftyAds.swift */,
 				B4C060D51D1EB676004A3BA8 /* SwiftyAds */,
 				B4B01A141B9A0AF500F9A8EA /* Products */,
@@ -144,12 +142,12 @@
 			isa = PBXGroup;
 			children = (
 				B4F4EE101DA3F7BC00C6FEC0 /* GameScene.swift */,
-				B418D9E01E44B42000DD6C15 /* Images.xcassets */,
 				B4F4EE0F1DA3F7BC00C6FEC0 /* GameScene.sks */,
 				B4B01A181B9A0AF500F9A8EA /* AppDelegate.swift */,
 				B4B01A1E1B9A0AF500F9A8EA /* GameViewController.swift */,
-				B4F4EE0B1DA3F6C300C6FEC0 /* Main.storyboard */,
-				B4F4EE091DA3F6C300C6FEC0 /* LaunchScreen.xib */,
+				B4DA75731E4CBEDA00A52B0E /* LaunchScreen.xib */,
+				B4DA75751E4CBEDA00A52B0E /* Main.storyboard */,
+				B418D9E01E44B42000DD6C15 /* Images.xcassets */,
 				B4B01A171B9A0AF500F9A8EA /* Info.plist */,
 				B4B01A3E1B9A0B3500F9A8EA /* Frameworks */,
 			);
@@ -221,9 +219,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4F4EE111DA3F7BC00C6FEC0 /* GameScene.sks in Resources */,
+				B4DA75771E4CBEDA00A52B0E /* LaunchScreen.xib in Resources */,
 				B418D9E11E44B42000DD6C15 /* Images.xcassets in Resources */,
-				B4F4EE0D1DA3F6C300C6FEC0 /* LaunchScreen.xib in Resources */,
-				B4F4EE0E1DA3F6C300C6FEC0 /* Main.storyboard in Resources */,
+				B4DA75781E4CBEDA00A52B0E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,23 +290,21 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		B4F4EE091DA3F6C300C6FEC0 /* LaunchScreen.xib */ = {
+		B4DA75731E4CBEDA00A52B0E /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B4F4EE0A1DA3F6C300C6FEC0 /* Base */,
+				B4DA75741E4CBEDA00A52B0E /* Base */,
 			);
 			name = LaunchScreen.xib;
-			path = "SwiftyAds (iOS)";
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
-		B4F4EE0B1DA3F6C300C6FEC0 /* Main.storyboard */ = {
+		B4DA75751E4CBEDA00A52B0E /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B4F4EE0C1DA3F6C300C6FEC0 /* Base */,
+				B4DA75761E4CBEDA00A52B0E /* Base */,
 			);
 			name = Main.storyboard;
-			path = "SwiftyAds (iOS)";
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
 
@@ -416,7 +412,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAds (iOS)/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAds/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dominik.SwiftyAds;
@@ -439,7 +435,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAds (iOS)/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAds/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dominik.SwiftyAds;
