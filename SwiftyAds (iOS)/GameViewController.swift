@@ -14,7 +14,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
      
         // Set up ad Mob
-        SwiftyAdsAdMob.shared.setup(
+        SwiftyAds.shared.setup(
             viewController: self,
             bannerID: "Enter your real ID",
             interstitialID: "Enter your real ID",
@@ -43,7 +43,7 @@ class GameViewController: UIViewController {
         
         coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
             
-            SwiftyAdsAdMob.shared.updateForOrientation()
+            SwiftyAds.shared.updateForOrientation()
             
 //            let orientation = UIApplication.sharedApplication().statusBarOrientation
 //            switch orientation {

@@ -35,12 +35,7 @@ class GameScene: SKScene {
                 label?.text = "Remove ads in \(touchCounter) clicks"
             }
             if touchCounter == 0 {
-                #if os(iOS)
-                    SwiftyAdsAdMob.shared.isRemoved = true
-                #endif
-                #if os(tvOS)
-                    SwiftyAdsAppLovin.shared.isRemoved = true
-                #endif
+                SwiftyAds.shared.isRemoved = true
             }
         }
     }
@@ -48,22 +43,12 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         label?.text = "Remove ads in \(touchCounter) clicks"
     
-        #if os(iOS)
-            SwiftyAdsAdMob.shared.delegate = self
-            SwiftyAdsAdMob.shared.showBanner()
-        #endif
-        #if os(tvOS)
-            SwiftyAdsAppLovin.shared.delegate = self
-        #endif
+        SwiftyAds.shared.delegate = self
+        SwiftyAds.shared.showBanner()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        #if os(iOS)
-            SwiftyAdsAdMob.shared.showInterstitial(withInterval: 2)
-        #endif
-        #if os(tvOS)
-            SwiftyAdsAppLovin.shared.showInterstitial(withInterval: 2)
-        #endif
+        SwiftyAds.shared.showInterstitial(withInterval: 2)
         
         touchCounter -= 1
     }
