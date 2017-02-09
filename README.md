@@ -1,11 +1,8 @@
 # SwiftyAds
 
-A collection of helper classes to integrate Ads from AdMob and AppLovin (tvOS). 
-With these helpers you can easily show Banner Ads, Interstitial Ads and RewardVideoAds anywhere in your project.
+A Swift helper to integrate Ads from AdMob so you can easily show Banner Ads, Interstitial Ads and RewardVideoAds anywhere in your project.
 
 This helper follows all the best practices in regards to ads, like creating shared banners and correctly preloading interstitial and rewarded videos so they are always ready to show.
-
-NOTE: I recently spoke to app lovin support and it seems that they do not support tvOS anymore. I only included the app lovon code for tvOS because adMob does not support it. I will remove the code in the next uodate.
 
 # Cocoa Pods
 
@@ -17,10 +14,8 @@ In the meantime I would create a folder on your Mac, called something like Share
 
 You should only show rewarded videos with a dedicated button and you should only show that button when a video is loaded (see instructions below). If the user presses the reward video button and watches a video it might take a few seconds for the next video to reload afterwards. Incase the user immediately tries to watch another video this helper will show an alert informing the user that no video is available at the moment. 
 
-- AdMob
 
 Admob reward videos will only work when using a 3rd party mediation network such as Chartboost or Vungle. 
-
 Read the AdMob mediation guidlines 
 
 https://support.google.com/admob/bin/answer.py?answer=2413211
@@ -66,14 +61,13 @@ https://cocoapods.org/app
 - Step 3: Copy the following files into your project (see CocoaPods above for reference trick on multiple projects)
 
 ```swift
-SwiftyAdsDelegate.swift
-SwiftyAdsAdMob.swift
+SwiftyAds.swift
 ```
 
 - Step 4: Setup up the helper when your app launches. 
 
 ```swift
-SwiftyAdsAdMob.shared.setup(
+SwiftyAds.shared.setup(
       viewController: self, 
       bannerID:      "Enter your real id", 
       interID:       "Enter your real id", 
@@ -85,25 +79,25 @@ SwiftyAdsAdMob.shared.setup(
 
 - To show an Ad simply call these anywhere you like in your project
 ```swift
-SwiftyAdsAdMob.shared.showBanner() 
-SwiftyAdsAdMob.shared.showBanner(withDelay: 1) // Delay showing banner slightly eg when transitioning to new scene/view
-SwiftyAdsAdMob.shared.showInterstitial()
-SwiftyAdsAdMob.shared.showInterstitial(withInterval: 4) // Shows an ad every 4th time method is called
-SwiftyAdsAdMob.shared.showRewardedVideo() // Should be called when pressing dedicated button
+SwiftyAds.shared.showBanner() 
+SwiftyAds.shared.showBanner(withDelay: 1) // Delay showing banner slightly eg when transitioning to new scene/view
+SwiftyAds.shared.showInterstitial()
+SwiftyAds.shared.showInterstitial(withInterval: 4) // Shows an ad every 4th time method is called
+SwiftyAds.shared.showRewardedVideo() // Should be called when pressing dedicated button
 
-if SwiftyAdsAdMob.shared.isRewardedVideoReady { // Will try to load an ad if it returns false
+if SwiftyAds.shared.isRewardedVideoReady { // Will try to load an ad if it returns false
     // add reward video button
 }
 ```
 
 - To remove Banner Ads, for example during gameplay 
 ```swift
-SwiftyAdsAdMob.shared.removeBanner() 
+SwiftyAds.shared.removeBanner() 
 ```
 
 - To remove all Ads, mainly for in app purchases simply call 
 ```swift
-SwiftyAdsAdMob.shared.isRemoved = true 
+SwiftyAds.shared.isRemoved = true 
 ```
 
 NOTE: Remove Ads bool 
@@ -119,7 +113,7 @@ For permanent storage you will need to create your own "removedAdsProduct" prope
 Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
 to receive delegate callbacks.
 ```swift
-SwiftyAdsAdMob.shared.delegate = self 
+SwiftyAds.shared.delegate = self 
 ```
 
 Than create an extension conforming to the AdsDelegate protocol.
@@ -151,7 +145,7 @@ override func viewWillTransition(to size: CGSize, with coordinator: UIViewContro
         
         coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
           
-            SwiftyAdsAdMob.shared.updateForOrientation()
+            SwiftyAds.shared.updateForOrientation()
             
             }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
                 print("Device rotation completed")
