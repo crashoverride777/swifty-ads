@@ -27,10 +27,12 @@
 		B4DA75781E4CBEDA00A52B0E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4DA75751E4CBEDA00A52B0E /* Main.storyboard */; };
 		B4F4EE111DA3F7BC00C6FEC0 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B4F4EE0F1DA3F7BC00C6FEC0 /* GameScene.sks */; };
 		B4F4EE131DA3F7BC00C6FEC0 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F4EE101DA3F7BC00C6FEC0 /* GameScene.swift */; };
+		F30F6920A767E5037C54BE92 /* Pods_SwiftyAds__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB64B3ED67AA510A8240C65 /* Pods_SwiftyAds__iOS_.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0DE477628229B17094F186F3 /* Pods-SwiftyAds (tvOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAds (tvOS).release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyAds (tvOS)/Pods-SwiftyAds (tvOS).release.xcconfig"; sourceTree = "<group>"; };
+		2AB64B3ED67AA510A8240C65 /* Pods_SwiftyAds__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAds__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		523D8F56078957ECDD773241 /* Pods-SwiftyAds (iOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAds (iOS).release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyAds (iOS)/Pods-SwiftyAds (iOS).release.xcconfig"; sourceTree = "<group>"; };
 		B418D9E01E44B42000DD6C15 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B435FFE01CE14C2A00A678AA /* SwiftyAds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyAds.swift; path = SwiftyAds/SwiftyAds.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 				B4B01A441B9A0B8600F9A8EA /* AVFoundation.framework in Frameworks */,
 				B4B01A421B9A0B8100F9A8EA /* AudioToolbox.framework in Frameworks */,
 				B4B01A401B9A0B7700F9A8EA /* AdSupport.framework in Frameworks */,
+				F30F6920A767E5037C54BE92 /* Pods_SwiftyAds__iOS_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +98,7 @@
 		947B71864618DC3F471261D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2AB64B3ED67AA510A8240C65 /* Pods_SwiftyAds__iOS_.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
