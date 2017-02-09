@@ -37,10 +37,6 @@ Than read your 3rd party ad network(s) of choice mediation guidlines to set up r
 
 NOTE: AdMob reward videos will either show a black full screen ad when using the test AdUnitID or not show one at all.
 
-- AppLovin
-
-AppLovin reward videos on tvOS on the other hand need to be set up directly via their documentation as we are directly using their APIs. Go to applovin.com and follow the documentation on how to set up rewarded videos.
-
 # "DEBUG" custom flag
 
 AdMob uses 2 types of AdUnit IDs, 1 for testing and 1 for release. You should not test live ads when you are testing your app.
@@ -145,124 +141,6 @@ extension GameScene: SwiftyAdsDelegate {
 }
 ```
 
-# AppLovin: Pre-setup (tvOS)
-
-Step 1: Create an AppLovin account at
-
-https://applovin.com
-
-Step 2: Log into your account and click on Doc (top right next to account) and tvOS and tvOS SDK integration and follow the steps to install the SDK.
-
-This should include
-
-1) Downloading the SDK folder that includes the headers and lib file and copy it into your project.
-
-Note: I was having some issues with this for ages because I was copying the whole folder from the website into my project. Do NOT do this. Make sure you copy/drag the lib file serperatly into your project and than copy the headers folder into your project and select copy if needed (Dont forget to do same with the tvOS SDK).
-
-2) Linking the correct frameworks (AdSupport, UIKit etc)
-3) Adding your appLovin SDK key (you can use your key and add it in this sample project to test out ads)
-4) Enabling the -ObjC flag in other linkers.
-
-
-- Step 3: Create an objC bridging header. Go to File-New-File and create a new header file. Call it something like HeaderTV and save.
-
-Than add the app lovin swift libraries in the header file (see sample project if needed)
-```swift
-#import "ALSwiftHeaders.h"
-```
-
-Than go to Targets-BuildSettings and search for "bridging". Double click on "Objective C Bridging Header" and enter the name of the header file followed by .h, for example HeaderTV.h
-
-- Step 4: Copy the following files into your project (see CocoaPods above for reference trick on multiple projects)
-
-```swift
-SwiftyAdsDelegate.swift
-SwiftyAdsAppLovin.swift
-```
-- Step 5: Setup the helper when your app launches. 
-
-```swift
-SwiftyAdsAppLovin.shared.setup()
-```
-
-# App Lovin: How to use (tvOS)
-
-- To show an Ad simply call these anywhere you like in your project
-```swift
-SwiftyAdsAppLovin.shared.showInterstitial()
-SwiftyAdsAppLovin.shared.showInterstitial(withInterval: 4) // Show an ad every 4th time method is called
-SwiftyAdsAppLovin.shared.showRewardedVideo() // Should be called when pressing dedicated button
-
-if SwiftyAdsAppLovin.shared.isRewardedVideoReady { // Will try to load an ad if it returns false
-    // add reward video button
-}
-```
-
-- To remove all Ads, mainly for in app purchases simply call 
-```swift
-SwiftyAdsAppLovin.shared.isRemoved = true 
-```
-
-NOTE: Remove Ads bool 
-
-If set to true all the methods to show banner and interstitial ads will not fire anymore and therefore require no further editing. 
-
-This will not stop rewarded videos from showing as they should have a dedicated button. Some reward videos are not skipabble and therefore should never be shown automatically. This way you can remove banner and interstitial ads but still have a rewarded videos button. 
-
-For permanent storage you will need to create your own "removedAdsProduct" property and save it in something like UserDefaults, or preferably iOS Keychain. Than call this method when your app launches after you have set up the helper.
-
-- Implement the delegate methods.
-
-Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
-to receive delegate callbacks.
-```swift
-SwiftyAdsAppLovin.shared.delegate = self 
-```
-
-Than create an extension conforming to the AdsDelegate protocol.
-```swift
-extension GameScene: SwiftyAdsDelegate {
-    func adDidOpen() {
-        // pause your game/app if needed
-    }
-    func adDidClose() { 
-       // resume your game/app if needed
-    }
-    func adDidRewardUser(withAmount rewardAmount: Int) {
-       // leave empty if unused
-    }
-}
-```
-
-# How to use all helpers
-
-I deprecated the AdsManager.swift file in v6.1 as I felt like it was complicating things unnecessarlily and making the helper(s) less flexible and more confusing to beginners. If you are using both helpers at the same time you will have to implement your own logic for showing the correct ad.
-
-To differentiate between targets you can do something like this.
-
-```swift
-#if os(iOS)
-    SwiftyAdsAdMob.shared.showInterstitial()
-#endif
-#if os(tvOS)
-    SwiftyAdsAppLovin.shared.showInterstitial()
-#endif
-```
-
-Also do not forget things like settings up the delegates 
-
-```swift
-SwiftyAdsAdMob.shared.delegate = self
-SwiftyAdsAppLovin.shared.delegate = self
-```
-
-or calling the remove method in all helpers when the remove ads button was pressed
-
-```swift
-SwiftyAdsAdMob.shared.isRemoved = true 
-SwiftyAdsAppLovin.shared.isRemoved = true 
-```
-
 # Supporting both landscape and portrait orientation
 
 - If your app supports both portrait and landscape orientation go to the ViewController and add the following method.
@@ -295,53 +173,8 @@ Enjoy
 
 # Release Notes
 
-- v6.2.2
+- v7.0
 
-Added AppLovin setup method (see instructions)
-
-Cleanup
-
-- v6.2.1
-
-Added a UIAlertController when the "showRewardedVideo" method is called but the video is not ready. Remember you should only show reward videos with a dedicated button and you should only show that reward video button when a video is loaded. 
-However when the user the presses the reward video button and watches a video it might take a few seconds for the next video to reload. If the user immediately tries to watch another video afterwards IMO the easiest and cleanest way is to just show an alert "No video available at the moment"
-
-Removed deprecated methods
+Removed app lovin as they no longer support the tvOS platform
 
 Cleanup
-
-- v6.2
-
-Removed Custom ads to further simplify this project
-
-Cleanup
-
-- v6.1.1
-
-Custom ads improvements
-
-The remove methods are deprecated, use "...shared.isRemoved = true" instead
-
-- v6.1
-
-Deprecated the AdsManager as I felt like it was complicating things uncecessarily. This should also make it easier for people to pick and choose what they need and make the helper more flexible and clearer to understand.
-
-- v6.0.3
-
-Cleanup
-
-- v6.0.2
-
-Cleanup
-
-- v6.0.1
-
-Custom ads on tvOS need to be removed manually again. Please check instructions.
-
-Cleanup.
-
-- v6.0
-
-Project has been renamed to SwiftyAds.
-
-No more source breaking changes after this update. All future changes will be handled with deprecated messages unless the whole API changes.
