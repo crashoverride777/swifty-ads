@@ -169,6 +169,6 @@ Enjoy
 
 - v7.0
 
-Removed app lovin as they no longer support the tvOS platform
+Removed AppLovin as they no longer support the tvOS platform
 
 Cleanup
