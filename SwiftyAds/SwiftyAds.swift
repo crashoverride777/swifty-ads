@@ -96,10 +96,6 @@ final class SwiftyAds: NSObject {
     /// Reward amount backup. If there is a problem fetching the amount from server or its 0 this will be used.
     var rewardAmountBackup = 1
     
-    /// Presenting view controller
-    fileprivate var presentingViewController: UIViewController?
-    
-    
     /// Ads
     fileprivate var bannerAd: GADBannerView?
     fileprivate var interstitialAd: GADInterstitial?
@@ -146,16 +142,12 @@ final class SwiftyAds: NSObject {
     
     // MARK: - Show Banner
     
-    /// Show banner ad with delay
+    /// Show banner ad
     ///
-    /// - parameter delay: The delay until showing the ad. Defaults to 0.
     /// - parameter viewController: The view controller that will present the ad.
-    func showBanner(withDelay delay: TimeInterval = 0.1, from viewController: UIViewController?) {
-        self.presentingViewController = viewController
-        
+    func showBanner(from viewController: UIViewController?) {
         guard !isRemoved else { return }
-        
-        Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(loadBannerAd), userInfo: nil, repeats: false)
+        loadBannerAd(from: viewController)
     }
     
     // MARK: - Show Interstitial
@@ -165,10 +157,8 @@ final class SwiftyAds: NSObject {
     /// - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to nil.
     /// - parameter viewController: The view controller that will present the ad.
     func showInterstitial(withInterval interval: Int? = nil, from viewController: UIViewController?) {
-        self.presentingViewController = viewController
-        
         guard !isRemoved, isInterstitialReady else { return }
-        guard let viewController = presentingViewController else { return }
+        guard let viewController = viewController else { return }
         
         if let interval = interval {
             intervalCounter += 1
@@ -187,15 +177,12 @@ final class SwiftyAds: NSObject {
     ///
     /// - parameter viewController: The view controller that will present the ad.
     func showRewardedVideo(from viewController: UIViewController?) {
-        self.presentingViewController = viewController
-        
         guard isRewardedVideoReady else {
-            showAlert(message: LocalizedText.noVideo)
+            showAlert(message: LocalizedText.noVideo, from: viewController)
             return
         }
         
-        guard let viewController = presentingViewController else { return }
-        
+        guard let viewController = viewController else { return }
         print("AdMob reward video is showing")
         rewardedVideoAd?.present(fromRootViewController: viewController)
     }
@@ -209,21 +196,13 @@ final class SwiftyAds: NSObject {
         bannerAd?.delegate = nil
         bannerAd?.removeFromSuperview()
         bannerAd = nil
-        
-        guard let view = presentingViewController?.view else { return }
-        for subview in view.subviews { // Just incase there are multiple instances of a banner
-            if let bannerAd = subview as? GADBannerView {
-                bannerAd.delegate = nil
-                bannerAd.removeFromSuperview()
-            }
-        }
     }
     
     // MARK: - Update For Orientation
     
     /// Orientation changed
-    func updateForOrientation() {
-        guard let bannerAd = bannerAd, let viewController = presentingViewController else { return }
+    func updateForOrientation(from viewController: UIViewController?) {
+        guard let bannerAd = bannerAd, let viewController = viewController else { return }
         bannerAd.adSize = bannerSize
         bannerAd.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.maxY - (bannerAd.frame.height / 2))
     }
@@ -234,9 +213,9 @@ final class SwiftyAds: NSObject {
 private extension SwiftyAds {
     
     /// Load banner ad
-    @objc func loadBannerAd() {
+    @objc func loadBannerAd(from viewController: UIViewController?) {
         print("AdMob banner ad loading...")
-        guard let viewController = presentingViewController else { return }
+        guard let viewController = viewController else { return }
         
         bannerAd = GADBannerView(adSize: bannerSize)
         bannerAd?.adUnitID = bannerAdUnitID
@@ -292,7 +271,7 @@ extension SwiftyAds: GADBannerViewDelegate {
     // Did receive
     func adViewDidReceiveAd(_ bannerView: GADBannerView) {
         print("AdMob banner did receive ad from: \(bannerView.adNetworkClassName)")
-        guard let viewController = presentingViewController else { return }
+        guard let viewController = bannerView.rootViewController else { return }
         
         bannerView.isHidden = false
         UIView.animate(withDuration: 1.5) {
@@ -327,8 +306,8 @@ extension SwiftyAds: GADBannerViewDelegate {
     func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
         print(error.localizedDescription)
         
-        UIView.animate(withDuration: 1.5 , animations: { [weak self] in
-            if let viewController = self?.presentingViewController {
+        UIView.animate(withDuration: 1.5 , animations: {
+            if let viewController = bannerView.rootViewController {
                 bannerView.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.maxY + (bannerView.frame.height / 2))
             }
             
@@ -437,8 +416,8 @@ extension SwiftyAds: GADRewardBasedVideoAdDelegate {
 
 private extension SwiftyAds {
     
-    func showAlert(message: String) {
-        guard let viewController = presentingViewController else { return }
+    func showAlert(message: String, from viewController: UIViewController?) {
+        guard let viewController = viewController else { return }
         
         let alertController = UIAlertController(title: LocalizedText.sorry, message: message, preferredStyle: .alert)
         

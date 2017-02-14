@@ -44,7 +44,7 @@ class GameViewController: UIViewController {
         
         coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
             
-            SwiftyAds.shared.updateForOrientation()
+            SwiftyAds.shared.updateForOrientation(from: self)
             
 //            let orientation = UIApplication.sharedApplication().statusBarOrientation
 //            switch orientation {
