@@ -75,6 +75,14 @@ SwiftyAds.shared.setup(
 )
 ```
 
+Note: If your app has multiple view controllers make sure you call 
+
+```swift
+SwiftyAds.shared.presentingViewController = self
+```
+
+in each ViewControllers viewDidLoad method.
+
 # How to use
 
 - To show an Ad simply call these anywhere you like in your project
