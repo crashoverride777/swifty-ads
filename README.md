@@ -81,14 +81,12 @@ SwiftyAds.shared.setup(
 
 // View Controller
 SwiftyAds.shared.showBanner(from: self) 
-SwiftyAds.shared.showBanner(withDelay: 1, from: self) // Delay showing banner slightly eg when transitioning to new scene/view
 SwiftyAds.shared.showInterstitial(from: self)
 SwiftyAds.shared.showInterstitial(withInterval: 4, from: self) // Shows an ad every 4th time method is called
 SwiftyAds.shared.showRewardedVideo(from: self) // Should be called when pressing dedicated button
 
 // SpriteKit Scene (Needs to be called outside didMoveToView as window property will be nil otherwise)
 SwiftyAds.shared.showBanner(from: view?.window?.rootViewController) 
-SwiftyAds.shared.showBanner(withDelay: 1, from: view?.window?.rootViewController) // Delay showing banner slightly eg when transitioning to new scene/view
 SwiftyAds.shared.showInterstitial(from: view?.window?.rootViewController)
 SwiftyAds.shared.showInterstitial(withInterval: 4, from: view?.window?.rootViewController) // Shows an ad every 4th time method is called
 SwiftyAds.shared.showRewardedVideo(from: view?.window?.rootViewController) // Should be called when pressing dedicated button
@@ -154,7 +152,7 @@ override func viewWillTransition(to size: CGSize, with coordinator: UIViewContro
         
         coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
           
-            SwiftyAds.shared.updateForOrientation()
+            SwiftyAds.shared.updateForOrientation(from: self)
             
             }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
                 print("Device rotation completed")
