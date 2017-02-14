@@ -176,6 +176,8 @@ Enjoy
 
 - v7.0.1
 
+UIViewController dependency injection 
+
 Cleanup
 
 - v7.0
