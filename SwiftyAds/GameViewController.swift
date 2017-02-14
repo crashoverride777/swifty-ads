@@ -15,11 +15,12 @@ class GameViewController: UIViewController {
      
         // Set up ad Mob
         SwiftyAds.shared.setup(
-            viewController: self,
             bannerID: "Enter your real ID",
             interstitialID: "Enter your real ID",
             rewardedVideoID: "Enter your real ID"
         )
+        
+        SwiftyAds.shared.showBanner(from: self)
         
         if let scene = GameScene(fileNamed: "GameScene") {
             // Configure the view.

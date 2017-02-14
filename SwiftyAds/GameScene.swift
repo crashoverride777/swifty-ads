@@ -44,11 +44,10 @@ class GameScene: SKScene {
         label?.text = "Remove ads in \(touchCounter) clicks"
     
         SwiftyAds.shared.delegate = self
-        SwiftyAds.shared.showBanner()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        SwiftyAds.shared.showInterstitial(withInterval: 2)
+        SwiftyAds.shared.showInterstitial(withInterval: 2, from: view?.window?.rootViewController)
         
         touchCounter -= 1
     }

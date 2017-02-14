@@ -61,9 +61,6 @@ final class SwiftyAds: NSObject {
     /// Delegates
     weak var delegate: SwiftyAdsDelegate?
     
-    /// Presenting view controller
-    var presentingViewController: UIViewController?
-    
     /// Remove ads
     var isRemoved = false {
         didSet {
@@ -99,6 +96,10 @@ final class SwiftyAds: NSObject {
     /// Reward amount backup. If there is a problem fetching the amount from server or its 0 this will be used.
     var rewardAmountBackup = 1
     
+    /// Presenting view controller
+    fileprivate var presentingViewController: UIViewController?
+    
+    
     /// Ads
     fileprivate var bannerAd: GADBannerView?
     fileprivate var interstitialAd: GADInterstitial?
@@ -129,13 +130,10 @@ final class SwiftyAds: NSObject {
     
     /// Setup
     ///
-    /// - parameter viewController: The view controller reference to present ads.
     /// - parameter bannerID: The banner adUnitID for this app.
     /// - parameter interstitialID: The interstitial adUnitID for this app.
     /// - parameter rewardedVideoID: The rewarded video adUnitID for this app.
-    func setup(viewController: UIViewController, bannerID: String, interstitialID: String, rewardedVideoID: String) {
-        presentingViewController = viewController
-        
+    func setup(bannerID: String, interstitialID: String, rewardedVideoID: String) {
         #if !DEBUG
             bannerAdUnitID = bannerID
             interstitialAdUnitID = interstitialID
@@ -151,7 +149,10 @@ final class SwiftyAds: NSObject {
     /// Show banner ad with delay
     ///
     /// - parameter delay: The delay until showing the ad. Defaults to 0.
-    func showBanner(withDelay delay: TimeInterval = 0.1) {
+    /// - parameter viewController: The view controller that will present the ad.
+    func showBanner(withDelay delay: TimeInterval = 0.1, from viewController: UIViewController?) {
+        self.presentingViewController = viewController
+        
         guard !isRemoved else { return }
         
         Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(loadBannerAd), userInfo: nil, repeats: false)
@@ -162,7 +163,10 @@ final class SwiftyAds: NSObject {
     /// Show interstitial ad randomly
     ///
     /// - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to nil.
-    func showInterstitial(withInterval interval: Int? = nil) {
+    /// - parameter viewController: The view controller that will present the ad.
+    func showInterstitial(withInterval interval: Int? = nil, from viewController: UIViewController?) {
+        self.presentingViewController = viewController
+        
         guard !isRemoved, isInterstitialReady else { return }
         guard let viewController = presentingViewController else { return }
         
@@ -179,8 +183,12 @@ final class SwiftyAds: NSObject {
     // MARK: - Show Reward Video
     
     /// Show rewarded video ad
-    /// Do not show automatically, use a dedicated reward video button
-    func showRewardedVideo() {
+    /// Do not show automatically, use a dedicated reward video button.
+    ///
+    /// - parameter viewController: The view controller that will present the ad.
+    func showRewardedVideo(from viewController: UIViewController?) {
+        self.presentingViewController = viewController
+        
         guard isRewardedVideoReady else {
             showAlert(message: LocalizedText.noVideo)
             return
