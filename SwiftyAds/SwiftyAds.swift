@@ -146,7 +146,7 @@ final class SwiftyAds: NSObject {
     ///
     /// - parameter viewController: The view controller that will present the ad.
     func showBanner(from viewController: UIViewController?) {
-        guard !isRemoved else { return }
+        guard !isRemoved, let viewController = viewController else { return }
         loadBannerAd(from: viewController)
     }
     
@@ -201,8 +201,8 @@ final class SwiftyAds: NSObject {
     // MARK: - Update For Orientation
     
     /// Orientation changed
-    func updateForOrientation(from viewController: UIViewController?) {
-        guard let bannerAd = bannerAd, let viewController = viewController else { return }
+    func updateForOrientation(from viewController: UIViewController) {
+        guard let bannerAd = bannerAd else { return }
         bannerAd.adSize = bannerSize
         bannerAd.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.maxY - (bannerAd.frame.height / 2))
     }
@@ -213,10 +213,9 @@ final class SwiftyAds: NSObject {
 private extension SwiftyAds {
     
     /// Load banner ad
-    @objc func loadBannerAd(from viewController: UIViewController?) {
+    @objc func loadBannerAd(from viewController: UIViewController) {
         print("AdMob banner ad loading...")
-        guard let viewController = viewController else { return }
-        
+    
         bannerAd = GADBannerView(adSize: bannerSize)
         bannerAd?.adUnitID = bannerAdUnitID
         bannerAd?.delegate = self
