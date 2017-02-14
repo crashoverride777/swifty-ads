@@ -158,7 +158,6 @@ final class SwiftyAds: NSObject {
     /// - parameter viewController: The view controller that will present the ad.
     func showInterstitial(withInterval interval: Int? = nil, from viewController: UIViewController?) {
         guard !isRemoved, isInterstitialReady else { return }
-        guard let viewController = viewController else { return }
         
         if let interval = interval {
             intervalCounter += 1
@@ -166,6 +165,7 @@ final class SwiftyAds: NSObject {
             intervalCounter = 0
         }
         
+        guard let viewController = viewController else { return }
         print("AdMob interstitial is showing")
         interstitialAd?.present(fromRootViewController: viewController)
     }
@@ -216,6 +216,7 @@ private extension SwiftyAds {
     @objc func loadBannerAd(from viewController: UIViewController) {
         print("AdMob banner ad loading...")
     
+        bannerAd?.removeFromSuperview()
         bannerAd = GADBannerView(adSize: bannerSize)
         bannerAd?.adUnitID = bannerAdUnitID
         bannerAd?.delegate = self
