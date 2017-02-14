@@ -76,7 +76,7 @@ final class SwiftyAds: NSObject {
     var isInterstitialReady: Bool {
         guard let ad = interstitialAd, ad.isReady else {
             print("AdMob interstitial ad is not ready, reloading...")
-            interstitialAd = loadInterstitialAd()
+            loadInterstitialAd()
             return false
         }
         return true
@@ -87,7 +87,7 @@ final class SwiftyAds: NSObject {
     var isRewardedVideoReady: Bool {
         guard let ad = rewardedVideoAd, ad.isReady else {
             print("AdMob reward video is not ready, reloading...")
-            rewardedVideoAd = loadRewardedVideoAd()
+            loadRewardedVideoAd()
             return false
         }
         return true
@@ -136,8 +136,8 @@ final class SwiftyAds: NSObject {
             rewardedVideoAdUnitID = rewardedVideoID
         #endif
         
-        interstitialAd = loadInterstitialAd()
-        rewardedVideoAd = loadRewardedVideoAd()
+        loadInterstitialAd()
+        loadRewardedVideoAd()
     }
     
     // MARK: - Show Banner
@@ -232,35 +232,31 @@ private extension SwiftyAds {
     }
 
     /// Load interstitial ad
-    func loadInterstitialAd() -> GADInterstitial {
+    func loadInterstitialAd() {
         print("AdMob interstitial ad loading...")
         
-        let interstitialAd = GADInterstitial(adUnitID: interstitialAdUnitID)
-        interstitialAd.delegate = self
+        interstitialAd = GADInterstitial(adUnitID: interstitialAdUnitID)
+        interstitialAd?.delegate = self
         
         let request = GADRequest()
         #if DEBUG
             request.testDevices = [kGADSimulatorID]
         #endif
-        interstitialAd.load(request)
-     
-        return interstitialAd
+        interstitialAd?.load(request)
     }
     
     /// Load rewarded video ad
-    func loadRewardedVideoAd() -> GADRewardBasedVideoAd {
+    func loadRewardedVideoAd() {
         print("AdMob rewarded video ad loading...")
         
-        let rewardedVideoAd = GADRewardBasedVideoAd.sharedInstance()
-        rewardedVideoAd.delegate = self
+        rewardedVideoAd = GADRewardBasedVideoAd.sharedInstance()
+        rewardedVideoAd?.delegate = self
         
         let request = GADRequest()
         #if DEBUG
             request.testDevices = [kGADSimulatorID]
         #endif
-        rewardedVideoAd.load(request, withAdUnitID: rewardedVideoAdUnitID)
-        
-        return rewardedVideoAd
+        rewardedVideoAd?.load(request, withAdUnitID: rewardedVideoAdUnitID)
     }
 }
 
@@ -341,7 +337,7 @@ extension SwiftyAds: GADInterstitialDelegate {
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
         print("AdMob interstitial closed, reloading...")
         delegate?.adDidClose()
-        interstitialAd = loadInterstitialAd()
+        loadInterstitialAd()
     }
     
     // Will leave application
@@ -376,7 +372,7 @@ extension SwiftyAds: GADRewardBasedVideoAdDelegate {
     func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
         print("AdMob reward video closed, reloading...")
         delegate?.adDidClose()
-        rewardedVideoAd = loadRewardedVideoAd()
+        loadRewardedVideoAd()
     }
     
     // Did receive
