@@ -61,6 +61,9 @@ final class SwiftyAds: NSObject {
     /// Delegates
     weak var delegate: SwiftyAdsDelegate?
     
+    /// Presenting view controller
+    var presentingViewController: UIViewController?
+    
     /// Remove ads
     var isRemoved = false {
         didSet {
@@ -96,9 +99,6 @@ final class SwiftyAds: NSObject {
     /// Reward amount backup. If there is a problem fetching the amount from server or its 0 this will be used.
     var rewardAmountBackup = 1
     
-    /// Presenting view controller
-    fileprivate var presentingViewController: UIViewController?
-    
     /// Ads
     fileprivate var bannerAd: GADBannerView?
     fileprivate var interstitialAd: GADInterstitial?
@@ -122,13 +122,12 @@ final class SwiftyAds: NSObject {
     
     /// Init
     private override init() {
-        super.init()
         print("Google Mobile Ads SDK version \(GADRequest.sdkVersion())")
     }
     
     // MARK: - Setup
     
-    /// Set up admob helper
+    /// Setup
     ///
     /// - parameter viewController: The view controller reference to present ads.
     /// - parameter bannerID: The banner adUnitID for this app.
@@ -165,7 +164,7 @@ final class SwiftyAds: NSObject {
     /// - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to nil.
     func showInterstitial(withInterval interval: Int? = nil) {
         guard !isRemoved, isInterstitialReady else { return }
-        guard let rootViewController = presentingViewController?.view?.window?.rootViewController else { return }
+        guard let viewController = presentingViewController else { return }
         
         if let interval = interval {
             intervalCounter += 1
@@ -174,7 +173,7 @@ final class SwiftyAds: NSObject {
         }
         
         print("AdMob interstitial is showing")
-        interstitialAd?.present(fromRootViewController: rootViewController)
+        interstitialAd?.present(fromRootViewController: viewController)
     }
     
     // MARK: - Show Reward Video
@@ -187,10 +186,10 @@ final class SwiftyAds: NSObject {
             return
         }
         
-        guard let rootViewController = presentingViewController?.view?.window?.rootViewController else { return }
+        guard let viewController = presentingViewController else { return }
         
         print("AdMob reward video is showing")
-        rewardedVideoAd?.present(fromRootViewController: rootViewController)
+        rewardedVideoAd?.present(fromRootViewController: viewController)
     }
     
     // MARK: - Remove Banner
@@ -234,7 +233,7 @@ private extension SwiftyAds {
         bannerAd = GADBannerView(adSize: bannerSize)
         bannerAd?.adUnitID = bannerAdUnitID
         bannerAd?.delegate = self
-        bannerAd?.rootViewController = viewController.view?.window?.rootViewController
+        bannerAd?.rootViewController = viewController
         bannerAd?.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.maxY + (bannerAd!.frame.height / 2))
         viewController.view.addSubview(bannerAd!)
         
@@ -282,6 +281,7 @@ private extension SwiftyAds {
 
 extension SwiftyAds: GADBannerViewDelegate {
     
+    // Did receive
     func adViewDidReceiveAd(_ bannerView: GADBannerView) {
         print("AdMob banner did receive ad from: \(bannerView.adNetworkClassName)")
         guard let viewController = presentingViewController else { return }
@@ -292,35 +292,38 @@ extension SwiftyAds: GADBannerViewDelegate {
         }
     }
     
+    // Will present
     func adViewWillPresentScreen(_ bannerView: GADBannerView) { // gets called only in release mode
         print("AdMob banner clicked")
         delegate?.adDidOpen()
     }
     
+    // Will dismiss
     func adViewWillDismissScreen(_ bannerView: GADBannerView) {
         print("AdMob banner about to be closed")
     }
     
+    // Did dismiss
     func adViewDidDismissScreen(_ bannerView: GADBannerView) { // gets called in only release mode
         print("AdMob banner closed")
         delegate?.adDidClose()
     }
     
+    // Will leave application
     func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
         print("AdMob banner will leave application")
         delegate?.adDidOpen()
     }
     
+    // Did fail to receive
     func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
         print(error.localizedDescription)
         
-        guard let viewController = presentingViewController else {
-            bannerView.isHidden = true
-            return
-        }
-        
-        UIView.animate(withDuration: 1.5 , animations: {
-            bannerView.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.maxY + (bannerView.frame.height / 2))
+        UIView.animate(withDuration: 1.5 , animations: { [weak self] in
+            if let viewController = self?.presentingViewController {
+                bannerView.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.maxY + (bannerView.frame.height / 2))
+            }
+            
         }, completion: { finish in
             bannerView.isHidden = true
         })
@@ -331,36 +334,45 @@ extension SwiftyAds: GADBannerViewDelegate {
 
 extension SwiftyAds: GADInterstitialDelegate {
     
+    // Did receive
     func interstitialDidReceiveAd(_ ad: GADInterstitial) {
         print("AdMob interstitial did receive ad from: \(ad.adNetworkClassName)")
     }
     
+    // Will present
     func interstitialWillPresentScreen(_ ad: GADInterstitial) {
         print("AdMob interstitial will present")
         delegate?.adDidOpen()
     }
     
+    // Will dismiss
     func interstitialWillDismissScreen(_ ad: GADInterstitial) {
         print("AdMob interstitial about to be closed")
     }
     
+    // Did dismiss
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
         print("AdMob interstitial closed, reloading...")
         delegate?.adDidClose()
         interstitialAd = loadInterstitialAd()
     }
     
+    // Will leave application
     func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
         print("AdMob interstitial will leave application")
         delegate?.adDidOpen()
     }
     
+    // Did fail to present
     func interstitialDidFail(toPresentScreen ad: GADInterstitial) {
         print("AdMob interstitial did fail to present")
     }
     
+    // Did fail to receive
     func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
         print(error.localizedDescription)
+        
+        // Do not reload here as it might cause endless preloads when internet problems
     }
 }
 
@@ -368,42 +380,48 @@ extension SwiftyAds: GADInterstitialDelegate {
 
 extension SwiftyAds: GADRewardBasedVideoAdDelegate {
     
+    // Did open
     func rewardBasedVideoAdDidOpen(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
         print("AdMob reward video ad did open")
     }
     
+    // Did close
     func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
         print("AdMob reward video closed, reloading...")
         delegate?.adDidClose()
         rewardedVideoAd = loadRewardedVideoAd()
     }
     
+    // Did receive
     func rewardBasedVideoAdDidReceive(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
         print("AdMob reward video did receive ad")
     }
     
+    // Did start playing
     func rewardBasedVideoAdDidStartPlaying(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
         print("AdMob reward video did start playing")
         delegate?.adDidOpen()
     }
     
+    // Will leave application
     func rewardBasedVideoAdWillLeaveApplication(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
         print("AdMob reward video will leave application")
         delegate?.adDidOpen()
     }
     
+    // Did fail to load
     func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didFailToLoadWithError error: Error) {
         print(error.localizedDescription)
+        
+        // Do not reload here as it might cause endless preloads when internet problems
     }
     
+    // Did reward user
     func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didRewardUserWith reward: GADAdReward) {
         print("AdMob reward video did reward user with \(reward)")
         
-        if reward.amount == 0 {
-            delegate?.adDidRewardUser(withAmount: rewardAmountBackup)
-        } else {
-            delegate?.adDidRewardUser(withAmount: Int(reward.amount))
-        }
+        let rewardAmount = reward.amount == 0 ? rewardAmountBackup : Int(reward.amount)
+        delegate?.adDidRewardUser(withAmount: rewardAmount)
     }
 }
 
@@ -412,7 +430,7 @@ extension SwiftyAds: GADRewardBasedVideoAdDelegate {
 private extension SwiftyAds {
     
     func showAlert(message: String) {
-        guard let rootViewController = presentingViewController?.view?.window?.rootViewController else { return }
+        guard let viewController = presentingViewController else { return }
         
         let alertController = UIAlertController(title: LocalizedText.sorry, message: message, preferredStyle: .alert)
         
@@ -424,7 +442,7 @@ private extension SwiftyAds {
          this alert is presented on the main queue.
          */
         DispatchQueue.main.async {
-            rootViewController.present(alertController, animated: true)
+            viewController.present(alertController, animated: true)
         }
     }
 }
