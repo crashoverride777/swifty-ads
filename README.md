@@ -68,30 +68,31 @@ SwiftyAds.swift
 
 ```swift
 SwiftyAds.shared.setup(
-      viewController: self, 
       bannerID:      "Enter your real id", 
       interID:       "Enter your real id", 
       rewardVideoID: "Enter your real id"
 )
 ```
 
-Note: If your app has multiple view controllers make sure you call 
-
-```swift
-SwiftyAds.shared.presentingViewController = self
-```
-
-in each ViewControllers viewDidLoad method.
-
 # How to use
 
 - To show an Ad simply call these anywhere you like in your project
 ```swift
-SwiftyAds.shared.showBanner() 
-SwiftyAds.shared.showBanner(withDelay: 1) // Delay showing banner slightly eg when transitioning to new scene/view
-SwiftyAds.shared.showInterstitial()
-SwiftyAds.shared.showInterstitial(withInterval: 4) // Shows an ad every 4th time method is called
-SwiftyAds.shared.showRewardedVideo() // Should be called when pressing dedicated button
+
+// View Controller
+SwiftyAds.shared.showBanner(from: self) 
+SwiftyAds.shared.showBanner(withDelay: 1, from: self) // Delay showing banner slightly eg when transitioning to new scene/view
+SwiftyAds.shared.showInterstitial(from: self)
+SwiftyAds.shared.showInterstitial(withInterval: 4, from: self) // Shows an ad every 4th time method is called
+SwiftyAds.shared.showRewardedVideo(from: self) // Should be called when pressing dedicated button
+
+// SpriteKit Scene (Needs to be called outside didMoveToView as window property will be nil otherwise)
+SwiftyAds.shared.showBanner(from: view?.window?.rootViewController) 
+SwiftyAds.shared.showBanner(withDelay: 1, from: view?.window?.rootViewController) // Delay showing banner slightly eg when transitioning to new scene/view
+SwiftyAds.shared.showInterstitial(from: view?.window?.rootViewController)
+SwiftyAds.shared.showInterstitial(withInterval: 4, from: view?.window?.rootViewController) // Shows an ad every 4th time method is called
+SwiftyAds.shared.showRewardedVideo(from: view?.window?.rootViewController) // Should be called when pressing dedicated button
+
 
 if SwiftyAds.shared.isRewardedVideoReady { // Will try to load an ad if it returns false
     // add reward video button
