@@ -175,6 +175,10 @@ Enjoy
 
 # Release Notes
 
+- v7.0.1
+
+Cleanup
+
 - v7.0
 
 Removed AppLovin as they no longer support the tvOS platform
