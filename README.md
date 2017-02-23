@@ -81,12 +81,14 @@ SwiftyAds.shared.setup(
 
 // View Controller
 SwiftyAds.shared.showBanner(from: self) 
+SwiftyAds.shared.showBanner(at: .top, from: self) // Shows banner at the top
 SwiftyAds.shared.showInterstitial(from: self)
 SwiftyAds.shared.showInterstitial(withInterval: 4, from: self) // Shows an ad every 4th time method is called
 SwiftyAds.shared.showRewardedVideo(from: self) // Should be called when pressing dedicated button
 
 // SpriteKit Scene (Needs to be called outside didMoveToView as window property will be nil otherwise)
 SwiftyAds.shared.showBanner(from: view?.window?.rootViewController) 
+SwiftyAds.shared.showBanner(at: .top, from: view?.window?.rootViewController) // Shows banner at the top
 SwiftyAds.shared.showInterstitial(from: view?.window?.rootViewController)
 SwiftyAds.shared.showInterstitial(withInterval: 4, from: view?.window?.rootViewController) // Shows an ad every 4th time method is called
 SwiftyAds.shared.showRewardedVideo(from: view?.window?.rootViewController) // Should be called when pressing dedicated button
@@ -176,6 +178,12 @@ Please feel free to let me know about any bugs or improvements.
 Enjoy
 
 # Release Notes
+
+- v7.0.2
+
+Added ability to show banner ads at the top
+
+Cleanup
 
 - v7.0.1
 
