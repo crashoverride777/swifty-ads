@@ -431,7 +431,7 @@ extension SwiftyAds: GADRewardBasedVideoAdDelegate {
     func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didRewardUserWith reward: GADAdReward) {
         print("AdMob reward video did reward user with \(reward)")
         
-        let rewardAmount = reward.amount == 0 ? rewardAmountBackup : Int(reward.amount)
+        let rewardAmount = Int(reward.amount) <= 0 ? rewardAmountBackup : Int(reward.amount)
         delegate?.adDidRewardUser(withAmount: rewardAmount)
     }
 }
