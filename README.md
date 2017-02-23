@@ -64,7 +64,7 @@ https://cocoapods.org/app
 SwiftyAds.swift
 ```
 
-- Step 4: Setup up the helper in your first view controller. 
+- Step 4: Setup up the helper as soon as your app launches e.g AppDelegate or 1st ViewController.
 
 ```swift
 SwiftyAds.shared.setup(
