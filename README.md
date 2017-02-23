@@ -12,7 +12,7 @@ In the meantime I would create a folder on your Mac, called something like Share
 
 # Rewarded Videos
 
-You should only show rewarded videos with a dedicated button and you should only show that button when a video is loaded (see instructions below). If the user presses the reward video button and watches a video it might take a few seconds for the next video to reload afterwards. Incase the user immediately tries to watch another video this helper will show an alert informing the user that no video is available at the moment. 
+You should only show rewarded videos with a dedicated button and you should only show that button when a video is loaded (see how to use below). If the user presses the reward video button and watches a video it might take a few seconds for the next video to reload afterwards. Incase the user immediately tries to watch another video this helper will show an alert informing the user that no video is available at the moment. 
 
 
 Admob reward videos will only work when using a 3rd party mediation network such as Chartboost or Vungle. 
