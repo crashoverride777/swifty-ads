@@ -113,7 +113,7 @@ If set to true all the methods to show banner and interstitial ads will not fire
 
 This will not stop rewarded videos from showing as they should have a dedicated button. Some reward videos are not skipabble and therefore should never be shown automatically. This way you can remove banner and interstitial ads but still have a rewarded videos button. 
 
-For permanent storage you will need to create your own "removedAdsProduct" property and save it in something like UserDefaults, or preferably iOS Keychain. Than call this method when your app launches after you have set up the helper.
+For permanent storage you will need to create your own "removedAdsProduct" property and save it in something like UserDefaults, or preferably iOS Keychain. Than at app launch check if your saved property is set to true and than updated the helper poperty.
 
 - Implement the delegate methods.
 
@@ -135,7 +135,10 @@ extension GameScene: SwiftyAdsDelegate {
     func adDidRewardUser(withAmount rewardAmount: Int) {
         self.coins += rewardAmount
        // Reward amount is a DecimelNumber I converted to an Int for convenience. 
+     
        // You can ignore this and hardcore the value if you would like but than you cannot change the value dynamically without having to update your app.
+       
+       // You can also ingore the rewardAmount and do something else, for example unlocking a level or bonus item.
        
        // leave empty if unused
     }
@@ -144,7 +147,7 @@ extension GameScene: SwiftyAdsDelegate {
 
 # Supporting both landscape and portrait orientation
 
-- If your app supports both portrait and landscape orientation go to the ViewController and add the following method.
+- If your app supports both portrait and landscape orientation go to your ViewControllers and add the following method.
 
 ```swift
 override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -162,7 +165,7 @@ override func viewWillTransition(to size: CGSize, with coordinator: UIViewContro
 
 # When you submit your app to Apple
 
-When you submit your app to Apple on iTunes connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected.
+When you submit your app to Apple on iTunes connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected. If you use reward videos you should also select the 3rd point.
 
 # Final Info
 
