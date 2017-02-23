@@ -185,6 +185,6 @@ Cleanup
 
 - v7.0
 
-Removed AppLovin as they no longer support the tvOS platform
+Removed AppLovin as they no longer support the tvOS platform. If another reliable ad platform for tvOS comes out I will add it to this helper.
 
 Cleanup
