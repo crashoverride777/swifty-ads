@@ -78,7 +78,6 @@ SwiftyAds.shared.setup(
 
 - To show an Ad simply call these anywhere you like in your project
 ```swift
-
 // View Controller
 SwiftyAds.shared.showBanner(from: self) 
 SwiftyAds.shared.showBanner(at: .top, from: self) // Shows banner at the top
@@ -92,11 +91,20 @@ SwiftyAds.shared.showBanner(at: .top, from: view?.window?.rootViewController) //
 SwiftyAds.shared.showInterstitial(from: view?.window?.rootViewController)
 SwiftyAds.shared.showInterstitial(withInterval: 4, from: view?.window?.rootViewController) // Shows an ad every 4th time method is called
 SwiftyAds.shared.showRewardedVideo(from: view?.window?.rootViewController) // Should be called when pressing dedicated button
+```
 
+- To check if ads are ready
 
-if SwiftyAds.shared.isRewardedVideoReady { // Will try to load an ad if it returns false
-    // add reward video button
+```swift
+if SwiftyAds.shared.isRewardedVideoReady {
+    // add/show reward video button
 }
+
+if SwiftyAds.shared.isInterstitialReady {
+    // maybe show custom ad or something similar
+}
+
+Note: When these return false the helper will try to load preload an ad again.
 ```
 
 - To remove Banner Ads, for example during gameplay 
