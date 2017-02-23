@@ -44,6 +44,12 @@ public protocol SwiftyAdsDelegate: class {
     func adDidRewardUser(withAmount rewardAmount: Int)
 }
 
+/// SwiftyAdsBannerPosition
+enum SwiftyAdsBannerPosition {
+    case bottom
+    case top
+}
+
 /**
  SwiftyAds
  
@@ -109,7 +115,10 @@ final class SwiftyAds: NSObject {
     /// Interval counter
     private var intervalCounter = 0
     
-    /// Bnner size
+    /// Banner position
+    fileprivate var bannerPosition = SwiftyAdsBannerPosition.bottom
+    
+    /// Banner size
     fileprivate var bannerSize: GADAdSize {
         let isLandscape = UIApplication.shared.statusBarOrientation.isLandscape
         return isLandscape ? kGADAdSizeSmartBannerLandscape : kGADAdSizeSmartBannerPortrait
@@ -144,9 +153,11 @@ final class SwiftyAds: NSObject {
     
     /// Show banner ad
     ///
+    /// - parameter position: The position of the banner. Defaults to bottom.
     /// - parameter viewController: The view controller that will present the ad.
-    func showBanner(from viewController: UIViewController?) {
+    func showBanner(at position: SwiftyAdsBannerPosition = .bottom, from viewController: UIViewController?) {
         guard !isRemoved, let viewController = viewController else { return }
+        bannerPosition = position
         loadBannerAd(from: viewController)
     }
     
@@ -154,7 +165,7 @@ final class SwiftyAds: NSObject {
     
     /// Show interstitial ad randomly
     ///
-    /// - parameter interval: The interval of when to show the ad, e.g every 4th time. Defaults to nil.
+    /// - parameter interval: The interval of when to show the ad, e.g every 4th time this method is called. Defaults to nil.
     /// - parameter viewController: The view controller that will present the ad.
     func showInterstitial(withInterval interval: Int? = nil, from viewController: UIViewController?) {
         guard !isRemoved, isInterstitialReady else { return }
@@ -213,7 +224,7 @@ final class SwiftyAds: NSObject {
 private extension SwiftyAds {
     
     /// Load banner ad
-    @objc func loadBannerAd(from viewController: UIViewController) {
+    func loadBannerAd(from viewController: UIViewController) {
         print("AdMob banner ad loading...")
     
         bannerAd?.removeFromSuperview()
@@ -221,7 +232,13 @@ private extension SwiftyAds {
         bannerAd?.adUnitID = bannerAdUnitID
         bannerAd?.delegate = self
         bannerAd?.rootViewController = viewController
-        bannerAd?.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.maxY + (bannerAd!.frame.height / 2))
+        
+        switch bannerPosition {
+        case .bottom:
+            bannerAd?.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.maxY + (bannerAd!.frame.height / 2))
+        case .top:
+            bannerAd?.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.minY - (bannerAd!.frame.height / 2))
+        }
         viewController.view.addSubview(bannerAd!)
         
         let request = GADRequest()
@@ -271,7 +288,13 @@ extension SwiftyAds: GADBannerViewDelegate {
         
         bannerView.isHidden = false
         UIView.animate(withDuration: 1.5) {
-            bannerView.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.maxY - (bannerView.frame.height / 2))
+            
+            switch self.bannerPosition {
+            case .bottom:
+                bannerView.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.maxY - (bannerView.frame.height / 2))
+            case .top:
+                bannerView.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.minY + (bannerView.frame.height / 2))
+            }
         }
     }
     
@@ -304,7 +327,12 @@ extension SwiftyAds: GADBannerViewDelegate {
         
         UIView.animate(withDuration: 1.5 , animations: {
             if let viewController = bannerView.rootViewController {
-                bannerView.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.maxY + (bannerView.frame.height / 2))
+                switch self.bannerPosition {
+                case .bottom:
+                    bannerView.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.maxY + (bannerView.frame.height / 2))
+                case .top:
+                    bannerView.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.minY - (bannerView.frame.height / 2))
+                }
             }
             
         }, completion: { finish in
