@@ -104,7 +104,7 @@ if SwiftyAds.shared.isInterstitialReady {
     // maybe show custom ad or something similar
 }
 
-Note: When these return false the helper will try to load preload an ad again.
+// When these return false the helper will try to load preload an ad again.
 ```
 
 - To remove Banner Ads, for example during gameplay 
