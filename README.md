@@ -68,9 +68,9 @@ SwiftyAds.swift
 
 ```swift
 SwiftyAds.shared.setup(
-      bannerID:      "Enter your real id", 
-      interID:       "Enter your real id", 
-      rewardVideoID: "Enter your real id"
+      bannerID:       "Enter your real id or leave empty if unused", 
+      interstitialID: "Enter your real id or leave empty if unused", 
+      rewardVideoID:  "Enter your real id or leave empty if unused"
 )
 ```
 
