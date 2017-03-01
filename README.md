@@ -4,6 +4,8 @@ A Swift helper to integrate Ads from AdMob so you can easily show Banner Ads, In
 
 This helper follows all the best practices in regards to ads, like creating shared banners and correctly preloading interstitial and rewarded videos so they are always ready to show.
 
+NOTE: I am having troubles recently with showing live banner ads. I also use this helper in all my projects on the App store and for some reason banner ads stopped showing. I am almost certain that this is not a mistake on my behalf but I am not exactly sure whats going on. They still work fine test mode.
+
 # Cocoa Pods
 
 I know that the current way of copying the .swift file(s) into your project sucks and is bad practice, so I am working hard to finally support CocoaPods very soon. The only problem I have with this repository is the requirement of 3rd party SDKs, so it will not be as easy to do compared to my other repositories.
