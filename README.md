@@ -189,6 +189,10 @@ Enjoy
 
 # Release Notes
 
+- v7.0.3
+
+Orientation fix for banner ads
+
 - v7.0.2
 
 Added ability to show banner ads at the top
