@@ -211,10 +211,10 @@ final class SwiftyAds: NSObject {
     // MARK: - Update For Orientation
     
     /// Orientation changed
-    func updateForOrientation(from viewController: UIViewController) {
-        guard let bannerAd = bannerAd else { return }
-        bannerAd.adSize = bannerSize
-        bannerAd.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.maxY - (bannerAd.frame.height / 2))
+    func updateForOrientation() {
+        print("AdMob banner orientation updated")
+        bannerAd?.adSize = bannerSize
+        setBannerToOnScreenPosition(bannerAd, from: bannerAd?.rootViewController)
     }
 }
 
@@ -231,13 +231,9 @@ private extension SwiftyAds {
         bannerAd?.adUnitID = bannerAdUnitID
         bannerAd?.delegate = self
         bannerAd?.rootViewController = viewController
+        bannerAd?.isHidden = true
+        setBannerToOffScreenPosition(bannerAd, from: viewController)
         
-        switch bannerPosition {
-        case .bottom:
-            bannerAd?.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.maxY + (bannerAd!.frame.height / 2))
-        case .top:
-            bannerAd?.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.minY - (bannerAd!.frame.height / 2))
-        }
         viewController.view.addSubview(bannerAd!)
         
         let request = GADRequest()
@@ -283,17 +279,10 @@ extension SwiftyAds: GADBannerViewDelegate {
     // Did receive
     func adViewDidReceiveAd(_ bannerView: GADBannerView) {
         print("AdMob banner did receive ad from: \(bannerView.adNetworkClassName)")
-        guard let viewController = bannerView.rootViewController else { return }
-        
+    
         bannerView.isHidden = false
-        UIView.animate(withDuration: 1.5) {
-            
-            switch self.bannerPosition {
-            case .bottom:
-                bannerView.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.maxY - (bannerView.frame.height / 2))
-            case .top:
-                bannerView.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.minY + (bannerView.frame.height / 2))
-            }
+        UIView.animate(withDuration: 1.5) { [weak self] in
+            self?.setBannerToOnScreenPosition(bannerView, from: bannerView.rootViewController)
         }
     }
     
@@ -324,16 +313,8 @@ extension SwiftyAds: GADBannerViewDelegate {
     func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
         print(error.localizedDescription)
         
-        UIView.animate(withDuration: 1.5 , animations: {
-            if let viewController = bannerView.rootViewController {
-                switch self.bannerPosition {
-                case .bottom:
-                    bannerView.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.maxY + (bannerView.frame.height / 2))
-                case .top:
-                    bannerView.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.minY - (bannerView.frame.height / 2))
-                }
-            }
-            
+        UIView.animate(withDuration: 1.5 , animations: { [weak self] in
+            self?.setBannerToOffScreenPosition(bannerView, from: bannerView.rootViewController)
         }, completion: { finish in
             bannerView.isHidden = true
         })
@@ -432,6 +413,33 @@ extension SwiftyAds: GADRewardBasedVideoAdDelegate {
         
         let rewardAmount = Int(reward.amount) <= 0 ? rewardAmountBackup : Int(reward.amount)
         delegate?.adDidRewardUser(withAmount: rewardAmount)
+    }
+}
+
+// MARK: - Banner Positions
+
+private extension SwiftyAds {
+    
+    func setBannerToOnScreenPosition(_ bannerAd: GADBannerView?, from viewController: UIViewController?) {
+        guard let bannerAd = bannerAd, let viewController = viewController else { return }
+        
+        switch self.bannerPosition {
+        case .bottom:
+            bannerAd.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.maxY - (bannerAd.frame.height / 2))
+        case .top:
+            bannerAd.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.minY + (bannerAd.frame.height / 2))
+        }
+    }
+    
+    func setBannerToOffScreenPosition(_ bannerAd: GADBannerView?, from viewController: UIViewController?) {
+        guard let bannerAd = bannerAd, let viewController = viewController else { return }
+        
+        switch self.bannerPosition {
+        case .bottom:
+            bannerAd.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.maxY + (bannerAd.frame.height / 2))
+        case .top:
+            bannerAd.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.minY - (bannerAd.frame.height / 2))
+        }
     }
 }
 

@@ -43,18 +43,8 @@ class GameViewController: UIViewController {
         super.viewWillTransition(to: size, with: coordinator)
         
         coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
-            
-            SwiftyAds.shared.updateForOrientation(from: self)
-            
-//            let orientation = UIApplication.sharedApplication().statusBarOrientation
-//            switch orientation {
-//            case .Portrait:
-//                print("Portrait")
-//                // Do something
-//            default:
-//                print("Anything But Portrait")
-//                // Do something else
-//            }
+
+            SwiftyAds.shared.updateForOrientation()
             
             }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
                 print("Device rotation completed")

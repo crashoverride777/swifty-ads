@@ -27,28 +27,31 @@ extension GameScene: SwiftyAdsDelegate {
 
 class GameScene: SKScene {
     
+    // MARK: - Properties
+    
     lazy var label: SKLabelNode? = self.childNode(withName: "textLabel") as? SKLabelNode
     
     var touchCounter = 15 {
         didSet {
-            if touchCounter >= 0 {
-                label?.text = "Remove ads in \(touchCounter) clicks"
-            }
-            if touchCounter == 0 {
+            guard touchCounter > 0 else {
                 SwiftyAds.shared.isRemoved = true
+                label?.text = "Removed all ads"
+                return
             }
+            
+            label?.text = "Remove ads in \(touchCounter) clicks"
         }
     }
     
+    // MARK: - Life Cycle
+    
     override func didMove(to view: SKView) {
         label?.text = "Remove ads in \(touchCounter) clicks"
-    
         SwiftyAds.shared.delegate = self
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         SwiftyAds.shared.showInterstitial(withInterval: 2, from: view?.window?.rootViewController)
-        
         touchCounter -= 1
     }
 }
