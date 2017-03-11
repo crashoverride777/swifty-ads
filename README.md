@@ -87,7 +87,8 @@ SwiftyAds.shared.showInterstitial(from: self)
 SwiftyAds.shared.showInterstitial(withInterval: 4, from: self) // Shows an ad every 4th time method is called
 SwiftyAds.shared.showRewardedVideo(from: self) // Should be called when pressing dedicated button
 
-// SpriteKit Scene (Might need to be called outside didMoveToView or .window property might be nil)
+// SpriteKit Scene
+// do not call this in didMoveToView as .window property is still nil at that point. Use a delay or call it later)
 SwiftyAds.shared.showBanner(from: view?.window?.rootViewController) 
 SwiftyAds.shared.showBanner(at: .top, from: view?.window?.rootViewController) // Shows banner at the top
 SwiftyAds.shared.showInterstitial(from: view?.window?.rootViewController)
