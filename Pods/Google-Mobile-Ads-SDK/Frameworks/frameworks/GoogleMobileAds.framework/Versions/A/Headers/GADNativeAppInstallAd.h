@@ -48,6 +48,14 @@ GAD_ASSUME_NONNULL_BEGIN
 /// Video controller for controlling video playback in GADNativeAppInstallAdView's mediaView.
 @property(nonatomic, strong, readonly) GADVideoController *videoController;
 
+/// Registers ad view and asset views created from this native ad.
+/// @param assetViews Dictionary of asset views keyed by asset IDs.
+- (void)registerAdView:(UIView *)adView assetViews:(NSDictionary<NSString *, UIView *> *)assetViews;
+
+/// Unregisters ad view from this native ad. The corresponding asset views will also be
+/// unregistered.
+- (void)unregisterAdView;
+
 @end
 
 #pragma mark - Protocol and constants

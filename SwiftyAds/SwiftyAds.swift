@@ -32,13 +32,10 @@ private enum LocalizedText {
 
 /// SwiftyAdsDelegate
 public protocol SwiftyAdsDelegate: class {
-    
     /// Ad did open
     func adDidOpen()
-    
     /// Ad did close
     func adDidClose()
-    
     /// Ad did reward user
     func adDidRewardUser(withAmount rewardAmount: Int)
 }
@@ -98,9 +95,6 @@ final class SwiftyAds: NSObject {
         return true
     }
     
-    /// Reward amount backup. If there is a problem fetching the amount from server or its 0 this will be used.
-    var rewardAmountBackup = 1
-    
     /// Ads
     fileprivate var bannerAd: GADBannerView?
     fileprivate var interstitialAd: GADInterstitial?
@@ -109,10 +103,13 @@ final class SwiftyAds: NSObject {
     /// Test Ad Unit IDs. Will get set to real ID in setup method
     fileprivate var bannerAdUnitID = "ca-app-pub-3940256099942544/2934735716"
     fileprivate var interstitialAdUnitID = "ca-app-pub-3940256099942544/4411468910"
-    fileprivate var rewardedVideoAdUnitID = "ca-app-pub-1234567890123456/1234567890"
+    fileprivate var rewardedVideoAdUnitID = "ca-app-pub-1234567890123456/1234567890" // todo -> doesnt seem to work anymore 
     
     /// Interval counter
     private var intervalCounter = 0
+    
+    /// Reward amount backup
+    fileprivate var rewardAmountBackup = 1
     
     /// Banner position
     fileprivate var bannerPosition = SwiftyAdsBannerPosition.bottom
@@ -137,7 +134,10 @@ final class SwiftyAds: NSObject {
     /// - parameter bannerID: The banner adUnitID for this app.
     /// - parameter interstitialID: The interstitial adUnitID for this app.
     /// - parameter rewardedVideoID: The rewarded video adUnitID for this app.
-    func setup(bannerID: String, interstitialID: String, rewardedVideoID: String) {
+    /// - parameter rewardAmountBackup: The rewarded amount backup incase the amount could not be fetched from the network or is 0. Defaults to 1.
+    func setup(bannerID: String, interstitialID: String, rewardedVideoID: String, rewardAmountBackup: Int = 1) {
+        self.rewardAmountBackup = rewardAmountBackup
+        
         #if !DEBUG
             bannerAdUnitID = bannerID
             interstitialAdUnitID = interstitialID
@@ -278,7 +278,7 @@ extension SwiftyAds: GADBannerViewDelegate {
     
     // Did receive
     func adViewDidReceiveAd(_ bannerView: GADBannerView) {
-        print("AdMob banner did receive ad from: \(bannerView.adNetworkClassName)")
+        print("AdMob banner did receive ad from: \(bannerView.adNetworkClassName ?? "")")
     
         bannerView.isHidden = false
         UIView.animate(withDuration: 1.5) { [weak self] in
@@ -327,7 +327,7 @@ extension SwiftyAds: GADInterstitialDelegate {
     
     // Did receive
     func interstitialDidReceiveAd(_ ad: GADInterstitial) {
-        print("AdMob interstitial did receive ad from: \(ad.adNetworkClassName)")
+        print("AdMob interstitial did receive ad from: \(ad.adNetworkClassName ?? "")")
     }
     
     // Will present
