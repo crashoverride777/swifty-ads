@@ -188,6 +188,10 @@ Enjoy
 
 # Release Notes
 
+- v7.0.4
+
+Updated to Swift 3.1
+
 - v7.0.3
 
 Orientation fix for banner ads
