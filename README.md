@@ -34,8 +34,9 @@ NOTE: AdMob reward videos will either show a black full screen ad when using the
 
 # "DEBUG" custom flag
 
-AdMob uses 2 types of AdUnit IDs, 1 for testing and 1 for release. You should not test live ads when you are testing your app.
-This helper will automatically change the AdUnitID from test to release mode and vice versa. 
+AdMob uses 2 types of AdUnit IDs, 1 for testing and 1 for release. This helper will automatically change the AdUnitID from test to release mode and vice versa. 
+
+You should not show real ads when you are testing your app. In the past Google has been quite strict and has closed down AdMob/AdSense accounts because ads were clicked on apps that were not live. Keep this in mind when you for example test your app via TestFlight because your app will be in release mode when you send a TestFlight build which means it will show real ads.
 
 With the latest xCode it is no longer necessary to setup the DEBUG flag manually.
 
