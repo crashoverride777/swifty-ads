@@ -75,7 +75,7 @@ SwiftyAds.shared.setup(
 
 # How to use
 
-- To show an Ad simply call these anywhere you like in your project
+- To show an Ad simply call these methods anywhere you like in your project
 ```swift
 // View Controller
 SwiftyAds.shared.showBanner(from: self) 
