@@ -4,12 +4,6 @@ A Swift helper to integrate Ads from AdMob so you can easily show Banner Ads, In
 
 This helper follows all the best practices in regards to ads, like creating shared banners and correctly preloading interstitial and rewarded videos so they are always ready to show.
 
-# Cocoa Pods
-
-I know that the current way of copying the .swift file(s) into your project sucks and is bad practice, so I am working hard to finally support CocoaPods very soon. The only problem I have with this repository is the requirement of 3rd party SDKs, so it will not be as easy to do compared to my other repositories.
-
-In the meantime I would create a folder on your Mac, called something like SharedFiles, and drag the swift file(s) into this folder. Than drag the files from this folder into your project, making sure that "copy if needed" is not selected. This way its easier to update the files and to share them between projects.
-
 # Rewarded Videos
 
 You should only show rewarded videos with a dedicated button and you should only show that button when a video is loaded (see how to use below). If the user presses the reward video button and watches a video it might take a few seconds for the next video to reload afterwards. Incase the user immediately tries to watch another video this helper will show an alert informing the user that no video is available at the moment. 
@@ -59,11 +53,15 @@ I would recommend using Cocoa Pods especially if you will add more SDKs down the
 They have an app now which should makes managing pods alot easier.
 https://cocoapods.org/app
 
-- Step 3: Copy the following files into your project (see CocoaPods above for reference trick on multiple projects)
+- Step 3: Copy the following file into your project.
 
 ```swift
 SwiftyAds.swift
 ```
+
+Tip:
+
+If you have multiple apps and do not want to copy the file into each project I would create a folder on your Mac, called something like SharedFiles. Than drag the SwiftyAds.swift file into this folder. Than drag the SwiftyAds.swift file from this folder into your project, making sure that "copy if needed" is not selected. This way its easier to update the files and to share them between projects. Just make sure you do not move or rename this shared folder otherwise you will have to relink the file again.
 
 - Step 4: Setup up the helper as soon as your app launches e.g AppDelegate or 1st ViewController.
 
