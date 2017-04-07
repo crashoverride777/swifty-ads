@@ -6,9 +6,6 @@ This helper follows all the best practices in regards to ads, like creating shar
 
 # Rewarded Videos
 
-You should only show rewarded videos with a dedicated button and you should only show that button when a video is loaded (see how to use below). If the user presses the reward video button and watches a video it might take a few seconds for the next video to reload afterwards. Incase the user immediately tries to watch another video this helper will show an alert informing the user that no video is available at the moment. 
-
-
 Admob reward videos will only work when using a 3rd party mediation network such as Chartboost or Vungle. 
 Read the AdMob mediation guidlines 
 
@@ -93,15 +90,17 @@ SwiftyAds.shared.showInterstitial(withInterval: 4, from: view?.window?.rootViewC
 SwiftyAds.shared.showRewardedVideo(from: view?.window?.rootViewController) // Should be called when pressing dedicated button
 ```
 
+Note:
+
+You should only show rewarded videos with a dedicated button and you should only show that button when a video is loaded (see below). If the user presses the reward video button and watches a video it might take a few seconds for the next video to reload afterwards. Incase the user immediately tries to watch another video this helper will show an alert informing the user that no video is available at the moment. 
+
 Tip:
 
-From my personal experience and from a user perspective you should not spam full screen interstitial ads all the time. This will also increase your revenue because user retention rate is higher so you should not be greedy. 
-
-Therefore you should
+From my personal experience and from a user perspective you should not spam full screen interstitial ads all the time. This will also increase your revenue because user retention rate is higher so you should not be greedy. Therefore you should
 
 1) Not show an interstitial ad everytime a button is pressed 
 2) Not show an interstitial ad everytime you die in a game
-3) Use the "withInterval" property in the show method and set it to a minimum of 5/6 depending on the frequence the method is called. There might be special cirumstances where you could set it lower e.g in a game where it takes a while to die but usually 5/6 mimimum is what I use. You could also randomise the interval e.g random number between 5-8.
+3) Use the "withInterval" property in the show method and set it to a minimum of 5/6 depending on the frequence the method is called. There might be special cirumstances where you could set it lower e.g in a game where it takes a while to die but usually 5/6 mimimum is what I think is best. You could also randomise the interval e.g random number between 5-8.
 
 - To check if ads are ready
 
