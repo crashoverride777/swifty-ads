@@ -93,6 +93,16 @@ SwiftyAds.shared.showInterstitial(withInterval: 4, from: view?.window?.rootViewC
 SwiftyAds.shared.showRewardedVideo(from: view?.window?.rootViewController) // Should be called when pressing dedicated button
 ```
 
+Tip:
+
+From my personal experience and from a user perspective you should not spam full screen interstitial ads all the time. This will also increase your revenue because user retention rate is higher so you should not be greedy. Once I reduced ad frequence in my projects I actually started to make more money. 
+
+Therefore do not show an interstitial ad 
+
+1) Everytime a button is pressed 
+2) Everytime you die in a game
+3) Use the "withInterval" property in the show method and set it to a minimum of 5/6 depending on the frequence the method is called. There might be special cirumstances where you could set it lower e.g in a game where it takes a while to die but usually 5/6 mimimum is what I use. You could also randomise the interval e.g random number between 5-8.
+
 - To check if ads are ready
 
 ```swift
