@@ -63,7 +63,9 @@ Tip:
 
 If you have multiple apps and do not want to copy the file into each project I would create a folder on your Mac, called something like SharedFiles. Than drag the SwiftyAds.swift file into this folder. Than drag the SwiftyAds.swift file from this folder into your project, making sure that "copy if needed" is not selected. This way its easier to update the files and to share them between projects. Just make sure you do not move or rename this shared folder otherwise you will have to relink the file again.
 
-- Step 4: Setup up the helper as soon as your app launches e.g AppDelegate or 1st ViewController.
+# How to use
+
+- Setup up the helper with your AdUnitIDs as soon as your app launches e.g AppDelegate or 1st ViewController.
 
 ```swift
 SwiftyAds.shared.setup(
@@ -73,9 +75,7 @@ SwiftyAds.shared.setup(
 )
 ```
 
-# How to use
-
-- To show an Ad simply call these methods anywhere you like in your project
+- To show an Ad call these methods anywhere you like in your project
 ```swift
 // View Controller
 SwiftyAds.shared.showBanner(from: self) 
@@ -85,7 +85,7 @@ SwiftyAds.shared.showInterstitial(withInterval: 4, from: self) // Shows an ad ev
 SwiftyAds.shared.showRewardedVideo(from: self) // Should be called when pressing dedicated button
 
 // SpriteKit Scene
-// do not call this in didMoveToView as .window property is still nil at that point. Use a delay or call it later)
+// Do not call this in didMoveToView as .window property is still nil at that point. Use a delay or call it later)
 SwiftyAds.shared.showBanner(from: view?.window?.rootViewController) 
 SwiftyAds.shared.showBanner(at: .top, from: view?.window?.rootViewController) // Shows banner at the top
 SwiftyAds.shared.showInterstitial(from: view?.window?.rootViewController)
@@ -95,12 +95,12 @@ SwiftyAds.shared.showRewardedVideo(from: view?.window?.rootViewController) // Sh
 
 Tip:
 
-From my personal experience and from a user perspective you should not spam full screen interstitial ads all the time. This will also increase your revenue because user retention rate is higher so you should not be greedy. Once I reduced ad frequence in my projects I actually started to make more money. 
+From my personal experience and from a user perspective you should not spam full screen interstitial ads all the time. This will also increase your revenue because user retention rate is higher so you should not be greedy. 
 
-Therefore do not show an interstitial ad 
+Therefore you should
 
-1) Everytime a button is pressed 
-2) Everytime you die in a game
+1) Not show an interstitial ad everytime a button is pressed 
+2) Not show an interstitial ad everytime you die in a game
 3) Use the "withInterval" property in the show method and set it to a minimum of 5/6 depending on the frequence the method is called. There might be special cirumstances where you could set it lower e.g in a game where it takes a while to die but usually 5/6 mimimum is what I use. You could also randomise the interval e.g random number between 5-8.
 
 - To check if ads are ready
