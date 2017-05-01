@@ -22,14 +22,6 @@
 
 import GoogleMobileAds
 
-/// Localized text (todo)
-private enum LocalizedText {
-    static let ok = "OK"
-    static let sorry = "Sorry"
-    static let noVideo = "No video available to watch at the moment."
-}
-
-
 /// SwiftyAdsDelegate
 public protocol SwiftyAdsDelegate: class {
     /// Ad did open
@@ -40,18 +32,18 @@ public protocol SwiftyAdsDelegate: class {
     func adDidRewardUser(withAmount rewardAmount: Int)
 }
 
-/// SwiftyAdsBannerPosition
-enum SwiftyAdsBannerPosition {
-    case bottom
-    case top
-}
-
 /**
  SwiftyAds
  
- Singleton class to manage adverts from AdMob.
+ A helper class to manage adverts from AdMob.
  */
 final class SwiftyAds: NSObject {
+    
+    /// Banner position
+    enum BannerPosition {
+        case bottom
+        case top
+    }
     
     // MARK: - Static Properties
     
@@ -112,7 +104,7 @@ final class SwiftyAds: NSObject {
     fileprivate var rewardAmountBackup = 1
     
     /// Banner position
-    fileprivate var bannerPosition = SwiftyAdsBannerPosition.bottom
+    fileprivate var bannerPosition = BannerPosition.bottom
     
     /// Banner size
     fileprivate var bannerSize: GADAdSize {
@@ -134,7 +126,7 @@ final class SwiftyAds: NSObject {
     /// - parameter bannerID: The banner adUnitID for this app.
     /// - parameter interstitialID: The interstitial adUnitID for this app.
     /// - parameter rewardedVideoID: The rewarded video adUnitID for this app.
-    /// - parameter rewardAmountBackup: The rewarded amount backup incase the amount could not be fetched from the network or is 0. Defaults to 1.
+    /// - parameter rewardAmountBackup: The rewarded amount backup used incase the server amount cannot be fetched or is 0. Defaults to 1.
     func setup(bannerID: String, interstitialID: String, rewardedVideoID: String, rewardAmountBackup: Int = 1) {
         self.rewardAmountBackup = rewardAmountBackup
         
@@ -154,8 +146,8 @@ final class SwiftyAds: NSObject {
     ///
     /// - parameter position: The position of the banner. Defaults to bottom.
     /// - parameter viewController: The view controller that will present the ad.
-    func showBanner(at position: SwiftyAdsBannerPosition = .bottom, from viewController: UIViewController?) {
-        guard !isRemoved, let viewController = viewController else { return }
+    func showBanner(at position: BannerPosition = .bottom, from viewController: UIViewController) {
+        guard !isRemoved else { return }
         bannerPosition = position
         loadBannerAd(from: viewController)
     }
@@ -166,7 +158,7 @@ final class SwiftyAds: NSObject {
     ///
     /// - parameter interval: The interval of when to show the ad, e.g every 4th time this method is called. Defaults to nil.
     /// - parameter viewController: The view controller that will present the ad.
-    func showInterstitial(withInterval interval: Int? = nil, from viewController: UIViewController?) {
+    func showInterstitial(withInterval interval: Int? = nil, from viewController: UIViewController) {
         guard !isRemoved, isInterstitialReady else { return }
         
         if let interval = interval {
@@ -174,8 +166,7 @@ final class SwiftyAds: NSObject {
             guard intervalCounter >= interval else { return }
             intervalCounter = 0
         }
-        
-        guard let viewController = viewController else { return }
+    
         print("AdMob interstitial is showing")
         interstitialAd?.present(fromRootViewController: viewController)
     }
@@ -186,13 +177,12 @@ final class SwiftyAds: NSObject {
     /// Do not show automatically, use a dedicated reward video button.
     ///
     /// - parameter viewController: The view controller that will present the ad.
-    func showRewardedVideo(from viewController: UIViewController?) {
+    func showRewardedVideo(from viewController: UIViewController) {
         guard isRewardedVideoReady else {
-            showAlert(message: LocalizedText.noVideo, from: viewController)
+            showNoVideoAvailableAlert(from: viewController)
             return
         }
-        
-        guard let viewController = viewController else { return }
+
         print("AdMob reward video is showing")
         rewardedVideoAd?.present(fromRootViewController: viewController)
     }
@@ -447,12 +437,10 @@ private extension SwiftyAds {
 
 private extension SwiftyAds {
     
-    func showAlert(message: String, from viewController: UIViewController?) {
-        guard let viewController = viewController else { return }
+    func showNoVideoAvailableAlert(from viewController: UIViewController) {
+        let alertController = UIAlertController(title: "Sorry", message: "No video available to watch at the moment.", preferredStyle: .alert)
         
-        let alertController = UIAlertController(title: LocalizedText.sorry, message: message, preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: LocalizedText.ok, style: .cancel)
+        let okAction = UIAlertAction(title: "OK", style: .cancel)
         alertController.addAction(okAction)
         
         /*
