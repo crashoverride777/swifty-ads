@@ -73,17 +73,18 @@ SwiftyAds.shared.setup(
 ```
 
 - To show an Ad call these methods anywhere you like in your project
+
+View Controller
 ```swift
-// View Controller
 SwiftyAds.shared.showBanner(from: self) 
 SwiftyAds.shared.showBanner(at: .top, from: self) // Shows banner at the top
 SwiftyAds.shared.showInterstitial(from: self)
 SwiftyAds.shared.showInterstitial(withInterval: 4, from: self) // Shows an ad every 4th time method is called
 SwiftyAds.shared.showRewardedVideo(from: self) // Should be called when pressing dedicated button
-
-// SpriteKit Scene
-// Do not call this in didMoveToView as .window property is still nil at that point. Use a delay or call it later)
-
+```
+SpriteKit Scene
+(Do not call this in didMoveToView as .window property is still nil at that point. Use a delay or call it later)
+```swift
 if let viewController = view?.window?.rootViewController {
      SwiftyAds.shared.showBanner(from: viewController) 
      SwiftyAds.shared.showBanner(at: .top, from: viewController) // Shows banner at the top
@@ -165,6 +166,25 @@ extension GameScene: SwiftyAdsDelegate {
        // leave empty if unused
     }
 }
+```
+
+Note:
+
+This helper will pass a default value to the below method
+
+```swift
+func adDidRewardUser(withAmount rewardAmount: Int) {
+```
+
+incase there is a problem fetching the value from the ad network or you set it to 0 or lower by accident. The default value is 1. Incase you need to change this e.g to 20, you can change this in the setup method.
+
+```swift
+SwiftyAds.shared.setup(
+      bannerID:        ..., 
+      interstitialID:  ..., 
+      rewardedVideoID: ...,
+      rewardAmountBackup: 20
+)
 ```
 
 # Supporting both landscape and portrait orientation
