@@ -74,7 +74,7 @@ SwiftyAds.shared.setup(
 
 - To show an Ad call these methods anywhere you like in your project
 
-View Controller
+UIViewController
 ```swift
 SwiftyAds.shared.showBanner(from: self) 
 SwiftyAds.shared.showBanner(at: .top, from: self) // Shows banner at the top
@@ -82,7 +82,7 @@ SwiftyAds.shared.showInterstitial(from: self)
 SwiftyAds.shared.showInterstitial(withInterval: 4, from: self) // Shows an ad every 4th time method is called
 SwiftyAds.shared.showRewardedVideo(from: self) // Should be called when pressing dedicated button
 ```
-SpriteKit Scene
+SKScene
 (Do not call this in didMoveToView as .window property is still nil at that point. Use a delay or call it later)
 ```swift
 if let viewController = view?.window?.rootViewController {
@@ -94,7 +94,7 @@ if let viewController = view?.window?.rootViewController {
 }
 ```
 
-Reward Videos:
+Note:
 
 You should only show rewarded videos with a dedicated button and you should only show that button when a video is loaded (see below). If the user presses the reward video button and watches a video it might take a few seconds for the next video to reload afterwards. Incase the user immediately tries to watch another video this helper will show an alert informing the user that no video is available at the moment. 
 
