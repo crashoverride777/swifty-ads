@@ -219,32 +219,14 @@ Enjoy
 
 # Release Notes
 
-- v7.0.5
+- v8.0
 
-Cleanup
+Project has been renamed to SwiftyAd
 
-- v7.0.4
+Updated show methods
 
-Updated to Swift 3.1
+Update delegate methods
 
-- v7.0.3
+Project cleanup
 
-Orientation fix for banner ads
-
-- v7.0.2
-
-Added ability to show banner ads at the top
-
-Cleanup
-
-- v7.0.1
-
-UIViewController dependency injection 
-
-Cleanup
-
-- v7.0
-
-Removed AppLovin as they no longer support the tvOS platform. If another reliable ad platform for tvOS comes out I will add it to this helper.
-
-Cleanup
+Please check the documentation again
