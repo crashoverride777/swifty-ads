@@ -225,7 +225,7 @@ Project has been renamed to SwiftyAd
 
 Updated show methods
 
-Update delegate methods
+Updated delegate methods
 
 Project cleanup
 
