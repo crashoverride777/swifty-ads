@@ -148,7 +148,7 @@ SwiftyAd.shared.delegate = self
 
 Than create an extension conforming to the AdsDelegate protocol.
 ```swift
-extension GameScene: SwiftyAdsDelegate {
+extension GameScene: SwiftyAdDelegate {
     func swiftyAdDidOpen(_ swiftyAd: SwiftyAd) {
         // pause your game/app if needed
     }
