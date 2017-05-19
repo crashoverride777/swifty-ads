@@ -66,9 +66,9 @@ If you have multiple apps and do not want to copy the file into each project I w
 
 ```swift
 SwiftyAds.shared.setup(
-      bannerID:       "Enter your real id or leave empty if unused", 
-      interstitialID: "Enter your real id or leave empty if unused", 
-      rewardedVideoID:  "Enter your real id or leave empty if unused"
+      withBannerID:    "Enter your real id or leave empty if unused", 
+      interstitialID:  "Enter your real id or leave empty if unused", 
+      rewardedVideoID: "Enter your real id or leave empty if unused"
 )
 ```
 
@@ -76,21 +76,21 @@ SwiftyAds.shared.setup(
 
 UIViewController
 ```swift
-SwiftyAds.shared.showBanner(from: self) 
-SwiftyAds.shared.showBanner(at: .top, from: self) // Shows banner at the top
-SwiftyAds.shared.showInterstitial(from: self)
-SwiftyAds.shared.showInterstitial(withInterval: 4, from: self) // Shows an ad every 4th time method is called
-SwiftyAds.shared.showRewardedVideo(from: self) // Should be called when pressing dedicated button
+SwiftyAd.shared.showBanner(from: self) 
+SwiftyAd.shared.showBanner(from: self, at: .top) // Shows banner at the top
+SwiftyAd.shared.showInterstitial(from: self)
+SwiftyAd.shared.showInterstitial(from: self, withInterval: 4) // Shows an ad every 4th time method is called
+SwiftyAd.shared.showRewardedVideo(from: self) // Should be called when pressing dedicated button
 ```
 SKScene
 (Do not call this in didMoveToView as .window property is still nil at that point. Use a delay or call it later)
 ```swift
 if let viewController = view?.window?.rootViewController {
-     SwiftyAds.shared.showBanner(from: viewController) 
-     SwiftyAds.shared.showBanner(at: .top, from: viewController) // Shows banner at the top
-     SwiftyAds.shared.showInterstitial(from: viewController)
-     SwiftyAds.shared.showInterstitial(withInterval: 4, from: viewController) // Shows an ad every 4th time method is called  
-     SwiftyAds.shared.showRewardedVideo(from: viewController) // Should be called when pressing dedicated button
+     SwiftyAd.shared.showBanner(from: viewController) 
+     SwiftyAd.shared.showBanner(from: viewController, at: .top) // Shows banner at the top
+     SwiftyAd.shared.showInterstitial(from: viewController)
+     SwiftyAd.shared.showInterstitial(from: viewController, withInterval: 4) // Shows an ad every 4th time method is called  
+     SwiftyAd.shared.showRewardedVideo(from: viewController) // Should be called when pressing dedicated button
 }
 ```
 
@@ -109,11 +109,11 @@ From my personal experience and from a user perspective you should not spam full
 - To check if ads are ready
 
 ```swift
-if SwiftyAds.shared.isRewardedVideoReady {
+if SwiftyAd.shared.isRewardedVideoReady {
     // add/show reward video button
 }
 
-if SwiftyAds.shared.isInterstitialReady {
+if SwiftyAd.shared.isInterstitialReady {
     // maybe show custom ad or something similar
 }
 
@@ -122,12 +122,12 @@ if SwiftyAds.shared.isInterstitialReady {
 
 - To remove Banner Ads, for example during gameplay 
 ```swift
-SwiftyAds.shared.removeBanner() 
+SwiftyAd.shared.removeBanner() 
 ```
 
 - To remove all Ads, mainly for in app purchases simply call 
 ```swift
-SwiftyAds.shared.isRemoved = true 
+SwiftyAd.shared.isRemoved = true 
 ```
 
 NOTE: Remove Ads bool 
@@ -143,19 +143,19 @@ For permanent storage you will need to create your own "removedAdsProduct" prope
 Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
 to receive delegate callbacks.
 ```swift
-SwiftyAds.shared.delegate = self 
+SwiftyAd.shared.delegate = self 
 ```
 
 Than create an extension conforming to the AdsDelegate protocol.
 ```swift
 extension GameScene: SwiftyAdsDelegate {
-    func adDidOpen() {
+    func swiftyAdDidOpen(_ swiftyAd: SwiftyAd) {
         // pause your game/app if needed
     }
-    func adDidClose() { 
+    func swiftyAdDidClose(_ swiftyAd: SwiftyAd) { 
        // resume your game/app if needed
     }
-    func adDidRewardUser(withAmount rewardAmount: Int) {
+    func swifyAd(_ swiftyAd: SwiftyAd, didRewardUserWithAmount rewardAmount: Int) {
         self.coins += rewardAmount
        // Reward amount is a DecimelNumber I converted to an Int for convenience. 
      
@@ -173,14 +173,14 @@ Note:
 This helper will pass a default value to the below method
 
 ```swift
-func adDidRewardUser(withAmount rewardAmount: Int) {
+func swiftyAd(_ swiftyAd: SwiftyAd, didRewardUserWithAmount rewardAmount: Int) {
 ```
 
 incase there is a problem fetching the value from the ad network or you set it to 0 or lower by accident. The default value is 1. Incase you need to change this e.g to 20, you can change this in the setup method.
 
 ```swift
-SwiftyAds.shared.setup(
-      bannerID:        ..., 
+SwiftyAd.shared.setup(
+      withBannerID:        ..., 
       interstitialID:  ..., 
       rewardedVideoID: ...,
       rewardAmountBackup: 20
@@ -197,7 +197,7 @@ override func viewWillTransition(to size: CGSize, with coordinator: UIViewContro
         
         coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
           
-            SwiftyAds.shared.updateForOrientation()
+            SwiftyAd.shared.updateOrientation()
             
             }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
                 print("Device rotation completed")
