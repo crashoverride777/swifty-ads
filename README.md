@@ -1,4 +1,4 @@
-# SwiftyAds
+# SwiftyAd
 
 A Swift helper to integrate Ads from AdMob so you can easily show Banner Ads, Interstitial Ads and RewardVideoAds anywhere in your project.
 
@@ -53,7 +53,7 @@ https://cocoapods.org/app
 - Step 3: Copy the following file into your project.
 
 ```swift
-SwiftyAds.swift
+SwiftyAd.swift
 ```
 
 Tip:
@@ -65,7 +65,7 @@ If you have multiple apps and do not want to copy the file into each project I w
 - Setup up the helper with your AdUnitIDs as soon as your app launches e.g AppDelegate or 1st ViewController.
 
 ```swift
-SwiftyAds.shared.setup(
+SwiftyAd.shared.setup(
       withBannerID:    "Enter your real id or leave empty if unused", 
       interstitialID:  "Enter your real id or leave empty if unused", 
       rewardedVideoID: "Enter your real id or leave empty if unused"
