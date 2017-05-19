@@ -132,7 +132,7 @@ final class SwiftyAd: NSObject {
     /// - parameter interstitialID: The interstitial adUnitID for this app.
     /// - parameter rewardedVideoID: The rewarded video adUnitID for this app.
     /// - parameter rewardAmountBackup: The rewarded amount backup used incase the server amount cannot be fetched or is 0. Defaults to 1.
-    func setup(withBannerID: String, interstitialID: String, rewardedVideoID: String, rewardAmountBackup: Int = 1) {
+    func setup(withBannerID bannerID: String, interstitialID: String, rewardedVideoID: String, rewardAmountBackup: Int = 1) {
         self.rewardAmountBackup = rewardAmountBackup
         
         print("Google Mobile Ads SDK version \(GADRequest.sdkVersion())")
@@ -163,8 +163,8 @@ final class SwiftyAd: NSObject {
     
     /// Show interstitial ad randomly
     ///
-    /// - parameter interval: The interval of when to show the ad, e.g every 4th time this method is called. Defaults to nil.
     /// - parameter viewController: The view controller that will present the ad.
+    /// - parameter interval: The interval of when to show the ad, e.g every 4th time this method is called. Defaults to nil.
     func showInterstitial(from viewController: UIViewController, withInterval interval: Int? = nil) {
         guard !isRemoved, isInterstitialReady else { return }
         
