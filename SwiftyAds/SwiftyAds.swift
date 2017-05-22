@@ -95,7 +95,10 @@ final class SwiftyAds: NSObject {
     /// Test Ad Unit IDs. Will get set to real ID in setup method
     fileprivate var bannerAdUnitID = "ca-app-pub-3940256099942544/2934735716"
     fileprivate var interstitialAdUnitID = "ca-app-pub-3940256099942544/4411468910"
-    fileprivate var rewardedVideoAdUnitID = "ca-app-pub-1234567890123456/1234567890" // todo -> doesnt seem to work anymore 
+    fileprivate var rewardedVideoAdUnitID = "ca-app-pub-1234567890123456/1234567890" // todo -> doesnt seem to work anymore
+    
+    //Testdevices in DEBUG mode
+    fileprivate var testDevices: [Any] = [kGADSimulatorID]
     
     /// Interval counter
     private var intervalCounter = 0
@@ -127,13 +130,15 @@ final class SwiftyAds: NSObject {
     /// - parameter interstitialID: The interstitial adUnitID for this app.
     /// - parameter rewardedVideoID: The rewarded video adUnitID for this app.
     /// - parameter rewardAmountBackup: The rewarded amount backup used incase the server amount cannot be fetched or is 0. Defaults to 1.
-    func setup(bannerID: String, interstitialID: String, rewardedVideoID: String, rewardAmountBackup: Int = 1) {
+    func setup(bannerID: String, interstitialID: String, rewardedVideoID: String, rewardAmountBackup: Int = 1, testDevices: [Any] = []) {
         self.rewardAmountBackup = rewardAmountBackup
         
         #if !DEBUG
             bannerAdUnitID = bannerID
             interstitialAdUnitID = interstitialID
             rewardedVideoAdUnitID = rewardedVideoID
+        #else
+            self.testDevices.append(contentsOf: testDevices)
         #endif
         
         loadInterstitialAd()
@@ -166,7 +171,7 @@ final class SwiftyAds: NSObject {
             guard intervalCounter >= interval else { return }
             intervalCounter = 0
         }
-    
+        
         print("AdMob interstitial is showing")
         interstitialAd?.present(fromRootViewController: viewController)
     }
@@ -182,7 +187,7 @@ final class SwiftyAds: NSObject {
             showNoVideoAvailableAlert(from: viewController)
             return
         }
-
+        
         print("AdMob reward video is showing")
         rewardedVideoAd?.present(fromRootViewController: viewController)
     }
@@ -215,7 +220,7 @@ private extension SwiftyAds {
     /// Load banner ad
     func loadBannerAd(from viewController: UIViewController) {
         print("AdMob banner ad loading...")
-    
+        
         bannerAd?.removeFromSuperview()
         bannerAd = GADBannerView(adSize: bannerSize)
         bannerAd?.adUnitID = bannerAdUnitID
@@ -228,11 +233,11 @@ private extension SwiftyAds {
         
         let request = GADRequest()
         #if DEBUG
-            request.testDevices = [kGADSimulatorID]
+            request.testDevices = testDevices
         #endif
         bannerAd?.load(request)
     }
-
+    
     /// Load interstitial ad
     func loadInterstitialAd() {
         print("AdMob interstitial ad loading...")
@@ -242,7 +247,7 @@ private extension SwiftyAds {
         
         let request = GADRequest()
         #if DEBUG
-            request.testDevices = [kGADSimulatorID]
+            request.testDevices = testDevices
         #endif
         interstitialAd?.load(request)
     }
@@ -256,7 +261,7 @@ private extension SwiftyAds {
         
         let request = GADRequest()
         #if DEBUG
-            request.testDevices = [kGADSimulatorID]
+            request.testDevices = testDevices
         #endif
         rewardedVideoAd?.load(request, withAdUnitID: rewardedVideoAdUnitID)
     }
@@ -269,7 +274,7 @@ extension SwiftyAds: GADBannerViewDelegate {
     // Did receive
     func adViewDidReceiveAd(_ bannerView: GADBannerView) {
         print("AdMob banner did receive ad from: \(bannerView.adNetworkClassName ?? "")")
-    
+        
         bannerView.isHidden = false
         UIView.animate(withDuration: 1.5) { [weak self] in
             self?.setBannerToOnScreenPosition(bannerView, from: bannerView.rootViewController)
@@ -305,8 +310,8 @@ extension SwiftyAds: GADBannerViewDelegate {
         
         UIView.animate(withDuration: 1.5 , animations: { [weak self] in
             self?.setBannerToOffScreenPosition(bannerView, from: bannerView.rootViewController)
-        }, completion: { finish in
-            bannerView.isHidden = true
+            }, completion: { finish in
+                bannerView.isHidden = true
         })
     }
 }
@@ -413,7 +418,7 @@ private extension SwiftyAds {
     func setBannerToOnScreenPosition(_ bannerAd: GADBannerView?, from viewController: UIViewController?) {
         guard let bannerAd = bannerAd, let viewController = viewController else { return }
         
-        switch self.bannerPosition {
+        switch bannerPosition {
         case .bottom:
             bannerAd.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.maxY - (bannerAd.frame.height / 2))
         case .top:
@@ -424,7 +429,7 @@ private extension SwiftyAds {
     func setBannerToOffScreenPosition(_ bannerAd: GADBannerView?, from viewController: UIViewController?) {
         guard let bannerAd = bannerAd, let viewController = viewController else { return }
         
-        switch self.bannerPosition {
+        switch bannerPosition {
         case .bottom:
             bannerAd.center = CGPoint(x: viewController.view.frame.midX, y: viewController.view.frame.maxY + (bannerAd.frame.height / 2))
         case .top:
