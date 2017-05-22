@@ -21,7 +21,7 @@ GAD_ASSUME_NONNULL_BEGIN
 /// Native app install ad. To request this ad type, you need to pass
 /// kGADAdLoaderAdTypeNativeAppInstall (see GADAdLoaderAdTypes.h) to the |adTypes| parameter in
 /// GADAdLoader's initializer method. If you request this ad type, your delegate must conform to the
-/// GADNativeAppInstallAdRequestDelegate protocol.
+/// GADNativeAppInstallAdLoaderDelegate protocol.
 @interface GADNativeAppInstallAd : GADNativeAd
 
 #pragma mark - Must be displayed

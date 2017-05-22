@@ -1,4 +1,4 @@
-# SwiftyAds
+# SwiftyAd
 
 A Swift helper to integrate Ads from AdMob so you can easily show Banner Ads, Interstitial Ads and RewardVideoAds anywhere in your project.
 
@@ -53,7 +53,7 @@ https://cocoapods.org/app
 - Step 3: Copy the following file into your project.
 
 ```swift
-SwiftyAds.swift
+SwiftyAd.swift
 ```
 
 Tip:
@@ -65,10 +65,10 @@ If you have multiple apps and do not want to copy the file into each project I w
 - Setup up the helper with your AdUnitIDs as soon as your app launches e.g AppDelegate or 1st ViewController.
 
 ```swift
-SwiftyAds.shared.setup(
-      bannerID:       "Enter your real id or leave empty if unused", 
-      interstitialID: "Enter your real id or leave empty if unused", 
-      rewardedVideoID:  "Enter your real id or leave empty if unused"
+SwiftyAd.shared.setup(
+      withBannerID:    "Enter your real id or leave empty if unused", 
+      interstitialID:  "Enter your real id or leave empty if unused", 
+      rewardedVideoID: "Enter your real id or leave empty if unused"
 )
 ```
 
@@ -76,21 +76,21 @@ SwiftyAds.shared.setup(
 
 UIViewController
 ```swift
-SwiftyAds.shared.showBanner(from: self) 
-SwiftyAds.shared.showBanner(at: .top, from: self) // Shows banner at the top
-SwiftyAds.shared.showInterstitial(from: self)
-SwiftyAds.shared.showInterstitial(withInterval: 4, from: self) // Shows an ad every 4th time method is called
-SwiftyAds.shared.showRewardedVideo(from: self) // Should be called when pressing dedicated button
+SwiftyAd.shared.showBanner(from: self) 
+SwiftyAd.shared.showBanner(from: self, at: .top) // Shows banner at the top
+SwiftyAd.shared.showInterstitial(from: self)
+SwiftyAd.shared.showInterstitial(from: self, withInterval: 4) // Shows an ad every 4th time method is called
+SwiftyAd.shared.showRewardedVideo(from: self) // Should be called when pressing dedicated button
 ```
 SKScene
 (Do not call this in didMoveToView as .window property is still nil at that point. Use a delay or call it later)
 ```swift
 if let viewController = view?.window?.rootViewController {
-     SwiftyAds.shared.showBanner(from: viewController) 
-     SwiftyAds.shared.showBanner(at: .top, from: viewController) // Shows banner at the top
-     SwiftyAds.shared.showInterstitial(from: viewController)
-     SwiftyAds.shared.showInterstitial(withInterval: 4, from: viewController) // Shows an ad every 4th time method is called  
-     SwiftyAds.shared.showRewardedVideo(from: viewController) // Should be called when pressing dedicated button
+     SwiftyAd.shared.showBanner(from: viewController) 
+     SwiftyAd.shared.showBanner(from: viewController, at: .top) // Shows banner at the top
+     SwiftyAd.shared.showInterstitial(from: viewController)
+     SwiftyAd.shared.showInterstitial(from: viewController, withInterval: 4) // Shows an ad every 4th time method is called  
+     SwiftyAd.shared.showRewardedVideo(from: viewController) // Should be called when pressing dedicated button
 }
 ```
 
@@ -109,11 +109,11 @@ From my personal experience and from a user perspective you should not spam full
 - To check if ads are ready
 
 ```swift
-if SwiftyAds.shared.isRewardedVideoReady {
+if SwiftyAd.shared.isRewardedVideoReady {
     // add/show reward video button
 }
 
-if SwiftyAds.shared.isInterstitialReady {
+if SwiftyAd.shared.isInterstitialReady {
     // maybe show custom ad or something similar
 }
 
@@ -122,12 +122,12 @@ if SwiftyAds.shared.isInterstitialReady {
 
 - To remove Banner Ads, for example during gameplay 
 ```swift
-SwiftyAds.shared.removeBanner() 
+SwiftyAd.shared.removeBanner() 
 ```
 
 - To remove all Ads, mainly for in app purchases simply call 
 ```swift
-SwiftyAds.shared.isRemoved = true 
+SwiftyAd.shared.isRemoved = true 
 ```
 
 NOTE: Remove Ads bool 
@@ -143,19 +143,19 @@ For permanent storage you will need to create your own "removedAdsProduct" prope
 Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
 to receive delegate callbacks.
 ```swift
-SwiftyAds.shared.delegate = self 
+SwiftyAd.shared.delegate = self 
 ```
 
 Than create an extension conforming to the AdsDelegate protocol.
 ```swift
-extension GameScene: SwiftyAdsDelegate {
-    func adDidOpen() {
+extension GameScene: SwiftyAdDelegate {
+    func swiftyAdDidOpen(_ swiftyAd: SwiftyAd) {
         // pause your game/app if needed
     }
-    func adDidClose() { 
+    func swiftyAdDidClose(_ swiftyAd: SwiftyAd) { 
        // resume your game/app if needed
     }
-    func adDidRewardUser(withAmount rewardAmount: Int) {
+    func swifyAd(_ swiftyAd: SwiftyAd, didRewardUserWithAmount rewardAmount: Int) {
         self.coins += rewardAmount
        // Reward amount is a DecimelNumber I converted to an Int for convenience. 
      
@@ -173,14 +173,14 @@ Note:
 This helper will pass a default value to the below method
 
 ```swift
-func adDidRewardUser(withAmount rewardAmount: Int) {
+func swiftyAd(_ swiftyAd: SwiftyAd, didRewardUserWithAmount rewardAmount: Int) {
 ```
 
 incase there is a problem fetching the value from the ad network or you set it to 0 or lower by accident. The default value is 1. Incase you need to change this e.g to 20, you can change this in the setup method.
 
 ```swift
-SwiftyAds.shared.setup(
-      bannerID:        ..., 
+SwiftyAd.shared.setup(
+      withBannerID:        ..., 
       interstitialID:  ..., 
       rewardedVideoID: ...,
       rewardAmountBackup: 20
@@ -197,7 +197,7 @@ override func viewWillTransition(to size: CGSize, with coordinator: UIViewContro
         
         coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
           
-            SwiftyAds.shared.updateForOrientation()
+            SwiftyAd.shared.updateOrientation()
             
             }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
                 print("Device rotation completed")
@@ -219,32 +219,14 @@ Enjoy
 
 # Release Notes
 
-- v7.0.5
+- v8.0
 
-Cleanup
+Project has been renamed to SwiftyAd
 
-- v7.0.4
+Updated show methods
 
-Updated to Swift 3.1
+Updated delegate methods
 
-- v7.0.3
+Project cleanup
 
-Orientation fix for banner ads
-
-- v7.0.2
-
-Added ability to show banner ads at the top
-
-Cleanup
-
-- v7.0.1
-
-UIViewController dependency injection 
-
-Cleanup
-
-- v7.0
-
-Removed AppLovin as they no longer support the tvOS platform. If another reliable ad platform for tvOS comes out I will add it to this helper.
-
-Cleanup
+Please check the documentation again

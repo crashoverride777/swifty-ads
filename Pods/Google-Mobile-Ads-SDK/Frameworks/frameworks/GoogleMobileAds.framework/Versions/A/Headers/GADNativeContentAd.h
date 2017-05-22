@@ -22,7 +22,7 @@ GAD_ASSUME_NONNULL_BEGIN
 
 /// Native content ad. To request this ad type, you need to pass kGADAdLoaderAdTypeNativeContent
 /// (see GADAdLoaderAdTypes.h) to the |adTypes| parameter in GADAdLoader's initializer method. If
-/// you request this ad type, your delegate must conform to the GADNativeContentAdRequestDelegate
+/// you request this ad type, your delegate must conform to the GADNativeContentAdLoaderDelegate
 /// protocol.
 @interface GADNativeContentAd : GADNativeAd
 
