@@ -95,26 +95,26 @@ final class SwiftyAd: NSObject {
     }
     
     /// Ads
-    fileprivate var bannerViewAd: GADBannerView?
-    fileprivate var interstitialAd: GADInterstitial?
-    fileprivate var rewardedVideoAd: GADRewardBasedVideoAd?
+    private var bannerViewAd: GADBannerView?
+    private var interstitialAd: GADInterstitial?
+    private var rewardedVideoAd: GADRewardBasedVideoAd?
     
     /// Test Ad Unit IDs. Will get set to real ID in setup method
-    fileprivate var bannerViewAdUnitID = "ca-app-pub-3940256099942544/2934735716"
-    fileprivate var interstitialAdUnitID = "ca-app-pub-3940256099942544/4411468910"
-    fileprivate var rewardedVideoAdUnitID = "ca-app-pub-1234567890123456/1234567890" // todo -> doesnt seem to work anymore 
+    private var bannerViewAdUnitID = "ca-app-pub-3940256099942544/2934735716"
+    private var interstitialAdUnitID = "ca-app-pub-3940256099942544/4411468910"
+    private var rewardedVideoAdUnitID = "ca-app-pub-1234567890123456/1234567890" // todo -> doesnt seem to work anymore
     
     /// Interval counter
     private var intervalCounter = 0
     
     /// Reward amount backup
-    fileprivate var rewardAmountBackup = 1
+    private var rewardAmountBackup = 1
     
     /// Banner position
-    fileprivate var bannerPosition = BannerPosition.bottom
+    private var bannerPosition = BannerPosition.bottom
     
     /// Banner size
-    fileprivate var bannerSize: GADAdSize {
+    private var bannerSize: GADAdSize {
         let isLandscape = UIApplication.shared.statusBarOrientation.isLandscape
         return isLandscape ? kGADAdSizeSmartBannerLandscape : kGADAdSizeSmartBannerPortrait
     }
@@ -418,7 +418,7 @@ extension SwiftyAd: GADRewardBasedVideoAdDelegate {
     func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didRewardUserWith reward: GADAdReward) {
         print("AdMob reward video did reward user with \(reward)")
         
-        let rewardInt = Int(reward.amount)
+        let rewardInt = Int(truncating: reward.amount)
         let rewardAmount = rewardInt <= 0 ? rewardAmountBackup : rewardInt
         delegate?.swiftyAd(self, didRewardUserWithAmount: rewardAmount)
     }

@@ -21,7 +21,7 @@ GAD_ASSUME_NONNULL_BEGIN
 typedef void (^GADNativeAdCustomClickHandler)(NSString *assetID);
 
 /// Asset key for the GADMediaView asset view.
-static NSString *const GADNativeCustomTemplateAdMediaViewKey = @"_videoMediaView";
+extern NSString *const GADNativeCustomTemplateAdMediaViewKey;
 
 /// Native custom template ad. To request this ad type, you need to pass
 /// kGADAdLoaderAdTypeNativeCustomTemplate (see GADAdLoaderAdTypes.h) to the |adTypes| parameter in
@@ -33,7 +33,7 @@ static NSString *const GADNativeCustomTemplateAdMediaViewKey = @"_videoMediaView
 @property(nonatomic, readonly) NSString *templateID;
 
 /// Array of available asset keys.
-@property(nonatomic, readonly) NSArray *availableAssetKeys;
+@property(nonatomic, readonly) NSArray<NSString *> *availableAssetKeys;
 
 /// Returns video controller for controlling receiver's video.
 @property(nonatomic, readonly, strong) GADVideoController *videoController;
@@ -46,7 +46,7 @@ static NSString *const GADNativeCustomTemplateAdMediaViewKey = @"_videoMediaView
 /// click action, otherwise set it to nil. If this property is set to a non-nil value, the ad's
 /// built-in click actions are ignored and |customClickHandler| is executed when a click on the
 /// asset is received.
-@property(atomic, copy) GADNativeAdCustomClickHandler customClickHandler;
+@property(atomic, copy, GAD_NULLABLE) GADNativeAdCustomClickHandler customClickHandler;
 
 /// Returns the native ad image corresponding to the specified key or nil if the image is not
 /// available.
@@ -83,7 +83,7 @@ static NSString *const GADNativeCustomTemplateAdMediaViewKey = @"_videoMediaView
 @protocol GADNativeCustomTemplateAdLoaderDelegate<GADAdLoaderDelegate>
 
 /// Called when requesting an ad. Asks the delegate for an array of custom template ID strings.
-- (NSArray *)nativeCustomTemplateIDsForAdLoader:(GADAdLoader *)adLoader;
+- (NSArray<NSString *> *)nativeCustomTemplateIDsForAdLoader:(GADAdLoader *)adLoader;
 
 /// Tells the delegate that a native custom template ad was received.
 - (void)adLoader:(GADAdLoader *)adLoader

@@ -8,12 +8,18 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#import <GoogleMobileAds/GADAdLoaderAdTypes.h>
 #import <GoogleMobileAds/GADAdLoaderDelegate.h>
 #import <GoogleMobileAds/GADRequest.h>
 #import <GoogleMobileAds/GADRequestError.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
 GAD_ASSUME_NONNULL_BEGIN
+
+/// Ad loader options base class. See each ad type's header for available GADAdLoaderOptions
+/// subclasses.
+@interface GADAdLoaderOptions : NSObject
+@end
 
 /// Loads ads. See GADAdLoaderAdTypes.h for available ad types.
 @interface GADAdLoader : NSObject
@@ -25,6 +31,9 @@ GAD_ASSUME_NONNULL_BEGIN
 /// The ad loader's ad unit ID.
 @property(nonatomic, readonly) NSString *adUnitID;
 
+/// Indicates whether the ad loader is loading.
+@property(nonatomic, getter=isLoading, readonly) BOOL loading;
+
 /// Returns an initialized ad loader configured to load the specified ad types.
 ///
 /// @param rootViewController The root view controller is used to present ad click actions.
@@ -33,17 +42,12 @@ GAD_ASSUME_NONNULL_BEGIN
 /// use default options. See each ad type's header for available GADAdLoaderOptions subclasses.
 - (instancetype)initWithAdUnitID:(NSString *)adUnitID
               rootViewController:(UIViewController *GAD_NULLABLE_TYPE)rootViewController
-                         adTypes:(NSArray *)adTypes
-                         options:(NSArray *GAD_NULLABLE_TYPE)options;
+                         adTypes:(NSArray<GADAdLoaderAdType> *)adTypes
+                         options:(NSArray<GADAdLoaderOptions *> *GAD_NULLABLE_TYPE)options;
 
 /// Loads the ad and informs the delegate of the outcome.
 - (void)loadRequest:(GADRequest *GAD_NULLABLE_TYPE)request;
 
-@end
-
-/// Ad loader options base class. See each ad type's header for available GADAdLoaderOptions
-/// subclasses.
-@interface GADAdLoaderOptions : NSObject
 @end
 
 GAD_ASSUME_NONNULL_END

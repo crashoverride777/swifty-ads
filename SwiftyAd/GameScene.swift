@@ -47,7 +47,7 @@ class GameScene: SKScene {
     }
     
     /// Coins
-    fileprivate var coins = 0
+    private var coins = 0
     
     // MARK: - Did Move To View
     
