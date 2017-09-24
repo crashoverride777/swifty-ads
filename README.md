@@ -219,6 +219,10 @@ Enjoy
 
 # Release Notes
 
+- v8.0.1
+
+Swift 4 update
+
 - v8.0
 
 Project has been renamed to SwiftyAd
