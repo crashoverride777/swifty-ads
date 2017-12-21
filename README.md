@@ -4,10 +4,6 @@ A Swift helper to integrate Ads from AdMob so you can easily show Banner Ads, In
 
 This helper follows all the best practices in regards to ads, like creating shared banners and correctly preloading interstitial and rewarded videos so they are always ready to show.
 
-# Swift 4 and iPhone X
-
-I will release the Swift 4 update alongside the iPhone X update this week. I am still experementing how to handle banners on iPhoneX when the device is in landscape. If I use the new safe area insets for the banners they will be positioned higher than usually to leave room for iPhoneX swipe area. In portrait this does not matter as we have extra screen estate at the top and bottom due to the larger display but in landscape we do not. Therfore the banner might now be covering UI that it should not, at least thats whats happening in my games.
-
 # Rewarded Videos
 
 Admob reward videos will only work when using a 3rd party mediation network such as Chartboost or Vungle. 
