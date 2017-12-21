@@ -219,6 +219,12 @@ Enjoy
 
 # Release Notes
 
+- v8.1
+
+Banners are now positioned with constraints
+
+iPhoneX support
+
 - v8.0.1
 
 Swift 4 update
