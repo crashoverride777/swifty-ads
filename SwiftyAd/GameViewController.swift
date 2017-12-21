@@ -20,7 +20,7 @@ class GameViewController: UIViewController {
             rewardedVideoID: "Enter your real ID"
         )
         
-        SwiftyAd.shared.showBanner(from: self)
+        SwiftyAd.shared.showBanner(from: self, at: .bottom)
         
         if let scene = GameScene(fileNamed: "GameScene") {
             // Configure the view.
@@ -57,9 +57,9 @@ class GameViewController: UIViewController {
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
-            return UIInterfaceOrientationMask.allButUpsideDown
+            return .allButUpsideDown
         } else {
-            return UIInterfaceOrientationMask.all
+            return .all
         }
     }
 

@@ -55,7 +55,7 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         
         SwiftyAd.shared.delegate = self
-        
+    
         label.text = "Remove ads in \(touchCounter) clicks"
     }
     
