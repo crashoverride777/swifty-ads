@@ -130,10 +130,6 @@ final class SwiftyAd: NSObject {
         print("AdMob SDK version \(GADRequest.sdkVersion())")
     }
     
-    func test(vc: UIViewController) {
-        animateBannerToOffScreenPosition(self.bannerAdView!, from: vc)
-    }
-    
     // MARK: - Setup
     
     /// Set up admob helper
