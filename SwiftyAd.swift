@@ -84,7 +84,7 @@ final class SwiftyAd: NSObject {
         return true
     }
     
-    /// Remove ads
+    /// Remove ads e.g for in app purchases
     var isRemoved = false {
         didSet {
             guard isRemoved else { return }
@@ -114,25 +114,27 @@ final class SwiftyAd: NSObject {
     /// Banner position
     private var bannerPosition = BannerPosition.bottom
     
+    /// Banner animation duration
+    private let bannerAnimationDuration = 1.8
+    
     /// Banner size
     private var bannerSize: GADAdSize {
         let isLandscape = UIApplication.shared.statusBarOrientation.isLandscape
         return isLandscape ? kGADAdSizeSmartBannerLandscape : kGADAdSizeSmartBannerPortrait
     }
     
-    /// Banner animation duration
-    private let bannerAnimationDuration = 1.8
-    
     // MARK: - Init
     
     private override init() {
         super.init()
         print("AdMob SDK version \(GADRequest.sdkVersion())")
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(didRotateDevice), name: .UIDeviceOrientationDidChange, object: nil)
     }
     
     // MARK: - Setup
     
-    /// Set up admob helper
+    /// Set up swift ad
     ///
     /// - parameter bannerID: The banner adUnitID for this app.
     /// - parameter interstitialID: The interstitial adUnitID for this app.
@@ -205,13 +207,6 @@ final class SwiftyAd: NSObject {
         bannerAdView = nil
         bannerViewConstraint = nil
     }
-    
-    // MARK: - Update For Orientation
-    
-    /// Orientation changed
-    func updateOrientation() {
-        bannerAdView?.adSize = bannerSize
-    }
 }
 
 // MARK: - Load Ad
@@ -263,30 +258,24 @@ private extension SwiftyAd {
     
     func loadInterstitialAd() {
         interstitialAd = GADInterstitial(adUnitID: interstitialAdUnitID)
-        
-        guard let interstitialAd = interstitialAd else { return }
-        
-        interstitialAd.delegate = self
+        interstitialAd?.delegate = self
         
         let request = GADRequest()
         #if DEBUG
             request.testDevices = [kGADSimulatorID]
         #endif
-        interstitialAd.load(request)
+        interstitialAd?.load(request)
     }
     
     func loadRewardedVideoAd() {
         rewardedVideoAd = GADRewardBasedVideoAd.sharedInstance()
-        
-        guard let rewardedVideoAd = rewardedVideoAd else { return }
-        
-        rewardedVideoAd.delegate = self
+        rewardedVideoAd?.delegate = self
         
         let request = GADRequest()
         #if DEBUG
             request.testDevices = [kGADSimulatorID]
         #endif
-        rewardedVideoAd.load(request, withAdUnitID: rewardedVideoAdUnitID)
+        rewardedVideoAd?.load(request, withAdUnitID: rewardedVideoAdUnitID)
     }
 }
 
@@ -296,7 +285,6 @@ extension SwiftyAd: GADBannerViewDelegate {
     
     func adViewDidReceiveAd(_ bannerView: GADBannerView) {
         print("AdMob banner did receive ad from: \(bannerView.adNetworkClassName ?? "")")
-        bannerView.isHidden = false
         animateBannerToOnScreenPosition(bannerView, from: bannerView.rootViewController)
     }
     
@@ -393,6 +381,16 @@ extension SwiftyAd: GADRewardBasedVideoAdDelegate {
     }
 }
 
+// MARK: - Callbacks
+
+private extension SwiftyAd {
+
+    @objc func didRotateDevice() {
+        print("SwiftyAd did rotate device")
+        bannerAdView?.adSize = bannerSize
+    }
+}
+
 // MARK: - Banner Position
 
 private extension SwiftyAd {
@@ -409,9 +407,9 @@ private extension SwiftyAd {
     func animateBannerToOffScreenPosition(_ bannerAd: GADBannerView, from viewController: UIViewController?, withAnimation: Bool = true) {
         switch bannerPosition {
         case .bottom:
-            bannerViewConstraint?.constant = 0 + (bannerAd.frame.height * 3)
+            bannerViewConstraint?.constant = 0 + (bannerAd.frame.height * 3) // *3 due to iPhoneX safe area
         case .top:
-            bannerViewConstraint?.constant = 0 - (bannerAd.frame.height * 3)
+            bannerViewConstraint?.constant = 0 - (bannerAd.frame.height * 3) // *3 due to iPhoneX safe area
         }
         
         guard withAnimation else { return }

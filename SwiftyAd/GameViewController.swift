@@ -37,30 +37,13 @@ class GameViewController: UIViewController {
             skView.presentScene(scene)
         }
     }
-   
-    // Check for device orientation changes
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        
-        coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
-
-            SwiftyAd.shared.updateOrientation()
-            
-            }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
-                print("Device rotation completed")
-        })
-    }
 
     override var shouldAutorotate: Bool {
         return true
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
-        } else {
-            return .all
-        }
+        return .all
     }
 
     override func didReceiveMemoryWarning() {
