@@ -219,6 +219,10 @@ Enjoy
 
 # Release Notes
 
+- v8.1.2
+
+Orientation changes are now handled automatically
+
 - v8.1.1
 
 Removed left-over test function
