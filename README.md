@@ -187,24 +187,6 @@ SwiftyAd.shared.setup(
 )
 ```
 
-# Supporting both landscape and portrait orientation
-
-- If your app supports both portrait and landscape orientation go to your ViewControllers and add the following method.
-
-```swift
-override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        
-        coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
-          
-            SwiftyAd.shared.updateOrientation()
-            
-            }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
-                print("Device rotation completed")
-        })
-    }
-```
-
 # When you submit your app to Apple
 
 When you submit your app to Apple on iTunes connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected. If you use reward videos you should also select the 3rd point.
