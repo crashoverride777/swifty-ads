@@ -1,8 +1,8 @@
 # SwiftyAd
 
-A Swift helper to integrate Ads from AdMob so you can easily show Banner Ads, Interstitial Ads and RewardVideoAds anywhere in your project.
+A Swift helper to integrate Ads from AdMob so you can easily show banner, interstitial and rewarded video ads anywhere in your project.
 
-This helper follows all the best practices in regards to ads, like creating shared banners and correctly preloading interstitial and rewarded videos so they are always ready to show.
+This helper follows all the best practices in regards to ads, like creating shared banners and correctly preloading interstitial and rewarded video ads so they are always ready to show.
 
 # Rewarded Videos
 
@@ -45,7 +45,7 @@ https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods
 // Manually
 https://developers.google.com/admob/ios/quick-start#manually_using_the_sdk_download
 
-I would recommend using Cocoa Pods especially if you will add more SDKs down the line from other ad networks. Its a bit more complicated but once you understand and do it once or twice its a breeze. 
+I would recommend using Cocoa Pods especially if you will add more SDKs down the line from other ad networks.
 
 They have an app now which should makes managing pods alot easier.
 https://cocoapods.org/app
@@ -55,10 +55,6 @@ https://cocoapods.org/app
 ```swift
 SwiftyAd.swift
 ```
-
-Tip:
-
-If you have multiple apps and do not want to copy the file into each project I would create a folder on your Mac, called something like SharedFiles. Than drag the SwiftyAds.swift file into this folder. Than drag the SwiftyAds.swift file from this folder into your project, making sure that "copy if needed" is not selected. This way its easier to update the files and to share them between projects. Just make sure you do not move or rename this shared folder otherwise you will have to relink the file again.
 
 # How to use
 
@@ -96,15 +92,7 @@ if let viewController = view?.window?.rootViewController {
 
 Note:
 
-You should only show rewarded videos with a dedicated button and you should only show that button when a video is loaded (see below). If the user presses the reward video button and watches a video it might take a few seconds for the next video to reload afterwards. Incase the user immediately tries to watch another video this helper will show an alert informing the user that no video is available at the moment. 
-
-Tip:
-
-From my personal experience and from a user perspective you should not spam full screen interstitial ads all the time. This will also increase your revenue because user retention rate is higher so you should not be greedy. Therefore you should
-
-1) Not show an interstitial ad everytime a button is pressed 
-2) Not show an interstitial ad everytime you die in a game
-3) Use the "withInterval" property in the show method and set it to a minimum of 5/6 depending on the frequence the method is called. There might be special cirumstances where you could set it lower e.g in a game where it takes a while to die but usually 5/6 mimimum is what I think is best. You could also randomise the interval e.g random number between 5-8.
+You should only show rewarded videos with a dedicated button and you should only show that button when a video is loaded (see below). If the user presses the rewarded video button and watches a video it might take a few seconds for the next video to reload. Incase the user immediately tries to watch another video this helper will show a "no video is available at the moment" alert. 
 
 - To check if ads are ready
 
@@ -132,11 +120,17 @@ SwiftyAd.shared.isRemoved = true
 
 NOTE: Remove Ads bool 
 
-If set to true all the methods to show banner and interstitial ads will not fire anymore and therefore require no further editing. 
+If set to true the methods to show banner and interstitial ads will not fire anymore and therefore require no further editing. 
 
-This will not stop rewarded videos from showing as they should have a dedicated button. Some reward videos are not skipabble and therefore should never be shown automatically. This way you can remove banner and interstitial ads but still have a rewarded videos button. 
+For permanent storage you will need to create your own "removedAdsProduct" property and save it in something like UserDefaults, or preferably Keychain. Than at app launch check if your saved property is set to true and than update the SwiftyAds poperty e.g
 
-For permanent storage you will need to create your own "removedAdsProduct" property and save it in something like UserDefaults, or preferably iOS Keychain. Than at app launch check if your saved property is set to true and than updated the helper poperty.
+```swift
+if UserDefaults.standard.bool(forKey: "RemovedAdsKey") {
+    SwiftyAd.shared.isRemoved = true 
+}
+```
+
+This will not stop rewarded videos from showing as they should have a dedicated button. Some rewarded videos are not skipabble and therefore should never be shown automatically. This way you can remove banner and interstitial ads but still have a rewarded videos. 
 
 - Implement the delegate methods.
 
@@ -157,30 +151,30 @@ extension GameScene: SwiftyAdDelegate {
     }
     func swifyAd(_ swiftyAd: SwiftyAd, didRewardUserWithAmount rewardAmount: Int) {
         self.coins += rewardAmount
-       // Reward amount is a DecimelNumber I converted to an Int for convenience. 
+       // Reward amount is a decimel number I converted to an integer for convenience. This value comes from your AdNetwork.
      
-       // You can ignore this and hardcore the value if you would like but than you cannot change the value dynamically without having to update your app.
+       // You can ignore this and hardcode the value if you would like but than you cannot change the value dynamically without having to update your app.
        
-       // You can also ingore the rewardAmount and do something else, for example unlocking a level or bonus item.
+       // You could also ignore the reward amount and do something else, for example unlocking a level or bonus item.
        
-       // leave empty if unused
+       // Leave empty if unused
     }
 }
 ```
 
 Note:
 
-This helper will pass a default value to the below method
+This helper will pass a default reward amount to the below method
 
 ```swift
 func swiftyAd(_ swiftyAd: SwiftyAd, didRewardUserWithAmount rewardAmount: Int) {
 ```
 
-incase there is a problem fetching the value from the ad network or you set it to 0 or lower by accident. The default value is 1. Incase you need to change this e.g to 20, you can change this in the setup method.
+incase there is a problem fetching the value from the ad network or you set it to 0 by accident. The default value is 1. You can change this in the setup method.
 
 ```swift
 SwiftyAd.shared.setup(
-      withBannerID:        ..., 
+      withBannerID:    ..., 
       interstitialID:  ..., 
       rewardedVideoID: ...,
       rewardAmountBackup: 20
@@ -189,11 +183,18 @@ SwiftyAd.shared.setup(
 
 # When you submit your app to Apple
 
-When you submit your app to Apple on iTunes connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected. If you use reward videos you should also select the 3rd point.
+When you submit your app to Apple on iTunes connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected. If you use reward videos you should also select the 3rd bulletpoint.
+
+# Tip
+
+From my personal experience and from a user perspective you should not spam full screen interstitial ads all the time. This will also increase your revenue because user retention rate is higher so you should not be greedy. Therefore you should
+
+1) Not show an interstitial ad everytime a button is pressed 
+2) Not show an interstitial ad everytime you die in a game
 
 # Final Info
 
-The sample project is the basic Apple spritekit template. It now shows a banner Ad on launch and an interstitial ad randomly when touching the screen. After a certain amount of clicks all ads will be removed to simulate what a removeAds button would do. 
+The sample project is the basic Apple spritekit template. It now shows a banner Ad after launch and an interstitial ad randomly when touching the screen. After a certain amount of clicks all ads will be removed to simulate what a remove ads button would do. 
 
 Please feel free to let me know about any bugs or improvements. 
 
