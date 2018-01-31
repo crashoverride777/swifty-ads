@@ -98,7 +98,7 @@ You should only show rewarded videos with a dedicated button and you should only
 
 ```swift
 if SwiftyAd.shared.isRewardedVideoReady {
-    // add/show reward video button
+    // show reward video button
 }
 
 if SwiftyAd.shared.isInterstitialReady {
@@ -113,7 +113,7 @@ if SwiftyAd.shared.isInterstitialReady {
 SwiftyAd.shared.removeBanner() 
 ```
 
-- To remove all Ads, mainly for in app purchases simply call 
+- To remove all Ads, mainly for in app purchases, simply call 
 ```swift
 SwiftyAd.shared.isRemoved = true 
 ```
