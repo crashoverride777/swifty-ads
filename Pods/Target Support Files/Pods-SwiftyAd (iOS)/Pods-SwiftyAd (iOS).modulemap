@@ -1,6 +1,0 @@
-framework module Pods_SwiftyAd__iOS_ {
-  umbrella header "Pods-SwiftyAd (iOS)-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		95FCAFC7F595266D4C6C3079 /* Pods_SwiftyAd__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0DD51B70AB9F036A5013B45 /* Pods_SwiftyAd__iOS_.framework */; };
+		361D0CC1486D9B83D53567B6 /* Pods_SwiftyAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36E4E0628DBF34F2F25D3F16 /* Pods_SwiftyAd.framework */; };
 		B418D9E11E44B42000DD6C15 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B418D9E01E44B42000DD6C15 /* Images.xcassets */; };
 		B435FFE11CE14C2A00A678AA /* SwiftyAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = B435FFE01CE14C2A00A678AA /* SwiftyAd.swift */; };
 		B4B01A191B9A0AF500F9A8EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B01A181B9A0AF500F9A8EA /* AppDelegate.swift */; };
@@ -30,7 +30,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1C32159F51E545D7F0EEC413 /* Pods-SwiftyAd.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAd.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyAd/Pods-SwiftyAd.release.xcconfig"; sourceTree = "<group>"; };
 		22965D53D6907B6C34935DF0 /* Pods-SwiftyAd (iOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAd (iOS).release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyAd (iOS)/Pods-SwiftyAd (iOS).release.xcconfig"; sourceTree = "<group>"; };
+		36E4E0628DBF34F2F25D3F16 /* Pods_SwiftyAd.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAd.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B418D9E01E44B42000DD6C15 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B435FFE01CE14C2A00A678AA /* SwiftyAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAd.swift; sourceTree = "<group>"; };
 		B4B01A131B9A0AF500F9A8EA /* SwiftyAd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyAd.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,6 +56,7 @@
 		B4F4EE101DA3F7BC00C6FEC0 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		CB278B6CB2E1E30D4CB84818 /* Pods-SwiftyAd (iOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAd (iOS).debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyAd (iOS)/Pods-SwiftyAd (iOS).debug.xcconfig"; sourceTree = "<group>"; };
 		D0DD51B70AB9F036A5013B45 /* Pods_SwiftyAd__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAd__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6B04E3A8A4EBBC23BA56659 /* Pods-SwiftyAd.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAd.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyAd/Pods-SwiftyAd.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +75,7 @@
 				B4B01A441B9A0B8600F9A8EA /* AVFoundation.framework in Frameworks */,
 				B4B01A421B9A0B8100F9A8EA /* AudioToolbox.framework in Frameworks */,
 				B4B01A401B9A0B7700F9A8EA /* AdSupport.framework in Frameworks */,
-				95FCAFC7F595266D4C6C3079 /* Pods_SwiftyAd__iOS_.framework in Frameworks */,
+				361D0CC1486D9B83D53567B6 /* Pods_SwiftyAd.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +87,8 @@
 			children = (
 				CB278B6CB2E1E30D4CB84818 /* Pods-SwiftyAd (iOS).debug.xcconfig */,
 				22965D53D6907B6C34935DF0 /* Pods-SwiftyAd (iOS).release.xcconfig */,
+				E6B04E3A8A4EBBC23BA56659 /* Pods-SwiftyAd.debug.xcconfig */,
+				1C32159F51E545D7F0EEC413 /* Pods-SwiftyAd.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -92,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				D0DD51B70AB9F036A5013B45 /* Pods_SwiftyAd__iOS_.framework */,
+				36E4E0628DBF34F2F25D3F16 /* Pods_SwiftyAd.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -235,7 +241,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftyAd (iOS)/Pods-SwiftyAd (iOS)-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftyAd/Pods-SwiftyAd-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7FA0C3DFF24EED0B2ADD0983 /* [CP] Embed Pods Frameworks */ = {
@@ -250,7 +256,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftyAd (iOS)/Pods-SwiftyAd (iOS)-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftyAd/Pods-SwiftyAd-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9E2430265B52201036E331CB /* [CP] Check Pods Manifest.lock */ = {
@@ -409,7 +415,7 @@
 		};
 		B4B01A371B9A0AF500F9A8EA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CB278B6CB2E1E30D4CB84818 /* Pods-SwiftyAd (iOS).debug.xcconfig */;
+			baseConfigurationReference = E6B04E3A8A4EBBC23BA56659 /* Pods-SwiftyAd.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -433,7 +439,7 @@
 		};
 		B4B01A381B9A0AF500F9A8EA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 22965D53D6907B6C34935DF0 /* Pods-SwiftyAd (iOS).release.xcconfig */;
+			baseConfigurationReference = 1C32159F51E545D7F0EEC413 /* Pods-SwiftyAd.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

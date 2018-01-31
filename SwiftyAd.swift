@@ -62,6 +62,9 @@ final class SwiftyAd: NSObject {
     /// Delegates
     weak var delegate: SwiftyAdDelegate?
     
+    /// Banner animation duration
+    var bannerAnimationDuration = 1.8
+    
     /// Check if interstitial video is ready (e.g to show alternative ad)
     /// Will try to reload an ad if it returns false.
     var isInterstitialReady: Bool {
@@ -108,19 +111,12 @@ final class SwiftyAd: NSObject {
     /// Interval counter
     private var intervalCounter = 0
     
-    /// Reward amount backup
-    private var rewardAmountBackup = 1
-    
     /// Banner position
-    private var bannerPosition = BannerPosition.bottom
-    
-    /// Banner animation duration
-    private let bannerAnimationDuration = 1.8
+    private var bannerPosition: BannerPosition = .bottom
     
     /// Banner size
     private var bannerSize: GADAdSize {
-        let isLandscape = UIApplication.shared.statusBarOrientation.isLandscape
-        return isLandscape ? kGADAdSizeSmartBannerLandscape : kGADAdSizeSmartBannerPortrait
+        return UIDevice.current.orientation.isLandscape ? kGADAdSizeSmartBannerLandscape : kGADAdSizeSmartBannerPortrait
     }
     
     // MARK: - Init
@@ -139,17 +135,13 @@ final class SwiftyAd: NSObject {
     /// - parameter bannerID: The banner adUnitID for this app.
     /// - parameter interstitialID: The interstitial adUnitID for this app.
     /// - parameter rewardedVideoID: The rewarded video adUnitID for this app.
-    /// - parameter rewardAmountBackup: The rewarded amount backup used incase the server amount cannot be fetched or is 0. Defaults to 1.
-    func setup(withBannerID bannerID: String, interstitialID: String, rewardedVideoID: String, rewardAmountBackup: Int = 1) {
-        self.rewardAmountBackup = rewardAmountBackup
-        
+    func setup(withBannerID bannerID: String, interstitialID: String, rewardedVideoID: String) {
         #if !DEBUG
             bannerViewAdUnitID = bannerID
             interstitialAdUnitID = interstitialID
             rewardedVideoAdUnitID = rewardedVideoID
         #endif
         
-        // Preload inter and reward ads first time
         loadInterstitialAd()
         loadRewardedVideoAd()
     }
@@ -339,7 +331,7 @@ extension SwiftyAd: GADInterstitialDelegate {
     
     func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
         print(error.localizedDescription)
-        // Do not reload here as it might cause endless preloads when internet problems
+        // Do not reload here as it might cause endless loading loops if no/slow internet
     }
 }
 
@@ -369,14 +361,12 @@ extension SwiftyAd: GADRewardBasedVideoAdDelegate {
     
     func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didFailToLoadWithError error: Error) {
         print(error.localizedDescription)
-        // Do not reload here as it might cause endless preloads when internet problems
+        // Do not reload here as it might cause endless loading loops if no/slow internet
     }
     
     func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didRewardUserWith reward: GADAdReward) {
         print("AdMob reward based video ad did reward user with \(reward)")
-        
-        let rewardInt = Int(truncating: reward.amount)
-        let rewardAmount = rewardInt <= 0 ? rewardAmountBackup : rewardInt
+        let rewardAmount = Int(truncating: reward.amount)
         delegate?.swiftyAd(self, didRewardUserWithAmount: rewardAmount)
     }
 }
@@ -412,7 +402,10 @@ private extension SwiftyAd {
             bannerViewConstraint?.constant = 0 - (bannerAd.frame.height * 3) // *3 due to iPhoneX safe area
         }
         
-        guard withAnimation else { return }
+        guard withAnimation else {
+            bannerAd.isHidden = true
+            return
+        }
         
         UIView.animate(withDuration: bannerAnimationDuration, animations: {
             viewController?.view.layoutIfNeeded()
