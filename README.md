@@ -155,30 +155,17 @@ extension GameScene: SwiftyAdDelegate {
      
        // You can ignore this and hardcode the value if you would like but than you cannot change the value dynamically without having to update your app.
        
-       // You could also ignore the reward amount and do something else, for example unlocking a level or bonus item.
+       // You could also do something else like unlocking a level or bonus item.
        
        // Leave empty if unused
     }
 }
 ```
 
-Note:
-
-This helper will pass a default reward amount to the below method
+- Settings
 
 ```swift
-func swiftyAd(_ swiftyAd: SwiftyAd, didRewardUserWithAmount rewardAmount: Int) {
-```
-
-incase there is a problem fetching the value from the ad network or you set it to 0 by accident. The default value is 1. You can change this in the setup method.
-
-```swift
-SwiftyAd.shared.setup(
-      withBannerID:    ..., 
-      interstitialID:  ..., 
-      rewardedVideoID: ...,
-      rewardAmountBackup: 20
-)
+SwiftyAd.shared.bannerAnimationDuration = 2.0 // default is 1.8
 ```
 
 # When you submit your app to Apple
@@ -201,6 +188,11 @@ Please feel free to let me know about any bugs or improvements.
 Enjoy
 
 # Release Notes
+
+- v8.1.3
+
+Removed ```rewardAmountBackup``` property as its not really needed
+Small tweaks and fixes
 
 - v8.1.2
 
