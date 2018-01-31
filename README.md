@@ -192,6 +192,9 @@ Enjoy
 - v8.1.3
 
 Removed ```rewardAmountBackup``` property as its not really needed
+
+Banner animation duration can now be changed 
+
 Small tweaks and fixes
 
 - v8.1.2
