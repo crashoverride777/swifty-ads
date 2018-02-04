@@ -359,6 +359,10 @@ extension SwiftyAd: GADRewardBasedVideoAdDelegate {
         loadRewardedVideoAd()
     }
     
+    func rewardBasedVideoAdDidCompletePlaying(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+        
+    }
+    
     func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didFailToLoadWithError error: Error) {
         print(error.localizedDescription)
         // Do not reload here as it might cause endless loading loops if no/slow internet
