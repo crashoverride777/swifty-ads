@@ -11,7 +11,7 @@ Please read the AdMob mediation guidlines
 
 https://developers.google.com/admob/ios/mediation
 
-# "DEBUG" custom flag
+# DEBUG
 
 AdMob uses 2 types of AdUnit IDs, 1 for testing and 1 for release. This helper will automatically change the AdUnitID from test to release mode and vice versa. 
 
