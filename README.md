@@ -4,24 +4,12 @@ A Swift helper to integrate Ads from AdMob so you can easily show banner, inters
 
 This helper follows all the best practices in regards to ads, like creating shared banners and correctly preloading interstitial and rewarded video ads so they are always ready to show.
 
-# Rewarded Videos
+# Mediation (Rewarded Videos)
 
 Admob reward videos will only work when using a 3rd party mediation network such as Chartboost or Vungle. 
-Read the AdMob mediation guidlines 
-
-https://support.google.com/admob/bin/answer.py?answer=2413211
+Please read the AdMob mediation guidlines 
 
 https://developers.google.com/admob/ios/mediation
-
-https://developers.google.com/admob/ios/mediation-networks
-
-and rewarded video guidlines 
-
-https://developers.google.com/admob/ios/rewarded-video
-
-Than read your 3rd party ad network(s) of choice mediation guidlines to set up reward videos correctly. This will unclude installing their SDK and mediation adapters. 
-
-NOTE: AdMob reward videos will either show a black full screen ad when using the test AdUnitID or not show one at all.
 
 # "DEBUG" custom flag
 
