@@ -22,7 +22,8 @@
 
 import GoogleMobileAds
 
-/// LocalizedString (todo)
+/// LocalizedString
+/// TODO
 private extension String {
     static let sorry = "Sorry"
     static let ok = "OK"
