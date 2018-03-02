@@ -6,13 +6,6 @@ This helper follows all the best practices in regards to ads, like creating shar
 
 # Mediation (Rewarded Videos)
 
-Admob reward videos will only work when using a 3rd party mediation network such as Chartboost or Vungle. 
-Please read the AdMob mediation guidlines
-
-https://developers.google.com/admob/ios/mediation
-
-# "DEBUG" custom flag
-
 AdMob uses 2 types of AdUnit IDs, 1 for testing and 1 for release. This helper will automatically change the AdUnitID from test to release mode and vice versa. 
 
 You should not show real ads when you are testing your app. In the past Google has been quite strict and has closed down AdMob/AdSense accounts because ads were clicked on apps that were not live. Keep this in mind when you for example test your app via TestFlight because your app will be in release mode when you send a TestFlight build which means it will show real ads.
