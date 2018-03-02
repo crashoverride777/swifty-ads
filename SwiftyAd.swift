@@ -125,7 +125,6 @@ final class SwiftyAd: NSObject {
     private override init() {
         super.init()
         print("AdMob SDK version \(GADRequest.sdkVersion())")
-        
         NotificationCenter.default.addObserver(self, selector: #selector(didRotateDevice), name: .UIDeviceOrientationDidChange, object: nil)
     }
     
@@ -136,11 +135,11 @@ final class SwiftyAd: NSObject {
     /// - parameter bannerID: The banner adUnitID for this app.
     /// - parameter interstitialID: The interstitial adUnitID for this app.
     /// - parameter rewardedVideoID: The rewarded video adUnitID for this app.
-    func setup(withBannerID bannerID: String, interstitialID: String, rewardedVideoID: String) {
+    func setup(withBannerID bannerID: String?, interstitialID: String?, rewardedVideoID: String?) {
         #if !DEBUG
-            bannerViewAdUnitID = bannerID
-            interstitialAdUnitID = interstitialID
-            rewardedVideoAdUnitID = rewardedVideoID
+            bannerViewAdUnitID = bannerID ?? ""
+            interstitialAdUnitID = interstitialID ?? ""
+            rewardedVideoAdUnitID = rewardedVideoID ?? ""
         #endif
         
         loadInterstitialAd()
@@ -184,7 +183,9 @@ final class SwiftyAd: NSObject {
     /// - parameter viewController: The view controller that will present the ad.
     func showRewardedVideo(from viewController: UIViewController) {
         guard isRewardedVideoReady else {
-            showNoVideoAvailableAlert(from: viewController)
+            let alertController = UIAlertController(title: .sorry, message: .noVideo, preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: .ok, style: .cancel))
+            viewController.present(alertController, animated: true)
             return
         }
         
@@ -417,21 +418,6 @@ private extension SwiftyAd {
         }, completion: { isSuccess in
             bannerAd.isHidden = true
         })
-    }
-}
-
-// MARK: - Alert
-
-private extension SwiftyAd {
-    
-    func showNoVideoAvailableAlert(from viewController: UIViewController) {
-        let alertController = UIAlertController(title: .sorry, message: .noVideo, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: .ok, style: .cancel)
-        alertController.addAction(okAction)
-        
-        DispatchQueue.main.async {
-            viewController.present(alertController, animated: true)
-        }
     }
 }
 
