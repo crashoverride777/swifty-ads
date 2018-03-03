@@ -1,6 +1,3 @@
-# swifty-ad
-
-
 # SwiftyAd
 
 A Swift helper to integrate Ads from AdMob so you can easily show banner, interstitial and rewarded video ads anywhere in your project.
