@@ -11,10 +11,8 @@ s.social_media_url = 'http://twitter.com/overrideiactive'
 s.authors = { 'Dominik' => 'overrideinteractive@icloud.com' }
 
 s.requires_arc = true
-s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4' }
-
 s.ios.deployment_target = '9.3'
-#s.tvos.deployment_target = '10.2'
+s.swift_version = '4'
 
 s.source = {
     :git => 'https://github.com/crashoverride777/swifty-ad.git',
