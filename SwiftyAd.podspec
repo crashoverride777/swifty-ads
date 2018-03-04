@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 
-s.name = 'SwiftyMusic'
+s.name = 'SwiftyAd'
 s.version = '8.1.3'
 s.license = 'MIT'
 s.summary = 'A swift helper to show ads from Google AdMob.'
