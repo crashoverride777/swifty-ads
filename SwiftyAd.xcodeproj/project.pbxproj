@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3F39E61B44BDCE4483992D73 /* Pods_SwiftyAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9AE9207A4BE703DE583CE27 /* Pods_SwiftyAd.framework */; };
 		B4C1B12D204C298500452094 /* SwiftyAd.h in Headers */ = {isa = PBXBuildFile; fileRef = B4C1B12B204C298500452094 /* SwiftyAd.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B4C1B134204C2AA400452094 /* SwiftyAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C1B133204C2AA400452094 /* SwiftyAd.swift */; };
 /* End PBXBuildFile section */
@@ -17,9 +16,6 @@
 		B4C1B12B204C298500452094 /* SwiftyAd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyAd.h; sourceTree = "<group>"; };
 		B4C1B12C204C298500452094 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B4C1B133204C2AA400452094 /* SwiftyAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAd.swift; sourceTree = "<group>"; };
-		DDAF23F64AC354BCEE356547 /* Pods-SwiftyAd.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAd.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyAd/Pods-SwiftyAd.release.xcconfig"; sourceTree = "<group>"; };
-		DE102E6834279ED4A4ED46D4 /* Pods-SwiftyAd.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAd.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyAd/Pods-SwiftyAd.debug.xcconfig"; sourceTree = "<group>"; };
-		E9AE9207A4BE703DE583CE27 /* Pods_SwiftyAd.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAd.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,7 +23,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F39E61B44BDCE4483992D73 /* Pods_SwiftyAd.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -39,8 +34,6 @@
 			children = (
 				B4C1B12A204C298500452094 /* SwiftyAd */,
 				B4C1B129204C298500452094 /* Products */,
-				E8BAD59D306BAFCF7858BEC4 /* Pods */,
-				EA5A7EADF11AC459CF6F6A88 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,23 +55,6 @@
 			path = SwiftyAd;
 			sourceTree = "<group>";
 		};
-		E8BAD59D306BAFCF7858BEC4 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				DE102E6834279ED4A4ED46D4 /* Pods-SwiftyAd.debug.xcconfig */,
-				DDAF23F64AC354BCEE356547 /* Pods-SwiftyAd.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		EA5A7EADF11AC459CF6F6A88 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				E9AE9207A4BE703DE583CE27 /* Pods_SwiftyAd.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -97,12 +73,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B4C1B130204C298500452094 /* Build configuration list for PBXNativeTarget "SwiftyAd" */;
 			buildPhases = (
-				3B88646F298629F71F8BE918 /* [CP] Check Pods Manifest.lock */,
 				B4C1B123204C298500452094 /* Sources */,
 				B4C1B124204C298500452094 /* Frameworks */,
 				B4C1B125204C298500452094 /* Headers */,
 				B4C1B126204C298500452094 /* Resources */,
-				B5BC9046D18D97DDF1FC7E38 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -155,42 +129,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		3B88646F298629F71F8BE918 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SwiftyAd-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B5BC9046D18D97DDF1FC7E38 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftyAd/Pods-SwiftyAd-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B4C1B123204C298500452094 /* Sources */ = {
@@ -321,7 +259,6 @@
 		};
 		B4C1B131204C298500452094 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DE102E6834279ED4A4ED46D4 /* Pods-SwiftyAd.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -345,7 +282,6 @@
 		};
 		B4C1B132204C298500452094 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DDAF23F64AC354BCEE356547 /* Pods-SwiftyAd.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
