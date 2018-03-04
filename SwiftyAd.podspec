@@ -19,6 +19,6 @@ s.source = {
 
 s.source_files = "SwiftyAd/**/*.{swift}"
 
-s.dependency = 'Google-Mobile-Ads-SDK'
+s.dependency 'Google-Mobile-Ads-SDK'
 
 end
