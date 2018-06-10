@@ -70,6 +70,7 @@ SwiftyAd.shared.setup(
       privacyURL:  "Enter your privacy policy, this is especially important for EU users. Must be VALID"
 ) { consentyType in 
     print(consentType)
+    print(consentyType.hasPermission)
     // Do something if needed
 }
 ```
@@ -83,6 +84,7 @@ if let viewController = window?.rootViewController {
             privacyURL:  "Enter your privacy policy, this is especially important for EU users. Must be VALID"
       ) { consentyType in 
           print(consentType)
+          print(consentyType.hasPermission)
           // Do something if needed
       }
 }
@@ -97,6 +99,7 @@ if let viewController = view?.window?.rootViewController {
             privacyURL:  "Enter your privacy policy, this is especially important for EU users. Must be VALID"
       ) { consentyType in 
           print(consentType)
+          print(consentyType.hasPermission)
           // Do something if needed
       }
 }
