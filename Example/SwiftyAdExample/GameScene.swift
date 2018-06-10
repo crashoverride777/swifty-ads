@@ -30,57 +30,63 @@ class GameScene: SKScene {
     
     // MARK: - Properties
     
-    /// Labels
-    private lazy var label: SKLabelNode = self.childNode(withName: "textLabel") as! SKLabelNode
+    private let swiftyAd: SwiftyAd = .shared
+    private var coins = 0
+    private lazy var textLabel: SKLabelNode = self.childNode(withName: "textLabel") as! SKLabelNode
+    private lazy var consentLabel: SKLabelNode = self.childNode(withName: "consentLabel") as! SKLabelNode
     
-    /// Touch counter
     private var touchCounter = 15 {
         didSet {
             guard touchCounter > 0 else {
-                SwiftyAd.shared.isRemoved = true
-                label.text = "Removed all ads"
+                swiftyAd.isRemoved = true
+                textLabel.text = "Removed all ads"
                 return
             }
             
-            label.text = "Remove ads in \(touchCounter) clicks"
+            textLabel.text = "Remove ads in \(touchCounter) clicks"
         }
     }
-    
-    /// Coins
-    private var coins = 0
     
     // MARK: - Did Move To View
     
     /// Did move to view
     override func didMove(to view: SKView) {
         
-        SwiftyAd.shared.delegate = self
+        swiftyAd.delegate = self
     
-        label.text = "Remove ads in \(touchCounter) clicks"
+        textLabel.text = "Remove ads in \(touchCounter) clicks"
     }
     
     // MARK: - Touches
     
-    /// Touches began
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        defer {
-            touchCounter -= 1
+        for touch in touches {
+            let location = touch.location(in: self)
+            let node = atPoint(location)
+            
+            guard let viewController = view?.window?.rootViewController else { return }
+            
+            if node == consentLabel {
+                swiftyAd.consentManager.ask(from: viewController) { consentyType in
+                    print(consentyType)
+                }
+                return
+            }
+            
+            defer {
+                touchCounter -= 1
+            }
+            
+            swiftyAd.showInterstitial(from: viewController, withInterval: 2)
         }
-        
-        guard let viewController = view?.window?.rootViewController else { return }
-        SwiftyAd.shared.showInterstitial(from: viewController, withInterval: 2)
     }
     
-    /// Touches moved
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     }
     
-    /// Touches ended
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     }
     
-    /// Touches cancelled
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
     }
 }

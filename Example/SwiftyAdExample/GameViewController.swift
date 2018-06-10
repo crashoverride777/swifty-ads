@@ -14,14 +14,22 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
      
         // Set up ad Mob
-        SwiftyAd.shared.setup(
-            withBannerID:    "Enter your real ID",
-            interstitialID:  "Enter your real ID",
-            rewardedVideoID: "Enter your real ID"
+        let adUnitId = SwiftyAd.AdUnitId(
+            banner:        "ca-app-pub-2427795328331194/7041316660",
+            interstitial:  "ca-app-pub-2427795328331194/8518049864",
+            rewardedVideo: "ca-app-pub-2427795328331194/9994783069"
         )
         
-        SwiftyAd.shared.showBanner(from: self, at: .bottom)
+        let privacyURL = "https://www.overrideinteractive.com/legal/"
         
+        SwiftyAd.shared.setup(with: adUnitId, from: self, privacyURL: privacyURL) { consentType in
+            guard consentType.hasPermission else { return }
+            DispatchQueue.main.async {
+                SwiftyAd.shared.showBanner(from: self)
+            }
+        }
+    
+        // Load scene
         if let scene = GameScene(fileNamed: "GameScene") {
             // Configure the view.
             let skView = self.view as! SKView

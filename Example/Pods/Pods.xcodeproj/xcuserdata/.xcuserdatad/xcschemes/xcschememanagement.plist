@@ -4,7 +4,17 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-SwiftyAd.xcscheme</key>
+		<key>PersonalizedAdConsent-PersonalizedAdConsent.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>PersonalizedAdConsent.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-SwiftyAdExample.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

@@ -22,6 +22,13 @@
 
 import GoogleMobileAds
 
+/// Overrides the default print method so it print statements only show when in DEBUG mode
+private func print(_ items: Any...) {
+    #if DEBUG
+        Swift.print(items)
+    #endif
+}
+
 /// LocalizedString
 /// TODO
 private extension String {
@@ -41,11 +48,19 @@ protocol SwiftyAdDelegate: class {
 }
 
 /**
- AdMob
+ SwiftyAd
  
  A singleton class to manage adverts from Google AdMob.
  */
 final class SwiftyAd: NSObject {
+    
+    // MARK: - Types
+    
+    struct AdUnitId {
+        var banner        = "ca-app-pub-3940256099942544/2934735716"
+        var interstitial  = "ca-app-pub-3940256099942544/4411468910"
+        var rewardedVideo = "ca-app-pub-1234567890123456/1234567890"
+    }
     
     // MARK: - Static Properties
     
@@ -62,6 +77,9 @@ final class SwiftyAd: NSObject {
     
     /// Delegates
     weak var delegate: SwiftyAdDelegate?
+    
+    /// Consent manager
+    var consentManager: SwiftyAdConsentManager!
     
     /// Banner animation duration
     var bannerAnimationDuration = 1.8
@@ -104,10 +122,8 @@ final class SwiftyAd: NSObject {
     private var interstitialAd: GADInterstitial?
     private var rewardedVideoAd: GADRewardBasedVideoAd?
     
-    /// Ad Unit IDs. Gets set to real ID in setup method
-    private var bannerViewAdUnitID    = "ca-app-pub-3940256099942544/2934735716"
-    private var interstitialAdUnitID  = "ca-app-pub-3940256099942544/4411468910"
-    private var rewardedVideoAdUnitID = "ca-app-pub-1234567890123456/1234567890"
+    /// Ad Unit Ids
+    private var adUnitId = AdUnitId()
     
     /// Interval counter
     private var intervalCounter = 0
@@ -118,6 +134,11 @@ final class SwiftyAd: NSObject {
     /// Banner size
     private var bannerSize: GADAdSize {
         return UIDevice.current.orientation.isLandscape ? kGADAdSizeSmartBannerLandscape : kGADAdSizeSmartBannerPortrait
+    }
+    
+    /// Can show add
+    private var canShowAds: Bool {
+        return consentManager.consentType.hasPermission && !isRemoved
     }
     
     // MARK: - Init
@@ -132,18 +153,47 @@ final class SwiftyAd: NSObject {
     
     /// Set up swift ad
     ///
-    /// - parameter bannerID: The banner adUnitID for this app.
-    /// - parameter interstitialID: The interstitial adUnitID for this app.
-    /// - parameter rewardedVideoID: The rewarded video adUnitID for this app.
-    func setup(withBannerID bannerID: String?, interstitialID: String?, rewardedVideoID: String?) {
+    /// - parameter adUnitId: The struct for the different type of adUnitId's for this app.
+    /// - parameter viewController: The view controller that will present the consent alert if needed.
+    /// - parameter privacyURL: The privacy policy url string for consent requests (GDPR).
+    /// - parameter shouldOfferAdFree: A bool to indicate in the consent request if adFree should be offered. Defaults to false.
+    /// - returns handler: A handler that will return the updated ConsentType enum.
+    func setup(with adUnitId: AdUnitId, from viewController: UIViewController, privacyURL: String, shouldOfferAdFree: Bool = false, handler: @escaping (SwiftyAdConsentManager.ConsentType) -> Void) {
+        
+        // Create ids array
+        var ids: [String] = []
+    
         #if !DEBUG
-            bannerViewAdUnitID = bannerID ?? ""
-            interstitialAdUnitID = interstitialID ?? ""
-            rewardedVideoAdUnitID = rewardedVideoID ?? ""
+        // Update to real ids if not in debug mode
+        self.adUnitId = adUnitId
+    
+        // If not empty add to ids array
+        if !adUnitId.banner.isEmpty {
+            ids.append(adUnitId.banner)
+        }
+        if !adUnitId.interstitial.isEmpty {
+            ids.append(adUnitId.interstitial)
+        }
+        if !adUnitId.rewardedVideo.isEmpty {
+            ids.append(adUnitId.rewardedVideo)
+        }
         #endif
         
-        loadInterstitialAd()
-        loadRewardedVideoAd()
+        // Create consent manager
+        consentManager = SwiftyAdConsentManager(ids: ids, privacyPolicyURL: privacyURL, shouldOfferAdFree: shouldOfferAdFree)
+        
+        // Make consent request with valid ids
+        consentManager.ask(from: viewController, skipIfAlreadyAuthorized: true) { consentType in
+            switch consentType {
+            case .personalized, .nonPersonalized:
+                self.loadInterstitialAd()
+                self.loadRewardedVideoAd()
+            case .adFree, .unknown:
+                break
+            }
+        
+            handler(consentType)
+        }
     }
     
     // MARK: - Show Banner
@@ -153,7 +203,7 @@ final class SwiftyAd: NSObject {
     /// - parameter viewController: The view controller that will present the ad.
     /// - parameter position: The position of the banner. Defaults to bottom.
     func showBanner(from viewController: UIViewController, at position: BannerPosition = .bottom) {
-        guard !isRemoved else { return }
+        guard canShowAds else { return }
         bannerPosition = position
         loadBannerAd(from: viewController)
     }
@@ -165,7 +215,7 @@ final class SwiftyAd: NSObject {
     /// - parameter viewController: The view controller that will present the ad.
     /// - parameter interval: The interval of when to show the ad, e.g every 4th time the method is called. Defaults to nil.
     func showInterstitial(from viewController: UIViewController, withInterval interval: Int? = nil) {
-        guard !isRemoved, isInterstitialReady else { return }
+        guard canShowAds, isInterstitialReady else { return }
         
         if let interval = interval {
             intervalCounter += 1
@@ -182,7 +232,7 @@ final class SwiftyAd: NSObject {
     ///
     /// - parameter viewController: The view controller that will present the ad.
     func showRewardedVideo(from viewController: UIViewController) {
-        guard isRewardedVideoReady else {
+        guard canShowAds, isRewardedVideoReady else {
             let alertController = UIAlertController(title: .sorry, message: .noVideo, preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: .ok, style: .cancel))
             viewController.present(alertController, animated: true)
@@ -208,16 +258,16 @@ final class SwiftyAd: NSObject {
 private extension SwiftyAd {
     
     func loadBannerAd(from viewController: UIViewController) {
+        guard canShowAds else { return }
         removeBanner()
         bannerAdView = GADBannerView(adSize: bannerSize)
         
         guard let bannerAdView = bannerAdView else { return }
         
         // Create ad
-        bannerAdView.adUnitID = bannerViewAdUnitID
+        bannerAdView.adUnitID = adUnitId.banner
         bannerAdView.delegate = self
         bannerAdView.rootViewController = viewController
-        bannerAdView.isHidden = true
         bannerAdView.translatesAutoresizingMaskIntoConstraints = false
         viewController.view.addSubview(bannerAdView)
         
@@ -244,6 +294,7 @@ private extension SwiftyAd {
         
         // Request ad
         let request = GADRequest()
+        adExtras(for: request)
         #if DEBUG
             request.testDevices = [kGADSimulatorID]
         #endif
@@ -251,10 +302,12 @@ private extension SwiftyAd {
     }
     
     func loadInterstitialAd() {
-        interstitialAd = GADInterstitial(adUnitID: interstitialAdUnitID)
+        guard canShowAds else { return }
+        interstitialAd = GADInterstitial(adUnitID: adUnitId.interstitial)
         interstitialAd?.delegate = self
         
         let request = GADRequest()
+        adExtras(for: request)
         #if DEBUG
             request.testDevices = [kGADSimulatorID]
         #endif
@@ -262,14 +315,16 @@ private extension SwiftyAd {
     }
     
     func loadRewardedVideoAd() {
+        guard canShowAds else { return }
         rewardedVideoAd = GADRewardBasedVideoAd.sharedInstance()
         rewardedVideoAd?.delegate = self
         
         let request = GADRequest()
+        adExtras(for: request)
         #if DEBUG
             request.testDevices = [kGADSimulatorID]
         #endif
-        rewardedVideoAd?.load(request, withAdUnitID: rewardedVideoAdUnitID)
+        rewardedVideoAd?.load(request, withAdUnitID: adUnitId.rewardedVideo)
     }
 }
 
@@ -421,14 +476,14 @@ private extension SwiftyAd {
     }
 }
 
-// MARK: - Print
+// MARK: - Request Extras
 
 private extension SwiftyAd {
     
-    /// Overrides the default print method so it print statements only show when in DEBUG mode
-    func print(_ items: Any...) {
-        #if DEBUG
-            Swift.print(items)
-        #endif
+    func adExtras(for request: GADRequest) {
+        guard consentManager.consentType == .nonPersonalized else { return }
+        let extras = GADExtras()
+        extras.additionalParameters = ["npa": "1"] // only allow non-personalized ads
+        request.register(extras)
     }
 }

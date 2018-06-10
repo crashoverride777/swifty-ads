@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		361D0CC1486D9B83D53567B6 /* Pods_SwiftyAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36E4E0628DBF34F2F25D3F16 /* Pods_SwiftyAd.framework */; };
+		0415D22AF4A20E7C0EFF2991 /* Pods_SwiftyAdExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60BA28B43E2218213054A068 /* Pods_SwiftyAdExample.framework */; };
 		B418D9E11E44B42000DD6C15 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B418D9E01E44B42000DD6C15 /* Images.xcassets */; };
 		B435FFE11CE14C2A00A678AA /* SwiftyAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = B435FFE01CE14C2A00A678AA /* SwiftyAd.swift */; };
+		B476FA3220CDA29300655D79 /* SwiftyAdConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B476FA3120CDA29300655D79 /* SwiftyAdConsentManager.swift */; };
 		B4B01A191B9A0AF500F9A8EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B01A181B9A0AF500F9A8EA /* AppDelegate.swift */; };
 		B4B01A1F1B9A0AF500F9A8EA /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B01A1E1B9A0AF500F9A8EA /* GameViewController.swift */; };
 		B4DA75771E4CBEDA00A52B0E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4DA75731E4CBEDA00A52B0E /* LaunchScreen.xib */; };
@@ -19,11 +20,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1C32159F51E545D7F0EEC413 /* Pods-SwiftyAd.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAd.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyAd/Pods-SwiftyAd.release.xcconfig"; sourceTree = "<group>"; };
-		22965D53D6907B6C34935DF0 /* Pods-SwiftyAd (iOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAd (iOS).release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyAd (iOS)/Pods-SwiftyAd (iOS).release.xcconfig"; sourceTree = "<group>"; };
-		36E4E0628DBF34F2F25D3F16 /* Pods_SwiftyAd.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAd.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		60BA28B43E2218213054A068 /* Pods_SwiftyAdExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAdExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B418D9E01E44B42000DD6C15 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B435FFE01CE14C2A00A678AA /* SwiftyAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyAd.swift; path = ../SwiftyAd/SwiftyAd.swift; sourceTree = "<group>"; };
+		B476FA3120CDA29300655D79 /* SwiftyAdConsentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdConsentManager.swift; sourceTree = "<group>"; };
 		B4B01A131B9A0AF500F9A8EA /* SwiftyAdExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyAdExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4B01A171B9A0AF500F9A8EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = SwiftyAdExample/Info.plist; sourceTree = SOURCE_ROOT; };
 		B4B01A181B9A0AF500F9A8EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = SwiftyAdExample/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
@@ -32,9 +32,8 @@
 		B4DA75761E4CBEDA00A52B0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B4F4EE0F1DA3F7BC00C6FEC0 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		B4F4EE101DA3F7BC00C6FEC0 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		CB278B6CB2E1E30D4CB84818 /* Pods-SwiftyAd (iOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAd (iOS).debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyAd (iOS)/Pods-SwiftyAd (iOS).debug.xcconfig"; sourceTree = "<group>"; };
-		D0DD51B70AB9F036A5013B45 /* Pods_SwiftyAd__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAd__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E6B04E3A8A4EBBC23BA56659 /* Pods-SwiftyAd.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAd.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyAd/Pods-SwiftyAd.debug.xcconfig"; sourceTree = "<group>"; };
+		D8C3B9F30B97AD7F0B279A1C /* Pods-SwiftyAdExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyAdExample/Pods-SwiftyAdExample.release.xcconfig"; sourceTree = "<group>"; };
+		F0CE8E09F8705B08A754E481 /* Pods-SwiftyAdExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyAdExample/Pods-SwiftyAdExample.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,7 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				361D0CC1486D9B83D53567B6 /* Pods_SwiftyAd.framework in Frameworks */,
+				0415D22AF4A20E7C0EFF2991 /* Pods_SwiftyAdExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,10 +51,8 @@
 		50EE868FBF4303E359C69933 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				CB278B6CB2E1E30D4CB84818 /* Pods-SwiftyAd (iOS).debug.xcconfig */,
-				22965D53D6907B6C34935DF0 /* Pods-SwiftyAd (iOS).release.xcconfig */,
-				E6B04E3A8A4EBBC23BA56659 /* Pods-SwiftyAd.debug.xcconfig */,
-				1C32159F51E545D7F0EEC413 /* Pods-SwiftyAd.release.xcconfig */,
+				F0CE8E09F8705B08A754E481 /* Pods-SwiftyAdExample.debug.xcconfig */,
+				D8C3B9F30B97AD7F0B279A1C /* Pods-SwiftyAdExample.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -63,8 +60,7 @@
 		947B71864618DC3F471261D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D0DD51B70AB9F036A5013B45 /* Pods_SwiftyAd__iOS_.framework */,
-				36E4E0628DBF34F2F25D3F16 /* Pods_SwiftyAd.framework */,
+				60BA28B43E2218213054A068 /* Pods_SwiftyAdExample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -73,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				B435FFE01CE14C2A00A678AA /* SwiftyAd.swift */,
+				B476FA3120CDA29300655D79 /* SwiftyAdConsentManager.swift */,
 				B4C060D51D1EB676004A3BA8 /* SwiftyAdExample */,
 				B4B01A141B9A0AF500F9A8EA /* Products */,
 				50EE868FBF4303E359C69933 /* Pods */,
@@ -114,8 +111,7 @@
 				B4B01A0F1B9A0AF500F9A8EA /* Sources */,
 				B4B01A101B9A0AF500F9A8EA /* Frameworks */,
 				B4B01A111B9A0AF500F9A8EA /* Resources */,
-				7FA0C3DFF24EED0B2ADD0983 /* [CP] Embed Pods Frameworks */,
-				350AD974D0FF37BEBBC2C1F7 /* [CP] Copy Pods Resources */,
+				D52A53180E02F3AD448216EF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -134,7 +130,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Dominik;
 				TargetAttributes = {
 					B4B01A121B9A0AF500F9A8EA = {
@@ -176,49 +172,40 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		350AD974D0FF37BEBBC2C1F7 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftyAd/Pods-SwiftyAd-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7FA0C3DFF24EED0B2ADD0983 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftyAd/Pods-SwiftyAd-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		9E2430265B52201036E331CB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SwiftyAdExample-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D52A53180E02F3AD448216EF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-SwiftyAdExample/Pods-SwiftyAdExample-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/PersonalizedAdConsent/PersonalizedAdConsent.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PersonalizedAdConsent.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftyAdExample/Pods-SwiftyAdExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -231,6 +218,7 @@
 				B4B01A1F1B9A0AF500F9A8EA /* GameViewController.swift in Sources */,
 				B435FFE11CE14C2A00A678AA /* SwiftyAd.swift in Sources */,
 				B4B01A191B9A0AF500F9A8EA /* AppDelegate.swift in Sources */,
+				B476FA3220CDA29300655D79 /* SwiftyAdConsentManager.swift in Sources */,
 				B4F4EE131DA3F7BC00C6FEC0 /* GameScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -269,12 +257,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -325,12 +315,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -364,7 +356,7 @@
 		};
 		B4B01A371B9A0AF500F9A8EA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E6B04E3A8A4EBBC23BA56659 /* Pods-SwiftyAd.debug.xcconfig */;
+			baseConfigurationReference = F0CE8E09F8705B08A754E481 /* Pods-SwiftyAdExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -388,7 +380,7 @@
 		};
 		B4B01A381B9A0AF500F9A8EA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1C32159F51E545D7F0EEC413 /* Pods-SwiftyAd.release.xcconfig */;
+			baseConfigurationReference = D8C3B9F30B97AD7F0B279A1C /* Pods-SwiftyAdExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
