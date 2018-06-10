@@ -33,7 +33,7 @@ With the latest xCode it is no longer necessary to setup the DEBUG flag manually
 
 https://support.google.com/admob/answer/3052638?hl=en-GB&ref_topic=3052726
 
-- Step 2: Install AdMob SDK and PersonalizedAdConsent via CocoaPods
+- Step 2: Install AdMob and PersonalizedAdConsent SDK via CocoaPods
 
 https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods
 https://cocoapods.org/app
@@ -43,7 +43,7 @@ pod 'Google-Mobile-Ads-SDK'
 pod 'PersonalizedAdConsent'
 ```
 
-- Step 3: Copy the following file into your project.
+- Step 3: Copy the following files into your project.
 
 ```swift
 SwiftyAd.swift
