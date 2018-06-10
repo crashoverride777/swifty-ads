@@ -4,7 +4,15 @@ A Swift helper to integrate Ads from AdMob so you can easily show banner, inters
 
 This helper follows all the best practices in regards to ads, like creating shared banners and correctly preloading interstitial and rewarded video ads so they are always ready to show.
 
+# GDPR (EU countries only)
+
+Please read https://developers.google.com/admob/ios/eu-consent#collect_consent
+
+As of version 8.2 this helper supports consent requests for EU countries via a new class called `SwiftyAdConsentManager`. At the moment it will show the default google adMob consent form. I will add a custom consent form for mediation very soon. Please do not use mediation if in EU countries. 
+
 # Mediation (Rewarded Videos)
+
+NOTE: GDPR - Currently SwiftyAd does NOT support mediation consents for GDPR reasons. Please do not use mediation until a further update is released. See GDPR above.
 
 Admob reward videos will only work when using a 3rd party mediation network such as Chartboost or Vungle. 
 Please read the AdMob mediation guidlines 
@@ -25,23 +33,21 @@ With the latest xCode it is no longer necessary to setup the DEBUG flag manually
 
 https://support.google.com/admob/answer/3052638?hl=en-GB&ref_topic=3052726
 
-- Step 2: Install AdMob SDK
+- Step 2: Install AdMob SDK and PersonalizedAdConsent via CocoaPods
 
-// Cocoa Pods
 https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods
-
-// Manually
-https://developers.google.com/admob/ios/quick-start#manually_using_the_sdk_download
-
-I would recommend using Cocoa Pods especially if you will add more SDKs down the line from other ad networks.
-
-They have an app now which should makes managing pods alot easier.
 https://cocoapods.org/app
+
+```
+pod 'Google-Mobile-Ads-SDK'
+pod 'PersonalizedAdConsent'
+```
 
 - Step 3: Copy the following file into your project.
 
 ```swift
 SwiftyAd.swift
+SwiftyAdConsentManager.swift
 ```
 
 # How to use
@@ -49,11 +55,69 @@ SwiftyAd.swift
 - Setup up the helper with your AdUnitIDs as soon as your app launches e.g AppDelegate or 1st ViewController.
 
 ```swift
-SwiftyAd.shared.setup(
-      withBannerID:    "Enter your real id or leave empty if unused", 
-      interstitialID:  "Enter your real id or leave empty if unused", 
-      rewardedVideoID: "Enter your real id or leave empty if unused"
+let adUnitId = SwiftyAd.AdUnitId(
+      banner:        "Enter your real id or leave empty if unused", 
+      interstitial:  "Enter your real id or leave empty if unused", 
+      rewardedVideo: "Enter your real id or leave empty if unused"
 )
+```
+
+UIViewController
+```swift
+SwiftyAd.shared.setup(
+      with: adUnitId, 
+      from: self,
+      privacyURL:  "Enter your privacy policy, this is especially important for EU users. Must be VALID"
+) { consentyType in 
+    print(consentType)
+    // Do something if needed
+}
+```
+
+AppDelegate
+```swift
+if let viewController = window?.rootViewController {
+      SwiftyAd.shared.setup(
+            with: adUnitId, 
+            from: viewController,
+            privacyURL:  "Enter your privacy policy, this is especially important for EU users. Must be VALID"
+      ) { consentyType in 
+          print(consentType)
+          // Do something if needed
+      }
+}
+```
+
+SpriteKit
+```swift
+if let viewController = view?.window?.rootViewController {
+      SwiftyAd.shared.setup(
+            with: adUnitId, 
+            from: viewController,
+            privacyURL:  "Enter your privacy policy, this is especially important for EU users. Must be VALID"
+      ) { consentyType in 
+          print(consentType)
+          // Do something if needed
+      }
+}
+```
+
+With ad free consent
+```swift
+SwiftyAd.shared.setup(
+      with: ... ,
+      from: ...,
+      privacyURL: ...,
+      shouldOfferAdFree: true // defaults to false
+) ....
+```
+
+- To ask for consent again (GDPR) (e.g in app setting)
+
+```swift
+swiftyAd.consentManager.ask(from: viewController) { consentyType in
+    print(consentyType)
+}
 ```
 
 - To show an Ad call these methods anywhere you like in your project
