@@ -6,11 +6,13 @@ This helper follows all the best practices in regards to ads, like creating shar
 
 # GDPR (EU countries only)
 
-Please read https://developers.google.com/admob/ios/eu-consent#collect_consent
+Please [READ](https://developers.google.com/admob/ios/eu-consent#collect_consent)
 
-As of version 9.0 this helper supports consent requests for EU countries via a new class called `SwiftyAdConsentManager`. It can show the default google form or a custom consent form.
+As of version 9.0 this helper supports full GDPR support via a new class called `SwiftyAdConsentManager`. It can show the default google consent form or a custom consent form.
 
-NOTE: To show the google consent form please read the instructions URL above, mainly you have to set your ad technology providers in your AdMob console to manual and not recommended.
+NOTE: To show the google consent form please read the instructions above, mainly you have to set your ad technology providers in your AdMob console to manual and not recommended.
+
+The custom consent form is only supported in English, please add your own languages to the String extension in both .swift files.
 
 # Mediation (Rewarded Videos)
 
@@ -18,6 +20,10 @@ Admob reward videos will only work when using a 3rd party mediation network such
 Please read the AdMob mediation guidlines 
 
 https://developers.google.com/admob/ios/mediation
+
+NOTE:
+
+Make sure to include your mediation networks when setting up SwiftyAd (see How To Use)
 
 # DEBUG
 
@@ -65,9 +71,9 @@ let adConfig = SwiftyAd.Configuration(
         
 let adConsentConfig = SwiftyAd.ConsentConfiguration(
       privacyPolicyURL: "https://developers.google.com/admob/ios/eu-consent", // enter real
-      shouldOfferAdFree: false,
+      shouldOfferAdFree: false, // ad free button in the consent form
       mediationNetworks: ["Chartboost", "AppLovin", "Vungle"], // Mediation providers you use or leave empty. These will be used in the custom consent form for GDPR reasons
-      isTaggedForUnderAgeOfConsent: false, // required for GDPR, so set appropriately
+      isTaggedForUnderAgeOfConsent: false, // required for GDPR, so set appropriately. Will be ignored if not in EEA
       formType: .custom
 )
         
