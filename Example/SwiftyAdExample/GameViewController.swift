@@ -63,10 +63,6 @@ extension GameViewController: SwiftyAdDelegate {
         print("SwiftyAd did close")
     }
     
-    func swiftyAdDidPressAdFreeConsentButton(_ swiftyAd: SwiftyAd) {
-        print("SwiftyAd did press ad free button in consent form")
-    }
-    
     func swiftyAd(_ swiftyAd: SwiftyAd, didChange consentStatus: SwiftyAd.ConsentStatus) {
         print("SwiftyAd did change consent status to \(consentStatus)")
         // e.g update mediation networks

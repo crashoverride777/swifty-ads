@@ -36,8 +36,6 @@ protocol SwiftyAdDelegate: class {
     func swiftyAdDidOpen(_ swiftyAd: SwiftyAd)
     /// SwiftyAd did close
     func swiftyAdDidClose(_ swiftyAd: SwiftyAd)
-    /// SwiftyAd did press ad free button
-    func swiftyAdDidPressAdFreeConsentButton(_ swiftyAd: SwiftyAd)
     /// Did change consent status
     func swiftyAd(_ swiftyAd: SwiftyAd, didChange consentStatus: SwiftyAd.ConsentStatus)
     /// SwiftyAd did reward user
@@ -177,10 +175,7 @@ final class SwiftyAd: NSObject {
                 self.loadInterstitialAd()
                 self.loadRewardedVideoAd()
                 handler(true)
-            case .adFree:
-                self.delegate?.swiftyAdDidPressAdFreeConsentButton(self)
-                handler(false)
-            case .unknown:
+            case .adFree, .unknown:
                 handler(false)
             }
         }
@@ -193,13 +188,6 @@ final class SwiftyAd: NSObject {
     /// - parameter viewController: The view controller that will present the consent form.
     func askForConsent(from viewController: UIViewController) {
         consentManager.ask(from: viewController, skipIfAlreadyAuthorized: false) { status in
-            switch status {
-            case .adFree:
-                self.delegate?.swiftyAdDidPressAdFreeConsentButton(self)
-            default:
-                break
-            }
-            
             self.delegate?.swiftyAd(self, didChange: status)
         }
     }
@@ -462,10 +450,7 @@ private extension SwiftyAd {
             switch status {
             case .personalized, .nonPersonalized:
                 handler(true)
-            case .adFree:
-                self.delegate?.swiftyAdDidPressAdFreeConsentButton(self)
-                handler(false)
-            case .unknown:
+            case .adFree, .unknown:
                 handler(false)
             }
         }
