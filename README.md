@@ -139,7 +139,7 @@ if SwiftyAd.shared.isInterstitialReady {
 // When these return false the helper will try to preload an ad again.
 ```
 
-## Remove Banner Ads
+## Remove Banner ads
 
 e.g during gameplay 
 
@@ -147,7 +147,7 @@ e.g during gameplay
 SwiftyAd.shared.removeBanner() 
 ```
 
-## To remove all (in app purchases)
+## Remove all ads (in app purchases)
 
 ```swift
 SwiftyAd.shared.isRemoved = true 
