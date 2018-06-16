@@ -10,26 +10,13 @@ import SpriteKit
 
 class GameViewController: UIViewController {
 
+    private let swiftyAd: SwiftyAd = .shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
      
-        // Set up ad Mob
-        let adUnitId = SwiftyAd.AdUnitId(
-            banner:        "ca-app-pub-2427795328331194/7041316660",
-            interstitial:  "ca-app-pub-2427795328331194/8518049864",
-            rewardedVideo: "ca-app-pub-2427795328331194/9994783069"
-        )
-        
-        let privacyURL = "https://www.overrideinteractive.com/legal/"
-        
-        SwiftyAd.shared.setup(with: adUnitId, from: self, privacyURL: privacyURL) { consentType in
-            guard consentType.hasPermission else { return }
-            DispatchQueue.main.async {
-                SwiftyAd.shared.showBanner(from: self)
-            }
-        }
+        setupSwiftyAd(formType: .custom)
     
-        // Load scene
         if let scene = GameScene(fileNamed: "GameScene") {
             // Configure the view.
             let skView = self.view as! SKView
@@ -61,5 +48,69 @@ class GameViewController: UIViewController {
 
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+}
+
+// MARK: - SwiftyAdDelegate
+
+extension GameViewController: SwiftyAdDelegate {
+    
+    func swiftyAdDidOpen(_ swiftyAd: SwiftyAd) {
+        print("SwiftyAd did open")
+    }
+    
+    func swiftyAdDidClose(_ swiftyAd: SwiftyAd) {
+        print("SwiftyAd did close")
+    }
+    
+    func swiftyAdDidPressAdFreeConsentButton(_ swiftyAd: SwiftyAd) {
+        print("SwiftyAd did press ad free button in consent form")
+    }
+    
+    func swiftyAd(_ swiftyAd: SwiftyAd, didChange consentStatus: SwiftyAd.ConsentStatus) {
+        print("SwiftyAd did change consent status to \(consentStatus)")
+        // e.g update mediation networks
+    }
+    
+    func swiftyAd(_ swiftyAd: SwiftyAd, didRewardUserWithAmount rewardAmount: Int) {
+        print("SwiftyAd did reward user with \(rewardAmount)")
+        
+        if let scene = (view as? SKView)?.scene as? GameScene {
+            scene.coins += rewardAmount
+        }
+        
+        // Will actually not work with this sample project, adMob just shows a black ad in test mode
+        // It only works with 3rd party mediation partners you set up through your adMob account
+    }
+}
+
+// MARK: - Setup Swifty Ad
+
+extension GameViewController {
+    
+    func setupSwiftyAd(formType: SwiftyAd.FormType) {
+        let config = SwiftyAd.Configuration(
+            bannerAdUnitId:        "",
+            interstitialAdUnitId:  "",
+            rewardedVideoAdUnitId: "",
+            bannerAnimationDuration: 1.8
+        )
+        
+        let consentConfig = SwiftyAd.ConsentConfiguration(
+            privacyPolicyURL: "https://developers.google.com/admob/ios/eu-consent", // enter real
+            shouldOfferAdFree: false,
+            mediationNetworks: ["Chartboost", "AppLovin", "Vungle"],
+            isTaggedForUnderAgeOfConsent: false,
+            formType: formType
+            
+        )
+        
+        swiftyAd.delegate = self
+        swiftyAd.setup(with: config, consentConfiguration: consentConfig, viewController: self) { status in
+            guard status != .unknown else { return }
+            DispatchQueue.main.async {
+                self.swiftyAd.showBanner(from: self)
+            }
+        }
     }
 }

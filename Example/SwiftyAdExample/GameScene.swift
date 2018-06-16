@@ -7,33 +7,17 @@
 
 import SpriteKit
 
-extension GameScene: SwiftyAdDelegate {
-    
-    func swiftyAdDidOpen(_ swiftyAd: SwiftyAd) {
-        print("SwiftyAd did open")
-    }
-    
-    func swiftyAdDidClose(_ swiftyAd: SwiftyAd) {
-        print("SwiftyAd did close")
-    }
-    
-    func swiftyAd(_ swiftyAd: SwiftyAd, didRewardUserWithAmount rewardAmount: Int) {
-        print("SwiftyAd did reward user")
-        
-        coins += rewardAmount
-        // Will actually not work with this sample project, adMob just shows a black ad in test mode
-        // It only works with 3rd party mediation partners you set up through your adMob account
-    }
-}
-
 class GameScene: SKScene {
     
     // MARK: - Properties
+
+    var coins = 0
+    
+    private lazy var textLabel: SKLabelNode = self.childNode(withName: "textLabel") as! SKLabelNode
+    private lazy var consentDefaultLabel: SKLabelNode = self.childNode(withName: "consentDefaultLabel") as! SKLabelNode
+    private lazy var consentCustomLabel: SKLabelNode = self.childNode(withName: "consentCustomLabel") as! SKLabelNode
     
     private let swiftyAd: SwiftyAd = .shared
-    private var coins = 0
-    private lazy var textLabel: SKLabelNode = self.childNode(withName: "textLabel") as! SKLabelNode
-    private lazy var consentLabel: SKLabelNode = self.childNode(withName: "consentLabel") as! SKLabelNode
     
     private var touchCounter = 15 {
         didSet {
@@ -47,13 +31,9 @@ class GameScene: SKScene {
         }
     }
     
-    // MARK: - Did Move To View
+    // MARK: - Life Cycle
     
-    /// Did move to view
     override func didMove(to view: SKView) {
-        
-        swiftyAd.delegate = self
-    
         textLabel.text = "Remove ads in \(touchCounter) clicks"
     }
     
@@ -66,11 +46,16 @@ class GameScene: SKScene {
             
             guard let viewController = view?.window?.rootViewController else { return }
             
-            if node == consentLabel {
-                swiftyAd.consentManager.ask(from: viewController) { consentyType in
-                    print(consentyType)
-                }
-                return
+            if node == consentDefaultLabel {
+                let gameVC = view?.window?.rootViewController as! GameViewController
+                gameVC.setupSwiftyAd(formType: .google) // just for this demo to show both alerts
+                swiftyAd.askForConsent(from: viewController)
+            }
+            
+            if node == consentCustomLabel {
+                let gameVC = view?.window?.rootViewController as! GameViewController
+                gameVC.setupSwiftyAd(formType: .custom) // just for this demo to show both alerts
+                swiftyAd.askForConsent(from: viewController)
             }
             
             defer {

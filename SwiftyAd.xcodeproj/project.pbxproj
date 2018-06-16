@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B41E32BB20D05C3900E06BAB /* SwiftyAdConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41E32BA20D05C3900E06BAB /* SwiftyAdConsentManager.swift */; };
 		B4C1B12D204C298500452094 /* SwiftyAd.h in Headers */ = {isa = PBXBuildFile; fileRef = B4C1B12B204C298500452094 /* SwiftyAd.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B4C1B134204C2AA400452094 /* SwiftyAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C1B133204C2AA400452094 /* SwiftyAd.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B41E32BA20D05C3900E06BAB /* SwiftyAdConsentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdConsentManager.swift; sourceTree = "<group>"; };
 		B4C1B128204C298500452094 /* SwiftyAd.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyAd.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4C1B12B204C298500452094 /* SwiftyAd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyAd.h; sourceTree = "<group>"; };
 		B4C1B12C204C298500452094 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,6 +51,7 @@
 			isa = PBXGroup;
 			children = (
 				B4C1B133204C2AA400452094 /* SwiftyAd.swift */,
+				B41E32BA20D05C3900E06BAB /* SwiftyAdConsentManager.swift */,
 				B4C1B12B204C298500452094 /* SwiftyAd.h */,
 				B4C1B12C204C298500452094 /* Info.plist */,
 			);
@@ -136,6 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4C1B134204C2AA400452094 /* SwiftyAd.swift in Sources */,
+				B41E32BB20D05C3900E06BAB /* SwiftyAdConsentManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
