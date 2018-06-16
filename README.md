@@ -14,6 +14,8 @@ NOTE: To show the google consent form please read the instructions above, mainly
 
 The custom consent form is only supported in English, please add your own languages to the String extension in both .swift files.
 
+It is also required that the user has the option to change their GDPR consent settings at anytime, usually via a button in the apps settings menu.
+
 # Mediation
 
 Admob reward videos will only work when using a 3rd party mediation network such as Chartboost or Vungle. 
@@ -55,7 +57,7 @@ SwiftyAdConsentManager.swift
 
 - Setup up the helper with your AdUnitIDs as soon as your app launches e.g RootViewController or AppDelegate.
 
-// View Controller
+View Controller
 ```swift
 let adConfig = SwiftyAd.Configuration(
       bannerAdUnitId:        "Enter your real id or leave empty if unused",
@@ -80,28 +82,18 @@ SwiftyAd.shared.setup(with: adConfig, consentConfiguration: adConsentConfig, vie
 }
 ```
 
-// AppDelegate or SKScene you can get access to the rootViewController like sp
+AppDelegate
 ```swift
 if let viewController = window?.rootViewController {
       SwiftyAd.shared.setup...
 }
 ```
 
-// SKScene
+SKScene
 ```swift
 if let viewController = view?.window?.rootViewController {
       SwiftyAd.shared.setup...
 }
-```
-
-With ad free button in consent form (GDPR)
-```swift
-SwiftyAd.shared.setup(
-      with: ... ,
-      from: ...,
-      privacyURL: ...,
-      shouldOfferAdFree: true // defaults to false
-)
 ```
 
 - To show an Ad call these methods anywhere you like in your project
@@ -188,8 +180,11 @@ extension GameViewController: SwiftyAdDelegate {
     }
     
     func swifyAd(_ swiftyAd: SwiftyAd, didRewardUserWithAmount rewardAmount: Int) {
-        self.coins += rewardAmount
        // Reward amount is a decimel number I converted to an integer for convenience. This value comes from your AdNetwork.
+       if let scene = (view as? SKView)?.scene as? GameScene {
+            scene.coins += rewardAmount
+        }
+       
      
        // You can ignore this and hardcode the value if you would like but than you cannot change the value dynamically without having to update your app.
        
@@ -200,10 +195,18 @@ extension GameViewController: SwiftyAdDelegate {
 }
 ```
 
-- To ask for consent again (GDPR) (e.g in app setting)
+- To ask for consent again (GDPR) 
+
+It is required that the user has the option to change their GDPR consent settings, usually via a button in settings.
 
 ```swift
-swiftyAd.askForConsent(from: viewController)
+SwiftyAd.shared.askForConsent(from: viewController)
+```
+
+The consent button can be hidden for non EEA users like so
+
+```swift
+consentButton.isHidden = !SwiftyAd.shared.isRequiredToAskForConsent
 ```
 
 # When you submit your app to Apple
