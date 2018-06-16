@@ -106,8 +106,8 @@ extension GameViewController {
         )
         
         swiftyAd.delegate = self
-        swiftyAd.setup(with: config, consentConfiguration: consentConfig, viewController: self) { status in
-            guard status != .unknown else { return }
+        swiftyAd.setup(with: config, consentConfiguration: consentConfig, viewController: self) { hasConsent in
+            guard hasConsent else { return }
             DispatchQueue.main.async {
                 self.swiftyAd.showBanner(from: self)
             }

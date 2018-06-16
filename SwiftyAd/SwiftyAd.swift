@@ -138,13 +138,13 @@ final class SwiftyAd: NSObject {
     
     // MARK: - Setup
     
-    /// Set up swift ad
+    /// Setup swift ad
     ///
     /// - parameter configuration: A struct to setup swiftyAd.
     /// - parameter consentConfiguration: A struct to setup the consent manager.
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - returns handler: A handler that will return the updated consent status.
-    func setup(with configuration: Configuration, consentConfiguration: ConsentConfiguration, viewController: UIViewController, handler: @escaping (ConsentStatus) -> Void) {
+    func setup(with configuration: Configuration, consentConfiguration: ConsentConfiguration, viewController: UIViewController, handler: @escaping (_ hasConsent: Bool) -> Void) {
         
         // Create ids array for consent manager
         var ids: [String] = []
@@ -165,18 +165,19 @@ final class SwiftyAd: NSObject {
         
         // Make consent request
         consentManager.ask(from: viewController, skipIfAlreadyAuthorized: true) { status in
+            self.delegate?.swiftyAd(self, didChange: status)
+           
             switch status {
             case .personalized, .nonPersonalized:
                 self.loadInterstitialAd()
                 self.loadRewardedVideoAd()
+                handler(true)
             case .adFree:
                 self.delegate?.swiftyAdDidPressAdFreeConsentButton(self)
+                handler(false)
             case .unknown:
-                break
+                handler(false)
             }
-        
-            self.delegate?.swiftyAd(self, didChange: status)
-            handler(status)
         }
     }
     
