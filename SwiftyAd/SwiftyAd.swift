@@ -79,6 +79,11 @@ final class SwiftyAd: NSObject {
         return consentManager.hasConsent
     }
     
+    /// Check if we must ask for consent e.g to hide change consent button in apps settings menu (required GDPR requiredment)
+    var isRequiredToAskForConsent: Bool {
+        return consentManager.isRequiredToAskForConsent
+    }
+    
     /// Check if interstitial video is ready (e.g to show alternative ad like an in house ad)
     /// Will try to reload an ad if it returns false.
     var isInterstitialReady: Bool {

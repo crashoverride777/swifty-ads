@@ -88,6 +88,12 @@ final class SwiftyAdConsentManager {
         return consentInformation.isRequestLocationInEEAOrUnknown
     }
     
+    var isRequiredToAskForConsent: Bool {
+        guard isInEEA else { return false }
+        guard !isTaggedForUnderAgeOfConsent else { return false } // must be non personalized only, cannot legally consent
+        return true
+    }
+    
     /// Check if we can show ads
     var hasConsent: Bool {
         guard isInEEA, !isTaggedForUnderAgeOfConsent else { return true }

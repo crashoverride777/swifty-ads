@@ -35,6 +35,8 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         textLabel.text = "Remove ads in \(touchCounter) clicks"
+        consentDefaultLabel.isHidden = !swiftyAd.isRequiredToAskForConsent
+        consentCustomLabel.isHidden = !swiftyAd.isRequiredToAskForConsent
     }
     
     // MARK: - Touches
