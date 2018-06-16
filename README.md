@@ -8,11 +8,11 @@ This helper follows all the best practices in regards to ads, like creating shar
 
 Please read https://developers.google.com/admob/ios/eu-consent#collect_consent
 
-As of version 8.2 this helper supports consent requests for EU countries via a new class called `SwiftyAdConsentManager`. At the moment it will show the default google adMob consent form. I will add a custom consent form for mediation very soon. Please do not use mediation if in EU countries. 
+As of version 9.0 this helper supports consent requests for EU countries via a new class called `SwiftyAdConsentManager`. It can show the default google form or a custom consent form.
+
+NOTE: To show the google consent form please read the instructions URL above, mainly you have to set your ad technology providers in your AdMob console to manual and not recommended.
 
 # Mediation (Rewarded Videos)
-
-NOTE: GDPR - Currently SwiftyAd does NOT support mediation consents for GDPR reasons. Please do not use mediation until a further update is released. See GDPR above.
 
 Admob reward videos will only work when using a 3rd party mediation network such as Chartboost or Vungle. 
 Please read the AdMob mediation guidlines 
@@ -52,75 +52,55 @@ SwiftyAdConsentManager.swift
 
 # How to use
 
-- Setup up the helper with your AdUnitIDs as soon as your app launches e.g AppDelegate or 1st ViewController.
+- Setup up the helper with your AdUnitIDs as soon as your app launches e.g RootViewController or AppDelegate.
 
+// View Controller
 ```swift
-let adUnitId = SwiftyAd.AdUnitId(
-      banner:        "Enter your real id or leave empty if unused", 
-      interstitial:  "Enter your real id or leave empty if unused", 
-      rewardedVideo: "Enter your real id or leave empty if unused"
+let adConfig = SwiftyAd.Configuration(
+      bannerAdUnitId:        "Enter your real id or leave empty if unused",
+      interstitialAdUnitId:  "Enter your real id or leave empty if unused",
+      rewardedVideoAdUnitId: "Enter your real id or leave empty if unused",
+      bannerAnimationDuration: 1.8
 )
-```
-
-UIViewController
-```swift
-SwiftyAd.shared.setup(
-      with: adUnitId, 
-      from: self,
-      privacyURL:  "Enter your privacy policy, this is especially important for EU users. Must be VALID"
-) { consentyType in 
-    print(consentType)
-    print(consentyType.hasPermission)
-    // Do something if needed
+        
+let adConsentConfig = SwiftyAd.ConsentConfiguration(
+      privacyPolicyURL: "https://developers.google.com/admob/ios/eu-consent", // enter real
+      shouldOfferAdFree: false,
+      mediationNetworks: ["Chartboost", "AppLovin", "Vungle"], // Mediation providers you use or leave empty. These will be used in the custom consent form for GDPR reasons
+      isTaggedForUnderAgeOfConsent: false, // required for GDPR, so set appropriately
+      formType: .custom
+)
+        
+SwiftyAd.shared.setup(with: adConfig, consentConfiguration: adConsentConfig, viewController: self) { status in
+      guard status != .unknown else { return }
+      DispatchQueue.main.async {
+           self.SwiftyAd.shared.showBanner(from: self)
+      }
 }
 ```
 
-AppDelegate
+// AppDelegate or SKScene you can get access to the rootViewController like sp
 ```swift
 if let viewController = window?.rootViewController {
-      SwiftyAd.shared.setup(
-            with: adUnitId, 
-            from: viewController,
-            privacyURL:  "Enter your privacy policy, this is especially important for EU users. Must be VALID"
-      ) { consentyType in 
-          print(consentType)
-          print(consentyType.hasPermission)
-          // Do something if needed
-      }
+      SwiftyAd.shared.setup...
 }
 ```
 
-SpriteKit
+// SKScene
 ```swift
 if let viewController = view?.window?.rootViewController {
-      SwiftyAd.shared.setup(
-            with: adUnitId, 
-            from: viewController,
-            privacyURL:  "Enter your privacy policy, this is especially important for EU users. Must be VALID"
-      ) { consentyType in 
-          print(consentType)
-          print(consentyType.hasPermission)
-          // Do something if needed
-      }
+      SwiftyAd.shared.setup...
 }
 ```
 
-With ad free consent
+With ad free button in consent form (GDPR)
 ```swift
 SwiftyAd.shared.setup(
       with: ... ,
       from: ...,
       privacyURL: ...,
       shouldOfferAdFree: true // defaults to false
-) ....
-```
-
-- To ask for consent again (GDPR) (e.g in app setting)
-
-```swift
-swiftyAd.consentManager.ask(from: viewController) { consentyType in
-    print(consentyType)
-}
+)
 ```
 
 - To show an Ad call these methods anywhere you like in your project
@@ -128,20 +108,15 @@ swiftyAd.consentManager.ask(from: viewController) { consentyType in
 UIViewController
 ```swift
 SwiftyAd.shared.showBanner(from: self) 
-SwiftyAd.shared.showBanner(from: self, at: .top) // Shows banner at the top
 SwiftyAd.shared.showInterstitial(from: self)
 SwiftyAd.shared.showInterstitial(from: self, withInterval: 4) // Shows an ad every 4th time method is called
 SwiftyAd.shared.showRewardedVideo(from: self) // Should be called when pressing dedicated button
 ```
-SKScene
-(Do not call this in didMoveToView as .window property is still nil at that point. Use a delay or call it later)
+
+SKScene (Do not call this in didMoveToView as .window property is still nil at that point. Use a delay or call it later)
 ```swift
 if let viewController = view?.window?.rootViewController {
-     SwiftyAd.shared.showBanner(from: viewController) 
-     SwiftyAd.shared.showBanner(from: viewController, at: .top) // Shows banner at the top
-     SwiftyAd.shared.showInterstitial(from: viewController)
-     SwiftyAd.shared.showInterstitial(from: viewController, withInterval: 4) // Shows an ad every 4th time method is called  
-     SwiftyAd.shared.showRewardedVideo(from: viewController) // Should be called when pressing dedicated button
+     SwiftyAd.shared.show...
 }
 ```
 
@@ -173,7 +148,7 @@ SwiftyAd.shared.removeBanner()
 SwiftyAd.shared.isRemoved = true 
 ```
 
-NOTE: Remove Ads bool 
+NOTE:
 
 If set to true the methods to show banner and interstitial ads will not fire anymore and therefore require no further editing. 
 
@@ -189,21 +164,28 @@ This will not stop rewarded videos from showing as they should have a dedicated 
 
 - Implement the delegate methods.
 
-Set the delegate in the relevant SKScenes ```DidMoveToView``` method or in your ViewControllers ```ViewDidLoad``` method
-to receive delegate callbacks.
+Set the delegate.
 ```swift
 SwiftyAd.shared.delegate = self 
 ```
 
+NOTE: I recommned to do this only at 1 central place in your app e.g RootViewController, GameViewController etc
+
 Than create an extension conforming to the AdsDelegate protocol.
 ```swift
-extension GameScene: SwiftyAdDelegate {
+extension GameViewController: SwiftyAdDelegate {
     func swiftyAdDidOpen(_ swiftyAd: SwiftyAd) {
         // pause your game/app if needed
     }
+    
     func swiftyAdDidClose(_ swiftyAd: SwiftyAd) { 
        // resume your game/app if needed
     }
+    
+    func swiftyAd(_ swiftyAd: SwiftyAd, didChange consentStatus: SwiftyAd.ConsentStatus) {
+       // update mediation networks etc
+    }
+    
     func swifyAd(_ swiftyAd: SwiftyAd, didRewardUserWithAmount rewardAmount: Int) {
         self.coins += rewardAmount
        // Reward amount is a decimel number I converted to an integer for convenience. This value comes from your AdNetwork.
@@ -217,10 +199,10 @@ extension GameScene: SwiftyAdDelegate {
 }
 ```
 
-- Settings
+- To ask for consent again (GDPR) (e.g in app setting)
 
 ```swift
-SwiftyAd.shared.bannerAnimationDuration = 2.0 // default is 1.8
+swiftyAd.askForConsent(from: viewController)
 ```
 
 # When you submit your app to Apple
