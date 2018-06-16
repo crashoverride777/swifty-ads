@@ -50,7 +50,7 @@ pod 'Google-Mobile-Ads-SDK'
 pod 'PersonalizedAdConsent'
 ```
 
-## 3: 
+## Step 3: 
 
 Copy the following files into your project.
 
@@ -61,7 +61,9 @@ SwiftyAdConsentManager.swift
 
 # How to use
 
-- Setup up the helper with your AdUnitIDs as soon as your app launches e.g RootViewController or AppDelegate.
+## Setup 
+
+Setup the helper with your AdUnitIDs as soon as your app launches e.g RootViewController or AppDelegate.
 
 View Controller
 ```swift
@@ -102,7 +104,7 @@ if let viewController = view?.window?.rootViewController {
 }
 ```
 
-- To show an Ad call these methods anywhere you like in your project
+## Show Ads
 
 UIViewController
 ```swift
@@ -123,7 +125,7 @@ Note:
 
 You should only show rewarded videos with a dedicated button and you should only show that button when a video is loaded (see below). If the user presses the rewarded video button and watches a video it might take a few seconds for the next video to reload. Incase the user immediately tries to watch another video this helper will show a "no video is available at the moment" alert. 
 
-- To check if ads are ready
+## Check if ads are ready
 
 ```swift
 if SwiftyAd.shared.isRewardedVideoReady {
@@ -137,12 +139,16 @@ if SwiftyAd.shared.isInterstitialReady {
 // When these return false the helper will try to preload an ad again.
 ```
 
-- To remove Banner Ads, for example during gameplay 
+## Remove Banner Ads
+
+e.g during gameplay 
+
 ```swift
 SwiftyAd.shared.removeBanner() 
 ```
 
-- To remove all Ads, mainly for in app purchases, simply call 
+## To remove all (in app purchases)
+
 ```swift
 SwiftyAd.shared.isRemoved = true 
 ```
@@ -161,7 +167,7 @@ if UserDefaults.standard.bool(forKey: "RemovedAdsKey") {
 
 This will not stop rewarded videos from showing as they should have a dedicated button. Some rewarded videos are not skipabble and therefore should never be shown automatically. This way you can remove banner and interstitial ads but still have a rewarded videos. 
 
-- Implement the delegate methods.
+## Implement the delegate methods
 
 Set the delegate.
 ```swift
@@ -201,7 +207,7 @@ extension GameViewController: SwiftyAdDelegate {
 }
 ```
 
-- To ask for consent again (GDPR) 
+## To ask for consent again (GDPR) 
 
 It is required that the user has the option to change their GDPR consent settings, usually via a button in settings.
 
