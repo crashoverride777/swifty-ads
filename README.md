@@ -4,7 +4,7 @@ A Swift helper to integrate Ads from AdMob so you can easily show banner, inters
 
 This helper follows all the best practices in regards to ads, like creating shared banners and correctly preloading interstitial and rewarded video ads so they are always ready to show.
 
-# GDPR (EU countries only)
+# GDPR in EEA countries (European Economic Area)
 
 Please [READ](https://developers.google.com/admob/ios/eu-consent#collect_consent)
 
@@ -14,7 +14,7 @@ NOTE: To show the google consent form please read the instructions above, mainly
 
 The custom consent form is only supported in English, please add your own languages to the String extension in both .swift files.
 
-# Mediation (Rewarded Videos)
+# Mediation
 
 Admob reward videos will only work when using a 3rd party mediation network such as Chartboost or Vungle. 
 Please read the AdMob mediation guidlines 
@@ -37,15 +37,12 @@ With the latest xCode it is no longer necessary to setup the DEBUG flag manually
 
 - Step 1: Sign up for a Google [AdMob account](https://support.google.com/admob/answer/3052638?hl=en-GB&ref_topic=3052726) and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
 
-- Step 2: Install AdMob and PersonalizedAdConsent SDK via CocoaPods
+- Step 2: Install AdMob and PersonalizedAdConsent SDK via [CocoaPods](https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods). There is now an [app](https://cocoapods.org/app) which makes handling pods much easier.
 
 ```
 pod 'Google-Mobile-Ads-SDK'
 pod 'PersonalizedAdConsent'
 ```
-
-https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods
-https://cocoapods.org/app
 
 - Step 3: Copy the following files into your project.
 
