@@ -74,8 +74,8 @@ let adConsentConfig = SwiftyAd.ConsentConfiguration(
       formType: .custom
 )
         
-SwiftyAd.shared.setup(with: adConfig, consentConfiguration: adConsentConfig, viewController: self) { status in
-      guard status != .unknown else { return }
+SwiftyAd.shared.setup(with: adConfig, consentConfiguration: adConsentConfig, viewController: self) { hasConsent in
+      guard hasConsent else { return }
       DispatchQueue.main.async {
            self.SwiftyAd.shared.showBanner(from: self)
       }
