@@ -4,7 +4,7 @@ A Swift helper to integrate Ads from AdMob so you can easily show banner, inters
 
 This helper follows all the best practices in regards to ads, like creating shared banners and correctly preloading interstitial and rewarded video ads so they are always ready to show.
 
-# GDPR in EEA (European Economic Area)
+## GDPR in EEA (European Economic Area)
 
 Please [READ](https://developers.google.com/admob/ios/eu-consent#collect_consent)
 
@@ -16,7 +16,7 @@ The custom consent form is only supported in English, please add your own langua
 
 It is also required that the user has the option to change their GDPR consent settings at anytime, usually via a button in the apps settings menu.
 
-# Mediation
+## Mediation
 
 Admob reward videos will only work when using a 3rd party mediation network such as Chartboost or Vungle. 
 Please read the AdMob mediation guidlines 
@@ -27,7 +27,7 @@ NOTE:
 
 Make sure to include your mediation networks when setting up SwiftyAd (see How To Use)
 
-# DEBUG
+## DEBUG
 
 AdMob uses 2 types of AdUnit IDs, 1 for testing and 1 for release. This helper will automatically change the AdUnitID from test to release mode and vice versa. 
 
@@ -35,13 +35,13 @@ You should not show real ads when you are testing your app. In the past Google h
 
 With the latest xCode it is no longer necessary to setup the DEBUG flag manually.
 
-# Pre-setup
+## Pre-setup
 
-## Step 1: 
+### Step 1: 
 
 Sign up for a Google [AdMob account](https://support.google.com/admob/answer/3052638?hl=en-GB&ref_topic=3052726) and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
 
-## Step 2: 
+### Step 2: 
 
 Install AdMob and PersonalizedAdConsent SDK via [CocoaPods](https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods). There is now an [app](https://cocoapods.org/app) which makes handling pods much easier.
 
@@ -50,7 +50,7 @@ pod 'Google-Mobile-Ads-SDK'
 pod 'PersonalizedAdConsent'
 ```
 
-## Step 3: 
+### Step 3: 
 
 Copy the following files into your project.
 
@@ -59,9 +59,9 @@ SwiftyAd.swift
 SwiftyAdConsentManager.swift
 ```
 
-# How to use
+## How to use
 
-## Implement the delegate methods
+### Implement the delegate methods
 
 Set the delegate.
 ```swift
@@ -101,7 +101,7 @@ extension GameViewController: SwiftyAdDelegate {
 }
 ```
 
-## Setup 
+### Setup 
 
 Setup the helper with your AdUnitIDs also as soon as your app launches e.g RootViewController or AppDelegate. You should do this after setting the delegate as described above.
 
@@ -144,7 +144,7 @@ if let viewController = view?.window?.rootViewController {
 }
 ```
 
-## Show Ads
+### Show Ads
 
 UIViewController
 ```swift
@@ -165,7 +165,7 @@ Note:
 
 You should only show rewarded videos with a dedicated button and you should only show that button when a video is loaded (see below). If the user presses the rewarded video button and watches a video it might take a few seconds for the next video to reload. Incase the user immediately tries to watch another video this helper will show a "no video is available at the moment" alert. 
 
-## Check if ads are ready
+### Check if ads are ready
 
 ```swift
 if SwiftyAd.shared.isRewardedVideoReady {
@@ -179,7 +179,7 @@ if SwiftyAd.shared.isInterstitialReady {
 // When these return false the helper will try to preload an ad again.
 ```
 
-## Remove Banner ads
+### Remove Banner ads
 
 e.g during gameplay 
 
@@ -187,7 +187,7 @@ e.g during gameplay
 SwiftyAd.shared.removeBanner() 
 ```
 
-## Remove all ads (in app purchases)
+### Remove all ads (in app purchases)
 
 ```swift
 SwiftyAd.shared.isRemoved = true 
@@ -207,7 +207,7 @@ if UserDefaults.standard.bool(forKey: "RemovedAdsKey") {
 
 This will not stop rewarded videos from showing as they should have a dedicated button. Some rewarded videos are not skipabble and therefore should never be shown automatically. This way you can remove banner and interstitial ads but still have a rewarded videos. 
 
-## To ask for consent again (GDPR) 
+### To ask for consent again (GDPR) 
 
 It is required that the user has the option to change their GDPR consent settings, usually via a button in settings.
 
@@ -221,18 +221,18 @@ The consent button can be hidden for non EEA users like so
 consentButton.isHidden = !SwiftyAd.shared.isRequiredToAskForConsent
 ```
 
-# When you submit your app to Apple
+## When you submit your app to Apple
 
 When you submit your app to Apple on iTunes connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected. If you use reward videos you should also select the 3rd bulletpoint.
 
-# Tip
+## Tip
 
 From my personal experience and from a user perspective you should not spam full screen interstitial ads all the time. This will also increase your revenue because user retention rate is higher so you should not be greedy. Therefore you should
 
 1) Not show an interstitial ad everytime a button is pressed 
 2) Not show an interstitial ad everytime you die in a game
 
-# Final Info
+## Final Info
 
 The sample project is the basic Apple spritekit template. It now shows a banner Ad after launch and an interstitial ad randomly when touching the screen. After a certain amount of clicks all ads will be removed to simulate what a remove ads button would do. 
 
