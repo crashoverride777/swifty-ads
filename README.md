@@ -61,9 +61,49 @@ SwiftyAdConsentManager.swift
 
 # How to use
 
+## Implement the delegate methods
+
+Set the delegate.
+```swift
+SwiftyAd.shared.delegate = self 
+```
+
+NOTE: I recommned to do this only at 1 central place in your app e.g RootViewController, GameViewController etc. This should be the 1st thing you do, to make sure the delegates fire as soon as possible.
+
+Than create an extension conforming to the AdsDelegate protocol.
+```swift
+extension GameViewController: SwiftyAdDelegate {
+    func swiftyAdDidOpen(_ swiftyAd: SwiftyAd) {
+        // pause your game/app if needed
+    }
+    
+    func swiftyAdDidClose(_ swiftyAd: SwiftyAd) { 
+       // resume your game/app if needed
+    }
+    
+    func swiftyAd(_ swiftyAd: SwiftyAd, didChange consentStatus: SwiftyAd.ConsentStatus) {
+       // update mediation networks etc
+    }
+    
+    func swifyAd(_ swiftyAd: SwiftyAd, didRewardUserWithAmount rewardAmount: Int) {
+       // Reward amount is a decimel number I converted to an integer for convenience. This value comes from your AdNetwork.
+       if let scene = (view as? SKView)?.scene as? GameScene {
+            scene.coins += rewardAmount
+        }
+       
+     
+       // You can ignore this and hardcode the value if you would like but than you cannot change the value dynamically without having to update your app.
+       
+       // You could also do something else like unlocking a level or bonus item.
+       
+       // Leave empty if unused
+    }
+}
+```
+
 ## Setup 
 
-Setup the helper with your AdUnitIDs as soon as your app launches e.g RootViewController or AppDelegate.
+Setup the helper with your AdUnitIDs also as soon as your app launches e.g RootViewController or AppDelegate. You should do this after setting the delegate as described above.
 
 View Controller
 ```swift
@@ -166,46 +206,6 @@ if UserDefaults.standard.bool(forKey: "RemovedAdsKey") {
 ```
 
 This will not stop rewarded videos from showing as they should have a dedicated button. Some rewarded videos are not skipabble and therefore should never be shown automatically. This way you can remove banner and interstitial ads but still have a rewarded videos. 
-
-## Implement the delegate methods
-
-Set the delegate.
-```swift
-SwiftyAd.shared.delegate = self 
-```
-
-NOTE: I recommned to do this only at 1 central place in your app e.g RootViewController, GameViewController etc
-
-Than create an extension conforming to the AdsDelegate protocol.
-```swift
-extension GameViewController: SwiftyAdDelegate {
-    func swiftyAdDidOpen(_ swiftyAd: SwiftyAd) {
-        // pause your game/app if needed
-    }
-    
-    func swiftyAdDidClose(_ swiftyAd: SwiftyAd) { 
-       // resume your game/app if needed
-    }
-    
-    func swiftyAd(_ swiftyAd: SwiftyAd, didChange consentStatus: SwiftyAd.ConsentStatus) {
-       // update mediation networks etc
-    }
-    
-    func swifyAd(_ swiftyAd: SwiftyAd, didRewardUserWithAmount rewardAmount: Int) {
-       // Reward amount is a decimel number I converted to an integer for convenience. This value comes from your AdNetwork.
-       if let scene = (view as? SKView)?.scene as? GameScene {
-            scene.coins += rewardAmount
-        }
-       
-     
-       // You can ignore this and hardcode the value if you would like but than you cannot change the value dynamically without having to update your app.
-       
-       // You could also do something else like unlocking a level or bonus item.
-       
-       // Leave empty if unused
-    }
-}
-```
 
 ## To ask for consent again (GDPR) 
 
