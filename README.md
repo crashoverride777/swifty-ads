@@ -48,12 +48,14 @@ Sign up for a Google [AdMob account](https://support.google.com/admob/answer/305
 
 ### Step 2: 
 
-Install AdMob and PersonalizedAdConsent SDK via [CocoaPods](https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods). There is now an [app](https://cocoapods.org/app) which makes handling pods much easier.
+[CocoaPods](https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods) is a dependency manager for Cocoa projects. Simply install the pod by adding the following line to your pod file
 
-```
+```swift
 pod 'Google-Mobile-Ads-SDK'
 pod 'PersonalizedAdConsent'
 ```
+
+There is now an [app](https://cocoapods.org/app) which makes handling pods much easier
 
 ### Step 3: 
 
