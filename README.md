@@ -4,6 +4,11 @@ A Swift helper to integrate Ads from AdMob so you can easily show banner, inters
 
 This helper follows all the best practices in regards to ads, like creating shared banners and correctly preloading interstitial and rewarded video ads so they are always ready to show.
 
+## Requirements
+
+- iOS 9.3+
+- Swift 4.0+
+
 ## GDPR in EEA (European Economic Area)
 
 Please [READ](https://developers.google.com/admob/ios/eu-consent#collect_consent)
@@ -35,7 +40,7 @@ You should not show real ads when you are testing your app. In the past Google h
 
 With the latest xCode it is no longer necessary to setup the DEBUG flag manually.
 
-## Pre-setup
+## Installation
 
 ### Step 1: 
 
@@ -59,7 +64,7 @@ SwiftyAd.swift
 SwiftyAdConsentManager.swift
 ```
 
-## How to use
+## Usage
 
 ### Implement the delegate methods
 
