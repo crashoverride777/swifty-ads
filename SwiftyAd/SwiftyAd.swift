@@ -136,7 +136,7 @@ final class SwiftyAd: NSObject {
     private override init() {
         super.init()
         print("AdMob SDK version \(GADRequest.sdkVersion())")
-        NotificationCenter.default.addObserver(self, selector: #selector(deviceRotated), name: .UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(deviceRotated), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     // MARK: - Setup
