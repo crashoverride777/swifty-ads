@@ -45,23 +45,18 @@ final class SwiftyAdConsentManager {
 
     // MARK: - Types
     
-    struct Configuration {
+    struct Configuration: Codable {
         let privacyPolicyURL: String
         let shouldOfferAdFree: Bool
         let mediationNetworks: [String]
         let isTaggedForUnderAgeOfConsent: Bool
-        let formType: FormType
+        let isCustomForm: Bool
         
         var mediationNetworksString: String {
             return mediationNetworks.map({ $0 }).joined(separator: ", ")
         }
     }
-    
-    enum FormType {
-        case google
-        case custom
-    }
-    
+ 
     enum ConsentStatus {
         case personalized
         case nonPersonalized
@@ -161,11 +156,10 @@ final class SwiftyAdConsentManager {
             }
             
             // Show consent form
-            switch self.configuration.formType {
-            case .google:
-                self.showDefaultConsentForm(from: viewController, handler: handler)
-            case .custom:
+            if self.configuration.isCustomForm {
                 self.showCustomConsentForm(from: viewController, handler: handler)
+            } else {
+                self.showDefaultConsentForm(from: viewController, handler: handler)
             }
         }
     }

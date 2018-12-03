@@ -15,8 +15,15 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
      
-        setupSwiftyAd(formType: .custom)
+        // Setup swifty ad
+        swiftyAd.setup(with: self, delegate: self) { hasConsent in
+            guard hasConsent else { return }
+            DispatchQueue.main.async {
+                self.swiftyAd.showBanner(from: self)
+            }
+        }
     
+        // Load game scene
         if let scene = GameScene(fileNamed: "GameScene") {
             // Configure the view.
             let skView = self.view as! SKView
@@ -77,36 +84,5 @@ extension GameViewController: SwiftyAdDelegate {
         
         // Will actually not work with this sample project, adMob just shows a black ad in test mode
         // It only works with 3rd party mediation partners you set up through your adMob account
-    }
-}
-
-// MARK: - Setup Swifty Ad
-
-extension GameViewController {
-    
-    func setupSwiftyAd(formType: SwiftyAd.FormType) {
-        let config = SwiftyAd.Configuration(
-            bannerAdUnitId:        "",
-            interstitialAdUnitId:  "",
-            rewardedVideoAdUnitId: "",
-            bannerAnimationDuration: 1.8
-        )
-        
-        let consentConfig = SwiftyAd.ConsentConfiguration(
-            privacyPolicyURL: "https://developers.google.com/admob/ios/eu-consent", // enter real
-            shouldOfferAdFree: false,
-            mediationNetworks: ["Chartboost", "AppLovin", "Vungle"],
-            isTaggedForUnderAgeOfConsent: false,
-            formType: formType
-            
-        )
-        
-        swiftyAd.delegate = self
-        swiftyAd.setup(with: config, consentConfiguration: consentConfig, viewController: self) { hasConsent in
-            guard hasConsent else { return }
-            DispatchQueue.main.async {
-                self.swiftyAd.showBanner(from: self)
-            }
-        }
     }
 }

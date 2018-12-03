@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0415D22AF4A20E7C0EFF2991 /* Pods_SwiftyAdExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60BA28B43E2218213054A068 /* Pods_SwiftyAdExample.framework */; };
+		6A06291D21B5EC9100C1F376 /* SwiftyAd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A06291C21B5EC9100C1F376 /* SwiftyAd.plist */; };
 		B418D9E11E44B42000DD6C15 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B418D9E01E44B42000DD6C15 /* Images.xcassets */; };
 		B435FFE11CE14C2A00A678AA /* SwiftyAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = B435FFE01CE14C2A00A678AA /* SwiftyAd.swift */; };
 		B476FA3220CDA29300655D79 /* SwiftyAdConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B476FA3120CDA29300655D79 /* SwiftyAdConsentManager.swift */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		60BA28B43E2218213054A068 /* Pods_SwiftyAdExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAdExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A06291C21B5EC9100C1F376 /* SwiftyAd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SwiftyAd.plist; sourceTree = "<group>"; };
 		B418D9E01E44B42000DD6C15 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B435FFE01CE14C2A00A678AA /* SwiftyAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyAd.swift; path = ../SwiftyAd/SwiftyAd.swift; sourceTree = "<group>"; };
 		B476FA3120CDA29300655D79 /* SwiftyAdConsentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SwiftyAdConsentManager.swift; path = ../SwiftyAd/SwiftyAdConsentManager.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 			children = (
 				B435FFE01CE14C2A00A678AA /* SwiftyAd.swift */,
 				B476FA3120CDA29300655D79 /* SwiftyAdConsentManager.swift */,
+				6A06291C21B5EC9100C1F376 /* SwiftyAd.plist */,
 				B4C060D51D1EB676004A3BA8 /* SwiftyAdExample */,
 				B4B01A141B9A0AF500F9A8EA /* Products */,
 				50EE868FBF4303E359C69933 /* Pods */,
@@ -162,6 +165,7 @@
 				B4F4EE111DA3F7BC00C6FEC0 /* GameScene.sks in Resources */,
 				B418D9E11E44B42000DD6C15 /* Images.xcassets in Resources */,
 				B4DA75781E4CBEDA00A52B0E /* Main.storyboard in Resources */,
+				6A06291D21B5EC9100C1F376 /* SwiftyAd.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,7 +285,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -332,7 +336,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -355,7 +359,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAdExample/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dominik.SwiftyAdExample;
 				PRODUCT_NAME = SwiftyAdExample;
@@ -378,7 +382,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAdExample/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dominik.SwiftyAdExample;
 				PRODUCT_NAME = SwiftyAdExample;

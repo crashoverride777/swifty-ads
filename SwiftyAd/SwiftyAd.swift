@@ -50,16 +50,48 @@ protocol SwiftyAdDelegate: class {
 final class SwiftyAd: NSObject {
     typealias ConsentConfiguration = SwiftyAdConsentManager.Configuration
     typealias ConsentStatus = SwiftyAdConsentManager.ConsentStatus
-    typealias FormType = SwiftyAdConsentManager.FormType
     
     // MARK: - Types
     
-    /// A struct to configure swifty ad
-    struct Configuration {
-        var bannerAdUnitId        = "ca-app-pub-3940256099942544/2934735716"
-        var interstitialAdUnitId  = "ca-app-pub-3940256099942544/4411468910"
-        var rewardedVideoAdUnitId = "ca-app-pub-1234567890123456/1234567890"
-        var bannerAnimationDuration = 1.8
+    private struct Configuration: Codable {
+        let bannerAdUnitId: String
+        let interstitialAdUnitId: String
+        let rewardedVideoAdUnitId: String
+        let gdpr: ConsentConfiguration
+        
+        var ids: [String] {
+            return [bannerAdUnitId, interstitialAdUnitId, rewardedVideoAdUnitId].filter { !$0.isEmpty }
+        }
+        
+        static var propertyList: Configuration {
+            guard let configurationURL = Bundle.main.url(forResource: "SwiftyAd", withExtension: "plist") else {
+                print("SwiftyAd must have a valid property list")
+                fatalError("SwiftyAd must have a valid property list")
+            }
+            do {
+                let data = try Data(contentsOf: configurationURL)
+                let decoder = PropertyListDecoder()
+                return try decoder.decode(Configuration.self, from: data)
+            } catch {
+                print("SwiftyAd must have a valid property list \(error)")
+                fatalError("SwiftyAd must have a valid property list")
+            }
+        }
+        
+        static var debug: Configuration {
+            return Configuration(
+                bannerAdUnitId: "ca-app-pub-3940256099942544/2934735716",
+                interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
+                rewardedVideoAdUnitId: "ca-app-pub-1234567890123456/1234567890",
+                gdpr: ConsentConfiguration(
+                    privacyPolicyURL: "https://developers.google.com/admob/ios/eu-consent",
+                    shouldOfferAdFree: false,
+                    mediationNetworks: [],
+                    isTaggedForUnderAgeOfConsent: false,
+                    isCustomForm: true
+                )
+            )
+        }
     }
     
     // MARK: - Static Properties
@@ -68,9 +100,6 @@ final class SwiftyAd: NSObject {
     static let shared = SwiftyAd()
     
     // MARK: - Properties
-    
-    /// Delegates
-    weak var delegate: SwiftyAdDelegate?
     
     /// Check if user has consent e.g to hide rewarded video button
     var hasConsent: Bool {
@@ -114,6 +143,12 @@ final class SwiftyAd: NSObject {
         }
     }
     
+    /// Delegates
+    private weak var delegate: SwiftyAdDelegate?
+    
+    /// Configuration
+    private var configuration: Configuration!
+    
     /// Consent manager
     private var consentManager: SwiftyAdConsentManager!
     
@@ -125,8 +160,8 @@ final class SwiftyAd: NSObject {
     /// Constraints
     private var bannerViewConstraint: NSLayoutConstraint?
     
-    /// Configuration
-    private var configuration = Configuration()
+    /// Banner animation duration
+    private var bannerAnimationDuration = 1.8
     
     /// Interval counter
     private var intervalCounter = 0
@@ -143,28 +178,27 @@ final class SwiftyAd: NSObject {
     
     /// Setup swift ad
     ///
-    /// - parameter configuration: A struct to setup swiftyAd.
-    /// - parameter consentConfiguration: A struct to setup the consent manager.
     /// - parameter viewController: The view controller that will present the consent alert if needed.
-    /// - returns handler: A handler that will return the updated consent status.
-    func setup(with configuration: Configuration, consentConfiguration: ConsentConfiguration, viewController: UIViewController, handler: @escaping (_ hasConsent: Bool) -> Void) {
+    /// - parameter delegate: A delegate to receive event callbacks.
+    /// - parameter bannerAnimationDuration: The duration of the banner animation.
+    /// - returns handler: A handler that will return a boolean with the consent status.
+    func setup(with viewController: UIViewController,
+               delegate: SwiftyAdDelegate?,
+               bannerAnimationDuration: TimeInterval? = nil,
+               handler: @escaping (_ hasConsent: Bool) -> Void) {
+        self.delegate = delegate
+        if let bannerAnimationDuration = bannerAnimationDuration {
+            self.bannerAnimationDuration = bannerAnimationDuration
+        }
         
-        // Create ids array for consent manager
-        var ids: [String] = []
-        
-        #if !DEBUG
-        // Update to real ids if not in debug mode
-        self.configuration = configuration
-        
-        // Update ids array with real ids
-        ids.append(configuration.bannerAdUnitId)
-        ids.append(configuration.interstitialAdUnitId)
-        ids.append(configuration.rewardedVideoAdUnitId)
-        ids = ids.filter { !$0.isEmpty }
+        // Configure
+        configuration = Configuration.propertyList
+        #if DEBUG
+        configuration = Configuration.debug
         #endif
         
         // Create consent manager
-        consentManager = SwiftyAdConsentManager(ids: ids, configuration: consentConfiguration)
+        consentManager = SwiftyAdConsentManager(ids: configuration.ids, configuration: configuration.gdpr)
         
         // Make consent request
         consentManager.ask(from: viewController, skipIfAlreadyAuthorized: true) { status in
@@ -465,7 +499,7 @@ private extension SwiftyAd {
         bannerAd.isHidden = false
         bannerViewConstraint?.constant = 0
         
-        UIView.animate(withDuration: configuration.bannerAnimationDuration) {
+        UIView.animate(withDuration: bannerAnimationDuration) {
             viewController?.view.layoutIfNeeded()
         }
     }
@@ -478,7 +512,7 @@ private extension SwiftyAd {
             return
         }
         
-        UIView.animate(withDuration: configuration.bannerAnimationDuration, animations: {
+        UIView.animate(withDuration: bannerAnimationDuration, animations: {
             viewController?.view.layoutIfNeeded()
         }, completion: { isSuccess in
             bannerAd.isHidden = true

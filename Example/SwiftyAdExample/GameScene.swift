@@ -14,8 +14,7 @@ class GameScene: SKScene {
     var coins = 0
     
     private lazy var textLabel: SKLabelNode = self.childNode(withName: "textLabel") as! SKLabelNode
-    private lazy var consentDefaultLabel: SKLabelNode = self.childNode(withName: "consentDefaultLabel") as! SKLabelNode
-    private lazy var consentCustomLabel: SKLabelNode = self.childNode(withName: "consentCustomLabel") as! SKLabelNode
+    private lazy var consentLabel: SKLabelNode = self.childNode(withName: "consentLabel") as! SKLabelNode
     
     private let swiftyAd: SwiftyAd = .shared
     
@@ -35,8 +34,7 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         textLabel.text = "Remove ads in \(touchCounter) clicks"
-        consentDefaultLabel.isHidden = !swiftyAd.isRequiredToAskForConsent
-        consentCustomLabel.isHidden = !swiftyAd.isRequiredToAskForConsent
+        consentLabel.isHidden = !swiftyAd.isRequiredToAskForConsent
     }
     
     // MARK: - Touches
@@ -48,18 +46,11 @@ class GameScene: SKScene {
             
             guard let viewController = view?.window?.rootViewController else { return }
             
-            if node == consentDefaultLabel {
+            if node == consentLabel {
                 let gameVC = view?.window?.rootViewController as! GameViewController
-                gameVC.setupSwiftyAd(formType: .google) // just for this demo to show both alerts
                 swiftyAd.askForConsent(from: viewController)
             }
-            
-            if node == consentCustomLabel {
-                let gameVC = view?.window?.rootViewController as! GameViewController
-                gameVC.setupSwiftyAd(formType: .custom) // just for this demo to show both alerts
-                swiftyAd.askForConsent(from: viewController)
-            }
-            
+           
             defer {
                 touchCounter -= 1
             }

@@ -4,6 +4,15 @@
   <meta charset="utf-8"/>
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
   <style type="text/css">
+    /* Overwrite the default to keep the scrollbar always visible */
+    ::-webkit-scrollbar {
+      -webkit-appearance: none;
+      width: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, .4);
+      border-radius: 3px;
+    }
     html,
     body {
       margin: 0;
@@ -149,7 +158,7 @@
     }
     .button {
       border-radius: 8px;
-      border: 1px solid #e0e0e0;
+      border: 1px solid #DADCE0;
       box-sizing: border-box;
       cursor: pointer;
       padding: 12px 16px 14px;
@@ -186,33 +195,47 @@
       color: rgba(0, 0, 0, .71);
       font-family: 'Roboto', Arial, sans-serif;
       font-size: 14px;
-      padding: 0 8px;
+      padding: 0;
       text-align: center;
       min-height: 36px;
       line-height: 18px;
+    }
+    #providers::after {
+      background-color: #DADCE0;
+      content: '';
+      height: 1px;
+      left: 0;
+      position: absolute;
+      right: 0;
     }
     #providers > div {
       box-sizing: border-box;
       padding: 2px 10px;
     }
     #providers ul {
+      box-sizing: border-box;
       font-size: 12px;
-      line-height: 17px;
       list-style-type: none;
-      margin-bottom: -2px;
-      margin-right: -8px;
-      max-height: 132px;
+      margin-bottom: 0;
+      margin-right: -2px;
       overflow: auto;
-      padding: 0 8px;
+      padding: 0 0 12px;
       text-align: left;
     }
     #providers li {
+      border: 1px solid #DADCE0;
+      border-radius: 8px;
       display: inline-block;
-      width: 46%;
-      margin-right: 8px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      margin-bottom: 5px;
+      margin-right: 2px;
+    }
+    #providers li:active {
+      background-color: #EEEEEE;
+    }
+    #providers a {
+      color: #3C4043;
+      display: inline-block;
+      padding: 6px 10px;
     }
     .how-use-data {
       font-size: 12px;
@@ -226,7 +249,7 @@
       background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMHB4IiBoZWlnaHQ9IjIwcHgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzQyODVGNCI+ICAgIDxwYXRoIGQ9Ik0xMS42NyAzLjg3TDkuOSAyLjEgMCAxMmw5LjkgOS45IDEuNzctMS43N0wzLjU0IDEyeiIvPiAgICA8cGF0aCBmaWxsPSJub25lIiBkPSJNMCAwaDI0djI0SDB6Ii8+PC9zdmc+);
       background-position: 14px center;
       background-repeat: no-repeat;
-      border: 1px solid #e0e0e0;
+      border: 1px solid #DADCE0;
       border-radius: 4px;
       color: #1A73E8;
       display: inline-block;
@@ -281,7 +304,7 @@
       text-decoration: none;
     }
     @media screen and (max-width: 410px) and (max-height: 730px) {
-      /* e.g. iPhone 4, 5, 6 portrait */
+      /* e.g. iPhone 4, 5, 6/7/8 portrait */
       #overlay {
         left: 10px;
         right: 10px;
@@ -310,7 +333,6 @@
         display: inline;
       }
       #providers {
-        display: inline;
         padding: 0;
       }
       .back.btn {
@@ -318,7 +340,7 @@
       }
     }
     @media screen and (max-width: 730px) and (max-height: 410px) {
-      /* e.g. iPhone 4, 5, 6 landscape */
+      /* e.g. iPhone 4, 5, 6/7/8 landscape */
       #overlay {
         left: 8px;
         right: 8px;
@@ -363,14 +385,8 @@
         font-size: 12px;
       }
       #providers {
-        display: inline;
         font-size: 12px;
         padding: 0;
-      }
-      #providers ul {
-        line-height: 15px;
-        margin-bottom: 0;
-        max-height: 120px;
       }
       .how-use-data {
         margin-top: 12px;
@@ -419,14 +435,10 @@
         display: inline;
       }
       #providers {
-        display: inline;
         padding: 0;
       }
       #providers ul {
-        padding: 0 16px;
-      }
-      #providers li {
-        width: 31%;
+        padding: 0 16px 12px;
       }
       .footer {
         margin-top: 20px;
@@ -435,12 +447,35 @@
         margin-top: 0;
       }
     }
+    @media screen and (min-height: 377px) and (max-height: 700px) {
+      /* e.g. iPhone 4, 5, 6/7/8 portrait, 6/7/8 Plus landscape */
+      #providers ul {
+        max-height: calc(100vh - 246px);
+      }
+    }
+    @media screen and (min-height: 701px) {
+      /* e.g. iPhone 6/7/8 Plus portrait or taller (tablets) */
+      #providers ul {
+        max-height: 460px;
+      }
+    }
+    @media screen and (min-height: 361px) and (max-height: 376px) {
+      /* e.g. iPhone 6/7/8, X landscape */
+      #providers ul {
+        max-height: calc(100vh - 212px);
+      }
+    }
+    @media screen and (max-height: 360px) {
+      /* e.g. iPhone 4, 5 landscape */
+      #providers ul {
+        max-height: calc(100vh - 230px);
+      }
+    }
   </style>
   <script type="text/javascript">
     var obj = {};
     var state = 'init';
     var consentDelayMs = 1000;
-    var maxProviderCount = 12;
      // Function that opens app privacy policy URL in a browser.
     var showAppPrivacyPolicy = function() {};
 
@@ -504,6 +539,7 @@
 
     function showProviders() {
       consentAnimation(obj.consent0El, 'in');
+      document.getElementById('providersList').scrollTop = 0;
     };
 
     function showUniqueIdInfo() {
@@ -582,15 +618,6 @@
       var adNetworks = rawResponse['ad_network_ids'] || [];
       if (!adNetworks) {
         throw Error('Error: invalid ad networks.');
-      }
-
-      // All ad networks must have publisher_consent_type `2`.
-      for (var i = 0; i < adNetworks.length; i++) {
-        var adNetwork = adNetworks[i];
-        var publisherConsentType = adNetwork['publisher_consent_type'] || 0;
-        if (publisherConsentType != 2) {
-          throw Error('Error: consent form can be used with custom provider selection only.');
-        }
       }
     }
 
@@ -694,9 +721,12 @@
 
       // Update provider list.
       var providers = consentInfo['providers'] || [];
+      var providersLen = providers.length;
+
       obj.providersEl.innerHTML = '';
       var providersList = document.createElement('ul');
-      for (var i = 0; i < providers.length; i++) {
+      providersList.setAttribute('id', 'providersList');
+      for (var i = 0; i < providersLen; i++) {
         var provider = providers[i];
         var providerTag = document.createElement('a');
         providerTag.innerText = provider['company_name'];
@@ -709,7 +739,10 @@
       obj.providersEl.appendChild(providersList);
 
       // Hide unavailable options.
-      var hasValidProviderCount = providers.length > 0 && providers.length <= maxProviderCount;
+      var hasValidProviderCount = providersLen > 0;
+      if (hasValidProviderCount) {
+        document.getElementById('providers_count').innerText = providersLen;
+      }
       var hasAnyNonPersonalizedOnlyPubId = consentInfo['has_any_npa_pub_id'] || false;
       if (!formInfo['offer_personalized'] ||
           !hasValidProviderCount ||
@@ -816,7 +849,7 @@
             <div class="head_detail">
               <span id="change_anytime_text1">You can change your choice anytime for <span class="app_name">App Name</span> in the app settings.</span>
               <span id="head_detail_text">Our partners will collect data and use a unique identifier on your device to show you ads.
-                <a href="#" onclick="showProviders();">Learn how <span class="app_name">App Name</span> and our partners collect and use data</a>
+                <a href="#" onclick="showProviders();">Learn how <span class="app_name">App Name</span> and our <span id="providers_count"></span> partners collect and use data</a>
               </span>
             </div>
           </div>

@@ -29,7 +29,7 @@
 - (nullable instancetype)initWithDictionary:(nullable NSDictionary<NSString *, id> *)dictionary;
 @end
 
-NSString *const PACVersionString = @"1.0.1";
+NSString *const PACVersionString = @"1.0.3";
 NSString *const PACUserDefaultsRootKey = @"personalized_ad_status";
 
 static NSString *const PACInfoUpdateURLFormat =
