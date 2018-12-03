@@ -67,18 +67,24 @@ Copy the following files into your project.
 ```swift
 SwiftyAd.swift
 SwiftyAdConsentManager.swift
+SwiftyAd.plist
 ```
 
 ## Usage
 
-### Implement the delegate methods
+### Setup 
 
-Set the delegate.
+Enter your ad settings into the SwiftyAd.plist file you added to your project. Than call the setup method as soon as your app launches. 
+
+View Controller
 ```swift
-SwiftyAd.shared.delegate = self 
+SwiftyAd.shared.setup(with: self, delegate: self) { hasConsent in
+    guard hasConsent else { return }
+    DispatchQueue.main.async {
+        SwiftyAd.shared.showBanner(from: self)
+    }
+}
 ```
-
-NOTE: I recommned to do this only at 1 central place in your app e.g RootViewController, GameViewController etc. This should be the 1st thing you do, to make sure the delegates fire as soon as possible.
 
 Than create an extension conforming to the AdsDelegate protocol.
 ```swift
@@ -108,35 +114,6 @@ extension GameViewController: SwiftyAdDelegate {
        
        // Leave empty if unused
     }
-}
-```
-
-### Setup 
-
-Setup the helper with your AdUnitIDs also as soon as your app launches e.g RootViewController or AppDelegate. You should do this after setting the delegate as described above.
-
-View Controller
-```swift
-let adConfig = SwiftyAd.Configuration(
-      bannerAdUnitId:        "Enter your real id or leave empty if unused",
-      interstitialAdUnitId:  "Enter your real id or leave empty if unused",
-      rewardedVideoAdUnitId: "Enter your real id or leave empty if unused",
-      bannerAnimationDuration: 1.8
-)
-        
-let adConsentConfig = SwiftyAd.ConsentConfiguration(
-      privacyPolicyURL: "https://developers.google.com/admob/ios/eu-consent", // enter real
-      shouldOfferAdFree: false, // ad free button in the consent form
-      mediationNetworks: ["Chartboost", "AppLovin", "Vungle"], // Mediation providers you use or leave empty. These will be used in the custom consent form for GDPR reasons
-      isTaggedForUnderAgeOfConsent: false, // required for GDPR, so set appropriately. Will be ignored if not in EEA
-      formType: .custom
-)
-        
-SwiftyAd.shared.setup(with: adConfig, consentConfiguration: adConsentConfig, viewController: self) { hasConsent in
-      guard hasConsent else { return }
-      DispatchQueue.main.async {
-           SwiftyAd.shared.showBanner(from: self)
-      }
 }
 ```
 
