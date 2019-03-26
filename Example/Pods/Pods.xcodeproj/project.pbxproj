@@ -51,19 +51,19 @@
 		14595F991FA7BE76DCB94BA5704A281C /* PersonalizedAdConsent.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PersonalizedAdConsent.xcconfig; sourceTree = "<group>"; };
 		175E933FBB68F831FB7E8A32FF6AE4DB /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1AAB2EF28AB9189659A8D25B75350F36 /* Pods-SwiftyAdExample-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SwiftyAdExample-frameworks.sh"; sourceTree = "<group>"; };
-		22F4D27EFFB04AC0F0229B9E15CE83F8 /* PersonalizedAdConsent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = PersonalizedAdConsent.framework; path = PersonalizedAdConsent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		22F4D27EFFB04AC0F0229B9E15CE83F8 /* PersonalizedAdConsent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PersonalizedAdConsent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		27476552197FD782DCCF2C6F7A76B20F /* Pods-SwiftyAdExample-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SwiftyAdExample-resources.sh"; sourceTree = "<group>"; };
 		3258CDDC34370A2F581B0EC6C3ED388C /* libGoogleMobileAds.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libGoogleMobileAds.a; path = Libraries/libGoogleMobileAds.a; sourceTree = "<group>"; };
-		5219BCC616E4178FD4926009AC43A0D4 /* PersonalizedAdConsent.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = PersonalizedAdConsent.bundle; path = "PersonalizedAdConsent-PersonalizedAdConsent.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5219BCC616E4178FD4926009AC43A0D4 /* PersonalizedAdConsent.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PersonalizedAdConsent.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		57AD4AB009E0D1F70D6B303A1642D985 /* PersonalizedAdConsent-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PersonalizedAdConsent-prefix.pch"; sourceTree = "<group>"; };
 		5B0572B003C47D9EF774844AC1CCC308 /* Pods-SwiftyAdExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SwiftyAdExample.release.xcconfig"; sourceTree = "<group>"; };
 		6662F3574B8E85A743039E6A1FA062F7 /* PersonalizedAdConsent.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = PersonalizedAdConsent.modulemap; sourceTree = "<group>"; };
-		685A6564F121334595A5D3AD91E9520D /* Pods_SwiftyAdExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_SwiftyAdExample.framework; path = "Pods-SwiftyAdExample.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		685A6564F121334595A5D3AD91E9520D /* Pods_SwiftyAdExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAdExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7271F95BAE9E59A2938DF9CC952E5EC0 /* ResourceBundle-PersonalizedAdConsent-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-PersonalizedAdConsent-Info.plist"; sourceTree = "<group>"; };
 		78DF184058DC41C9271C2A1F8F252D9A /* Pods-SwiftyAdExample-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SwiftyAdExample-acknowledgements.markdown"; sourceTree = "<group>"; };
 		7A0B39EEF21D84AABE3B2E0169437796 /* PACError.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PACError.h; path = PersonalizedAdConsent/PersonalizedAdConsent/PACError.h; sourceTree = "<group>"; };
 		8BF3033D65C71D5AA1DA587DA9883C95 /* PACError.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PACError.m; path = PersonalizedAdConsent/PersonalizedAdConsent/PACError.m; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		999EF856F396EA02D2257FF56E70C6EF /* Pods-SwiftyAdExample-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SwiftyAdExample-acknowledgements.plist"; sourceTree = "<group>"; };
 		9B918003EEAAF1423083EDF202BA89AC /* PACConsentForm.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PACConsentForm.m; path = PersonalizedAdConsent/PersonalizedAdConsent/PACConsentForm.m; sourceTree = "<group>"; };
 		A492D8C2BE57860FC384B1D575346D04 /* Pods-SwiftyAdExample.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-SwiftyAdExample.modulemap"; sourceTree = "<group>"; };
@@ -71,7 +71,7 @@
 		AC8C051E7BDE59218A31476D73CDCBFE /* Pods-SwiftyAdExample-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SwiftyAdExample-umbrella.h"; sourceTree = "<group>"; };
 		BB090697891AA22CCC1FF04EBFFD25FB /* PersonalizedAdConsent-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PersonalizedAdConsent-umbrella.h"; sourceTree = "<group>"; };
 		D6DFF15000AFE2A371BF499E7AFDA808 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		DB09F994D4D730F6AF803EE8ACACB56E /* consentform.html */ = {isa = PBXFileReference; includeInIndex = 1; name = consentform.html; path = PersonalizedAdConsent/PersonalizedAdConsent/PersonalizedAdConsent.bundle/consentform.html; sourceTree = "<group>"; };
+		DB09F994D4D730F6AF803EE8ACACB56E /* consentform.html */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.html; name = consentform.html; path = PersonalizedAdConsent/PersonalizedAdConsent/PersonalizedAdConsent.bundle/consentform.html; sourceTree = "<group>"; };
 		E555A587E130C76C7AE2E0DA5710D513 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = Frameworks/frameworks/GoogleMobileAds.framework; sourceTree = "<group>"; };
 		ECCD3CDC02C82A5C6343EB8670F8BC73 /* PersonalizedAdConsent-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PersonalizedAdConsent-dummy.m"; sourceTree = "<group>"; };
 		ED535F2B5C6CC85A9A5F92D21AC7382E /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -122,7 +122,6 @@
 				5081CC9CE451356CC6FF14A98DC0CC4A /* Resources */,
 				827053B0BFBF87A93A74EA3148F7B6A1 /* Support Files */,
 			);
-			name = PersonalizedAdConsent;
 			path = PersonalizedAdConsent;
 			sourceTree = "<group>";
 		};
@@ -235,7 +234,6 @@
 			children = (
 				80BEDFC91A1A4F178C2A0F459E0150B0 /* Frameworks */,
 			);
-			name = "Google-Mobile-Ads-SDK";
 			path = "Google-Mobile-Ads-SDK";
 			sourceTree = "<group>";
 		};
@@ -328,14 +326,15 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0930;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1020;
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
 			productRefGroup = C6270B418BEC6E43E393B01D8EDF5EA3 /* Products */;
@@ -475,6 +474,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -541,6 +541,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -592,8 +593,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.2;
 				SYMROOT = "${SRCROOT}/../build";
 			};

@@ -130,18 +130,18 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = Dominik;
 				TargetAttributes = {
 					B4B01A121B9A0AF500F9A8EA = {
 						CreatedOnToolsVersion = 6.4;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
 			buildConfigurationList = B4B01A0E1B9A0AF500F9A8EA /* Build configuration list for PBXProject "SwiftyAdExample" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -365,7 +365,7 @@
 				PRODUCT_NAME = SwiftyAdExample;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -387,7 +387,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.dominik.SwiftyAdExample;
 				PRODUCT_NAME = SwiftyAdExample;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
