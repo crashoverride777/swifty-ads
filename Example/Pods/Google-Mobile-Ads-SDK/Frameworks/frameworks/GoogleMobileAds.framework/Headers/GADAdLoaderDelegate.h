@@ -6,7 +6,6 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import <GoogleMobileAds/GADRequestError.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
@@ -16,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Base ad loader delegate protocol. Ad types provide extended protocols that declare methods to
 /// handle successful ad loads.
-@protocol GADAdLoaderDelegate<NSObject>
+@protocol GADAdLoaderDelegate <NSObject>
 
 /// Called when adLoader fails to load an ad.
 - (void)adLoader:(GADAdLoader *)adLoader didFailToReceiveAdWithError:(GADRequestError *)error;

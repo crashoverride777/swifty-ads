@@ -6,12 +6,11 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NSString *GADUnifiedNativeAssetIdentifier GAD_STRING_ENUM;
+typedef NSString *GADUnifiedNativeAssetIdentifier NS_STRING_ENUM;
 
 GAD_EXTERN GADUnifiedNativeAssetIdentifier const GADUnifiedNativeHeadlineAsset;
 GAD_EXTERN GADUnifiedNativeAssetIdentifier const GADUnifiedNativeCallToActionAsset;

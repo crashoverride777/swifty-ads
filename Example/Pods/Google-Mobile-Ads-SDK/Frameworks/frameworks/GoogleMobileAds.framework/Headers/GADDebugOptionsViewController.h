@@ -6,16 +6,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+#import <UIKit/UIKit.h>
 
 @class GADDebugOptionsViewController;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /// Delegate for the GADDebugOptionsViewController.
-@protocol GADDebugOptionsViewControllerDelegate<NSObject>
+@protocol GADDebugOptionsViewControllerDelegate <NSObject>
 
 /// Called when the debug options flow is finished.
 - (void)debugOptionsViewControllerDidDismiss:(GADDebugOptionsViewController *)controller;
@@ -23,7 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /// Displays debug options to the user.
-GAD_SUBCLASSING_RESTRICTED
 @interface GADDebugOptionsViewController : UIViewController
 
 /// Creates and returns a GADDebugOptionsViewController object initialized with the ad unit ID.

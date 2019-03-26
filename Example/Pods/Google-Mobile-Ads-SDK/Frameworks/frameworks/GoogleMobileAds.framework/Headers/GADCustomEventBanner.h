@@ -5,17 +5,16 @@
 //  Copyright 2012 Google Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 #import <GoogleMobileAds/GADAdSize.h>
 #import <GoogleMobileAds/GADCustomEventBannerDelegate.h>
 #import <GoogleMobileAds/GADCustomEventRequest.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 /// The banner custom event protocol. Your banner custom event handler must implement this protocol.
-@protocol GADCustomEventBanner<NSObject>
+@protocol GADCustomEventBanner <NSObject>
 
 /// Inform |delegate| with the custom event execution results to ensure mediation behaves correctly.
 ///

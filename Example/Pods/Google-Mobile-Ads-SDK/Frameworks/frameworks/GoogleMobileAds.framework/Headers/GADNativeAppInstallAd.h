@@ -6,8 +6,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-
 #import <GoogleMobileAds/GADAdChoicesView.h>
 #import <GoogleMobileAds/GADAdLoaderDelegate.h>
 #import <GoogleMobileAds/GADMediaView.h>
@@ -16,15 +14,15 @@
 #import <GoogleMobileAds/GADNativeAppInstallAdAssetIDs.h>
 #import <GoogleMobileAds/GADVideoController.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 /// Native app install ad. To request this ad type, you need to pass
 /// kGADAdLoaderAdTypeNativeAppInstall (see GADAdLoaderAdTypes.h) to the |adTypes| parameter in
-/// GADAdLoader's initializer method. If you request this ad type, your delegate must conform to the
-/// GADNativeAppInstallAdLoaderDelegate protocol.
+/// GADAdLoader's initializer method. If you request this ad type, your delegate must conform to
+/// the GADNativeAppInstallAdLoaderDelegate protocol.
 GAD_DEPRECATED_MSG_ATTRIBUTE("Use GADUnifiedNativeAd instead.")
-GAD_SUBCLASSING_RESTRICTED
 @interface GADNativeAppInstallAd : GADNativeAd
 
 #pragma mark - Must be displayed
@@ -45,7 +43,7 @@ GAD_SUBCLASSING_RESTRICTED
 /// String representation of the app's price.
 @property(nonatomic, readonly, copy, nullable) NSString *price;
 /// Array of GADNativeAdImage objects related to the advertised application.
-@property(nonatomic, readonly, strong, nullable) NSArray *images;
+@property(nonatomic, readonly, strong, nullable) NSArray<GADNativeAdImage *> *images;
 /// App store rating (0 to 5).
 @property(nonatomic, readonly, copy, nullable) NSDecimalNumber *starRating;
 /// Video controller for controlling video playback in GADNativeAppInstallAdView's mediaView.
@@ -78,7 +76,7 @@ GAD_SUBCLASSING_RESTRICTED
 /// The delegate of a GADAdLoader object implements this protocol to receive GADNativeAppInstallAd
 /// ads.
 GAD_DEPRECATED_MSG_ATTRIBUTE("Use GADUnifiedNativeAdLoaderDelegate instead.")
-@protocol GADNativeAppInstallAdLoaderDelegate<GADAdLoaderDelegate>
+@protocol GADNativeAppInstallAdLoaderDelegate <GADAdLoaderDelegate>
 /// Called when a native app install ad is received.
 - (void)adLoader:(GADAdLoader *)adLoader
     didReceiveNativeAppInstallAd:(GADNativeAppInstallAd *)nativeAppInstallAd;

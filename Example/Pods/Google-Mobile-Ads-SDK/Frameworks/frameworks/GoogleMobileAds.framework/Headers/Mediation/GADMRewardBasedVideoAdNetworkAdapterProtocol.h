@@ -10,7 +10,7 @@
 @protocol GADMRewardBasedVideoAdNetworkConnector;
 
 /// Your adapter must conform to this protocol to provide reward based video ads.
-@protocol GADMRewardBasedVideoAdNetworkAdapter<NSObject>
+@protocol GADMRewardBasedVideoAdNetworkAdapter <NSObject>
 
 /// Returns a version string for the adapter. It can be any string that uniquely identifies the
 /// version of your adapter. For example, "1.0", or simply a date such as "20110915".
@@ -23,7 +23,7 @@
 /// Returns an initialized instance of the adapter when mediation ad requests come in. The adapter
 /// must only maintain a weak reference to the provided connector.
 - (instancetype)initWithRewardBasedVideoAdNetworkConnector:
-        (id<GADMRewardBasedVideoAdNetworkConnector>)connector;
+    (id<GADMRewardBasedVideoAdNetworkConnector>)connector;
 
 /// Tells the adapter to set up reward based video ads. The adapter should notify the Google Mobile
 /// Ads SDK whether set up has succeeded or failed using callbacks provided in the connector. When

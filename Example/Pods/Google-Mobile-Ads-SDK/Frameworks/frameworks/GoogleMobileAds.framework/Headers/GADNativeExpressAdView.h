@@ -5,13 +5,12 @@
 //  Copyright 2015 Google Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 #import <GoogleMobileAds/GADAdSize.h>
 #import <GoogleMobileAds/GADNativeExpressAdViewDelegate.h>
 #import <GoogleMobileAds/GADRequest.h>
 #import <GoogleMobileAds/GADVideoController.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -30,7 +29,6 @@ NS_ASSUME_NONNULL_BEGIN
 ///   [adView loadRequest:[GADRequest request]];
 ///   </pre>
 GAD_DEPRECATED_ATTRIBUTE
-GAD_SUBCLASSING_RESTRICTED
 @interface GADNativeExpressAdView : UIView
 
 #pragma mark - Initialization
@@ -39,8 +37,8 @@ GAD_SUBCLASSING_RESTRICTED
 /// |origin| relative to its superview bounds. Returns nil if |adSize| is an invalid ad size.
 - (nullable instancetype)initWithAdSize:(GADAdSize)adSize origin:(CGPoint)origin;
 
-/// Returns an initialized GADNativeExpressAdView instance set to |adSize| and positioned at the top
-/// left of its superview. Returns nil if |adSize| is an invalid ad size.
+/// Returns an initialized GADNativeExpressAdView instance set to |adSize| and positioned at the
+/// top left of its superview. Returns nil if |adSize| is an invalid ad size.
 - (nullable instancetype)initWithAdSize:(GADAdSize)adSize;
 
 /// Video controller for controlling video rendered by this native express ad view.
@@ -89,8 +87,8 @@ GAD_SUBCLASSING_RESTRICTED
 
 /// The name of the ad network adapter class that fetched the current ad. Returns nil while the
 /// latest ad request is in progress or if the latest ad request failed. For both standard and
-/// mediated Google AdMob ads, this method returns @"GADMAdapterGoogleAdMobAds". For ads fetched via
-/// mediation custom events, this method returns @"GADMAdapterCustomEvents".
+/// mediated Google AdMob ads, this method returns @"GADMAdapterGoogleAdMobAds". For ads fetched
+/// via mediation custom events, this method returns @"GADMAdapterCustomEvents".
 @property(nonatomic, readonly, weak, nullable) NSString *adNetworkClassName;
 
 @end

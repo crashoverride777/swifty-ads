@@ -6,22 +6,20 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-
+#import <GoogleMobileAds/GADAdMetadataKeys.h>
 #import <GoogleMobileAds/GADRequest.h>
+#import <GoogleMobileAds/GADRequestError.h>
 #import <GoogleMobileAds/GADRewardBasedVideoAdDelegate.h>
-
-NS_ASSUME_NONNULL_BEGIN
+#import <UIKit/UIKit.h>
 
 /// The GADRewardBasedVideoAd class is used for requesting and presenting a reward based video ad.
 /// This class isn't thread safe.
-GAD_SUBCLASSING_RESTRICTED
 @interface GADRewardBasedVideoAd : NSObject
 
 /// Delegate for receiving video notifications.
 @property(nonatomic, weak, nullable) id<GADRewardBasedVideoAdDelegate> delegate;
 
-/// Indicates if the receiver is ready to be presented full screen.
+/// Indicates whether the receiver is ready to be presented full screen.
 @property(nonatomic, readonly, getter=isReady) BOOL ready;
 
 /// The ad network class name that fetched the current ad. Returns nil while the latest ad request
@@ -38,17 +36,20 @@ GAD_SUBCLASSING_RESTRICTED
 /// Optional custom reward string to include in the server-to-server callback.
 @property(nonatomic, copy, nullable) NSString *customRewardString;
 
+/// The loaded ad's metadata. Is nil if no ad is loaded or the loaded ad doesn't have metadata. Ad
+/// metadata may update after loading. Use the rewardBasedVideoAdMetadataDidChange: delegate method
+/// on GADRewardBasedVideoAdDelegate to listen for updates.
+@property(nonatomic, readonly, nullable) NSDictionary<GADAdMetadataKey, id> *adMetadata;
+
 /// Returns the shared GADRewardBasedVideoAd instance.
-+ (GADRewardBasedVideoAd *)sharedInstance;
++ (nonnull GADRewardBasedVideoAd *)sharedInstance;
 
 /// Initiates the request to fetch the reward based video ad. The |request| object supplies ad
 /// targeting information and must not be nil. The adUnitID is the ad unit id used for fetching an
 /// ad and must not be nil.
-- (void)loadRequest:(GADRequest *)request withAdUnitID:(NSString *)adUnitID;
+- (void)loadRequest:(nonnull GADRequest *)request withAdUnitID:(nonnull NSString *)adUnitID;
 
 /// Presents the reward based video ad with the provided view controller.
-- (void)presentFromRootViewController:(UIViewController *)viewController;
+- (void)presentFromRootViewController:(nonnull UIViewController *)viewController;
 
 @end
-
-NS_ASSUME_NONNULL_END

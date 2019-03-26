@@ -18,15 +18,14 @@ typedef NS_ENUM(NSInteger, GADNativeAdImageAdLoaderOptionsOrientation) {
 };
 
 /// Ad loader options for native ad image settings.
-GAD_SUBCLASSING_RESTRICTED
 @interface GADNativeAdImageAdLoaderOptions : GADAdLoaderOptions
 
-/// Indicates if image asset content should be loaded by the SDK. If set to YES, the SDK will not
-/// load image asset content and native ad image URLs can be used to fetch content. Defaults to NO,
-/// image assets are loaded by the SDK.
+/// Indicates whether image asset content should be loaded by the SDK. If set to YES, the SDK will
+/// not load image asset content and native ad image URLs can be used to fetch content. Defaults to
+/// NO, image assets are loaded by the SDK.
 @property(nonatomic, assign) BOOL disableImageLoading;
 
-/// Indicates if multiple images should be loaded for each asset. Defaults to NO.
+/// Indicates whether multiple images should be loaded for each asset. Defaults to NO.
 @property(nonatomic, assign) BOOL shouldRequestMultipleImages;
 
 /// Indicates preferred image orientation. Defaults to

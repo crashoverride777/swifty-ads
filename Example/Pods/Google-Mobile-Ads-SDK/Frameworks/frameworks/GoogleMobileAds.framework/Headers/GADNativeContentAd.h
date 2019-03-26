@@ -6,8 +6,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-
 #import <GoogleMobileAds/GADAdChoicesView.h>
 #import <GoogleMobileAds/GADAdLoaderDelegate.h>
 #import <GoogleMobileAds/GADMediaView.h>
@@ -16,6 +14,7 @@
 #import <GoogleMobileAds/GADNativeContentAdAssetIDs.h>
 #import <GoogleMobileAds/GADVideoController.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,7 +25,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// you request this ad type, your delegate must conform to the GADNativeContentAdLoaderDelegate
 /// protocol.
 GAD_DEPRECATED_MSG_ATTRIBUTE("Use GADUnifiedNativeAd instead.")
-GAD_SUBCLASSING_RESTRICTED
 @interface GADNativeContentAd : GADNativeAd
 
 #pragma mark - Must be displayed
@@ -39,7 +37,7 @@ GAD_SUBCLASSING_RESTRICTED
 #pragma mark - Recommended to display
 
 /// Large images.
-@property(nonatomic, readonly, copy, nullable) NSArray *images;
+@property(nonatomic, readonly, copy, nullable) NSArray<GADNativeAdImage *> *images;
 /// Small logo image.
 @property(nonatomic, readonly, strong, nullable) GADNativeAdImage *logo;
 /// Text that encourages user to take some action with the ad.
@@ -75,7 +73,7 @@ GAD_SUBCLASSING_RESTRICTED
 
 /// The delegate of a GADAdLoader object implements this protocol to receive GADNativeContentAd ads.
 GAD_DEPRECATED_MSG_ATTRIBUTE("Use GADUnifiedNativeAdLoaderDelegate instead.")
-@protocol GADNativeContentAdLoaderDelegate<GADAdLoaderDelegate>
+@protocol GADNativeContentAdLoaderDelegate <GADAdLoaderDelegate>
 /// Called when native content is received.
 - (void)adLoader:(GADAdLoader *)adLoader
     didReceiveNativeContentAd:(GADNativeContentAd *)nativeContentAd;

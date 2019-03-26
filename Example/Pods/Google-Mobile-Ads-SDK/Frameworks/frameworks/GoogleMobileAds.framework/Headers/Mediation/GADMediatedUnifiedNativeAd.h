@@ -6,7 +6,6 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import <GoogleMobileAds/GADNativeAdImage.h>
 #import <GoogleMobileAds/GADUnifiedNativeAdAssetIdentifiers.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
@@ -15,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Provides methods used for constructing native ads. The adapter must return an object conforming
 /// to this protocol for native ad requests.
-@protocol GADMediatedUnifiedNativeAd<NSObject>
+@protocol GADMediatedUnifiedNativeAd <NSObject>
 
 /// Headline.
 @property(nonatomic, readonly, copy, nullable) NSString *headline;
@@ -57,7 +56,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, readonly, nullable) UIView *mediaView;
 
 /// Indicates whether the ad has video content.
-@property(nonatomic, assign, readonly) BOOL hasVideoContent;
+@property(nonatomic, readonly) BOOL hasVideoContent;
+
+/// Media content aspect ratio (width/height) or 0 if there's no media content.
+@property(nonatomic, readonly) CGFloat mediaContentAspectRatio;
 
 /// Tells the receiver that it has been rendered in |view| with clickable asset views and
 /// nonclickable asset views. viewController should be used to present modal views for the ad.
@@ -79,8 +81,8 @@ NS_ASSUME_NONNULL_BEGIN
                                  view:(UIView *)view
                        viewController:(UIViewController *)viewController;
 
-/// Tells the receiver that it has untracked |view|. This method is called when the mediatedNativeAd
-/// is no longer rendered in the provided view and the delegate should stop tracking the view's
+/// Tells the receiver that it has untracked |view|. This method is called when the mediated native
+/// ad is no longer rendered in the provided view and the delegate should stop tracking the view's
 /// impressions and clicks. The method may also be called with a nil view when the view in which the
 /// mediated native ad has rendered is deallocated.
 - (void)didUntrackView:(nullable UIView *)view;

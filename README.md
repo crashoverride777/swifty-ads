@@ -1,4 +1,4 @@
-[![Swift 4.2](https://img.shields.io/badge/swift-4.2-ED523F.svg?style=flat)](https://swift.org/download/)
+[![Swift 5.0](https://img.shields.io/badge/swift-5.0-ED523F.svg?style=flat)](https://swift.org/download/)
 [![Platform](https://img.shields.io/cocoapods/p/SwiftyRate.svg?style=flat)]()
 
 # SwiftyAd
@@ -10,7 +10,7 @@ This helper follows all the best practices in regards to ads, like creating shar
 ## Requirements
 
 - iOS 9.3+
-- Swift 4.0+
+- Swift 5.0+
 
 ## GDPR in EEA (European Economic Area)
 
@@ -45,6 +45,8 @@ With the latest xCode it is no longer necessary to setup the DEBUG flag manually
 
 ## Installation
 
+https://developers.google.com/ad-manager/mobile-ads-sdk/ios/quick-start
+
 ### Step 1: 
 
 Sign up for a Google [AdMob account](https://support.google.com/admob/answer/3052638?hl=en-GB&ref_topic=3052726) and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
@@ -69,6 +71,12 @@ SwiftyAd.swift
 SwiftyAdConsentManager.swift
 SwiftyAd.plist
 ```
+
+### Step 4:
+
+Add a new entry in the info.plist called `GADIsAdManagerApp` (String) with a value of `YES` when using SDK 7.42 or higher
+
+https://developers.google.com/ad-manager/mobile-ads-sdk/ios/quick-start#update_your_infoplist
 
 ## Usage
 

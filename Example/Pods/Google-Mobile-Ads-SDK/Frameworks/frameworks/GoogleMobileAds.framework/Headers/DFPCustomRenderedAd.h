@@ -7,19 +7,14 @@
 
 #import <UIKit/UIKit.h>
 
-#import <GoogleMobileAds/GoogleMobileAdsDefines.h>
-
-NS_ASSUME_NONNULL_BEGIN
-
 /// Custom rendered ad. Your application renders the ad.
-GAD_SUBCLASSING_RESTRICTED
 @interface DFPCustomRenderedAd : NSObject
 
 /// The ad's HTML.
-@property(nonatomic, readonly, copy) NSString *adHTML;
+@property(nonatomic, readonly, nonnull) NSString *adHTML;
 
 /// The base URL of the ad's HTML.
-@property(nonatomic, readonly, copy) NSURL *adBaseURL;
+@property(nonatomic, readonly, nonnull) NSURL *adBaseURL;
 
 /// Call this method when the user clicks the ad.
 - (void)recordClick;
@@ -28,8 +23,6 @@ GAD_SUBCLASSING_RESTRICTED
 - (void)recordImpression;
 
 /// Call this method after the ad has been rendered in a UIView object.
-- (void)finishedRenderingAdView:(UIView *)view;
+- (void)finishedRenderingAdView:(nonnull UIView *)view;
 
 @end
-
-NS_ASSUME_NONNULL_END

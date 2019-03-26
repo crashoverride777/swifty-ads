@@ -6,7 +6,6 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
 @class GADUnifiedNativeAd;
@@ -14,7 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// Identifies native ad assets.
-@protocol GADUnifiedNativeAdDelegate<NSObject>
+@protocol GADUnifiedNativeAdDelegate <NSObject>
 
 @optional
 
@@ -56,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Used for Mute This Ad feature. Called after the native ad is muted. Only called for Google ads
 /// and is not supported for mediated ads.
-- (void)nativeAdIsMuted:(GADUnifiedNativeAd *)nativeAd;
+- (void)nativeAdIsMuted:(nonnull GADUnifiedNativeAd *)nativeAd;
 
 @end
 

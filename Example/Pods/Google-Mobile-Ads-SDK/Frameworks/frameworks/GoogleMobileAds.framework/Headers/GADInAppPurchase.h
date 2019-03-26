@@ -6,9 +6,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <StoreKit/StoreKit.h>
-
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+#import <StoreKit/StoreKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,9 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Instances of this class are created and passed to your in-app purchase delegate after the user
 /// has successfully paid for a product. Your code must correctly deliver the product to the user
 /// and then call the didCompletePurchase method to finish the transaction.
-
 GAD_DEPRECATED_ATTRIBUTE
-GAD_SUBCLASSING_RESTRICTED
 @interface GADDefaultInAppPurchase : NSObject
 
 /// Enables the default consumable product in-app purchase flow handled by the Google Mobile Ads
@@ -61,10 +58,10 @@ GAD_SUBCLASSING_RESTRICTED
 /// Enum of the different statuses resulting from processing a purchase.
 GAD_DEPRECATED_ATTRIBUTE
 typedef NS_ENUM(NSInteger, GADInAppPurchaseStatus) {
-  kGADInAppPurchaseStatusError = 0,          ///< Error occured while processing the purchase.
+  kGADInAppPurchaseStatusError = 0,          ///< Error occurred while processing the purchase.
   kGADInAppPurchaseStatusSuccessful = 1,     ///< Purchase was completed successfully.
   kGADInAppPurchaseStatusCancel = 2,         ///< Purchase was cancelled by the user.
-  kGADInAppPurchaseStatusInvalidProduct = 3  ///< Error occured while looking up the product.
+  kGADInAppPurchaseStatusInvalidProduct = 3  ///< Error occurred while looking up the product.
 };
 
 /// The in-app purchase item to be purchased with the purchase flow handled by you, the
@@ -73,7 +70,6 @@ typedef NS_ENUM(NSInteger, GADInAppPurchaseStatus) {
 /// users click a buy button. It is important to report the result of the purchase back to the SDK
 /// in order to track metrics about the transaction.
 GAD_DEPRECATED_ATTRIBUTE
-GAD_SUBCLASSING_RESTRICTED
 @interface GADInAppPurchase : NSObject
 
 /// The in-app purchase product ID.
@@ -82,8 +78,8 @@ GAD_SUBCLASSING_RESTRICTED
 /// The product quantity.
 @property(nonatomic, readonly, assign) NSInteger quantity;
 
-/// The GADInAppPurchaseDelegate object must call this method after handling the in-app purchase for
-/// both successful and unsuccessful purchase attempts. This method reports ad conversion and
+/// The GADInAppPurchaseDelegate object must call this method after handling the in-app purchase
+/// for both successful and unsuccessful purchase attempts. This method reports ad conversion and
 /// purchase status information to Google.
 - (void)reportPurchaseStatus:(GADInAppPurchaseStatus)purchaseStatus;
 

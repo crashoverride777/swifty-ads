@@ -14,7 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// multiple ads and the height is set dynamically based on the ad contents. Please cross-reference
 /// the property sections and properties with the official reference document:
 /// https://developers.google.com/custom-search-ads/docs/reference
-GAD_SUBCLASSING_RESTRICTED
 @interface GADDynamicHeightSearchRequest : GADRequest
 
 #pragma mark - Page Level Parameters
@@ -29,7 +28,7 @@ GAD_SUBCLASSING_RESTRICTED
 
 #pragma mark Configuration Settings
 
-/// Indicates if the CSA "adTest" parameter is enabled.
+/// Indicates whether the CSA "adTest" parameter is enabled.
 @property(nonatomic, assign) BOOL adTestEnabled;
 
 /// The CSA "channel" parameter.
@@ -48,19 +47,19 @@ GAD_SUBCLASSING_RESTRICTED
 
 #pragma mark Ad Extensions
 
-/// Indicates if the CSA "clickToCall" parameter is enabled.
+/// Indicates whether the CSA "clickToCall" parameter is enabled.
 @property(nonatomic, assign) BOOL clickToCallExtensionEnabled;
 
-/// Indicates if the CSA "location" parameter is enabled.
+/// Indicates whether the CSA "location" parameter is enabled.
 @property(nonatomic, assign) BOOL locationExtensionEnabled;
 
-/// Indicates if the CSA "plusOnes" parameter is enabled.
+/// Indicates whether the CSA "plusOnes" parameter is enabled.
 @property(nonatomic, assign) BOOL plusOnesExtensionEnabled;
 
-/// Indicates if the CSA "sellerRatings" parameter is enabled.
+/// Indicates whether the CSA "sellerRatings" parameter is enabled.
 @property(nonatomic, assign) BOOL sellerRatingsExtensionEnabled;
 
-/// Indicates if the CSA "siteLinks" parameter is enabled.
+/// Indicates whether the CSA "siteLinks" parameter is enabled.
 @property(nonatomic, assign) BOOL siteLinksExtensionEnabled;
 
 #pragma mark - Unit Level Parameters
@@ -141,10 +140,10 @@ GAD_SUBCLASSING_RESTRICTED
 /// The CSA "borderSelections" parameter.
 @property(nonatomic, copy, nullable) NSString *borderCSSSelections;
 
-/// Indicates if the CSA "noTitleUnderline" parameter is enabled.
+/// Indicates whether the CSA "noTitleUnderline" parameter is enabled.
 @property(nonatomic, assign) BOOL titleUnderlineHidden;
 
-/// Indicates if the CSA "titleBold" parameter is enabled.
+/// Indicates whether the CSA "titleBold" parameter is enabled.
 @property(nonatomic, assign) BOOL boldTitleEnabled;
 
 /// The CSA "verticalSpacing" parameter.
@@ -152,10 +151,10 @@ GAD_SUBCLASSING_RESTRICTED
 
 #pragma mark Ad Extensions
 
-/// Indicates if the CSA "detailedAttribution" parameter is enabled.
+/// Indicates whether the CSA "detailedAttribution" parameter is enabled.
 @property(nonatomic, assign) BOOL detailedAttributionExtensionEnabled;
 
-/// Indicates if the CSA "longerHeadlines" parameter is enabled.
+/// Indicates whether the CSA "longerHeadlines" parameter is enabled.
 @property(nonatomic, assign) BOOL longerHeadlinesExtensionEnabled;
 
 /// Sets an advanced option value for a specified key. The value must be an NSString or NSNumber.

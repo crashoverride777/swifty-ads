@@ -16,86 +16,80 @@
 @protocol GADMAdNetworkConnector;
 
 /// Ad network adapter protocol.
-@protocol GADMAdNetworkAdapter<NSObject>
+@protocol GADMAdNetworkAdapter <NSObject>
 
 /// Returns a version string for the adapter. It can be any string that uniquely identifies the
-/// version of your adapter. For example, "1.0", or simply a date such as "20110915".
+/// adapter's version. For example, "1.0", or a date such as "20110915".
 + (NSString *)adapterVersion;
 
-/// The extras class that is used to specify additional parameters for a request to this ad network.
-/// Returns Nil if the network does not have extra settings for publishers to send.
+/// Returns the extras class that is used by publishers to provide additional parameters to this
+/// adapter. Returns Nil if the adapter doesn't have extra publisher provided settings.
 + (Class<GADAdNetworkExtras>)networkExtrasClass;
 
-/// Designated initializer. Implementing classes can and should keep the connector in an instance
-/// variable. However you must never retain the connector, as doing so will create a circular
-/// reference and cause memory leaks.
+/// Designated initializer. Adapters can and should store a weak reference to the connector.
+/// However, adapters must not keep a strong reference to the connector, as doing so creates a
+/// reference cycle and abandoned memory.
 - (instancetype)initWithGADMAdNetworkConnector:(id<GADMAdNetworkConnector>)connector;
 
-/// Asks the adapter to initiate a banner ad request. The adapter does not need to return anything.
-/// The assumption is that the adapter will start an asynchronous ad fetch over the network. Your
-/// adapter may act as a delegate to your SDK to listen to callbacks. If your SDK does not support
-/// the given ad size, or does not support banner ads, call back to the adapter:didFailAd: method of
-/// the connector.
+/// Asks the adapter to initiate an asynchronous banner ad request. The adapter may act as a
+/// delegate to your SDK to listen to callbacks. If your SDK doesn't support the given ad size, or
+/// doesn't support banner ads, call adapter:didFailAd: on the connector.
 - (void)getBannerWithSize:(GADAdSize)adSize;
 
-/// Asks the adapter to initiate an interstitial ad request. The adapter does not need to return
-/// anything. The assumption is that the adapter will start an asynchronous ad fetch over the
-/// network. Your adapter may act as a delegate to your SDK to listen to callbacks. If your SDK does
-/// not support interstitials, call back to the adapter:didFailInterstitial: method of the
-/// connector.
+/// Asks the adapter to initiate an asynchronous interstitial ad request. The adapter may act as a
+/// delegate to your SDK to listen to callbacks. If your SDK doesn't support interstitials, call
+/// adapter:didFailInterstitial: on the connector.
 - (void)getInterstitial;
 
-/// When called, the adapter must remove itself as a delegate or notification observer from the
-/// underlying ad network SDK. You should also call this method in your adapter dealloc, so when
-/// your adapter goes away, your SDK will not call a freed object. This function should be
-/// idempotent and should not crash regardless of when or how many times the method is called.
+/// When called, the adapter must remove strong references to itself (e.g., delegate properties and
+/// notification observers). You should also call this method in your adapter dealloc to prevent
+/// your SDK from interacting with the deallocated adapter. This function may be called multiple
+/// times.
 - (void)stopBeingDelegate;
 
-/// Present an interstitial using the supplied UIViewController, by calling
+/// Presents an interstitial using the supplied UIViewController, by calling
 /// presentViewController:animated:completion:.
 ///
 /// Your interstitial should not immediately present itself when it is received. Instead, you should
 /// wait until this method is called on your adapter to present the interstitial.
 ///
-/// Make sure to call adapterWillPresentInterstitial: on the connector when the interstitial is
+/// The adapter must call adapterWillPresentInterstitial: on the connector when the interstitial is
 /// about to be presented, and adapterWillDismissInterstitial: and adapterDidDismissInterstitial:
 /// when the interstitial is being dismissed.
 - (void)presentInterstitialFromRootViewController:(UIViewController *)rootViewController;
 
 @optional
 
-/// Starts request for a native ad. |adTypes| contains the list of native ad types requested. See
-/// GADAdLoaderAdTypes.h for available ad types. |options| are any additional options configured by
-/// the publisher for requesting a native ad. See GADNativeAdImageAdLoaderOptions.h for available
-/// image options. When this method is called the receiver may start native ad request
-/// asynchronously. On completion the receiver should notify the Google Mobile Ads SDK with a native
-/// ad object using the receiver's connector method
-/// adapter:didReceiveNativeAdDataSource:mediationDelegate or adapter:didFailAd: if the ad request
-/// encountered an error.
+/// Asks the adapter to initiate an asynchronous native ad request. |adTypes| contains the list of
+/// native ad types requested. See GADAdLoaderAdTypes.h for available ad types. |options| contains
+/// additional options configured by the publisher. See GADNativeAdImageAdLoaderOptions.h for
+/// available image options.
+///
+/// On ad load success or failure, call adapter:didReceiveNativeAdDataSource:mediationDelegate or
+/// adapter:didFailAd: on the connector.
 - (void)getNativeAdWithAdTypes:(NSArray<GADAdLoaderAdType> *)adTypes
                        options:(NSArray<GADAdLoaderOptions *> *)options;
 
-/// Indicates if the adapter handles user clicks. If this method returns YES, the adapter must
-/// handle user clicks and notify the Google Mobile Ads SDK of clicks using
-/// +[GADMediatedNativeAdNotificationSource mediatedNativeAdDidRecordClick:]. If this method returns
+/// Indicates if the adapter handles user clicks. If the adapter returns YES, it must handle user
+/// clicks and notify the Google Mobile Ads SDK of clicks using
+/// +[GADMediatedNativeAdNotificationSource mediatedNativeAdDidRecordClick:]. If the adapter returns
 /// NO, the Google Mobile Ads SDK handles user clicks and notifies the adapter of clicks using
 /// -[GADMediatedNativeAdDelegate
 /// mediatedNativeAd:didRecordClickOnAssetWithName:view:viewController:].
 - (BOOL)handlesUserClicks;
 
-/// Indicates if the adapter handles user impressions tracking. If this method returns YES, the
+/// Indicates if the adapter handles user impressions tracking. If the adapter returns YES, the
 /// Google Mobile Ads SDK will not track user impressions and the adapter must notify the
 /// Google Mobile Ads SDK of impressions using +[GADMediatedNativeAdNotificationSource
-/// mediatedNativeAdDidRecordImpression:]. If this method returns NO,
-/// the Google Mobile Ads SDK tracks user impressions and notifies the adapter of impressions
-/// using -[GADMediatedNativeAdDelegate mediatedNativeAdDidRecordImpression:].
+/// mediatedNativeAdDidRecordImpression:]. If the adapter returns NO, the Google Mobile Ads SDK
+/// tracks user impressions and notifies the adapter of impressions using
+/// -[GADMediatedNativeAdDelegate mediatedNativeAdDidRecordImpression:].
 - (BOOL)handlesUserImpressions;
 
-/// If your ad network handles multiple ad sizes for the same banner ad, implement this method to
-/// know when the user changes the banner size. This is typically changing from
-/// kGADAdSizeSmartBannerPortrait to kGADAdSizeSmartBannerLandscape, or vice versa. If this method
-/// is not implemented, every time the user changes the ad size, a new ad will be requested with the
-/// new size by calling your getBannerWithSize: method.
+/// If your ad network handles multiple ad sizes for the same banner ad, implement this method to be
+/// informed of banner size updates. Ad sizes typically change between kGADAdSizeSmartBannerPortrait
+/// and kGADAdSizeSmartBannerLandscape. If this method is not implemented, the ad is removed from
+/// the user interface when the size changes.
 - (void)changeAdSizeTo:(GADAdSize)adSize;
 
 @end

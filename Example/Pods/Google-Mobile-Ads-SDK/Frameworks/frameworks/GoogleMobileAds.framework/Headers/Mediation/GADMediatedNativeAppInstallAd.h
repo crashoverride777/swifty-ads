@@ -6,7 +6,6 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import <GoogleMobileAds/GADNativeAdImage.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 #import <GoogleMobileAds/Mediation/GADMediatedNativeAd.h>
@@ -14,15 +13,15 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// Provides methods used for constructing native app install ads. The adapter must return an object
-/// conforming to this protocol for native app install requests.
+/// conforming to this protocol for native app install ad requests.
 GAD_DEPRECATED_MSG_ATTRIBUTE("Use GADMediatedUnifiedNativeAd instead.")
-@protocol GADMediatedNativeAppInstallAd<GADMediatedNativeAd>
+@protocol GADMediatedNativeAppInstallAd <GADMediatedNativeAd>
 
 /// App title.
 - (nullable NSString *)headline;
 
 /// Array of GADNativeAdImage objects related to the advertised application.
-- (nullable NSArray *)images;
+- (nullable NSArray<GADNativeAdImage *> *)images;
 
 /// App description.
 - (nullable NSString *)body;
@@ -50,7 +49,7 @@ GAD_DEPRECATED_MSG_ATTRIBUTE("Use GADMediatedUnifiedNativeAd instead.")
 /// Media view.
 - (nullable UIView *)mediaView;
 
-/// Returns YES if the ad has video content.
+/// Indicates whether the ad has video content.
 - (BOOL)hasVideoContent;
 
 @end

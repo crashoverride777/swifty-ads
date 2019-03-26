@@ -14,16 +14,15 @@
 #import <GoogleMobileAds/GADVideoController.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 /// The delegate of a GADAdLoader object must conform to this protocol to receive DFPBannerViews.
-@protocol DFPBannerAdLoaderDelegate<GADAdLoaderDelegate>
+@protocol DFPBannerAdLoaderDelegate <GADAdLoaderDelegate>
 
 /// Asks the delegate which banner ad sizes should be requested.
-- (NSArray<NSValue *> *)validBannerSizesForAdLoader:(GADAdLoader *)adLoader;
+- (nonnull NSArray<NSValue *> *)validBannerSizesForAdLoader:(nonnull GADAdLoader *)adLoader;
 
 /// Tells the delegate that a Google Ad Manager banner ad was received.
-- (void)adLoader:(GADAdLoader *)adLoader didReceiveDFPBannerView:(DFPBannerView *)bannerView;
+- (void)adLoader:(nonnull GADAdLoader *)adLoader
+    didReceiveDFPBannerView:(nonnull DFPBannerView *)bannerView;
 
 @end
 
@@ -32,7 +31,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// To request this ad type using GADAdLoader, you need to pass kGADAdLoaderAdTypeDFPBanner (see
 /// GADAdLoaderAdTypes.h) to the |adTypes| parameter in GADAdLoader's initializer method. If you
 /// request this ad type, your delegate must conform to the DFPBannerAdLoaderDelegate protocol.
-GAD_SUBCLASSING_RESTRICTED
 @interface DFPBannerView : GADBannerView
 
 /// Required value created on the Ad Manager website. Create a new ad unit for every unique
@@ -66,18 +64,18 @@ GAD_SUBCLASSING_RESTRICTED
 @property(nonatomic, copy, nullable) NSArray<NSValue *> *validAdSizes;
 
 /// Correlator object for correlating this object to other ad objects.
-@property(nonatomic, strong, nullable) GADCorrelator *correlator;
+@property(nonatomic, nullable) GADCorrelator *correlator;
 
 /// Indicates that the publisher will record impressions manually when the ad becomes visible to the
 /// user.
-@property(nonatomic, assign) BOOL enableManualImpressions;
+@property(nonatomic) BOOL enableManualImpressions;
 
 /// Optional delegate object for custom rendered ads.
-@property(nonatomic, weak, nullable)
-    IBOutlet id<DFPCustomRenderedBannerViewDelegate> customRenderedBannerViewDelegate;
+@property(nonatomic, weak, nullable) IBOutlet id<DFPCustomRenderedBannerViewDelegate>
+    customRenderedBannerViewDelegate;
 
 /// Video controller for controlling video rendered by this ad view.
-@property(nonatomic, strong, readonly) GADVideoController *videoController;
+@property(nonatomic, readonly, nonnull) GADVideoController *videoController;
 
 /// If you've set enableManualImpressions to YES, call this method when the ad is visible.
 - (void)recordImpression;
@@ -89,7 +87,7 @@ GAD_SUBCLASSING_RESTRICTED
 ///
 /// @param adOptions An array of GADAdLoaderOptions objects. The array is deep copied and option
 /// objects cannot be modified after calling this method.
-- (void)setAdOptions:(NSArray<GADAdLoaderOptions *> *)adOptions;
+- (void)setAdOptions:(nonnull NSArray<GADAdLoaderOptions *> *)adOptions;
 
 #pragma mark Deprecated
 
@@ -102,11 +100,9 @@ GAD_SUBCLASSING_RESTRICTED
 ///   <pre>
 ///   GADAdSize size1 = kGADAdSizeBanner;
 ///   GADAdSize size2 = kGADAdSizeLargeBanner;
-///   [bannerView setValidAdSizesWithSizes:&size1, &size2, NULL];
+///   [bannerView setValidAdSizesWithSizes:&size1, &size2, nil];
 ///   </pre>
-- (void)setValidAdSizesWithSizes:(GADAdSize *)firstSize, ... NS_REQUIRES_NIL_TERMINATION
+- (void)setValidAdSizesWithSizes:(nullable GADAdSize *)firstSize, ... NS_REQUIRES_NIL_TERMINATION
                                  GAD_DEPRECATED_MSG_ATTRIBUTE("Use validAdSizes property.");
 
 @end
-
-NS_ASSUME_NONNULL_END

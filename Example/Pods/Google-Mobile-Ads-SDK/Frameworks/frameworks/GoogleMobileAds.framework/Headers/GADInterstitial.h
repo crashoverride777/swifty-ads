@@ -5,19 +5,15 @@
 //  Copyright 2011 Google Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 #import <GoogleMobileAds/GADInAppPurchaseDelegate.h>
 #import <GoogleMobileAds/GADInterstitialDelegate.h>
 #import <GoogleMobileAds/GADRequest.h>
 #import <GoogleMobileAds/GADRequestError.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
-
-NS_ASSUME_NONNULL_BEGIN
+#import <UIKit/UIKit.h>
 
 /// An interstitial ad. This is a full-screen advertisement shown at natural transition points in
 /// your application such as between game levels or news stories.
-GAD_SUBCLASSING_RESTRICTED
 @interface GADInterstitial : NSObject
 
 /// Initializes an interstitial with an ad unit created on the AdMob website. Create a new ad unit
@@ -25,12 +21,12 @@ GAD_SUBCLASSING_RESTRICTED
 /// placement. Ad units are important for targeting and statistics.
 ///
 /// Example AdMob ad unit ID: @"ca-app-pub-0123456789012345/0123456789"
-- (instancetype)initWithAdUnitID:(NSString *)adUnitID NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithAdUnitID:(nonnull NSString *)adUnitID NS_DESIGNATED_INITIALIZER;
 
 #pragma mark Pre-Request
 
-/// Required value passed in with initWithAdUnitID:.
-@property(nonatomic, readonly, copy, nullable) NSString *adUnitID;
+/// The interstitial's ad unit ID.
+@property(nonatomic, readonly, nullable) NSString *adUnitID;
 
 /// Optional delegate object that receives state change notifications from this GADInterstitalAd.
 @property(nonatomic, weak, nullable) id<GADInterstitialDelegate> delegate;
@@ -49,17 +45,17 @@ GAD_SUBCLASSING_RESTRICTED
 
 /// Returns YES if the interstitial is ready to be displayed. The delegate's
 /// interstitialAdDidReceiveAd: will be called after this property switches from NO to YES.
-@property(nonatomic, readonly, assign) BOOL isReady;
+@property(nonatomic, readonly) BOOL isReady;
 
 /// Returns YES if this object has already been presented. Interstitial objects can only be used
 /// once even with different requests.
-@property(nonatomic, readonly, assign) BOOL hasBeenUsed;
+@property(nonatomic, readonly) BOOL hasBeenUsed;
 
 /// Returns the ad network class name that fetched the current ad. Returns nil while the latest ad
 /// request is in progress or if the latest ad request failed. For both standard and mediated Google
 /// AdMob ads, this property returns @"GADMAdapterGoogleAdMobAds". For ads fetched via mediation
 /// custom events, this property returns @"GADMAdapterCustomEvents".
-@property(nonatomic, readonly, copy, nullable) NSString *adNetworkClassName;
+@property(nonatomic, readonly, nullable) NSString *adNetworkClassName;
 
 /// Presents the interstitial ad which takes over the entire screen until the user dismisses it.
 /// This has no effect unless isReady returns YES and/or the delegate's interstitialDidReceiveAd:
@@ -69,21 +65,19 @@ GAD_SUBCLASSING_RESTRICTED
 /// application does not use view controllers pass in nil and your views will be removed from the
 /// window to show the interstitial and restored when done. After the interstitial has been removed,
 /// the delegate's interstitialDidDismissScreen: will be called.
-- (void)presentFromRootViewController:(UIViewController *)rootViewController;
+- (void)presentFromRootViewController:(nonnull UIViewController *)rootViewController;
 
 #pragma mark Deprecated
 
-/// Deprecated delegate. GADInAppPurchase has been deprecated.
-@property(nonatomic, weak, nullable)
-    id<GADInAppPurchaseDelegate> inAppPurchaseDelegate GAD_DEPRECATED_ATTRIBUTE;
+/// Deprecated delegate. GADInAppPurchase is deprecated.
+@property(nonatomic, weak, nullable) id<GADInAppPurchaseDelegate> inAppPurchaseDelegate
+    GAD_DEPRECATED_ATTRIBUTE;
 
 /// Deprecated intializer. Use initWithAdUnitID: instead.
-- (instancetype)init GAD_DEPRECATED_MSG_ATTRIBUTE("Use initWithAdUnitID:.");
+- (nonnull instancetype)init GAD_DEPRECATED_MSG_ATTRIBUTE("Use initWithAdUnitID:.");
 
 /// Deprecated setter, use initWithAdUnitID: instead.
 - (void)setAdUnitID:(nullable NSString *)adUnitID
     GAD_DEPRECATED_MSG_ATTRIBUTE("Use initWithAdUnitID: instead of setting the ad unit ID.");
 
 @end
-
-NS_ASSUME_NONNULL_END

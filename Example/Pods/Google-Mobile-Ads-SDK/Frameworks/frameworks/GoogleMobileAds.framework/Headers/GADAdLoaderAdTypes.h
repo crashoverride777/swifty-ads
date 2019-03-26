@@ -6,12 +6,11 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NSString *GADAdLoaderAdType GAD_STRING_ENUM;
+typedef NSString *GADAdLoaderAdType NS_STRING_ENUM;
 
 /// Use with GADAdLoader to request native app install ads. To receive ads, the ad loader's delegate
 /// must conform to the GADNativeAppInstallAdLoaderDelegate protocol. See GADNativeAppInstallAd.h.

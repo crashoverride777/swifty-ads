@@ -6,36 +6,40 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <GoogleMobileAds/GoogleMobileAds.h>
+
+#import <GoogleMobileAds/GADAdNetworkExtras.h>
+#import <GoogleMobileAds/GADRequest.h>
+#import <GoogleMobileAds/GADRequestConfiguration.h>
+#import <GoogleMobileAds/Mediation/GADMEnums.h>
 
 /// Provides information which can be used for making ad requests during mediation.
-@protocol GADMediationAdRequest<NSObject>
+@protocol GADMediationAdRequest <NSObject>
 
 /// Publisher ID set by the publisher on the AdMob frontend.
-- (NSString *)publisherId;
+- (nullable NSString *)publisherId;
 
 /// Mediation configurations set by the publisher on the AdMob frontend.
-- (NSDictionary *)credentials;
+- (nullable NSDictionary *)credentials;
 
 /// Returns YES if the publisher is requesting test ads.
 - (BOOL)testMode;
 
 /// The adapter's ad network extras specified in GADRequest.
-- (id<GADAdNetworkExtras>)networkExtras;
+- (nullable id<GADAdNetworkExtras>)networkExtras;
 
 /// Returns the value of childDirectedTreatment supplied by the publisher. Returns nil if the
 /// publisher hasn't specified child directed treatment. Returns @YES if child directed treatment is
 /// enabled.
-- (NSNumber *)childDirectedTreatment;
+- (nullable NSNumber *)childDirectedTreatment;
 
 /// Returns the maximum ad content rating supplied by the publisher. Returns nil if the publisher
 /// hasn't specified a max ad content rating.
-- (GADMaxAdContentRating)maxAdContentRating;
+- (nullable GADMaxAdContentRating)maxAdContentRating;
 
 /// Returns the value of underAgeOfConsent supplied by the publisher. Returns nil if the publisher
 /// hasn't specified the user is under the age of consent. Returns @YES if the user is under the age
 /// of consent.
-- (NSNumber *)underAgeOfConsent;
+- (nullable NSNumber *)underAgeOfConsent;
 
 /// Returns YES if the publisher has specified latitude and longitude location.
 - (BOOL)userHasLocation;
@@ -50,10 +54,10 @@
 - (CGFloat)userLocationAccuracyInMeters;
 
 /// Returns user's location description. May return a value even if userHasLocation is NO.
-- (NSString *)userLocationDescription;
+- (nullable NSString *)userLocationDescription;
 
 /// Keywords describing the user's current activity. Example: @"Sport Scores".
-- (NSArray *)userKeywords;
+- (nullable NSArray *)userKeywords;
 
 #pragma mark Deprecated
 
@@ -63,6 +67,6 @@
 
 /// Deprecated. The end user's birthday set by the publisher. Returns nil if it has not been
 /// specified.
-- (NSDate *)userBirthday GAD_DEPRECATED_ATTRIBUTE;
+- (nullable NSDate *)userBirthday GAD_DEPRECATED_ATTRIBUTE;
 
 @end
