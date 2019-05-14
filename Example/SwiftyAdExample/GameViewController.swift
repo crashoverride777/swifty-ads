@@ -16,7 +16,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
      
         // Setup swifty ad
-        swiftyAd.setup(with: self, delegate: self) { hasConsent in
+        swiftyAd.setup(with: self, delegate: self, consentManager: nil, mediationManager: nil) { hasConsent in
             guard hasConsent else { return }
             DispatchQueue.main.async {
                 self.swiftyAd.showBanner(from: self)
@@ -70,7 +70,7 @@ extension GameViewController: SwiftyAdDelegate {
         print("SwiftyAd did close")
     }
     
-    func swiftyAd(_ swiftyAd: SwiftyAd, didChange consentStatus: SwiftyAd.ConsentStatus) {
+    func swiftyAd(_ swiftyAd: SwiftyAd, didChange consentStatus: SwiftyAdConsentStatus) {
         print("SwiftyAd did change consent status to \(consentStatus)")
         // e.g update mediation networks
     }

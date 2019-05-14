@@ -36,6 +36,24 @@ private extension String {
     static let allowNonPersonalized = "Allow non-personalized ads"
 }
 
+enum SwiftyAdConsentStatus {
+    case personalized
+    case nonPersonalized
+    case adFree
+    case unknown
+}
+
+protocol SwiftyAdConsent: class {
+    var status: SwiftyAdConsentStatus { get }
+    var isInEEA: Bool { get }
+    var isRequiredToAskForConsent: Bool { get }
+    var hasConsent: Bool { get }
+    var isTaggedForUnderAgeOfConsent: Bool { get }
+    func ask(from viewController: UIViewController,
+             skipIfAlreadyAuthorized: Bool,
+             handler: @escaping (SwiftyAdConsentStatus) -> Void)
+}
+
 /**
  SwiftyAdConsentManager
  
@@ -56,24 +74,37 @@ final class SwiftyAdConsentManager {
             return mediationNetworks.map({ $0 }).joined(separator: ", ")
         }
     }
- 
-    enum ConsentStatus {
-        case personalized
-        case nonPersonalized
-        case adFree
-        case unknown
-    }
     
     // MARK: - Properties
+
+    /// Private
+    private let ids: [String]
+    private let configuration: Configuration
+    private let consentInformation: PACConsentInformation = .sharedInstance
+    
+    // MARK: - Init
+    
+    init(ids: [String], configuration: Configuration) {
+        self.ids = ids
+        self.configuration = configuration
+        consentInformation.isTaggedForUnderAgeOfConsent = configuration.isTaggedForUnderAgeOfConsent
+    }
+}
+
+// MARK: - SwiftyAdConsent
+
+extension SwiftyAdConsentManager: SwiftyAdConsent {
     
     /// The current status
-    var status: ConsentStatus {
+    var status: SwiftyAdConsentStatus {
         switch consentInformation.consentStatus {
         case .personalized:
             return .personalized
         case .nonPersonalized:
             return .nonPersonalized
         case .unknown:
+            return .unknown
+        @unknown default:
             return .unknown
         }
     }
@@ -100,22 +131,10 @@ final class SwiftyAdConsentManager {
         return configuration.isTaggedForUnderAgeOfConsent
     }
     
-    /// Private
-    private let ids: [String]
-    private let configuration: Configuration
-    private let consentInformation: PACConsentInformation = .sharedInstance
-    
-    // MARK: - Init
-    
-    init(ids: [String], configuration: Configuration) {
-        self.ids = ids
-        self.configuration = configuration
-        consentInformation.isTaggedForUnderAgeOfConsent = configuration.isTaggedForUnderAgeOfConsent
-    }
-    
-    // MARK: - Ask For Consent
-    
-    func ask(from viewController: UIViewController, skipIfAlreadyAuthorized: Bool = false, handler: @escaping (ConsentStatus) -> Void) {
+    /// Ask for consent
+    func ask(from viewController: UIViewController,
+             skipIfAlreadyAuthorized: Bool,
+             handler: @escaping (SwiftyAdConsentStatus) -> Void) {
         consentInformation.requestConsentInfoUpdate(forPublisherIdentifiers: ids) { (_ error) in
             if let error = error {
                 print("SwiftyAdConsentManager error requesting consent info update: \(error)")
@@ -135,6 +154,8 @@ final class SwiftyAdConsentManager {
                     handler(self.status)
                     return
                 case .unknown:
+                    break
+                @unknown default:
                     break
                 }
             }
@@ -169,7 +190,8 @@ final class SwiftyAdConsentManager {
 
 private extension SwiftyAdConsentManager {
     
-    func showDefaultConsentForm(from viewController: UIViewController, handler: @escaping (ConsentStatus) -> Void) {
+    func showDefaultConsentForm(from viewController: UIViewController,
+                                handler: @escaping (SwiftyAdConsentStatus) -> Void) {
         // Make sure we have a valid privacy policy url
         guard let url = URL(string: configuration.privacyPolicyURL) else {
             print("SwiftyAdConsentManager invalid privacy policy URL")
@@ -223,7 +245,8 @@ private extension SwiftyAdConsentManager {
 
 private extension SwiftyAdConsentManager {
     
-    func showCustomConsentForm(from viewController: UIViewController, handler: @escaping (ConsentStatus) -> Void) {
+    func showCustomConsentForm(from viewController: UIViewController,
+                               handler: @escaping (SwiftyAdConsentStatus) -> Void) {
         // Create alert message with all ad providers
         var message = .consentMessage + "\n\n" + .weShowAdsFrom + "Google AdMob, " + configuration.mediationNetworksString
         

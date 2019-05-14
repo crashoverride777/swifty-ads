@@ -2,7 +2,7 @@
 //  GADMediaView.h
 //  Google Mobile Ads SDK
 //
-//  Copyright 2019 Google Inc. All rights reserved.
+//  Copyright 2019 Google LLC. All rights reserved.
 //
 
 #import <GoogleMobileAds/GADMediaContent.h>

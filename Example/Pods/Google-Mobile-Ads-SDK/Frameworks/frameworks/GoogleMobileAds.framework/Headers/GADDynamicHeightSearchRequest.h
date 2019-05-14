@@ -2,7 +2,7 @@
 //  GADDynamicHeightSearchRequest.h
 //  GoogleMobileAds
 //
-//  Copyright © 2016 Google Inc. All rights reserved.
+//  Copyright 2016 Google LLC. All rights reserved.
 //
 
 #import <GoogleMobileAds/GADRequest.h>

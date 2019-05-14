@@ -2,13 +2,11 @@
 //  GADAdNetworkExtras.h
 //  Google Mobile Ads SDK
 //
-//  Copyright 2012 Google Inc. All rights reserved.
+//  Copyright 2012 Google LLC. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
-
-NS_ASSUME_NONNULL_BEGIN
 
 /// An object implementing this protocol contains information set by the publisher on the client
 /// device for a particular ad network.
@@ -17,5 +15,3 @@ NS_ASSUME_NONNULL_BEGIN
 /// use.
 @protocol GADAdNetworkExtras <NSObject>
 @end
-
-NS_ASSUME_NONNULL_END

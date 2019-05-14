@@ -2,7 +2,7 @@
 //  GADBannerView.h
 //  Google Mobile Ads SDK
 //
-//  Copyright 2011 Google Inc. All rights reserved.
+//  Copyright 2011 Google LLC. All rights reserved.
 //
 
 #import <GoogleMobileAds/GADAdSize.h>
@@ -13,8 +13,6 @@
 #import <GoogleMobileAds/GADRequestError.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 #import <UIKit/UIKit.h>
-
-NS_ASSUME_NONNULL_BEGIN
 
 /// The view that displays banner ads. A minimum implementation to get an ad from within a
 /// UIViewController class is:
@@ -35,11 +33,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Initializes and returns a banner view with the specified ad size and origin relative to the
 /// banner's superview.
-- (instancetype)initWithAdSize:(GADAdSize)adSize origin:(CGPoint)origin;
+- (nonnull instancetype)initWithAdSize:(GADAdSize)adSize origin:(CGPoint)origin;
 
 /// Initializes and returns a banner view with the specified ad size placed at its superview's
 /// origin.
-- (instancetype)initWithAdSize:(GADAdSize)adSize;
+- (nonnull instancetype)initWithAdSize:(GADAdSize)adSize;
 
 #pragma mark Pre-Request
 
@@ -84,7 +82,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// is in progress or if the latest ad request failed. For both standard and mediated Google AdMob
 /// ads, this property returns @"GADMAdapterGoogleAdMobAds". For ads fetched via mediation custom
 /// events, this property returns @"GADMAdapterCustomEvents".
-@property(nonatomic, readonly, copy, nullable) NSString *adNetworkClassName;
+@property(nonatomic, readonly, nullable) NSString *adNetworkClassName;
 
 #pragma mark Deprecated
 
@@ -103,5 +101,3 @@ NS_ASSUME_NONNULL_BEGIN
     UIView *mediatedAdView GAD_DEPRECATED_MSG_ATTRIBUTE("Use adNetworkClassName.");
 
 @end
-
-NS_ASSUME_NONNULL_END

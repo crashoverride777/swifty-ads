@@ -2,7 +2,7 @@
 //  DFPCustomRenderedInterstitialDelegate.h
 //  Google Mobile Ads SDK
 //
-//  Copyright 2014 Google Inc. All rights reserved.
+//  Copyright 2014 Google LLC. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

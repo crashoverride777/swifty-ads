@@ -2,7 +2,7 @@
 //  GADNativeAdImageAdLoaderOptions.h
 //  Google Mobile Ads SDK
 //
-//  Copyright 2015 Google Inc. All rights reserved.
+//  Copyright 2015 Google LLC. All rights reserved.
 //
 
 #import <GoogleMobileAds/GADAdLoader.h>
@@ -28,9 +28,13 @@ typedef NS_ENUM(NSInteger, GADNativeAdImageAdLoaderOptionsOrientation) {
 /// Indicates whether multiple images should be loaded for each asset. Defaults to NO.
 @property(nonatomic, assign) BOOL shouldRequestMultipleImages;
 
+#pragma mark - Deprecated
+
 /// Indicates preferred image orientation. Defaults to
 /// GADNativeAdImageAdLoaderOptionsOrientationAny.
-@property(nonatomic, assign) GADNativeAdImageAdLoaderOptionsOrientation preferredImageOrientation;
+@property(nonatomic, assign)
+    GADNativeAdImageAdLoaderOptionsOrientation preferredImageOrientation DEPRECATED_MSG_ATTRIBUTE(
+        "Use the mediaAspectRatio property from GADNativeAdMediaAdLoaderOptions instead.");
 
 @end
 

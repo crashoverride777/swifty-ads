@@ -2,7 +2,7 @@
 //  GoogleMobileAdsDefines.h
 //  Google Mobile Ads SDK
 //
-//  Copyright (c) 2015 Google Inc. All rights reserved.
+//  Copyright 2015 Google LLC. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

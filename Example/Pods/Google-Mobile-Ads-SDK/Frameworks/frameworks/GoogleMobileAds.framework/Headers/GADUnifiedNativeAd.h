@@ -2,7 +2,7 @@
 //  GADUnifiedNativeAd.h
 //  Google Mobile Ads SDK
 //
-//  Copyright 2017 Google Inc. All rights reserved.
+//  Copyright 2017 Google LLC. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -49,8 +49,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, readonly, copy, nullable) NSString *price;
 /// Identifies the advertiser. For example, the advertiser’s name or visible URL.
 @property(nonatomic, readonly, copy, nullable) NSString *advertiser;
-/// Video controller for controlling video playback in GADUnifiedNativeAdView's mediaView.
-@property(nonatomic, strong, readonly, nullable) GADVideoController *videoController;
 
 /// Optional delegate to receive state change notifications.
 @property(nonatomic, weak, nullable) id<GADUnifiedNativeAdDelegate> delegate;
@@ -97,6 +95,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// Reports the mute event with the mute reason selected by user. Use nil if no reason was selected.
 /// Call this method only if customMuteThisAdAvailable is YES.
 - (void)muteThisAdWithReason:(nullable GADMuteThisAdReason *)reason;
+
+#pragma mark - Deprecated
+
+/// Video controller for controlling video playback in GADUnifiedNativeAdView's mediaView.
+@property(nonatomic, readonly, nullable)
+    GADVideoController *videoController GAD_DEPRECATED_MSG_ATTRIBUTE(
+        "Use the videoController property from the ad's mediaContent instead.");
 
 @end
 

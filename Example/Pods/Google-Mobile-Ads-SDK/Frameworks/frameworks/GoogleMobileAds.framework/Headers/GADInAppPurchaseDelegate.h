@@ -2,7 +2,7 @@
 //  GADInAppPurchaseDelegate.h
 //  Google Mobile Ads SDK
 //
-//  Copyright 2013 Google Inc. All rights reserved.
+//  Copyright 2013 Google LLC. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

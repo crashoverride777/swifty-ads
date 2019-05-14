@@ -2,12 +2,11 @@
 //  DFPInterstitial.h
 //  Google Mobile Ads SDK
 //
-//  Copyright 2012 Google Inc. All rights reserved.
+//  Copyright 2012 Google LLC. All rights reserved.
 //
 
 #import <GoogleMobileAds/DFPCustomRenderedInterstitialDelegate.h>
 #import <GoogleMobileAds/GADAppEventDelegate.h>
-#import <GoogleMobileAds/GADCorrelator.h>
 #import <GoogleMobileAds/GADInterstitial.h>
 
 /// Google Ad Manager interstitial ad, a full-screen advertisement shown at natural
@@ -20,9 +19,6 @@
 ///
 /// Example Ad Manager ad unit ID: @"/6499/example/interstitial"
 - (nonnull instancetype)initWithAdUnitID:(nonnull NSString *)adUnitID NS_DESIGNATED_INITIALIZER;
-
-/// Correlator object for correlating this object to other ad objects.
-@property(nonatomic, strong, nullable) GADCorrelator *correlator;
 
 /// Optional delegate that is notified when creatives send app events.
 @property(nonatomic, weak, nullable) id<GADAppEventDelegate> appEventDelegate;

@@ -2,7 +2,7 @@
 //  DFPBannerView.h
 //  Google Mobile Ads SDK
 //
-//  Copyright 2012 Google Inc. All rights reserved.
+//  Copyright 2012 Google LLC. All rights reserved.
 //
 
 #import <GoogleMobileAds/DFPCustomRenderedBannerViewDelegate.h>
@@ -10,7 +10,6 @@
 #import <GoogleMobileAds/GADAdLoaderDelegate.h>
 #import <GoogleMobileAds/GADAppEventDelegate.h>
 #import <GoogleMobileAds/GADBannerView.h>
-#import <GoogleMobileAds/GADCorrelator.h>
 #import <GoogleMobileAds/GADVideoController.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
@@ -62,9 +61,6 @@
 ///   bannerView.validAdSizes = validSizes;
 ///   </pre>
 @property(nonatomic, copy, nullable) NSArray<NSValue *> *validAdSizes;
-
-/// Correlator object for correlating this object to other ad objects.
-@property(nonatomic, nullable) GADCorrelator *correlator;
 
 /// Indicates that the publisher will record impressions manually when the ad becomes visible to the
 /// user.

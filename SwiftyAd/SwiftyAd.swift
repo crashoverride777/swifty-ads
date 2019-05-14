@@ -37,9 +37,14 @@ protocol SwiftyAdDelegate: class {
     /// SwiftyAd did close
     func swiftyAdDidClose(_ swiftyAd: SwiftyAd)
     /// Did change consent status
-    func swiftyAd(_ swiftyAd: SwiftyAd, didChange consentStatus: SwiftyAd.ConsentStatus)
+    func swiftyAd(_ swiftyAd: SwiftyAd, didChange consentStatus: SwiftyAdConsentStatus)
     /// SwiftyAd did reward user
     func swiftyAd(_ swiftyAd: SwiftyAd, didRewardUserWithAmount rewardAmount: Int)
+}
+
+/// A protocol for mediation implementations
+protocol SwiftyAdMediation: class {
+    func update(for consentType: SwiftyAdConsentStatus)
 }
 
 /**
@@ -49,7 +54,6 @@ protocol SwiftyAdDelegate: class {
  */
 final class SwiftyAd: NSObject {
     typealias ConsentConfiguration = SwiftyAdConsentManager.Configuration
-    typealias ConsentStatus = SwiftyAdConsentManager.ConsentStatus
     
     // MARK: - Types
     
@@ -150,7 +154,10 @@ final class SwiftyAd: NSObject {
     private var configuration: Configuration!
     
     /// Consent manager
-    private var consentManager: SwiftyAdConsentManager!
+    private var consentManager: SwiftyAdConsent!
+    
+    /// Mediation manager
+    private var mediationManager: SwiftyAdMediation?
     
     /// Ads
     private var bannerAdView: GADBannerView?
@@ -180,10 +187,14 @@ final class SwiftyAd: NSObject {
     ///
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter delegate: A delegate to receive event callbacks.
+    /// - parameter consentManager: An optional protocol for consent implementation. Set to nil to use default SwiftyAd
+    /// - parameter mediationManager: An optional protocol for mediation network implementation e.g for consent status changes
     /// - parameter bannerAnimationDuration: The duration of the banner animation.
     /// - returns handler: A handler that will return a boolean with the consent status.
     func setup(with viewController: UIViewController,
                delegate: SwiftyAdDelegate?,
+               consentManager: SwiftyAdConsent?,
+               mediationManager: SwiftyAdMediation?,
                bannerAnimationDuration: TimeInterval? = nil,
                handler: @escaping (_ hasConsent: Bool) -> Void) {
         self.delegate = delegate
@@ -197,12 +208,16 @@ final class SwiftyAd: NSObject {
         configuration = Configuration.debug
         #endif
         
+        // Update mediation manager
+        self.mediationManager = mediationManager
+        
         // Create consent manager
-        consentManager = SwiftyAdConsentManager(ids: configuration.ids, configuration: configuration.gdpr)
+        self.consentManager = consentManager ?? SwiftyAdConsentManager(ids: configuration.ids,
+                                                                       configuration: configuration.gdpr)
         
         // Make consent request
-        consentManager.ask(from: viewController, skipIfAlreadyAuthorized: true) { status in
-            self.delegate?.swiftyAd(self, didChange: status)
+        consentManager?.ask(from: viewController, skipIfAlreadyAuthorized: true) { status in
+            self.handleConsentStatusChange(status)
            
             switch status {
             case .personalized, .nonPersonalized:
@@ -222,7 +237,7 @@ final class SwiftyAd: NSObject {
     /// - parameter viewController: The view controller that will present the consent form.
     func askForConsent(from viewController: UIViewController) {
         consentManager.ask(from: viewController, skipIfAlreadyAuthorized: false) { status in
-            self.delegate?.swiftyAd(self, didChange: status)
+            self.handleConsentStatusChange(status)
         }
     }
     
@@ -478,7 +493,7 @@ private extension SwiftyAd {
         
         consentManager.ask(from: viewController, skipIfAlreadyAuthorized: false) { status in
             defer {
-                self.delegate?.swiftyAd(self, didChange: status)
+                self.handleConsentStatusChange(status)
             }
             
             switch status {
@@ -551,6 +566,16 @@ private extension SwiftyAd {
         
         // Return the request
         return request
+    }
+}
+
+// MARK: - Consent Status Change
+
+private extension SwiftyAd {
+    
+    func handleConsentStatusChange(_ status: SwiftyAdConsentStatus) {
+        delegate?.swiftyAd(self, didChange: status)
+        mediationManager?.update(for: status)
     }
 }
 

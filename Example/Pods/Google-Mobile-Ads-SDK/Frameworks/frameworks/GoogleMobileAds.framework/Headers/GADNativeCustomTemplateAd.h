@@ -2,11 +2,12 @@
 //  GADNativeCustomTemplateAd.h
 //  Google Mobile Ads SDK
 //
-//  Copyright 2015 Google Inc. All rights reserved.
+//  Copyright 2015 Google LLC. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <GoogleMobileAds/GADAdLoaderDelegate.h>
+#import <GoogleMobileAds/GADDisplayAdMeasurement.h>
 #import <GoogleMobileAds/GADMediaView.h>
 #import <GoogleMobileAds/GADNativeAd.h>
 #import <GoogleMobileAds/GADNativeAdImage.h>
@@ -46,6 +47,9 @@ GAD_EXTERN NSString *const GADNativeCustomTemplateAdMediaViewKey;
 /// built-in click actions are ignored and |customClickHandler| is executed when a click on the
 /// asset is received.
 @property(atomic, copy, nullable) GADNativeAdCustomClickHandler customClickHandler;
+
+/// The display ad measurement associated with this ad.
+@property(nonatomic, readonly, nullable) GADDisplayAdMeasurement *displayAdMeasurement;
 
 /// Returns the native ad image corresponding to the specified key or nil if the image is not
 /// available.
