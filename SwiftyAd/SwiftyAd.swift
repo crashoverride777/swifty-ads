@@ -178,7 +178,24 @@ final class SwiftyAd: NSObject {
     private override init() {
         super.init()
         print("AdMob SDK version \(GADRequest.sdkVersion())")
-        NotificationCenter.default.addObserver(self, selector: #selector(deviceRotated), name: UIDevice.orientationDidChangeNotification, object: nil)
+       
+        // Update configuration
+        configuration = .propertyList
+        #if DEBUG
+        configuration = .debug
+        #endif
+        
+        // Add notification center observers
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(deviceRotated),
+                                               name: UIDevice.orientationDidChangeNotification,
+                                               object: nil)
+    }
+    
+    // MARK: - Callbacks
+    
+    @objc private func deviceRotated() {
+        bannerAdView?.adSize = UIDevice.current.orientation.isLandscape ? kGADAdSizeSmartBannerLandscape : kGADAdSizeSmartBannerPortrait
     }
     
     // MARK: - Setup
@@ -198,22 +215,14 @@ final class SwiftyAd: NSObject {
                bannerAnimationDuration: TimeInterval? = nil,
                handler: @escaping (_ hasConsent: Bool) -> Void) {
         self.delegate = delegate
+        self.mediationManager = mediationManager
+        self.consentManager = consentManager ?? SwiftyAdConsentManager(ids: configuration.ids,
+                                                                       configuration: configuration.gdpr)
+        
+        // Update banner animation duration
         if let bannerAnimationDuration = bannerAnimationDuration {
             self.bannerAnimationDuration = bannerAnimationDuration
         }
-        
-        // Configure
-        configuration = Configuration.propertyList
-        #if DEBUG
-        configuration = Configuration.debug
-        #endif
-        
-        // Update mediation manager
-        self.mediationManager = mediationManager
-        
-        // Create consent manager
-        self.consentManager = consentManager ?? SwiftyAdConsentManager(ids: configuration.ids,
-                                                                       configuration: configuration.gdpr)
         
         // Make consent request
         self.consentManager.ask(from: viewController, skipIfAlreadyAuthorized: true) { status in
@@ -407,15 +416,6 @@ extension SwiftyAd: GADRewardBasedVideoAdDelegate {
         print("AdMob reward based video ad did reward user with \(reward)")
         let rewardAmount = Int(truncating: reward.amount)
         delegate?.swiftyAd(self, didRewardUserWithAmount: rewardAmount)
-    }
-}
-
-// MARK: - Callbacks
-
-private extension SwiftyAd {
-
-    @objc func deviceRotated() {
-        bannerAdView?.adSize = UIDevice.current.orientation.isLandscape ? kGADAdSizeSmartBannerLandscape : kGADAdSizeSmartBannerPortrait
     }
 }
 
