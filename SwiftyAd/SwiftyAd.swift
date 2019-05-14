@@ -187,8 +187,8 @@ final class SwiftyAd: NSObject {
     ///
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter delegate: A delegate to receive event callbacks.
-    /// - parameter consentManager: An optional protocol for consent implementation. Set to nil to use default SwiftyAd
-    /// - parameter mediationManager: An optional protocol for mediation network implementation e.g for consent status changes
+    /// - parameter consentManager: An optional protocol for consent implementation. Set to nil to use default SwiftyAd.
+    /// - parameter mediationManager: An optional protocol for mediation network implementation e.g for consent status changes.
     /// - parameter bannerAnimationDuration: The duration of the banner animation.
     /// - returns handler: A handler that will return a boolean with the consent status.
     func setup(with viewController: UIViewController,
@@ -216,7 +216,7 @@ final class SwiftyAd: NSObject {
                                                                        configuration: configuration.gdpr)
         
         // Make consent request
-        consentManager?.ask(from: viewController, skipIfAlreadyAuthorized: true) { status in
+        self.consentManager.ask(from: viewController, skipIfAlreadyAuthorized: true) { status in
             self.handleConsentStatusChange(status)
            
             switch status {
