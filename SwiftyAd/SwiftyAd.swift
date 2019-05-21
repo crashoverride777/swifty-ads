@@ -472,7 +472,7 @@ private extension SwiftyAd {
     }
     
     func loadRewardedVideoAd() {
-        guard !isRemoved, hasConsent else { return }
+        guard hasConsent else { return }
 
         rewardedVideoAd = GADRewardBasedVideoAd.sharedInstance()
         rewardedVideoAd?.delegate = self
