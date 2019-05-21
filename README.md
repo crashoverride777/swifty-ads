@@ -86,12 +86,14 @@ Enter your ad settings into the SwiftyAd.plist file you added to your project. T
 
 View Controller
 ```swift
-SwiftyAd.shared.setup(with: self, delegate: self) { hasConsent in
+SwiftyAd.shared.setup(with: self, delegate: self, mediationManager: nil) { hasConsent in
     guard hasConsent else { return }
     DispatchQueue.main.async {
         SwiftyAd.shared.showBanner(from: self)
     }
 }
+
+NOTE: MediationManager parameter is a protocol with 1 method that you can optionally implement to update your mediation network consent status. Please read the relevant documentation
 ```
 
 Than create an extension conforming to the AdsDelegate protocol.
@@ -106,7 +108,7 @@ extension GameViewController: SwiftyAdDelegate {
     }
     
     func swiftyAd(_ swiftyAd: SwiftyAd, didChange consentStatus: SwiftyAd.ConsentStatus) {
-       // update mediation networks etc
+        // see setup for using mediationManager protocol to update your consent status
     }
     
     func swifyAd(_ swiftyAd: SwiftyAd, didRewardUserWithAmount rewardAmount: Int) {

@@ -16,7 +16,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
      
         // Setup swifty ad
-        swiftyAd.setup(with: self, delegate: self, consentManager: nil, mediationManager: nil) { hasConsent in
+        swiftyAd.setup(with: self, delegate: self, mediationManager: nil) { hasConsent in
             guard hasConsent else { return }
             DispatchQueue.main.async {
                 self.swiftyAd.showBanner(from: self)

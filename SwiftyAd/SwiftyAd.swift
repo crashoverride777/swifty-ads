@@ -204,20 +204,17 @@ final class SwiftyAd: NSObject {
     ///
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter delegate: A delegate to receive event callbacks.
-    /// - parameter consentManager: An optional protocol for consent implementation. Set to nil to use default SwiftyAd.
     /// - parameter mediationManager: An optional protocol for mediation network implementation e.g for consent status changes.
     /// - parameter bannerAnimationDuration: The duration of the banner animation.
     /// - returns handler: A handler that will return a boolean with the consent status.
     func setup(with viewController: UIViewController,
                delegate: SwiftyAdDelegate?,
-               consentManager: SwiftyAdConsent?,
                mediationManager: SwiftyAdMediation?,
                bannerAnimationDuration: TimeInterval? = nil,
                handler: @escaping (_ hasConsent: Bool) -> Void) {
         self.delegate = delegate
         self.mediationManager = mediationManager
-        self.consentManager = consentManager ?? SwiftyAdConsentManager(ids: configuration.ids,
-                                                                       configuration: configuration.gdpr)
+        self.consentManager = SwiftyAdConsentManager(ids: configuration.ids, configuration: configuration.gdpr)
         
         // Update banner animation duration
         if let bannerAnimationDuration = bannerAnimationDuration {
