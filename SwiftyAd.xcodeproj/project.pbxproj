@@ -79,6 +79,9 @@
 		6AE205D22297454800A4E4AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6AE205D52297454800A4E4AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6AE205D72297454800A4E4AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6AE205E22297482900A4E4AD /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6AE205E32297485000A4E4AD /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6AE205E42297485C00A4E4AD /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6AE481CF2294B3140063B22F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6AE482F02294B75C0063B22F /* LocalizedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedString.swift; sourceTree = "<group>"; };
 		6AE482F22294B7660063B22F /* SwiftyAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAd.swift; sourceTree = "<group>"; };
@@ -186,12 +189,12 @@
 			isa = PBXGroup;
 			children = (
 				6AE481C72294B22B0063B22F /* Internal */,
-				B4C1B12B204C298500452094 /* SwiftyAd.h */,
 				6AE482F22294B7660063B22F /* SwiftyAd.swift */,
 				6AF30B9222973F380016B54E /* SwiftyAd+Banner.swift */,
 				6AF30B9422973F380016B54E /* SwiftyAd+Interstitial.swift */,
 				6AF30B9322973F380016B54E /* SwiftyAd+Rewarded.swift */,
 				6AE482F32294B7660063B22F /* SwiftyAdConsentManager.swift */,
+				B4C1B12B204C298500452094 /* SwiftyAd.h */,
 				B4C1B12C204C298500452094 /* Info.plist */,
 			);
 			path = SwiftyAd;
@@ -276,6 +279,9 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
+				es,
+				fr,
 			);
 			mainGroup = B4C1B11E204C298500452094;
 			productRefGroup = B4C1B129204C298500452094 /* Products */;
@@ -383,6 +389,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				6AE481CF2294B3140063B22F /* en */,
+				6AE205E22297482900A4E4AD /* de */,
+				6AE205E32297485000A4E4AD /* es */,
+				6AE205E42297485C00A4E4AD /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -433,6 +442,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -496,6 +506,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
