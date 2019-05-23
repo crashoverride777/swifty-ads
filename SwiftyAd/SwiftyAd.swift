@@ -49,7 +49,7 @@ public final class SwiftyAd: NSObject {
     // MARK: - Static Properties
     
     /// Shared instance
-    static let shared = SwiftyAd()
+    public static let shared = SwiftyAd()
     
     // MARK: - Properties
     

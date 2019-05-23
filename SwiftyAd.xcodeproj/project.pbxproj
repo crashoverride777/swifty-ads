@@ -12,6 +12,15 @@
 		6AE20582229741A200A4E4AD /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE2057E229741A200A4E4AD /* nanopb.framework */; };
 		6AE20583229741A200A4E4AD /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE2057F229741A200A4E4AD /* GoogleMobileAds.framework */; };
 		6AE205BD229743DD00A4E4AD /* PersonalizedAdConsent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE205BC229743D600A4E4AD /* PersonalizedAdConsent.framework */; };
+		6AE205C62297454800A4E4AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE205C52297454800A4E4AD /* AppDelegate.swift */; };
+		6AE205C82297454800A4E4AD /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 6AE205C72297454800A4E4AD /* GameScene.sks */; };
+		6AE205CC2297454800A4E4AD /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE205CB2297454800A4E4AD /* GameScene.swift */; };
+		6AE205CE2297454800A4E4AD /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE205CD2297454800A4E4AD /* GameViewController.swift */; };
+		6AE205D12297454800A4E4AD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AE205CF2297454800A4E4AD /* Main.storyboard */; };
+		6AE205D32297454800A4E4AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6AE205D22297454800A4E4AD /* Assets.xcassets */; };
+		6AE205D62297454800A4E4AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AE205D42297454800A4E4AD /* LaunchScreen.storyboard */; };
+		6AE205DC229745AD00A4E4AD /* SwiftyAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4C1B128204C298500452094 /* SwiftyAd.framework */; };
+		6AE205DE229745EF00A4E4AD /* SwiftyAd.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B4C1B128204C298500452094 /* SwiftyAd.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6AE481CE2294B3140063B22F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6AE481D02294B3140063B22F /* Localizable.strings */; };
 		6AE482F12294B75C0063B22F /* LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F02294B75C0063B22F /* LocalizedString.swift */; };
 		6AE482F42294B7660063B22F /* SwiftyAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F22294B7660063B22F /* SwiftyAd.swift */; };
@@ -32,7 +41,28 @@
 			remoteGlobalIDString = 5A92D29F2076961800FFE51D;
 			remoteInfo = PersonalizedAdConsent;
 		};
+		6AE205DF229745EF00A4E4AD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B4C1B11F204C298500452094 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B4C1B127204C298500452094;
+			remoteInfo = SwiftyAd;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6AE205E1229745EF00A4E4AD /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				6AE205DE229745EF00A4E4AD /* SwiftyAd.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		6AE2057C229741A200A4E4AD /* GoogleAppMeasurement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppMeasurement.framework; sourceTree = "<group>"; };
@@ -40,6 +70,15 @@
 		6AE2057E229741A200A4E4AD /* nanopb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = nanopb.framework; sourceTree = "<group>"; };
 		6AE2057F229741A200A4E4AD /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
 		6AE205B7229743D600A4E4AD /* PersonalizedAdConsent.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PersonalizedAdConsent.xcodeproj; path = "googleads-consent-sdk-ios-master/PersonalizedAdConsent/PersonalizedAdConsent.xcodeproj"; sourceTree = "<group>"; };
+		6AE205C32297454700A4E4AD /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6AE205C52297454800A4E4AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6AE205C72297454800A4E4AD /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		6AE205CB2297454800A4E4AD /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		6AE205CD2297454800A4E4AD /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		6AE205D02297454800A4E4AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		6AE205D22297454800A4E4AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6AE205D52297454800A4E4AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		6AE205D72297454800A4E4AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6AE481CF2294B3140063B22F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6AE482F02294B75C0063B22F /* LocalizedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedString.swift; sourceTree = "<group>"; };
 		6AE482F22294B7660063B22F /* SwiftyAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAd.swift; sourceTree = "<group>"; };
@@ -55,6 +94,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		6AE205C02297454700A4E4AD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6AE205DC229745AD00A4E4AD /* SwiftyAd.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B4C1B124204C298500452094 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -90,6 +137,21 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		6AE205C42297454800A4E4AD /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				6AE205C52297454800A4E4AD /* AppDelegate.swift */,
+				6AE205C72297454800A4E4AD /* GameScene.sks */,
+				6AE205CB2297454800A4E4AD /* GameScene.swift */,
+				6AE205CD2297454800A4E4AD /* GameViewController.swift */,
+				6AE205CF2297454800A4E4AD /* Main.storyboard */,
+				6AE205D22297454800A4E4AD /* Assets.xcassets */,
+				6AE205D42297454800A4E4AD /* LaunchScreen.storyboard */,
+				6AE205D72297454800A4E4AD /* Info.plist */,
+			);
+			path = Example;
+			sourceTree = "<group>";
+		};
 		6AE481C72294B22B0063B22F /* Internal */ = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				B4C1B12A204C298500452094 /* SwiftyAd */,
+				6AE205C42297454800A4E4AD /* Example */,
 				6AE2057A2297417D00A4E4AD /* Frameworks */,
 				B4C1B129204C298500452094 /* Products */,
 			);
@@ -114,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				B4C1B128204C298500452094 /* SwiftyAd.framework */,
+				6AE205C32297454700A4E4AD /* Example.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -147,6 +211,25 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		6AE205C22297454700A4E4AD /* Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6AE205DB2297454800A4E4AD /* Build configuration list for PBXNativeTarget "Example" */;
+			buildPhases = (
+				6AE205BF2297454700A4E4AD /* Sources */,
+				6AE205C02297454700A4E4AD /* Frameworks */,
+				6AE205C12297454700A4E4AD /* Resources */,
+				6AE205E1229745EF00A4E4AD /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6AE205E0229745EF00A4E4AD /* PBXTargetDependency */,
+			);
+			name = Example;
+			productName = Example;
+			productReference = 6AE205C32297454700A4E4AD /* Example.app */;
+			productType = "com.apple.product-type.application";
+		};
 		B4C1B127204C298500452094 /* SwiftyAd */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B4C1B130204C298500452094 /* Build configuration list for PBXNativeTarget "SwiftyAd" */;
@@ -171,9 +254,14 @@
 		B4C1B11F204C298500452094 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = Dominik;
 				TargetAttributes = {
+					6AE205C22297454700A4E4AD = {
+						CreatedOnToolsVersion = 10.2.1;
+						ProvisioningStyle = Automatic;
+					};
 					B4C1B127204C298500452094 = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 1020;
@@ -201,6 +289,7 @@
 			projectRoot = "";
 			targets = (
 				B4C1B127204C298500452094 /* SwiftyAd */,
+				6AE205C22297454700A4E4AD /* Example */,
 			);
 		};
 /* End PBXProject section */
@@ -216,6 +305,17 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		6AE205C12297454700A4E4AD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6AE205D12297454800A4E4AD /* Main.storyboard in Resources */,
+				6AE205C82297454800A4E4AD /* GameScene.sks in Resources */,
+				6AE205D32297454800A4E4AD /* Assets.xcassets in Resources */,
+				6AE205D62297454800A4E4AD /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B4C1B126204C298500452094 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -227,6 +327,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		6AE205BF2297454700A4E4AD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6AE205CC2297454800A4E4AD /* GameScene.swift in Sources */,
+				6AE205CE2297454800A4E4AD /* GameViewController.swift in Sources */,
+				6AE205C62297454800A4E4AD /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B4C1B123204C298500452094 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -244,7 +354,31 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		6AE205E0229745EF00A4E4AD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B4C1B127204C298500452094 /* SwiftyAd */;
+			targetProxy = 6AE205DF229745EF00A4E4AD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
+		6AE205CF2297454800A4E4AD /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6AE205D02297454800A4E4AD /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		6AE205D42297454800A4E4AD /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6AE205D52297454800A4E4AD /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		6AE481D02294B3140063B22F /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -256,6 +390,45 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		6AE205D82297454800A4E4AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DK88YZ475Z;
+				INFOPLIST_FILE = Example/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dominik.Example;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6AE205D92297454800A4E4AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DK88YZ475Z;
+				INFOPLIST_FILE = Example/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dominik.Example;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		B4C1B12E204C298500452094 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -382,6 +555,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = DK88YZ475Z;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -409,6 +583,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = DK88YZ475Z;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -431,6 +606,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		6AE205DB2297454800A4E4AD /* Build configuration list for PBXNativeTarget "Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6AE205D82297454800A4E4AD /* Debug */,
+				6AE205D92297454800A4E4AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B4C1B122204C298500452094 /* Build configuration list for PBXProject "SwiftyAd" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
