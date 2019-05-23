@@ -1,0 +1,9 @@
+framework module PersonalizedAdConsent {
+  umbrella header "PersonalizedAdConsent.h"
+
+  export *
+  module * { export * }
+
+  header "PACPersonalizedAdConsent.h"
+  header "PACConsentForm.h"
+}

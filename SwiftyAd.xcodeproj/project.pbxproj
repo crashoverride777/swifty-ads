@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6AE20580229741A200A4E4AD /* GoogleAppMeasurement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE2057C229741A200A4E4AD /* GoogleAppMeasurement.framework */; };
+		6AE20581229741A200A4E4AD /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE2057D229741A200A4E4AD /* GoogleUtilities.framework */; };
+		6AE20582229741A200A4E4AD /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE2057E229741A200A4E4AD /* nanopb.framework */; };
+		6AE20583229741A200A4E4AD /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE2057F229741A200A4E4AD /* GoogleMobileAds.framework */; };
+		6AE205BD229743DD00A4E4AD /* PersonalizedAdConsent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE205BC229743D600A4E4AD /* PersonalizedAdConsent.framework */; };
 		6AE481CE2294B3140063B22F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6AE481D02294B3140063B22F /* Localizable.strings */; };
 		6AE482F12294B75C0063B22F /* LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F02294B75C0063B22F /* LocalizedString.swift */; };
 		6AE482F42294B7660063B22F /* SwiftyAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F22294B7660063B22F /* SwiftyAd.swift */; };
@@ -19,7 +24,22 @@
 		B4C1B12D204C298500452094 /* SwiftyAd.h in Headers */ = {isa = PBXBuildFile; fileRef = B4C1B12B204C298500452094 /* SwiftyAd.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		6AE205BB229743D600A4E4AD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6AE205B7229743D600A4E4AD /* PersonalizedAdConsent.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5A92D29F2076961800FFE51D;
+			remoteInfo = PersonalizedAdConsent;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		6AE2057C229741A200A4E4AD /* GoogleAppMeasurement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppMeasurement.framework; sourceTree = "<group>"; };
+		6AE2057D229741A200A4E4AD /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleUtilities.framework; sourceTree = "<group>"; };
+		6AE2057E229741A200A4E4AD /* nanopb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = nanopb.framework; sourceTree = "<group>"; };
+		6AE2057F229741A200A4E4AD /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
+		6AE205B7229743D600A4E4AD /* PersonalizedAdConsent.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PersonalizedAdConsent.xcodeproj; path = "googleads-consent-sdk-ios-master/PersonalizedAdConsent/PersonalizedAdConsent.xcodeproj"; sourceTree = "<group>"; };
 		6AE481CF2294B3140063B22F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6AE482F02294B75C0063B22F /* LocalizedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedString.swift; sourceTree = "<group>"; };
 		6AE482F22294B7660063B22F /* SwiftyAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAd.swift; sourceTree = "<group>"; };
@@ -39,12 +59,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AE205BD229743DD00A4E4AD /* PersonalizedAdConsent.framework in Frameworks */,
+				6AE20581229741A200A4E4AD /* GoogleUtilities.framework in Frameworks */,
+				6AE20582229741A200A4E4AD /* nanopb.framework in Frameworks */,
+				6AE20583229741A200A4E4AD /* GoogleMobileAds.framework in Frameworks */,
+				6AE20580229741A200A4E4AD /* GoogleAppMeasurement.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6AE2057A2297417D00A4E4AD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6AE205B7229743D600A4E4AD /* PersonalizedAdConsent.xcodeproj */,
+				6AE2057C229741A200A4E4AD /* GoogleAppMeasurement.framework */,
+				6AE2057D229741A200A4E4AD /* GoogleUtilities.framework */,
+				6AE2057E229741A200A4E4AD /* nanopb.framework */,
+				6AE2057F229741A200A4E4AD /* GoogleMobileAds.framework */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		6AE205B8229743D600A4E4AD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6AE205BC229743D600A4E4AD /* PersonalizedAdConsent.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		6AE481C72294B22B0063B22F /* Internal */ = {
 			isa = PBXGroup;
 			children = (
@@ -60,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				B4C1B12A204C298500452094 /* SwiftyAd */,
+				6AE2057A2297417D00A4E4AD /* Frameworks */,
 				B4C1B129204C298500452094 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -146,12 +192,28 @@
 			mainGroup = B4C1B11E204C298500452094;
 			productRefGroup = B4C1B129204C298500452094 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 6AE205B8229743D600A4E4AD /* Products */;
+					ProjectRef = 6AE205B7229743D600A4E4AD /* PersonalizedAdConsent.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				B4C1B127204C298500452094 /* SwiftyAd */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		6AE205BC229743D600A4E4AD /* PersonalizedAdConsent.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = PersonalizedAdConsent.framework;
+			remoteRef = 6AE205BB229743D600A4E4AD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		B4C1B126204C298500452094 /* Resources */ = {
@@ -325,8 +387,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Example/Pods/Google-Mobile-Ads-SDK/Frameworks/frameworks",
-					"$(PROJECT_DIR)/Example/Pods/GoogleAppMeasurement/Frameworks",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = SwiftyAd/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -353,8 +414,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Example/Pods/Google-Mobile-Ads-SDK/Frameworks/frameworks",
-					"$(PROJECT_DIR)/Example/Pods/GoogleAppMeasurement/Frameworks",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = SwiftyAd/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
