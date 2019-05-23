@@ -22,14 +22,6 @@
 
 import GoogleMobileAds
 
-#warning("FIX")
-/// LocalizedString
-private extension String {
-    static let sorry = "Sorry"
-    static let ok = "OK"
-    static let noVideo = "No video available to watch at the moment."
-}
-
 /// SwiftyAdDelegate
 protocol SwiftyAdDelegate: class {
     /// SwiftyAd did open
@@ -53,50 +45,6 @@ protocol SwiftyAdMediation: class {
  A singleton class to manage adverts from Google AdMob.
  */
 final class SwiftyAd: NSObject {
-    typealias ConsentConfiguration = SwiftyAdConsentManager.Configuration
-    
-    // MARK: - Types
-    
-    private struct Configuration: Codable {
-        let bannerAdUnitId: String
-        let interstitialAdUnitId: String
-        let rewardedVideoAdUnitId: String
-        let gdpr: ConsentConfiguration
-        
-        var ids: [String] {
-            return [bannerAdUnitId, interstitialAdUnitId, rewardedVideoAdUnitId].filter { !$0.isEmpty }
-        }
-        
-        static var propertyList: Configuration {
-            guard let configurationURL = Bundle.main.url(forResource: "SwiftyAd", withExtension: "plist") else {
-                print("SwiftyAd must have a valid property list")
-                fatalError("SwiftyAd must have a valid property list")
-            }
-            do {
-                let data = try Data(contentsOf: configurationURL)
-                let decoder = PropertyListDecoder()
-                return try decoder.decode(Configuration.self, from: data)
-            } catch {
-                print("SwiftyAd must have a valid property list \(error)")
-                fatalError("SwiftyAd must have a valid property list")
-            }
-        }
-        
-        static var debug: Configuration {
-            return Configuration(
-                bannerAdUnitId: "ca-app-pub-3940256099942544/2934735716",
-                interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
-                rewardedVideoAdUnitId: "ca-app-pub-1234567890123456/1234567890",
-                gdpr: ConsentConfiguration(
-                    privacyPolicyURL: "https://developers.google.com/admob/ios/eu-consent",
-                    shouldOfferAdFree: false,
-                    mediationNetworks: [],
-                    isTaggedForUnderAgeOfConsent: false,
-                    isCustomForm: true
-                )
-            )
-        }
-    }
     
     // MARK: - Static Properties
     
@@ -151,7 +99,7 @@ final class SwiftyAd: NSObject {
     private weak var delegate: SwiftyAdDelegate?
     
     /// Configuration
-    private var configuration: Configuration!
+    private var configuration: AdConfiguration!
     
     /// Consent manager
     private var consentManager: SwiftyAdConsent!
@@ -294,8 +242,10 @@ final class SwiftyAd: NSObject {
             if self.isRewardedVideoReady {
                 self.rewardedVideoAd?.present(fromRootViewController: viewController)
             } else {
-                let alertController = UIAlertController(title: .sorry, message: .noVideo, preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: .ok, style: .cancel))
+                let alertController = UIAlertController(title: LocalizedString.sorry,
+                                                        message: LocalizedString.noVideo,
+                                                        preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: LocalizedString.ok, style: .cancel))
                 viewController.present(alertController, animated: true)
             }
         }
