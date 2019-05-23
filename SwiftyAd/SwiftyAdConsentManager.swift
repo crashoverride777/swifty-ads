@@ -23,14 +23,14 @@
 import UIKit
 import PersonalizedAdConsent
 
-enum SwiftyAdConsentStatus {
+public enum SwiftyAdConsentStatus {
     case personalized
     case nonPersonalized
     case adFree
     case unknown
 }
 
-protocol SwiftyAdConsent: class {
+public protocol SwiftyAdConsent: class {
     var status: SwiftyAdConsentStatus { get }
     var isInEEA: Bool { get }
     var isRequiredToAskForConsent: Bool { get }

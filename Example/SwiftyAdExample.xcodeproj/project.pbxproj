@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0415D22AF4A20E7C0EFF2991 /* Pods_SwiftyAdExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60BA28B43E2218213054A068 /* Pods_SwiftyAdExample.framework */; };
+		6AA131EB22971BA10040CDF3 /* SwiftyAd+Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA131EA22971BA10040CDF3 /* SwiftyAd+Banner.swift */; };
+		6AA131ED22971C4F0040CDF3 /* SwiftyAd+Interstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA131EC22971C4F0040CDF3 /* SwiftyAd+Interstitial.swift */; };
+		6AA131EF22971C8D0040CDF3 /* SwiftyAd+Rewarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA131EE22971C8D0040CDF3 /* SwiftyAd+Rewarded.swift */; };
 		6AE4831B2294B8120063B22F /* SwiftyAdConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE483102294B8120063B22F /* SwiftyAdConsentManager.swift */; };
 		6AE4831C2294B8120063B22F /* SwiftyAd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6AE483112294B8120063B22F /* SwiftyAd.plist */; };
 		6AE4831D2294B8120063B22F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6AE483132294B8120063B22F /* Localizable.strings */; };
@@ -25,6 +28,9 @@
 
 /* Begin PBXFileReference section */
 		60BA28B43E2218213054A068 /* Pods_SwiftyAdExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAdExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6AA131EA22971BA10040CDF3 /* SwiftyAd+Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftyAd+Banner.swift"; sourceTree = "<group>"; };
+		6AA131EC22971C4F0040CDF3 /* SwiftyAd+Interstitial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftyAd+Interstitial.swift"; sourceTree = "<group>"; };
+		6AA131EE22971C8D0040CDF3 /* SwiftyAd+Rewarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftyAd+Rewarded.swift"; sourceTree = "<group>"; };
 		6AE483102294B8120063B22F /* SwiftyAdConsentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdConsentManager.swift; sourceTree = "<group>"; };
 		6AE483112294B8120063B22F /* SwiftyAd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SwiftyAd.plist; sourceTree = "<group>"; };
 		6AE483142294B8120063B22F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -70,6 +76,9 @@
 			children = (
 				6AE483102294B8120063B22F /* SwiftyAdConsentManager.swift */,
 				6AE483232294B9260063B22F /* SwiftyAd.swift */,
+				6AA131EA22971BA10040CDF3 /* SwiftyAd+Banner.swift */,
+				6AA131EC22971C4F0040CDF3 /* SwiftyAd+Interstitial.swift */,
+				6AA131EE22971C8D0040CDF3 /* SwiftyAd+Rewarded.swift */,
 				6AE483112294B8120063B22F /* SwiftyAd.plist */,
 				6AE483122294B8120063B22F /* Internal */,
 			);
@@ -250,11 +259,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4B01A1F1B9A0AF500F9A8EA /* GameViewController.swift in Sources */,
+				6AA131EF22971C8D0040CDF3 /* SwiftyAd+Rewarded.swift in Sources */,
 				B4B01A191B9A0AF500F9A8EA /* AppDelegate.swift in Sources */,
 				6AE4831F2294B8120063B22F /* LocalizedString.swift in Sources */,
 				B4F4EE131DA3F7BC00C6FEC0 /* GameScene.swift in Sources */,
+				6AA131EB22971BA10040CDF3 /* SwiftyAd+Banner.swift in Sources */,
 				6AE483242294B9260063B22F /* SwiftyAd.swift in Sources */,
 				6AE4831B2294B8120063B22F /* SwiftyAdConsentManager.swift in Sources */,
+				6AA131ED22971C4F0040CDF3 /* SwiftyAd+Interstitial.swift in Sources */,
 				6AE483202294B8120063B22F /* ConsentConfiguration.swift in Sources */,
 				6AE4831E2294B8120063B22F /* AdConfiguration.swift in Sources */,
 			);
