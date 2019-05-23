@@ -120,6 +120,11 @@ final class SwiftyAd: NSObject {
     
     /// Interval counter
     private var intervalCounter = 0
+    
+    #if DEBUG
+    //Testdevices in DEBUG mode
+    private var testDevices: [Any] = [kGADSimulatorID]
+    #endif
         
     // MARK: - Init
     
@@ -154,15 +159,22 @@ final class SwiftyAd: NSObject {
     /// - parameter delegate: A delegate to receive event callbacks.
     /// - parameter mediationManager: An optional protocol for mediation network implementation e.g for consent status changes.
     /// - parameter bannerAnimationDuration: The duration of the banner animation.
+    /// - parameter testDevices: The test devices to use when debugging. These will get added in addition to kGADSimulatorID.
     /// - returns handler: A handler that will return a boolean with the consent status.
     func setup(with viewController: UIViewController,
                delegate: SwiftyAdDelegate?,
                mediationManager: SwiftyAdMediation?,
                bannerAnimationDuration: TimeInterval? = nil,
+               testDevices: [Any] = [],
                handler: @escaping (_ hasConsent: Bool) -> Void) {
         self.delegate = delegate
         self.mediationManager = mediationManager
         self.consentManager = SwiftyAdConsentManager(ids: configuration.ids, configuration: configuration.gdpr)
+        
+        // Debug settings
+        #if DEBUG
+        self.testDevices.append(contentsOf: testDevices)
+        #endif
         
         // Update banner animation duration
         if let bannerAnimationDuration = bannerAnimationDuration {
@@ -491,7 +503,7 @@ private extension SwiftyAd {
         
         // Set debug settings
         #if DEBUG
-        request.testDevices = [kGADSimulatorID]
+        request.testDevices = testDevices
         #endif
         
         // Add extras if in EU (GDPR)
