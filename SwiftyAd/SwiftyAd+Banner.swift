@@ -38,11 +38,13 @@ extension SwiftyAd {
         }
         
         bannerAdView.translatesAutoresizingMaskIntoConstraints = false
-        bannerAdView.leftAnchor.constraint(equalTo: layoutGuide.leftAnchor).isActive = true
-        bannerAdView.rightAnchor.constraint(equalTo: layoutGuide.rightAnchor).isActive = true
         bannerViewConstraint = bannerAdView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor)
-        bannerViewConstraint?.isActive = true
-        
+        NSLayoutConstraint.activate([
+            bannerAdView.leftAnchor.constraint(equalTo: layoutGuide.leftAnchor),
+            bannerAdView.rightAnchor.constraint(equalTo: layoutGuide.rightAnchor),
+            bannerViewConstraint!
+        ])
+       
         // Move off screen
         animateBannerToOffScreenPosition(bannerAdView, from: viewController, withAnimation: false)
         
