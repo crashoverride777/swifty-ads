@@ -19,6 +19,8 @@ s.source = {
 
 s.source_files = "SwiftyAd/**/*.{swift}"
 
-s.dependency 'Google-Mobile-Ads-SDK'
+#s.dependency 'Google-Mobile-Ads-SDK'
+
+s.ios.vendored_frameworks = 'Example/Pods/Google-Mobile-Ads-SDK/GoogleMobileAds.framework'
 
 end
