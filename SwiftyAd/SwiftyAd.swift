@@ -133,9 +133,10 @@ final class SwiftyAd: NSObject {
         print("AdMob SDK version \(GADRequest.sdkVersion())")
        
         // Update configuration
-        configuration = .propertyList
         #if DEBUG
         configuration = .debug
+        #else
+        configuration = .propertyList
         #endif
         
         // Add notification center observers
