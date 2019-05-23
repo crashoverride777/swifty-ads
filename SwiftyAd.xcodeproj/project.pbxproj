@@ -13,6 +13,9 @@
 		6AE482F52294B7660063B22F /* SwiftyAdConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F32294B7660063B22F /* SwiftyAdConsentManager.swift */; };
 		6AE482F72294B76D0063B22F /* ConsentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F62294B76D0063B22F /* ConsentConfiguration.swift */; };
 		6AE482F92294B7740063B22F /* AdConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F82294B7740063B22F /* AdConfiguration.swift */; };
+		6AF30B9522973F380016B54E /* SwiftyAd+Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF30B9222973F380016B54E /* SwiftyAd+Banner.swift */; };
+		6AF30B9622973F380016B54E /* SwiftyAd+Rewarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF30B9322973F380016B54E /* SwiftyAd+Rewarded.swift */; };
+		6AF30B9722973F380016B54E /* SwiftyAd+Interstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF30B9422973F380016B54E /* SwiftyAd+Interstitial.swift */; };
 		B4C1B12D204C298500452094 /* SwiftyAd.h in Headers */ = {isa = PBXBuildFile; fileRef = B4C1B12B204C298500452094 /* SwiftyAd.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -23,6 +26,9 @@
 		6AE482F32294B7660063B22F /* SwiftyAdConsentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdConsentManager.swift; sourceTree = "<group>"; };
 		6AE482F62294B76D0063B22F /* ConsentConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentConfiguration.swift; sourceTree = "<group>"; };
 		6AE482F82294B7740063B22F /* AdConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdConfiguration.swift; sourceTree = "<group>"; };
+		6AF30B9222973F380016B54E /* SwiftyAd+Banner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SwiftyAd+Banner.swift"; sourceTree = "<group>"; };
+		6AF30B9322973F380016B54E /* SwiftyAd+Rewarded.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SwiftyAd+Rewarded.swift"; sourceTree = "<group>"; };
+		6AF30B9422973F380016B54E /* SwiftyAd+Interstitial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SwiftyAd+Interstitial.swift"; sourceTree = "<group>"; };
 		B4C1B128204C298500452094 /* SwiftyAd.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyAd.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4C1B12B204C298500452094 /* SwiftyAd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyAd.h; sourceTree = "<group>"; };
 		B4C1B12C204C298500452094 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -72,6 +78,9 @@
 				6AE481C72294B22B0063B22F /* Internal */,
 				B4C1B12B204C298500452094 /* SwiftyAd.h */,
 				6AE482F22294B7660063B22F /* SwiftyAd.swift */,
+				6AF30B9222973F380016B54E /* SwiftyAd+Banner.swift */,
+				6AF30B9422973F380016B54E /* SwiftyAd+Interstitial.swift */,
+				6AF30B9322973F380016B54E /* SwiftyAd+Rewarded.swift */,
 				6AE482F32294B7660063B22F /* SwiftyAdConsentManager.swift */,
 				B4C1B12C204C298500452094 /* Info.plist */,
 			);
@@ -160,10 +169,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AF30B9722973F380016B54E /* SwiftyAd+Interstitial.swift in Sources */,
+				6AF30B9622973F380016B54E /* SwiftyAd+Rewarded.swift in Sources */,
 				6AE482F52294B7660063B22F /* SwiftyAdConsentManager.swift in Sources */,
 				6AE482F42294B7660063B22F /* SwiftyAd.swift in Sources */,
 				6AE482F92294B7740063B22F /* AdConfiguration.swift in Sources */,
 				6AE482F12294B75C0063B22F /* LocalizedString.swift in Sources */,
+				6AF30B9522973F380016B54E /* SwiftyAd+Banner.swift in Sources */,
 				6AE482F72294B76D0063B22F /* ConsentConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
