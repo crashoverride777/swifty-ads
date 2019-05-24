@@ -215,12 +215,8 @@ public final class SwiftyAd: NSObject {
     /// - parameter viewController: The view controller that will present the ad.
     /// - parameter position: The position of the banner. Defaults to bottom.
     public func showBanner(from viewController: UIViewController) {
-        guard !isRemoved else { return }
-        
-        checkThatWeCanShowAd(from: viewController) { canShowAd in
-            guard canShowAd else { return }
-            self.loadBannerAd(from: viewController)
-        }
+        guard !isRemoved, hasConsent else { return }
+        loadBannerAd(from: viewController)
     }
     
     // MARK: - Show Interstitial
@@ -230,11 +226,10 @@ public final class SwiftyAd: NSObject {
     /// - parameter viewController: The view controller that will present the ad.
     /// - parameter interval: The interval of when to show the ad, e.g every 4th time the method is called. Defaults to nil.
     public func showInterstitial(from viewController: UIViewController, withInterval interval: Int? = nil) {
-        guard !isRemoved, intervalTracker.canShow(forInterval: interval) else { return }
-        checkThatWeCanShowAd(from: viewController) { canShowAd in
-            guard canShowAd, self.isInterstitialReady else { return }
-            self.interstitialAd?.present(fromRootViewController: viewController)
-        }
+        guard !isRemoved, hasConsent else { return }
+        guard intervalTracker.canShow(forInterval: interval) else { return }
+        guard isInterstitialReady else { return }
+        interstitialAd?.present(fromRootViewController: viewController)
     }
     
     // MARK: - Show Reward Video
@@ -243,17 +238,15 @@ public final class SwiftyAd: NSObject {
     ///
     /// - parameter viewController: The view controller that will present the ad.
     public func showRewardedVideo(from viewController: UIViewController) {
-        checkThatWeCanShowAd(from: viewController) { canShowAd in
-            guard canShowAd else { return }
-            if self.isRewardedVideoReady {
-                self.rewardedVideoAd?.present(fromRootViewController: viewController)
-            } else {
-                let alertController = UIAlertController(title: LocalizedString.sorry,
-                                                        message: LocalizedString.noVideo,
-                                                        preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: LocalizedString.ok, style: .cancel))
-                viewController.present(alertController, animated: true)
-            }
+        guard hasConsent else { return }
+        if isRewardedVideoReady {
+            rewardedVideoAd?.present(fromRootViewController: viewController)
+        } else {
+            let alertController = UIAlertController(title: LocalizedString.sorry,
+                                                    message: LocalizedString.noVideo,
+                                                    preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: LocalizedString.ok, style: .cancel))
+            viewController.present(alertController, animated: true)
         }
     }
     
@@ -265,31 +258,6 @@ public final class SwiftyAd: NSObject {
         bannerAdView?.removeFromSuperview()
         bannerAdView = nil
         bannerViewConstraint = nil
-    }
-}
-
-// MARK: - Check That We Can Show Ad
-
-private extension SwiftyAd {
-    
-    func checkThatWeCanShowAd(from viewController: UIViewController, handler: @escaping (Bool) -> Void) {
-        guard !hasConsent else {
-            handler(true)
-            return
-        }
-        
-        consentManager.ask(from: viewController, skipIfAlreadyAuthorized: false) { status in
-            defer {
-                self.handleConsentStatusChange(status)
-            }
-            
-            switch status {
-            case .personalized, .nonPersonalized:
-                handler(true)
-            case .adFree, .unknown:
-                handler(false)
-            }
-        }
     }
 }
 
@@ -311,9 +279,12 @@ extension SwiftyAd {
             // Create additional parameters with under age of consent
             var additionalParameters: [String: Any] = ["tag_for_under_age_of_consent": consentManager.isTaggedForUnderAgeOfConsent]
           
-            // Add non personalized paramater to additional parameters if needed
-            if consentManager.status == .nonPersonalized {
+            // Update for consent status
+            switch consentManager.status {
+            case .nonPersonalized:
                 additionalParameters["npa"] = "1" // only allow non-personalized ads
+            default:
+                break
             }
             
             // Create extras
