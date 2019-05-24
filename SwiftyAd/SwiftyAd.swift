@@ -22,23 +22,6 @@
 
 import GoogleMobileAds
 
-/// SwiftyAdDelegate
-public protocol SwiftyAdDelegate: class {
-    /// SwiftyAd did open
-    func swiftyAdDidOpen(_ swiftyAd: SwiftyAd)
-    /// SwiftyAd did close
-    func swiftyAdDidClose(_ swiftyAd: SwiftyAd)
-    /// Did change consent status
-    func swiftyAd(_ swiftyAd: SwiftyAd, didChange consentStatus: SwiftyAdConsentStatus)
-    /// SwiftyAd did reward user
-    func swiftyAd(_ swiftyAd: SwiftyAd, didRewardUserWithAmount rewardAmount: Int)
-}
-
-/// A protocol for mediation implementations
-public protocol SwiftyAdMediation: class {
-    func update(for consentType: SwiftyAdConsentStatus)
-}
-
 /**
  SwiftyAd
  
@@ -48,10 +31,35 @@ public final class SwiftyAd: NSObject {
     
     // MARK: - Static Properties
     
-    /// Shared instance
+    /// The shared instance of SwiftyAd using default non costumizable settings
     public static let shared = SwiftyAd()
     
     // MARK: - Properties
+    
+    /// Delegate callbacks
+    public weak var delegate: SwiftyAdDelegate?
+    
+    /// Ads
+    var bannerAdView: GADBannerView?
+    var interstitialAd: GADInterstitial?
+    var rewardedVideoAd: GADRewardBasedVideoAd?
+    
+    /// Constraints
+    var bannerViewConstraint: NSLayoutConstraint?
+    
+    /// Init
+    let configuration: AdConfiguration
+    private var intervalTracker: SwiftyAdIntervalTrackerInput!
+    private var mediationManager: SwiftyAdMediation?
+    private var consentManager: SwiftyAdConsent!
+    private(set) var bannerAnimationDuration = 1.8
+    
+    #if DEBUG
+    //Testdevices in DEBUG mode
+    private var testDevices: [Any] = [kGADSimulatorID]
+    #endif
+    
+    // MARK: - Computed Properties
     
     /// Check if user has consent e.g to hide rewarded video button
     public var hasConsent: Bool {
@@ -94,51 +102,47 @@ public final class SwiftyAd: NSObject {
             interstitialAd = nil
         }
     }
-    
-    /// Delegates
-    private(set) weak var delegate: SwiftyAdDelegate?
-    
-    /// Configuration
-    private(set) var configuration: AdConfiguration!
-    
-    /// Consent manager
-    private var consentManager: SwiftyAdConsent!
-    
-    /// Mediation manager
-    private var mediationManager: SwiftyAdMediation?
-    
-    /// Ads
-    var bannerAdView: GADBannerView?
-    var interstitialAd: GADInterstitial?
-    var rewardedVideoAd: GADRewardBasedVideoAd?
-    
-    /// Constraints
-    var bannerViewConstraint: NSLayoutConstraint?
-    
-    /// Banner animation duration
-    private(set) var bannerAnimationDuration = 1.8
-    
-    /// Interval counter
-    private var intervalCounter = 0
-    
-    #if DEBUG
-    //Testdevices in DEBUG mode
-    private var testDevices: [Any] = [kGADSimulatorID]
-    #endif
         
     // MARK: - Init
     
-    private override init() {
-        super.init()
-        print("AdMob SDK version \(GADRequest.sdkVersion())")
-       
+    public init(intervalTracker: SwiftyAdIntervalTrackerInput? = nil,
+                mediationManager: SwiftyAdMediation? = nil,
+                consentManager: SwiftyAdConsent? = nil,
+                bannerAnimationDuration: TimeInterval? = nil,
+                testDevices: [Any] = []) {
         // Update configuration
         #if DEBUG
         configuration = .debug
         #else
         configuration = .propertyList
         #endif
+        super.init()
         
+        // Debug settings
+        #if DEBUG
+        self.testDevices.append(contentsOf: testDevices)
+        #endif
+        
+        defer {
+            print("AdMob SDK version \(GADRequest.sdkVersion())")
+        }
+        
+        // Update properties
+        self.intervalTracker = intervalTracker ?? IntervalTracker()
+        self.mediationManager = mediationManager
+        self.consentManager = consentManager ?? SwiftyAdConsentManager(ids: configuration.ids, configuration: configuration.gdpr)
+        
+        // Update banner animation duration
+        if let bannerAnimationDuration = bannerAnimationDuration {
+            self.bannerAnimationDuration = bannerAnimationDuration
+        }
+        
+        // Setup
+        #warning("FINISH")
+//        setup(with: viewController,
+//              delegate: delegate,
+//              mediationManager: mediationManager) { }
+       
         // Add notification center observers
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(deviceRotated),
@@ -157,21 +161,17 @@ public final class SwiftyAd: NSObject {
     /// Setup swift ad
     ///
     /// - parameter viewController: The view controller that will present the consent alert if needed.
-    /// - parameter delegate: A delegate to receive event callbacks.
-    /// - parameter mediationManager: An optional protocol for mediation network implementation e.g for consent status changes.
+    /// - parameter delegate: A delegate to receive event callbacks. Can also be set manually if needed.
     /// - parameter bannerAnimationDuration: The duration of the banner animation.
     /// - parameter testDevices: The test devices to use when debugging. These will get added in addition to kGADSimulatorID.
     /// - returns handler: A handler that will return a boolean with the consent status.
     public func setup(with viewController: UIViewController,
-               delegate: SwiftyAdDelegate?,
-               mediationManager: SwiftyAdMediation?,
-               bannerAnimationDuration: TimeInterval? = nil,
-               testDevices: [Any] = [],
-               handler: @escaping (_ hasConsent: Bool) -> Void) {
+                      delegate: SwiftyAdDelegate?,
+                      bannerAnimationDuration: TimeInterval? = nil,
+                      testDevices: [Any] = [],
+                      handler: @escaping (_ hasConsent: Bool) -> Void) {
         self.delegate = delegate
-        self.mediationManager = mediationManager
-        self.consentManager = SwiftyAdConsentManager(ids: configuration.ids, configuration: configuration.gdpr)
-        
+    
         // Debug settings
         #if DEBUG
         self.testDevices.append(contentsOf: testDevices)
@@ -230,14 +230,7 @@ public final class SwiftyAd: NSObject {
     /// - parameter viewController: The view controller that will present the ad.
     /// - parameter interval: The interval of when to show the ad, e.g every 4th time the method is called. Defaults to nil.
     public func showInterstitial(from viewController: UIViewController, withInterval interval: Int? = nil) {
-        guard !isRemoved else { return }
-        
-        if let interval = interval {
-            intervalCounter += 1
-            guard intervalCounter >= interval else { return }
-            intervalCounter = 0
-        }
-        
+        guard !isRemoved, intervalTracker.canShow(forInterval: interval) else { return }
         checkThatWeCanShowAd(from: viewController) { canShowAd in
             guard canShowAd, self.isInterstitialReady else { return }
             self.interstitialAd?.present(fromRootViewController: viewController)

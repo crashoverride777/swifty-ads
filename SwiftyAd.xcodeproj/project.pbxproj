@@ -21,6 +21,8 @@
 		6AE205D62297454800A4E4AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AE205D42297454800A4E4AD /* LaunchScreen.storyboard */; };
 		6AE205DC229745AD00A4E4AD /* SwiftyAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4C1B128204C298500452094 /* SwiftyAd.framework */; };
 		6AE205DE229745EF00A4E4AD /* SwiftyAd.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B4C1B128204C298500452094 /* SwiftyAd.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6AE2060C229766B300A4E4AD /* IntervalTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE2060B229766B300A4E4AD /* IntervalTracker.swift */; };
+		6AE2060F2297686E00A4E4AD /* SwiftyAdProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE2060E2297686E00A4E4AD /* SwiftyAdProtocols.swift */; };
 		6AE481CE2294B3140063B22F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6AE481D02294B3140063B22F /* Localizable.strings */; };
 		6AE482F12294B75C0063B22F /* LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F02294B75C0063B22F /* LocalizedString.swift */; };
 		6AE482F42294B7660063B22F /* SwiftyAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F22294B7660063B22F /* SwiftyAd.swift */; };
@@ -82,6 +84,8 @@
 		6AE205E22297482900A4E4AD /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6AE205E32297485000A4E4AD /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6AE205E42297485C00A4E4AD /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6AE2060B229766B300A4E4AD /* IntervalTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalTracker.swift; sourceTree = "<group>"; };
+		6AE2060E2297686E00A4E4AD /* SwiftyAdProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdProtocols.swift; sourceTree = "<group>"; };
 		6AE481CF2294B3140063B22F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6AE482F02294B75C0063B22F /* LocalizedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedString.swift; sourceTree = "<group>"; };
 		6AE482F22294B7660063B22F /* SwiftyAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAd.swift; sourceTree = "<group>"; };
@@ -155,15 +159,23 @@
 			path = Example;
 			sourceTree = "<group>";
 		};
-		6AE481C72294B22B0063B22F /* Internal */ = {
+		6AE20610229769AF00A4E4AD /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				6AE482F82294B7740063B22F /* AdConfiguration.swift */,
 				6AE482F62294B76D0063B22F /* ConsentConfiguration.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6AE481C72294B22B0063B22F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				6AE2060B229766B300A4E4AD /* IntervalTracker.swift */,
 				6AE482F02294B75C0063B22F /* LocalizedString.swift */,
 				6AE481D02294B3140063B22F /* Localizable.strings */,
 			);
-			path = Internal;
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		B4C1B11E204C298500452094 = {
@@ -188,7 +200,9 @@
 		B4C1B12A204C298500452094 /* SwiftyAd */ = {
 			isa = PBXGroup;
 			children = (
-				6AE481C72294B22B0063B22F /* Internal */,
+				6AE20610229769AF00A4E4AD /* Models */,
+				6AE481C72294B22B0063B22F /* Helpers */,
+				6AE2060E2297686E00A4E4AD /* SwiftyAdProtocols.swift */,
 				6AE482F22294B7660063B22F /* SwiftyAd.swift */,
 				6AF30B9222973F380016B54E /* SwiftyAd+Banner.swift */,
 				6AF30B9422973F380016B54E /* SwiftyAd+Interstitial.swift */,
@@ -351,6 +365,8 @@
 				6AF30B9622973F380016B54E /* SwiftyAd+Rewarded.swift in Sources */,
 				6AE482F52294B7660063B22F /* SwiftyAdConsentManager.swift in Sources */,
 				6AE482F42294B7660063B22F /* SwiftyAd.swift in Sources */,
+				6AE2060F2297686E00A4E4AD /* SwiftyAdProtocols.swift in Sources */,
+				6AE2060C229766B300A4E4AD /* IntervalTracker.swift in Sources */,
 				6AE482F92294B7740063B22F /* AdConfiguration.swift in Sources */,
 				6AE482F12294B75C0063B22F /* LocalizedString.swift in Sources */,
 				6AF30B9522973F380016B54E /* SwiftyAd+Banner.swift in Sources */,

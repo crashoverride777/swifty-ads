@@ -30,17 +30,6 @@ public enum SwiftyAdConsentStatus {
     case unknown
 }
 
-public protocol SwiftyAdConsent: class {
-    var status: SwiftyAdConsentStatus { get }
-    var isInEEA: Bool { get }
-    var isRequiredToAskForConsent: Bool { get }
-    var hasConsent: Bool { get }
-    var isTaggedForUnderAgeOfConsent: Bool { get }
-    func ask(from viewController: UIViewController,
-             skipIfAlreadyAuthorized: Bool,
-             handler: @escaping (SwiftyAdConsentStatus) -> Void)
-}
-
 /**
  SwiftyAdConsentManager
  
