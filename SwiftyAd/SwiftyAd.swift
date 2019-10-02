@@ -66,7 +66,7 @@ public final class SwiftyAd: NSObject {
         return consentManager.hasConsent
     }
     
-    /// Check if we must ask for consent e.g to hide change consent button in apps settings menu (required GDPR requiredment)
+    /// Check if we must ask for consent e.g to hide change consent button in apps settings menu (required GDPR requirement)
     public var isRequiredToAskForConsent: Bool {
         return consentManager.isRequiredToAskForConsent
     }

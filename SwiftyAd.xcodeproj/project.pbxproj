@@ -32,6 +32,7 @@
 		6AF30B9522973F380016B54E /* SwiftyAd+Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF30B9222973F380016B54E /* SwiftyAd+Banner.swift */; };
 		6AF30B9622973F380016B54E /* SwiftyAd+Rewarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF30B9322973F380016B54E /* SwiftyAd+Rewarded.swift */; };
 		6AF30B9722973F380016B54E /* SwiftyAd+Interstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF30B9422973F380016B54E /* SwiftyAd+Interstitial.swift */; };
+		84C139556193A2C891388F30 /* Pods_SwiftyAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0ACDEC06398AB1664F611AE /* Pods_SwiftyAd.framework */; };
 		B4C1B12D204C298500452094 /* SwiftyAd.h in Headers */ = {isa = PBXBuildFile; fileRef = B4C1B12B204C298500452094 /* SwiftyAd.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -67,6 +68,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1CD6D3A1DA6C2F06685D78D4 /* Pods-SwiftyAd.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAd.release.xcconfig"; path = "Target Support Files/Pods-SwiftyAd/Pods-SwiftyAd.release.xcconfig"; sourceTree = "<group>"; };
+		5C289CAD6C92D2284D966AE7 /* Pods-SwiftyAd.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAd.debug.xcconfig"; path = "Target Support Files/Pods-SwiftyAd/Pods-SwiftyAd.debug.xcconfig"; sourceTree = "<group>"; };
 		6AE2057C229741A200A4E4AD /* GoogleAppMeasurement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppMeasurement.framework; sourceTree = "<group>"; };
 		6AE2057D229741A200A4E4AD /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleUtilities.framework; sourceTree = "<group>"; };
 		6AE2057E229741A200A4E4AD /* nanopb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = nanopb.framework; sourceTree = "<group>"; };
@@ -98,6 +101,7 @@
 		B4C1B128204C298500452094 /* SwiftyAd.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyAd.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4C1B12B204C298500452094 /* SwiftyAd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyAd.h; sourceTree = "<group>"; };
 		B4C1B12C204C298500452094 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E0ACDEC06398AB1664F611AE /* Pods_SwiftyAd.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAd.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,12 +122,23 @@
 				6AE20582229741A200A4E4AD /* nanopb.framework in Frameworks */,
 				6AE20583229741A200A4E4AD /* GoogleMobileAds.framework in Frameworks */,
 				6AE20580229741A200A4E4AD /* GoogleAppMeasurement.framework in Frameworks */,
+				84C139556193A2C891388F30 /* Pods_SwiftyAd.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		650B29D619BC15A94A9957CF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5C289CAD6C92D2284D966AE7 /* Pods-SwiftyAd.debug.xcconfig */,
+				1CD6D3A1DA6C2F06685D78D4 /* Pods-SwiftyAd.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		6AE2057A2297417D00A4E4AD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -132,6 +147,7 @@
 				6AE2057D229741A200A4E4AD /* GoogleUtilities.framework */,
 				6AE2057E229741A200A4E4AD /* nanopb.framework */,
 				6AE2057F229741A200A4E4AD /* GoogleMobileAds.framework */,
+				E0ACDEC06398AB1664F611AE /* Pods_SwiftyAd.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -185,6 +201,7 @@
 				6AE205C42297454800A4E4AD /* Example */,
 				6AE2057A2297417D00A4E4AD /* Frameworks */,
 				B4C1B129204C298500452094 /* Products */,
+				650B29D619BC15A94A9957CF /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -251,6 +268,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B4C1B130204C298500452094 /* Build configuration list for PBXNativeTarget "SwiftyAd" */;
 			buildPhases = (
+				114665AC0513B0875C3C8DBC /* [CP] Check Pods Manifest.lock */,
 				B4C1B123204C298500452094 /* Sources */,
 				B4C1B124204C298500452094 /* Frameworks */,
 				B4C1B125204C298500452094 /* Headers */,
@@ -345,6 +363,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		114665AC0513B0875C3C8DBC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SwiftyAd-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6AE205BF2297454700A4E4AD /* Sources */ = {
@@ -577,6 +620,7 @@
 		};
 		B4C1B131204C298500452094 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5C289CAD6C92D2284D966AE7 /* Pods-SwiftyAd.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -605,6 +649,7 @@
 		};
 		B4C1B132204C298500452094 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1CD6D3A1DA6C2F06685D78D4 /* Pods-SwiftyAd.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
