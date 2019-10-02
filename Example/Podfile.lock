@@ -1,27 +1,27 @@
 PODS:
-  - Google-Mobile-Ads-SDK (7.44.0):
+  - Google-Mobile-Ads-SDK (7.50.0):
     - GoogleAppMeasurement (~> 6.0)
-  - GoogleAppMeasurement (6.0.1):
+  - GoogleAppMeasurement (6.1.2):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
     - GoogleUtilities/Network (~> 6.0)
     - "GoogleUtilities/NSData+zlib (~> 6.0)"
     - nanopb (~> 0.3)
-  - GoogleUtilities/AppDelegateSwizzler (6.1.0):
+  - GoogleUtilities/AppDelegateSwizzler (6.3.1):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (6.1.0)
-  - GoogleUtilities/Logger (6.1.0):
+  - GoogleUtilities/Environment (6.3.1)
+  - GoogleUtilities/Logger (6.3.1):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (6.1.0):
+  - GoogleUtilities/MethodSwizzler (6.3.1):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (6.1.0):
+  - GoogleUtilities/Network (6.3.1):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (6.1.0)"
-  - GoogleUtilities/Reachability (6.1.0):
+  - "GoogleUtilities/NSData+zlib (6.3.1)"
+  - GoogleUtilities/Reachability (6.3.1):
     - GoogleUtilities/Logger
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
@@ -35,7 +35,7 @@ DEPENDENCIES:
   - PersonalizedAdConsent
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
     - GoogleUtilities
@@ -43,12 +43,12 @@ SPEC REPOS:
     - PersonalizedAdConsent
 
 SPEC CHECKSUMS:
-  Google-Mobile-Ads-SDK: 1e72b4f438d997ab0f2ee62b3a7b0cbcc87c47cb
-  GoogleAppMeasurement: 51d8d9ea48f0ca44484d29cfbdef976fbd4fc336
-  GoogleUtilities: 84df567c76ca84f67b7bb40e769fdd4acc746a10
+  Google-Mobile-Ads-SDK: d48dbaf5bae1ab7a94a9786f493c26c454bc6f16
+  GoogleAppMeasurement: 0ae90be1cc4dad40f4a27fc767ef59fa032ec87b
+  GoogleUtilities: f895fde57977df4e0233edda0dbeac490e3703b6
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   PersonalizedAdConsent: b50a8a5d6065b6db23121e8fcc0dce2ae983f6ea
 
 PODFILE CHECKSUM: 09ac039415ba50b9a442eb3fcd157e9775a28691
 
-COCOAPODS: 1.7.0
+COCOAPODS: 1.8.1

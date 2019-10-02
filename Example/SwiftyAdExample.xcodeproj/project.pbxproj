@@ -365,6 +365,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAdExample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 9.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dominik.SwiftyAdExample;
 				PRODUCT_NAME = SwiftyAdExample;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -388,6 +389,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAdExample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 9.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dominik.SwiftyAdExample;
 				PRODUCT_NAME = SwiftyAdExample;
 				SWIFT_OBJC_BRIDGING_HEADER = "";

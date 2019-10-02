@@ -75,6 +75,8 @@ final class SwiftyAdConsentManager {
             return .nonPersonalized
         case .unknown:
             return .unknown
+        @unknown default:
+            return .unknown
         }
     }
     
@@ -135,6 +137,8 @@ final class SwiftyAdConsentManager {
                     handler(self.status)
                     return
                 case .unknown:
+                    break
+                @unknown default:
                     break
                 }
             }

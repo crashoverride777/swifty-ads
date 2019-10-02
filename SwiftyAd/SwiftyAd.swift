@@ -65,24 +65,22 @@ final class SwiftyAd: NSObject {
         
         static var propertyList: Configuration {
             guard let configurationURL = Bundle.main.url(forResource: "SwiftyAd", withExtension: "plist") else {
-                print("SwiftyAd must have a valid property list")
-                fatalError("SwiftyAd must have a valid property list")
+                fatalError("SwiftyAd must have a valid property list url")
             }
             do {
                 let data = try Data(contentsOf: configurationURL)
                 let decoder = PropertyListDecoder()
                 return try decoder.decode(Configuration.self, from: data)
             } catch {
-                print("SwiftyAd must have a valid property list \(error)")
-                fatalError("SwiftyAd must have a valid property list")
+                fatalError("SwiftyAd property list decoding error: \(error)")
             }
         }
         
         static var debug: Configuration {
             return Configuration(
                 bannerAdUnitId: "ca-app-pub-3940256099942544/2934735716",
-                interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
-                rewardedVideoAdUnitId: "ca-app-pub-1234567890123456/1234567890",
+                interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910", // video = ca-app-pub-3940256099942544/5135589807
+                rewardedVideoAdUnitId: "ca-app-pub-3940256099942544/1712485313",
                 gdpr: ConsentConfiguration(
                     privacyPolicyURL: "https://developers.google.com/admob/ios/eu-consent",
                     shouldOfferAdFree: false,
@@ -171,7 +169,14 @@ final class SwiftyAd: NSObject {
     private override init() {
         super.init()
         print("AdMob SDK version \(GADRequest.sdkVersion())")
-        NotificationCenter.default.addObserver(self, selector: #selector(deviceRotated), name: UIDevice.orientationDidChangeNotification, object: nil)
+        
+        // Add notification center observers
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(deviceRotated),
+            name: UIDevice.orientationDidChangeNotification,
+            object: nil
+        )
     }
     
     // MARK: - Setup
@@ -181,10 +186,12 @@ final class SwiftyAd: NSObject {
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter delegate: A delegate to receive event callbacks.
     /// - parameter bannerAnimationDuration: The duration of the banner animation.
+    /// - parameter testDevices: An array of test device IDs if you want to do more rigorous testing with production-looking ads (see google docs). Defaults to nil.
     /// - returns handler: A handler that will return a boolean with the consent status.
     func setup(with viewController: UIViewController,
                delegate: SwiftyAdDelegate?,
                bannerAnimationDuration: TimeInterval? = nil,
+               testDevices: [String]? = nil,
                handler: @escaping (_ hasConsent: Bool) -> Void) {
         self.delegate = delegate
         if let bannerAnimationDuration = bannerAnimationDuration {
@@ -195,6 +202,11 @@ final class SwiftyAd: NSObject {
         configuration = Configuration.propertyList
         #if DEBUG
         configuration = Configuration.debug
+        
+        // If you want to do more rigorous testing with production-looking ads,
+        // you can now configure your device as a test device and use your own
+        // ad unit IDs that you've created in the AdMob UI.
+        GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = testDevices
         #endif
         
         // Create consent manager
@@ -206,9 +218,13 @@ final class SwiftyAd: NSObject {
            
             switch status {
             case .personalized, .nonPersonalized:
-                self.loadInterstitialAd()
-                self.loadRewardedVideoAd()
-                handler(true)
+                // Start SDK to improve latency
+                GADMobileAds.sharedInstance().start { status in
+                    print("AdMob SDK has started with statuses \(status.adapterStatusesByClassName)")
+                    self.loadInterstitialAd()
+                    self.loadRewardedVideoAd()
+                    handler(true)
+                }
             case .adFree, .unknown:
                 handler(false)
             }
@@ -296,7 +312,7 @@ final class SwiftyAd: NSObject {
 extension SwiftyAd: GADBannerViewDelegate {
     
     func adViewDidReceiveAd(_ bannerView: GADBannerView) {
-        print("AdMob banner did receive ad from: \(bannerView.adNetworkClassName ?? "")")
+        print("AdMob banner did receive ad from: \(bannerView.responseInfo?.adNetworkClassName ?? "")")
         animateBannerToOnScreenPosition(bannerView, from: bannerView.rootViewController)
     }
     
@@ -327,7 +343,7 @@ extension SwiftyAd: GADBannerViewDelegate {
 extension SwiftyAd: GADInterstitialDelegate {
     
     func interstitialDidReceiveAd(_ ad: GADInterstitial) {
-        print("AdMob interstitial did receive ad from: \(ad.adNetworkClassName ?? "")")
+        print("AdMob interstitial did receive ad from: \(ad.responseInfo?.adNetworkClassName ?? "")")
     }
     
     func interstitialWillPresentScreen(_ ad: GADInterstitial) {
@@ -526,11 +542,6 @@ private extension SwiftyAd {
     
     func makeRequest() -> GADRequest {
         let request = GADRequest()
-        
-        // Set debug settings
-        #if DEBUG
-        request.testDevices = [kGADSimulatorID]
-        #endif
         
         // Add extras if in EU (GDPR)
         if consentManager.isInEEA {
