@@ -43,7 +43,7 @@ extension AdConfiguration {
         return AdConfiguration(
             bannerAdUnitId: "ca-app-pub-3940256099942544/2934735716",
             interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
-            rewardedVideoAdUnitId: "ca-app-pub-1234567890123456/1234567890",
+            rewardedVideoAdUnitId: "ca-app-pub-3940256099942544/1712485313", // new API
             gdpr: ConsentConfiguration(
                 privacyPolicyURL: "https://developers.google.com/admob/ios/eu-consent",
                 shouldOfferAdFree: false,
