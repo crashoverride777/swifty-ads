@@ -184,25 +184,24 @@ e.g during gameplay
 SwiftyAd.shared.removeBanner() 
 ```
 
-### Remove all ads (in app purchases)
+### Remove/Disable ads (in app purchases)
 
 ```swift
-SwiftyAd.shared.isRemoved = true 
+SwiftyAd.shared.disable()
 ```
 
 NOTE:
 
 If set to true the methods to show banner and interstitial ads will not fire anymore and therefore require no further editing. 
+This will not stop rewarded videos from showing as they should have a dedicated button. Some rewarded videos are not skipabble and therefore should never be shown automatically. This way you can remove banner and interstitial ads but still have a rewarded videos. 
 
 For permanent storage you will need to create your own "removedAdsProduct" property and save it in something like UserDefaults, or preferably Keychain. Than at app launch check if your saved property is set to true and than update the SwiftyAds poperty e.g
 
 ```swift
-if UserDefaults.standard.bool(forKey: "RemovedAdsKey") {
-    SwiftyAd.shared.isRemoved = true 
+if UserDefaults.standard.bool(forKey: "RemovedAdsKey") == true {
+    SwiftyAd.shared.disable()
 }
 ```
-
-This will not stop rewarded videos from showing as they should have a dedicated button. Some rewarded videos are not skipabble and therefore should never be shown automatically. This way you can remove banner and interstitial ads but still have a rewarded videos. 
 
 ### To ask for consent again (GDPR) 
 

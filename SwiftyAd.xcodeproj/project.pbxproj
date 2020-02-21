@@ -7,35 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6A68A74E23FF52AD0030374F /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A68A74D23FF52AD0030374F /* RequestBuilder.swift */; };
-		6A68A75323FF589C0030374F /* SwiftyBannerAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A68A75223FF589C0030374F /* SwiftyBannerAd.swift */; };
-		6A68A75723FF5B3A0030374F /* SwiftyInterstitialAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A68A75623FF5B3A0030374F /* SwiftyInterstitialAd.swift */; };
-		6A68A75923FF5B450030374F /* SwiftyRewardedAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A68A75823FF5B450030374F /* SwiftyRewardedAd.swift */; };
-		6AE2060C229766B300A4E4AD /* IntervalTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE2060B229766B300A4E4AD /* IntervalTracker.swift */; };
-		6AE481CE2294B3140063B22F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6AE481D02294B3140063B22F /* Localizable.strings */; };
-		6AE482F12294B75C0063B22F /* LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F02294B75C0063B22F /* LocalizedString.swift */; };
+		6A428656240084C00035487A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6A428651240084C00035487A /* Localizable.strings */; };
+		6A68A74E23FF52AD0030374F /* SwiftyAdRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A68A74D23FF52AD0030374F /* SwiftyAdRequestBuilder.swift */; };
+		6A68A75323FF589C0030374F /* SwiftyAdBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A68A75223FF589C0030374F /* SwiftyAdBanner.swift */; };
+		6A68A75723FF5B3A0030374F /* SwiftyAdInterstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A68A75623FF5B3A0030374F /* SwiftyAdInterstitial.swift */; };
+		6A68A75923FF5B450030374F /* SwiftyAdRewarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A68A75823FF5B450030374F /* SwiftyAdRewarded.swift */; };
+		6AE2060C229766B300A4E4AD /* SwiftyAdIntervalTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE2060B229766B300A4E4AD /* SwiftyAdIntervalTracker.swift */; };
+		6AE482F12294B75C0063B22F /* SwiftyAdLocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F02294B75C0063B22F /* SwiftyAdLocalizedString.swift */; };
 		6AE482F42294B7660063B22F /* SwiftyAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F22294B7660063B22F /* SwiftyAd.swift */; };
 		6AE482F52294B7660063B22F /* SwiftyAdConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F32294B7660063B22F /* SwiftyAdConsentManager.swift */; };
-		6AE482F72294B76D0063B22F /* ConsentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F62294B76D0063B22F /* ConsentConfiguration.swift */; };
-		6AE482F92294B7740063B22F /* AdConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F82294B7740063B22F /* AdConfiguration.swift */; };
+		6AE482F72294B76D0063B22F /* SwiftyAdConsentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F62294B76D0063B22F /* SwiftyAdConsentConfiguration.swift */; };
+		6AE482F92294B7740063B22F /* SwiftyAdConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F82294B7740063B22F /* SwiftyAdConfiguration.swift */; };
 		B4C1B12D204C298500452094 /* SwiftyAd.h in Headers */ = {isa = PBXBuildFile; fileRef = B4C1B12B204C298500452094 /* SwiftyAd.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6A68A74D23FF52AD0030374F /* RequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBuilder.swift; sourceTree = "<group>"; };
-		6A68A75223FF589C0030374F /* SwiftyBannerAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBannerAd.swift; sourceTree = "<group>"; };
-		6A68A75623FF5B3A0030374F /* SwiftyInterstitialAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyInterstitialAd.swift; sourceTree = "<group>"; };
-		6A68A75823FF5B450030374F /* SwiftyRewardedAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyRewardedAd.swift; sourceTree = "<group>"; };
-		6AE205E22297482900A4E4AD /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		6AE205E32297485000A4E4AD /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		6AE205E42297485C00A4E4AD /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		6AE2060B229766B300A4E4AD /* IntervalTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalTracker.swift; sourceTree = "<group>"; };
-		6AE481CF2294B3140063B22F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		6AE482F02294B75C0063B22F /* LocalizedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedString.swift; sourceTree = "<group>"; };
+		6A428652240084C00035487A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6A428653240084C00035487A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6A428654240084C00035487A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6A428655240084C00035487A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6A68A74D23FF52AD0030374F /* SwiftyAdRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdRequestBuilder.swift; sourceTree = "<group>"; };
+		6A68A75223FF589C0030374F /* SwiftyAdBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdBanner.swift; sourceTree = "<group>"; };
+		6A68A75623FF5B3A0030374F /* SwiftyAdInterstitial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdInterstitial.swift; sourceTree = "<group>"; };
+		6A68A75823FF5B450030374F /* SwiftyAdRewarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdRewarded.swift; sourceTree = "<group>"; };
+		6AE2060B229766B300A4E4AD /* SwiftyAdIntervalTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdIntervalTracker.swift; sourceTree = "<group>"; };
+		6AE482F02294B75C0063B22F /* SwiftyAdLocalizedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdLocalizedString.swift; sourceTree = "<group>"; };
 		6AE482F22294B7660063B22F /* SwiftyAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAd.swift; sourceTree = "<group>"; };
 		6AE482F32294B7660063B22F /* SwiftyAdConsentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdConsentManager.swift; sourceTree = "<group>"; };
-		6AE482F62294B76D0063B22F /* ConsentConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentConfiguration.swift; sourceTree = "<group>"; };
-		6AE482F82294B7740063B22F /* AdConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdConfiguration.swift; sourceTree = "<group>"; };
+		6AE482F62294B76D0063B22F /* SwiftyAdConsentConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdConsentConfiguration.swift; sourceTree = "<group>"; };
+		6AE482F82294B7740063B22F /* SwiftyAdConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdConfiguration.swift; sourceTree = "<group>"; };
 		B4C1B128204C298500452094 /* SwiftyAd.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyAd.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4C1B12B204C298500452094 /* SwiftyAd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyAd.h; sourceTree = "<group>"; };
 		B4C1B12C204C298500452094 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -55,11 +55,21 @@
 		6A4285F724005F560035487A /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				6A68A75C23FF69840030374F /* Internal */,
 				6A68DA6523FF69B50006F655 /* Public */,
+				6A68A75C23FF69840030374F /* Internal */,
+				6A428650240084C00035487A /* Resources */,
 			);
 			path = Source;
 			sourceTree = "<group>";
+		};
+		6A428650240084C00035487A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6A428651240084C00035487A /* Localizable.strings */,
+			);
+			name = Resources;
+			path = Source/Resources;
+			sourceTree = SOURCE_ROOT;
 		};
 		6A68A75C23FF69840030374F /* Internal */ = {
 			isa = PBXGroup;
@@ -74,9 +84,9 @@
 		6A68DA6423FF69AA0006F655 /* Ads */ = {
 			isa = PBXGroup;
 			children = (
-				6A68A75223FF589C0030374F /* SwiftyBannerAd.swift */,
-				6A68A75623FF5B3A0030374F /* SwiftyInterstitialAd.swift */,
-				6A68A75823FF5B450030374F /* SwiftyRewardedAd.swift */,
+				6A68A75223FF589C0030374F /* SwiftyAdBanner.swift */,
+				6A68A75623FF5B3A0030374F /* SwiftyAdInterstitial.swift */,
+				6A68A75823FF5B450030374F /* SwiftyAdRewarded.swift */,
 			);
 			path = Ads;
 			sourceTree = "<group>";
@@ -85,7 +95,6 @@
 			isa = PBXGroup;
 			children = (
 				6AE482F22294B7660063B22F /* SwiftyAd.swift */,
-				6AE482F32294B7660063B22F /* SwiftyAdConsentManager.swift */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -93,8 +102,8 @@
 		6AE20610229769AF00A4E4AD /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				6AE482F82294B7740063B22F /* AdConfiguration.swift */,
-				6AE482F62294B76D0063B22F /* ConsentConfiguration.swift */,
+				6AE482F82294B7740063B22F /* SwiftyAdConfiguration.swift */,
+				6AE482F62294B76D0063B22F /* SwiftyAdConsentConfiguration.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -102,10 +111,10 @@
 		6AE481C72294B22B0063B22F /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				6AE2060B229766B300A4E4AD /* IntervalTracker.swift */,
-				6A68A74D23FF52AD0030374F /* RequestBuilder.swift */,
-				6AE482F02294B75C0063B22F /* LocalizedString.swift */,
-				6AE481D02294B3140063B22F /* Localizable.strings */,
+				6AE2060B229766B300A4E4AD /* SwiftyAdIntervalTracker.swift */,
+				6AE482F32294B7660063B22F /* SwiftyAdConsentManager.swift */,
+				6A68A74D23FF52AD0030374F /* SwiftyAdRequestBuilder.swift */,
+				6AE482F02294B75C0063B22F /* SwiftyAdLocalizedString.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -211,7 +220,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6AE481CE2294B3140063B22F /* Localizable.strings in Resources */,
+				6A428656240084C00035487A /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,29 +231,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A68A75723FF5B3A0030374F /* SwiftyInterstitialAd.swift in Sources */,
+				6A68A75723FF5B3A0030374F /* SwiftyAdInterstitial.swift in Sources */,
 				6AE482F52294B7660063B22F /* SwiftyAdConsentManager.swift in Sources */,
-				6A68A75923FF5B450030374F /* SwiftyRewardedAd.swift in Sources */,
+				6A68A75923FF5B450030374F /* SwiftyAdRewarded.swift in Sources */,
 				6AE482F42294B7660063B22F /* SwiftyAd.swift in Sources */,
-				6A68A75323FF589C0030374F /* SwiftyBannerAd.swift in Sources */,
-				6AE2060C229766B300A4E4AD /* IntervalTracker.swift in Sources */,
-				6AE482F92294B7740063B22F /* AdConfiguration.swift in Sources */,
-				6A68A74E23FF52AD0030374F /* RequestBuilder.swift in Sources */,
-				6AE482F12294B75C0063B22F /* LocalizedString.swift in Sources */,
-				6AE482F72294B76D0063B22F /* ConsentConfiguration.swift in Sources */,
+				6A68A75323FF589C0030374F /* SwiftyAdBanner.swift in Sources */,
+				6AE2060C229766B300A4E4AD /* SwiftyAdIntervalTracker.swift in Sources */,
+				6AE482F92294B7740063B22F /* SwiftyAdConfiguration.swift in Sources */,
+				6A68A74E23FF52AD0030374F /* SwiftyAdRequestBuilder.swift in Sources */,
+				6AE482F12294B75C0063B22F /* SwiftyAdLocalizedString.swift in Sources */,
+				6AE482F72294B76D0063B22F /* SwiftyAdConsentConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		6AE481D02294B3140063B22F /* Localizable.strings */ = {
+		6A428651240084C00035487A /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				6AE481CF2294B3140063B22F /* en */,
-				6AE205E22297482900A4E4AD /* de */,
-				6AE205E32297485000A4E4AD /* es */,
-				6AE205E42297485C00A4E4AD /* fr */,
+				6A428652240084C00035487A /* de */,
+				6A428653240084C00035487A /* en */,
+				6A428654240084C00035487A /* es */,
+				6A428655240084C00035487A /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -304,7 +313,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -362,7 +371,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -387,11 +396,12 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = SwiftyAd/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dominik.SwiftyAd;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -412,11 +422,12 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = SwiftyAd/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dominik.SwiftyAd;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
