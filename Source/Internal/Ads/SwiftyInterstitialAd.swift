@@ -7,11 +7,6 @@
 //
 
 import GoogleMobileAds
-#warning("use closures?")
-protocol SwiftyInterstitialAdDelegate: AnyObject {
-    func swiftyInterstitialAdDidOpen(_ bannerAd: SwiftyInterstitialAd)
-    func swiftyInterstitialAdDidClose(_ bannerAd: SwiftyInterstitialAd)
-}
 
 protocol SwiftyInterstitialAdType: AnyObject {
     var isReady: Bool { get }
@@ -26,7 +21,8 @@ final class SwiftyInterstitialAd: NSObject {
     
     private let adUnitId: String
     private let request: () -> GADRequest
-    private unowned let delegate: SwiftyInterstitialAdDelegate
+    private let didOpen: () -> Void
+    private let didClose: () -> Void
     
     private var interstitial: GADInterstitial?
     
@@ -34,10 +30,12 @@ final class SwiftyInterstitialAd: NSObject {
     
     init(adUnitId: String,
          request: @escaping () -> GADRequest,
-         delegate: SwiftyInterstitialAdDelegate) {
+         didOpen: @escaping () -> Void,
+         didClose: @escaping () -> Void) {
         self.adUnitId = adUnitId
         self.request = request
-        self.delegate = delegate
+        self.didOpen = didOpen
+        self.didClose = didClose
     }
 }
 
@@ -79,18 +77,18 @@ extension SwiftyInterstitialAd: GADInterstitialDelegate {
     }
     
     func interstitialWillPresentScreen(_ ad: GADInterstitial) {
-        delegate.swiftyInterstitialAdDidOpen(self)
+        didOpen()
     }
     
     func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
-        delegate.swiftyInterstitialAdDidOpen(self)
+        didOpen()
     }
     
     func interstitialWillDismissScreen(_ ad: GADInterstitial) {
     }
     
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
-        delegate.swiftyInterstitialAdDidClose(self)
+        didClose()
         load()
     }
     

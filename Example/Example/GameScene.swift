@@ -15,6 +15,7 @@ class GameScene: SKScene {
     var coins = 0
     
     private lazy var textLabel: SKLabelNode = self.childNode(withName: "textLabel") as! SKLabelNode
+    private lazy var rewardedLabel: SKLabelNode = self.childNode(withName: "rewardedLabel") as! SKLabelNode
     private lazy var consentLabel: SKLabelNode = self.childNode(withName: "consentLabel") as! SKLabelNode
     
     private let swiftyAd: SwiftyAd = .shared
@@ -46,18 +47,18 @@ class GameScene: SKScene {
             let location = touch.location(in: self)
             let node = atPoint(location)
             
-            guard let viewController = view?.window?.rootViewController else { return }
+            guard let viewController = view?.window?.rootViewController as? GameViewController else {
+                return
+            }
             
-            if node == consentLabel {
-                let gameVC = view?.window?.rootViewController as! GameViewController
+            if node === rewardedLabel {
+                swiftyAd.showRewardedVideo(from: viewController)
+            } else if node === consentLabel {
                 swiftyAd.askForConsent(from: viewController)
-            }
-            
-            defer {
+            } else {
                 touchCounter -= 1
+                swiftyAd.showInterstitial(from: viewController, withInterval: 2)
             }
-            
-            swiftyAd.showInterstitial(from: viewController, withInterval: 2)
         }
     }
     

@@ -69,10 +69,19 @@ public final class SwiftyAd: NSObject {
     private(set) lazy var banner: SwiftyBannerAdType = {
         let ad = SwiftyBannerAd(
             adUnitId: configuration.bannerAdUnitId,
-            request: { [unowned self] in self.requestBuilder.build() },
-            delegate: self,
             bannerAnimationDuration: 1.8,
-            notificationCenter: .default
+            notificationCenter: .default,
+            request: ({ [unowned self] in
+                self.requestBuilder.build()
+            }),
+            didOpen: ({ [weak self] in
+                guard let self = self else { return }
+                self.delegate?.swiftyAdDidOpen(self)
+            }),
+            didClose: ({ [weak self] in
+                guard let self = self else { return }
+                self.delegate?.swiftyAdDidClose(self)
+            })
         )
         return ad
     }()
@@ -80,8 +89,17 @@ public final class SwiftyAd: NSObject {
     private(set) lazy var interstitial: SwiftyInterstitialAdType = {
         let ad = SwiftyInterstitialAd(
             adUnitId: configuration.interstitialAdUnitId,
-            request: { [unowned self] in self.requestBuilder.build() },
-            delegate: self
+            request: ({ [unowned self] in
+                self.requestBuilder.build()
+            }),
+            didOpen: ({ [weak self] in
+                guard let self = self else { return }
+                self.delegate?.swiftyAdDidOpen(self)
+            }),
+            didClose: ({ [weak self] in
+                guard let self = self else { return }
+                self.delegate?.swiftyAdDidClose(self)
+            })
         )
         return ad
     }()
@@ -89,8 +107,21 @@ public final class SwiftyAd: NSObject {
     private(set) lazy var rewarded: SwiftyRewardedAdType = {
         let ad = SwiftyRewardedAd(
             adUnitId: configuration.rewardedVideoAdUnitId,
-            request: { [unowned self] in self.requestBuilder.build() },
-            delegate: self
+            request: ({ [unowned self] in
+                self.requestBuilder.build()
+            }),
+            didOpen: ({ [weak self] in
+                guard let self = self else { return }
+                self.delegate?.swiftyAdDidOpen(self)
+            }),
+            didClose: ({ [weak self] in
+                guard let self = self else { return }
+                self.delegate?.swiftyAdDidClose(self)
+            }),
+            didReward: ({ [weak self] rewardAmount in
+                guard let self = self else { return }
+                self.delegate?.swiftyAd(self, didRewardUserWithAmount: rewardAmount)
+            })
         )
         return ad
     }()
@@ -275,49 +306,6 @@ public final class SwiftyAd: NSObject {
     }
 }
 
-// MARK: - SwiftBannerAdDelegate
-
-extension SwiftyAd: SwiftyBannerAdDelegate {
-    
-    func swiftyBannerAdDidOpen(_ bannerAd: SwiftyBannerAd) {
-        delegate?.swiftyAdDidOpen(self)
-    }
-    
-    func swiftyBannerAdDidClose(_ bannerAd: SwiftyBannerAd) {
-        delegate?.swiftyAdDidClose(self)
-    }
-}
-
-// MARK: - SwiftyInterstitialAdDelegate
-
-extension SwiftyAd: SwiftyInterstitialAdDelegate {
-    
-    func swiftyInterstitialAdDidOpen(_ bannerAd: SwiftyInterstitialAd) {
-        delegate?.swiftyAdDidOpen(self)
-    }
-    
-    func swiftyInterstitialAdDidClose(_ bannerAd: SwiftyInterstitialAd) {
-        delegate?.swiftyAdDidClose(self)
-    }
-}
-
-// MARK: - SwiftyRewardedAdDelegate
-
-extension SwiftyAd: SwiftyRewardedAdDelegate {
-    
-    func swiftyRewardedAdDidOpen(_ bannerAd: SwiftyRewardedAd) {
-        delegate?.swiftyAdDidOpen(self)
-    }
-    
-    func swiftyRewardedAdDidClose(_ bannerAd: SwiftyRewardedAd) {
-        delegate?.swiftyAdDidClose(self)
-    }
-    
-    func swiftyRewardedAd(_ swiftyAd: SwiftyRewardedAd, didRewardUserWithAmount rewardAmount: Int) {
-        delegate?.swiftyAd(self, didRewardUserWithAmount: rewardAmount)
-    }
-}
-
 // MARK: - Private Methods
 
 private extension SwiftyAd {
@@ -326,11 +314,4 @@ private extension SwiftyAd {
         delegate?.swiftyAd(self, didChange: status)
         mediationManager?.update(for: status)
     }
-}
-
-/// Overrides the default print method so it print statements only show when in DEBUG mode
-private func print(_ items: Any...) {
-    #if DEBUG
-    Swift.print(items)
-    #endif
 }

@@ -82,8 +82,5 @@ extension GameViewController: SwiftyAdDelegate {
         if let scene = (view as? SKView)?.scene as? GameScene {
             scene.coins += rewardAmount
         }
-        
-        // Will actually not work with this sample project, adMob just shows a black ad in test mode
-        // It only works with 3rd party mediation partners you set up through your adMob account
     }
 }

@@ -7,12 +7,6 @@
 //
 
 import GoogleMobileAds
-#warning("use closures?")
-protocol SwiftyRewardedAdDelegate: AnyObject {
-    func swiftyRewardedAdDidOpen(_ bannerAd: SwiftyRewardedAd)
-    func swiftyRewardedAdDidClose(_ bannerAd: SwiftyRewardedAd)
-    func swiftyRewardedAd(_ swiftyAd: SwiftyRewardedAd, didRewardUserWithAmount rewardAmount: Int)
-}
 
 protocol SwiftyRewardedAdType: AnyObject {
     var isReady: Bool { get }
@@ -26,17 +20,24 @@ final class SwiftyRewardedAd: NSObject {
     
     private let adUnitId: String
     private let request: () -> GADRequest
-    private unowned let delegate: SwiftyRewardedAdDelegate
+    private let didOpen: () -> Void
+    private let didClose: () -> Void
+    private let didReward: (Int) -> Void
+    
     private var rewardedAd: GADRewardedAd? // new API
     
     // MARK: - Init
     
     init(adUnitId: String,
          request: @escaping () -> GADRequest,
-         delegate: SwiftyRewardedAdDelegate) {
+         didOpen: @escaping () -> Void,
+         didClose: @escaping () -> Void,
+         didReward: @escaping (Int) -> Void) {
         self.adUnitId = adUnitId
         self.request = request
-        self.delegate = delegate
+        self.didOpen = didOpen
+        self.didClose = didClose
+        self.didReward = didReward
     }
 }
 
@@ -85,11 +86,11 @@ extension SwiftyRewardedAd: GADRewardedAdDelegate {
     
     func rewardedAdDidPresent(_ rewardedAd: GADRewardedAd) {
         print("AdMob reward based video did present ad from: \(rewardedAd.responseInfo?.adNetworkClassName ?? "")")
-        delegate.swiftyRewardedAdDidOpen(self)
+        didOpen()
     }
     
     func rewardedAdDidDismiss(_ rewardedAd: GADRewardedAd) {
-        delegate.swiftyRewardedAdDidClose(self)
+        didClose()
         load()
     }
     
@@ -101,6 +102,6 @@ extension SwiftyRewardedAd: GADRewardedAdDelegate {
     func rewardedAd(_ rewardedAd: GADRewardedAd, userDidEarn reward: GADAdReward) {
         print("AdMob reward based video ad did reward user with \(reward)")
         let rewardAmount = Int(truncating: reward.amount)
-        delegate.swiftyRewardedAd(self, didRewardUserWithAmount: rewardAmount)
+        didReward(rewardAmount)
     }
 }

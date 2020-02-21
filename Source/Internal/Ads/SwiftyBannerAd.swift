@@ -7,11 +7,6 @@
 //
 
 import GoogleMobileAds
-#warning("use closures?")
-protocol SwiftyBannerAdDelegate: AnyObject {
-    func swiftyBannerAdDidOpen(_ bannerAd: SwiftyBannerAd)
-    func swiftyBannerAdDidClose(_ bannerAd: SwiftyBannerAd)
-}
 
 protocol SwiftyBannerAdType: AnyObject {
     func show(from viewController: UIViewController)
@@ -25,7 +20,8 @@ final class SwiftyBannerAd: NSObject {
     
     private let adUnitId: String
     private let request: () -> GADRequest
-    private unowned let delegate: SwiftyBannerAdDelegate
+    private let didOpen: () -> Void
+    private let didClose: () -> Void
     private var animationDuration: TimeInterval
     
     private var bannerView: GADBannerView?
@@ -34,14 +30,16 @@ final class SwiftyBannerAd: NSObject {
     // MARK: - Init
     
     init(adUnitId: String,
-         request: @escaping () -> GADRequest,
-         delegate: SwiftyBannerAdDelegate,
          bannerAnimationDuration: TimeInterval,
-         notificationCenter: NotificationCenter) {
+         notificationCenter: NotificationCenter,
+         request: @escaping () -> GADRequest,
+         didOpen: @escaping () -> Void,
+         didClose: @escaping () -> Void) {
         self.adUnitId = adUnitId
-        self.request = request
-        self.delegate = delegate
         self.animationDuration = bannerAnimationDuration
+        self.request = request
+        self.didOpen = didOpen
+        self.didClose = didClose
         super.init()
         
         notificationCenter.addObserver(
@@ -117,11 +115,11 @@ extension SwiftyBannerAd: GADBannerViewDelegate {
     }
     
     func adViewWillPresentScreen(_ bannerView: GADBannerView) {
-        delegate.swiftyBannerAdDidOpen(self)
+        didOpen()
     }
     
     func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
-        delegate.swiftyBannerAdDidOpen(self)
+        didOpen()
     }
     
     func adViewWillDismissScreen(_ bannerView: GADBannerView) {
@@ -129,7 +127,7 @@ extension SwiftyBannerAd: GADBannerViewDelegate {
     }
     
     func adViewDidDismissScreen(_ bannerView: GADBannerView) {
-        delegate.swiftyBannerAdDidClose(self)
+        didClose()
     }
     
     func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
