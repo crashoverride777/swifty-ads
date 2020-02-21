@@ -20,11 +20,6 @@ public protocol SwiftyAdDelegate: class {
     func swiftyAd(_ swiftyAd: SwiftyAd, didRewardUserWithAmount rewardAmount: Int)
 }
 
-/// A tracker protocol to show ads at certain interval
-public protocol SwiftyAdIntervalTrackerInput: class {
-    func canShow(forInterval interval: Int?) -> Bool
-}
-
 /// A protocol for mediation implementations
 public protocol SwiftyAdMediation: class {
     func update(for consentType: SwiftyAdConsentStatus)

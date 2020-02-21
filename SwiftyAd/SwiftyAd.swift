@@ -39,20 +39,59 @@ public final class SwiftyAd: NSObject {
     /// Delegate callbacks
     public weak var delegate: SwiftyAdDelegate?
     
+    /// Remove ads e.g for in app purchases
+    public var isRemoved = false {
+        didSet {
+            guard isRemoved else { return }
+            removeBanner()
+            interstitialAd?.delegate = nil
+            interstitialAd = nil
+        }
+    }
+    
     /// Ads
-    var bannerAdView: GADBannerView?
+    //var bannerAdView: GADBannerView?
     var interstitialAd: GADInterstitial?
-    var rewardedVideoAd: GADRewardBasedVideoAd?
+    //var rewardedVideoAd: GADRewardBasedVideoAd?
+    
+    private(set) lazy var banner: SwiftyBannerAdType = {
+        let ad = SwiftyBannerAd(
+            configuration: configuration,
+            requestBuilder: requestBuilder,
+            delegate: self,
+            bannerAnimationDuration: 1.8,
+            notificationCenter: .default,
+            isRemoved: { [unowned self] in self.isRemoved },
+            hasConsent: { [unowned self] in  self.hasConsent }
+        )
+        return ad
+    }()
+    
+    private(set) lazy var interstitial: SwiftyInterstitialAdType = {
+        let ad = SwiftyInterstitialAd()
+        return ad
+    }()
+    
+    private(set) lazy var rewarded: SwiftyRewardedAdType = {
+        let ad = SwiftyRewardedAd(
+            configuration: configuration,
+            requestBuilder: requestBuilder,
+            delegate: self,
+            hasConsent: { [unowned self] in  self.hasConsent }
+        )
+        return ad
+    }()
     
     /// Constraints
-    var bannerViewConstraint: NSLayoutConstraint?
+    //var bannerViewConstraint: NSLayoutConstraint?
     
     /// Init
     let configuration: AdConfiguration
-    private var intervalTracker: SwiftyAdIntervalTrackerInput!
-    private var mediationManager: SwiftyAdMediation?
-    private var consentManager: SwiftyAdConsent!
-    private(set) var bannerAnimationDuration = 1.8
+    let requestBuilder: GADRequestBuilderType
+    let intervalTracker: SwiftyAdIntervalTrackerType
+    let consentManager: SwiftyAdConsent
+    let mediationManager: SwiftyAdMediation?
+    //var bannerAnimationDuration: TimeInterval
     
     #if DEBUG
     //Testdevices in DEBUG mode
@@ -63,12 +102,12 @@ public final class SwiftyAd: NSObject {
     
     /// Check if user has consent e.g to hide rewarded video button
     public var hasConsent: Bool {
-        return consentManager.hasConsent
+        consentManager.hasConsent
     }
     
     /// Check if we must ask for consent e.g to hide change consent button in apps settings menu (required GDPR requirement)
     public var isRequiredToAskForConsent: Bool {
-        return consentManager.isRequiredToAskForConsent
+        consentManager.isRequiredToAskForConsent
     }
     
     /// Check if interstitial video is ready (e.g to show alternative ad like an in house ad)
@@ -85,75 +124,64 @@ public final class SwiftyAd: NSObject {
     /// Check if reward video is ready (e.g to hide a reward video button)
     /// Will try to reload an ad if it returns false.
     public var isRewardedVideoReady: Bool {
-        guard rewardedVideoAd?.isReady == true else {
-            print("AdMob reward video is not ready, reloading...")
-            loadRewardedVideoAd()
-            return false
-        }
-        return true
-    }
-    
-    /// Remove ads e.g for in app purchases
-    public var isRemoved = false {
-        didSet {
-            guard isRemoved else { return }
-            removeBanner()
-            interstitialAd?.delegate = nil
-            interstitialAd = nil
-        }
+        rewarded.isReady
+//        guard rewardedVideoAd?.isReady == true else {
+//            print("AdMob reward video is not ready, reloading...")
+//            loadRewardedVideoAd()
+//            return false
+//        }
+//        return true
     }
         
     // MARK: - Init
     
-    public init(intervalTracker: SwiftyAdIntervalTrackerInput? = nil,
-                mediationManager: SwiftyAdMediation? = nil,
-                consentManager: SwiftyAdConsent? = nil,
-                bannerAnimationDuration: TimeInterval? = nil,
-                testDevices: [Any] = []) {
+    override convenience init() {
         // Update configuration
         #if DEBUG
-        configuration = .debug
+        let configuration: AdConfiguration = .debug
         #else
-        configuration = .propertyList
+        let configuration: AdConfiguration = .propertyList
         #endif
-        super.init()
-        
-        // Debug settings
-        #if DEBUG
-        self.testDevices.append(contentsOf: testDevices)
-        #endif
-        
-        defer {
-            print("AdMob SDK version \(GADRequest.sdkVersion())")
-        }
-        
-        // Update properties
-        self.intervalTracker = intervalTracker ?? IntervalTracker()
-        self.mediationManager = mediationManager
-        self.consentManager = consentManager ?? SwiftyAdConsentManager(ids: configuration.ids, configuration: configuration.gdpr)
-        
-        // Update banner animation duration
-        if let bannerAnimationDuration = bannerAnimationDuration {
-            self.bannerAnimationDuration = bannerAnimationDuration
-        }
-        
-        // Setup
-        #warning("FINISH")
-//        setup(with: viewController,
-//              delegate: delegate,
-//              mediationManager: mediationManager) { }
-       
-        // Add notification center observers
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(deviceRotated),
-                                               name: UIDevice.orientationDidChangeNotification,
-                                               object: nil)
+        let consentManager = SwiftyAdConsentManager(ids: configuration.ids, configuration: configuration.gdpr)
+        let requestBuilder = GADRequestBuilder(consentManager: consentManager, testDevices: nil)
+        self.init(
+            configuration: configuration,
+            requestBuilder: requestBuilder,
+            intervalTracker: IntervalTracker(),
+            mediationManager: nil,
+            consentManager: consentManager,
+            //bannerAnimationDuration: 1.8,
+            testDevices: [],
+            notificationCenter: .default
+        )
     }
     
-    // MARK: - Callbacks
-    
-    @objc func deviceRotated() {
-        bannerAdView?.adSize = UIDevice.current.orientation.isLandscape ? kGADAdSizeSmartBannerLandscape : kGADAdSizeSmartBannerPortrait
+    init(configuration: AdConfiguration,
+         requestBuilder: GADRequestBuilderType,
+         intervalTracker: SwiftyAdIntervalTrackerType,
+         mediationManager: SwiftyAdMediation?,
+         consentManager: SwiftyAdConsent,
+         //bannerAnimationDuration: TimeInterval,
+         testDevices: [Any],
+         notificationCenter: NotificationCenter) {
+        self.configuration = configuration
+        self.requestBuilder = requestBuilder
+        self.intervalTracker = intervalTracker
+        self.mediationManager = mediationManager
+        self.consentManager = consentManager
+        //self.bannerAnimationDuration = bannerAnimationDuration
+        self.testDevices = testDevices
+        super.init()
+        
+        print("AdMob SDK version \(GADRequest.sdkVersion())")
+        
+//        // Add notification center observers
+//        notificationCenter.addObserver(
+//            self,
+//            selector: #selector(deviceRotated),
+//            name: UIDevice.orientationDidChangeNotification,
+//            object: nil
+//        )
     }
     
     // MARK: - Setup
@@ -167,7 +195,7 @@ public final class SwiftyAd: NSObject {
     /// - returns handler: A handler that will return a boolean with the consent status.
     public func setup(with viewController: UIViewController,
                       delegate: SwiftyAdDelegate?,
-                      bannerAnimationDuration: TimeInterval? = nil,
+                      bannerAnimationDuration: TimeInterval,
                       testDevices: [Any] = [],
                       handler: @escaping (_ hasConsent: Bool) -> Void) {
         self.delegate = delegate
@@ -178,9 +206,8 @@ public final class SwiftyAd: NSObject {
         #endif
         
         // Update banner animation duration
-        if let bannerAnimationDuration = bannerAnimationDuration {
-            self.bannerAnimationDuration = bannerAnimationDuration
-        }
+        banner.updateAnimationDuration(to: bannerAnimationDuration)
+        //self.bannerAnimationDuration = bannerAnimationDuration
         
         // Make consent request
         self.consentManager.ask(from: viewController, skipIfAlreadyAuthorized: true) { status in
@@ -189,7 +216,7 @@ public final class SwiftyAd: NSObject {
             switch status {
             case .personalized, .nonPersonalized:
                 self.loadInterstitialAd()
-                self.loadRewardedVideoAd()
+                self.rewarded.load()
                 handler(true)
             case .adFree, .unknown:
                 handler(false)
@@ -215,8 +242,9 @@ public final class SwiftyAd: NSObject {
     /// - parameter viewController: The view controller that will present the ad.
     /// - parameter position: The position of the banner. Defaults to bottom.
     public func showBanner(from viewController: UIViewController) {
-        guard !isRemoved, hasConsent else { return }
-        loadBannerAd(from: viewController)
+        banner.show(from: viewController)
+        //guard !isRemoved, hasConsent else { return }
+        //loadBannerAd(from: viewController)
     }
     
     // MARK: - Show Interstitial
@@ -238,67 +266,69 @@ public final class SwiftyAd: NSObject {
     ///
     /// - parameter viewController: The view controller that will present the ad.
     public func showRewardedVideo(from viewController: UIViewController) {
-        guard hasConsent else { return }
-        if isRewardedVideoReady {
-            rewardedVideoAd?.present(fromRootViewController: viewController)
-        } else {
-            let alertController = UIAlertController(title: LocalizedString.sorry,
-                                                    message: LocalizedString.noVideo,
-                                                    preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: LocalizedString.ok, style: .cancel))
-            viewController.present(alertController, animated: true)
-        }
+        rewarded.show(from: viewController)
+//        guard hasConsent else { return }
+//        if isRewardedVideoReady {
+//            rewardedVideoAd?.present(fromRootViewController: viewController)
+//        } else {
+//            let alertController = UIAlertController(
+//                title: LocalizedString.sorry,
+//                message: LocalizedString.noVideo,
+//                preferredStyle: .alert
+//            )
+//            alertController.addAction(UIAlertAction(title: LocalizedString.ok, style: .cancel))
+//            viewController.present(alertController, animated: true)
+//        }
     }
     
     // MARK: - Remove Banner
     
     /// Remove banner ads
     public func removeBanner() {
-        bannerAdView?.delegate = nil
-        bannerAdView?.removeFromSuperview()
-        bannerAdView = nil
-        bannerViewConstraint = nil
+        banner.remove()
     }
 }
 
-// MARK: - Make Ad Request
+// MARK: - SwiftBannerAdDelegate
 
-extension SwiftyAd {
+extension SwiftyAd: SwiftyBannerAdDelegate {
     
-    func makeRequest() -> GADRequest {
-        let request = GADRequest()
-        
-        // Set debug settings
-        #if DEBUG
-        request.testDevices = testDevices
-        #endif
-        
-        // Add extras if in EU (GDPR)
-        if consentManager.isInEEA {
-            
-            // Create additional parameters with under age of consent
-            var additionalParameters: [String: Any] = ["tag_for_under_age_of_consent": consentManager.isTaggedForUnderAgeOfConsent]
-          
-            // Update for consent status
-            switch consentManager.status {
-            case .nonPersonalized:
-                additionalParameters["npa"] = "1" // only allow non-personalized ads
-            default:
-                break
-            }
-            
-            // Create extras
-            let extras = GADExtras()
-            extras.additionalParameters = additionalParameters
-            request.register(extras)
-        }
-        
-        // Return the request
-        return request
+    func swiftyBannerAdDidOpen(_ bannerAd: SwiftyBannerAd) {
+        delegate?.swiftyAdDidOpen(self)
+    }
+    
+    func swiftyBannerAdDidClose(_ bannerAd: SwiftyBannerAd) {
+        delegate?.swiftyAdDidClose(self)
     }
 }
 
-// MARK: - Consent Status Change
+// MARK: - SwiftyRewardedAdDelegate
+
+extension SwiftyAd: SwiftyRewardedAdDelegate {
+    
+    func swiftyRewardedAdDidOpen(_ bannerAd: SwiftyRewardedAd) {
+        delegate?.swiftyAdDidOpen(self)
+    }
+    
+    func swiftyRewardedAdDidClose(_ bannerAd: SwiftyRewardedAd) {
+        delegate?.swiftyAdDidClose(self)
+    }
+    
+    func swiftyRewardedAd(_ swiftyAd: SwiftyRewardedAd, didRewardUserWithAmount rewardAmount: Int) {
+        delegate?.swiftyAd(self, didRewardUserWithAmount: rewardAmount)
+    }
+}
+
+//// MARK: - Internal Methods
+//
+//extension SwiftyAd {
+//    
+//    @objc func deviceRotated() {
+//        bannerAdView?.adSize = UIDevice.current.orientation.isLandscape ? kGADAdSizeSmartBannerLandscape : kGADAdSizeSmartBannerPortrait
+//    }
+//}
+
+// MARK: - Private Methods
 
 private extension SwiftyAd {
     

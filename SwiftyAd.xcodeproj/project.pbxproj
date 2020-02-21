@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A68A74E23FF52AD0030374F /* GADRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A68A74D23FF52AD0030374F /* GADRequestBuilder.swift */; };
+		6A68A75323FF589C0030374F /* SwiftyBannerAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A68A75223FF589C0030374F /* SwiftyBannerAd.swift */; };
+		6A68A75723FF5B3A0030374F /* SwiftyInterstitialAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A68A75623FF5B3A0030374F /* SwiftyInterstitialAd.swift */; };
+		6A68A75923FF5B450030374F /* SwiftyRewardedAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A68A75823FF5B450030374F /* SwiftyRewardedAd.swift */; };
 		6AE20580229741A200A4E4AD /* GoogleAppMeasurement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE2057C229741A200A4E4AD /* GoogleAppMeasurement.framework */; };
 		6AE20581229741A200A4E4AD /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE2057D229741A200A4E4AD /* GoogleUtilities.framework */; };
 		6AE20582229741A200A4E4AD /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE2057E229741A200A4E4AD /* nanopb.framework */; };
@@ -70,6 +74,10 @@
 /* Begin PBXFileReference section */
 		1CD6D3A1DA6C2F06685D78D4 /* Pods-SwiftyAd.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAd.release.xcconfig"; path = "Target Support Files/Pods-SwiftyAd/Pods-SwiftyAd.release.xcconfig"; sourceTree = "<group>"; };
 		5C289CAD6C92D2284D966AE7 /* Pods-SwiftyAd.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAd.debug.xcconfig"; path = "Target Support Files/Pods-SwiftyAd/Pods-SwiftyAd.debug.xcconfig"; sourceTree = "<group>"; };
+		6A68A74D23FF52AD0030374F /* GADRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GADRequestBuilder.swift; sourceTree = "<group>"; };
+		6A68A75223FF589C0030374F /* SwiftyBannerAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBannerAd.swift; sourceTree = "<group>"; };
+		6A68A75623FF5B3A0030374F /* SwiftyInterstitialAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyInterstitialAd.swift; sourceTree = "<group>"; };
+		6A68A75823FF5B450030374F /* SwiftyRewardedAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyRewardedAd.swift; sourceTree = "<group>"; };
 		6AE2057C229741A200A4E4AD /* GoogleAppMeasurement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppMeasurement.framework; sourceTree = "<group>"; };
 		6AE2057D229741A200A4E4AD /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleUtilities.framework; sourceTree = "<group>"; };
 		6AE2057E229741A200A4E4AD /* nanopb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = nanopb.framework; sourceTree = "<group>"; };
@@ -135,8 +143,17 @@
 				5C289CAD6C92D2284D966AE7 /* Pods-SwiftyAd.debug.xcconfig */,
 				1CD6D3A1DA6C2F06685D78D4 /* Pods-SwiftyAd.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		6A68A75523FF5B270030374F /* New */ = {
+			isa = PBXGroup;
+			children = (
+				6A68A75223FF589C0030374F /* SwiftyBannerAd.swift */,
+				6A68A75623FF5B3A0030374F /* SwiftyInterstitialAd.swift */,
+				6A68A75823FF5B450030374F /* SwiftyRewardedAd.swift */,
+			);
+			path = New;
 			sourceTree = "<group>";
 		};
 		6AE2057A2297417D00A4E4AD /* Frameworks */ = {
@@ -188,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				6AE2060B229766B300A4E4AD /* IntervalTracker.swift */,
+				6A68A74D23FF52AD0030374F /* GADRequestBuilder.swift */,
 				6AE482F02294B75C0063B22F /* LocalizedString.swift */,
 				6AE481D02294B3140063B22F /* Localizable.strings */,
 			);
@@ -221,6 +239,7 @@
 				6AE481C72294B22B0063B22F /* Helpers */,
 				6AE2060E2297686E00A4E4AD /* SwiftyAdProtocols.swift */,
 				6AE482F22294B7660063B22F /* SwiftyAd.swift */,
+				6A68A75523FF5B270030374F /* New */,
 				6AF30B9222973F380016B54E /* SwiftyAd+Banner.swift */,
 				6AF30B9422973F380016B54E /* SwiftyAd+Interstitial.swift */,
 				6AF30B9322973F380016B54E /* SwiftyAd+Rewarded.swift */,
@@ -406,11 +425,15 @@
 			files = (
 				6AF30B9722973F380016B54E /* SwiftyAd+Interstitial.swift in Sources */,
 				6AF30B9622973F380016B54E /* SwiftyAd+Rewarded.swift in Sources */,
+				6A68A75723FF5B3A0030374F /* SwiftyInterstitialAd.swift in Sources */,
 				6AE482F52294B7660063B22F /* SwiftyAdConsentManager.swift in Sources */,
+				6A68A75923FF5B450030374F /* SwiftyRewardedAd.swift in Sources */,
 				6AE482F42294B7660063B22F /* SwiftyAd.swift in Sources */,
+				6A68A75323FF589C0030374F /* SwiftyBannerAd.swift in Sources */,
 				6AE2060F2297686E00A4E4AD /* SwiftyAdProtocols.swift in Sources */,
 				6AE2060C229766B300A4E4AD /* IntervalTracker.swift in Sources */,
 				6AE482F92294B7740063B22F /* AdConfiguration.swift in Sources */,
+				6A68A74E23FF52AD0030374F /* GADRequestBuilder.swift in Sources */,
 				6AE482F12294B75C0063B22F /* LocalizedString.swift in Sources */,
 				6AF30B9522973F380016B54E /* SwiftyAd+Banner.swift in Sources */,
 				6AE482F72294B76D0063B22F /* ConsentConfiguration.swift in Sources */,

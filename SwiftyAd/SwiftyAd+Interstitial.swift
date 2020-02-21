@@ -17,7 +17,7 @@ extension SwiftyAd {
         
         interstitialAd = GADInterstitial(adUnitID: configuration.interstitialAdUnitId)
         interstitialAd?.delegate = self
-        let request = makeRequest()
+        let request = requestBuilder.build()
         interstitialAd?.load(request)
     }
 }

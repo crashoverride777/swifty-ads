@@ -8,16 +8,70 @@
 
 import GoogleMobileAds
 
-/*
-// MARK: - Load
+protocol SwiftyBannerAdDelegate: AnyObject {
+    func swiftyBannerAdDidOpen(_ bannerAd: SwiftyBannerAd)
+    func swiftyBannerAdDidClose(_ bannerAd: SwiftyBannerAd)
+}
 
-extension SwiftyAd {
+protocol SwiftyBannerAdType: AnyObject {
+    func show(from viewController: UIViewController)
+    func remove()
+    func updateAnimationDuration(to duration: TimeInterval)
+}
+
+final class SwiftyBannerAd: NSObject {
     
-    func loadBannerAd(from viewController: UIViewController) {
-        guard !isRemoved, hasConsent else { return }
+    // MARK: - Properties
+    
+    private let configuration: AdConfiguration
+    private let requestBuilder: GADRequestBuilderType
+    private unowned let delegate: SwiftyBannerAdDelegate
+    private var animationDuration: TimeInterval
+    
+    private let isRemoved: () -> Bool
+    private let hasConsent: () -> Bool
+    
+    private var bannerAdView: GADBannerView?
+    private var bannerViewConstraint: NSLayoutConstraint?
+    
+    // MARK: - Init
+    
+    init(configuration: AdConfiguration,
+         requestBuilder: GADRequestBuilderType,
+         delegate: SwiftyBannerAdDelegate,
+         bannerAnimationDuration: TimeInterval,
+         notificationCenter: NotificationCenter,
+         isRemoved: @escaping () -> Bool,
+         hasConsent: @escaping () -> Bool) {
+        self.configuration = configuration
+        self.requestBuilder = requestBuilder
+        self.delegate = delegate
+        self.animationDuration = bannerAnimationDuration
+        self.isRemoved = isRemoved
+        self.hasConsent = hasConsent
+        super.init()
+        
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(deviceRotated),
+            name: UIDevice.orientationDidChangeNotification,
+            object: nil
+        )
+    }
+}
+ 
+// MARK: - SwiftyBannerAdType
+
+extension SwiftyBannerAd: SwiftyBannerAdType {
+    
+    /// Show banner ad
+    ///
+    /// - parameter viewController: The view controller that will present the ad.
+    func show(from viewController: UIViewController) {
+        guard !isRemoved(), hasConsent() else { return }
         
         // Remove old banners
-        removeBanner()
+        remove()
         
         // Create ad
         bannerAdView = GADBannerView()
@@ -53,11 +107,24 @@ extension SwiftyAd {
         let request = requestBuilder.build()
         bannerAdView.load(request)
     }
+    
+    /// Remove banner ads
+    public func remove() {
+        bannerAdView?.delegate = nil
+        bannerAdView?.removeFromSuperview()
+        bannerAdView = nil
+        bannerViewConstraint = nil
+    }
+    
+    /// Update banner animation duration
+    func updateAnimationDuration(to duration: TimeInterval) {
+        self.animationDuration = duration
+    }
 }
 
 // MARK: - GADBannerViewDelegate
 
-extension SwiftyAd: GADBannerViewDelegate {
+extension SwiftyBannerAd: GADBannerViewDelegate {
     
     public func adViewDidReceiveAd(_ bannerView: GADBannerView) {
         print("AdMob banner did receive ad from: \(bannerView.adNetworkClassName ?? "")")
@@ -65,11 +132,11 @@ extension SwiftyAd: GADBannerViewDelegate {
     }
     
     public func adViewWillPresentScreen(_ bannerView: GADBannerView) {
-        delegate?.swiftyAdDidOpen(self)
+        delegate.swiftyBannerAdDidOpen(self)
     }
     
     public func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
-        delegate?.swiftyAdDidOpen(self)
+        delegate.swiftyBannerAdDidOpen(self)
     }
     
     public func adViewWillDismissScreen(_ bannerView: GADBannerView) {
@@ -77,7 +144,7 @@ extension SwiftyAd: GADBannerViewDelegate {
     }
     
     public func adViewDidDismissScreen(_ bannerView: GADBannerView) {
-        delegate?.swiftyAdDidClose(self)
+        delegate.swiftyBannerAdDidClose(self)
     }
     
     public func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
@@ -86,15 +153,19 @@ extension SwiftyAd: GADBannerViewDelegate {
     }
 }
 
-// MARK: - Private
+// MARK: - Private Methods
 
-private extension SwiftyAd {
+private extension SwiftyBannerAd {
+    
+    @objc func deviceRotated() {
+        bannerAdView?.adSize = UIDevice.current.orientation.isLandscape ? kGADAdSizeSmartBannerLandscape : kGADAdSizeSmartBannerPortrait
+    }
     
     func animateBannerToOnScreenPosition(_ bannerAd: GADBannerView, from viewController: UIViewController?) {
         bannerAd.isHidden = false
         bannerViewConstraint?.constant = 0
         
-        UIView.animate(withDuration: bannerAnimationDuration) {
+        UIView.animate(withDuration: animationDuration) {
             viewController?.view.layoutIfNeeded()
         }
     }
@@ -107,11 +178,10 @@ private extension SwiftyAd {
             return
         }
         
-        UIView.animate(withDuration: bannerAnimationDuration, animations: {
+        UIView.animate(withDuration: animationDuration, animations: {
             viewController?.view.layoutIfNeeded()
         }, completion: { isSuccess in
             bannerAd.isHidden = true
         })
     }
 }
-*/
