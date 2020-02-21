@@ -9,28 +9,31 @@
 import Foundation
 import GoogleMobileAds
 
-protocol GADRequestBuilderType: AnyObject {
+protocol RequestBuilderType: AnyObject {
     func build() -> GADRequest
 }
 
-final class GADRequestBuilder {
-    private let consentManager: SwiftyAdConsent
+final class RequestBuilder {
+    private let mobileAds: GADMobileAds
+    private let consentManager: SwiftyAdConsentManagerType
     private let testDevices: [String]?
     
-    init(consentManager: SwiftyAdConsent, testDevices: [String]?) {
+    init(mobileAds: GADMobileAds, consentManager: SwiftyAdConsentManagerType, testDevices: [String]?) {
+        self.mobileAds = mobileAds
         self.consentManager = consentManager
         self.testDevices = testDevices
     }
 }
 
-extension GADRequestBuilder: GADRequestBuilderType {
+extension RequestBuilder: RequestBuilderType {
   
     func build() -> GADRequest {
         let request = GADRequest()
         
         // Set debug settings
         #if DEBUG
-        request.testDevices = testDevices
+        //request.testDevices = testDevices
+        mobileAds.requestConfiguration.testDeviceIdentifiers = testDevices
         #endif
         
         // Add extras if in EU (GDPR)

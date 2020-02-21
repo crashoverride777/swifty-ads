@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol SwiftyAdIntervalTrackerType: AnyObject {
+protocol SwiftyAdIntervalTrackerType: AnyObject {
     func canShow(forInterval interval: Int?) -> Bool
 }
 

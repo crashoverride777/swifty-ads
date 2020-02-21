@@ -7,7 +7,7 @@
 //
 
 import GoogleMobileAds
-
+#warning("use closures?")
 protocol SwiftyBannerAdDelegate: AnyObject {
     func swiftyBannerAdDidOpen(_ bannerAd: SwiftyBannerAd)
     func swiftyBannerAdDidClose(_ bannerAd: SwiftyBannerAd)
@@ -23,32 +23,25 @@ final class SwiftyBannerAd: NSObject {
     
     // MARK: - Properties
     
-    private let configuration: AdConfiguration
-    private let requestBuilder: GADRequestBuilderType
+    private let adUnitId: String
+    private let request: () -> GADRequest
     private unowned let delegate: SwiftyBannerAdDelegate
     private var animationDuration: TimeInterval
     
-    private let isRemoved: () -> Bool
-    private let hasConsent: () -> Bool
-    
-    private var bannerAdView: GADBannerView?
+    private var bannerView: GADBannerView?
     private var bannerViewConstraint: NSLayoutConstraint?
     
     // MARK: - Init
     
-    init(configuration: AdConfiguration,
-         requestBuilder: GADRequestBuilderType,
+    init(adUnitId: String,
+         request: @escaping () -> GADRequest,
          delegate: SwiftyBannerAdDelegate,
          bannerAnimationDuration: TimeInterval,
-         notificationCenter: NotificationCenter,
-         isRemoved: @escaping () -> Bool,
-         hasConsent: @escaping () -> Bool) {
-        self.configuration = configuration
-        self.requestBuilder = requestBuilder
+         notificationCenter: NotificationCenter) {
+        self.adUnitId = adUnitId
+        self.request = request
         self.delegate = delegate
         self.animationDuration = bannerAnimationDuration
-        self.isRemoved = isRemoved
-        self.hasConsent = hasConsent
         super.init()
         
         notificationCenter.addObserver(
@@ -64,22 +57,17 @@ final class SwiftyBannerAd: NSObject {
 
 extension SwiftyBannerAd: SwiftyBannerAdType {
     
-    /// Show banner ad
-    ///
-    /// - parameter viewController: The view controller that will present the ad.
     func show(from viewController: UIViewController) {
-        guard !isRemoved(), hasConsent() else { return }
-        
         // Remove old banners
         remove()
         
         // Create ad
-        bannerAdView = GADBannerView()
+        bannerView = GADBannerView()
         deviceRotated() // to set banner size
         
-        guard let bannerAdView = bannerAdView else { return }
+        guard let bannerAdView = bannerView else { return }
         
-        bannerAdView.adUnitID = configuration.bannerAdUnitId
+        bannerAdView.adUnitID = adUnitId
         bannerAdView.delegate = self
         bannerAdView.rootViewController = viewController
         viewController.view.addSubview(bannerAdView)
@@ -104,19 +92,16 @@ extension SwiftyBannerAd: SwiftyBannerAdType {
         animateBannerToOffScreenPosition(bannerAdView, from: viewController, withAnimation: false)
         
         // Request ad
-        let request = requestBuilder.build()
-        bannerAdView.load(request)
+        bannerAdView.load(request())
     }
     
-    /// Remove banner ads
-    public func remove() {
-        bannerAdView?.delegate = nil
-        bannerAdView?.removeFromSuperview()
-        bannerAdView = nil
+    func remove() {
+        bannerView?.delegate = nil
+        bannerView?.removeFromSuperview()
+        bannerView = nil
         bannerViewConstraint = nil
     }
     
-    /// Update banner animation duration
     func updateAnimationDuration(to duration: TimeInterval) {
         self.animationDuration = duration
     }
@@ -126,28 +111,28 @@ extension SwiftyBannerAd: SwiftyBannerAdType {
 
 extension SwiftyBannerAd: GADBannerViewDelegate {
     
-    public func adViewDidReceiveAd(_ bannerView: GADBannerView) {
-        print("AdMob banner did receive ad from: \(bannerView.adNetworkClassName ?? "")")
+    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+        print("AdMob banner did receive ad from: \(bannerView.responseInfo?.adNetworkClassName ?? "")")
         animateBannerToOnScreenPosition(bannerView, from: bannerView.rootViewController)
     }
     
-    public func adViewWillPresentScreen(_ bannerView: GADBannerView) {
+    func adViewWillPresentScreen(_ bannerView: GADBannerView) {
         delegate.swiftyBannerAdDidOpen(self)
     }
     
-    public func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
+    func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
         delegate.swiftyBannerAdDidOpen(self)
     }
     
-    public func adViewWillDismissScreen(_ bannerView: GADBannerView) {
+    func adViewWillDismissScreen(_ bannerView: GADBannerView) {
         
     }
     
-    public func adViewDidDismissScreen(_ bannerView: GADBannerView) {
+    func adViewDidDismissScreen(_ bannerView: GADBannerView) {
         delegate.swiftyBannerAdDidClose(self)
     }
     
-    public func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
+    func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
         print(error.localizedDescription)
         animateBannerToOffScreenPosition(bannerView, from: bannerView.rootViewController)
     }
@@ -158,7 +143,7 @@ extension SwiftyBannerAd: GADBannerViewDelegate {
 private extension SwiftyBannerAd {
     
     @objc func deviceRotated() {
-        bannerAdView?.adSize = UIDevice.current.orientation.isLandscape ? kGADAdSizeSmartBannerLandscape : kGADAdSizeSmartBannerPortrait
+        bannerView?.adSize = UIDevice.current.orientation.isLandscape ? kGADAdSizeSmartBannerLandscape : kGADAdSizeSmartBannerPortrait
     }
     
     func animateBannerToOnScreenPosition(_ bannerAd: GADBannerView, from viewController: UIViewController?) {

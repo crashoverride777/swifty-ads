@@ -30,6 +30,18 @@ public enum SwiftyAdConsentStatus {
     case unknown
 }
 
+/// A protocol for consent management in EEA
+public protocol SwiftyAdConsentManagerType: class {
+    var status: SwiftyAdConsentStatus { get }
+    var isInEEA: Bool { get }
+    var isRequiredToAskForConsent: Bool { get }
+    var hasConsent: Bool { get }
+    var isTaggedForUnderAgeOfConsent: Bool { get }
+    func ask(from viewController: UIViewController,
+             skipIfAlreadyAuthorized: Bool,
+             handler: @escaping (SwiftyAdConsentStatus) -> Void)
+}
+
 /**
  SwiftyAdConsentManager
  
@@ -53,9 +65,9 @@ final class SwiftyAdConsentManager {
     }
 }
 
-// MARK: - SwiftyAdConsent
+// MARK: - SwiftyAdConsentManagerType
 
-extension SwiftyAdConsentManager: SwiftyAdConsent {
+extension SwiftyAdConsentManager: SwiftyAdConsentManagerType {
     
     /// The current status
     var status: SwiftyAdConsentStatus {

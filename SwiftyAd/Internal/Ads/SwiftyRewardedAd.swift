@@ -7,7 +7,7 @@
 //
 
 import GoogleMobileAds
-
+#warning("use closures?")
 protocol SwiftyRewardedAdDelegate: AnyObject {
     func swiftyRewardedAdDidOpen(_ bannerAd: SwiftyRewardedAd)
     func swiftyRewardedAdDidClose(_ bannerAd: SwiftyRewardedAd)
@@ -24,23 +24,20 @@ final class SwiftyRewardedAd: NSObject {
     
     // MARK: - Properties
     
-    private let configuration: AdConfiguration
-    private let requestBuilder: GADRequestBuilderType
+    private let adUnitId: String
+    private let request: () -> GADRequest
     private unowned let delegate: SwiftyRewardedAdDelegate
-    private let hasConsent: () -> Bool
     
-    private var rewardedVideoAd: GADRewardBasedVideoAd?
+    private var rewardBasedVideoAd: GADRewardBasedVideoAd?
     
     // MARK: - Init
     
-    init(configuration: AdConfiguration,
-         requestBuilder: GADRequestBuilderType,
-         delegate: SwiftyRewardedAdDelegate,
-         hasConsent: @escaping () -> Bool) {
-        self.configuration = configuration
-        self.requestBuilder = requestBuilder
+    init(adUnitId: String,
+         request: @escaping () -> GADRequest,
+         delegate: SwiftyRewardedAdDelegate) {
+        self.adUnitId = adUnitId
+        self.request = request
         self.delegate = delegate
-        self.hasConsent = hasConsent
     }
 }
 
@@ -48,10 +45,8 @@ final class SwiftyRewardedAd: NSObject {
 
 extension SwiftyRewardedAd: SwiftyRewardedAdType {
     
-    /// Check if reward video is ready (e.g to hide a reward video button)
-    /// Will try to reload an ad if it returns false.
-    public var isReady: Bool {
-        guard rewardedVideoAd?.isReady == true else {
+    var isReady: Bool {
+        guard rewardBasedVideoAd?.isReady == true else {
             print("AdMob reward video is not ready, reloading...")
             load()
             return false
@@ -59,23 +54,15 @@ extension SwiftyRewardedAd: SwiftyRewardedAdType {
         return true
     }
     
-    /// Preload ad
     func load() {
-        guard hasConsent() else { return }
-        
-        rewardedVideoAd = GADRewardBasedVideoAd.sharedInstance()
-        rewardedVideoAd?.delegate = self
-        let request = requestBuilder.build()
-        rewardedVideoAd?.load(request, withAdUnitID: configuration.rewardedVideoAdUnitId)
+        rewardBasedVideoAd = .sharedInstance()
+        rewardBasedVideoAd?.delegate = self
+        rewardBasedVideoAd?.load(request(), withAdUnitID: adUnitId)
     }
-    
-    /// Show rewarded video ad
-    ///
-    /// - parameter viewController: The view controller that will present the ad.
-    public func show(from viewController: UIViewController) {
-        guard hasConsent() else { return }
+ 
+    func show(from viewController: UIViewController) {
         if isReady {
-            rewardedVideoAd?.present(fromRootViewController: viewController)
+            rewardBasedVideoAd?.present(fromRootViewController: viewController)
         } else {
             let alertController = UIAlertController(
                 title: LocalizedString.sorry,
@@ -92,36 +79,36 @@ extension SwiftyRewardedAd: SwiftyRewardedAdType {
 
 extension SwiftyRewardedAd: GADRewardBasedVideoAdDelegate {
     
-    public func rewardBasedVideoAdDidReceive(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+    func rewardBasedVideoAdDidReceive(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
         print("AdMob reward based video did receive ad from: \(rewardBasedVideoAd.adNetworkClassName ?? "")")
     }
     
-    public func rewardBasedVideoAdDidStartPlaying(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+    func rewardBasedVideoAdDidStartPlaying(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
         delegate.swiftyRewardedAdDidOpen(self)
     }
     
-    public func rewardBasedVideoAdDidOpen(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+    func rewardBasedVideoAdDidOpen(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
     }
     
-    public func rewardBasedVideoAdWillLeaveApplication(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+    func rewardBasedVideoAdWillLeaveApplication(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
         delegate.swiftyRewardedAdDidOpen(self)
     }
     
-    public func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+    func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
         delegate.swiftyRewardedAdDidClose(self)
         load()
     }
     
-    public func rewardBasedVideoAdDidCompletePlaying(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+    func rewardBasedVideoAdDidCompletePlaying(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
         
     }
     
-    public func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didFailToLoadWithError error: Error) {
+    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didFailToLoadWithError error: Error) {
         print(error.localizedDescription)
         // Do not reload here as it might cause endless loading loops if no/slow internet
     }
     
-    public func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didRewardUserWith reward: GADAdReward) {
+    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didRewardUserWith reward: GADAdReward) {
         print("AdMob reward based video ad did reward user with \(reward)")
         let rewardAmount = Int(truncating: reward.amount)
         delegate.swiftyRewardedAd(self, didRewardUserWithAmount: rewardAmount)
