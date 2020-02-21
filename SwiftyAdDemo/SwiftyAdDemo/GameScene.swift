@@ -12,14 +12,14 @@ class GameScene: SKScene {
     
     // MARK: - Properties
     
+    var swiftyAd: SwiftyAdType!
+    
     var coins = 0
     
     private lazy var interstitialLabel: SKLabelNode = self.childNode(withName: "interstitialLabel") as! SKLabelNode
     private lazy var rewardedLabel: SKLabelNode = self.childNode(withName: "rewardedLabel") as! SKLabelNode
     private lazy var removeLabel: SKLabelNode = self.childNode(withName: "removeLabel") as! SKLabelNode
     private lazy var consentLabel: SKLabelNode = self.childNode(withName: "consentLabel") as! SKLabelNode
-    
-    private let swiftyAd: SwiftyAd = .shared
     
     // MARK: - Life Cycle
     

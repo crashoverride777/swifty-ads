@@ -39,6 +39,25 @@ public protocol SwiftyAdMediation: class {
     func update(for consentType: SwiftyAdConsentStatus)
 }
 
+/// Swifty ad type
+public protocol SwiftyAdType: AnyObject {
+    var hasConsent: Bool { get }
+    var isRequiredToAskForConsent: Bool { get }
+    var isInterstitialReady: Bool { get }
+    var isRewardedVideoReady: Bool { get }
+    func setup(with viewController: UIViewController,
+               delegate: SwiftyAdDelegate?,
+               bannerAnimationDuration: TimeInterval,
+               testDevices: [Any],
+               handler: @escaping (_ hasConsent: Bool) -> Void)
+    func askForConsent(from viewController: UIViewController)
+    func showBanner(from viewController: UIViewController)
+    func showInterstitial(from viewController: UIViewController, withInterval interval: Int?)
+    func showRewardedVideo(from viewController: UIViewController)
+    func removeBanner()
+    func disable()
+}
+
 /**
  SwiftyAd
  
@@ -130,28 +149,6 @@ public final class SwiftyAd: NSObject {
     
     // MARK: - Computed Properties
     
-    /// Check if user has consent e.g to hide rewarded video button
-    public var hasConsent: Bool {
-        consentManager.hasConsent
-    }
-    
-    /// Check if we must ask for consent e.g to hide change consent button in apps settings menu (required GDPR requirement)
-    public var isRequiredToAskForConsent: Bool {
-        consentManager.isRequiredToAskForConsent
-    }
-    
-    /// Check if interstitial video is ready (e.g to show alternative ad like an in house ad)
-    /// Will try to reload an ad if it returns false.
-    public var isInterstitialReady: Bool {
-        interstitial.isReady
-    }
-    
-    /// Check if reward video is ready (e.g to hide a reward video button)
-    /// Will try to reload an ad if it returns false.
-    public var isRewardedVideoReady: Bool {
-        rewarded.isReady
-    }
-        
     /// Check if ads have been removed
     private var isRemoved = false {
         didSet {
@@ -210,8 +207,33 @@ public final class SwiftyAd: NSObject {
         super.init()
         print("AdMob SDK version \(GADRequest.sdkVersion())")
     }
+}
+
+// MARK: - SwiftyAdType
+
+extension SwiftyAd: SwiftyAdType {
     
-    // MARK: - Setup
+    /// Check if user has consent e.g to hide rewarded video button
+    public var hasConsent: Bool {
+        consentManager.hasConsent
+    }
+     
+    /// Check if we must ask for consent e.g to hide change consent button in apps settings menu (required GDPR requirement)
+    public var isRequiredToAskForConsent: Bool {
+        consentManager.isRequiredToAskForConsent
+    }
+     
+    /// Check if interstitial video is ready (e.g to show alternative ad like an in house ad)
+    /// Will try to reload an ad if it returns false.
+    public var isInterstitialReady: Bool {
+        interstitial.isReady
+    }
+     
+    /// Check if reward video is ready (e.g to hide a reward video button)
+    /// Will try to reload an ad if it returns false.
+    public var isRewardedVideoReady: Bool {
+        rewarded.isReady
+    }
     
     /// Setup swift ad
     ///
@@ -223,7 +245,7 @@ public final class SwiftyAd: NSObject {
     public func setup(with viewController: UIViewController,
                       delegate: SwiftyAdDelegate?,
                       bannerAnimationDuration: TimeInterval,
-                      testDevices: [Any] = [],
+                      testDevices: [Any],
                       handler: @escaping (_ hasConsent: Bool) -> Void) {
         self.delegate = delegate
     
@@ -252,9 +274,7 @@ public final class SwiftyAd: NSObject {
             }
         }
     }
-    
-    // MARK: - Ask For Consent
-    
+
     /// Ask for consent. Use this for the consent button that should be e.g in settings.
     ///
     /// - parameter viewController: The view controller that will present the consent form.
@@ -264,8 +284,6 @@ public final class SwiftyAd: NSObject {
         }
     }
     
-    // MARK: - Show Banner
-    
     /// Show banner ad
     ///
     /// - parameter viewController: The view controller that will present the ad.
@@ -274,21 +292,17 @@ public final class SwiftyAd: NSObject {
         guard !isRemoved, hasConsent else { return }
         banner.show(from: viewController)
     }
-    
-    // MARK: - Show Interstitial
-    
+ 
     /// Show interstitial ad
     ///
     /// - parameter viewController: The view controller that will present the ad.
-    /// - parameter interval: The interval of when to show the ad, e.g every 4th time the method is called. Defaults to nil.
-    public func showInterstitial(from viewController: UIViewController, withInterval interval: Int? = nil) {
+    /// - parameter interval: The interval of when to show the ad, e.g every 4th time the method is called. Set to nil to always show.
+    public func showInterstitial(from viewController: UIViewController, withInterval interval: Int?) {
         guard !isRemoved, hasConsent else { return }
         guard intervalTracker.canShow(forInterval: interval) else { return }
         guard isInterstitialReady else { return }
         interstitial.show(for: viewController)
     }
-    
-    // MARK: - Show Reward Video
     
     /// Show rewarded video ad
     ///
@@ -298,15 +312,11 @@ public final class SwiftyAd: NSObject {
         rewarded.show(from: viewController)
     }
     
-    // MARK: - Remove Banner
-    
     /// Remove banner ads
     public func removeBanner() {
         banner.remove()
     }
-    
-    // MARK: - Disable ads
-    
+
     /// Disable ads e.g in app purchases
     public func disable() {
         isRemoved = true

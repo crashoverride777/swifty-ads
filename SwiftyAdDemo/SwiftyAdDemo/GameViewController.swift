@@ -11,13 +11,13 @@ import SpriteKit
 
 class GameViewController: UIViewController {
     
-    private let swiftyAd: SwiftyAd = .shared
+    private let swiftyAd: SwiftyAdType = SwiftyAd.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Setup swifty ad
-        swiftyAd.setup(with: self, delegate: self, bannerAnimationDuration: 0.3) { hasConsent in
+        swiftyAd.setup(with: self, delegate: self, bannerAnimationDuration: 0.3, testDevices: []) { hasConsent in
             guard hasConsent else { return }
             DispatchQueue.main.async {
                 self.swiftyAd.showBanner(from: self)
@@ -26,6 +26,8 @@ class GameViewController: UIViewController {
         
         // Load game scene
         if let scene = GameScene(fileNamed: "GameScene") {
+            scene.swiftyAd = swiftyAd
+            
             // Configure the view.
             let skView = self.view as! SKView
             skView.showsFPS = true

@@ -107,10 +107,10 @@
 			children = (
 				6A428678240085690035487A /* Source */,
 				6A42864D240070590035487A /* SwiftyAd.plist */,
-				6A4286042400609E0035487A /* AppDelegate.swift */,
-				6A4286222400612D0035487A /* GameScene.sks */,
-				6A4286242400612E0035487A /* GameScene.swift */,
 				6A4286232400612E0035487A /* GameViewController.swift */,
+				6A4286242400612E0035487A /* GameScene.swift */,
+				6A4286222400612D0035487A /* GameScene.sks */,
+				6A4286042400609E0035487A /* AppDelegate.swift */,
 				6A42860E2400609E0035487A /* Main.storyboard */,
 				6A428611240060A00035487A /* Assets.xcassets */,
 				6A428613240060A00035487A /* LaunchScreen.storyboard */,
