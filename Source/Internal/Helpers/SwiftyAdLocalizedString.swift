@@ -1,5 +1,5 @@
 //
-//  LocalizedString.swift
+//  SwiftyAdLocalizedString.swift
 //  SwiftyAd
 //
 //  Created by Dominik Ringler on 21/05/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum LocalizedString {
+enum SwiftyAdLocalizedString {
     static let sorry = localized("Sorry", comment: "Sorry")
     static let ok = localized("Ok", comment: "Ok")
     static let noVideo = localized("NoVideo", comment: "No video available to watch at the moment.")
@@ -25,7 +25,7 @@ enum LocalizedString {
 
 // MARK: - Get Localized String
 
-private extension LocalizedString {
+private extension SwiftyAdLocalizedString {
     
     static func localized(_ text: String, comment: String, argument: CVarArg? = nil, argument2: CVarArg? = nil) -> String {
         return NSLocalizedString(text, tableName: nil, bundle: Bundle(for: SwiftyAd.self), value: "", comment: comment)

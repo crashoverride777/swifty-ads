@@ -1,5 +1,5 @@
 //
-//  IntervalTracker.swift
+//  SwiftyAdIntervalTracker.swift
 //  SwiftyAd
 //
 //  Created by Dominik Ringler on 24/05/2019.
@@ -12,11 +12,11 @@ protocol SwiftyAdIntervalTrackerType: AnyObject {
     func canShow(forInterval interval: Int?) -> Bool
 }
 
-final class IntervalTracker {
+final class SwiftyAdIntervalTracker {
     private var intervalCounter = 0
 }
 
-extension IntervalTracker: SwiftyAdIntervalTrackerType {
+extension SwiftyAdIntervalTracker: SwiftyAdIntervalTrackerType {
     
     func canShow(forInterval interval: Int?) -> Bool {
         guard let interval = interval else {

@@ -1,5 +1,5 @@
 //
-//  ConsentConfiguration.swift
+//  SwiftyAdConsentConfiguration.swift
 //  SwiftyAd
 //
 //  Created by Dominik Ringler on 21/05/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ConsentConfiguration: Codable {
+struct SwiftyAdConsentConfiguration: Codable {
     let privacyPolicyURL: String
     let shouldOfferAdFree: Bool
     let mediationNetworks: [String]

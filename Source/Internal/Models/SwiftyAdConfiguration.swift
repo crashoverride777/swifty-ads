@@ -8,23 +8,20 @@
 
 import Foundation
 
-struct AdConfiguration: Codable {
+struct SwiftyAdConfiguration: Codable {
     let bannerAdUnitId: String
     let interstitialAdUnitId: String
     let rewardedVideoAdUnitId: String
-    let gdpr: ConsentConfiguration
-}
+    let gdpr: SwiftyAdConsentConfiguration
 
-extension AdConfiguration {
-    
     var ids: [String] {
         return [bannerAdUnitId, interstitialAdUnitId, rewardedVideoAdUnitId].filter { !$0.isEmpty }
     }
 }
 
-extension AdConfiguration {
+extension SwiftyAdConfiguration {
     
-    static var propertyList: AdConfiguration {
+    static var propertyList: SwiftyAdConfiguration {
         guard let configurationURL = Bundle.main.url(forResource: "SwiftyAd", withExtension: "plist") else {
             print("SwiftyAd must have a valid property list")
             fatalError("SwiftyAd must have a valid property list")
@@ -32,19 +29,19 @@ extension AdConfiguration {
         do {
             let data = try Data(contentsOf: configurationURL)
             let decoder = PropertyListDecoder()
-            return try decoder.decode(AdConfiguration.self, from: data)
+            return try decoder.decode(SwiftyAdConfiguration.self, from: data)
         } catch {
             print("SwiftyAd must have a valid property list \(error)")
             fatalError("SwiftyAd must have a valid property list")
         }
     }
     
-    static var debug: AdConfiguration {
-        return AdConfiguration(
+    static var debug: SwiftyAdConfiguration {
+        return SwiftyAdConfiguration(
             bannerAdUnitId: "ca-app-pub-3940256099942544/2934735716",
             interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
             rewardedVideoAdUnitId: "ca-app-pub-3940256099942544/1712485313",
-            gdpr: ConsentConfiguration(
+            gdpr: SwiftyAdConsentConfiguration(
                 privacyPolicyURL: "https://developers.google.com/admob/ios/eu-consent",
                 shouldOfferAdFree: false,
                 mediationNetworks: [],

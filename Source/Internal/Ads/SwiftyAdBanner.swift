@@ -1,6 +1,6 @@
 //
-//  SwiftyAd+Banner.swift
-//  SwiftyAdExample
+//  SwiftyAdBanner.swift
+//  SwiftyAd
 //
 //  Created by Dominik Ringler on 23/05/2019.
 //  Copyright © 2019 Dominik. All rights reserved.
@@ -8,13 +8,13 @@
 
 import GoogleMobileAds
 
-protocol SwiftyBannerAdType: AnyObject {
+protocol SwiftyAdBannerType: AnyObject {
     func show(from viewController: UIViewController)
     func remove()
     func updateAnimationDuration(to duration: TimeInterval)
 }
 
-final class SwiftyBannerAd: NSObject {
+final class SwiftyAdBanner: NSObject {
     
     // MARK: - Properties
     
@@ -22,21 +22,19 @@ final class SwiftyBannerAd: NSObject {
     private let request: () -> GADRequest
     private let didOpen: () -> Void
     private let didClose: () -> Void
-    private var animationDuration: TimeInterval
-    
+
     private var bannerView: GADBannerView?
+    private var animationDuration: TimeInterval = 1.8
     private var bannerViewConstraint: NSLayoutConstraint?
     
     // MARK: - Init
     
     init(adUnitId: String,
-         bannerAnimationDuration: TimeInterval,
          notificationCenter: NotificationCenter,
          request: @escaping () -> GADRequest,
          didOpen: @escaping () -> Void,
          didClose: @escaping () -> Void) {
         self.adUnitId = adUnitId
-        self.animationDuration = bannerAnimationDuration
         self.request = request
         self.didOpen = didOpen
         self.didClose = didClose
@@ -51,9 +49,9 @@ final class SwiftyBannerAd: NSObject {
     }
 }
  
-// MARK: - SwiftyBannerAdType
+// MARK: - SwiftyAdBannerType
 
-extension SwiftyBannerAd: SwiftyBannerAdType {
+extension SwiftyAdBanner: SwiftyAdBannerType {
     
     func show(from viewController: UIViewController) {
         // Remove old banners
@@ -71,13 +69,7 @@ extension SwiftyBannerAd: SwiftyBannerAdType {
         viewController.view.addSubview(bannerAdView)
         
         // Add constraints
-        let layoutGuide: UILayoutGuide
-        if #available(iOS 11, *) {
-            layoutGuide = viewController.view.safeAreaLayoutGuide
-        } else {
-            layoutGuide = viewController.view.layoutMarginsGuide
-        }
-        
+        let layoutGuide = viewController.view.safeAreaLayoutGuide
         bannerAdView.translatesAutoresizingMaskIntoConstraints = false
         bannerViewConstraint = bannerAdView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor)
         NSLayoutConstraint.activate([
@@ -87,7 +79,7 @@ extension SwiftyBannerAd: SwiftyBannerAdType {
         ])
        
         // Move off screen
-        animateBannerToOffScreenPosition(bannerAdView, from: viewController, withAnimation: false)
+        animateBannerToOffScreenPosition(bannerAdView, from: viewController, animated: false)
         
         // Request ad
         bannerAdView.load(request())
@@ -107,10 +99,10 @@ extension SwiftyBannerAd: SwiftyBannerAdType {
 
 // MARK: - GADBannerViewDelegate
 
-extension SwiftyBannerAd: GADBannerViewDelegate {
+extension SwiftyAdBanner: GADBannerViewDelegate {
     
     func adViewDidReceiveAd(_ bannerView: GADBannerView) {
-        print("AdMob banner did receive ad from: \(bannerView.responseInfo?.adNetworkClassName ?? "")")
+        print("SwiftyBannerAd did receive ad from: \(bannerView.responseInfo?.adNetworkClassName ?? "")")
         animateBannerToOnScreenPosition(bannerView, from: bannerView.rootViewController)
     }
     
@@ -138,31 +130,39 @@ extension SwiftyBannerAd: GADBannerViewDelegate {
 
 // MARK: - Private Methods
 
-private extension SwiftyBannerAd {
+private extension SwiftyAdBanner {
     
     @objc func deviceRotated() {
         bannerView?.adSize = UIDevice.current.orientation.isLandscape ? kGADAdSizeSmartBannerLandscape : kGADAdSizeSmartBannerPortrait
     }
     
     func animateBannerToOnScreenPosition(_ bannerAd: GADBannerView, from viewController: UIViewController?) {
+        guard let viewController = viewController else {
+            return
+        }
+        
         bannerAd.isHidden = false
         bannerViewConstraint?.constant = 0
         
         UIView.animate(withDuration: animationDuration) {
-            viewController?.view.layoutIfNeeded()
+            viewController.view.layoutIfNeeded()
         }
     }
     
-    func animateBannerToOffScreenPosition(_ bannerAd: GADBannerView, from viewController: UIViewController?, withAnimation: Bool = true) {
+    func animateBannerToOffScreenPosition(_ bannerAd: GADBannerView, from viewController: UIViewController?, animated: Bool = true) {
+        guard let viewController = viewController else {
+            return
+        }
+        
         bannerViewConstraint?.constant = 0 + (bannerAd.frame.height * 3) // *3 due to iPhoneX safe area
         
-        guard withAnimation else {
+        guard animated else {
             bannerAd.isHidden = true
             return
         }
         
         UIView.animate(withDuration: animationDuration, animations: {
-            viewController?.view.layoutIfNeeded()
+            viewController.view.layoutIfNeeded()
         }, completion: { isSuccess in
             bannerAd.isHidden = true
         })

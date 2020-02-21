@@ -1,24 +1,10 @@
-//    The MIT License (MIT)
 //
-//    Copyright (c) 2015-2018 Dominik Ringler
+//  SwiftyAdConsentManager.swift
+//  SwiftyAd
 //
-//    Permission is hereby granted, free of charge, to any person obtaining a copy
-//    of this software and associated documentation files (the "Software"), to deal
-//    in the Software without restriction, including without limitation the rights
-//    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//    copies of the Software, and to permit persons to whom the Software is
-//    furnished to do so, subject to the following conditions:
+//  Created by Dominik Ringler on 21/05/2019.
+//  Copyright © 2019 Dominik. All rights reserved.
 //
-//    The above copyright notice and this permission notice shall be included in all
-//    copies or substantial portions of the Software.
-//
-//    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-//    SOFTWARE.
 
 import UIKit
 import PersonalizedAdConsent
@@ -30,8 +16,7 @@ public enum SwiftyAdConsentStatus {
     case unknown
 }
 
-/// A protocol for consent management in EEA
-public protocol SwiftyAdConsentManagerType: class {
+protocol SwiftyAdConsentManagerType: class {
     var status: SwiftyAdConsentStatus { get }
     var isInEEA: Bool { get }
     var isRequiredToAskForConsent: Bool { get }
@@ -42,23 +27,17 @@ public protocol SwiftyAdConsentManagerType: class {
              handler: @escaping (SwiftyAdConsentStatus) -> Void)
 }
 
-/**
- SwiftyAdConsentManager
- 
- A class to manage consent request for Google AdMob (e.g GDPR).
- */
 final class SwiftyAdConsentManager {
 
     // MARK: - Properties
 
-    /// Private
     private let ids: [String]
-    private let configuration: ConsentConfiguration
+    private let configuration: SwiftyAdConsentConfiguration
     private let consentInformation: PACConsentInformation = .sharedInstance
     
     // MARK: - Init
     
-    init(ids: [String], configuration: ConsentConfiguration) {
+    init(ids: [String], configuration: SwiftyAdConsentConfiguration) {
         self.ids = ids
         self.configuration = configuration
         consentInformation.isTaggedForUnderAgeOfConsent = configuration.isTaggedForUnderAgeOfConsent
@@ -68,8 +47,7 @@ final class SwiftyAdConsentManager {
 // MARK: - SwiftyAdConsentManagerType
 
 extension SwiftyAdConsentManager: SwiftyAdConsentManagerType {
-    
-    /// The current status
+
     var status: SwiftyAdConsentStatus {
         switch consentInformation.consentStatus {
         case .personalized:
@@ -83,9 +61,8 @@ extension SwiftyAdConsentManager: SwiftyAdConsentManagerType {
         }
     }
     
-    /// Check if user is in EEA (EU economic area)
     var isInEEA: Bool {
-        return consentInformation.isRequestLocationInEEAOrUnknown
+        consentInformation.isRequestLocationInEEAOrUnknown
     }
     
     var isRequiredToAskForConsent: Bool {
@@ -94,18 +71,16 @@ extension SwiftyAdConsentManager: SwiftyAdConsentManagerType {
         return true
     }
     
-    /// Check if we can show ads
     var hasConsent: Bool {
-        guard isInEEA, !isTaggedForUnderAgeOfConsent else { return true }
+        guard isInEEA else { return true }
+        guard !isTaggedForUnderAgeOfConsent else { return false } // cannot legally consent, so cannot show ad
         return status != .unknown
     }
-    
-    /// Check if under age is turned on
+
     var isTaggedForUnderAgeOfConsent: Bool {
-        return configuration.isTaggedForUnderAgeOfConsent
+        configuration.isTaggedForUnderAgeOfConsent
     }
     
-    /// Ask for consent
     func ask(from viewController: UIViewController,
              skipIfAlreadyAuthorized: Bool,
              handler: @escaping (SwiftyAdConsentStatus) -> Void) {
@@ -223,29 +198,29 @@ private extension SwiftyAdConsentManager {
                                handler: @escaping (SwiftyAdConsentStatus) -> Void) {
         // Create alert message with all ad providers
         var message =
-            LocalizedString.consentMessage +
+            SwiftyAdLocalizedString.consentMessage +
             "\n\n" +
-            LocalizedString.weShowAdsFrom +
+            SwiftyAdLocalizedString.weShowAdsFrom +
             "Google AdMob, " +
             configuration.mediationNetworksString
         
         if let adProviders = consentInformation.adProviders, !adProviders.isEmpty {
-            message += "\n\n" + LocalizedString.weUseAdProviders + "\((adProviders.map({ $0.name })).joined(separator: ", "))"
+            message += "\n\n" + SwiftyAdLocalizedString.weUseAdProviders + "\((adProviders.map({ $0.name })).joined(separator: ", "))"
         }
         message += "\n\n\(configuration.privacyPolicyURL)"
         
         // Create alert controller
-        let alertController = UIAlertController(title: LocalizedString.consentTitle, message: message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: SwiftyAdLocalizedString.consentTitle, message: message, preferredStyle: .alert)
         
         // Personalized action
-        let personalizedAction = UIAlertAction(title: LocalizedString.allowPersonalized, style: .default) { action in
+        let personalizedAction = UIAlertAction(title: SwiftyAdLocalizedString.allowPersonalized, style: .default) { action in
             self.consentInformation.consentStatus = .personalized
             handler(.personalized)
         }
         alertController.addAction(personalizedAction)
         
         // Non-Personalized action
-        let nonPersonalizedAction = UIAlertAction(title: LocalizedString.allowNonPersonalized, style: .default) { action in
+        let nonPersonalizedAction = UIAlertAction(title: SwiftyAdLocalizedString.allowNonPersonalized, style: .default) { action in
             self.consentInformation.consentStatus = .nonPersonalized
             handler(.nonPersonalized)
         }
@@ -253,7 +228,7 @@ private extension SwiftyAdConsentManager {
         
         // Ad free action
         if configuration.shouldOfferAdFree {
-            let adFreeAction = UIAlertAction(title: LocalizedString.adFree, style: .default) { action in
+            let adFreeAction = UIAlertAction(title: SwiftyAdLocalizedString.adFree, style: .default) { action in
                 self.consentInformation.consentStatus = .unknown
                 handler(.adFree)
             }

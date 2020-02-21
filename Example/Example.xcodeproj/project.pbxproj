@@ -15,17 +15,18 @@
 		6A4286252400612E0035487A /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 6A4286222400612D0035487A /* GameScene.sks */; };
 		6A4286262400612E0035487A /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4286232400612E0035487A /* GameViewController.swift */; };
 		6A4286272400612E0035487A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4286242400612E0035487A /* GameScene.swift */; };
-		6A428642240063530035487A /* SwiftyRewardedAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A428630240063530035487A /* SwiftyRewardedAd.swift */; };
-		6A428643240063530035487A /* SwiftyBannerAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A428631240063530035487A /* SwiftyBannerAd.swift */; };
-		6A428644240063530035487A /* SwiftyInterstitialAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A428632240063530035487A /* SwiftyInterstitialAd.swift */; };
-		6A428645240063530035487A /* AdConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A428634240063530035487A /* AdConfiguration.swift */; };
-		6A428646240063530035487A /* ConsentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A428635240063530035487A /* ConsentConfiguration.swift */; };
+		6A428642240063530035487A /* SwiftyAdRewarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A428630240063530035487A /* SwiftyAdRewarded.swift */; };
+		6A428643240063530035487A /* SwiftyAdBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A428631240063530035487A /* SwiftyAdBanner.swift */; };
+		6A428644240063530035487A /* SwiftyAdInterstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A428632240063530035487A /* SwiftyAdInterstitial.swift */; };
+		6A428645240063530035487A /* SwiftyAdConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A428634240063530035487A /* SwiftyAdConfiguration.swift */; };
+		6A428646240063530035487A /* SwiftyAdConsentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A428635240063530035487A /* SwiftyAdConsentConfiguration.swift */; };
 		6A428647240063530035487A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6A428637240063530035487A /* Localizable.strings */; };
-		6A428648240063530035487A /* IntervalTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A42863A240063530035487A /* IntervalTracker.swift */; };
-		6A428649240063530035487A /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A42863C240063530035487A /* RequestBuilder.swift */; };
-		6A42864A240063530035487A /* LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A42863D240063530035487A /* LocalizedString.swift */; };
+		6A428648240063530035487A /* SwiftyAdIntervalTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A42863A240063530035487A /* SwiftyAdIntervalTracker.swift */; };
+		6A428649240063530035487A /* SwiftyAdRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A42863C240063530035487A /* SwiftyAdRequestBuilder.swift */; };
+		6A42864A240063530035487A /* SwiftyAdLocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A42863D240063530035487A /* SwiftyAdLocalizedString.swift */; };
 		6A42864B240063530035487A /* SwiftyAdConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A428640240063530035487A /* SwiftyAdConsentManager.swift */; };
 		6A42864C240063530035487A /* SwiftyAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A428641240063530035487A /* SwiftyAd.swift */; };
+		6A42864E240070590035487A /* SwiftyAd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A42864D240070590035487A /* SwiftyAd.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,20 +42,21 @@
 		6A4286222400612D0035487A /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		6A4286232400612E0035487A /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		6A4286242400612E0035487A /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		6A428630240063530035487A /* SwiftyRewardedAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyRewardedAd.swift; sourceTree = "<group>"; };
-		6A428631240063530035487A /* SwiftyBannerAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBannerAd.swift; sourceTree = "<group>"; };
-		6A428632240063530035487A /* SwiftyInterstitialAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyInterstitialAd.swift; sourceTree = "<group>"; };
-		6A428634240063530035487A /* AdConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdConfiguration.swift; sourceTree = "<group>"; };
-		6A428635240063530035487A /* ConsentConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentConfiguration.swift; sourceTree = "<group>"; };
+		6A428630240063530035487A /* SwiftyAdRewarded.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdRewarded.swift; sourceTree = "<group>"; };
+		6A428631240063530035487A /* SwiftyAdBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdBanner.swift; sourceTree = "<group>"; };
+		6A428632240063530035487A /* SwiftyAdInterstitial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdInterstitial.swift; sourceTree = "<group>"; };
+		6A428634240063530035487A /* SwiftyAdConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdConfiguration.swift; sourceTree = "<group>"; };
+		6A428635240063530035487A /* SwiftyAdConsentConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdConsentConfiguration.swift; sourceTree = "<group>"; };
 		6A428638240063530035487A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6A428639240063530035487A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		6A42863A240063530035487A /* IntervalTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntervalTracker.swift; sourceTree = "<group>"; };
+		6A42863A240063530035487A /* SwiftyAdIntervalTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdIntervalTracker.swift; sourceTree = "<group>"; };
 		6A42863B240063530035487A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		6A42863C240063530035487A /* RequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestBuilder.swift; sourceTree = "<group>"; };
-		6A42863D240063530035487A /* LocalizedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedString.swift; sourceTree = "<group>"; };
+		6A42863C240063530035487A /* SwiftyAdRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdRequestBuilder.swift; sourceTree = "<group>"; };
+		6A42863D240063530035487A /* SwiftyAdLocalizedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdLocalizedString.swift; sourceTree = "<group>"; };
 		6A42863E240063530035487A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6A428640240063530035487A /* SwiftyAdConsentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdConsentManager.swift; sourceTree = "<group>"; };
 		6A428641240063530035487A /* SwiftyAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAd.swift; sourceTree = "<group>"; };
+		6A42864D240070590035487A /* SwiftyAd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SwiftyAd.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				6A42862D240063530035487A /* Source */,
+				6A42864D240070590035487A /* SwiftyAd.plist */,
 				6A4286042400609E0035487A /* AppDelegate.swift */,
 				6A4286222400612D0035487A /* GameScene.sks */,
 				6A4286242400612E0035487A /* GameScene.swift */,
@@ -115,8 +118,9 @@
 		6A42862D240063530035487A /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				6A42862E240063530035487A /* Internal */,
 				6A42863F240063530035487A /* Public */,
+				6A42862E240063530035487A /* Internal */,
+				6A42864F240080C30035487A /* Resources */,
 			);
 			name = Source;
 			path = ../../Source;
@@ -125,8 +129,8 @@
 		6A42862E240063530035487A /* Internal */ = {
 			isa = PBXGroup;
 			children = (
-				6A42862F240063530035487A /* Ads */,
 				6A428633240063530035487A /* Models */,
+				6A42862F240063530035487A /* Ads */,
 				6A428636240063530035487A /* Helpers */,
 			);
 			path = Internal;
@@ -135,9 +139,9 @@
 		6A42862F240063530035487A /* Ads */ = {
 			isa = PBXGroup;
 			children = (
-				6A428631240063530035487A /* SwiftyBannerAd.swift */,
-				6A428632240063530035487A /* SwiftyInterstitialAd.swift */,
-				6A428630240063530035487A /* SwiftyRewardedAd.swift */,
+				6A428631240063530035487A /* SwiftyAdBanner.swift */,
+				6A428632240063530035487A /* SwiftyAdInterstitial.swift */,
+				6A428630240063530035487A /* SwiftyAdRewarded.swift */,
 			);
 			path = Ads;
 			sourceTree = "<group>";
@@ -145,8 +149,8 @@
 		6A428633240063530035487A /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				6A428634240063530035487A /* AdConfiguration.swift */,
-				6A428635240063530035487A /* ConsentConfiguration.swift */,
+				6A428634240063530035487A /* SwiftyAdConfiguration.swift */,
+				6A428635240063530035487A /* SwiftyAdConsentConfiguration.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -154,10 +158,10 @@
 		6A428636240063530035487A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				6A428637240063530035487A /* Localizable.strings */,
-				6A42863A240063530035487A /* IntervalTracker.swift */,
-				6A42863C240063530035487A /* RequestBuilder.swift */,
-				6A42863D240063530035487A /* LocalizedString.swift */,
+				6A42863A240063530035487A /* SwiftyAdIntervalTracker.swift */,
+				6A42863C240063530035487A /* SwiftyAdRequestBuilder.swift */,
+				6A428640240063530035487A /* SwiftyAdConsentManager.swift */,
+				6A42863D240063530035487A /* SwiftyAdLocalizedString.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -165,10 +169,17 @@
 		6A42863F240063530035487A /* Public */ = {
 			isa = PBXGroup;
 			children = (
-				6A428640240063530035487A /* SwiftyAdConsentManager.swift */,
 				6A428641240063530035487A /* SwiftyAd.swift */,
 			);
 			path = Public;
+			sourceTree = "<group>";
+		};
+		6A42864F240080C30035487A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6A428637240063530035487A /* Localizable.strings */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		82F2E159D6DE685ABF9E4B1A /* Frameworks */ = {
@@ -247,6 +258,7 @@
 				6A4286102400609E0035487A /* Main.storyboard in Resources */,
 				6A428612240060A00035487A /* Assets.xcassets in Resources */,
 				6A428615240060A00035487A /* LaunchScreen.storyboard in Resources */,
+				6A42864E240070590035487A /* SwiftyAd.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,17 +313,17 @@
 			files = (
 				6A4286272400612E0035487A /* GameScene.swift in Sources */,
 				6A4286262400612E0035487A /* GameViewController.swift in Sources */,
-				6A42864A240063530035487A /* LocalizedString.swift in Sources */,
+				6A42864A240063530035487A /* SwiftyAdLocalizedString.swift in Sources */,
 				6A42864B240063530035487A /* SwiftyAdConsentManager.swift in Sources */,
-				6A428645240063530035487A /* AdConfiguration.swift in Sources */,
-				6A428644240063530035487A /* SwiftyInterstitialAd.swift in Sources */,
-				6A428648240063530035487A /* IntervalTracker.swift in Sources */,
-				6A428649240063530035487A /* RequestBuilder.swift in Sources */,
+				6A428645240063530035487A /* SwiftyAdConfiguration.swift in Sources */,
+				6A428644240063530035487A /* SwiftyAdInterstitial.swift in Sources */,
+				6A428648240063530035487A /* SwiftyAdIntervalTracker.swift in Sources */,
+				6A428649240063530035487A /* SwiftyAdRequestBuilder.swift in Sources */,
 				6A42864C240063530035487A /* SwiftyAd.swift in Sources */,
-				6A428642240063530035487A /* SwiftyRewardedAd.swift in Sources */,
+				6A428642240063530035487A /* SwiftyAdRewarded.swift in Sources */,
 				6A4286052400609E0035487A /* AppDelegate.swift in Sources */,
-				6A428643240063530035487A /* SwiftyBannerAd.swift in Sources */,
-				6A428646240063530035487A /* ConsentConfiguration.swift in Sources */,
+				6A428643240063530035487A /* SwiftyAdBanner.swift in Sources */,
+				6A428646240063530035487A /* SwiftyAdConsentConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

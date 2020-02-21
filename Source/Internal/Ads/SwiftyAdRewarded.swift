@@ -1,5 +1,5 @@
 //
-//  SwiftyRewardedAd.swift
+//  SwiftyAdRewarded.swift
 //  SwiftyAd
 //
 //  Created by Dominik Ringler on 21/02/2020.
@@ -8,13 +8,13 @@
 
 import GoogleMobileAds
 
-protocol SwiftyRewardedAdType: AnyObject {
+protocol SwiftyAdRewardedType: AnyObject {
     var isReady: Bool { get }
     func load()
     func show(from viewController: UIViewController)
 }
 
-final class SwiftyRewardedAd: NSObject {
+final class SwiftyAdRewarded: NSObject {
     
     // MARK: - Properties
     
@@ -24,7 +24,7 @@ final class SwiftyRewardedAd: NSObject {
     private let didClose: () -> Void
     private let didReward: (Int) -> Void
     
-    private var rewardedAd: GADRewardedAd? // new API
+    private var rewardedAd: GADRewardedAd?
     
     // MARK: - Init
     
@@ -41,13 +41,13 @@ final class SwiftyRewardedAd: NSObject {
     }
 }
 
-// MARK: - SwiftyRewardedAdType
+// MARK: - SwiftyAdRewardedType
 
-extension SwiftyRewardedAd: SwiftyRewardedAdType {
+extension SwiftyAdRewarded: SwiftyAdRewardedType {
     
     var isReady: Bool {
         guard rewardedAd?.isReady == true else {
-            print("AdMob reward video is not ready, reloading...")
+            print("SwiftyRewardedAd reward video is not ready, reloading...")
             load()
             return false
         }
@@ -57,11 +57,10 @@ extension SwiftyRewardedAd: SwiftyRewardedAdType {
     func load() {
         rewardedAd = GADRewardedAd(adUnitID: adUnitId)
         rewardedAd?.load(request()) { error in
-          if let error = error {
-            print("Loading failed: \(error)")
-          } else {
-            print("Loading Succeeded")
-          }
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
         }
     }
  
@@ -70,11 +69,11 @@ extension SwiftyRewardedAd: SwiftyRewardedAdType {
             rewardedAd?.present(fromRootViewController: viewController, delegate: self)
         } else {
             let alertController = UIAlertController(
-                title: LocalizedString.sorry,
-                message: LocalizedString.noVideo,
+                title: SwiftyAdLocalizedString.sorry,
+                message: SwiftyAdLocalizedString.noVideo,
                 preferredStyle: .alert
             )
-            alertController.addAction(UIAlertAction(title: LocalizedString.ok, style: .cancel))
+            alertController.addAction(UIAlertAction(title: SwiftyAdLocalizedString.ok, style: .cancel))
             viewController.present(alertController, animated: true)
         }
     }
@@ -82,7 +81,7 @@ extension SwiftyRewardedAd: SwiftyRewardedAdType {
 
 // MARK: - GADRewardedAdDelegate
 
-extension SwiftyRewardedAd: GADRewardedAdDelegate {
+extension SwiftyAdRewarded: GADRewardedAdDelegate {
     
     func rewardedAdDidPresent(_ rewardedAd: GADRewardedAd) {
         print("AdMob reward based video did present ad from: \(rewardedAd.responseInfo?.adNetworkClassName ?? "")")

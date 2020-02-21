@@ -14,29 +14,17 @@ class GameScene: SKScene {
     
     var coins = 0
     
-    private lazy var textLabel: SKLabelNode = self.childNode(withName: "textLabel") as! SKLabelNode
+    private lazy var interstitialLabel: SKLabelNode = self.childNode(withName: "interstitialLabel") as! SKLabelNode
     private lazy var rewardedLabel: SKLabelNode = self.childNode(withName: "rewardedLabel") as! SKLabelNode
+    private lazy var removeLabel: SKLabelNode = self.childNode(withName: "removeLabel") as! SKLabelNode
     private lazy var consentLabel: SKLabelNode = self.childNode(withName: "consentLabel") as! SKLabelNode
     
     private let swiftyAd: SwiftyAd = .shared
-    
-    private var touchCounter = 15 {
-        didSet {
-            guard touchCounter > 0 else {
-                swiftyAd.isRemoved = true
-                textLabel.text = "Removed all ads"
-                return
-            }
-            
-            textLabel.text = "Remove ads in \(touchCounter) clicks"
-        }
-    }
     
     // MARK: - Life Cycle
     
     override func didMove(to view: SKView) {
         backgroundColor = .gray
-        textLabel.text = "Remove ads in \(touchCounter) clicks"
         consentLabel.isHidden = !swiftyAd.isRequiredToAskForConsent
     }
     
@@ -51,13 +39,17 @@ class GameScene: SKScene {
                 return
             }
             
-            if node === rewardedLabel {
-                swiftyAd.showRewardedVideo(from: viewController)
-            } else if node === consentLabel {
-                swiftyAd.askForConsent(from: viewController)
-            } else {
-                touchCounter -= 1
+            switch node {
+            case interstitialLabel:
                 swiftyAd.showInterstitial(from: viewController, withInterval: 2)
+            case rewardedLabel:
+                swiftyAd.showRewardedVideo(from: viewController)
+            case removeLabel:
+                swiftyAd.disable()
+            case consentLabel:
+                swiftyAd.askForConsent(from: viewController)
+            default:
+                break
             }
         }
     }

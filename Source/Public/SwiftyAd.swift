@@ -1,6 +1,6 @@
 //    The MIT License (MIT)
 //
-//    Copyright (c) 2015-2018 Dominik Ringler
+//    Copyright (c) 2015-2020 Dominik Ringler
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy
 //    of this software and associated documentation files (the "Software"), to deal
@@ -56,20 +56,10 @@ public final class SwiftyAd: NSObject {
     /// Delegate callbacks
     public weak var delegate: SwiftyAdDelegate?
     
-    /// Remove ads e.g for in app purchases
-    public var isRemoved = false {
-        didSet {
-            guard isRemoved else { return }
-            removeBanner()
-            interstitial.stopLoading()
-        }
-    }
-    
     /// Ads
-    private(set) lazy var banner: SwiftyBannerAdType = {
-        let ad = SwiftyBannerAd(
+    private(set) lazy var banner: SwiftyAdBannerType = {
+        let ad = SwiftyAdBanner(
             adUnitId: configuration.bannerAdUnitId,
-            bannerAnimationDuration: 1.8,
             notificationCenter: .default,
             request: ({ [unowned self] in
                 self.requestBuilder.build()
@@ -86,8 +76,8 @@ public final class SwiftyAd: NSObject {
         return ad
     }()
     
-    private(set) lazy var interstitial: SwiftyInterstitialAdType = {
-        let ad = SwiftyInterstitialAd(
+    private(set) lazy var interstitial: SwiftyAdInterstitialType = {
+        let ad = SwiftyAdInterstitial(
             adUnitId: configuration.interstitialAdUnitId,
             request: ({ [unowned self] in
                 self.requestBuilder.build()
@@ -104,8 +94,8 @@ public final class SwiftyAd: NSObject {
         return ad
     }()
     
-    private(set) lazy var rewarded: SwiftyRewardedAdType = {
-        let ad = SwiftyRewardedAd(
+    private(set) lazy var rewarded: SwiftyAdRewardedType = {
+        let ad = SwiftyAdRewarded(
             adUnitId: configuration.rewardedVideoAdUnitId,
             request: ({ [unowned self] in
                 self.requestBuilder.build()
@@ -127,8 +117,8 @@ public final class SwiftyAd: NSObject {
     }()
     
     /// Init
-    let configuration: AdConfiguration
-    let requestBuilder: RequestBuilderType
+    let configuration: SwiftyAdConfiguration
+    let requestBuilder: SwiftyAdRequestBuilderType
     let intervalTracker: SwiftyAdIntervalTrackerType
     let consentManager: SwiftyAdConsentManagerType
     let mediationManager: SwiftyAdMediation?
@@ -162,12 +152,21 @@ public final class SwiftyAd: NSObject {
         rewarded.isReady
     }
         
+    /// Check if ads have been removed
+    private var isRemoved = false {
+        didSet {
+            guard isRemoved else { return }
+            removeBanner()
+            interstitial.stopLoading()
+        }
+    }
+    
     // MARK: - Init
     
     override convenience init() {
         // Update configuration
         #if DEBUG
-        let configuration: AdConfiguration = .debug
+        let configuration: SwiftyAdConfiguration = .debug
         #else
         let configuration: AdConfiguration = .propertyList
         #endif
@@ -176,16 +175,18 @@ public final class SwiftyAd: NSObject {
             configuration: configuration.gdpr
         )
         
-        let requestBuilder = RequestBuilder(
-            mobileAds: GADMobileAds.sharedInstance(),
-            consentManager: consentManager,
+        let requestBuilder = SwiftyAdRequestBuilder(
+            mobileAds: .sharedInstance(),
+            isGDPRRequired: consentManager.isInEEA,
+            isNonPersonalizedOnly: consentManager.status == .nonPersonalized,
+            isTaggedForUnderAgeOfConsent: consentManager.isTaggedForUnderAgeOfConsent,
             testDevices: nil
         )
         
         self.init(
             configuration: configuration,
             requestBuilder: requestBuilder,
-            intervalTracker: IntervalTracker(),
+            intervalTracker: SwiftyAdIntervalTracker(),
             mediationManager: nil,
             consentManager: consentManager,
             testDevices: [],
@@ -193,8 +194,8 @@ public final class SwiftyAd: NSObject {
         )
     }
     
-    init(configuration: AdConfiguration,
-         requestBuilder: RequestBuilderType,
+    init(configuration: SwiftyAdConfiguration,
+         requestBuilder: SwiftyAdRequestBuilderType,
          intervalTracker: SwiftyAdIntervalTrackerType,
          mediationManager: SwiftyAdMediation?,
          consentManager: SwiftyAdConsentManagerType,
@@ -244,7 +245,6 @@ public final class SwiftyAd: NSObject {
                     self.interstitial.load()
                 }
                 self.rewarded.load()
-                
                 handler(true)
             
             case .adFree, .unknown:
@@ -303,6 +303,13 @@ public final class SwiftyAd: NSObject {
     /// Remove banner ads
     public func removeBanner() {
         banner.remove()
+    }
+    
+    // MARK: - Disable ads
+    
+    /// Disable ads e.g in app purchases
+    public func disable() {
+        isRemoved = true
     }
 }
 

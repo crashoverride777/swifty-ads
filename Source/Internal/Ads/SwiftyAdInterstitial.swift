@@ -1,5 +1,5 @@
 //
-//  SwiftyInterstitialAd.swift
+//  SwiftyAdInterstitial.swift
 //  SwiftyAd
 //
 //  Created by Dominik Ringler on 21/02/2020.
@@ -8,14 +8,14 @@
 
 import GoogleMobileAds
 
-protocol SwiftyInterstitialAdType: AnyObject {
+protocol SwiftyAdInterstitialType: AnyObject {
     var isReady: Bool { get }
     func load()
     func show(for viewController: UIViewController)
     func stopLoading()
 }
 
-final class SwiftyInterstitialAd: NSObject {
+final class SwiftyAdInterstitial: NSObject {
 
     // MARK: - Properties
     
@@ -39,13 +39,15 @@ final class SwiftyInterstitialAd: NSObject {
     }
 }
 
-extension SwiftyInterstitialAd: SwiftyInterstitialAdType {
+// MARK: - SwiftyAdInterstitialType
+
+extension SwiftyAdInterstitial: SwiftyAdInterstitialType {
     
     /// Check if interstitial video is ready (e.g to show alternative ad like an in house ad)
     /// Will try to reload an ad if it returns false.
     var isReady: Bool {
         guard interstitial?.isReady == true else {
-            print("AdMob interstitial ad is not ready, reloading...")
+            print("SwiftyInterstitialAd ad is not ready, reloading...")
             load()
             return false
         }
@@ -70,10 +72,10 @@ extension SwiftyInterstitialAd: SwiftyInterstitialAdType {
 
 // MARK: - GADInterstitialDelegate
 
-extension SwiftyInterstitialAd: GADInterstitialDelegate {
+extension SwiftyAdInterstitial: GADInterstitialDelegate {
     
     func interstitialDidReceiveAd(_ ad: GADInterstitial) {
-        print("AdMob interstitial did receive ad from: \(ad.responseInfo?.adNetworkClassName ?? "")")
+        print("SwiftyInterstitialAd did receive ad from: \(ad.responseInfo?.adNetworkClassName ?? "")")
     }
     
     func interstitialWillPresentScreen(_ ad: GADInterstitial) {
