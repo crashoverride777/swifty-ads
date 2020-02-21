@@ -11,20 +11,6 @@
 		6A68A75323FF589C0030374F /* SwiftyBannerAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A68A75223FF589C0030374F /* SwiftyBannerAd.swift */; };
 		6A68A75723FF5B3A0030374F /* SwiftyInterstitialAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A68A75623FF5B3A0030374F /* SwiftyInterstitialAd.swift */; };
 		6A68A75923FF5B450030374F /* SwiftyRewardedAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A68A75823FF5B450030374F /* SwiftyRewardedAd.swift */; };
-		6AE20580229741A200A4E4AD /* GoogleAppMeasurement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE2057C229741A200A4E4AD /* GoogleAppMeasurement.framework */; };
-		6AE20581229741A200A4E4AD /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE2057D229741A200A4E4AD /* GoogleUtilities.framework */; };
-		6AE20582229741A200A4E4AD /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE2057E229741A200A4E4AD /* nanopb.framework */; };
-		6AE20583229741A200A4E4AD /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE2057F229741A200A4E4AD /* GoogleMobileAds.framework */; };
-		6AE205BD229743DD00A4E4AD /* PersonalizedAdConsent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AE205BC229743D600A4E4AD /* PersonalizedAdConsent.framework */; };
-		6AE205C62297454800A4E4AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE205C52297454800A4E4AD /* AppDelegate.swift */; };
-		6AE205C82297454800A4E4AD /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 6AE205C72297454800A4E4AD /* GameScene.sks */; };
-		6AE205CC2297454800A4E4AD /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE205CB2297454800A4E4AD /* GameScene.swift */; };
-		6AE205CE2297454800A4E4AD /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE205CD2297454800A4E4AD /* GameViewController.swift */; };
-		6AE205D12297454800A4E4AD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AE205CF2297454800A4E4AD /* Main.storyboard */; };
-		6AE205D32297454800A4E4AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6AE205D22297454800A4E4AD /* Assets.xcassets */; };
-		6AE205D62297454800A4E4AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AE205D42297454800A4E4AD /* LaunchScreen.storyboard */; };
-		6AE205DC229745AD00A4E4AD /* SwiftyAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4C1B128204C298500452094 /* SwiftyAd.framework */; };
-		6AE205DE229745EF00A4E4AD /* SwiftyAd.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B4C1B128204C298500452094 /* SwiftyAd.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6AE2060C229766B300A4E4AD /* IntervalTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE2060B229766B300A4E4AD /* IntervalTracker.swift */; };
 		6AE481CE2294B3140063B22F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6AE481D02294B3140063B22F /* Localizable.strings */; };
 		6AE482F12294B75C0063B22F /* LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F02294B75C0063B22F /* LocalizedString.swift */; };
@@ -32,62 +18,14 @@
 		6AE482F52294B7660063B22F /* SwiftyAdConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F32294B7660063B22F /* SwiftyAdConsentManager.swift */; };
 		6AE482F72294B76D0063B22F /* ConsentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F62294B76D0063B22F /* ConsentConfiguration.swift */; };
 		6AE482F92294B7740063B22F /* AdConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F82294B7740063B22F /* AdConfiguration.swift */; };
-		84C139556193A2C891388F30 /* Pods_SwiftyAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0ACDEC06398AB1664F611AE /* Pods_SwiftyAd.framework */; };
 		B4C1B12D204C298500452094 /* SwiftyAd.h in Headers */ = {isa = PBXBuildFile; fileRef = B4C1B12B204C298500452094 /* SwiftyAd.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		6AE205BB229743D600A4E4AD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6AE205B7229743D600A4E4AD /* PersonalizedAdConsent.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5A92D29F2076961800FFE51D;
-			remoteInfo = PersonalizedAdConsent;
-		};
-		6AE205DF229745EF00A4E4AD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B4C1B11F204C298500452094 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B4C1B127204C298500452094;
-			remoteInfo = SwiftyAd;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		6AE205E1229745EF00A4E4AD /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				6AE205DE229745EF00A4E4AD /* SwiftyAd.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		1CD6D3A1DA6C2F06685D78D4 /* Pods-SwiftyAd.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAd.release.xcconfig"; path = "Target Support Files/Pods-SwiftyAd/Pods-SwiftyAd.release.xcconfig"; sourceTree = "<group>"; };
-		5C289CAD6C92D2284D966AE7 /* Pods-SwiftyAd.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAd.debug.xcconfig"; path = "Target Support Files/Pods-SwiftyAd/Pods-SwiftyAd.debug.xcconfig"; sourceTree = "<group>"; };
 		6A68A74D23FF52AD0030374F /* RequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBuilder.swift; sourceTree = "<group>"; };
 		6A68A75223FF589C0030374F /* SwiftyBannerAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBannerAd.swift; sourceTree = "<group>"; };
 		6A68A75623FF5B3A0030374F /* SwiftyInterstitialAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyInterstitialAd.swift; sourceTree = "<group>"; };
 		6A68A75823FF5B450030374F /* SwiftyRewardedAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyRewardedAd.swift; sourceTree = "<group>"; };
-		6AE2057C229741A200A4E4AD /* GoogleAppMeasurement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppMeasurement.framework; sourceTree = "<group>"; };
-		6AE2057D229741A200A4E4AD /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleUtilities.framework; sourceTree = "<group>"; };
-		6AE2057E229741A200A4E4AD /* nanopb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = nanopb.framework; sourceTree = "<group>"; };
-		6AE2057F229741A200A4E4AD /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
-		6AE205B7229743D600A4E4AD /* PersonalizedAdConsent.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PersonalizedAdConsent.xcodeproj; path = "googleads-consent-sdk-ios-master/PersonalizedAdConsent/PersonalizedAdConsent.xcodeproj"; sourceTree = "<group>"; };
-		6AE205C32297454700A4E4AD /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		6AE205C52297454800A4E4AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6AE205C72297454800A4E4AD /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		6AE205CB2297454800A4E4AD /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		6AE205CD2297454800A4E4AD /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
-		6AE205D02297454800A4E4AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		6AE205D22297454800A4E4AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		6AE205D52297454800A4E4AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		6AE205D72297454800A4E4AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6AE205E22297482900A4E4AD /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6AE205E32297485000A4E4AD /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6AE205E42297485C00A4E4AD /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -101,43 +39,19 @@
 		B4C1B128204C298500452094 /* SwiftyAd.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyAd.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4C1B12B204C298500452094 /* SwiftyAd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyAd.h; sourceTree = "<group>"; };
 		B4C1B12C204C298500452094 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E0ACDEC06398AB1664F611AE /* Pods_SwiftyAd.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAd.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		6AE205C02297454700A4E4AD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6AE205DC229745AD00A4E4AD /* SwiftyAd.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B4C1B124204C298500452094 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6AE205BD229743DD00A4E4AD /* PersonalizedAdConsent.framework in Frameworks */,
-				6AE20581229741A200A4E4AD /* GoogleUtilities.framework in Frameworks */,
-				6AE20582229741A200A4E4AD /* nanopb.framework in Frameworks */,
-				6AE20583229741A200A4E4AD /* GoogleMobileAds.framework in Frameworks */,
-				6AE20580229741A200A4E4AD /* GoogleAppMeasurement.framework in Frameworks */,
-				84C139556193A2C891388F30 /* Pods_SwiftyAd.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		650B29D619BC15A94A9957CF /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				5C289CAD6C92D2284D966AE7 /* Pods-SwiftyAd.debug.xcconfig */,
-				1CD6D3A1DA6C2F06685D78D4 /* Pods-SwiftyAd.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		6A68A75C23FF69840030374F /* Internal */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,42 +81,6 @@
 			path = Public;
 			sourceTree = "<group>";
 		};
-		6AE2057A2297417D00A4E4AD /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				6AE205B7229743D600A4E4AD /* PersonalizedAdConsent.xcodeproj */,
-				6AE2057C229741A200A4E4AD /* GoogleAppMeasurement.framework */,
-				6AE2057D229741A200A4E4AD /* GoogleUtilities.framework */,
-				6AE2057E229741A200A4E4AD /* nanopb.framework */,
-				6AE2057F229741A200A4E4AD /* GoogleMobileAds.framework */,
-				E0ACDEC06398AB1664F611AE /* Pods_SwiftyAd.framework */,
-			);
-			path = Frameworks;
-			sourceTree = "<group>";
-		};
-		6AE205B8229743D600A4E4AD /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				6AE205BC229743D600A4E4AD /* PersonalizedAdConsent.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		6AE205C42297454800A4E4AD /* Example */ = {
-			isa = PBXGroup;
-			children = (
-				6AE205C52297454800A4E4AD /* AppDelegate.swift */,
-				6AE205C72297454800A4E4AD /* GameScene.sks */,
-				6AE205CB2297454800A4E4AD /* GameScene.swift */,
-				6AE205CD2297454800A4E4AD /* GameViewController.swift */,
-				6AE205CF2297454800A4E4AD /* Main.storyboard */,
-				6AE205D22297454800A4E4AD /* Assets.xcassets */,
-				6AE205D42297454800A4E4AD /* LaunchScreen.storyboard */,
-				6AE205D72297454800A4E4AD /* Info.plist */,
-			);
-			path = Example;
-			sourceTree = "<group>";
-		};
 		6AE20610229769AF00A4E4AD /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -227,10 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				B4C1B12A204C298500452094 /* SwiftyAd */,
-				6AE205C42297454800A4E4AD /* Example */,
-				6AE2057A2297417D00A4E4AD /* Frameworks */,
 				B4C1B129204C298500452094 /* Products */,
-				650B29D619BC15A94A9957CF /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -238,7 +113,6 @@
 			isa = PBXGroup;
 			children = (
 				B4C1B128204C298500452094 /* SwiftyAd.framework */,
-				6AE205C32297454700A4E4AD /* Example.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -268,30 +142,10 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		6AE205C22297454700A4E4AD /* Example */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6AE205DB2297454800A4E4AD /* Build configuration list for PBXNativeTarget "Example" */;
-			buildPhases = (
-				6AE205BF2297454700A4E4AD /* Sources */,
-				6AE205C02297454700A4E4AD /* Frameworks */,
-				6AE205C12297454700A4E4AD /* Resources */,
-				6AE205E1229745EF00A4E4AD /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				6AE205E0229745EF00A4E4AD /* PBXTargetDependency */,
-			);
-			name = Example;
-			productName = Example;
-			productReference = 6AE205C32297454700A4E4AD /* Example.app */;
-			productType = "com.apple.product-type.application";
-		};
 		B4C1B127204C298500452094 /* SwiftyAd */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B4C1B130204C298500452094 /* Build configuration list for PBXNativeTarget "SwiftyAd" */;
 			buildPhases = (
-				114665AC0513B0875C3C8DBC /* [CP] Check Pods Manifest.lock */,
 				B4C1B123204C298500452094 /* Sources */,
 				B4C1B124204C298500452094 /* Frameworks */,
 				B4C1B125204C298500452094 /* Headers */,
@@ -316,10 +170,6 @@
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = Dominik;
 				TargetAttributes = {
-					6AE205C22297454700A4E4AD = {
-						CreatedOnToolsVersion = 10.2.1;
-						ProvisioningStyle = Automatic;
-					};
 					B4C1B127204C298500452094 = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 1020;
@@ -341,42 +191,14 @@
 			mainGroup = B4C1B11E204C298500452094;
 			productRefGroup = B4C1B129204C298500452094 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 6AE205B8229743D600A4E4AD /* Products */;
-					ProjectRef = 6AE205B7229743D600A4E4AD /* PersonalizedAdConsent.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				B4C1B127204C298500452094 /* SwiftyAd */,
-				6AE205C22297454700A4E4AD /* Example */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXReferenceProxy section */
-		6AE205BC229743D600A4E4AD /* PersonalizedAdConsent.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = PersonalizedAdConsent.framework;
-			remoteRef = 6AE205BB229743D600A4E4AD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
-
 /* Begin PBXResourcesBuildPhase section */
-		6AE205C12297454700A4E4AD /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6AE205D12297454800A4E4AD /* Main.storyboard in Resources */,
-				6AE205C82297454800A4E4AD /* GameScene.sks in Resources */,
-				6AE205D32297454800A4E4AD /* Assets.xcassets in Resources */,
-				6AE205D62297454800A4E4AD /* LaunchScreen.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B4C1B126204C298500452094 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -387,42 +209,7 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		114665AC0513B0875C3C8DBC /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SwiftyAd-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		6AE205BF2297454700A4E4AD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6AE205CC2297454800A4E4AD /* GameScene.swift in Sources */,
-				6AE205CE2297454800A4E4AD /* GameViewController.swift in Sources */,
-				6AE205C62297454800A4E4AD /* AppDelegate.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B4C1B123204C298500452094 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -442,31 +229,7 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		6AE205E0229745EF00A4E4AD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B4C1B127204C298500452094 /* SwiftyAd */;
-			targetProxy = 6AE205DF229745EF00A4E4AD /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin PBXVariantGroup section */
-		6AE205CF2297454800A4E4AD /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6AE205D02297454800A4E4AD /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		6AE205D42297454800A4E4AD /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6AE205D52297454800A4E4AD /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
 		6AE481D02294B3140063B22F /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -481,45 +244,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		6AE205D82297454800A4E4AD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DK88YZ475Z;
-				INFOPLIST_FILE = Example/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dominik.Example;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		6AE205D92297454800A4E4AD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DK88YZ475Z;
-				INFOPLIST_FILE = Example/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dominik.Example;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		B4C1B12E204C298500452094 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -643,7 +367,6 @@
 		};
 		B4C1B131204C298500452094 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5C289CAD6C92D2284D966AE7 /* Pods-SwiftyAd.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -672,7 +395,6 @@
 		};
 		B4C1B132204C298500452094 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1CD6D3A1DA6C2F06685D78D4 /* Pods-SwiftyAd.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -701,15 +423,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6AE205DB2297454800A4E4AD /* Build configuration list for PBXNativeTarget "Example" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6AE205D82297454800A4E4AD /* Debug */,
-				6AE205D92297454800A4E4AD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		B4C1B122204C298500452094 /* Build configuration list for PBXProject "SwiftyAd" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
