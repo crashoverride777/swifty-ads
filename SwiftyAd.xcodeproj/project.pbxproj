@@ -52,6 +52,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6A4285F724005F560035487A /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				6A68A75C23FF69840030374F /* Internal */,
+				6A68DA6523FF69B50006F655 /* Public */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
 		6A68A75C23FF69840030374F /* Internal */ = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +113,7 @@
 		B4C1B11E204C298500452094 = {
 			isa = PBXGroup;
 			children = (
+				6A4285F724005F560035487A /* Source */,
 				B4C1B12A204C298500452094 /* SwiftyAd */,
 				B4C1B129204C298500452094 /* Products */,
 			);
@@ -120,8 +130,6 @@
 		B4C1B12A204C298500452094 /* SwiftyAd */ = {
 			isa = PBXGroup;
 			children = (
-				6A68A75C23FF69840030374F /* Internal */,
-				6A68DA6523FF69B50006F655 /* Public */,
 				B4C1B12B204C298500452094 /* SwiftyAd.h */,
 				B4C1B12C204C298500452094 /* Info.plist */,
 			);
