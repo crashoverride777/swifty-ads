@@ -22,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6A38EBA72401916500E645A0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		6A428652240084C00035487A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6A428653240084C00035487A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6A428654240084C00035487A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -122,6 +123,7 @@
 		B4C1B11E204C298500452094 = {
 			isa = PBXGroup;
 			children = (
+				6A38EBA72401916500E645A0 /* README.md */,
 				6A4285F724005F560035487A /* Source */,
 				B4C1B12A204C298500452094 /* SwiftyAd */,
 				B4C1B129204C298500452094 /* Products */,

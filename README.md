@@ -9,7 +9,7 @@ This helper follows all the best practices in regards to ads, like creating shar
 
 ## Requirements
 
-- iOS 9.3+
+- iOS 11.4+
 - Swift 5.0+
 
 ## GDPR in EEA (European Economic Area)
@@ -64,13 +64,7 @@ There is now an [app](https://cocoapods.org/app) which makes handling pods much 
 
 ### Step 3: 
 
-Copy the following files into your project.
-
-```swift
-SwiftyAd.swift
-SwiftyAdConsentManager.swift
-SwiftyAd.plist
-```
+Copy the `source`` folder and its containing files into your project.
 
 ### Step 4:
 
