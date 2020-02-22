@@ -43,38 +43,36 @@ You should not show real ads when you are testing your app. In the past Google h
 
 With the latest xCode it is no longer necessary to setup the DEBUG flag manually.
 
-## Installation
+## Create AdMob account
 
 https://developers.google.com/ad-manager/mobile-ads-sdk/ios/quick-start
 
-### Step 1: 
-
 Sign up for a Google [AdMob account](https://support.google.com/admob/answer/3052638?hl=en-GB&ref_topic=3052726) and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
 
-### Step 2: 
+## Installation
 
-[CocoaPods](https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods) is a dependency manager for Cocoa projects. Simply install the pod by adding the following line to your pod file
+### Cocoa Pods
+
+[CocoaPods](https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods) is a dependency manager for Cocoa projects. 
+Simply install the pod by adding the following line to your pod file
 
 ```swift
-pod 'Google-Mobile-Ads-SDK'
-pod 'PersonalizedAdConsent'
+pod 'SwiftyAds'
 ```
 
-There is now an [app](https://cocoapods.org/app) which makes handling pods much easier
+### Manually 
 
-### Step 3: 
+Altenatively you can drag the `Source` folder and its containing files into your project.
 
-Copy the `source` folder and its containing files into your project.
-
-### Step 4: 
-
-Create a new `.plist` file called SwiftyAd or copy the provided one in the sample project and update with your values
-
-### Step 5:
+## Update Info.plist: 
 
 Add a new entry in your apps info.plist called `GADIsAdManagerApp` (String) with a value of `YES` when using SDK 7.42 or higher
 
 https://developers.google.com/ad-manager/mobile-ads-sdk/ios/quick-start#update_your_infoplist
+
+## Add SwiftyAds.plist
+
+Create a new `SwiftyAds.plist` file like the demo project one and update with your app ids and settings
 
 ## Usage
 
