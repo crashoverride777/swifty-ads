@@ -100,7 +100,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
              handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
         consentInformation.requestConsentInfoUpdate(forPublisherIdentifiers: ids) { (_ error) in
             if let error = error {
-                print("SwiftyAdConsentManager error requesting consent info update: \(error)")
+                print("SwiftyAdsConsentManager error requesting consent info update: \(error)")
                 handler(self.status)
                 return
             }
@@ -109,11 +109,11 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
             if skipIfAlreadyAuthorized {
                 switch self.consentInformation.consentStatus {
                 case .personalized:
-                    print("SwiftyAdConsentManager already has consent permission, no need to ask again")
+                    print("SwiftyAdsConsentManager already has consent permission, no need to ask again")
                     handler(self.status)
                     return
                 case .nonPersonalized:
-                    print("SwiftyAdConsentManager already has consent permission, no need to ask again")
+                    print("SwiftyAdsConsentManager already has consent permission, no need to ask again")
                     handler(self.status)
                     return
                 case .unknown:
@@ -125,7 +125,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
             
             // We only need to ask for consent if we are in the EEA
             guard self.consentInformation.isRequestLocationInEEAOrUnknown else {
-                print("SwiftyAdConsentManager not in EU, no need to handle consent logic")
+                print("SwiftyAdsConsentManager not in EU, no need to handle consent logic")
                 self.consentInformation.consentStatus = .personalized
                 handler(.personalized)
                 return
@@ -134,7 +134,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
             // We also do not need to ask for consent if under age is turned on because than all add requests have to be non-personalized
             guard !self.isTaggedForUnderAgeOfConsent else {
                 self.consentInformation.consentStatus = .nonPersonalized
-                print("SwiftyAdConsentManager under age, no need to handle consent logic as it must be non-personalized")
+                print("SwiftyAdsConsentManager under age, no need to handle consent logic as it must be non-personalized")
                 handler(.nonPersonalized)
                 return
             }
@@ -157,14 +157,14 @@ private extension SwiftyAdsConsentManager {
                                 handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
         // Make sure we have a valid privacy policy url
         guard let url = URL(string: configuration.privacyPolicyURL) else {
-            print("SwiftyAdConsentManager invalid privacy policy URL")
+            print("SwiftyAdsConsentManager invalid privacy policy URL")
             handler(status)
             return
         }
         
         // Make sure we have a valid consent form
         guard let form = PACConsentForm(applicationPrivacyPolicyURL: url) else {
-            print("SwiftyAdConsentManager PACConsentForm nil")
+            print("SwiftyAdsConsentManager PACConsentForm nil")
             handler(status)
             return
         }
@@ -177,7 +177,7 @@ private extension SwiftyAdsConsentManager {
         // Load form
         form.load { (_ error) in
             if let error = error {
-                print("SwiftyAdConsentManager error loading consent form: \(error)")
+                print("SwiftyAdsConsentManager error loading consent form: \(error)")
                 handler(self.status)
                 return
             }
@@ -185,7 +185,7 @@ private extension SwiftyAdsConsentManager {
             // Loaded successfully, present it
             form.present(from: viewController) { (error, prefersAdFree) in
                 if let error = error {
-                    print("SwiftyAdConsentManager error presenting consent form: \(error)")
+                    print("SwiftyAdsConsentManager error presenting consent form: \(error)")
                     handler(self.status)
                     return
                 }
