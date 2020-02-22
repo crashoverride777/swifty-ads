@@ -3,11 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4E0CC0AEDAF0675E52A92C28 /* Pods_SwiftyAdDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC82E60981EE6BA6FE8A69F /* Pods_SwiftyAdDemo.framework */; };
+		6A38EC072401A0BF00E645A0 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A38EC022401A0BD00E645A0 /* GoogleMobileAds.framework */; };
+		6A38EC082401A0BF00E645A0 /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A38EC032401A0BD00E645A0 /* nanopb.framework */; };
+		6A38EC092401A0BF00E645A0 /* GoogleAppMeasurement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A38EC042401A0BE00E645A0 /* GoogleAppMeasurement.framework */; };
+		6A38EC0A2401A0BF00E645A0 /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A38EC052401A0BE00E645A0 /* GoogleUtilities.framework */; };
+		6A38EC0B2401A0BF00E645A0 /* PersonalizedAdConsent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A38EC062401A0BF00E645A0 /* PersonalizedAdConsent.framework */; };
 		6A4286052400609E0035487A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4286042400609E0035487A /* AppDelegate.swift */; };
 		6A4286102400609E0035487A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A42860E2400609E0035487A /* Main.storyboard */; };
 		6A428612240060A00035487A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A428611240060A00035487A /* Assets.xcassets */; };
@@ -29,9 +33,25 @@
 		6A4286982400856A0035487A /* SwiftyAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A42868D240085690035487A /* SwiftyAd.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		6A38EBBA24019D1B00E645A0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		497CF2E91E89C5D421FFA62C /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
-		6A0AF8EC68B7081EF2470DD9 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
+		6A38EC022401A0BD00E645A0 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
+		6A38EC032401A0BD00E645A0 /* nanopb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = nanopb.framework; sourceTree = "<group>"; };
+		6A38EC042401A0BE00E645A0 /* GoogleAppMeasurement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppMeasurement.framework; sourceTree = "<group>"; };
+		6A38EC052401A0BE00E645A0 /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleUtilities.framework; sourceTree = "<group>"; };
+		6A38EC062401A0BF00E645A0 /* PersonalizedAdConsent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PersonalizedAdConsent.framework; sourceTree = "<group>"; };
 		6A4286012400609E0035487A /* SwiftyAdDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyAdDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A4286042400609E0035487A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6A42860F2400609E0035487A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -56,9 +76,6 @@
 		6A42868A240085690035487A /* SwiftyAdRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdRequestBuilder.swift; sourceTree = "<group>"; };
 		6A42868B240085690035487A /* SwiftyAdIntervalTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdIntervalTracker.swift; sourceTree = "<group>"; };
 		6A42868D240085690035487A /* SwiftyAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAd.swift; sourceTree = "<group>"; };
-		6AA553F027D0AFBD3515B1AD /* Pods-SwiftyAdDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdDemo.release.xcconfig"; path = "Target Support Files/Pods-SwiftyAdDemo/Pods-SwiftyAdDemo.release.xcconfig"; sourceTree = "<group>"; };
-		BFC82E60981EE6BA6FE8A69F /* Pods_SwiftyAdDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAdDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EC0418F0830125C3E2521003 /* Pods-SwiftyAdDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdDemo.debug.xcconfig"; path = "Target Support Files/Pods-SwiftyAdDemo/Pods-SwiftyAdDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,31 +83,35 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E0CC0AEDAF0675E52A92C28 /* Pods_SwiftyAdDemo.framework in Frameworks */,
+				6A38EC082401A0BF00E645A0 /* nanopb.framework in Frameworks */,
+				6A38EC072401A0BF00E645A0 /* GoogleMobileAds.framework in Frameworks */,
+				6A38EC0A2401A0BF00E645A0 /* GoogleUtilities.framework in Frameworks */,
+				6A38EC092401A0BF00E645A0 /* GoogleAppMeasurement.framework in Frameworks */,
+				6A38EC0B2401A0BF00E645A0 /* PersonalizedAdConsent.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		60E4D4A4C5B5E070F6DF97DA /* Pods */ = {
+		6A38EBBB24019DBD00E645A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				497CF2E91E89C5D421FFA62C /* Pods-Example.debug.xcconfig */,
-				6A0AF8EC68B7081EF2470DD9 /* Pods-Example.release.xcconfig */,
-				EC0418F0830125C3E2521003 /* Pods-SwiftyAdDemo.debug.xcconfig */,
-				6AA553F027D0AFBD3515B1AD /* Pods-SwiftyAdDemo.release.xcconfig */,
 			);
-			path = Pods;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		6A4285F82400609E0035487A = {
 			isa = PBXGroup;
 			children = (
+				6A38EC042401A0BE00E645A0 /* GoogleAppMeasurement.framework */,
+				6A38EC022401A0BD00E645A0 /* GoogleMobileAds.framework */,
+				6A38EC052401A0BE00E645A0 /* GoogleUtilities.framework */,
+				6A38EC032401A0BD00E645A0 /* nanopb.framework */,
+				6A38EC062401A0BF00E645A0 /* PersonalizedAdConsent.framework */,
 				6A4286032400609E0035487A /* SwiftyAdDemo */,
 				6A4286022400609E0035487A /* Products */,
-				60E4D4A4C5B5E070F6DF97DA /* Pods */,
-				82F2E159D6DE685ABF9E4B1A /* Frameworks */,
+				6A38EBBB24019DBD00E645A0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -186,14 +207,6 @@
 			path = Public;
 			sourceTree = "<group>";
 		};
-		82F2E159D6DE685ABF9E4B1A /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BFC82E60981EE6BA6FE8A69F /* Pods_SwiftyAdDemo.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -201,11 +214,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6A428619240060A00035487A /* Build configuration list for PBXNativeTarget "SwiftyAdDemo" */;
 			buildPhases = (
-				15AE2D149F6EC1F80742D6FC /* [CP] Check Pods Manifest.lock */,
 				6A4285FD2400609E0035487A /* Sources */,
 				6A4285FE2400609E0035487A /* Frameworks */,
 				6A4285FF2400609E0035487A /* Resources */,
-				6FCD77C439A3AA903805B7BE /* [CP] Embed Pods Frameworks */,
+				6A38EBBA24019D1B00E645A0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -267,48 +279,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		15AE2D149F6EC1F80742D6FC /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SwiftyAdDemo-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6FCD77C439A3AA903805B7BE /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SwiftyAdDemo/Pods-SwiftyAdDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SwiftyAdDemo/Pods-SwiftyAdDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SwiftyAdDemo/Pods-SwiftyAdDemo-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6A4285FD2400609E0035487A /* Sources */ = {
@@ -482,11 +452,17 @@
 		};
 		6A42861A240060A00035487A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EC0418F0830125C3E2521003 /* Pods-SwiftyAdDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DK88YZ475Z;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks/GoogleMobileAdsSdkiOS-7.55.1",
+					"$(PROJECT_DIR)/Frameworks",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/SDKs",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAdDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -501,11 +477,17 @@
 		};
 		6A42861B240060A00035487A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6AA553F027D0AFBD3515B1AD /* Pods-SwiftyAdDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DK88YZ475Z;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks/GoogleMobileAdsSdkiOS-7.55.1",
+					"$(PROJECT_DIR)/Frameworks",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/SDKs",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAdDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
