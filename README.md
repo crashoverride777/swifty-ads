@@ -49,23 +49,23 @@ pod 'SwiftyAds'
 
 Altenatively you can drag the `Source` folder and its containing files into your project.
 
-## Update Info.plist: 
+## Usage
+
+Note: SwifyAds will always display test app when testing in debug mode.
+
+### Update Info.plist: 
 
 Add a new entry in your apps info.plist called `GADIsAdManagerApp` (String) with a value of `YES` when using SDK 7.42 or higher
 
 https://developers.google.com/ad-manager/mobile-ads-sdk/ios/quick-start#update_your_infoplist
 
-## Add SwiftyAds.plist
+### Add SwiftyAds.plist
 
 Create a new `SwiftyAds.plist` file like in the demo project  and update with your ad ids and settings
 
-## Usage
-
-Note: SwifyAds will always display test app when testing in debug mode.
-
 ### Setup 
 
-Enter your ad settings into the SwiftyAd.plist file you added to your project. Than call the setup method as soon as your app launches. 
+Call the setup method as soon as your app launches. 
 
 View Controller
 ```swift
