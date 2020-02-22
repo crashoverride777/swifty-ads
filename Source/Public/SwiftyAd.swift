@@ -155,7 +155,7 @@ public final class SwiftyAd: NSObject {
         #if DEBUG
         let configuration: SwiftyAdConfiguration = .debug
         #else
-        let configuration: AdConfiguration = .propertyList
+        let configuration: SwiftyAdConfiguration = .propertyList
         #endif
         let consentManager = SwiftyAdConsentManager(
             ids: configuration.ids,
