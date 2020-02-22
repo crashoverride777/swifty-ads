@@ -15,15 +15,7 @@ This helper follows all the best practices in regards to ads, like creating shar
 
 ## GDPR in EEA (European Economic Area)
 
-Please [READ](https://developers.google.com/admob/ios/eu-consent#collect_consent)
-
-As of version 9.0 this helper supports full GDPR support via a new class called `SwiftyAdConsentManager`. It can show the default google consent form or a custom consent form.
-
-NOTE: To show the google consent form please read the instructions above, mainly you have to set your ad technology providers in your AdMob console to manual and not recommended.
-
-The custom consent form is only supported in English, please add your own languages to the String extension in both .swift files.
-
-It is also required that the user has the option to change their GDPR consent settings at anytime, usually via a button in the apps settings menu.
+[READ](https://developers.google.com/admob/ios/eu-consent#collect_consent)
 
 ## Mediation
 
@@ -65,7 +57,7 @@ https://developers.google.com/ad-manager/mobile-ads-sdk/ios/quick-start#update_y
 
 ## Add SwiftyAds.plist
 
-Create a new `SwiftyAds.plist` file like the demo project one and update with your app ids and settings
+Create a new `SwiftyAds.plist` file like in the demo project  and update with your ad ids and settings
 
 ## Usage
 
