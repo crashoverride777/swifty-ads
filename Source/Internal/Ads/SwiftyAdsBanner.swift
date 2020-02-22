@@ -22,13 +22,13 @@
 
 import GoogleMobileAds
 
-protocol SwiftyAdBannerType: AnyObject {
+protocol SwiftyAdsBannerType: AnyObject {
     func show(from viewController: UIViewController)
     func remove()
     func updateAnimationDuration(to duration: TimeInterval)
 }
 
-final class SwiftyAdBanner: NSObject {
+final class SwiftyAdsBanner: NSObject {
     
     // MARK: - Properties
     
@@ -65,7 +65,7 @@ final class SwiftyAdBanner: NSObject {
  
 // MARK: - SwiftyAdBannerType
 
-extension SwiftyAdBanner: SwiftyAdBannerType {
+extension SwiftyAdsBanner: SwiftyAdsBannerType {
     
     func show(from viewController: UIViewController) {
         // Remove old banners
@@ -113,7 +113,7 @@ extension SwiftyAdBanner: SwiftyAdBannerType {
 
 // MARK: - GADBannerViewDelegate
 
-extension SwiftyAdBanner: GADBannerViewDelegate {
+extension SwiftyAdsBanner: GADBannerViewDelegate {
     
     func adViewDidReceiveAd(_ bannerView: GADBannerView) {
         print("SwiftyBannerAd did receive ad from: \(bannerView.responseInfo?.adNetworkClassName ?? "")")
@@ -144,7 +144,7 @@ extension SwiftyAdBanner: GADBannerViewDelegate {
 
 // MARK: - Private Methods
 
-private extension SwiftyAdBanner {
+private extension SwiftyAdsBanner {
     
     @objc func deviceRotated() {
         bannerView?.adSize = UIDevice.current.orientation.isLandscape ? kGADAdSizeSmartBannerLandscape : kGADAdSizeSmartBannerPortrait

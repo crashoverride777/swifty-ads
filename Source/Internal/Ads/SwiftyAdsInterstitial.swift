@@ -22,14 +22,14 @@
 
 import GoogleMobileAds
 
-protocol SwiftyAdInterstitialType: AnyObject {
+protocol SwiftyAdsInterstitialType: AnyObject {
     var isReady: Bool { get }
     func load()
     func show(for viewController: UIViewController)
     func stopLoading()
 }
 
-final class SwiftyAdInterstitial: NSObject {
+final class SwiftyAdsInterstitial: NSObject {
 
     // MARK: - Properties
     
@@ -55,7 +55,7 @@ final class SwiftyAdInterstitial: NSObject {
 
 // MARK: - SwiftyAdInterstitialType
 
-extension SwiftyAdInterstitial: SwiftyAdInterstitialType {
+extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
     
     /// Check if interstitial video is ready (e.g to show alternative ad like an in house ad)
     /// Will try to reload an ad if it returns false.
@@ -86,7 +86,7 @@ extension SwiftyAdInterstitial: SwiftyAdInterstitialType {
 
 // MARK: - GADInterstitialDelegate
 
-extension SwiftyAdInterstitial: GADInterstitialDelegate {
+extension SwiftyAdsInterstitial: GADInterstitialDelegate {
     
     func interstitialDidReceiveAd(_ ad: GADInterstitial) {
         print("SwiftyInterstitialAd did receive ad from: \(ad.responseInfo?.adNetworkClassName ?? "")")

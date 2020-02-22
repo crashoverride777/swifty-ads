@@ -22,7 +22,7 @@
 
 import Foundation
 
-enum SwiftyAdLocalizedString {
+enum SwiftyAdsLocalizedString {
     static let sorry = localized("Sorry", comment: "Sorry")
     static let ok = localized("Ok", comment: "Ok")
     static let noVideo = localized("NoVideo", comment: "No video available to watch at the moment.")
@@ -39,7 +39,7 @@ enum SwiftyAdLocalizedString {
 
 // MARK: - Get Localized String
 
-private extension SwiftyAdLocalizedString {
+private extension SwiftyAdsLocalizedString {
     
     static func localized(_ text: String, comment: String, argument: CVarArg? = nil, argument2: CVarArg? = nil) -> String {
         return NSLocalizedString(text, tableName: nil, bundle: Bundle(for: SwiftyAds.self), value: "", comment: comment)

@@ -23,11 +23,11 @@
 import Foundation
 import GoogleMobileAds
 
-protocol SwiftyAdRequestBuilderType: AnyObject {
+protocol SwiftyAdsRequestBuilderType: AnyObject {
     func build() -> GADRequest
 }
 
-final class SwiftyAdRequestBuilder {
+final class SwiftyAdsRequestBuilder {
     
     // MARK: - Properties
     
@@ -52,9 +52,9 @@ final class SwiftyAdRequestBuilder {
     }
 }
 
-// MARK: - RequestBuilderType
+// MARK: - SwiftyAdsRequestBuilderType
 
-extension SwiftyAdRequestBuilder: SwiftyAdRequestBuilderType {
+extension SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
   
     func build() -> GADRequest {
         let request = GADRequest()
@@ -68,7 +68,7 @@ extension SwiftyAdRequestBuilder: SwiftyAdRequestBuilderType {
 
 // MARK: - Private Methods
 
-private extension SwiftyAdRequestBuilder {
+private extension SwiftyAdsRequestBuilder {
     
     func addGDPRExtrasIfNeeded(for request: GADRequest) {
         guard isGDPRRequired else {

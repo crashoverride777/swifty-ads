@@ -22,13 +22,13 @@
 
 import GoogleMobileAds
 
-protocol SwiftyAdRewardedType: AnyObject {
+protocol SwiftyAdsRewardedType: AnyObject {
     var isReady: Bool { get }
     func load()
     func show(from viewController: UIViewController)
 }
 
-final class SwiftyAdRewarded: NSObject {
+final class SwiftyAdsRewarded: NSObject {
     
     // MARK: - Properties
     
@@ -57,7 +57,7 @@ final class SwiftyAdRewarded: NSObject {
 
 // MARK: - SwiftyAdRewardedType
 
-extension SwiftyAdRewarded: SwiftyAdRewardedType {
+extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
     
     var isReady: Bool {
         guard rewardedAd?.isReady == true else {
@@ -83,11 +83,11 @@ extension SwiftyAdRewarded: SwiftyAdRewardedType {
             rewardedAd?.present(fromRootViewController: viewController, delegate: self)
         } else {
             let alertController = UIAlertController(
-                title: SwiftyAdLocalizedString.sorry,
-                message: SwiftyAdLocalizedString.noVideo,
+                title: SwiftyAdsLocalizedString.sorry,
+                message: SwiftyAdsLocalizedString.noVideo,
                 preferredStyle: .alert
             )
-            alertController.addAction(UIAlertAction(title: SwiftyAdLocalizedString.ok, style: .cancel))
+            alertController.addAction(UIAlertAction(title: SwiftyAdsLocalizedString.ok, style: .cancel))
             viewController.present(alertController, animated: true)
         }
     }
@@ -95,7 +95,7 @@ extension SwiftyAdRewarded: SwiftyAdRewardedType {
 
 // MARK: - GADRewardedAdDelegate
 
-extension SwiftyAdRewarded: GADRewardedAdDelegate {
+extension SwiftyAdsRewarded: GADRewardedAdDelegate {
     
     func rewardedAdDidPresent(_ rewardedAd: GADRewardedAd) {
         print("AdMob reward based video did present ad from: \(rewardedAd.responseInfo?.adNetworkClassName ?? "")")

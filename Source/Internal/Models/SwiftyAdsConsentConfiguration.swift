@@ -22,28 +22,14 @@
 
 import Foundation
 
-protocol SwiftyAdIntervalTrackerType: AnyObject {
-    func canShow(forInterval interval: Int?) -> Bool
-}
-
-final class SwiftyAdIntervalTracker {
-    private var intervalCounter = 0
-}
-
-extension SwiftyAdIntervalTracker: SwiftyAdIntervalTrackerType {
+struct SwiftyAdsConsentConfiguration: Codable {
+    let privacyPolicyURL: String
+    let shouldOfferAdFree: Bool
+    let mediationNetworks: [String]
+    let isTaggedForUnderAgeOfConsent: Bool
+    let isCustomForm: Bool
     
-    func canShow(forInterval interval: Int?) -> Bool {
-        guard let interval = interval else {
-            return true
-        }
-        
-        intervalCounter += 1
-        
-        guard intervalCounter >= interval else {
-            return false
-        }
-        
-        intervalCounter = 0
-        return true
+    var mediationNetworksString: String {
+        return mediationNetworks.map({ $0 }).joined(separator: ", ")
     }
 }

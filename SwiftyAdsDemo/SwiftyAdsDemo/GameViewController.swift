@@ -66,20 +66,20 @@ class GameViewController: UIViewController {
 extension GameViewController: SwiftyAdsDelegate {
     
     func swiftyAdsDidOpen(_ swiftyAds: SwiftyAds) {
-        print("SwiftyAd did open")
+        print("SwiftyAds did open")
     }
     
     func swiftyAdsDidClose(_ swiftyAds: SwiftyAds) {
-        print("SwiftyAd did close")
+        print("SwiftyAds did close")
     }
     
-    func swiftyAds(_ swiftyAds: SwiftyAds, didChange consentStatus: SwiftyAdConsentStatus) {
-        print("SwiftyAd did change consent status to \(consentStatus)")
+    func swiftyAds(_ swiftyAds: SwiftyAds, didChange consentStatus: SwiftyAdsConsentStatus) {
+        print("SwiftyAds did change consent status to \(consentStatus)")
         // e.g update mediation networks
     }
     
     func swiftyAds(_ swiftyAds: SwiftyAds, didRewardUserWithAmount rewardAmount: Int) {
-        print("SwiftyAd did reward user with \(rewardAmount)")
+        print("SwiftyAds did reward user with \(rewardAmount)")
         
         if let scene = (view as? SKView)?.scene as? GameScene {
             scene.coins += rewardAmount

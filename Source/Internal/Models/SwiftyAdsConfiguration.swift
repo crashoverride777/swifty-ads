@@ -22,40 +22,40 @@
 
 import Foundation
 
-struct SwiftyAdConfiguration: Codable {
+struct SwiftyAdsConfiguration: Codable {
     let bannerAdUnitId: String
     let interstitialAdUnitId: String
     let rewardedVideoAdUnitId: String
-    let gdpr: SwiftyAdConsentConfiguration
+    let gdpr: SwiftyAdsConsentConfiguration
 
     var ids: [String] {
         return [bannerAdUnitId, interstitialAdUnitId, rewardedVideoAdUnitId].filter { !$0.isEmpty }
     }
 }
 
-extension SwiftyAdConfiguration {
+extension SwiftyAdsConfiguration {
     
-    static var propertyList: SwiftyAdConfiguration {
-        guard let configurationURL = Bundle.main.url(forResource: "SwiftyAd", withExtension: "plist") else {
-            print("SwiftyAd must have a valid property list")
-            fatalError("SwiftyAd must have a valid property list")
+    static var propertyList: SwiftyAdsConfiguration {
+        guard let configurationURL = Bundle.main.url(forResource: "SwiftyAds", withExtension: "plist") else {
+            print("SwiftyAds must have a valid property list")
+            fatalError("SwiftyAds must have a valid property list")
         }
         do {
             let data = try Data(contentsOf: configurationURL)
             let decoder = PropertyListDecoder()
-            return try decoder.decode(SwiftyAdConfiguration.self, from: data)
+            return try decoder.decode(SwiftyAdsConfiguration.self, from: data)
         } catch {
-            print("SwiftyAd must have a valid property list \(error)")
-            fatalError("SwiftyAd must have a valid property list")
+            print("SwiftyAds must have a valid property list \(error)")
+            fatalError("SwiftyAds must have a valid property list")
         }
     }
     
-    static var debug: SwiftyAdConfiguration {
-        return SwiftyAdConfiguration(
+    static var debug: SwiftyAdsConfiguration {
+        return SwiftyAdsConfiguration(
             bannerAdUnitId: "ca-app-pub-3940256099942544/2934735716",
             interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
             rewardedVideoAdUnitId: "ca-app-pub-3940256099942544/1712485313",
-            gdpr: SwiftyAdConsentConfiguration(
+            gdpr: SwiftyAdsConsentConfiguration(
                 privacyPolicyURL: "https://developers.google.com/admob/ios/eu-consent",
                 shouldOfferAdFree: false,
                 mediationNetworks: [],

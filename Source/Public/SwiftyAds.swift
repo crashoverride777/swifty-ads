@@ -22,21 +22,21 @@
 
 import GoogleMobileAds
 
-/// SwiftyAdDelegate
+/// SwiftyAdsDelegate
 public protocol SwiftyAdsDelegate: class {
-    /// SwiftyAd did open
+    /// SwiftyAds did open
     func swiftyAdsDidOpen(_ swiftyAds: SwiftyAds)
-    /// SwiftyAd did close
+    /// SwiftyAds did close
     func swiftyAdsDidClose(_ swiftyAds: SwiftyAds)
-    /// Did change consent status
-    func swiftyAds(_ swiftyAds: SwiftyAds, didChange consentStatus: SwiftyAdConsentStatus)
-    /// SwiftyAd did reward user
+    /// SwiftyAds did change consent status
+    func swiftyAds(_ swiftyAds: SwiftyAds, didChange consentStatus: SwiftyAdsConsentStatus)
+    /// SwiftyAds did reward user
     func swiftyAds(_ swiftyAds: SwiftyAds, didRewardUserWithAmount rewardAmount: Int)
 }
 
 /// A protocol for mediation implementations
 public protocol SwiftyAdsMediation: class {
-    func update(for consentType: SwiftyAdConsentStatus)
+    func update(for consentType: SwiftyAdsConsentStatus)
 }
 
 /// Swifty ad type
@@ -67,7 +67,7 @@ public final class SwiftyAds: NSObject {
     
     // MARK: - Static Properties
     
-    /// The shared instance of SwiftyAd using default non costumizable settings
+    /// The shared instance of SwiftyAds using default non costumizable settings
     public static let shared = SwiftyAds()
     
     // MARK: - Properties
@@ -76,8 +76,8 @@ public final class SwiftyAds: NSObject {
     public weak var delegate: SwiftyAdsDelegate?
     
     /// Ads
-    private lazy var banner: SwiftyAdBannerType = {
-        let ad = SwiftyAdBanner(
+    private lazy var banner: SwiftyAdsBannerType = {
+        let ad = SwiftyAdsBanner(
             adUnitId: configuration.bannerAdUnitId,
             notificationCenter: .default,
             request: ({ [unowned self] in
@@ -95,8 +95,8 @@ public final class SwiftyAds: NSObject {
         return ad
     }()
     
-    private lazy var interstitial: SwiftyAdInterstitialType = {
-        let ad = SwiftyAdInterstitial(
+    private lazy var interstitial: SwiftyAdsInterstitialType = {
+        let ad = SwiftyAdsInterstitial(
             adUnitId: configuration.interstitialAdUnitId,
             request: ({ [unowned self] in
                 self.requestBuilder.build()
@@ -113,8 +113,8 @@ public final class SwiftyAds: NSObject {
         return ad
     }()
     
-    private lazy var rewarded: SwiftyAdRewardedType = {
-        let ad = SwiftyAdRewarded(
+    private lazy var rewarded: SwiftyAdsRewardedType = {
+        let ad = SwiftyAdsRewarded(
             adUnitId: configuration.rewardedVideoAdUnitId,
             request: ({ [unowned self] in
                 self.requestBuilder.build()
@@ -136,10 +136,10 @@ public final class SwiftyAds: NSObject {
     }()
     
     /// Init
-    let configuration: SwiftyAdConfiguration
-    let requestBuilder: SwiftyAdRequestBuilderType
-    let intervalTracker: SwiftyAdIntervalTrackerType
-    let consentManager: SwiftyAdConsentManagerType
+    let configuration: SwiftyAdsConfiguration
+    let requestBuilder: SwiftyAdsRequestBuilderType
+    let intervalTracker: SwiftyAdsIntervalTrackerType
+    let consentManager: SwiftyAdsConsentManagerType
     let mediationManager: SwiftyAdsMediation?
     private var isRemoved = false
     
@@ -150,16 +150,16 @@ public final class SwiftyAds: NSObject {
     override convenience init() {
         // Update configuration
         #if DEBUG
-        let configuration: SwiftyAdConfiguration = .debug
+        let configuration: SwiftyAdsConfiguration = .debug
         #else
         let configuration: SwiftyAdConfiguration = .propertyList
         #endif
-        let consentManager = SwiftyAdConsentManager(
+        let consentManager = SwiftyAdsConsentManager(
             ids: configuration.ids,
             configuration: configuration.gdpr
         )
         
-        let requestBuilder = SwiftyAdRequestBuilder(
+        let requestBuilder = SwiftyAdsRequestBuilder(
             mobileAds: .sharedInstance(),
             isGDPRRequired: consentManager.isInEEA,
             isNonPersonalizedOnly: consentManager.status == .nonPersonalized,
@@ -170,7 +170,7 @@ public final class SwiftyAds: NSObject {
         self.init(
             configuration: configuration,
             requestBuilder: requestBuilder,
-            intervalTracker: SwiftyAdIntervalTracker(),
+            intervalTracker: SwiftyAdsIntervalTracker(),
             mediationManager: nil,
             consentManager: consentManager,
             testDevices: [],
@@ -178,11 +178,11 @@ public final class SwiftyAds: NSObject {
         )
     }
     
-    init(configuration: SwiftyAdConfiguration,
-         requestBuilder: SwiftyAdRequestBuilderType,
-         intervalTracker: SwiftyAdIntervalTrackerType,
+    init(configuration: SwiftyAdsConfiguration,
+         requestBuilder: SwiftyAdsRequestBuilderType,
+         intervalTracker: SwiftyAdsIntervalTrackerType,
          mediationManager: SwiftyAdsMediation?,
-         consentManager: SwiftyAdConsentManagerType,
+         consentManager: SwiftyAdsConsentManagerType,
          testDevices: [Any],
          notificationCenter: NotificationCenter) {
         self.configuration = configuration
@@ -316,7 +316,7 @@ extension SwiftyAds: SwiftyAdsType {
 
 private extension SwiftyAds {
     
-    func handleConsentStatusChange(_ status: SwiftyAdConsentStatus) {
+    func handleConsentStatusChange(_ status: SwiftyAdsConsentStatus) {
         delegate?.swiftyAds(self, didChange: status)
         mediationManager?.update(for: status)
     }
