@@ -39,7 +39,13 @@ public protocol SwiftyAdsMediationType: class {
     func update(for consentType: SwiftyAdsConsentStatus)
 }
 
-/// Swifty ad type
+/// SwiftyAds mode
+public enum SwiftyAdsMode {
+    case production
+    case test(devices: [String])
+}
+
+/// SwiftyAds type
 public protocol SwiftyAdsType: AnyObject {
     var hasConsent: Bool { get }
     var isRequiredToAskForConsent: Bool { get }
@@ -49,7 +55,7 @@ public protocol SwiftyAdsType: AnyObject {
                delegate: SwiftyAdsDelegate?,
                mediation: SwiftyAdsMediationType?,
                bannerAnimationDuration: TimeInterval,
-               testDevices: [Any],
+               mode: SwiftyAdsMode,
                handler: @escaping (_ hasConsent: Bool) -> Void)
     func askForConsent(from viewController: UIViewController)
     func showBanner(from viewController: UIViewController)
@@ -73,16 +79,13 @@ public final class SwiftyAds: NSObject {
     
     // MARK: - Properties
     
-    /// Delegate callbacks
-    public weak var delegate: SwiftyAdsDelegate?
-    
     /// Ads
     private lazy var banner: SwiftyAdsBannerType = {
         let ad = SwiftyAdsBanner(
             adUnitId: configuration.bannerAdUnitId,
             notificationCenter: .default,
             request: ({ [unowned self] in
-                self.requestBuilder.build()
+                self.makeRequest()
             }),
             didOpen: ({ [weak self] in
                 guard let self = self else { return }
@@ -100,7 +103,7 @@ public final class SwiftyAds: NSObject {
         let ad = SwiftyAdsInterstitial(
             adUnitId: configuration.interstitialAdUnitId,
             request: ({ [unowned self] in
-                self.requestBuilder.build()
+                self.makeRequest()
             }),
             didOpen: ({ [weak self] in
                 guard let self = self else { return }
@@ -118,7 +121,7 @@ public final class SwiftyAds: NSObject {
         let ad = SwiftyAdsRewarded(
             adUnitId: configuration.rewardedVideoAdUnitId,
             request: ({ [unowned self] in
-                self.requestBuilder.build()
+                self.makeRequest()
             }),
             didOpen: ({ [weak self] in
                 guard let self = self else { return }
@@ -137,24 +140,21 @@ public final class SwiftyAds: NSObject {
     }()
     
     /// Init
-    private let configuration: SwiftyAdsConfiguration
+    private var configuration: SwiftyAdsConfiguration
     private let requestBuilder: SwiftyAdsRequestBuilderType
     private let intervalTracker: SwiftyAdsIntervalTrackerType
     private let consentManager: SwiftyAdsConsentManagerType
     private var mediation: SwiftyAdsMediationType?
+    private weak var delegate: SwiftyAdsDelegate?
     private var isRemoved = false
-    
+    private var mode: SwiftyAdsMode
     private var testDevices: [Any] = [kGADSimulatorID]
     
     // MARK: - Init
     
     override convenience init() {
-        // Update configuration
-        #if DEBUG
         let configuration: SwiftyAdsConfiguration = .debug
-        #else
-        let configuration: SwiftyAdsConfiguration = .propertyList
-        #endif
+        
         let consentManager = SwiftyAdsConsentManager(
             ids: configuration.ids,
             configuration: configuration.gdpr
@@ -164,8 +164,7 @@ public final class SwiftyAds: NSObject {
             mobileAds: .sharedInstance(),
             isGDPRRequired: consentManager.isInEEA,
             isNonPersonalizedOnly: consentManager.status == .nonPersonalized,
-            isTaggedForUnderAgeOfConsent: consentManager.isTaggedForUnderAgeOfConsent,
-            testDevices: nil
+            isTaggedForUnderAgeOfConsent: consentManager.isTaggedForUnderAgeOfConsent
         )
         
         self.init(
@@ -174,7 +173,7 @@ public final class SwiftyAds: NSObject {
             intervalTracker: SwiftyAdsIntervalTracker(),
             mediation: nil,
             consentManager: consentManager,
-            testDevices: [],
+            mode: .production,
             notificationCenter: .default
         )
     }
@@ -184,14 +183,14 @@ public final class SwiftyAds: NSObject {
          intervalTracker: SwiftyAdsIntervalTrackerType,
          mediation: SwiftyAdsMediationType?,
          consentManager: SwiftyAdsConsentManagerType,
-         testDevices: [Any],
+         mode: SwiftyAdsMode,
          notificationCenter: NotificationCenter) {
         self.configuration = configuration
         self.requestBuilder = requestBuilder
         self.intervalTracker = intervalTracker
         self.mediation = mediation
         self.consentManager = consentManager
-        self.testDevices = testDevices
+        self.mode = mode
         super.init()
         print("AdMob SDK version \(GADRequest.sdkVersion())")
     }
@@ -229,21 +228,24 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter delegate: A delegate to receive event callbacks. Can also be set manually if needed.
     /// - parameter mediation: A implementation of SwiftyAdsMediationType protocol to manage mediation support.
     /// - parameter bannerAnimationDuration: The duration of the banner animation.
-    /// - parameter testDevices: The test devices to use when debugging. These will get added in addition to kGADSimulatorID.
+    /// - parameter mode: Set the mode of ads, production or debug.
     /// - returns handler: A handler that will return a boolean with the consent status.
     public func setup(with viewController: UIViewController,
                       delegate: SwiftyAdsDelegate?,
                       mediation: SwiftyAdsMediationType?,
                       bannerAnimationDuration: TimeInterval,
-                      testDevices: [Any],
+                      mode: SwiftyAdsMode,
                       handler: @escaping (_ hasConsent: Bool) -> Void) {
         self.delegate = delegate
         self.mediation = mediation
         
-        // Debug settings
-        #if DEBUG
-        self.testDevices.append(contentsOf: testDevices)
-        #endif
+        switch mode {
+        case .production:
+            configuration = .propertyList
+        case .test(let testDevices):
+            configuration = .debug
+            self.testDevices.append(contentsOf: testDevices)
+        }
         
         // Update banner animation duration
         banner.updateAnimationDuration(to: bannerAnimationDuration)
@@ -323,5 +325,14 @@ private extension SwiftyAds {
     func handleConsentStatusChange(_ status: SwiftyAdsConsentStatus) {
         delegate?.swiftyAds(self, didChange: status)
         mediation?.update(for: status)
+    }
+    
+    func makeRequest() -> GADRequest {
+        switch mode {
+        case .production:
+            return requestBuilder.build(.production)
+        case .test(let devices):
+            return requestBuilder.build(.test(devices: devices))
+        }
     }
 }

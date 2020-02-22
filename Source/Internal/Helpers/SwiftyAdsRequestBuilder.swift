@@ -22,9 +22,14 @@
 
 import Foundation
 import GoogleMobileAds
+  
+enum SwiftyAdsRequestBuilderMode {
+    case production
+    case test(devices: [String])
+}
 
 protocol SwiftyAdsRequestBuilderType: AnyObject {
-    func build() -> GADRequest
+    func build(_ mode: SwiftyAdsRequestBuilderMode) -> GADRequest
 }
 
 final class SwiftyAdsRequestBuilder {
@@ -35,20 +40,17 @@ final class SwiftyAdsRequestBuilder {
     private let isGDPRRequired: Bool
     private let isNonPersonalizedOnly: Bool
     private let isTaggedForUnderAgeOfConsent: Bool
-    private let testDevices: [String]?
     
     // MARK: - Init
     
     init(mobileAds: GADMobileAds,
          isGDPRRequired: Bool,
          isNonPersonalizedOnly: Bool,
-         isTaggedForUnderAgeOfConsent: Bool,
-         testDevices: [String]?) {
+         isTaggedForUnderAgeOfConsent: Bool) {
         self.mobileAds = mobileAds
         self.isGDPRRequired = isGDPRRequired
         self.isNonPersonalizedOnly = isNonPersonalizedOnly
         self.isTaggedForUnderAgeOfConsent = isTaggedForUnderAgeOfConsent
-        self.testDevices = testDevices
     }
 }
 
@@ -56,11 +58,14 @@ final class SwiftyAdsRequestBuilder {
 
 extension SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
   
-    func build() -> GADRequest {
+    func build(_ mode: SwiftyAdsRequestBuilderMode) -> GADRequest {
         let request = GADRequest()
-        #if DEBUG
-        mobileAds.requestConfiguration.testDeviceIdentifiers = testDevices
-        #endif
+        switch mode {
+        case .production:
+            break
+        case .test(let devices):
+            mobileAds.requestConfiguration.testDeviceIdentifiers = devices
+        }
         addGDPRExtrasIfNeeded(for: request)
         return request
     }

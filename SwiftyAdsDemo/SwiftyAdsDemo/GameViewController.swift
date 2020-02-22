@@ -17,12 +17,17 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         // Setup swifty ad
+        #if DEBUG
+        let swiftyAdsMode: SwiftyAdsMode = .test(devices: [])
+        #else
+        let swiftyAdsMode: SwiftyAdsMode = .production
+        #endif
         swiftyAds.setup(
             with: self,
             delegate: self,
             mediation: nil,
             bannerAnimationDuration: 0.3,
-            testDevices: [],
+            mode: swiftyAdsMode,
             handler: ({ hasConsent in
                 guard hasConsent else { return }
                 DispatchQueue.main.async {
