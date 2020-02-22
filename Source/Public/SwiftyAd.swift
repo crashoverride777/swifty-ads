@@ -76,7 +76,7 @@ public final class SwiftyAd: NSObject {
     public weak var delegate: SwiftyAdDelegate?
     
     /// Ads
-    private(set) lazy var banner: SwiftyAdBannerType = {
+    private lazy var banner: SwiftyAdBannerType = {
         let ad = SwiftyAdBanner(
             adUnitId: configuration.bannerAdUnitId,
             notificationCenter: .default,
@@ -95,7 +95,7 @@ public final class SwiftyAd: NSObject {
         return ad
     }()
     
-    private(set) lazy var interstitial: SwiftyAdInterstitialType = {
+    private lazy var interstitial: SwiftyAdInterstitialType = {
         let ad = SwiftyAdInterstitial(
             adUnitId: configuration.interstitialAdUnitId,
             request: ({ [unowned self] in
@@ -113,7 +113,7 @@ public final class SwiftyAd: NSObject {
         return ad
     }()
     
-    private(set) lazy var rewarded: SwiftyAdRewardedType = {
+    private lazy var rewarded: SwiftyAdRewardedType = {
         let ad = SwiftyAdRewarded(
             adUnitId: configuration.rewardedVideoAdUnitId,
             request: ({ [unowned self] in
@@ -141,22 +141,12 @@ public final class SwiftyAd: NSObject {
     let intervalTracker: SwiftyAdIntervalTrackerType
     let consentManager: SwiftyAdConsentManagerType
     let mediationManager: SwiftyAdMediation?
-  
+    private var isRemoved = false
+    
     #if DEBUG
     //Testdevices in DEBUG mode
     private var testDevices: [Any] = [kGADSimulatorID]
     #endif
-    
-    // MARK: - Computed Properties
-    
-    /// Check if ads have been removed
-    private var isRemoved = false {
-        didSet {
-            guard isRemoved else { return }
-            removeBanner()
-            interstitial.stopLoading()
-        }
-    }
     
     // MARK: - Init
     
@@ -320,6 +310,8 @@ extension SwiftyAd: SwiftyAdType {
     /// Disable ads e.g in app purchases
     public func disable() {
         isRemoved = true
+        removeBanner()
+        interstitial.stopLoading()
     }
 }
 
