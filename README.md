@@ -1,5 +1,6 @@
 [![Swift 5.0](https://img.shields.io/badge/swift-5.0-ED523F.svg?style=flat)](https://swift.org/download/)
-[![Platform](https://img.shields.io/cocoapods/p/SwiftyRate.svg?style=flat)]()
+[![Platform](https://img.shields.io/cocoapods/p/SwiftyAds.svg?style=flat)]()
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/SwiftyAds.svg)](https://img.shields.io/cocoapods/v/SwiftyAds.svg)
 
 # SwiftyAds
 
