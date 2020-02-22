@@ -35,7 +35,7 @@ public protocol SwiftyAdsDelegate: class {
 }
 
 /// A protocol for mediation implementations
-public protocol SwiftyAdsMediation: class {
+public protocol SwiftyAdsMediationType: class {
     func update(for consentType: SwiftyAdsConsentStatus)
 }
 
@@ -47,6 +47,7 @@ public protocol SwiftyAdsType: AnyObject {
     var isRewardedVideoReady: Bool { get }
     func setup(with viewController: UIViewController,
                delegate: SwiftyAdsDelegate?,
+               mediation: SwiftyAdsMediationType?,
                bannerAnimationDuration: TimeInterval,
                testDevices: [Any],
                handler: @escaping (_ hasConsent: Bool) -> Void)
@@ -136,11 +137,11 @@ public final class SwiftyAds: NSObject {
     }()
     
     /// Init
-    let configuration: SwiftyAdsConfiguration
-    let requestBuilder: SwiftyAdsRequestBuilderType
-    let intervalTracker: SwiftyAdsIntervalTrackerType
-    let consentManager: SwiftyAdsConsentManagerType
-    let mediationManager: SwiftyAdsMediation?
+    private let configuration: SwiftyAdsConfiguration
+    private let requestBuilder: SwiftyAdsRequestBuilderType
+    private let intervalTracker: SwiftyAdsIntervalTrackerType
+    private let consentManager: SwiftyAdsConsentManagerType
+    private var mediation: SwiftyAdsMediationType?
     private var isRemoved = false
     
     private var testDevices: [Any] = [kGADSimulatorID]
@@ -171,7 +172,7 @@ public final class SwiftyAds: NSObject {
             configuration: configuration,
             requestBuilder: requestBuilder,
             intervalTracker: SwiftyAdsIntervalTracker(),
-            mediationManager: nil,
+            mediation: nil,
             consentManager: consentManager,
             testDevices: [],
             notificationCenter: .default
@@ -181,14 +182,14 @@ public final class SwiftyAds: NSObject {
     init(configuration: SwiftyAdsConfiguration,
          requestBuilder: SwiftyAdsRequestBuilderType,
          intervalTracker: SwiftyAdsIntervalTrackerType,
-         mediationManager: SwiftyAdsMediation?,
+         mediation: SwiftyAdsMediationType?,
          consentManager: SwiftyAdsConsentManagerType,
          testDevices: [Any],
          notificationCenter: NotificationCenter) {
         self.configuration = configuration
         self.requestBuilder = requestBuilder
         self.intervalTracker = intervalTracker
-        self.mediationManager = mediationManager
+        self.mediation = mediation
         self.consentManager = consentManager
         self.testDevices = testDevices
         super.init()
@@ -226,16 +227,19 @@ extension SwiftyAds: SwiftyAdsType {
     ///
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter delegate: A delegate to receive event callbacks. Can also be set manually if needed.
+    /// - parameter mediation: A implementation of SwiftyAdsMediationType protocol to manage mediation support.
     /// - parameter bannerAnimationDuration: The duration of the banner animation.
     /// - parameter testDevices: The test devices to use when debugging. These will get added in addition to kGADSimulatorID.
     /// - returns handler: A handler that will return a boolean with the consent status.
     public func setup(with viewController: UIViewController,
                       delegate: SwiftyAdsDelegate?,
+                      mediation: SwiftyAdsMediationType?,
                       bannerAnimationDuration: TimeInterval,
                       testDevices: [Any],
                       handler: @escaping (_ hasConsent: Bool) -> Void) {
         self.delegate = delegate
-    
+        self.mediation = mediation
+        
         // Debug settings
         #if DEBUG
         self.testDevices.append(contentsOf: testDevices)
@@ -318,6 +322,6 @@ private extension SwiftyAds {
     
     func handleConsentStatusChange(_ status: SwiftyAdsConsentStatus) {
         delegate?.swiftyAds(self, didChange: status)
-        mediationManager?.update(for: status)
+        mediation?.update(for: status)
     }
 }

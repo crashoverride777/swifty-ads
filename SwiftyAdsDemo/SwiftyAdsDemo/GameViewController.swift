@@ -17,12 +17,19 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         // Setup swifty ad
-        swiftyAds.setup(with: self, delegate: self, bannerAnimationDuration: 0.3, testDevices: []) { hasConsent in
-            guard hasConsent else { return }
-            DispatchQueue.main.async {
-                self.swiftyAds.showBanner(from: self)
-            }
-        }
+        swiftyAds.setup(
+            with: self,
+            delegate: self,
+            mediation: nil,
+            bannerAnimationDuration: 0.3,
+            testDevices: [],
+            handler: ({ hasConsent in
+                guard hasConsent else { return }
+                DispatchQueue.main.async {
+                    self.swiftyAds.showBanner(from: self)
+                }
+            })
+        )
         
         // Load game scene
         if let scene = GameScene(fileNamed: "GameScene") {
