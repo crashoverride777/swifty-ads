@@ -13,7 +13,6 @@ class GameScene: SKScene {
     // MARK: - Properties
     
     var swiftyAd: SwiftyAdType!
-    
     var coins = 0
     
     private lazy var interstitialLabel: SKLabelNode = self.childNode(withName: "interstitialLabel") as! SKLabelNode
@@ -27,8 +26,6 @@ class GameScene: SKScene {
         backgroundColor = .gray
         consentLabel.isHidden = !swiftyAd.isRequiredToAskForConsent
     }
-    
-    // MARK: - Touches
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
