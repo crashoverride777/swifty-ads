@@ -69,7 +69,7 @@ Call the setup method as soon as your app launches.
 
 View Controller
 ```swift
-SwiftyAds.shared.setup(with: self, delegate: self, mediation: nil, bannerAnimationDuration: 0.3, testDevices: []) { hasConsent in
+SwiftyAds.shared.setup(with: self, delegate: self, mediation: nil, bannerAnimationDuration: 0.3, mode: .production) { hasConsent in
     guard hasConsent else { return }
     DispatchQueue.main.async {
         SwiftyAds.shared.showBanner(from: self)
