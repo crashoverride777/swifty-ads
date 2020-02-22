@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6A38EC072401A0BF00E645A0 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A38EC022401A0BD00E645A0 /* GoogleMobileAds.framework */; };
-		6A38EC082401A0BF00E645A0 /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A38EC032401A0BD00E645A0 /* nanopb.framework */; };
-		6A38EC092401A0BF00E645A0 /* GoogleAppMeasurement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A38EC042401A0BE00E645A0 /* GoogleAppMeasurement.framework */; };
-		6A38EC0A2401A0BF00E645A0 /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A38EC052401A0BE00E645A0 /* GoogleUtilities.framework */; };
-		6A38EC0B2401A0BF00E645A0 /* PersonalizedAdConsent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A38EC062401A0BF00E645A0 /* PersonalizedAdConsent.framework */; };
 		6A4286052400609E0035487A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4286042400609E0035487A /* AppDelegate.swift */; };
 		6A4286102400609E0035487A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A42860E2400609E0035487A /* Main.storyboard */; };
 		6A428612240060A00035487A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A428611240060A00035487A /* Assets.xcassets */; };
@@ -47,11 +42,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		6A38EC022401A0BD00E645A0 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
-		6A38EC032401A0BD00E645A0 /* nanopb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = nanopb.framework; sourceTree = "<group>"; };
-		6A38EC042401A0BE00E645A0 /* GoogleAppMeasurement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppMeasurement.framework; sourceTree = "<group>"; };
-		6A38EC052401A0BE00E645A0 /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleUtilities.framework; sourceTree = "<group>"; };
-		6A38EC062401A0BF00E645A0 /* PersonalizedAdConsent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PersonalizedAdConsent.framework; sourceTree = "<group>"; };
 		6A4286012400609E0035487A /* SwiftyAdDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyAdDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A4286042400609E0035487A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6A42860F2400609E0035487A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -83,11 +73,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A38EC082401A0BF00E645A0 /* nanopb.framework in Frameworks */,
-				6A38EC072401A0BF00E645A0 /* GoogleMobileAds.framework in Frameworks */,
-				6A38EC0A2401A0BF00E645A0 /* GoogleUtilities.framework in Frameworks */,
-				6A38EC092401A0BF00E645A0 /* GoogleAppMeasurement.framework in Frameworks */,
-				6A38EC0B2401A0BF00E645A0 /* PersonalizedAdConsent.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,11 +89,6 @@
 		6A4285F82400609E0035487A = {
 			isa = PBXGroup;
 			children = (
-				6A38EC042401A0BE00E645A0 /* GoogleAppMeasurement.framework */,
-				6A38EC022401A0BD00E645A0 /* GoogleMobileAds.framework */,
-				6A38EC052401A0BE00E645A0 /* GoogleUtilities.framework */,
-				6A38EC032401A0BD00E645A0 /* nanopb.framework */,
-				6A38EC062401A0BF00E645A0 /* PersonalizedAdConsent.framework */,
 				6A4286032400609E0035487A /* SwiftyAdDemo */,
 				6A4286022400609E0035487A /* Products */,
 				6A38EBBB24019DBD00E645A0 /* Frameworks */,
