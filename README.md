@@ -69,14 +69,14 @@ Call the setup method as soon as your app launches.
 
 View Controller
 ```swift
-SwiftyAds.shared.setup(with: self, delegate: self, bannerAnimationDuration: 0.3, testDevices: []) { hasConsent in
+SwiftyAds.shared.setup(with: self, delegate: self, mediation: nil, bannerAnimationDuration: 0.3, testDevices: []) { hasConsent in
     guard hasConsent else { return }
     DispatchQueue.main.async {
         SwiftyAds.shared.showBanner(from: self)
     }
 }
 
-NOTE: MediationManager parameter is a protocol with 1 method that you can optionally implement to update your mediation network consent status. Please read the relevant documentation
+NOTE: The mediation parameter is a protocol with 1 method that you can optionally implement to update your mediation network consent status. Please read the relevant documentation from the mediation networks
 ```
 
 AppDelegate
@@ -93,9 +93,9 @@ if let viewController = view?.window?.rootViewController {
 }
 ```
 
-Than create an extension conforming to the AdsDelegate protocol.
+Than create an extension conforming to the SwiftyAdsDelegate protocol.
 ```swift
-extension GameViewController: SwiftyAdDelegate {
+extension GameViewController: SwiftyAdsDelegate {
     func swiftyAdsDidOpen(_ swiftyAds: SwiftyAds) {
         // pause your game/app if needed
     }
@@ -104,11 +104,11 @@ extension GameViewController: SwiftyAdDelegate {
        // resume your game/app if needed
     }
     
-    func swiftyAds(_ swiftyAds: SwiftyAds, didChange consentStatus: SwiftyAd.ConsentStatus) {
+    func swiftyAds(_ swiftyAds: SwiftyAds, didChange consentStatus: SwiftyAdsConsentStatus) {
         // see setup for using mediationManager protocol to update your consent status
     }
     
-    func swifyAds(_ swiftyAds: SwiftyAds, didRewardUserWithAmount rewardAmount: Int) {
+    func swiftyAds(_ swiftyAds: SwiftyAds, didRewardUserWithAmount rewardAmount: Int) {
        // Reward amount is a decimel number I converted to an integer for convenience. This value comes from your AdNetwork.
        if let scene = (view as? SKView)?.scene as? GameScene {
             scene.coins += rewardAmount
