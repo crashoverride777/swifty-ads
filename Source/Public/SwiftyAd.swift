@@ -141,22 +141,12 @@ public final class SwiftyAd: NSObject {
     let intervalTracker: SwiftyAdIntervalTrackerType
     let consentManager: SwiftyAdConsentManagerType
     let mediationManager: SwiftyAdMediation?
-  
+    private var isRemoved = false
+    
     #if DEBUG
     //Testdevices in DEBUG mode
     private var testDevices: [Any] = [kGADSimulatorID]
     #endif
-    
-    // MARK: - Computed Properties
-    
-    /// Check if ads have been removed
-    private var isRemoved = false {
-        didSet {
-            guard isRemoved else { return }
-            removeBanner()
-            interstitial.stopLoading()
-        }
-    }
     
     // MARK: - Init
     
@@ -320,6 +310,8 @@ extension SwiftyAd: SwiftyAdType {
     /// Disable ads e.g in app purchases
     public func disable() {
         isRemoved = true
+        removeBanner()
+        interstitial.stopLoading()
     }
 }
 
