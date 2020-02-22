@@ -4,7 +4,6 @@ s.name = 'SwiftyAd'
 s.version = '9.3.1'
 s.license = { :type => 'MIT', :file => 'LICENSE' }
 s.summary = 'A swift helper to show ads from Google AdMob. GDPR compliant.'
-
 s.homepage = 'https://github.com/crashoverride777/swifty-ad'
 s.social_media_url = 'http://twitter.com/overrideiactive'
 s.authors = { 'Dominik' => 'overrideinteractive@icloud.com' }

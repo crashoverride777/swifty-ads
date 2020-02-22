@@ -76,7 +76,7 @@ public final class SwiftyAd: NSObject {
     public weak var delegate: SwiftyAdDelegate?
     
     /// Ads
-    private(set) lazy var banner: SwiftyAdBannerType = {
+    private lazy var banner: SwiftyAdBannerType = {
         let ad = SwiftyAdBanner(
             adUnitId: configuration.bannerAdUnitId,
             notificationCenter: .default,
@@ -95,7 +95,7 @@ public final class SwiftyAd: NSObject {
         return ad
     }()
     
-    private(set) lazy var interstitial: SwiftyAdInterstitialType = {
+    private lazy var interstitial: SwiftyAdInterstitialType = {
         let ad = SwiftyAdInterstitial(
             adUnitId: configuration.interstitialAdUnitId,
             request: ({ [unowned self] in
@@ -113,7 +113,7 @@ public final class SwiftyAd: NSObject {
         return ad
     }()
     
-    private(set) lazy var rewarded: SwiftyAdRewardedType = {
+    private lazy var rewarded: SwiftyAdRewardedType = {
         let ad = SwiftyAdRewarded(
             adUnitId: configuration.rewardedVideoAdUnitId,
             request: ({ [unowned self] in
