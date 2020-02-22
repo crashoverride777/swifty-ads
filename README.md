@@ -36,14 +36,6 @@ NOTE:
 
 Make sure to include your mediation networks when setting up SwiftyAd (see How To Use)
 
-## DEBUG
-
-AdMob uses 2 types of AdUnit IDs, 1 for testing and 1 for release. This helper will automatically change the AdUnitID from test to release mode and vice versa. 
-
-You should not show real ads when you are testing your app. In the past Google has been quite strict and has closed down AdMob/AdSense accounts because ads were clicked on apps that were not live. Keep this in mind when you for example test your app via TestFlight because your app will be in release mode when you send a TestFlight build which means it will show real ads.
-
-With the latest xCode it is no longer necessary to setup the DEBUG flag manually.
-
 ## Create AdMob account
 
 https://developers.google.com/ad-manager/mobile-ads-sdk/ios/quick-start
@@ -76,6 +68,8 @@ https://developers.google.com/ad-manager/mobile-ads-sdk/ios/quick-start#update_y
 Create a new `SwiftyAds.plist` file like the demo project one and update with your app ids and settings
 
 ## Usage
+
+Note: SwifyAds will always display test app when testing in debug mode.
 
 ### Setup 
 
