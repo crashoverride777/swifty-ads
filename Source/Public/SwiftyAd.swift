@@ -143,10 +143,7 @@ public final class SwiftyAd: NSObject {
     let mediationManager: SwiftyAdMediation?
     private var isRemoved = false
     
-    #if DEBUG
-    //Testdevices in DEBUG mode
     private var testDevices: [Any] = [kGADSimulatorID]
-    #endif
     
     // MARK: - Init
     
