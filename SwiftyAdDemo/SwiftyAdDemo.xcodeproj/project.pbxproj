@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B4E4F20F70F10195F1D3EF2 /* Pods_SwiftyAdDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ACEB51EAB19FD4D47166FA8 /* Pods_SwiftyAdDemo.framework */; };
 		6A4286052400609E0035487A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4286042400609E0035487A /* AppDelegate.swift */; };
 		6A4286102400609E0035487A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A42860E2400609E0035487A /* Main.storyboard */; };
 		6A428612240060A00035487A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A428611240060A00035487A /* Assets.xcassets */; };
@@ -42,6 +43,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2ACEB51EAB19FD4D47166FA8 /* Pods_SwiftyAdDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAdDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A4286012400609E0035487A /* SwiftyAdDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyAdDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A4286042400609E0035487A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6A42860F2400609E0035487A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -66,6 +68,8 @@
 		6A42868A240085690035487A /* SwiftyAdRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdRequestBuilder.swift; sourceTree = "<group>"; };
 		6A42868B240085690035487A /* SwiftyAdIntervalTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdIntervalTracker.swift; sourceTree = "<group>"; };
 		6A42868D240085690035487A /* SwiftyAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAd.swift; sourceTree = "<group>"; };
+		B56AD7736DA9547C2466E236 /* Pods-SwiftyAdDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdDemo.debug.xcconfig"; path = "Target Support Files/Pods-SwiftyAdDemo/Pods-SwiftyAdDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		FDDECD69B41BFDB543E6E6EC /* Pods-SwiftyAdDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdDemo.release.xcconfig"; path = "Target Support Files/Pods-SwiftyAdDemo/Pods-SwiftyAdDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B4E4F20F70F10195F1D3EF2 /* Pods_SwiftyAdDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +87,7 @@
 		6A38EBBB24019DBD00E645A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2ACEB51EAB19FD4D47166FA8 /* Pods_SwiftyAdDemo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -92,6 +98,7 @@
 				6A4286032400609E0035487A /* SwiftyAdDemo */,
 				6A4286022400609E0035487A /* Products */,
 				6A38EBBB24019DBD00E645A0 /* Frameworks */,
+				FAB310E55D698247F9FDCE42 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -187,6 +194,15 @@
 			path = Public;
 			sourceTree = "<group>";
 		};
+		FAB310E55D698247F9FDCE42 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B56AD7736DA9547C2466E236 /* Pods-SwiftyAdDemo.debug.xcconfig */,
+				FDDECD69B41BFDB543E6E6EC /* Pods-SwiftyAdDemo.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -194,10 +210,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6A428619240060A00035487A /* Build configuration list for PBXNativeTarget "SwiftyAdDemo" */;
 			buildPhases = (
+				3BE077F51F7432F7753DF620 /* [CP] Check Pods Manifest.lock */,
 				6A4285FD2400609E0035487A /* Sources */,
 				6A4285FE2400609E0035487A /* Frameworks */,
 				6A4285FF2400609E0035487A /* Resources */,
 				6A38EBBA24019D1B00E645A0 /* Embed Frameworks */,
+				DEFF0104D5E31C72E72922FF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -259,6 +277,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3BE077F51F7432F7753DF620 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SwiftyAdDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DEFF0104D5E31C72E72922FF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SwiftyAdDemo/Pods-SwiftyAdDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SwiftyAdDemo/Pods-SwiftyAdDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SwiftyAdDemo/Pods-SwiftyAdDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6A4285FD2400609E0035487A /* Sources */ = {
@@ -432,17 +492,12 @@
 		};
 		6A42861A240060A00035487A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B56AD7736DA9547C2466E236 /* Pods-SwiftyAdDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DK88YZ475Z;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks/GoogleMobileAdsSdkiOS-7.55.1",
-					"$(PROJECT_DIR)/Frameworks",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/SDKs",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAdDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -458,17 +513,12 @@
 		};
 		6A42861B240060A00035487A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FDDECD69B41BFDB543E6E6EC /* Pods-SwiftyAdDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DK88YZ475Z;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks/GoogleMobileAdsSdkiOS-7.55.1",
-					"$(PROJECT_DIR)/Frameworks",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/SDKs",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAdDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
