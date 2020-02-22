@@ -64,7 +64,7 @@ There is now an [app](https://cocoapods.org/app) which makes handling pods much 
 
 ### Step 3: 
 
-Copy the `source`` folder and its containing files into your project.
+Copy the `source` folder and its containing files into your project.
 
 ### Step 4:
 
@@ -80,7 +80,7 @@ Enter your ad settings into the SwiftyAd.plist file you added to your project. T
 
 View Controller
 ```swift
-SwiftyAd.shared.setup(with: self, delegate: self, mediationManager: nil) { hasConsent in
+SwiftyAd.shared.setup(with: self, delegate: self, bannerAnimationDuration: 0.3, testDevices: []) { hasConsent in
     guard hasConsent else { return }
     DispatchQueue.main.async {
         SwiftyAd.shared.showBanner(from: self)
@@ -88,6 +88,20 @@ SwiftyAd.shared.setup(with: self, delegate: self, mediationManager: nil) { hasCo
 }
 
 NOTE: MediationManager parameter is a protocol with 1 method that you can optionally implement to update your mediation network consent status. Please read the relevant documentation
+```
+
+AppDelegate
+```swift
+if let viewController = window?.rootViewController {
+      SwiftyAd.shared.setup...
+}
+```
+
+SKScene
+```swift
+if let viewController = view?.window?.rootViewController {
+      SwiftyAd.shared.setup...
+}
 ```
 
 Than create an extension conforming to the AdsDelegate protocol.
@@ -118,20 +132,6 @@ extension GameViewController: SwiftyAdDelegate {
        
        // Leave empty if unused
     }
-}
-```
-
-AppDelegate
-```swift
-if let viewController = window?.rootViewController {
-      SwiftyAd.shared.setup...
-}
-```
-
-SKScene
-```swift
-if let viewController = view?.window?.rootViewController {
-      SwiftyAd.shared.setup...
 }
 ```
 
