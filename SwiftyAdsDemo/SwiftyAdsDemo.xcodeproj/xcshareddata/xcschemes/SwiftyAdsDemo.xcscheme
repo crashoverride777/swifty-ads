@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6A4286002400609E0035487A"
-               BuildableName = "SwiftyAdDemo.app"
-               BlueprintName = "SwiftyAdDemo"
-               ReferencedContainer = "container:SwiftyAdDemo.xcodeproj">
+               BuildableName = "SwiftyAdsDemo.app"
+               BlueprintName = "SwiftyAdsDemo"
+               ReferencedContainer = "container:SwiftyAdsDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6A4286002400609E0035487A"
-            BuildableName = "SwiftyAdDemo.app"
-            BlueprintName = "SwiftyAdDemo"
-            ReferencedContainer = "container:SwiftyAdDemo.xcodeproj">
+            BuildableName = "SwiftyAdsDemo.app"
+            BlueprintName = "SwiftyAdsDemo"
+            ReferencedContainer = "container:SwiftyAdsDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6A4286002400609E0035487A"
-            BuildableName = "SwiftyAdDemo.app"
-            BlueprintName = "SwiftyAdDemo"
-            ReferencedContainer = "container:SwiftyAdDemo.xcodeproj">
+            BuildableName = "SwiftyAdsDemo.app"
+            BlueprintName = "SwiftyAdsDemo"
+            ReferencedContainer = "container:SwiftyAdsDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

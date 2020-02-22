@@ -11,22 +11,22 @@ import SpriteKit
 
 class GameViewController: UIViewController {
     
-    private let swiftyAd: SwiftyAdType = SwiftyAd.shared
+    private let swiftyAds: SwiftyAdsType = SwiftyAds.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Setup swifty ad
-        swiftyAd.setup(with: self, delegate: self, bannerAnimationDuration: 0.3, testDevices: []) { hasConsent in
+        swiftyAds.setup(with: self, delegate: self, bannerAnimationDuration: 0.3, testDevices: []) { hasConsent in
             guard hasConsent else { return }
             DispatchQueue.main.async {
-                self.swiftyAd.showBanner(from: self)
+                self.swiftyAds.showBanner(from: self)
             }
         }
         
         // Load game scene
         if let scene = GameScene(fileNamed: "GameScene") {
-            scene.swiftyAd = swiftyAd
+            scene.swiftyAds = swiftyAds
             
             // Configure the view.
             let skView = self.view as! SKView
@@ -63,22 +63,22 @@ class GameViewController: UIViewController {
 
 // MARK: - SwiftyAdDelegate
 
-extension GameViewController: SwiftyAdDelegate {
+extension GameViewController: SwiftyAdsDelegate {
     
-    func swiftyAdDidOpen(_ swiftyAd: SwiftyAd) {
+    func swiftyAdsDidOpen(_ swiftyAds: SwiftyAds) {
         print("SwiftyAd did open")
     }
     
-    func swiftyAdDidClose(_ swiftyAd: SwiftyAd) {
+    func swiftyAdsDidClose(_ swiftyAds: SwiftyAds) {
         print("SwiftyAd did close")
     }
     
-    func swiftyAd(_ swiftyAd: SwiftyAd, didChange consentStatus: SwiftyAdConsentStatus) {
+    func swiftyAds(_ swiftyAds: SwiftyAds, didChange consentStatus: SwiftyAdConsentStatus) {
         print("SwiftyAd did change consent status to \(consentStatus)")
         // e.g update mediation networks
     }
     
-    func swiftyAd(_ swiftyAd: SwiftyAd, didRewardUserWithAmount rewardAmount: Int) {
+    func swiftyAds(_ swiftyAds: SwiftyAds, didRewardUserWithAmount rewardAmount: Int) {
         print("SwiftyAd did reward user with \(rewardAmount)")
         
         if let scene = (view as? SKView)?.scene as? GameScene {

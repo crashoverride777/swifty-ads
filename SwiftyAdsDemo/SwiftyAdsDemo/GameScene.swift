@@ -12,7 +12,7 @@ class GameScene: SKScene {
     
     // MARK: - Properties
     
-    var swiftyAd: SwiftyAdType!
+    var swiftyAds: SwiftyAdsType!
     var coins = 0
     
     private lazy var interstitialLabel: SKLabelNode = self.childNode(withName: "interstitialLabel") as! SKLabelNode
@@ -24,7 +24,7 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         backgroundColor = .gray
-        consentLabel.isHidden = !swiftyAd.isRequiredToAskForConsent
+        consentLabel.isHidden = !swiftyAds.isRequiredToAskForConsent
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -38,13 +38,13 @@ class GameScene: SKScene {
             
             switch node {
             case interstitialLabel:
-                swiftyAd.showInterstitial(from: viewController, withInterval: 2)
+                swiftyAds.showInterstitial(from: viewController, withInterval: 2)
             case rewardedLabel:
-                swiftyAd.showRewardedVideo(from: viewController)
+                swiftyAds.showRewardedVideo(from: viewController)
             case removeLabel:
-                swiftyAd.disable()
+                swiftyAds.disable()
             case consentLabel:
-                swiftyAd.askForConsent(from: viewController)
+                swiftyAds.askForConsent(from: viewController)
             default:
                 break
             }

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4B4E4F20F70F10195F1D3EF2 /* Pods_SwiftyAdDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ACEB51EAB19FD4D47166FA8 /* Pods_SwiftyAdDemo.framework */; };
 		6A4286052400609E0035487A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4286042400609E0035487A /* AppDelegate.swift */; };
 		6A4286102400609E0035487A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A42860E2400609E0035487A /* Main.storyboard */; };
 		6A428612240060A00035487A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A428611240060A00035487A /* Assets.xcassets */; };
@@ -15,18 +14,19 @@
 		6A4286252400612E0035487A /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 6A4286222400612D0035487A /* GameScene.sks */; };
 		6A4286262400612E0035487A /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4286232400612E0035487A /* GameViewController.swift */; };
 		6A4286272400612E0035487A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4286242400612E0035487A /* GameScene.swift */; };
-		6A42864E240070590035487A /* SwiftyAd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A42864D240070590035487A /* SwiftyAd.plist */; };
-		6A42868E2400856A0035487A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6A42867A240085690035487A /* Localizable.strings */; };
-		6A42868F2400856A0035487A /* SwiftyAdInterstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A428681240085690035487A /* SwiftyAdInterstitial.swift */; };
-		6A4286902400856A0035487A /* SwiftyAdRewarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A428682240085690035487A /* SwiftyAdRewarded.swift */; };
-		6A4286912400856A0035487A /* SwiftyAdBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A428683240085690035487A /* SwiftyAdBanner.swift */; };
-		6A4286922400856A0035487A /* SwiftyAdConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A428685240085690035487A /* SwiftyAdConfiguration.swift */; };
-		6A4286932400856A0035487A /* SwiftyAdConsentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A428686240085690035487A /* SwiftyAdConsentConfiguration.swift */; };
-		6A4286942400856A0035487A /* SwiftyAdLocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A428688240085690035487A /* SwiftyAdLocalizedString.swift */; };
-		6A4286952400856A0035487A /* SwiftyAdConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A428689240085690035487A /* SwiftyAdConsentManager.swift */; };
-		6A4286962400856A0035487A /* SwiftyAdRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A42868A240085690035487A /* SwiftyAdRequestBuilder.swift */; };
-		6A4286972400856A0035487A /* SwiftyAdIntervalTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A42868B240085690035487A /* SwiftyAdIntervalTracker.swift */; };
-		6A4286982400856A0035487A /* SwiftyAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A42868D240085690035487A /* SwiftyAd.swift */; };
+		6A494E702401B0F800203B0C /* SwiftyAd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A494E6F2401B0F800203B0C /* SwiftyAd.plist */; };
+		6AC971D52401B06700A0BB91 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6AC971C12401B06600A0BB91 /* Localizable.strings */; };
+		6AC971D62401B06700A0BB91 /* SwiftyAdInterstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971C82401B06600A0BB91 /* SwiftyAdInterstitial.swift */; };
+		6AC971D72401B06700A0BB91 /* SwiftyAdRewarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971C92401B06600A0BB91 /* SwiftyAdRewarded.swift */; };
+		6AC971D82401B06700A0BB91 /* SwiftyAdBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971CA2401B06600A0BB91 /* SwiftyAdBanner.swift */; };
+		6AC971D92401B06700A0BB91 /* SwiftyAdConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971CC2401B06600A0BB91 /* SwiftyAdConfiguration.swift */; };
+		6AC971DA2401B06700A0BB91 /* SwiftyAdConsentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971CD2401B06600A0BB91 /* SwiftyAdConsentConfiguration.swift */; };
+		6AC971DB2401B06700A0BB91 /* SwiftyAdLocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971CF2401B06600A0BB91 /* SwiftyAdLocalizedString.swift */; };
+		6AC971DC2401B06700A0BB91 /* SwiftyAdConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971D02401B06600A0BB91 /* SwiftyAdConsentManager.swift */; };
+		6AC971DD2401B06700A0BB91 /* SwiftyAdRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971D12401B06600A0BB91 /* SwiftyAdRequestBuilder.swift */; };
+		6AC971DE2401B06700A0BB91 /* SwiftyAdIntervalTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971D22401B06600A0BB91 /* SwiftyAdIntervalTracker.swift */; };
+		6AC971DF2401B06700A0BB91 /* SwiftyAds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971D42401B06600A0BB91 /* SwiftyAds.swift */; };
+		8255E865472D299AB1EC366F /* Pods_SwiftyAdsDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 267AC7188365496A1FC367F7 /* Pods_SwiftyAdsDemo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,8 +43,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2ACEB51EAB19FD4D47166FA8 /* Pods_SwiftyAdDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAdDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6A4286012400609E0035487A /* SwiftyAdDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyAdDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		267AC7188365496A1FC367F7 /* Pods_SwiftyAdsDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAdsDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		60E5DBC1C5B02CF664FB6966 /* Pods-SwiftyAdsDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdsDemo.release.xcconfig"; path = "Target Support Files/Pods-SwiftyAdsDemo/Pods-SwiftyAdsDemo.release.xcconfig"; sourceTree = "<group>"; };
+		6A4286012400609E0035487A /* SwiftyAdsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyAdsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A4286042400609E0035487A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6A42860F2400609E0035487A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6A428611240060A00035487A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -53,21 +54,22 @@
 		6A4286222400612D0035487A /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		6A4286232400612E0035487A /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		6A4286242400612E0035487A /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		6A42864D240070590035487A /* SwiftyAd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SwiftyAd.plist; sourceTree = "<group>"; };
-		6A42867B240085690035487A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		6A42867C240085690035487A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		6A42867D240085690035487A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		6A42867E240085690035487A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		6A428681240085690035487A /* SwiftyAdInterstitial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdInterstitial.swift; sourceTree = "<group>"; };
-		6A428682240085690035487A /* SwiftyAdRewarded.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdRewarded.swift; sourceTree = "<group>"; };
-		6A428683240085690035487A /* SwiftyAdBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdBanner.swift; sourceTree = "<group>"; };
-		6A428685240085690035487A /* SwiftyAdConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdConfiguration.swift; sourceTree = "<group>"; };
-		6A428686240085690035487A /* SwiftyAdConsentConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdConsentConfiguration.swift; sourceTree = "<group>"; };
-		6A428688240085690035487A /* SwiftyAdLocalizedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdLocalizedString.swift; sourceTree = "<group>"; };
-		6A428689240085690035487A /* SwiftyAdConsentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdConsentManager.swift; sourceTree = "<group>"; };
-		6A42868A240085690035487A /* SwiftyAdRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdRequestBuilder.swift; sourceTree = "<group>"; };
-		6A42868B240085690035487A /* SwiftyAdIntervalTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdIntervalTracker.swift; sourceTree = "<group>"; };
-		6A42868D240085690035487A /* SwiftyAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAd.swift; sourceTree = "<group>"; };
+		6A494E6F2401B0F800203B0C /* SwiftyAd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SwiftyAd.plist; sourceTree = "<group>"; };
+		6AC971C22401B06600A0BB91 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6AC971C32401B06600A0BB91 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6AC971C42401B06600A0BB91 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6AC971C52401B06600A0BB91 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6AC971C82401B06600A0BB91 /* SwiftyAdInterstitial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdInterstitial.swift; sourceTree = "<group>"; };
+		6AC971C92401B06600A0BB91 /* SwiftyAdRewarded.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdRewarded.swift; sourceTree = "<group>"; };
+		6AC971CA2401B06600A0BB91 /* SwiftyAdBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdBanner.swift; sourceTree = "<group>"; };
+		6AC971CC2401B06600A0BB91 /* SwiftyAdConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdConfiguration.swift; sourceTree = "<group>"; };
+		6AC971CD2401B06600A0BB91 /* SwiftyAdConsentConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdConsentConfiguration.swift; sourceTree = "<group>"; };
+		6AC971CF2401B06600A0BB91 /* SwiftyAdLocalizedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdLocalizedString.swift; sourceTree = "<group>"; };
+		6AC971D02401B06600A0BB91 /* SwiftyAdConsentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdConsentManager.swift; sourceTree = "<group>"; };
+		6AC971D12401B06600A0BB91 /* SwiftyAdRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdRequestBuilder.swift; sourceTree = "<group>"; };
+		6AC971D22401B06600A0BB91 /* SwiftyAdIntervalTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdIntervalTracker.swift; sourceTree = "<group>"; };
+		6AC971D42401B06600A0BB91 /* SwiftyAds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAds.swift; sourceTree = "<group>"; };
+		93FE114651B5F81A8F56C27C /* Pods-SwiftyAdsDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdsDemo.debug.xcconfig"; path = "Target Support Files/Pods-SwiftyAdsDemo/Pods-SwiftyAdsDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		B56AD7736DA9547C2466E236 /* Pods-SwiftyAdDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdDemo.debug.xcconfig"; path = "Target Support Files/Pods-SwiftyAdDemo/Pods-SwiftyAdDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		FDDECD69B41BFDB543E6E6EC /* Pods-SwiftyAdDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdDemo.release.xcconfig"; path = "Target Support Files/Pods-SwiftyAdDemo/Pods-SwiftyAdDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -77,7 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B4E4F20F70F10195F1D3EF2 /* Pods_SwiftyAdDemo.framework in Frameworks */,
+				8255E865472D299AB1EC366F /* Pods_SwiftyAdsDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,7 +89,7 @@
 		6A38EBBB24019DBD00E645A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2ACEB51EAB19FD4D47166FA8 /* Pods_SwiftyAdDemo.framework */,
+				267AC7188365496A1FC367F7 /* Pods_SwiftyAdsDemo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -95,7 +97,7 @@
 		6A4285F82400609E0035487A = {
 			isa = PBXGroup;
 			children = (
-				6A4286032400609E0035487A /* SwiftyAdDemo */,
+				6A4286032400609E0035487A /* SwiftyAdsDemo */,
 				6A4286022400609E0035487A /* Products */,
 				6A38EBBB24019DBD00E645A0 /* Frameworks */,
 				FAB310E55D698247F9FDCE42 /* Pods */,
@@ -105,16 +107,16 @@
 		6A4286022400609E0035487A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6A4286012400609E0035487A /* SwiftyAdDemo.app */,
+				6A4286012400609E0035487A /* SwiftyAdsDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		6A4286032400609E0035487A /* SwiftyAdDemo */ = {
+		6A4286032400609E0035487A /* SwiftyAdsDemo */ = {
 			isa = PBXGroup;
 			children = (
-				6A428678240085690035487A /* Source */,
-				6A42864D240070590035487A /* SwiftyAd.plist */,
+				6AC971BF2401B06600A0BB91 /* Source */,
+				6A494E6F2401B0F800203B0C /* SwiftyAd.plist */,
 				6A4286232400612E0035487A /* GameViewController.swift */,
 				6A4286242400612E0035487A /* GameScene.swift */,
 				6A4286222400612D0035487A /* GameScene.sks */,
@@ -124,72 +126,72 @@
 				6A428613240060A00035487A /* LaunchScreen.storyboard */,
 				6A428616240060A00035487A /* Info.plist */,
 			);
-			path = SwiftyAdDemo;
+			path = SwiftyAdsDemo;
 			sourceTree = "<group>";
 		};
-		6A428678240085690035487A /* Source */ = {
+		6AC971BF2401B06600A0BB91 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				6A428679240085690035487A /* Resources */,
-				6A42867F240085690035487A /* Internal */,
-				6A42868C240085690035487A /* Public */,
+				6AC971C02401B06600A0BB91 /* Resources */,
+				6AC971C62401B06600A0BB91 /* Internal */,
+				6AC971D32401B06600A0BB91 /* Public */,
 			);
 			name = Source;
 			path = ../../Source;
 			sourceTree = "<group>";
 		};
-		6A428679240085690035487A /* Resources */ = {
+		6AC971C02401B06600A0BB91 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				6A42867A240085690035487A /* Localizable.strings */,
+				6AC971C12401B06600A0BB91 /* Localizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		6A42867F240085690035487A /* Internal */ = {
+		6AC971C62401B06600A0BB91 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
-				6A428680240085690035487A /* Ads */,
-				6A428684240085690035487A /* Models */,
-				6A428687240085690035487A /* Helpers */,
+				6AC971C72401B06600A0BB91 /* Ads */,
+				6AC971CB2401B06600A0BB91 /* Models */,
+				6AC971CE2401B06600A0BB91 /* Helpers */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
 		};
-		6A428680240085690035487A /* Ads */ = {
+		6AC971C72401B06600A0BB91 /* Ads */ = {
 			isa = PBXGroup;
 			children = (
-				6A428681240085690035487A /* SwiftyAdInterstitial.swift */,
-				6A428682240085690035487A /* SwiftyAdRewarded.swift */,
-				6A428683240085690035487A /* SwiftyAdBanner.swift */,
+				6AC971C82401B06600A0BB91 /* SwiftyAdInterstitial.swift */,
+				6AC971C92401B06600A0BB91 /* SwiftyAdRewarded.swift */,
+				6AC971CA2401B06600A0BB91 /* SwiftyAdBanner.swift */,
 			);
 			path = Ads;
 			sourceTree = "<group>";
 		};
-		6A428684240085690035487A /* Models */ = {
+		6AC971CB2401B06600A0BB91 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				6A428685240085690035487A /* SwiftyAdConfiguration.swift */,
-				6A428686240085690035487A /* SwiftyAdConsentConfiguration.swift */,
+				6AC971CC2401B06600A0BB91 /* SwiftyAdConfiguration.swift */,
+				6AC971CD2401B06600A0BB91 /* SwiftyAdConsentConfiguration.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		6A428687240085690035487A /* Helpers */ = {
+		6AC971CE2401B06600A0BB91 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				6A428688240085690035487A /* SwiftyAdLocalizedString.swift */,
-				6A428689240085690035487A /* SwiftyAdConsentManager.swift */,
-				6A42868A240085690035487A /* SwiftyAdRequestBuilder.swift */,
-				6A42868B240085690035487A /* SwiftyAdIntervalTracker.swift */,
+				6AC971CF2401B06600A0BB91 /* SwiftyAdLocalizedString.swift */,
+				6AC971D02401B06600A0BB91 /* SwiftyAdConsentManager.swift */,
+				6AC971D12401B06600A0BB91 /* SwiftyAdRequestBuilder.swift */,
+				6AC971D22401B06600A0BB91 /* SwiftyAdIntervalTracker.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		6A42868C240085690035487A /* Public */ = {
+		6AC971D32401B06600A0BB91 /* Public */ = {
 			isa = PBXGroup;
 			children = (
-				6A42868D240085690035487A /* SwiftyAd.swift */,
+				6AC971D42401B06600A0BB91 /* SwiftyAds.swift */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -199,6 +201,8 @@
 			children = (
 				B56AD7736DA9547C2466E236 /* Pods-SwiftyAdDemo.debug.xcconfig */,
 				FDDECD69B41BFDB543E6E6EC /* Pods-SwiftyAdDemo.release.xcconfig */,
+				93FE114651B5F81A8F56C27C /* Pods-SwiftyAdsDemo.debug.xcconfig */,
+				60E5DBC1C5B02CF664FB6966 /* Pods-SwiftyAdsDemo.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -206,9 +210,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6A4286002400609E0035487A /* SwiftyAdDemo */ = {
+		6A4286002400609E0035487A /* SwiftyAdsDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6A428619240060A00035487A /* Build configuration list for PBXNativeTarget "SwiftyAdDemo" */;
+			buildConfigurationList = 6A428619240060A00035487A /* Build configuration list for PBXNativeTarget "SwiftyAdsDemo" */;
 			buildPhases = (
 				3BE077F51F7432F7753DF620 /* [CP] Check Pods Manifest.lock */,
 				6A4285FD2400609E0035487A /* Sources */,
@@ -221,9 +225,9 @@
 			);
 			dependencies = (
 			);
-			name = SwiftyAdDemo;
+			name = SwiftyAdsDemo;
 			productName = Example;
-			productReference = 6A4286012400609E0035487A /* SwiftyAdDemo.app */;
+			productReference = 6A4286012400609E0035487A /* SwiftyAdsDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -241,7 +245,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 6A4285FC2400609E0035487A /* Build configuration list for PBXProject "SwiftyAdDemo" */;
+			buildConfigurationList = 6A4285FC2400609E0035487A /* Build configuration list for PBXProject "SwiftyAdsDemo" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -257,7 +261,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6A4286002400609E0035487A /* SwiftyAdDemo */,
+				6A4286002400609E0035487A /* SwiftyAdsDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -268,11 +272,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A4286252400612E0035487A /* GameScene.sks in Resources */,
-				6A42868E2400856A0035487A /* Localizable.strings in Resources */,
+				6AC971D52401B06700A0BB91 /* Localizable.strings in Resources */,
 				6A4286102400609E0035487A /* Main.storyboard in Resources */,
 				6A428612240060A00035487A /* Assets.xcassets in Resources */,
 				6A428615240060A00035487A /* LaunchScreen.storyboard in Resources */,
-				6A42864E240070590035487A /* SwiftyAd.plist in Resources */,
+				6A494E702401B0F800203B0C /* SwiftyAd.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,7 +298,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SwiftyAdDemo-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SwiftyAdsDemo-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -307,15 +311,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SwiftyAdDemo/Pods-SwiftyAdDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SwiftyAdsDemo/Pods-SwiftyAdsDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SwiftyAdDemo/Pods-SwiftyAdDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SwiftyAdsDemo/Pods-SwiftyAdsDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SwiftyAdDemo/Pods-SwiftyAdDemo-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SwiftyAdsDemo/Pods-SwiftyAdsDemo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -325,18 +329,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A4286972400856A0035487A /* SwiftyAdIntervalTracker.swift in Sources */,
-				6A4286962400856A0035487A /* SwiftyAdRequestBuilder.swift in Sources */,
-				6A4286902400856A0035487A /* SwiftyAdRewarded.swift in Sources */,
-				6A42868F2400856A0035487A /* SwiftyAdInterstitial.swift in Sources */,
-				6A4286932400856A0035487A /* SwiftyAdConsentConfiguration.swift in Sources */,
-				6A4286952400856A0035487A /* SwiftyAdConsentManager.swift in Sources */,
-				6A4286942400856A0035487A /* SwiftyAdLocalizedString.swift in Sources */,
+				6AC971DE2401B06700A0BB91 /* SwiftyAdIntervalTracker.swift in Sources */,
+				6AC971DD2401B06700A0BB91 /* SwiftyAdRequestBuilder.swift in Sources */,
+				6AC971DF2401B06700A0BB91 /* SwiftyAds.swift in Sources */,
+				6AC971D72401B06700A0BB91 /* SwiftyAdRewarded.swift in Sources */,
+				6AC971D62401B06700A0BB91 /* SwiftyAdInterstitial.swift in Sources */,
+				6AC971DA2401B06700A0BB91 /* SwiftyAdConsentConfiguration.swift in Sources */,
+				6AC971DC2401B06700A0BB91 /* SwiftyAdConsentManager.swift in Sources */,
+				6AC971DB2401B06700A0BB91 /* SwiftyAdLocalizedString.swift in Sources */,
 				6A4286272400612E0035487A /* GameScene.swift in Sources */,
-				6A4286982400856A0035487A /* SwiftyAd.swift in Sources */,
-				6A4286922400856A0035487A /* SwiftyAdConfiguration.swift in Sources */,
+				6AC971D92401B06700A0BB91 /* SwiftyAdConfiguration.swift in Sources */,
 				6A4286262400612E0035487A /* GameViewController.swift in Sources */,
-				6A4286912400856A0035487A /* SwiftyAdBanner.swift in Sources */,
+				6AC971D82401B06700A0BB91 /* SwiftyAdBanner.swift in Sources */,
 				6A4286052400609E0035487A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -360,13 +364,13 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
-		6A42867A240085690035487A /* Localizable.strings */ = {
+		6AC971C12401B06600A0BB91 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				6A42867B240085690035487A /* de */,
-				6A42867C240085690035487A /* en */,
-				6A42867D240085690035487A /* es */,
-				6A42867E240085690035487A /* fr */,
+				6AC971C22401B06600A0BB91 /* de */,
+				6AC971C32401B06600A0BB91 /* en */,
+				6AC971C42401B06600A0BB91 /* es */,
+				6AC971C52401B06600A0BB91 /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -492,19 +496,20 @@
 		};
 		6A42861A240060A00035487A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B56AD7736DA9547C2466E236 /* Pods-SwiftyAdDemo.debug.xcconfig */;
+			baseConfigurationReference = 93FE114651B5F81A8F56C27C /* Pods-SwiftyAdsDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DK88YZ475Z;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAdDemo/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAdsDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SwiftyAdDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SwiftyAdsDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -513,19 +518,20 @@
 		};
 		6A42861B240060A00035487A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FDDECD69B41BFDB543E6E6EC /* Pods-SwiftyAdDemo.release.xcconfig */;
+			baseConfigurationReference = 60E5DBC1C5B02CF664FB6966 /* Pods-SwiftyAdsDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DK88YZ475Z;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAdDemo/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAdsDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SwiftyAdDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SwiftyAdsDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -535,7 +541,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6A4285FC2400609E0035487A /* Build configuration list for PBXProject "SwiftyAdDemo" */ = {
+		6A4285FC2400609E0035487A /* Build configuration list for PBXProject "SwiftyAdsDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6A428617240060A00035487A /* Debug */,
@@ -544,7 +550,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6A428619240060A00035487A /* Build configuration list for PBXNativeTarget "SwiftyAdDemo" */ = {
+		6A428619240060A00035487A /* Build configuration list for PBXNativeTarget "SwiftyAdsDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6A42861A240060A00035487A /* Debug */,

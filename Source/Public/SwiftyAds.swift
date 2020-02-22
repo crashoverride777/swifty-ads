@@ -23,30 +23,30 @@
 import GoogleMobileAds
 
 /// SwiftyAdDelegate
-public protocol SwiftyAdDelegate: class {
+public protocol SwiftyAdsDelegate: class {
     /// SwiftyAd did open
-    func swiftyAdDidOpen(_ swiftyAd: SwiftyAd)
+    func swiftyAdsDidOpen(_ swiftyAds: SwiftyAds)
     /// SwiftyAd did close
-    func swiftyAdDidClose(_ swiftyAd: SwiftyAd)
+    func swiftyAdsDidClose(_ swiftyAds: SwiftyAds)
     /// Did change consent status
-    func swiftyAd(_ swiftyAd: SwiftyAd, didChange consentStatus: SwiftyAdConsentStatus)
+    func swiftyAds(_ swiftyAds: SwiftyAds, didChange consentStatus: SwiftyAdConsentStatus)
     /// SwiftyAd did reward user
-    func swiftyAd(_ swiftyAd: SwiftyAd, didRewardUserWithAmount rewardAmount: Int)
+    func swiftyAds(_ swiftyAds: SwiftyAds, didRewardUserWithAmount rewardAmount: Int)
 }
 
 /// A protocol for mediation implementations
-public protocol SwiftyAdMediation: class {
+public protocol SwiftyAdsMediation: class {
     func update(for consentType: SwiftyAdConsentStatus)
 }
 
 /// Swifty ad type
-public protocol SwiftyAdType: AnyObject {
+public protocol SwiftyAdsType: AnyObject {
     var hasConsent: Bool { get }
     var isRequiredToAskForConsent: Bool { get }
     var isInterstitialReady: Bool { get }
     var isRewardedVideoReady: Bool { get }
     func setup(with viewController: UIViewController,
-               delegate: SwiftyAdDelegate?,
+               delegate: SwiftyAdsDelegate?,
                bannerAnimationDuration: TimeInterval,
                testDevices: [Any],
                handler: @escaping (_ hasConsent: Bool) -> Void)
@@ -59,21 +59,21 @@ public protocol SwiftyAdType: AnyObject {
 }
 
 /**
- SwiftyAd
+ SwiftyAds
  
  A singleton class to manage adverts from Google AdMob.
  */
-public final class SwiftyAd: NSObject {
+public final class SwiftyAds: NSObject {
     
     // MARK: - Static Properties
     
     /// The shared instance of SwiftyAd using default non costumizable settings
-    public static let shared = SwiftyAd()
+    public static let shared = SwiftyAds()
     
     // MARK: - Properties
     
     /// Delegate callbacks
-    public weak var delegate: SwiftyAdDelegate?
+    public weak var delegate: SwiftyAdsDelegate?
     
     /// Ads
     private lazy var banner: SwiftyAdBannerType = {
@@ -85,11 +85,11 @@ public final class SwiftyAd: NSObject {
             }),
             didOpen: ({ [weak self] in
                 guard let self = self else { return }
-                self.delegate?.swiftyAdDidOpen(self)
+                self.delegate?.swiftyAdsDidOpen(self)
             }),
             didClose: ({ [weak self] in
                 guard let self = self else { return }
-                self.delegate?.swiftyAdDidClose(self)
+                self.delegate?.swiftyAdsDidClose(self)
             })
         )
         return ad
@@ -103,11 +103,11 @@ public final class SwiftyAd: NSObject {
             }),
             didOpen: ({ [weak self] in
                 guard let self = self else { return }
-                self.delegate?.swiftyAdDidOpen(self)
+                self.delegate?.swiftyAdsDidOpen(self)
             }),
             didClose: ({ [weak self] in
                 guard let self = self else { return }
-                self.delegate?.swiftyAdDidClose(self)
+                self.delegate?.swiftyAdsDidClose(self)
             })
         )
         return ad
@@ -121,15 +121,15 @@ public final class SwiftyAd: NSObject {
             }),
             didOpen: ({ [weak self] in
                 guard let self = self else { return }
-                self.delegate?.swiftyAdDidOpen(self)
+                self.delegate?.swiftyAdsDidOpen(self)
             }),
             didClose: ({ [weak self] in
                 guard let self = self else { return }
-                self.delegate?.swiftyAdDidClose(self)
+                self.delegate?.swiftyAdsDidClose(self)
             }),
             didReward: ({ [weak self] rewardAmount in
                 guard let self = self else { return }
-                self.delegate?.swiftyAd(self, didRewardUserWithAmount: rewardAmount)
+                self.delegate?.swiftyAds(self, didRewardUserWithAmount: rewardAmount)
             })
         )
         return ad
@@ -140,7 +140,7 @@ public final class SwiftyAd: NSObject {
     let requestBuilder: SwiftyAdRequestBuilderType
     let intervalTracker: SwiftyAdIntervalTrackerType
     let consentManager: SwiftyAdConsentManagerType
-    let mediationManager: SwiftyAdMediation?
+    let mediationManager: SwiftyAdsMediation?
     private var isRemoved = false
     
     private var testDevices: [Any] = [kGADSimulatorID]
@@ -181,7 +181,7 @@ public final class SwiftyAd: NSObject {
     init(configuration: SwiftyAdConfiguration,
          requestBuilder: SwiftyAdRequestBuilderType,
          intervalTracker: SwiftyAdIntervalTrackerType,
-         mediationManager: SwiftyAdMediation?,
+         mediationManager: SwiftyAdsMediation?,
          consentManager: SwiftyAdConsentManagerType,
          testDevices: [Any],
          notificationCenter: NotificationCenter) {
@@ -198,7 +198,7 @@ public final class SwiftyAd: NSObject {
 
 // MARK: - SwiftyAdType
 
-extension SwiftyAd: SwiftyAdType {
+extension SwiftyAds: SwiftyAdsType {
     
     /// Check if user has consent e.g to hide rewarded video button
     public var hasConsent: Bool {
@@ -230,7 +230,7 @@ extension SwiftyAd: SwiftyAdType {
     /// - parameter testDevices: The test devices to use when debugging. These will get added in addition to kGADSimulatorID.
     /// - returns handler: A handler that will return a boolean with the consent status.
     public func setup(with viewController: UIViewController,
-                      delegate: SwiftyAdDelegate?,
+                      delegate: SwiftyAdsDelegate?,
                       bannerAnimationDuration: TimeInterval,
                       testDevices: [Any],
                       handler: @escaping (_ hasConsent: Bool) -> Void) {
@@ -314,10 +314,10 @@ extension SwiftyAd: SwiftyAdType {
 
 // MARK: - Private Methods
 
-private extension SwiftyAd {
+private extension SwiftyAds {
     
     func handleConsentStatusChange(_ status: SwiftyAdConsentStatus) {
-        delegate?.swiftyAd(self, didChange: status)
+        delegate?.swiftyAds(self, didChange: status)
         mediationManager?.update(for: status)
     }
 }

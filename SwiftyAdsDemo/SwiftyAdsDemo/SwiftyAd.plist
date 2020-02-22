@@ -2,14 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>bannerAdUnitId</key>
 	<string>ca-app-pub-3940256099942544/2934735716</string>
-	<key>interstitialAdUnitId</key>
-	<string>ca-app-pub-3940256099942544/4411468910</string>
-	<key>rewardedVideoAdUnitId</key>
-	<string>ca-app-pub-3940256099942544/1712485313</string>
 	<key>gdpr</key>
 	<dict>
+		<key>isCustomForm</key>
+		<true/>
+		<key>isTaggedForUnderAgeOfConsent</key>
+		<false/>
 		<key>mediationNetworks</key>
 		<array>
 			<string>Chartboost</string>
@@ -20,10 +22,10 @@
 		<string>https://www.example.com</string>
 		<key>shouldOfferAdFree</key>
 		<false/>
-		<key>isTaggedForUnderAgeOfConsent</key>
-		<false/>
-		<key>isCustomForm</key>
-		<true/>
 	</dict>
+	<key>interstitialAdUnitId</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>rewardedVideoAdUnitId</key>
+	<string>ca-app-pub-3940256099942544/1712485313</string>
 </dict>
 </plist>

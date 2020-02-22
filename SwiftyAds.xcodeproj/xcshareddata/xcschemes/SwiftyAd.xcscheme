@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B4C1B127204C298500452094"
-               BuildableName = "SwiftyAd.framework"
-               BlueprintName = "SwiftyAd"
-               ReferencedContainer = "container:SwiftyAd.xcodeproj">
+               BuildableName = "SwiftyAds.framework"
+               BlueprintName = "SwiftyAds"
+               ReferencedContainer = "container:SwiftyAds.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -51,9 +51,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B4C1B127204C298500452094"
-            BuildableName = "SwiftyAd.framework"
-            BlueprintName = "SwiftyAd"
-            ReferencedContainer = "container:SwiftyAd.xcodeproj">
+            BuildableName = "SwiftyAds.framework"
+            BlueprintName = "SwiftyAds"
+            ReferencedContainer = "container:SwiftyAds.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

@@ -1,7 +1,7 @@
 [![Swift 5.0](https://img.shields.io/badge/swift-5.0-ED523F.svg?style=flat)](https://swift.org/download/)
 [![Platform](https://img.shields.io/cocoapods/p/SwiftyRate.svg?style=flat)]()
 
-# SwiftyAd
+# SwiftyAds
 
 A Swift helper to integrate Ads from AdMob so you can easily show banner, interstitial and rewarded video ads anywhere in your project.
 
@@ -84,10 +84,10 @@ Enter your ad settings into the SwiftyAd.plist file you added to your project. T
 
 View Controller
 ```swift
-SwiftyAd.shared.setup(with: self, delegate: self, bannerAnimationDuration: 0.3, testDevices: []) { hasConsent in
+SwiftyAds.shared.setup(with: self, delegate: self, bannerAnimationDuration: 0.3, testDevices: []) { hasConsent in
     guard hasConsent else { return }
     DispatchQueue.main.async {
-        SwiftyAd.shared.showBanner(from: self)
+        SwiftyAds.shared.showBanner(from: self)
     }
 }
 
@@ -97,33 +97,33 @@ NOTE: MediationManager parameter is a protocol with 1 method that you can option
 AppDelegate
 ```swift
 if let viewController = window?.rootViewController {
-      SwiftyAd.shared.setup...
+      SwiftyAds.shared.setup...
 }
 ```
 
 SKScene
 ```swift
 if let viewController = view?.window?.rootViewController {
-      SwiftyAd.shared.setup...
+      SwiftyAds.shared.setup...
 }
 ```
 
 Than create an extension conforming to the AdsDelegate protocol.
 ```swift
 extension GameViewController: SwiftyAdDelegate {
-    func swiftyAdDidOpen(_ swiftyAd: SwiftyAd) {
+    func swiftyAdsDidOpen(_ swiftyAds: SwiftyAds) {
         // pause your game/app if needed
     }
     
-    func swiftyAdDidClose(_ swiftyAd: SwiftyAd) { 
+    func swiftyAdsDidClose(_ swiftyAds: SwiftyAds) { 
        // resume your game/app if needed
     }
     
-    func swiftyAd(_ swiftyAd: SwiftyAd, didChange consentStatus: SwiftyAd.ConsentStatus) {
+    func swiftyAds(_ swiftyAds: SwiftyAds, didChange consentStatus: SwiftyAd.ConsentStatus) {
         // see setup for using mediationManager protocol to update your consent status
     }
     
-    func swifyAd(_ swiftyAd: SwiftyAd, didRewardUserWithAmount rewardAmount: Int) {
+    func swifyAds(_ swiftyAds: SwiftyAds, didRewardUserWithAmount rewardAmount: Int) {
        // Reward amount is a decimel number I converted to an integer for convenience. This value comes from your AdNetwork.
        if let scene = (view as? SKView)?.scene as? GameScene {
             scene.coins += rewardAmount
@@ -143,16 +143,16 @@ extension GameViewController: SwiftyAdDelegate {
 
 UIViewController
 ```swift
-SwiftyAd.shared.showBanner(from: self) 
-SwiftyAd.shared.showInterstitial(from: self)
-SwiftyAd.shared.showInterstitial(from: self, withInterval: 4) // Shows an ad every 4th time method is called
-SwiftyAd.shared.showRewardedVideo(from: self) // Should be called when pressing dedicated button
+SwiftyAds.shared.showBanner(from: self) 
+SwiftyAds.shared.showInterstitial(from: self)
+SwiftyAds.shared.showInterstitial(from: self, withInterval: 4) // Shows an ad every 4th time method is called
+SwiftyAds.shared.showRewardedVideo(from: self) // Should be called when pressing dedicated button
 ```
 
 SKScene (Do not call this in didMoveToView as .window property is still nil at that point. Use a delay or call it later)
 ```swift
 if let viewController = view?.window?.rootViewController {
-     SwiftyAd.shared.show...
+     SwiftyAds.shared.show...
 }
 ```
 
@@ -163,11 +163,11 @@ You should only show rewarded videos with a dedicated button and you should only
 ### Check if ads are ready
 
 ```swift
-if SwiftyAd.shared.isRewardedVideoReady {
+if SwiftyAds.shared.isRewardedVideoReady {
     // show reward video button
 }
 
-if SwiftyAd.shared.isInterstitialReady {
+if SwiftyAds.shared.isInterstitialReady {
     // maybe show custom ad or something similar
 }
 
@@ -179,13 +179,13 @@ if SwiftyAd.shared.isInterstitialReady {
 e.g during gameplay 
 
 ```swift
-SwiftyAd.shared.removeBanner() 
+SwiftyAds.shared.removeBanner() 
 ```
 
 ### Remove/Disable ads (in app purchases)
 
 ```swift
-SwiftyAd.shared.disable()
+SwiftyAds.shared.disable()
 ```
 
 NOTE:
@@ -197,7 +197,7 @@ For permanent storage you will need to create your own "removedAdsProduct" prope
 
 ```swift
 if UserDefaults.standard.bool(forKey: "RemovedAdsKey") == true {
-    SwiftyAd.shared.disable()
+    SwiftyAds.shared.disable()
 }
 ```
 
@@ -206,13 +206,13 @@ if UserDefaults.standard.bool(forKey: "RemovedAdsKey") == true {
 It is required that the user has the option to change their GDPR consent settings, usually via a button in settings.
 
 ```swift
-SwiftyAd.shared.askForConsent(from: viewController)
+SwiftyAds.shared.askForConsent(from: viewController)
 ```
 
 The consent button can be hidden for non EEA users like so
 
 ```swift
-consentButton.isHidden = !SwiftyAd.shared.isRequiredToAskForConsent
+consentButton.isHidden = !SwiftyAds.shared.isRequiredToAskForConsent
 ```
 
 ## When you submit your app to Apple
