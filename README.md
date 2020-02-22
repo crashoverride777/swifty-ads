@@ -66,9 +66,13 @@ There is now an [app](https://cocoapods.org/app) which makes handling pods much 
 
 Copy the `source` folder and its containing files into your project.
 
-### Step 4:
+### Step 4: 
 
-Add a new entry in the info.plist called `GADIsAdManagerApp` (String) with a value of `YES` when using SDK 7.42 or higher
+Create a new `.plist` file called SwiftyAd or copy the provided one in the sample project and update with your values
+
+### Step 5:
+
+Add a new entry in your apps info.plist called `GADIsAdManagerApp` (String) with a value of `YES` when using SDK 7.42 or higher
 
 https://developers.google.com/ad-manager/mobile-ads-sdk/ios/quick-start#update_your_infoplist
 
