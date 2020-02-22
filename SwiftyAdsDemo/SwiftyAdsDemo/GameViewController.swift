@@ -61,7 +61,7 @@ class GameViewController: UIViewController {
     }
 }
 
-// MARK: - SwiftyAdDelegate
+// MARK: - SwiftyAdsDelegate
 
 extension GameViewController: SwiftyAdsDelegate {
     
