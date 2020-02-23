@@ -17,8 +17,8 @@ s.source = {
     :tag => s.version
 }
 
-s.source_files = "Source/**/*.{swift}"
-s.resource_bundle = { "SwiftyAds" => ["Source/Resources/**/*.{strings}"] }
+s.source_files = 'Source/**/*.{swift}'
+s.resource_bundle = { 'SwiftyAds' => ['Source/Resources/**/*.{strings}'] }
 
 s.static_framework = true
 
