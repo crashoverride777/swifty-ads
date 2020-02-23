@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 s.name = 'SwiftyAds'
-s.version = '10.0.5'
+s.version = '10.0.6'
 s.license = 'MIT'
 s.summary = 'A swift helper to show ads from Google AdMob. GDPR compliant.'
 s.homepage = 'https://github.com/crashoverride777/swifty-ads'
@@ -18,10 +18,11 @@ s.source = {
 }
 
 s.source_files = "Source/**/*.{swift}"
+s.resource_bundle = "Source/**/*.{strings}
+
+s.static_framework = true
 
 s.dependency 'Google-Mobile-Ads-SDK'
 s.dependency 'PersonalizedAdConsent'
-
-s.static_framework = true
 
 end
