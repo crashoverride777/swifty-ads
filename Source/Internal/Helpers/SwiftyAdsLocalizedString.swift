@@ -41,7 +41,7 @@ enum SwiftyAdsLocalizedString {
 
 private extension SwiftyAdsLocalizedString {
     
-    static func localized(_ text: String, comment: String, argument: CVarArg? = nil, argument2: CVarArg? = nil) -> String {
+    static func localized(_ text: String, comment: String) -> String {
         return NSLocalizedString(text, tableName: nil, bundle: Bundle(for: SwiftyAds.self), value: "", comment: comment)
     }
 }

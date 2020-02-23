@@ -161,9 +161,9 @@
 		6AC971C72401B06600A0BB91 /* Ads */ = {
 			isa = PBXGroup;
 			children = (
+				6AC971CA2401B06600A0BB91 /* SwiftyAdsBanner.swift */,
 				6AC971C82401B06600A0BB91 /* SwiftyAdsInterstitial.swift */,
 				6AC971C92401B06600A0BB91 /* SwiftyAdsRewarded.swift */,
-				6AC971CA2401B06600A0BB91 /* SwiftyAdsBanner.swift */,
 			);
 			path = Ads;
 			sourceTree = "<group>";

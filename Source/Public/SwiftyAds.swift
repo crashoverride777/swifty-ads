@@ -58,7 +58,7 @@ public protocol SwiftyAdsType: AnyObject {
                mode: SwiftyAdsMode,
                handler: @escaping (_ hasConsent: Bool) -> Void)
     func askForConsent(from viewController: UIViewController)
-    func showBanner(from viewController: UIViewController)
+    func showBanner(from viewController: UIViewController, isAtTop: Bool)
     func showInterstitial(from viewController: UIViewController, withInterval interval: Int?)
     func showRewardedVideo(from viewController: UIViewController)
     func removeBanner()
@@ -84,6 +84,7 @@ public final class SwiftyAds: NSObject {
         let ad = SwiftyAdsBanner(
             adUnitId: configuration.bannerAdUnitId,
             notificationCenter: .default,
+            isLandscape: { UIDevice.current.orientation.isLandscape },
             request: ({ [unowned self] in
                 self.makeRequest()
             }),
@@ -280,12 +281,12 @@ extension SwiftyAds: SwiftyAdsType {
     /// Show banner ad
     ///
     /// - parameter viewController: The view controller that will present the ad.
-    /// - parameter position: The position of the banner. Defaults to bottom.
-    public func showBanner(from viewController: UIViewController) {
+    /// - parameter isAtTop: If set to true the banner will be displayed at the top.
+    public func showBanner(from viewController: UIViewController, isAtTop: Bool) {
         guard !isRemoved, hasConsent else { return }
-        banner.show(from: viewController)
+        banner.show(from: viewController, at: isAtTop ? .top : .bottom)
     }
- 
+    
     /// Show interstitial ad
     ///
     /// - parameter viewController: The view controller that will present the ad.
