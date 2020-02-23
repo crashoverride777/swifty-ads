@@ -18,7 +18,7 @@ s.source = {
 }
 
 s.source_files = "Source/**/*.{swift}"
-s.resource_bundle = "Source/**/*.{strings}"
+s.resource_bundle = "Source/Resources/*.lproj/*.strings"
 
 s.static_framework = true
 
