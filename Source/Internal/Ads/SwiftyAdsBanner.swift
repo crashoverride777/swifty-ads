@@ -44,9 +44,10 @@ final class SwiftyAdsBanner: NSObject {
     private let didClose: () -> Void
 
     private var bannerView: GADBannerView?
-    private var animationDuration: TimeInterval = 1.8
-    private var bannerViewConstraint: NSLayoutConstraint?
     private var position: SwiftyAdsBannerPositition = .bottom
+    private var animationDuration: TimeInterval = 1.4
+    private var bannerViewConstraint: NSLayoutConstraint?
+    private var animator: UIViewPropertyAnimator?
     
     // MARK: - Init
     
@@ -136,7 +137,7 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
 extension SwiftyAdsBanner: GADBannerViewDelegate {
     
     func adViewDidReceiveAd(_ bannerView: GADBannerView) {
-        print("SwiftyBannerAd did receive ad from: \(bannerView.responseInfo?.adNetworkClassName ?? "")")
+        print("SwiftyAdsBanner did receive ad from: \(bannerView.responseInfo?.adNetworkClassName ?? "")")
         animateToOnScreenPosition(bannerView, from: bannerView.rootViewController)
     }
     
@@ -145,6 +146,7 @@ extension SwiftyAdsBanner: GADBannerViewDelegate {
     }
     
     func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
+        #warning("is this correct?")
         didOpen()
     }
     
@@ -170,7 +172,9 @@ private extension SwiftyAdsBanner {
         bannerView?.adSize = isLandscape() ? kGADAdSizeSmartBannerLandscape : kGADAdSizeSmartBannerPortrait
     }
     
-    func animateToOnScreenPosition(_ bannerAd: GADBannerView, from viewController: UIViewController?) {
+    func animateToOnScreenPosition(_ bannerAd: GADBannerView,
+                                   from viewController: UIViewController?,
+                                   completion: (() -> Void)? = nil) {
         guard let viewController = viewController else {
             return
         }
@@ -178,15 +182,23 @@ private extension SwiftyAdsBanner {
         bannerAd.isHidden = false
         bannerViewConstraint?.constant = 0
         
-        UIView.animate(withDuration: animationDuration) {
+        stopCurrentAnimatorAnimations()
+        animator = UIViewPropertyAnimator(duration: animationDuration, curve: .easeOut) {
             viewController.view.layoutIfNeeded()
         }
+        
+        animator?.addCompletion { _ in
+            completion?()
+        }
+
+        animator?.startAnimation()
     }
     
     func animateToOffScreenPosition(_ bannerAd: GADBannerView,
                                     from viewController: UIViewController?,
                                     position: SwiftyAdsBannerPositition,
-                                    animated: Bool = true) {
+                                    animated: Bool = true,
+                                    completion: (() -> Void)? = nil) {
         guard let viewController = viewController else {
             return
         }
@@ -203,10 +215,21 @@ private extension SwiftyAdsBanner {
             return
         }
         
-        UIView.animate(withDuration: animationDuration, animations: {
+        stopCurrentAnimatorAnimations()
+        animator = UIViewPropertyAnimator(duration: animationDuration, curve: .easeOut) {
             viewController.view.layoutIfNeeded()
-        }, completion: { isSuccess in
+        }
+        
+        animator?.addCompletion { _ in
             bannerAd.isHidden = true
-        })
+            completion?()
+        }
+        
+        animator?.startAnimation()
+    }
+
+    func stopCurrentAnimatorAnimations() {
+        animator?.stopAnimation(false)
+        animator?.finishAnimation(at: .current)
     }
 }

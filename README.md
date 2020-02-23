@@ -63,33 +63,36 @@ https://developers.google.com/ad-manager/mobile-ads-sdk/ios/quick-start#update_y
 
 Create a new `SwiftyAds.plist` file like in the demo project  and update with your ad ids and settings
 
-### Setup 
+### Using SwiftyAds outside a UIViewController
 
-Call the setup method as soon as your app launches. 
-
-View Controller
-```swift
-SwiftyAds.shared.setup(with: self, delegate: self, mediation: nil, bannerAnimationDuration: 0.3, mode: .production) { hasConsent in
-    guard hasConsent else { return }
-    DispatchQueue.main.async {
-        SwiftyAds.shared.showBanner(from: self)
-    }
-}
-
-NOTE: The mediation parameter is a protocol with 1 method that you can optionally implement to update your mediation network consent status. Please read the relevant documentation from the mediation networks
-```
+SwiftyAds requires reference to a UIViewController to present ads. If you are not using SwiftyAds inside a UIViewController you can do the following to get reference the `RootViewController`.
 
 AppDelegate
 ```swift
 if let viewController = window?.rootViewController {
-      SwiftyAds.shared.setup...
+    SwiftyAds.shared...
 }
 ```
 
 SKScene
 ```swift
 if let viewController = view?.window?.rootViewController {
-      SwiftyAds.shared.setup...
+    SwiftyAds.shared...
+}
+```
+
+### Setup 
+
+It is recommended to instantiate and manage SwiftyAds in 1 centralized spot e.g rootViewController or GameViewController (SpriteKit)
+
+Call the setup method as soon as your app launches. 
+
+```swift
+SwiftyAds.shared.setup(with: self, delegate: self, bannerAnimationDuration: 1.4, mode: .production) { consentStatus in
+    guard consentStatus.hasConsent else { return }
+    DispatchQueue.main.async {
+        SwiftyAds.shared.showBanner(from: self, atTop: false)
+    }
 }
 ```
 
@@ -105,7 +108,7 @@ extension GameViewController: SwiftyAdsDelegate {
     }
     
     func swiftyAds(_ swiftyAds: SwiftyAds, didChange consentStatus: SwiftyAdsConsentStatus) {
-        // see setup for using mediationManager protocol to update your consent status
+        // e.g update your mediation networks like Chartboost, Vungle etc
     }
     
     func swiftyAds(_ swiftyAds: SwiftyAds, didRewardUserWithAmount rewardAmount: Int) {
@@ -126,19 +129,11 @@ extension GameViewController: SwiftyAdsDelegate {
 
 ### Show Ads
 
-UIViewController
 ```swift
-SwiftyAds.shared.showBanner(from: self) 
+SwiftyAds.shared.showBanner(from: self, atTop: false) // if atTop = true banner will be anchored to top of screen 
 SwiftyAds.shared.showInterstitial(from: self)
-SwiftyAds.shared.showInterstitial(from: self, withInterval: 4) // Shows an ad every 4th time method is called
-SwiftyAds.shared.showRewardedVideo(from: self) // Should be called when pressing dedicated button
-```
-
-SKScene (Do not call this in didMoveToView as .window property is still nil at that point. Use a delay or call it later)
-```swift
-if let viewController = view?.window?.rootViewController {
-     SwiftyAds.shared.show...
-}
+SwiftyAds.shared.showInterstitial(from: self, withInterval: 4) // Shows an ad every 4th time method is called. Set to nil to always show.
+SwiftyAds.shared.showRewardedVideo(from: self) // Should be called when pressing dedicated button only
 ```
 
 Note:

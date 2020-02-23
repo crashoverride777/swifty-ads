@@ -28,6 +28,15 @@ public enum SwiftyAdsConsentStatus {
     case nonPersonalized
     case adFree
     case unknown
+    
+    public var hasConsent: Bool {
+        switch self {
+        case .personalized, .nonPersonalized:
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 protocol SwiftyAdsConsentManagerType: class {

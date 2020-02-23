@@ -25,13 +25,12 @@ class GameViewController: UIViewController {
         swiftyAds.setup(
             with: self,
             delegate: self,
-            mediation: nil,
             bannerAnimationDuration: 1.5,
             mode: swiftyAdsMode,
-            handler: ({ hasConsent in
-                guard hasConsent else { return }
+            handler: ({ status in
+                guard status.hasConsent else { return }
                 DispatchQueue.main.async {
-                    self.swiftyAds.showBanner(from: self, isAtTop: true)
+                    self.swiftyAds.showBanner(from: self, atTop: false)
                 }
             })
         )

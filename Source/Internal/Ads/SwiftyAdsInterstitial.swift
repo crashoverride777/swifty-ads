@@ -25,7 +25,7 @@ import GoogleMobileAds
 protocol SwiftyAdsInterstitialType: AnyObject {
     var isReady: Bool { get }
     func load()
-    func show(for viewController: UIViewController)
+    func show(from viewController: UIViewController)
     func stopLoading()
 }
 
@@ -56,12 +56,10 @@ final class SwiftyAdsInterstitial: NSObject {
 // MARK: - SwiftyAdInterstitialType
 
 extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
-    
-    /// Check if interstitial video is ready (e.g to show alternative ad like an in house ad)
-    /// Will try to reload an ad if it returns false.
+
     var isReady: Bool {
         guard interstitial?.isReady == true else {
-            print("SwiftyInterstitialAd ad is not ready, reloading...")
+            print("SwiftyAdsInterstitial ad is not ready, reloading...")
             load()
             return false
         }
@@ -74,7 +72,7 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
         interstitial?.load(request())
     }
     
-    func show(for viewController: UIViewController) {
+    func show(from viewController: UIViewController) {
         interstitial?.present(fromRootViewController: viewController)
     }
     
@@ -89,7 +87,7 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
 extension SwiftyAdsInterstitial: GADInterstitialDelegate {
     
     func interstitialDidReceiveAd(_ ad: GADInterstitial) {
-        print("SwiftyInterstitialAd did receive ad from: \(ad.responseInfo?.adNetworkClassName ?? "")")
+        print("SwiftyAdsInterstitial did receive ad from: \(ad.responseInfo?.adNetworkClassName ?? "")")
     }
     
     func interstitialWillPresentScreen(_ ad: GADInterstitial) {
@@ -97,6 +95,7 @@ extension SwiftyAdsInterstitial: GADInterstitialDelegate {
     }
     
     func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
+        #warning("is this correct?")
         didOpen()
     }
     

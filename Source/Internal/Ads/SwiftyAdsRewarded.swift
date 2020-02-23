@@ -98,7 +98,7 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
 extension SwiftyAdsRewarded: GADRewardedAdDelegate {
     
     func rewardedAdDidPresent(_ rewardedAd: GADRewardedAd) {
-        print("AdMob reward based video did present ad from: \(rewardedAd.responseInfo?.adNetworkClassName ?? "")")
+        print("SwiftyAdsRewarded did present ad from: \(rewardedAd.responseInfo?.adNetworkClassName ?? "")")
         didOpen()
     }
     
@@ -113,7 +113,7 @@ extension SwiftyAdsRewarded: GADRewardedAdDelegate {
     }
     
     func rewardedAd(_ rewardedAd: GADRewardedAd, userDidEarn reward: GADAdReward) {
-        print("AdMob reward based video ad did reward user with \(reward)")
+        print("SwiftyAdsRewarded ad did reward user with \(reward)")
         let rewardAmount = Int(truncating: reward.amount)
         didReward(rewardAmount)
     }

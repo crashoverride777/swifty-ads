@@ -34,11 +34,6 @@ public protocol SwiftyAdsDelegate: class {
     func swiftyAds(_ swiftyAds: SwiftyAds, didRewardUserWithAmount rewardAmount: Int)
 }
 
-/// A protocol for mediation implementations
-public protocol SwiftyAdsMediationType: class {
-    func update(for consentType: SwiftyAdsConsentStatus)
-}
-
 /// SwiftyAds mode
 public enum SwiftyAdsMode {
     case production
@@ -53,12 +48,11 @@ public protocol SwiftyAdsType: AnyObject {
     var isRewardedVideoReady: Bool { get }
     func setup(with viewController: UIViewController,
                delegate: SwiftyAdsDelegate?,
-               mediation: SwiftyAdsMediationType?,
                bannerAnimationDuration: TimeInterval,
                mode: SwiftyAdsMode,
-               handler: @escaping (_ hasConsent: Bool) -> Void)
+               handler: @escaping (SwiftyAdsConsentStatus) -> Void)
     func askForConsent(from viewController: UIViewController)
-    func showBanner(from viewController: UIViewController, isAtTop: Bool)
+    func showBanner(from viewController: UIViewController, atTop isAtTop: Bool)
     func showInterstitial(from viewController: UIViewController, withInterval interval: Int?)
     func showRewardedVideo(from viewController: UIViewController)
     func removeBanner()
@@ -79,8 +73,17 @@ public final class SwiftyAds: NSObject {
     
     // MARK: - Properties
     
-    /// Ads
-    private lazy var banner: SwiftyAdsBannerType = {
+    private var configuration: SwiftyAdsConfiguration
+    private let requestBuilder: SwiftyAdsRequestBuilderType
+    private let intervalTracker: SwiftyAdsIntervalTrackerType
+    private let consentManager: SwiftyAdsConsentManagerType
+    private weak var delegate: SwiftyAdsDelegate?
+    
+    private var isDisabled = false
+    private var mode: SwiftyAdsMode
+    private var testDevices: [Any] = [kGADSimulatorID]
+    
+    private lazy var bannerAd: SwiftyAdsBannerType = {
         let ad = SwiftyAdsBanner(
             adUnitId: configuration.bannerAdUnitId,
             notificationCenter: .default,
@@ -100,7 +103,7 @@ public final class SwiftyAds: NSObject {
         return ad
     }()
     
-    private lazy var interstitial: SwiftyAdsInterstitialType = {
+    private lazy var interstitialAd: SwiftyAdsInterstitialType = {
         let ad = SwiftyAdsInterstitial(
             adUnitId: configuration.interstitialAdUnitId,
             request: ({ [unowned self] in
@@ -118,7 +121,7 @@ public final class SwiftyAds: NSObject {
         return ad
     }()
     
-    private lazy var rewarded: SwiftyAdsRewardedType = {
+    private lazy var rewardedAd: SwiftyAdsRewardedType = {
         let ad = SwiftyAdsRewarded(
             adUnitId: configuration.rewardedVideoAdUnitId,
             request: ({ [unowned self] in
@@ -139,18 +142,7 @@ public final class SwiftyAds: NSObject {
         )
         return ad
     }()
-    
-    /// Init
-    private var configuration: SwiftyAdsConfiguration
-    private let requestBuilder: SwiftyAdsRequestBuilderType
-    private let intervalTracker: SwiftyAdsIntervalTrackerType
-    private let consentManager: SwiftyAdsConsentManagerType
-    private var mediation: SwiftyAdsMediationType?
-    private weak var delegate: SwiftyAdsDelegate?
-    private var isRemoved = false
-    private var mode: SwiftyAdsMode
-    private var testDevices: [Any] = [kGADSimulatorID]
-    
+        
     // MARK: - Init
     
     override convenience init() {
@@ -172,7 +164,6 @@ public final class SwiftyAds: NSObject {
             configuration: configuration,
             requestBuilder: requestBuilder,
             intervalTracker: SwiftyAdsIntervalTracker(),
-            mediation: nil,
             consentManager: consentManager,
             mode: .production,
             notificationCenter: .default
@@ -182,14 +173,12 @@ public final class SwiftyAds: NSObject {
     init(configuration: SwiftyAdsConfiguration,
          requestBuilder: SwiftyAdsRequestBuilderType,
          intervalTracker: SwiftyAdsIntervalTrackerType,
-         mediation: SwiftyAdsMediationType?,
          consentManager: SwiftyAdsConsentManagerType,
          mode: SwiftyAdsMode,
          notificationCenter: NotificationCenter) {
         self.configuration = configuration
         self.requestBuilder = requestBuilder
         self.intervalTracker = intervalTracker
-        self.mediation = mediation
         self.consentManager = consentManager
         self.mode = mode
         super.init()
@@ -214,31 +203,28 @@ extension SwiftyAds: SwiftyAdsType {
     /// Check if interstitial video is ready (e.g to show alternative ad like an in house ad)
     /// Will try to reload an ad if it returns false.
     public var isInterstitialReady: Bool {
-        interstitial.isReady
+        interstitialAd.isReady
     }
      
-    /// Check if reward video is ready (e.g to hide a reward video button)
+    /// Check if reward video is ready (e.g to hide/disable the rewarded video button)
     /// Will try to reload an ad if it returns false.
     public var isRewardedVideoReady: Bool {
-        rewarded.isReady
+        rewardedAd.isReady
     }
     
     /// Setup swift ad
     ///
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter delegate: A delegate to receive event callbacks. Can also be set manually if needed.
-    /// - parameter mediation: A implementation of SwiftyAdsMediationType protocol to manage mediation support.
     /// - parameter bannerAnimationDuration: The duration of the banner animation.
     /// - parameter mode: Set the mode of ads, production or debug.
-    /// - returns handler: A handler that will return a boolean with the consent status.
+    /// - parameter handler: A handler that will return the current consent status.
     public func setup(with viewController: UIViewController,
                       delegate: SwiftyAdsDelegate?,
-                      mediation: SwiftyAdsMediationType?,
                       bannerAnimationDuration: TimeInterval,
                       mode: SwiftyAdsMode,
-                      handler: @escaping (_ hasConsent: Bool) -> Void) {
+                      handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
         self.delegate = delegate
-        self.mediation = mediation
         
         switch mode {
         case .production:
@@ -249,27 +235,24 @@ extension SwiftyAds: SwiftyAdsType {
         }
         
         // Update banner animation duration
-        banner.updateAnimationDuration(to: bannerAnimationDuration)
+        bannerAd.updateAnimationDuration(to: bannerAnimationDuration)
        
         // Make consent request
         self.consentManager.ask(from: viewController, skipIfAlreadyAuthorized: true) { status in
             self.handleConsentStatusChange(status)
            
-            switch status {
-            case .personalized, .nonPersonalized:
-                if !self.isRemoved {
-                    self.interstitial.load()
+            if status.hasConsent {
+                if !self.isDisabled {
+                    self.interstitialAd.load()
                 }
-                self.rewarded.load()
-                handler(true)
-            
-            case .adFree, .unknown:
-                handler(false)
+                self.rewardedAd.load()
             }
+            
+            handler(status)
         }
     }
 
-    /// Ask for consent. Use this for the consent button that should be e.g in settings.
+    /// Ask for consent e.g when consent button is pressed
     ///
     /// - parameter viewController: The view controller that will present the consent form.
     public func askForConsent(from viewController: UIViewController) {
@@ -282,9 +265,10 @@ extension SwiftyAds: SwiftyAdsType {
     ///
     /// - parameter viewController: The view controller that will present the ad.
     /// - parameter isAtTop: If set to true the banner will be displayed at the top.
-    public func showBanner(from viewController: UIViewController, isAtTop: Bool) {
-        guard !isRemoved, hasConsent else { return }
-        banner.show(from: viewController, at: isAtTop ? .top : .bottom)
+    public func showBanner(from viewController: UIViewController, atTop isAtTop: Bool) {
+        guard !isDisabled else { return }
+        guard hasConsent else { return }
+        bannerAd.show(from: viewController, at: isAtTop ? .top : .bottom)
     }
     
     /// Show interstitial ad
@@ -292,10 +276,11 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter viewController: The view controller that will present the ad.
     /// - parameter interval: The interval of when to show the ad, e.g every 4th time the method is called. Set to nil to always show.
     public func showInterstitial(from viewController: UIViewController, withInterval interval: Int?) {
-        guard !isRemoved, hasConsent else { return }
-        guard intervalTracker.canShow(forInterval: interval) else { return }
+        guard !isDisabled else { return }
+        guard hasConsent else { return }
         guard isInterstitialReady else { return }
-        interstitial.show(for: viewController)
+        guard intervalTracker.canShow(forInterval: interval) else { return }
+        interstitialAd.show(from: viewController)
     }
     
     /// Show rewarded video ad
@@ -303,19 +288,19 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter viewController: The view controller that will present the ad.
     public func showRewardedVideo(from viewController: UIViewController) {
         guard hasConsent else { return }
-        rewarded.show(from: viewController)
+        rewardedAd.show(from: viewController)
     }
     
     /// Remove banner ads
     public func removeBanner() {
-        banner.remove()
+        bannerAd.remove()
     }
 
     /// Disable ads e.g in app purchases
     public func disable() {
-        isRemoved = true
+        isDisabled = true
         removeBanner()
-        interstitial.stopLoading()
+        interstitialAd.stopLoading()
     }
 }
 
@@ -325,7 +310,6 @@ private extension SwiftyAds {
     
     func handleConsentStatusChange(_ status: SwiftyAdsConsentStatus) {
         delegate?.swiftyAds(self, didChange: status)
-        mediation?.update(for: status)
     }
     
     func makeRequest() -> GADRequest {

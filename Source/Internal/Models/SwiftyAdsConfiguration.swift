@@ -37,16 +37,14 @@ extension SwiftyAdsConfiguration {
     
     static var propertyList: SwiftyAdsConfiguration {
         guard let configurationURL = Bundle.main.url(forResource: "SwiftyAds", withExtension: "plist") else {
-            print("SwiftyAds must have a valid property list")
-            fatalError("SwiftyAds must have a valid property list")
+            fatalError("SwiftyAdsConfiguration could not find SwiftyAds.plist in the main bundle")
         }
         do {
             let data = try Data(contentsOf: configurationURL)
             let decoder = PropertyListDecoder()
             return try decoder.decode(SwiftyAdsConfiguration.self, from: data)
         } catch {
-            print("SwiftyAds must have a valid property list \(error)")
-            fatalError("SwiftyAds must have a valid property list")
+            fatalError("SwiftyAdsConfiguration could not decode property list, please ensure all fields are correct")
         }
     }
     
