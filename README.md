@@ -4,7 +4,7 @@
 
 # SwiftyAds
 
-A Swift helper to integrate Ads from AdMob so you can easily show banner, interstitial and rewarded video ads anywhere in your project.
+A Swift helper to integrate Ads from Google AdMob so you can easily show banner, interstitial and rewarded video ads anywhere in your project.
 
 This helper follows all the best practices in regards to ads, like creating shared banners and correctly preloading interstitial and rewarded video ads so they are always ready to show.
 
@@ -26,7 +26,7 @@ https://developers.google.com/admob/ios/mediation
 
 NOTE:
 
-Make sure to include your mediation networks when setting up SwiftyAd (see How To Use)
+Make sure to include your mediation networks when setting up SwiftyAd (see Usage-> Add SwiftyAds.plist)
 
 ## Create AdMob account
 
@@ -51,8 +51,6 @@ Altenatively you can drag the `Source` folder and its containing files into your
 
 ## Usage
 
-Note: SwifyAds will always display test app when testing in debug mode.
-
 ### Update Info.plist: 
 
 Add a new entry in your apps info.plist called `GADIsAdManagerApp` (String) with a value of `YES` when using SDK 7.42 or higher
@@ -61,7 +59,7 @@ https://developers.google.com/ad-manager/mobile-ads-sdk/ios/quick-start#update_y
 
 ### Add SwiftyAds.plist
 
-Create a new `SwiftyAds.plist` file like in the demo project  and update with your ad ids and settings
+Create a new `SwiftyAds.plist` file like in the demo project  and update with your ad ids and other settings
 
 ### Using SwiftyAds outside a UIViewController
 
@@ -83,12 +81,18 @@ if let viewController = view?.window?.rootViewController {
 
 ### Setup 
 
-It is recommended to instantiate and manage SwiftyAds in 1 centralized spot e.g rootViewController or GameViewController (SpriteKit)
+It is recommended to instantiate and manage SwiftyAds in 1 centralized spot e.g RootViewController or GameViewController (SpriteKit)
 
 Call the setup method as soon as your app launches. 
 
 ```swift
-SwiftyAds.shared.setup(with: self, delegate: self, bannerAnimationDuration: 1.4, mode: .production) { consentStatus in
+#if DEBUG
+let swiftyAdsMode: SwiftyAdsMode = .test(devices: [])
+#else
+let swiftyAdsMode: SwiftyAdsMode = .production
+#endif
+
+SwiftyAds.shared.setup(with: self, delegate: self, bannerAnimationDuration: 1.4, mode: swiftyAdsMode) { consentStatus in
     guard consentStatus.hasConsent else { return }
     DispatchQueue.main.async {
         SwiftyAds.shared.showBanner(from: self, atTop: false)
@@ -108,7 +112,7 @@ extension GameViewController: SwiftyAdsDelegate {
     }
     
     func swiftyAds(_ swiftyAds: SwiftyAds, didChange consentStatus: SwiftyAdsConsentStatus) {
-        // e.g update your mediation networks like Chartboost, Vungle etc
+        // update your mediation network consent settings if needed e.g Chartboost, Vungle etc
     }
     
     func swiftyAds(_ swiftyAds: SwiftyAds, didRewardUserWithAmount rewardAmount: Int) {
@@ -139,6 +143,8 @@ SwiftyAds.shared.showRewardedVideo(from: self) // Should be called when pressing
 Note:
 
 You should only show rewarded videos with a dedicated button and you should only show that button when a video is loaded (see below). If the user presses the rewarded video button and watches a video it might take a few seconds for the next video to reload. Incase the user immediately tries to watch another video this helper will show a "no video is available at the moment" alert. 
+
+AdMob provided a new rewarded video API which lets you preload multiple rewarded videos with different AdUnitIds. Currentlty SwiftyAds only supports loading 1 rewarded video ad at a time. I will try to add support for multiple ads very soon.
 
 ### Check if ads are ready
 
