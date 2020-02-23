@@ -42,6 +42,23 @@ enum SwiftyAdsLocalizedString {
 private extension SwiftyAdsLocalizedString {
     
     static func localized(_ text: String, comment: String) -> String {
-        return NSLocalizedString(text, tableName: nil, bundle: Bundle(for: SwiftyAds.self), value: "", comment: comment)
+        return NSLocalizedString(text, tableName: nil, bundle: .localization, value: "", comment: comment)
+    }
+}
+
+private extension Bundle {
+ 
+    static var localization: Bundle {
+        let frameworkBundle = Bundle(for: SwiftyAds.self)
+        
+        guard let path = frameworkBundle.resourcePath else {
+            return frameworkBundle
+        }
+        
+        guard let resourceBundle = Bundle(path: path.appending("/SwiftyAds.bundle")) else {
+            return frameworkBundle
+        }
+        
+        return resourceBundle
     }
 }

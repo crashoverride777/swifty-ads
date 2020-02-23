@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 s.name = 'SwiftyAds'
-s.version = '10.0.6'
+s.version = '10.0.7'
 s.license = 'MIT'
 s.summary = 'A swift helper to show ads from Google AdMob. GDPR compliant.'
 s.homepage = 'https://github.com/crashoverride777/swifty-ads'
@@ -18,7 +18,7 @@ s.source = {
 }
 
 s.source_files = "Source/**/*.{swift}"
-s.resource_bundle = { "SwiftyAds" => ["Source/Resources/*.lproj/*.strings"] }
+s.resource_bundle = 'SwiftyAds' => ['Source/Resources/**/*.{strings}']
 
 s.static_framework = true
 
