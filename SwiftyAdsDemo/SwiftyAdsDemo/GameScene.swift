@@ -96,15 +96,10 @@ private extension GameScene {
             onClose: ({
                 print("SwiftyAds rewarded video ad did close")
             }),
-            onReward: ({ [weak self] rewardAmount in
-                print("SwiftyAds rewarded video ad did reward user with \(rewardAmount)")
-                self?.coins += rewardAmount
-            }),
             onError: ({ error in
                 print("SwiftyAds rewarded video ad error \(error)")
             }),
-            wasReady: ({ wasReady in
-                guard !wasReady else { return }
+            onNotReady: ({
                 let alertController = UIAlertController(
                     title: "Sorry",
                     message: "No video available to watch at the moment.",
@@ -112,6 +107,10 @@ private extension GameScene {
                 )
                 alertController.addAction(UIAlertAction(title: "Ok", style: .cancel))
                 viewController.present(alertController, animated: true)
+            }),
+            onReward: ({ [weak self] rewardAmount in
+                print("SwiftyAds rewarded video ad did reward user with \(rewardAmount)")
+                self?.coins += rewardAmount
             })
         )
     }

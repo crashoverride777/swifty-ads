@@ -28,16 +28,16 @@ protocol SwiftyAdsRewardedType: AnyObject {
     func show(from viewController: UIViewController,
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
-              onReward: ((Int) -> Void)?,
               onError: ((Error) -> Void)?,
-              wasReady: (_ isReady: Bool) -> Void)
+              onNotReady: (() -> Void)?,
+              onReward: @escaping (Int) -> Void)
 }
 
 final class SwiftyAdsRewarded: NSObject {
     
     // MARK: - Properties
     
-    private let adUnitId: String
+    private let adUnitId: () -> String
     private let request: () -> GADRequest
     private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
@@ -48,7 +48,7 @@ final class SwiftyAdsRewarded: NSObject {
     
     // MARK: - Init
     
-    init(adUnitId: String, request: @escaping () -> GADRequest) {
+    init(adUnitId: @escaping () -> String, request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
         self.request = request
     }
@@ -68,7 +68,7 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
     }
     
     func load() {
-        rewardedAd = GADRewardedAd(adUnitID: adUnitId)
+        rewardedAd = GADRewardedAd(adUnitID: adUnitId())
         rewardedAd?.load(request()) { error in
             if let error = error {
                 print(error.localizedDescription)
@@ -80,17 +80,18 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
     func show(from viewController: UIViewController,
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
-              onReward: ((Int) -> Void)?,
               onError: ((Error) -> Void)?,
-              wasReady: (_ isReady: Bool) -> Void) {
+              onNotReady: (() -> Void)?,
+              onReward: @escaping (Int) -> Void) {
         if isReady {
             rewardedAd?.present(fromRootViewController: viewController, delegate: self)
+        } else {
+            onNotReady?()
         }
         self.onOpen = onOpen
         self.onClose = onClose
         self.onError = onError
         self.onReward = onReward
-        wasReady(isReady)
     }
 }
 

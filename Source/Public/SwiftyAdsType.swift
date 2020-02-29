@@ -70,9 +70,9 @@ public protocol SwiftyAdsType: AnyObject {
     func showRewardedVideo(from viewController: UIViewController,
                            onOpen: (() -> Void)?,
                            onClose: (() -> Void)?,
-                           onReward: ((Int) -> Void)?,
                            onError: ((Error) -> Void)?,
-                           wasReady: (Bool) -> Void)
+                           onNotReady: (() -> Void)?,
+                           onReward: @escaping (Int) -> Void)
     func removeBanner()
     func disable()
 }

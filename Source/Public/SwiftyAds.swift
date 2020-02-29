@@ -45,11 +45,15 @@ public final class SwiftyAds: NSObject {
         
     private lazy var bannerAd: SwiftyAdsBannerType = {
         let ad = SwiftyAdsBanner(
-            adUnitId: configuration.bannerAdUnitId,
             notificationCenter: .default,
-            isLandscape: { UIDevice.current.orientation.isLandscape },
+            adUnitId: ({ [unowned self] in
+                self.configuration.bannerAdUnitId
+            }),
             request: ({ [unowned self] in
                 self.makeRequest()
+            }),
+            isLandscape: ({
+                UIDevice.current.orientation.isLandscape
             })
         )
         return ad
@@ -57,7 +61,9 @@ public final class SwiftyAds: NSObject {
     
     private lazy var interstitialAd: SwiftyAdsInterstitialType = {
         let ad = SwiftyAdsInterstitial(
-            adUnitId: configuration.interstitialAdUnitId,
+            adUnitId: ({ [unowned self] in
+                self.configuration.interstitialAdUnitId
+            }),
             request: ({ [unowned self] in
                 self.makeRequest()
             })
@@ -67,7 +73,9 @@ public final class SwiftyAds: NSObject {
     
     private lazy var rewardedAd: SwiftyAdsRewardedType = {
         let ad = SwiftyAdsRewarded(
-            adUnitId: configuration.rewardedVideoAdUnitId,
+            adUnitId: ({ [unowned self] in
+                self.configuration.rewardedVideoAdUnitId
+            }),
             request: ({ [unowned self] in
                 self.makeRequest()
             })
@@ -172,7 +180,7 @@ extension SwiftyAds: SwiftyAdsType {
     ///
     /// - parameter viewController: The view controller that will present the consent form.
     public func askForConsent(from viewController: UIViewController) {
-        consentManager.ask(from: viewController, skipAlertIfAlreadyAuthorized: false) { _ in }
+        consentManager.ask(from: viewController, skipAlertIfAlreadyAuthorized: false, handler: nil)
     }
     
     /// Show banner ad
@@ -230,23 +238,23 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter viewController: The view controller that will present the ad.
     /// - parameter onOpen: An optional callback when the banner was presented.
     /// - parameter onClose: An optional callback when the ad was dismissed.
-    /// - parameter onReward: An optional callback when the reward has been granted.
     /// - parameter onError: An optional callback when an error has occurred.
-    /// - parameter wasReady: A completion handler returning a boolean to indicate if the ad was displayed e.g show alert if not.
+    /// - parameter onNotReady: An optional callback when the ad was not ready.
+    /// - parameter onReward: A callback when the reward has been granted.
     public func showRewardedVideo(from viewController: UIViewController,
                                   onOpen: (() -> Void)?,
                                   onClose: (() -> Void)?,
-                                  onReward: ((Int) -> Void)?,
                                   onError: ((Error) -> Void)?,
-                                  wasReady: (Bool) -> Void) {
+                                  onNotReady: (() -> Void)?,
+                                  onReward: @escaping (Int) -> Void) {
         guard hasConsent else { return }
         rewardedAd.show(
             from: viewController,
             onOpen: onOpen,
             onClose: onClose,
-            onReward: onReward,
             onError: onError,
-            wasReady: wasReady
+            onNotReady: onNotReady,
+            onReward: onReward
         )
     }
     
