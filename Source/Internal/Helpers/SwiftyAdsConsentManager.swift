@@ -223,16 +223,10 @@ private extension SwiftyAdsConsentManager {
                                content: SwiftyAdsCustomConsentAlertContent,
                                handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
         // Create alert message with all ad providers
-        var message =
+        let message =
             content.message +
-            "\n\n" +
-            //content.weShowAdsFrom +
-            configuration().gdpr.adNetworksString
-        
-        //if let adProviders = consentInformation.adProviders, !adProviders.isEmpty {
-         //   message += "\n\n" + content.weUseAdProviders + "\((adProviders.map({ $0.name })).joined(separator: ", "))"
-        //}
-        //message += "\n\n\(configuration.privacyPolicyURL)"
+            "\n\n" + configuration().gdpr.adNetworksString +
+            "\n\n" + configuration().gdpr.privacyPolicyURL
         
         // Create alert controller
         let alertController = UIAlertController(title: content.title, message: message, preferredStyle: .alert)
