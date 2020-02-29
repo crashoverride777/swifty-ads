@@ -17,41 +17,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         // Setup swifty ad
-        #if DEBUG
-        let swiftyAdsMode: SwiftyAdsMode = .test(devices: [])
-        #else
-        let swiftyAdsMode: SwiftyAdsMode = .production
-        #endif
-        let customConsentContent = SwiftyAdsCustomConsentAlertContent(
-            title: "Permission to use data",
-            message: "We care about your privacy and data security. We keep this app free by showing ads. You can change your choice anytime in the app settings. Our partners will collect data and use a unique identifier on your device to show you ads.",
-            actionAdFree: nil,
-            actionAllowPersonalized: "Allow personalized",
-            actionAllowNonPersonalized: "Allow non personalized"
-        )
-        
-        swiftyAds.setup(
-            with: self,
-            mode: swiftyAdsMode,
-            consentStyle: .custom(customConsentContent),
-            consentStatusDidChange: ({ consentStatus in
-                print("SwiftyAds did change consent status to \(consentStatus)")
-                // e.g update mediation networks
-            }),
-            handler: ({ status in
-                guard status.hasConsent else { return }
-                DispatchQueue.main.async {
-                    self.swiftyAds.showBanner(
-                        from: self,
-                        atTop: false,
-                        animationDuration: 1.5,
-                        onOpen: nil,
-                        onClose: nil,
-                        onError: nil
-                    )
-                }
-            })
-        )
+        setupSwiftyAds()
         
         // Load game scene
         if let scene = GameScene(fileNamed: "GameScene") {
@@ -87,5 +53,48 @@ class GameViewController: UIViewController {
     
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+}
+
+// MARK: - Private Methods
+
+private extension GameViewController {
+    
+    func setupSwiftyAds() {
+        #if DEBUG
+        let mode: SwiftyAdsMode = .test(devices: [])
+        #else
+        let mode: SwiftyAdsMode = .production
+        #endif
+        let customConsentContent = SwiftyAdsCustomConsentAlertContent(
+            title: "Permission to use data",
+            message: "We care about your privacy and data security. We keep this app free by showing ads. You can change your choice anytime in the app settings. Our partners will collect data and use a unique identifier on your device to show you ads.",
+            actionAdFree: nil,
+            actionAllowPersonalized: "Allow personalized",
+            actionAllowNonPersonalized: "Allow non personalized"
+        )
+        
+        swiftyAds.setup(
+            with: self,
+            mode: mode,
+            consentStyle: .custom(customConsentContent),
+            consentStatusDidChange: ({ consentStatus in
+                print("SwiftyAds did change consent status to \(consentStatus)")
+                // e.g update mediation networks
+            }),
+            handler: ({ status in
+                guard status.hasConsent else { return }
+                DispatchQueue.main.async {
+                    self.swiftyAds.showBanner(
+                        from: self,
+                        atTop: false,
+                        animationDuration: 1.5,
+                        onOpen: nil,
+                        onClose: nil,
+                        onError: nil
+                    )
+                }
+            })
+        )
     }
 }

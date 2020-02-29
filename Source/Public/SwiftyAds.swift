@@ -163,7 +163,8 @@ extension SwiftyAds: SwiftyAdsType {
         }
      
         // Make consent request
-        consentManager.ask(from: viewController, skipIfAlreadyAuthorized: true) { status in
+        consentManager.ask(from: viewController, skipAlertIfAlreadyAuthorized: true) { [weak self] status in
+            guard let self = self else { return }
             self.handleConsentStatusChange(status)
            
             if status.hasConsent {
@@ -181,8 +182,8 @@ extension SwiftyAds: SwiftyAdsType {
     ///
     /// - parameter viewController: The view controller that will present the consent form.
     public func askForConsent(from viewController: UIViewController) {
-        consentManager.ask(from: viewController, skipIfAlreadyAuthorized: false) { status in
-            self.handleConsentStatusChange(status)
+        consentManager.ask(from: viewController, skipAlertIfAlreadyAuthorized: false) { [weak self] status in
+            self?.handleConsentStatusChange(status)
         }
     }
     
@@ -283,11 +284,6 @@ private extension SwiftyAds {
     }
     
     func makeRequest() -> GADRequest {
-        switch mode {
-        case .production:
-            return requestBuilder.build(.production)
-        case .test(let devices):
-            return requestBuilder.build(.test(devices: devices))
-        }
+        requestBuilder.build(mode)
     }
 }

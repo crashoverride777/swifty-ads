@@ -46,7 +46,7 @@ protocol SwiftyAdsConsentManagerType: class {
     var hasConsent: Bool { get }
     var isTaggedForUnderAgeOfConsent: Bool { get }
     func ask(from viewController: UIViewController,
-             skipIfAlreadyAuthorized: Bool,
+             skipAlertIfAlreadyAuthorized: Bool,
              handler: @escaping (SwiftyAdsConsentStatus) -> Void)
 }
 
@@ -105,46 +105,39 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
     }
     
     func ask(from viewController: UIViewController,
-             skipIfAlreadyAuthorized: Bool,
+             skipAlertIfAlreadyAuthorized: Bool,
              handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
-        consentInformation.requestConsentInfoUpdate(forPublisherIdentifiers: configuration().ids) { (_ error) in
+        consentInformation.requestConsentInfoUpdate(forPublisherIdentifiers: configuration().ids) { [weak self] (_ error) in
+            guard let self = self else { return }
+            
+            // Handle error
             if let error = error {
                 print("SwiftyAdsConsentManager error requesting consent info update: \(error)")
                 handler(self.status)
                 return
             }
             
-            // If we already have permission dont ask again
-            if skipIfAlreadyAuthorized {
-                switch self.consentInformation.consentStatus {
-                case .personalized:
-                    print("SwiftyAdsConsentManager already has consent permission, no need to ask again")
-                    handler(self.status)
-                    return
-                case .nonPersonalized:
-                    print("SwiftyAdsConsentManager already has consent permission, no need to ask again")
-                    handler(self.status)
-                    return
-                case .unknown:
-                    break
-                @unknown default:
-                    break
-                }
-            }
-            
             // We only need to ask for consent if we are in the EEA
-            guard self.consentInformation.isRequestLocationInEEAOrUnknown else {
+            guard self.isInEEA else {
                 print("SwiftyAdsConsentManager not in EU, no need to handle consent logic")
                 self.consentInformation.consentStatus = .personalized
                 handler(.personalized)
                 return
             }
             
-            // We also do not need to ask for consent if under age is turned on because than all add requests have to be non-personalized
+            // We also do not need to ask for consent if under age is turned on
+            // because than all add requests have to be non-personalized as a minor
+            // cannot legally consent
             guard !self.isTaggedForUnderAgeOfConsent else {
                 self.consentInformation.consentStatus = .nonPersonalized
                 print("SwiftyAdsConsentManager under age, no need to handle consent logic as it must be non-personalized")
                 handler(.nonPersonalized)
+                return
+            }
+            
+            // Skip alert if needed
+            if skipAlertIfAlreadyAuthorized, self.hasConsent {
+                handler(self.status)
                 return
             }
             

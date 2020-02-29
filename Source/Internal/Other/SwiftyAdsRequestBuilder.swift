@@ -23,13 +23,8 @@
 import Foundation
 import GoogleMobileAds
   
-enum SwiftyAdsRequestBuilderMode {
-    case production
-    case test(devices: [String])
-}
-
 protocol SwiftyAdsRequestBuilderType: AnyObject {
-    func build(_ mode: SwiftyAdsRequestBuilderMode) -> GADRequest
+    func build(_ mode: SwiftyAdsMode) -> GADRequest
 }
 
 final class SwiftyAdsRequestBuilder {
@@ -58,7 +53,7 @@ final class SwiftyAdsRequestBuilder {
 
 extension SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
   
-    func build(_ mode: SwiftyAdsRequestBuilderMode) -> GADRequest {
+    func build(_ mode: SwiftyAdsMode) -> GADRequest {
         switch mode {
         case .production:
             break
