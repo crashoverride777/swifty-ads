@@ -54,7 +54,7 @@ public protocol SwiftyAdsType: AnyObject {
     func askForConsent(from viewController: UIViewController)
     func showBanner(from viewController: UIViewController, atTop isAtTop: Bool, animationDuration: TimeInterval)
     func showInterstitial(from viewController: UIViewController, withInterval interval: Int?)
-    func showRewardedVideo(from viewController: UIViewController, completion: (Bool) -> Void)
+    func showRewardedVideo(from viewController: UIViewController, didShow: (Bool) -> Void)
     func removeBanner()
     func disable()
 }
@@ -90,14 +90,6 @@ public final class SwiftyAds: NSObject {
             isLandscape: { UIDevice.current.orientation.isLandscape },
             request: ({ [unowned self] in
                 self.makeRequest()
-            }),
-            didOpen: ({ [weak self] in
-                guard let self = self else { return }
-                self.delegate?.swiftyAdsDidOpen(self)
-            }),
-            didClose: ({ [weak self] in
-                guard let self = self else { return }
-                self.delegate?.swiftyAdsDidClose(self)
             })
         )
         return ad
@@ -108,14 +100,6 @@ public final class SwiftyAds: NSObject {
             adUnitId: configuration.interstitialAdUnitId,
             request: ({ [unowned self] in
                 self.makeRequest()
-            }),
-            didOpen: ({ [weak self] in
-                guard let self = self else { return }
-                self.delegate?.swiftyAdsDidOpen(self)
-            }),
-            didClose: ({ [weak self] in
-                guard let self = self else { return }
-                self.delegate?.swiftyAdsDidClose(self)
             })
         )
         return ad
@@ -126,18 +110,6 @@ public final class SwiftyAds: NSObject {
             adUnitId: configuration.rewardedVideoAdUnitId,
             request: ({ [unowned self] in
                 self.makeRequest()
-            }),
-            didOpen: ({ [weak self] in
-                guard let self = self else { return }
-                self.delegate?.swiftyAdsDidOpen(self)
-            }),
-            didClose: ({ [weak self] in
-                guard let self = self else { return }
-                self.delegate?.swiftyAdsDidClose(self)
-            }),
-            didReward: ({ [weak self] rewardAmount in
-                guard let self = self else { return }
-                self.delegate?.swiftyAds(self, didRewardUserWithAmount: rewardAmount)
             })
         )
         return ad
@@ -257,7 +229,19 @@ extension SwiftyAds: SwiftyAdsType {
     public func showBanner(from viewController: UIViewController, atTop isAtTop: Bool, animationDuration: TimeInterval) {
         guard !isDisabled else { return }
         guard hasConsent else { return }
-        bannerAd.show(from: viewController, at: isAtTop ? .top : .bottom, animationDuration: animationDuration)
+        bannerAd.show(
+            from: viewController,
+            at: isAtTop ? .top : .bottom,
+            animationDuration: animationDuration,
+            onOpen: ({ [weak self] in
+                guard let self = self else { return }
+                self.delegate?.swiftyAdsDidOpen(self)
+            }),
+            onClose: ({ [weak self] in
+                guard let self = self else { return }
+                self.delegate?.swiftyAdsDidClose(self)
+            })
+        )
     }
     
     /// Show interstitial ad
@@ -269,16 +253,41 @@ extension SwiftyAds: SwiftyAdsType {
         guard hasConsent else { return }
         guard isInterstitialReady else { return }
         guard intervalTracker.canShow(forInterval: interval) else { return }
-        interstitialAd.show(from: viewController)
+        interstitialAd.show(
+            from: viewController,
+            onOpen: ({ [weak self] in
+                guard let self = self else { return }
+                self.delegate?.swiftyAdsDidOpen(self)
+            }),
+            onClose: ({ [weak self] in
+                guard let self = self else { return }
+                self.delegate?.swiftyAdsDidClose(self)
+            })
+        )
     }
     
     /// Show rewarded video ad
     ///
     /// - parameter viewController: The view controller that will present the ad.
-    /// - parameter completion: A completion handler returning a boolean to indicate if the ad was displayed e.g show alert if not.
-    public func showRewardedVideo(from viewController: UIViewController, completion: (Bool) -> Void) {
+    /// - parameter didShow: A completion handler returning a boolean to indicate if the ad was displayed e.g show alert if not.
+    public func showRewardedVideo(from viewController: UIViewController, didShow: (Bool) -> Void) {
         guard hasConsent else { return }
-        rewardedAd.show(from: viewController, completion: completion)
+        rewardedAd.show(
+            from: viewController,
+            onOpen: ({ [weak self] in
+                guard let self = self else { return }
+                self.delegate?.swiftyAdsDidOpen(self)
+            }),
+            onClose: ({ [weak self] in
+                guard let self = self else { return }
+                self.delegate?.swiftyAdsDidClose(self)
+            }),
+            onReward: ({ [weak self] rewardAmount in
+                guard let self = self else { return }
+                self.delegate?.swiftyAds(self, didRewardUserWithAmount: rewardAmount)
+            }),
+            didShow: didShow
+        )
     }
     
     /// Remove banner ads

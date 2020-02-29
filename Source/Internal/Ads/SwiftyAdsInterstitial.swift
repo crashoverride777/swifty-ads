@@ -25,7 +25,9 @@ import GoogleMobileAds
 protocol SwiftyAdsInterstitialType: AnyObject {
     var isReady: Bool { get }
     func load()
-    func show(from viewController: UIViewController)
+    func show(from viewController: UIViewController,
+              onOpen: @escaping () -> Void,
+              onClose: @escaping () -> Void)
     func stopLoading()
 }
 
@@ -35,21 +37,16 @@ final class SwiftyAdsInterstitial: NSObject {
     
     private let adUnitId: String
     private let request: () -> GADRequest
-    private let didOpen: () -> Void
-    private let didClose: () -> Void
+    private var onOpen: (() -> Void)?
+    private var onClose: (() -> Void)?
     
     private var interstitial: GADInterstitial?
     
     // MARK: - Init
     
-    init(adUnitId: String,
-         request: @escaping () -> GADRequest,
-         didOpen: @escaping () -> Void,
-         didClose: @escaping () -> Void) {
+    init(adUnitId: String, request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
         self.request = request
-        self.didOpen = didOpen
-        self.didClose = didClose
     }
 }
 
@@ -72,7 +69,12 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
         interstitial?.load(request())
     }
     
-    func show(from viewController: UIViewController) {
+    func show(from viewController: UIViewController,
+              onOpen: @escaping () -> Void,
+              onClose: @escaping () -> Void) {
+        guard isReady else { return }
+        self.onOpen = onOpen
+        self.onClose = onClose
         interstitial?.present(fromRootViewController: viewController)
     }
     
@@ -91,23 +93,24 @@ extension SwiftyAdsInterstitial: GADInterstitialDelegate {
     }
     
     func interstitialWillPresentScreen(_ ad: GADInterstitial) {
-        didOpen()
+        onOpen?()
     }
     
     func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
-        #warning("is this correct?")
-        didOpen()
+
     }
     
     func interstitialWillDismissScreen(_ ad: GADInterstitial) {
+    
     }
     
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
-        didClose()
+        onClose?()
         load()
     }
     
     func interstitialDidFail(toPresentScreen ad: GADInterstitial) {
+    
     }
     
     func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
