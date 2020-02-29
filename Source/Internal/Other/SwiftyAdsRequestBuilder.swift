@@ -24,25 +24,22 @@ import Foundation
 import GoogleMobileAds
   
 protocol SwiftyAdsRequestBuilderType: AnyObject {
-    func build(_ mode: SwiftyAdsMode) -> GADRequest
+    func build() -> GADRequest
 }
 
 final class SwiftyAdsRequestBuilder {
     
     // MARK: - Properties
     
-    private let mobileAds: GADMobileAds
     private let isGDPRRequired: Bool
     private let isNonPersonalizedOnly: Bool
     private let isTaggedForUnderAgeOfConsent: Bool
     
     // MARK: - Init
     
-    init(mobileAds: GADMobileAds,
-         isGDPRRequired: Bool,
+    init(isGDPRRequired: Bool,
          isNonPersonalizedOnly: Bool,
          isTaggedForUnderAgeOfConsent: Bool) {
-        self.mobileAds = mobileAds
         self.isGDPRRequired = isGDPRRequired
         self.isNonPersonalizedOnly = isNonPersonalizedOnly
         self.isTaggedForUnderAgeOfConsent = isTaggedForUnderAgeOfConsent
@@ -53,22 +50,7 @@ final class SwiftyAdsRequestBuilder {
 
 extension SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
   
-    func build(_ mode: SwiftyAdsMode) -> GADRequest {
-        switch mode {
-        case .production:
-            break
-        case .test(let devices):
-            mobileAds.requestConfiguration.testDeviceIdentifiers = devices
-        }
-        return makeRequest()
-    }
-}
-
-// MARK: - Private Methods
-
-private extension SwiftyAdsRequestBuilder {
-    
-    func makeRequest() -> GADRequest {
+    func build() -> GADRequest {
         let request = GADRequest()
         
         // If no GDPR required we do not have to add any extras and can just return default request

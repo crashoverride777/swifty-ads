@@ -62,7 +62,7 @@ private extension GameViewController {
     
     func setupSwiftyAds() {
         #if DEBUG
-        let mode: SwiftyAdsMode = .test(devices: [])
+        let mode: SwiftyAdsMode = .debug(testDeviceIdentifiers: [])
         #else
         let mode: SwiftyAdsMode = .production
         #endif

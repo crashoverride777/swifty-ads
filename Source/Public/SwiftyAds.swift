@@ -36,15 +36,12 @@ public final class SwiftyAds: NSObject {
     
     // MARK: - Properties
     
+    private let mobileAds: GADMobileAds
     private let intervalTracker: SwiftyAdsIntervalTrackerType
     
-    private var configuration: SwiftyAdsConfiguration!
-    private var mode: SwiftyAdsMode!
     private var consentManager: SwiftyAdsConsentManagerType!
-    private var consentStyle: SwiftyAdsConsentStyle!
-    
+    private var configuration: SwiftyAdsConfiguration!
     private var isDisabled = false
-    private var testDevices: [Any] = [kGADSimulatorID]
         
     private lazy var bannerAd: SwiftyAdsBannerType = {
         let ad = SwiftyAdsBanner(
@@ -82,7 +79,6 @@ public final class SwiftyAds: NSObject {
     
     private var requestBuilder: SwiftyAdsRequestBuilderType {
         SwiftyAdsRequestBuilder(
-            mobileAds: .sharedInstance(),
             isGDPRRequired: consentManager.isInEEA,
             isNonPersonalizedOnly: consentManager.status == .nonPersonalized,
             isTaggedForUnderAgeOfConsent: consentManager.isTaggedForUnderAgeOfConsent
@@ -93,20 +89,19 @@ public final class SwiftyAds: NSObject {
     
     // Shared instance
     private override init() {
-        self.intervalTracker = SwiftyAdsIntervalTracker()
+        mobileAds = .sharedInstance()
+        intervalTracker = SwiftyAdsIntervalTracker()
         super.init()
         
     }
     
     // Testing
-    init(mode: SwiftyAdsMode,
+    init(mobileAds: GADMobileAds,
          consentManager: SwiftyAdsConsentManagerType,
-         intervalTracker: SwiftyAdsIntervalTrackerType,
-         consentStyle: SwiftyAdsConsentStyle) {
-        self.mode = mode
+         intervalTracker: SwiftyAdsIntervalTrackerType) {
+        self.mobileAds = mobileAds
         self.consentManager = consentManager
         self.intervalTracker = intervalTracker
-        self.consentStyle = consentStyle
     }
 }
 
@@ -141,23 +136,20 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter mode: Set the mode of ads, production or debug.
     /// - parameter consentStyle: The style of the consent alert.
-    /// - parameter consentStatusDidChange: A callback handler that will fire everytime the consent status has changed.
+    /// - parameter consentStatusDidChange: A handler that will fire everytime the consent status has changed.
     /// - parameter handler: A handler that will return the current consent status after the consent alert has been dismissed.
     public func setup(with viewController: UIViewController,
                       mode: SwiftyAdsMode,
                       consentStyle: SwiftyAdsConsentStyle,
                       consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                       handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
-        self.mode = mode
-        self.consentStyle = consentStyle
-        
         // Update configuration for selected mode
         switch mode {
         case .production:
             configuration = .production
-        case .test(let testDevices):
+        case .debug(let testDeviceIdentifiers):
             configuration = .debug
-            self.testDevices.append(contentsOf: testDevices)
+            mobileAds.requestConfiguration.testDeviceIdentifiers = testDeviceIdentifiers//kGADSimulatorID
         }
      
         // Create consent manager and make request
@@ -276,6 +268,6 @@ extension SwiftyAds: SwiftyAdsType {
 private extension SwiftyAds {
     
     func makeRequest() -> GADRequest {
-        requestBuilder.build(mode)
+        requestBuilder.build()
     }
 }

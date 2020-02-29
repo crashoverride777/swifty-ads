@@ -40,7 +40,7 @@ public struct SwiftyAdsCustomConsentAlertContent {
 
 public enum SwiftyAdsMode {
     case production
-    case test(devices: [String])
+    case debug(testDeviceIdentifiers: [String])
 }
 
 // MARK: - Type
