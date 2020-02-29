@@ -118,6 +118,7 @@ extension SwiftyAdsInterstitial: GADInterstitialDelegate {
     }
     
     func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
+        print("SwiftyAdsInterstitial didFailToReceiveAdWithError \(error)")
         onError?(error)
         // Do not reload here as it might cause endless loading loops if no/slow internet
     }

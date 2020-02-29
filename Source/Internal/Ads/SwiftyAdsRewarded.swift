@@ -115,6 +115,7 @@ extension SwiftyAdsRewarded: GADRewardedAdDelegate {
     }
     
     func rewardedAd(_ rewardedAd: GADRewardedAd, didFailToPresentWithError error: Error) {
+        print("SwiftyAdsRewarded didFailToReceiveAdWithError \(error)")
         onError?(error)
         // Do not reload here as it might cause endless loading loops if no/slow internet
     }

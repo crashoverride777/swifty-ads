@@ -41,7 +41,9 @@ extension SwiftyAdsConfiguration {
     
     var adNetworks: String {
         let networks: [String] = ["Google AdMob"] + mediationNetworks
-        return networks.map({ $0 }).joined(separator: networks.count > 1 ? ", " : "")
+        return networks
+            .map({ $0 })
+            .joined(separator: networks.count > 1 ? ", " : "")
     }
 }
 
