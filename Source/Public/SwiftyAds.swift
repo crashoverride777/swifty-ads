@@ -22,20 +22,6 @@
 
 import GoogleMobileAds
 
-/// SwiftyAdsDelegate
-public protocol SwiftyAdsDelegate: class {
-    /// SwiftyAds did open
-    func swiftyAdsDidOpen(_ swiftyAds: SwiftyAds)
-    /// SwiftyAds did close
-    func swiftyAdsDidClose(_ swiftyAds: SwiftyAds)
-    /// SwiftyAds did change consent status
-    func swiftyAds(_ swiftyAds: SwiftyAds, didChange consentStatus: SwiftyAdsConsentStatus)
-    /// SwiftyAds did reward user
-    func swiftyAds(_ swiftyAds: SwiftyAds, didRewardUserWithAmount rewardAmount: Int)
-    /// SwiftAds error
-    func swiftyAds(_ swiftyAds: SwiftyAds, didFailWith error: Error)
-}
-
 /// SwiftyAds mode
 public enum SwiftyAdsMode {
     case production
@@ -49,9 +35,9 @@ public protocol SwiftyAdsType: AnyObject {
     var isInterstitialReady: Bool { get }
     var isRewardedVideoReady: Bool { get }
     func setup(with viewController: UIViewController,
-               delegate: SwiftyAdsDelegate?,
                mode: SwiftyAdsMode,
                consentStyle: SwiftyAdsConsentStyle,
+               consentStatusDidChange: ((SwiftyAdsConsentStatus) -> Void)?,
                handler: @escaping (SwiftyAdsConsentStatus) -> Void)
     func askForConsent(from viewController: UIViewController)
     func showBanner(from viewController: UIViewController,
@@ -94,7 +80,7 @@ public final class SwiftyAds: NSObject {
     private var consentManager: SwiftyAdsConsentManagerType!
     private let intervalTracker: SwiftyAdsIntervalTrackerType
     private var consentStyle: SwiftyAdsConsentStyle = .adMob(shouldOfferAdFree: false)
-    private weak var delegate: SwiftyAdsDelegate?
+    private var consentStatusDidChange: ((SwiftyAdsConsentStatus) -> Void)?
     
     private var isDisabled = false
     private var testDevices: [Any] = [kGADSimulatorID]
@@ -193,18 +179,18 @@ extension SwiftyAds: SwiftyAdsType {
     /// Setup swift ad
     ///
     /// - parameter viewController: The view controller that will present the consent alert if needed.
-    /// - parameter delegate: A delegate to receive event callbacks. Can also be set manually if needed.
     /// - parameter mode: Set the mode of ads, production or debug.
     /// - parameter consentStyle: The style of the consent alert.
+    /// - parameter consentStatusDidChange: An optional callback that will trigger everytime the consent status has changed.
     /// - parameter handler: A handler that will return the current consent status.
     public func setup(with viewController: UIViewController,
-                      delegate: SwiftyAdsDelegate?,
                       mode: SwiftyAdsMode,
                       consentStyle: SwiftyAdsConsentStyle,
+                      consentStatusDidChange: ((SwiftyAdsConsentStatus) -> Void)?,
                       handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
-        self.delegate = delegate
         self.consentStyle = consentStyle
-       
+        self.consentStatusDidChange = consentStatusDidChange
+        
         switch mode {
         case .production:
             configuration = .propertyList
@@ -257,21 +243,9 @@ extension SwiftyAds: SwiftyAdsType {
             from: viewController,
             at: isAtTop ? .top : .bottom,
             animationDuration: animationDuration,
-            onOpen: ({ [weak self] in
-                guard let self = self else { return }
-                self.delegate?.swiftyAdsDidOpen(self)
-                onOpen?()
-            }),
-            onClose: ({ [weak self] in
-                guard let self = self else { return }
-                self.delegate?.swiftyAdsDidClose(self)
-                onClose?()
-            }),
-            onError: ({ [weak self] error in
-                guard let self = self else { return }
-                self.delegate?.swiftyAds(self, didFailWith: error)
-                onError?(error)
-            })
+            onOpen: onOpen,
+            onClose: onClose,
+            onError: onError
         )
     }
     
@@ -293,21 +267,9 @@ extension SwiftyAds: SwiftyAdsType {
         guard intervalTracker.canShow(forInterval: interval) else { return }
         interstitialAd.show(
             from: viewController,
-            onOpen: ({ [weak self] in
-                guard let self = self else { return }
-                self.delegate?.swiftyAdsDidOpen(self)
-                onOpen?()
-            }),
-            onClose: ({ [weak self] in
-                guard let self = self else { return }
-                self.delegate?.swiftyAdsDidClose(self)
-                onClose?()
-            }),
-            onError: ({ [weak self] error in
-                guard let self = self else { return }
-                self.delegate?.swiftyAds(self, didFailWith: error)
-                onError?(error)
-            })
+            onOpen: onOpen,
+            onClose: onClose,
+            onError: onError
         )
     }
     
@@ -328,26 +290,10 @@ extension SwiftyAds: SwiftyAdsType {
         guard hasConsent else { return }
         rewardedAd.show(
             from: viewController,
-            onOpen: ({ [weak self] in
-                guard let self = self else { return }
-                self.delegate?.swiftyAdsDidOpen(self)
-                onOpen?()
-            }),
-            onClose: ({ [weak self] in
-                guard let self = self else { return }
-                self.delegate?.swiftyAdsDidClose(self)
-                onClose?()
-            }),
-            onReward: ({ [weak self] rewardAmount in
-                guard let self = self else { return }
-                self.delegate?.swiftyAds(self, didRewardUserWithAmount: rewardAmount)
-                onReward?(rewardAmount)
-            }),
-            onError: ({ [weak self] error in
-                guard let self = self else { return }
-                self.delegate?.swiftyAds(self, didFailWith: error)
-                onError?(error)
-            }),
+            onOpen: onOpen,
+            onClose: onClose,
+            onReward: onReward,
+            onError: onError,
             wasReady: wasReady
         )
     }
@@ -370,7 +316,7 @@ extension SwiftyAds: SwiftyAdsType {
 private extension SwiftyAds {
     
     func handleConsentStatusChange(_ status: SwiftyAdsConsentStatus) {
-        delegate?.swiftyAds(self, didChange: status)
+        consentStatusDidChange?(status)
     }
     
     func makeRequest() -> GADRequest {

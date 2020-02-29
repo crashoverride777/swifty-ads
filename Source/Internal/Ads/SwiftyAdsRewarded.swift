@@ -26,10 +26,10 @@ protocol SwiftyAdsRewardedType: AnyObject {
     var isReady: Bool { get }
     func load()
     func show(from viewController: UIViewController,
-              onOpen: @escaping () -> Void,
-              onClose: @escaping () -> Void,
-              onReward: @escaping (Int) -> Void,
-              onError: @escaping (Error) -> Void,
+              onOpen: (() -> Void)?,
+              onClose: (() -> Void)?,
+              onReward: ((Int) -> Void)?,
+              onError: ((Error) -> Void)?,
               wasReady: (_ isReady: Bool) -> Void)
 }
 
@@ -78,10 +78,10 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
     }
  
     func show(from viewController: UIViewController,
-              onOpen: @escaping () -> Void,
-              onClose: @escaping () -> Void,
-              onReward: @escaping (Int) -> Void,
-              onError: @escaping (Error) -> Void,
+              onOpen: (() -> Void)?,
+              onClose: (() -> Void)?,
+              onReward: ((Int) -> Void)?,
+              onError: ((Error) -> Void)?,
               wasReady: (_ isReady: Bool) -> Void) {
         if isReady {
             rewardedAd?.present(fromRootViewController: viewController, delegate: self)

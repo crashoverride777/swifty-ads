@@ -43,7 +43,9 @@ class GameScene: SKScene {
                     withInterval: 2,
                     onOpen: nil,
                     onClose: nil,
-                    onError: nil
+                    onError: ({ error in
+                        print("SwiftyAds interstitial error \(error)")
+                    })
                 )
            
             case rewardedLabel:
@@ -51,8 +53,14 @@ class GameScene: SKScene {
                     from: viewController,
                     onOpen: nil,
                     onClose: nil,
-                    onReward: nil,
-                    onError: nil,
+                    onReward: ({ [weak self] rewardAmount in
+                        guard let self = self else { return }
+                        print("SwiftyAds did reward user with \(rewardAmount)")
+                        self.coins += rewardAmount
+                    }),
+                    onError: ({ error in
+                        print("SwiftyAds rewarded video error \(error)")
+                    }),
                     wasReady: ({ success in
                         if !success {
                             let alertController = UIAlertController(

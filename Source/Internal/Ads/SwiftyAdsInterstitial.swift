@@ -26,9 +26,9 @@ protocol SwiftyAdsInterstitialType: AnyObject {
     var isReady: Bool { get }
     func load()
     func show(from viewController: UIViewController,
-              onOpen: @escaping () -> Void,
-              onClose: @escaping () -> Void,
-              onError: @escaping (Error) -> Void)
+              onOpen: (() -> Void)?,
+              onClose: (() -> Void)?,
+              onError: ((Error) -> Void)?)
     func stopLoading()
 }
 
@@ -72,9 +72,9 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
     }
     
     func show(from viewController: UIViewController,
-              onOpen: @escaping () -> Void,
-              onClose: @escaping () -> Void,
-              onError: @escaping (Error) -> Void) {
+              onOpen: (() -> Void)?,
+              onClose: (() -> Void)?,
+              onError: ((Error) -> Void)?) {
         guard isReady else { return }
         self.onOpen = onOpen
         self.onClose = onClose

@@ -32,9 +32,12 @@ class GameViewController: UIViewController {
         
         swiftyAds.setup(
             with: self,
-            delegate: self,
             mode: swiftyAdsMode,
             consentStyle: .custom(customConsentContent),
+            consentStatusDidChange: ({ consentStatus in
+                print("SwiftyAds did change consent status to \(consentStatus)")
+                // e.g update mediation networks
+            }),
             handler: ({ status in
                 guard status.hasConsent else { return }
                 DispatchQueue.main.async {
@@ -84,35 +87,5 @@ class GameViewController: UIViewController {
     
     override var prefersStatusBarHidden: Bool {
         return true
-    }
-}
-
-// MARK: - SwiftyAdsDelegate
-
-extension GameViewController: SwiftyAdsDelegate {
-    
-    func swiftyAdsDidOpen(_ swiftyAds: SwiftyAds) {
-        print("SwiftyAds did open")
-    }
-    
-    func swiftyAdsDidClose(_ swiftyAds: SwiftyAds) {
-        print("SwiftyAds did close")
-    }
-    
-    func swiftyAds(_ swiftyAds: SwiftyAds, didChange consentStatus: SwiftyAdsConsentStatus) {
-        print("SwiftyAds did change consent status to \(consentStatus)")
-        // e.g update mediation networks
-    }
-    
-    func swiftyAds(_ swiftyAds: SwiftyAds, didRewardUserWithAmount rewardAmount: Int) {
-        print("SwiftyAds did reward user with \(rewardAmount)")
-        
-        if let scene = (view as? SKView)?.scene as? GameScene {
-            scene.coins += rewardAmount
-        }
-    }
-    
-    func swiftyAds(_ swiftyAds: SwiftyAds, didFailWith error: Error) {
-        print("SwiftyAds error \(error)")
     }
 }

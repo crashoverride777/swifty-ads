@@ -31,9 +31,9 @@ protocol SwiftyAdsBannerType: AnyObject {
     func show(from viewController: UIViewController,
               at position: SwiftyAdsBannerPositition,
               animationDuration: TimeInterval,
-              onOpen: @escaping () -> Void,
-              onClose: @escaping () -> Void,
-              onError: @escaping (Error) -> Void)
+              onOpen: (() -> Void)?,
+              onClose: (() -> Void)?,
+              onError: ((Error) -> Void)?)
     func remove()
 }
 
@@ -81,9 +81,9 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
     func show(from viewController: UIViewController,
               at position: SwiftyAdsBannerPositition,
               animationDuration: TimeInterval,
-              onOpen: @escaping () -> Void,
-              onClose: @escaping () -> Void,
-              onError: @escaping (Error) -> Void) {
+              onOpen: (() -> Void)?,
+              onClose: (() -> Void)?,
+              onError: ((Error) -> Void)?) {
         self.position = position
         self.animationDuration = animationDuration
         self.onOpen = onOpen
