@@ -25,7 +25,7 @@ import GoogleMobileAds
 protocol SwiftyAdsRewardedType: AnyObject {
     var isReady: Bool { get }
     func load()
-    func show(from viewController: UIViewController)
+    func show(from viewController: UIViewController, completion: (Bool) -> Void)
 }
 
 final class SwiftyAdsRewarded: NSObject {
@@ -60,7 +60,7 @@ final class SwiftyAdsRewarded: NSObject {
 extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
     
     var isReady: Bool {
-        guard rewardedAd?.isReady == true else {
+        guard let rewardedAd = rewardedAd, rewardedAd.isReady else {
             print("SwiftyRewardedAd reward video is not ready, reloading...")
             load()
             return false
@@ -78,18 +78,11 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
         }
     }
  
-    func show(from viewController: UIViewController) {
+    func show(from viewController: UIViewController, completion: (Bool) -> Void) {
         if isReady {
             rewardedAd?.present(fromRootViewController: viewController, delegate: self)
-        } else {
-            let alertController = UIAlertController(
-                title: SwiftyAdsLocalizedString.sorry,
-                message: SwiftyAdsLocalizedString.noVideo,
-                preferredStyle: .alert
-            )
-            alertController.addAction(UIAlertAction(title: SwiftyAdsLocalizedString.ok, style: .cancel))
-            viewController.present(alertController, animated: true)
         }
+        completion(isReady)
     }
 }
 

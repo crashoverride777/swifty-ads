@@ -24,12 +24,11 @@ import Foundation
 
 struct SwiftyAdsConsentConfiguration: Codable {
     let privacyPolicyURL: String
-    let shouldOfferAdFree: Bool
     let mediationNetworks: [String]
     let isTaggedForUnderAgeOfConsent: Bool
-    let isCustomForm: Bool
     
-    var mediationNetworksString: String {
-        return mediationNetworks.map({ $0 }).joined(separator: ", ")
+    var adNetworksString: String {
+        let networks: [String] = ["Google AdMob"] + mediationNetworks
+        return networks.map({ $0 }).joined(separator: networks.count > 1 ? ", " : "")
     }
 }

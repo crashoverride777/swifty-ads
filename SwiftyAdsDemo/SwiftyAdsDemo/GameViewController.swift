@@ -22,15 +22,23 @@ class GameViewController: UIViewController {
         #else
         let swiftyAdsMode: SwiftyAdsMode = .production
         #endif
+        let customConsentContent = SwiftyAdsCustomConsentAlertContent(
+            title: "Permission to use data",
+            message: "We care about your privacy and data security. We keep this app free by showing ads. You can change your choice anytime in the app settings. Our partners will collect data and use a unique identifier on your device to show you ads.",
+            actionAdFree: nil,
+            actionAllowPersonalized: "Allow personalized",
+            actionAllowNonPersonalized: "Allow non personalized"
+        )
+        
         swiftyAds.setup(
             with: self,
             delegate: self,
-            bannerAnimationDuration: 1.5,
             mode: swiftyAdsMode,
+            consentStyle: .custom(customConsentContent),
             handler: ({ status in
                 guard status.hasConsent else { return }
                 DispatchQueue.main.async {
-                    self.swiftyAds.showBanner(from: self, atTop: false)
+                    self.swiftyAds.showBanner(from: self, atTop: false, animationDuration: 1.5)
                 }
             })
         )

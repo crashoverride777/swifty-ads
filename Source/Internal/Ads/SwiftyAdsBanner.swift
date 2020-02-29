@@ -28,9 +28,8 @@ enum SwiftyAdsBannerPositition {
 }
 
 protocol SwiftyAdsBannerType: AnyObject {
-    func show(from viewController: UIViewController, at position: SwiftyAdsBannerPositition)
+    func show(from viewController: UIViewController, at position: SwiftyAdsBannerPositition, animationDuration: TimeInterval)
     func remove()
-    func updateAnimationDuration(to duration: TimeInterval)
 }
 
 final class SwiftyAdsBanner: NSObject {
@@ -77,8 +76,9 @@ final class SwiftyAdsBanner: NSObject {
 
 extension SwiftyAdsBanner: SwiftyAdsBannerType {
     
-    func show(from viewController: UIViewController, at position: SwiftyAdsBannerPositition) {
+    func show(from viewController: UIViewController, at position: SwiftyAdsBannerPositition, animationDuration: TimeInterval) {
         self.position = position
+        self.animationDuration = animationDuration
         
         // Remove old banners
         remove()
@@ -125,10 +125,6 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
         bannerView?.removeFromSuperview()
         bannerView = nil
         bannerViewConstraint = nil
-    }
-    
-    func updateAnimationDuration(to duration: TimeInterval) {
-        animationDuration = duration
     }
 }
 

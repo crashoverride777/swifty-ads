@@ -29,7 +29,7 @@ struct SwiftyAdsConfiguration: Codable {
     let gdpr: SwiftyAdsConsentConfiguration
 
     var ids: [String] {
-        return [bannerAdUnitId, interstitialAdUnitId, rewardedVideoAdUnitId].filter { !$0.isEmpty }
+        [bannerAdUnitId, interstitialAdUnitId, rewardedVideoAdUnitId].filter { !$0.isEmpty }
     }
 }
 
@@ -55,10 +55,8 @@ extension SwiftyAdsConfiguration {
             rewardedVideoAdUnitId: "ca-app-pub-3940256099942544/1712485313",
             gdpr: SwiftyAdsConsentConfiguration(
                 privacyPolicyURL: "https://developers.google.com/admob/ios/eu-consent",
-                shouldOfferAdFree: false,
-                mediationNetworks: [],
-                isTaggedForUnderAgeOfConsent: false,
-                isCustomForm: true
+                mediationNetworks: ["Test Mediation Network 1, Test Mediation Network 2"],
+                isTaggedForUnderAgeOfConsent: false
             )
         )
     }

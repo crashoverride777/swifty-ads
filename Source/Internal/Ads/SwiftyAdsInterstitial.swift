@@ -58,7 +58,7 @@ final class SwiftyAdsInterstitial: NSObject {
 extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
 
     var isReady: Bool {
-        guard interstitial?.isReady == true else {
+        guard let interstitial = interstitial, interstitial.isReady else {
             print("SwiftyAdsInterstitial ad is not ready, reloading...")
             load()
             return false

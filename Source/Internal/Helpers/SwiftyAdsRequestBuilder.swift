@@ -59,15 +59,13 @@ final class SwiftyAdsRequestBuilder {
 extension SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
   
     func build(_ mode: SwiftyAdsRequestBuilderMode) -> GADRequest {
-        let request = GADRequest()
         switch mode {
         case .production:
             break
         case .test(let devices):
             mobileAds.requestConfiguration.testDeviceIdentifiers = devices
         }
-        addGDPRExtrasIfNeeded(for: request)
-        return request
+        return makeRequest()
     }
 }
 
@@ -75,9 +73,12 @@ extension SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
 
 private extension SwiftyAdsRequestBuilder {
     
-    func addGDPRExtrasIfNeeded(for request: GADRequest) {
+    func makeRequest() -> GADRequest {
+        let request = GADRequest()
+        
+        // If no GDPR required we do not have to add any extras and can just return default request
         guard isGDPRRequired else {
-            return
+            return request
         }
             
         // Create additional parameters with under age of consent
@@ -94,5 +95,8 @@ private extension SwiftyAdsRequestBuilder {
         
         // Register extras in request
         request.register(extras)
+        
+        // Return the request the the added extras
+        return request
     }
 }

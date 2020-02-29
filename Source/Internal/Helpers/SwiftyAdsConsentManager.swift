@@ -54,16 +54,16 @@ final class SwiftyAdsConsentManager {
 
     // MARK: - Properties
 
-    private let ids: [String]
-    private let configuration: SwiftyAdsConsentConfiguration
+    private let configuration: () -> SwiftyAdsConfiguration
+    private let consentStyle: () -> SwiftyAdsConsentStyle
     private let consentInformation: PACConsentInformation = .sharedInstance
     
     // MARK: - Init
     
-    init(ids: [String], configuration: SwiftyAdsConsentConfiguration) {
-        self.ids = ids
+    init(configuration: @escaping () -> SwiftyAdsConfiguration, consentStyle: @escaping () -> SwiftyAdsConsentStyle) {
+        self.consentStyle = consentStyle
         self.configuration = configuration
-        consentInformation.isTaggedForUnderAgeOfConsent = configuration.isTaggedForUnderAgeOfConsent
+        consentInformation.isTaggedForUnderAgeOfConsent = configuration().gdpr.isTaggedForUnderAgeOfConsent
     }
 }
 
@@ -101,13 +101,13 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
     }
 
     var isTaggedForUnderAgeOfConsent: Bool {
-        configuration.isTaggedForUnderAgeOfConsent
+        configuration().gdpr.isTaggedForUnderAgeOfConsent
     }
     
     func ask(from viewController: UIViewController,
              skipIfAlreadyAuthorized: Bool,
              handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
-        consentInformation.requestConsentInfoUpdate(forPublisherIdentifiers: ids) { (_ error) in
+        consentInformation.requestConsentInfoUpdate(forPublisherIdentifiers: configuration().ids) { (_ error) in
             if let error = error {
                 print("SwiftyAdsConsentManager error requesting consent info update: \(error)")
                 handler(self.status)
@@ -149,10 +149,11 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
             }
             
             // Show consent form
-            if self.configuration.isCustomForm {
-                self.showCustomConsentForm(from: viewController, handler: handler)
-            } else {
-                self.showDefaultConsentForm(from: viewController, handler: handler)
+            switch self.consentStyle() {
+            case .adMob(let shouldOfferAdFree):
+                self.showDefaultConsentForm(from: viewController, shouldOfferAdFree: shouldOfferAdFree, handler: handler)
+            case .custom(let content):
+                self.showCustomConsentForm(from: viewController, content: content, handler: handler)
             }
         }
     }
@@ -163,9 +164,10 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
 private extension SwiftyAdsConsentManager {
     
     func showDefaultConsentForm(from viewController: UIViewController,
+                                shouldOfferAdFree: Bool,
                                 handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
         // Make sure we have a valid privacy policy url
-        guard let url = URL(string: configuration.privacyPolicyURL) else {
+        guard let url = URL(string: configuration().gdpr.privacyPolicyURL) else {
             print("SwiftyAdsConsentManager invalid privacy policy URL")
             handler(status)
             return
@@ -181,7 +183,7 @@ private extension SwiftyAdsConsentManager {
         // Set form properties
         form.shouldOfferPersonalizedAds = true
         form.shouldOfferNonPersonalizedAds = true
-        form.shouldOfferAdFree = configuration.shouldOfferAdFree
+        form.shouldOfferAdFree = shouldOfferAdFree
         
         // Load form
         form.load { (_ error) in
@@ -218,40 +220,40 @@ private extension SwiftyAdsConsentManager {
 private extension SwiftyAdsConsentManager {
     
     func showCustomConsentForm(from viewController: UIViewController,
+                               content: SwiftyAdsCustomConsentAlertContent,
                                handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
         // Create alert message with all ad providers
         var message =
-            SwiftyAdsLocalizedString.consentMessage +
+            content.message +
             "\n\n" +
-            SwiftyAdsLocalizedString.weShowAdsFrom +
-            "Google AdMob, " +
-            configuration.mediationNetworksString
+            //content.weShowAdsFrom +
+            configuration().gdpr.adNetworksString
         
-        if let adProviders = consentInformation.adProviders, !adProviders.isEmpty {
-            message += "\n\n" + SwiftyAdsLocalizedString.weUseAdProviders + "\((adProviders.map({ $0.name })).joined(separator: ", "))"
-        }
-        message += "\n\n\(configuration.privacyPolicyURL)"
+        //if let adProviders = consentInformation.adProviders, !adProviders.isEmpty {
+         //   message += "\n\n" + content.weUseAdProviders + "\((adProviders.map({ $0.name })).joined(separator: ", "))"
+        //}
+        //message += "\n\n\(configuration.privacyPolicyURL)"
         
         // Create alert controller
-        let alertController = UIAlertController(title: SwiftyAdsLocalizedString.consentTitle, message: message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: content.title, message: message, preferredStyle: .alert)
         
         // Personalized action
-        let personalizedAction = UIAlertAction(title: SwiftyAdsLocalizedString.allowPersonalized, style: .default) { action in
+        let personalizedAction = UIAlertAction(title: content.actionAllowPersonalized, style: .default) { action in
             self.consentInformation.consentStatus = .personalized
             handler(.personalized)
         }
         alertController.addAction(personalizedAction)
         
         // Non-Personalized action
-        let nonPersonalizedAction = UIAlertAction(title: SwiftyAdsLocalizedString.allowNonPersonalized, style: .default) { action in
+        let nonPersonalizedAction = UIAlertAction(title: content.actionAllowNonPersonalized, style: .default) { action in
             self.consentInformation.consentStatus = .nonPersonalized
             handler(.nonPersonalized)
         }
         alertController.addAction(nonPersonalizedAction)
         
         // Ad free action
-        if configuration.shouldOfferAdFree {
-            let adFreeAction = UIAlertAction(title: SwiftyAdsLocalizedString.adFree, style: .default) { action in
+        if let actionAdFree = content.actionAdFree {
+            let adFreeAction = UIAlertAction(title: actionAdFree, style: .default) { action in
                 self.consentInformation.consentStatus = .unknown
                 handler(.adFree)
             }
