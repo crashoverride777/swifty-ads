@@ -29,7 +29,8 @@ protocol SwiftyAdsRewardedType: AnyObject {
               onOpen: @escaping () -> Void,
               onClose: @escaping () -> Void,
               onReward: @escaping (Int) -> Void,
-              didShow: (_ isReady: Bool) -> Void)
+              onError: @escaping (Error) -> Void,
+              wasReady: (_ isReady: Bool) -> Void)
 }
 
 final class SwiftyAdsRewarded: NSObject {
@@ -41,6 +42,7 @@ final class SwiftyAdsRewarded: NSObject {
     private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
     private var onReward: ((Int) -> Void)?
+    private var onError: ((Error) -> Void)?
     
     private var rewardedAd: GADRewardedAd?
     
@@ -79,14 +81,16 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
               onOpen: @escaping () -> Void,
               onClose: @escaping () -> Void,
               onReward: @escaping (Int) -> Void,
-              didShow: (_ isReady: Bool) -> Void) {
+              onError: @escaping (Error) -> Void,
+              wasReady: (_ isReady: Bool) -> Void) {
         if isReady {
             rewardedAd?.present(fromRootViewController: viewController, delegate: self)
         }
         self.onOpen = onOpen
         self.onClose = onClose
+        self.onError = onError
         self.onReward = onReward
-        didShow(isReady)
+        wasReady(isReady)
     }
 }
 
@@ -103,15 +107,15 @@ extension SwiftyAdsRewarded: GADRewardedAdDelegate {
         onClose?()
         load()
     }
-    
-    func rewardedAd(_ rewardedAd: GADRewardedAd, didFailToPresentWithError error: Error) {
-        print(error.localizedDescription)
-        // Do not reload here as it might cause endless loading loops if no/slow internet
-    }
-    
+
     func rewardedAd(_ rewardedAd: GADRewardedAd, userDidEarn reward: GADAdReward) {
         print("SwiftyAdsRewarded ad did reward user with \(reward)")
         let rewardAmount = Int(truncating: reward.amount)
         onReward?(rewardAmount)
+    }
+    
+    func rewardedAd(_ rewardedAd: GADRewardedAd, didFailToPresentWithError error: Error) {
+        onError?(error)
+        // Do not reload here as it might cause endless loading loops if no/slow internet
     }
 }

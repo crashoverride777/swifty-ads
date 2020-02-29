@@ -104,4 +104,8 @@ extension GameViewController: SwiftyAdsDelegate {
             scene.coins += rewardAmount
         }
     }
+    
+    func swiftyAds(_ swiftyAds: SwiftyAds, didFailWith error: Error) {
+        print("SwiftyAds error \(error)")
+    }
 }

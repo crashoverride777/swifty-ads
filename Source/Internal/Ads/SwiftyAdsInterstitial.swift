@@ -27,7 +27,8 @@ protocol SwiftyAdsInterstitialType: AnyObject {
     func load()
     func show(from viewController: UIViewController,
               onOpen: @escaping () -> Void,
-              onClose: @escaping () -> Void)
+              onClose: @escaping () -> Void,
+              onError: @escaping (Error) -> Void)
     func stopLoading()
 }
 
@@ -39,6 +40,7 @@ final class SwiftyAdsInterstitial: NSObject {
     private let request: () -> GADRequest
     private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
+    private var onError: ((Error) -> Void)?
     
     private var interstitial: GADInterstitial?
     
@@ -71,10 +73,12 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
     
     func show(from viewController: UIViewController,
               onOpen: @escaping () -> Void,
-              onClose: @escaping () -> Void) {
+              onClose: @escaping () -> Void,
+              onError: @escaping (Error) -> Void) {
         guard isReady else { return }
         self.onOpen = onOpen
         self.onClose = onClose
+        self.onError = onError
         interstitial?.present(fromRootViewController: viewController)
     }
     
@@ -114,7 +118,7 @@ extension SwiftyAdsInterstitial: GADInterstitialDelegate {
     }
     
     func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
-        print(error.localizedDescription)
+        onError?(error)
         // Do not reload here as it might cause endless loading loops if no/slow internet
     }
 }

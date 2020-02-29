@@ -32,7 +32,8 @@ protocol SwiftyAdsBannerType: AnyObject {
               at position: SwiftyAdsBannerPositition,
               animationDuration: TimeInterval,
               onOpen: @escaping () -> Void,
-              onClose: @escaping () -> Void)
+              onClose: @escaping () -> Void,
+              onError: @escaping (Error) -> Void)
     func remove()
 }
 
@@ -45,7 +46,8 @@ final class SwiftyAdsBanner: NSObject {
     private let request: () -> GADRequest
     private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
-
+    private var onError: ((Error) -> Void)?
+    
     private var bannerView: GADBannerView?
     private var position: SwiftyAdsBannerPositition = .bottom
     private var animationDuration: TimeInterval = 1.4
@@ -80,11 +82,13 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
               at position: SwiftyAdsBannerPositition,
               animationDuration: TimeInterval,
               onOpen: @escaping () -> Void,
-              onClose: @escaping () -> Void) {
+              onClose: @escaping () -> Void,
+              onError: @escaping (Error) -> Void) {
         self.position = position
         self.animationDuration = animationDuration
         self.onOpen = onOpen
         self.onClose = onClose
+        self.onError = onError
         
         // Remove old banners
         remove()
@@ -167,6 +171,7 @@ extension SwiftyAdsBanner: GADBannerViewDelegate {
     func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
         print("SwiftyAdsBanner didFailToReceiveAdWithError \(error)")
         animateToOffScreenPosition(bannerView, from: bannerView.rootViewController, position: position)
+        onError?(error)
     }
 }
 

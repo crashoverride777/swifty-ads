@@ -32,6 +32,8 @@ public protocol SwiftyAdsDelegate: class {
     func swiftyAds(_ swiftyAds: SwiftyAds, didChange consentStatus: SwiftyAdsConsentStatus)
     /// SwiftyAds did reward user
     func swiftyAds(_ swiftyAds: SwiftyAds, didRewardUserWithAmount rewardAmount: Int)
+    /// SwiftAds error
+    func swiftyAds(_ swiftyAds: SwiftyAds, didFailWith error: Error)
 }
 
 /// SwiftyAds mode
@@ -54,7 +56,7 @@ public protocol SwiftyAdsType: AnyObject {
     func askForConsent(from viewController: UIViewController)
     func showBanner(from viewController: UIViewController, atTop isAtTop: Bool, animationDuration: TimeInterval)
     func showInterstitial(from viewController: UIViewController, withInterval interval: Int?)
-    func showRewardedVideo(from viewController: UIViewController, didShow: (Bool) -> Void)
+    func showRewardedVideo(from viewController: UIViewController, wasReady: (Bool) -> Void)
     func removeBanner()
     func disable()
 }
@@ -240,6 +242,10 @@ extension SwiftyAds: SwiftyAdsType {
             onClose: ({ [weak self] in
                 guard let self = self else { return }
                 self.delegate?.swiftyAdsDidClose(self)
+            }),
+            onError: ({ [weak self] error in
+                guard let self = self else { return }
+                self.delegate?.swiftyAds(self, didFailWith: error)
             })
         )
     }
@@ -262,6 +268,10 @@ extension SwiftyAds: SwiftyAdsType {
             onClose: ({ [weak self] in
                 guard let self = self else { return }
                 self.delegate?.swiftyAdsDidClose(self)
+            }),
+            onError: ({ [weak self] error in
+                guard let self = self else { return }
+                self.delegate?.swiftyAds(self, didFailWith: error)
             })
         )
     }
@@ -269,8 +279,8 @@ extension SwiftyAds: SwiftyAdsType {
     /// Show rewarded video ad
     ///
     /// - parameter viewController: The view controller that will present the ad.
-    /// - parameter didShow: A completion handler returning a boolean to indicate if the ad was displayed e.g show alert if not.
-    public func showRewardedVideo(from viewController: UIViewController, didShow: (Bool) -> Void) {
+    /// - parameter wasReady: A completion handler returning a boolean to indicate if the ad was displayed e.g show alert if not.
+    public func showRewardedVideo(from viewController: UIViewController, wasReady: (Bool) -> Void) {
         guard hasConsent else { return }
         rewardedAd.show(
             from: viewController,
@@ -286,7 +296,11 @@ extension SwiftyAds: SwiftyAdsType {
                 guard let self = self else { return }
                 self.delegate?.swiftyAds(self, didRewardUserWithAmount: rewardAmount)
             }),
-            didShow: didShow
+            onError: ({ [weak self] error in
+                guard let self = self else { return }
+                self.delegate?.swiftyAds(self, didFailWith: error)
+            }),
+            wasReady: wasReady
         )
     }
     
