@@ -54,9 +54,23 @@ public protocol SwiftyAdsType: AnyObject {
                consentStyle: SwiftyAdsConsentStyle,
                handler: @escaping (SwiftyAdsConsentStatus) -> Void)
     func askForConsent(from viewController: UIViewController)
-    func showBanner(from viewController: UIViewController, atTop isAtTop: Bool, animationDuration: TimeInterval)
-    func showInterstitial(from viewController: UIViewController, withInterval interval: Int?)
-    func showRewardedVideo(from viewController: UIViewController, wasReady: (Bool) -> Void)
+    func showBanner(from viewController: UIViewController,
+                    atTop isAtTop: Bool,
+                    animationDuration: TimeInterval,
+                    onOpen: (() -> Void)?,
+                    onClose: (() -> Void)?,
+                    onError: ((Error) -> Void)?)
+    func showInterstitial(from viewController: UIViewController,
+                          withInterval interval: Int?,
+                          onOpen: (() -> Void)?,
+                          onClose: (() -> Void)?,
+                          onError: ((Error) -> Void)?)
+    func showRewardedVideo(from viewController: UIViewController,
+                           onOpen: (() -> Void)?,
+                           onClose: (() -> Void)?,
+                           onReward: ((Int) -> Void)?,
+                           onError: ((Error) -> Void)?,
+                           wasReady: (Bool) -> Void)
     func removeBanner()
     func disable()
 }
@@ -228,7 +242,15 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter viewController: The view controller that will present the ad.
     /// - parameter isAtTop: If set to true the banner will be displayed at the top.
     /// - parameter animationDuration: The duration of the banner to animate on/off screen.
-    public func showBanner(from viewController: UIViewController, atTop isAtTop: Bool, animationDuration: TimeInterval) {
+    /// - parameter onOpen: An optional callback when the banner was presented.
+    /// - parameter onClose: An optional callback when the banner was dismissed or removed.
+    /// - parameter onError: An optional callback when an error has occurred.
+    public func showBanner(from viewController: UIViewController,
+                           atTop isAtTop: Bool,
+                           animationDuration: TimeInterval,
+                           onOpen: (() -> Void)?,
+                           onClose: (() -> Void)?,
+                           onError: ((Error) -> Void)?) {
         guard !isDisabled else { return }
         guard hasConsent else { return }
         bannerAd.show(
@@ -238,14 +260,17 @@ extension SwiftyAds: SwiftyAdsType {
             onOpen: ({ [weak self] in
                 guard let self = self else { return }
                 self.delegate?.swiftyAdsDidOpen(self)
+                onOpen?()
             }),
             onClose: ({ [weak self] in
                 guard let self = self else { return }
                 self.delegate?.swiftyAdsDidClose(self)
+                onClose?()
             }),
             onError: ({ [weak self] error in
                 guard let self = self else { return }
                 self.delegate?.swiftyAds(self, didFailWith: error)
+                onError?(error)
             })
         )
     }
@@ -254,7 +279,14 @@ extension SwiftyAds: SwiftyAdsType {
     ///
     /// - parameter viewController: The view controller that will present the ad.
     /// - parameter interval: The interval of when to show the ad, e.g every 4th time the method is called. Set to nil to always show.
-    public func showInterstitial(from viewController: UIViewController, withInterval interval: Int?) {
+    /// - parameter onOpen: An optional callback when the banner was presented.
+    /// - parameter onClose: An optional callback when the ad was dismissed.
+    /// - parameter onError: An optional callback when an error has occurred.
+    public func showInterstitial(from viewController: UIViewController,
+                                 withInterval interval: Int?,
+                                 onOpen: (() -> Void)?,
+                                 onClose: (() -> Void)?,
+                                 onError: ((Error) -> Void)?) {
         guard !isDisabled else { return }
         guard hasConsent else { return }
         guard isInterstitialReady else { return }
@@ -264,14 +296,17 @@ extension SwiftyAds: SwiftyAdsType {
             onOpen: ({ [weak self] in
                 guard let self = self else { return }
                 self.delegate?.swiftyAdsDidOpen(self)
+                onOpen?()
             }),
             onClose: ({ [weak self] in
                 guard let self = self else { return }
                 self.delegate?.swiftyAdsDidClose(self)
+                onClose?()
             }),
             onError: ({ [weak self] error in
                 guard let self = self else { return }
                 self.delegate?.swiftyAds(self, didFailWith: error)
+                onError?(error)
             })
         )
     }
@@ -279,26 +314,39 @@ extension SwiftyAds: SwiftyAdsType {
     /// Show rewarded video ad
     ///
     /// - parameter viewController: The view controller that will present the ad.
+    /// - parameter onOpen: An optional callback when the banner was presented.
+    /// - parameter onClose: An optional callback when the ad was dismissed.
+    /// - parameter onReward: An optional callback when the reward has been granted.
+    /// - parameter onError: An optional callback when an error has occurred.
     /// - parameter wasReady: A completion handler returning a boolean to indicate if the ad was displayed e.g show alert if not.
-    public func showRewardedVideo(from viewController: UIViewController, wasReady: (Bool) -> Void) {
+    public func showRewardedVideo(from viewController: UIViewController,
+                                  onOpen: (() -> Void)?,
+                                  onClose: (() -> Void)?,
+                                  onReward: ((Int) -> Void)?,
+                                  onError: ((Error) -> Void)?,
+                                  wasReady: (Bool) -> Void) {
         guard hasConsent else { return }
         rewardedAd.show(
             from: viewController,
             onOpen: ({ [weak self] in
                 guard let self = self else { return }
                 self.delegate?.swiftyAdsDidOpen(self)
+                onOpen?()
             }),
             onClose: ({ [weak self] in
                 guard let self = self else { return }
                 self.delegate?.swiftyAdsDidClose(self)
+                onClose?()
             }),
             onReward: ({ [weak self] rewardAmount in
                 guard let self = self else { return }
                 self.delegate?.swiftyAds(self, didRewardUserWithAmount: rewardAmount)
+                onReward?(rewardAmount)
             }),
             onError: ({ [weak self] error in
                 guard let self = self else { return }
                 self.delegate?.swiftyAds(self, didFailWith: error)
+                onError?(error)
             }),
             wasReady: wasReady
         )

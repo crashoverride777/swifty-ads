@@ -38,23 +38,40 @@ class GameScene: SKScene {
             
             switch node {
             case interstitialLabel:
-                swiftyAds.showInterstitial(from: viewController, withInterval: 2)
+                swiftyAds.showInterstitial(
+                    from: viewController,
+                    withInterval: 2,
+                    onOpen: nil,
+                    onClose: nil,
+                    onError: nil
+                )
+           
             case rewardedLabel:
-                swiftyAds.showRewardedVideo(from: viewController) { success in
-                    if !success {
-                        let alertController = UIAlertController(
-                            title: "Sorry",
-                            message: "No video available to watch at the moment.",
-                            preferredStyle: .alert
-                        )
-                        alertController.addAction(UIAlertAction(title: "Ok", style: .cancel))
-                        viewController.present(alertController, animated: true)
-                    }
-                }
+                swiftyAds.showRewardedVideo(
+                    from: viewController,
+                    onOpen: nil,
+                    onClose: nil,
+                    onReward: nil,
+                    onError: nil,
+                    wasReady: ({ success in
+                        if !success {
+                            let alertController = UIAlertController(
+                                title: "Sorry",
+                                message: "No video available to watch at the moment.",
+                                preferredStyle: .alert
+                            )
+                            alertController.addAction(UIAlertAction(title: "Ok", style: .cancel))
+                            viewController.present(alertController, animated: true)
+                        }
+                    })
+                )
+                
             case removeLabel:
                 swiftyAds.disable()
+            
             case consentLabel:
                 swiftyAds.askForConsent(from: viewController)
+            
             default:
                 break
             }
