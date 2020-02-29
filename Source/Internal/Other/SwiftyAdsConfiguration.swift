@@ -49,16 +49,16 @@ extension SwiftyAdsConfiguration {
 
 extension SwiftyAdsConfiguration {
     
-    static var propertyList: SwiftyAdsConfiguration {
+    static var production: SwiftyAdsConfiguration {
         guard let configurationURL = Bundle.main.url(forResource: "SwiftyAds", withExtension: "plist") else {
-            fatalError("SwiftyAdsConfiguration could not find SwiftyAds.plist in the main bundle")
+            fatalError("SwiftyAdsConfiguration could not find SwiftyAds.plist in the main bundle.")
         }
         do {
             let data = try Data(contentsOf: configurationURL)
             let decoder = PropertyListDecoder()
             return try decoder.decode(SwiftyAdsConfiguration.self, from: data)
         } catch {
-            fatalError("SwiftyAdsConfiguration could not decode property list, please ensure all fields are correct")
+            fatalError("SwiftyAdsConfiguration could not decode SwiftyAds.plist, please ensure all fields are correct.")
         }
     }
     

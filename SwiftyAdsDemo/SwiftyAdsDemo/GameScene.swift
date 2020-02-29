@@ -12,13 +12,19 @@ class GameScene: SKScene {
     
     // MARK: - Properties
     
-    var swiftyAds: SwiftyAdsType!
-    var coins = 0
+    private var swiftyAds: SwiftyAdsType!
+    private var coins = 0
     
     private lazy var interstitialLabel: SKLabelNode = self.childNode(withName: "interstitialLabel") as! SKLabelNode
     private lazy var rewardedLabel: SKLabelNode = self.childNode(withName: "rewardedLabel") as! SKLabelNode
-    private lazy var removeLabel: SKLabelNode = self.childNode(withName: "removeLabel") as! SKLabelNode
+    private lazy var disableLabel: SKLabelNode = self.childNode(withName: "disableLabel") as! SKLabelNode
     private lazy var consentLabel: SKLabelNode = self.childNode(withName: "consentLabel") as! SKLabelNode
+    
+    // MARK: - Init
+    
+    func configure(swiftyAds: SwiftyAdsType) {
+        self.swiftyAds = swiftyAds
+    }
     
     // MARK: - Life Cycle
     
@@ -38,48 +44,13 @@ class GameScene: SKScene {
             
             switch node {
             case interstitialLabel:
-                swiftyAds.showInterstitial(
-                    from: viewController,
-                    withInterval: 2,
-                    onOpen: nil,
-                    onClose: nil,
-                    onError: ({ error in
-                        print("SwiftyAds interstitial error \(error)")
-                    })
-                )
-           
+                showInterstitialAd(from: viewController)
             case rewardedLabel:
-                swiftyAds.showRewardedVideo(
-                    from: viewController,
-                    onOpen: nil,
-                    onClose: nil,
-                    onReward: ({ [weak self] rewardAmount in
-                        guard let self = self else { return }
-                        print("SwiftyAds did reward user with \(rewardAmount)")
-                        self.coins += rewardAmount
-                    }),
-                    onError: ({ error in
-                        print("SwiftyAds rewarded video error \(error)")
-                    }),
-                    wasReady: ({ success in
-                        if !success {
-                            let alertController = UIAlertController(
-                                title: "Sorry",
-                                message: "No video available to watch at the moment.",
-                                preferredStyle: .alert
-                            )
-                            alertController.addAction(UIAlertAction(title: "Ok", style: .cancel))
-                            viewController.present(alertController, animated: true)
-                        }
-                    })
-                )
-                
-            case removeLabel:
+                showRewardedAd(from: viewController)
+            case disableLabel:
                 swiftyAds.disable()
-            
             case consentLabel:
                 swiftyAds.askForConsent(from: viewController)
-            
             default:
                 break
             }
@@ -93,5 +64,55 @@ class GameScene: SKScene {
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+    }
+}
+
+// MARK: - Private Methods
+
+private extension GameScene {
+    
+    func showInterstitialAd(from viewController: UIViewController) {
+        swiftyAds.showInterstitial(
+            from: viewController,
+            withInterval: 2,
+            onOpen: ({
+                print("SwiftyAds interstitial ad did open")
+            }),
+            onClose: ({
+                print("SwiftyAds interstitial ad did close")
+            }),
+            onError: ({ error in
+                print("SwiftyAds interstitial ad error \(error)")
+            })
+        )
+    }
+    
+    func showRewardedAd(from viewController: UIViewController) {
+        swiftyAds.showRewardedVideo(
+            from: viewController,
+            onOpen: ({
+                print("SwiftyAds rewarded video ad did open")
+            }),
+            onClose: ({
+                print("SwiftyAds rewarded video ad did close")
+            }),
+            onReward: ({ [weak self] rewardAmount in
+                print("SwiftyAds rewarded video ad did reward user with \(rewardAmount)")
+                self?.coins += rewardAmount
+            }),
+            onError: ({ error in
+                print("SwiftyAds rewarded video ad error \(error)")
+            }),
+            wasReady: ({ wasReady in
+                guard !wasReady else { return }
+                let alertController = UIAlertController(
+                    title: "Sorry",
+                    message: "No video available to watch at the moment.",
+                    preferredStyle: .alert
+                )
+                alertController.addAction(UIAlertAction(title: "Ok", style: .cancel))
+                viewController.present(alertController, animated: true)
+            })
+        )
     }
 }

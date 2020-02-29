@@ -53,7 +53,7 @@ public protocol SwiftyAdsType: AnyObject {
     func setup(with viewController: UIViewController,
                mode: SwiftyAdsMode,
                consentStyle: SwiftyAdsConsentStyle,
-               consentStatusDidChange: ((SwiftyAdsConsentStatus) -> Void)?,
+               consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                handler: @escaping (SwiftyAdsConsentStatus) -> Void)
     func askForConsent(from viewController: UIViewController)
     func showBanner(from viewController: UIViewController,

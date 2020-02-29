@@ -91,7 +91,7 @@ private extension SwiftyAdsRequestBuilder {
         // Register extras in request
         request.register(extras)
         
-        // Return the request the the added extras
+        // Return the request with the added extras
         return request
     }
 }

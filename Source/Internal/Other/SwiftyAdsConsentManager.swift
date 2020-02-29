@@ -27,6 +27,7 @@ public enum SwiftyAdsConsentStatus {
     case personalized
     case nonPersonalized
     case adFree
+    case underAge
     case unknown
     
     public var hasConsent: Bool {
@@ -48,22 +49,24 @@ protocol SwiftyAdsConsentManagerType: class {
     func ask(from viewController: UIViewController,
              skipAlertIfAlreadyAuthorized: Bool,
              handler: @escaping (SwiftyAdsConsentStatus) -> Void)
+    func statusDidChange(handler: @escaping (SwiftyAdsConsentStatus) -> Void)
 }
 
 final class SwiftyAdsConsentManager {
 
     // MARK: - Properties
 
-    private let configuration: () -> SwiftyAdsConfiguration
-    private let consentStyle: () -> SwiftyAdsConsentStyle
+    private let configuration: SwiftyAdsConfiguration
+    private let consentStyle: SwiftyAdsConsentStyle
     private let consentInformation: PACConsentInformation = .sharedInstance
+    private var statusDidChange: ((SwiftyAdsConsentStatus) -> Void)?
     
     // MARK: - Init
     
-    init(configuration: @escaping () -> SwiftyAdsConfiguration, consentStyle: @escaping () -> SwiftyAdsConsentStyle) {
+    init(configuration: SwiftyAdsConfiguration, consentStyle: SwiftyAdsConsentStyle) {
         self.consentStyle = consentStyle
         self.configuration = configuration
-        consentInformation.isTaggedForUnderAgeOfConsent = configuration().isTaggedForUnderAgeOfConsent
+        consentInformation.isTaggedForUnderAgeOfConsent = configuration.isTaggedForUnderAgeOfConsent
     }
 }
 
@@ -101,27 +104,29 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
     }
 
     var isTaggedForUnderAgeOfConsent: Bool {
-        configuration().isTaggedForUnderAgeOfConsent
+        configuration.isTaggedForUnderAgeOfConsent
     }
     
     func ask(from viewController: UIViewController,
              skipAlertIfAlreadyAuthorized: Bool,
              handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
-        consentInformation.requestConsentInfoUpdate(forPublisherIdentifiers: configuration().ids) { [weak self] (_ error) in
+        consentInformation.requestConsentInfoUpdate(forPublisherIdentifiers: configuration.ids) { [weak self] (_ error) in
             guard let self = self else { return }
             
             // Handle error
             if let error = error {
                 print("SwiftyAdsConsentManager error requesting consent info update: \(error)")
                 handler(self.status)
+                self.statusDidChange?(self.status)
                 return
             }
             
             // We only need to ask for consent if we are in the EEA
             guard self.isInEEA else {
-                print("SwiftyAdsConsentManager not in EU, no need to handle consent logic")
+                print("SwiftyAdsConsentManager not in EEA, no need to handle consent logic")
                 self.consentInformation.consentStatus = .personalized
                 handler(.personalized)
+                self.statusDidChange?(.personalized)
                 return
             }
             
@@ -129,26 +134,39 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
             // because than all add requests have to be non-personalized as a minor
             // cannot legally consent
             guard !self.isTaggedForUnderAgeOfConsent else {
-                self.consentInformation.consentStatus = .nonPersonalized
                 print("SwiftyAdsConsentManager under age, no need to handle consent logic as it must be non-personalized")
-                handler(.nonPersonalized)
+                handler(.underAge)
+                self.statusDidChange?(.underAge)
                 return
             }
             
             // Skip alert if needed
             if skipAlertIfAlreadyAuthorized, self.hasConsent {
                 handler(self.status)
+                self.statusDidChange?(self.status)
                 return
             }
             
             // Show consent form
-            switch self.consentStyle() {
+            switch self.consentStyle {
             case .adMob(let shouldOfferAdFree):
-                self.showDefaultConsentForm(from: viewController, shouldOfferAdFree: shouldOfferAdFree, handler: handler)
+                self.showDefaultConsentForm(from: viewController, shouldOfferAdFree: shouldOfferAdFree) { [weak self] status in
+                    guard let self = self else { return }
+                    handler(status)
+                    self.statusDidChange?(status)
+                }
             case .custom(let content):
-                self.showCustomConsentForm(from: viewController, content: content, handler: handler)
+                self.showCustomConsentForm(from: viewController, content: content) { [weak self] status in
+                    guard let self = self else { return }
+                    handler(status)
+                    self.statusDidChange?(status)
+                }
             }
         }
+    }
+    
+    func statusDidChange(handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
+        statusDidChange = handler
     }
 }
 
@@ -160,7 +178,7 @@ private extension SwiftyAdsConsentManager {
                                 shouldOfferAdFree: Bool,
                                 handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
         // Make sure we have a valid privacy policy url
-        guard let url = URL(string: configuration().privacyPolicyURL) else {
+        guard let url = URL(string: configuration.privacyPolicyURL) else {
             print("SwiftyAdsConsentManager invalid privacy policy URL")
             handler(status)
             return
@@ -218,8 +236,8 @@ private extension SwiftyAdsConsentManager {
         // Create alert message with all ad providers
         let message =
             content.message +
-            "\n\n" + configuration().adNetworks +
-            "\n\n" + configuration().privacyPolicyURL
+            "\n\n" + configuration.adNetworks +
+            "\n\n" + configuration.privacyPolicyURL
         
         // Create alert controller
         let alertController = UIAlertController(title: content.title, message: message, preferredStyle: .alert)

@@ -21,7 +21,7 @@ class GameViewController: UIViewController {
         
         // Load game scene
         if let scene = GameScene(fileNamed: "GameScene") {
-            scene.swiftyAds = swiftyAds
+            scene.configure(swiftyAds: swiftyAds)
             
             // Configure the view.
             let skView = self.view as! SKView
@@ -80,7 +80,7 @@ private extension GameViewController {
             consentStyle: .custom(customConsentContent),
             consentStatusDidChange: ({ consentStatus in
                 print("SwiftyAds did change consent status to \(consentStatus)")
-                // e.g update mediation networks
+                // update mediation networks if required
             }),
             handler: ({ status in
                 guard status.hasConsent else { return }
@@ -89,9 +89,15 @@ private extension GameViewController {
                         from: self,
                         atTop: false,
                         animationDuration: 1.5,
-                        onOpen: nil,
-                        onClose: nil,
-                        onError: nil
+                        onOpen: ({
+                            print("SwiftyAds banner ad did open")
+                        }),
+                        onClose: ({
+                            print("SwiftyAds banner ad did close")
+                        }),
+                        onError: ({ error in
+                            print("SwiftyAds banner ad error \(error)")
+                        })
                     )
                 }
             })

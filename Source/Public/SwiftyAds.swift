@@ -36,12 +36,12 @@ public final class SwiftyAds: NSObject {
     
     // MARK: - Properties
     
-    private var configuration: SwiftyAdsConfiguration = .propertyList
-    private var mode: SwiftyAdsMode = .production
-    private var consentManager: SwiftyAdsConsentManagerType!
     private let intervalTracker: SwiftyAdsIntervalTrackerType
-    private var consentStyle: SwiftyAdsConsentStyle = .adMob(shouldOfferAdFree: false)
-    private var consentStatusDidChange: ((SwiftyAdsConsentStatus) -> Void)?
+    
+    private var configuration: SwiftyAdsConfiguration!
+    private var mode: SwiftyAdsMode!
+    private var consentManager: SwiftyAdsConsentManagerType!
+    private var consentStyle: SwiftyAdsConsentStyle!
     
     private var isDisabled = false
     private var testDevices: [Any] = [kGADSimulatorID]
@@ -95,10 +95,7 @@ public final class SwiftyAds: NSObject {
     private override init() {
         self.intervalTracker = SwiftyAdsIntervalTracker()
         super.init()
-        consentManager = SwiftyAdsConsentManager(
-            configuration: { [unowned self] in self.configuration },
-            consentStyle: { [unowned self] in self.consentStyle }
-        )
+        
     }
     
     // Testing
@@ -144,29 +141,30 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter mode: Set the mode of ads, production or debug.
     /// - parameter consentStyle: The style of the consent alert.
-    /// - parameter consentStatusDidChange: An optional callback that will trigger everytime the consent status has changed.
+    /// - parameter consentStatusDidChange: A callback handler that will fire everytime the consent status has changed.
     /// - parameter handler: A handler that will return the current consent status after the consent alert has been dismissed.
     public func setup(with viewController: UIViewController,
                       mode: SwiftyAdsMode,
                       consentStyle: SwiftyAdsConsentStyle,
-                      consentStatusDidChange: ((SwiftyAdsConsentStatus) -> Void)?,
+                      consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                       handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
+        self.mode = mode
         self.consentStyle = consentStyle
-        self.consentStatusDidChange = consentStatusDidChange
         
+        // Update configuration for selected mode
         switch mode {
         case .production:
-            configuration = .propertyList
+            configuration = .production
         case .test(let testDevices):
             configuration = .debug
             self.testDevices.append(contentsOf: testDevices)
         }
      
-        // Make consent request
+        // Create consent manager and make request
+        consentManager = SwiftyAdsConsentManager(configuration: configuration, consentStyle: consentStyle)
+        consentManager.statusDidChange(handler: consentStatusDidChange)
         consentManager.ask(from: viewController, skipAlertIfAlreadyAuthorized: true) { [weak self] status in
             guard let self = self else { return }
-            self.handleConsentStatusChange(status)
-           
             if status.hasConsent {
                 if !self.isDisabled {
                     self.interstitialAd.load()
@@ -182,9 +180,7 @@ extension SwiftyAds: SwiftyAdsType {
     ///
     /// - parameter viewController: The view controller that will present the consent form.
     public func askForConsent(from viewController: UIViewController) {
-        consentManager.ask(from: viewController, skipAlertIfAlreadyAuthorized: false) { [weak self] status in
-            self?.handleConsentStatusChange(status)
-        }
+        consentManager.ask(from: viewController, skipAlertIfAlreadyAuthorized: false) { _ in }
     }
     
     /// Show banner ad
@@ -278,10 +274,6 @@ extension SwiftyAds: SwiftyAdsType {
 // MARK: - Private Methods
 
 private extension SwiftyAds {
-    
-    func handleConsentStatusChange(_ status: SwiftyAdsConsentStatus) {
-        consentStatusDidChange?(status)
-    }
     
     func makeRequest() -> GADRequest {
         requestBuilder.build(mode)
