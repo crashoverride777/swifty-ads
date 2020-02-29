@@ -63,7 +63,7 @@ final class SwiftyAdsConsentManager {
     init(configuration: @escaping () -> SwiftyAdsConfiguration, consentStyle: @escaping () -> SwiftyAdsConsentStyle) {
         self.consentStyle = consentStyle
         self.configuration = configuration
-        consentInformation.isTaggedForUnderAgeOfConsent = configuration().gdpr.isTaggedForUnderAgeOfConsent
+        consentInformation.isTaggedForUnderAgeOfConsent = configuration().isTaggedForUnderAgeOfConsent
     }
 }
 
@@ -101,7 +101,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
     }
 
     var isTaggedForUnderAgeOfConsent: Bool {
-        configuration().gdpr.isTaggedForUnderAgeOfConsent
+        configuration().isTaggedForUnderAgeOfConsent
     }
     
     func ask(from viewController: UIViewController,
@@ -167,7 +167,7 @@ private extension SwiftyAdsConsentManager {
                                 shouldOfferAdFree: Bool,
                                 handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
         // Make sure we have a valid privacy policy url
-        guard let url = URL(string: configuration().gdpr.privacyPolicyURL) else {
+        guard let url = URL(string: configuration().privacyPolicyURL) else {
             print("SwiftyAdsConsentManager invalid privacy policy URL")
             handler(status)
             return
@@ -225,8 +225,8 @@ private extension SwiftyAdsConsentManager {
         // Create alert message with all ad providers
         let message =
             content.message +
-            "\n\n" + configuration().gdpr.adNetworksString +
-            "\n\n" + configuration().gdpr.privacyPolicyURL
+            "\n\n" + configuration().adNetworks +
+            "\n\n" + configuration().privacyPolicyURL
         
         // Create alert controller
         let alertController = UIAlertController(title: content.title, message: message, preferredStyle: .alert)

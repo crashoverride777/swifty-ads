@@ -22,49 +22,10 @@
 
 import GoogleMobileAds
 
-/// SwiftyAds mode
-public enum SwiftyAdsMode {
-    case production
-    case test(devices: [String])
-}
-
-/// SwiftyAds type
-public protocol SwiftyAdsType: AnyObject {
-    var hasConsent: Bool { get }
-    var isRequiredToAskForConsent: Bool { get }
-    var isInterstitialReady: Bool { get }
-    var isRewardedVideoReady: Bool { get }
-    func setup(with viewController: UIViewController,
-               mode: SwiftyAdsMode,
-               consentStyle: SwiftyAdsConsentStyle,
-               consentStatusDidChange: ((SwiftyAdsConsentStatus) -> Void)?,
-               handler: @escaping (SwiftyAdsConsentStatus) -> Void)
-    func askForConsent(from viewController: UIViewController)
-    func showBanner(from viewController: UIViewController,
-                    atTop isAtTop: Bool,
-                    animationDuration: TimeInterval,
-                    onOpen: (() -> Void)?,
-                    onClose: (() -> Void)?,
-                    onError: ((Error) -> Void)?)
-    func showInterstitial(from viewController: UIViewController,
-                          withInterval interval: Int?,
-                          onOpen: (() -> Void)?,
-                          onClose: (() -> Void)?,
-                          onError: ((Error) -> Void)?)
-    func showRewardedVideo(from viewController: UIViewController,
-                           onOpen: (() -> Void)?,
-                           onClose: (() -> Void)?,
-                           onReward: ((Int) -> Void)?,
-                           onError: ((Error) -> Void)?,
-                           wasReady: (Bool) -> Void)
-    func removeBanner()
-    func disable()
-}
-
 /**
  SwiftyAds
  
- A singleton class to manage adverts from Google AdMob.
+ A concret singleton class implementation of SwiftAdsType to display ads from AdMob.
  */
 public final class SwiftyAds: NSObject {
     
@@ -130,6 +91,7 @@ public final class SwiftyAds: NSObject {
     
     // MARK: - Init
     
+    // Shared instance
     private override init() {
         self.intervalTracker = SwiftyAdsIntervalTracker()
         super.init()
@@ -139,6 +101,7 @@ public final class SwiftyAds: NSObject {
         )
     }
     
+    // Testing
     init(mode: SwiftyAdsMode,
          consentManager: SwiftyAdsConsentManagerType,
          intervalTracker: SwiftyAdsIntervalTrackerType,
@@ -182,7 +145,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter mode: Set the mode of ads, production or debug.
     /// - parameter consentStyle: The style of the consent alert.
     /// - parameter consentStatusDidChange: An optional callback that will trigger everytime the consent status has changed.
-    /// - parameter handler: A handler that will return the current consent status.
+    /// - parameter handler: A handler that will return the current consent status after the consent alert has been dismissed.
     public func setup(with viewController: UIViewController,
                       mode: SwiftyAdsMode,
                       consentStyle: SwiftyAdsConsentStyle,

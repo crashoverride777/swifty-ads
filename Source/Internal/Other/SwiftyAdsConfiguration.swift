@@ -26,12 +26,26 @@ struct SwiftyAdsConfiguration: Codable {
     let bannerAdUnitId: String
     let interstitialAdUnitId: String
     let rewardedVideoAdUnitId: String
-    let gdpr: SwiftyAdsConsentConfiguration
+    let privacyPolicyURL: String
+    let isTaggedForUnderAgeOfConsent: Bool
+    let mediationNetworks: [String]
+}
 
+// MARK: - Computed
+
+extension SwiftyAdsConfiguration {
+    
     var ids: [String] {
         [bannerAdUnitId, interstitialAdUnitId, rewardedVideoAdUnitId].filter { !$0.isEmpty }
     }
+    
+    var adNetworks: String {
+        let networks: [String] = ["Google AdMob"] + mediationNetworks
+        return networks.map({ $0 }).joined(separator: networks.count > 1 ? ", " : "")
+    }
 }
+
+// MARK: - Static
 
 extension SwiftyAdsConfiguration {
     
@@ -49,15 +63,13 @@ extension SwiftyAdsConfiguration {
     }
     
     static var debug: SwiftyAdsConfiguration {
-        return SwiftyAdsConfiguration(
+        SwiftyAdsConfiguration(
             bannerAdUnitId: "ca-app-pub-3940256099942544/2934735716",
             interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
             rewardedVideoAdUnitId: "ca-app-pub-3940256099942544/1712485313",
-            gdpr: SwiftyAdsConsentConfiguration(
-                privacyPolicyURL: "https://developers.google.com/admob/ios/eu-consent",
-                mediationNetworks: ["Test Mediation Network 1, Test Mediation Network 2"],
-                isTaggedForUnderAgeOfConsent: false
-            )
+            privacyPolicyURL: "https://developers.google.com/admob/ios/eu-consent",
+            isTaggedForUnderAgeOfConsent: false,
+            mediationNetworks: ["Test Mediation Network 1, Test Mediation Network 2"]
         )
     }
 }
