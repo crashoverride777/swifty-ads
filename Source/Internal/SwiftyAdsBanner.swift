@@ -42,8 +42,8 @@ final class SwiftyAdsBanner: NSObject {
     // MARK: - Properties
     
     private let adUnitId: String
-    private let isLandscape: () -> Bool
     private let request: () -> GADRequest
+    private let isLandscape: () -> Bool
     private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
     private var onError: ((Error) -> Void)?

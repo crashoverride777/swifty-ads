@@ -80,7 +80,7 @@ func setupSwiftyAds() {
     SwiftyAds.shared.setup(
         with: self,
         mode: mode,
-        consentStyle: .custom(customConsentContent), // alternatevly set to adMob to use googles native consent form
+        consentStyle: .custom(content: customConsentContent), // alternatevly set to adMob to use googles native consent form
         consentStatusDidChange: ({ consentStatus in
             print("SwiftyAds did change consent status to \(consentStatus)")
             // update mediation networks if required

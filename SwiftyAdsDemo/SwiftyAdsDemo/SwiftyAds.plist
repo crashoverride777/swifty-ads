@@ -9,7 +9,7 @@
 	<key>rewardedVideoAdUnitId</key>
 	<string>ca-app-pub-3940256099942544/1712485313</string>
 	<key>privacyPolicyURL</key>
-	<string>https://www.example.com</string>
+	<string>https://www.example.com/privacy</string>
 	<key>isTaggedForUnderAgeOfConsent</key>
 	<false/>
 	<key>mediationNetworks</key>

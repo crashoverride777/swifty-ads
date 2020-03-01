@@ -10,7 +10,7 @@ import Foundation
 
 public enum SwiftyAdsConsentStyle {
     case adMob(shouldOfferAdFree: Bool)
-    case custom(SwiftyAdsCustomConsentAlertContent)
+    case custom(content: SwiftyAdsCustomConsentAlertContent)
 }
 
 public struct SwiftyAdsCustomConsentAlertContent {

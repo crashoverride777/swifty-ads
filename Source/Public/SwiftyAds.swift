@@ -156,8 +156,11 @@ extension SwiftyAds: SwiftyAdsType {
         )
      
         // Create consent manager and make request
-        consentManager = SwiftyAdsConsentManager(configuration: configuration, consentStyle: consentStyle)
-        consentManager.statusDidChange(handler: consentStatusDidChange)
+        consentManager = SwiftyAdsConsentManager(
+            configuration: configuration,
+            consentStyle: consentStyle,
+            statusDidChange: consentStatusDidChange
+        )
         consentManager.ask(from: viewController, skipAlertIfAlreadyAuthorized: true) { [weak self] status in
             guard let self = self else { return }
             if status.hasConsent {

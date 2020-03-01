@@ -15,11 +15,8 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Setup swifty ad
         setupSwiftyAds()
         
-        // Load game scene
         if let scene = GameScene(fileNamed: "GameScene") {
             scene.configure(swiftyAds: swiftyAds)
             
@@ -77,7 +74,7 @@ private extension GameViewController {
         swiftyAds.setup(
             with: self,
             mode: mode,
-            consentStyle: .custom(customConsentContent),
+            consentStyle: .custom(content: customConsentContent),
             consentStatusDidChange: ({ consentStatus in
                 print("SwiftyAds did change consent status to \(consentStatus)")
                 // update mediation networks if required
@@ -87,21 +84,25 @@ private extension GameViewController {
             handler: ({ status in
                 guard status.hasConsent else { return }
                 DispatchQueue.main.async {
-                    self.swiftyAds.showBanner(
-                        from: self,
-                        atTop: false,
-                        animationDuration: 1.5,
-                        onOpen: ({
-                            print("SwiftyAds banner ad did open")
-                        }),
-                        onClose: ({
-                            print("SwiftyAds banner ad did close")
-                        }),
-                        onError: ({ error in
-                            print("SwiftyAds banner ad error \(error)")
-                        })
-                    )
+                    self.showBanner()
                 }
+            })
+        )
+    }
+    
+    func showBanner() {
+        swiftyAds.showBanner(
+            from: self,
+            atTop: false,
+            animationDuration: 1.5,
+            onOpen: ({
+                print("SwiftyAds banner ad did open")
+            }),
+            onClose: ({
+                print("SwiftyAds banner ad did close")
+            }),
+            onError: ({ error in
+                print("SwiftyAds banner ad error \(error)")
             })
         )
     }
