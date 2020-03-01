@@ -51,6 +51,13 @@ class GameViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: { _ in
+            self.swiftyAds.updateBannerForOrientationChange(isLandscape: size.width > size.height)
+        })
+    }
 }
 
 // MARK: - Private Methods

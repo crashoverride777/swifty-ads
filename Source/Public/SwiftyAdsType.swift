@@ -25,6 +25,7 @@ public protocol SwiftyAdsType: AnyObject {
                     onOpen: (() -> Void)?,
                     onClose: (() -> Void)?,
                     onError: ((Error) -> Void)?)
+    func updateBannerForOrientationChange(isLandscape: Bool)
     func showInterstitial(from viewController: UIViewController,
                           withInterval interval: Int?,
                           onOpen: (() -> Void)?,

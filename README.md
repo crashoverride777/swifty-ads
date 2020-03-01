@@ -132,6 +132,17 @@ SwiftyAds.shared.showBanner(
 )
 ```
 
+To handle orientation changes call the `updateBannerForOrientationChange` method
+
+```swift
+override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    super.viewWillTransition(to: size, with: coordinator)
+    coordinator.animate(alongsideTransition: { _ in
+        SwiftyAds.shared.updateBannerForOrientationChange(isLandscape: size.width > size.height)
+    })
+}
+```
+
 ### Show Interstitial Ads
 
 ```swift

@@ -135,9 +135,6 @@ extension SwiftyAds: SwiftyAdsType {
             adUnitId: configuration.bannerAdUnitId,
             request: ({ [unowned self] in
                 self.requestBuilder.build()
-            }),
-            isLandscape: ({
-                UIDevice.current.orientation.isLandscape
             })
         )
         
@@ -200,11 +197,19 @@ extension SwiftyAds: SwiftyAdsType {
         bannerAd.show(
             from: viewController,
             at: isAtTop ? .top : .bottom,
+            isLandscape: UIDevice.current.orientation.isLandscape,
             animationDuration: animationDuration,
             onOpen: onOpen,
             onClose: onClose,
             onError: onError
         )
+    }
+    
+    /// Update banner for orientation change
+    ///
+    /// - parameter isLandscape: An flag to tell the banner if it should be refreshed for landscape or portrait orientation.
+    public func updateBannerForOrientationChange(isLandscape: Bool) {
+        bannerAd.refresh(isLandscape: isLandscape)
     }
     
     /// Show interstitial ad
