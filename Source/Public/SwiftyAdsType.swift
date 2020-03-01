@@ -8,43 +8,6 @@
 
 import UIKit
 
-// MARK: - Consent
-
-public enum SwiftyAdsConsentStyle {
-    case adMob(shouldOfferAdFree: Bool)
-    case custom(SwiftyAdsCustomConsentAlertContent)
-}
-
-public struct SwiftyAdsCustomConsentAlertContent {
-    public let title: String
-    public let message: String
-    public let actionAdFree: String?
-    public let actionAllowPersonalized: String
-    public let actionAllowNonPersonalized: String
-    
-    public init(
-        title: String,
-        message: String,
-        actionAdFree: String?,
-        actionAllowPersonalized: String,
-        actionAllowNonPersonalized: String) {
-        self.title = title
-        self.message = message
-        self.actionAdFree = actionAdFree
-        self.actionAllowPersonalized = actionAllowPersonalized
-        self.actionAllowNonPersonalized = actionAllowNonPersonalized
-    }
-}
-
-// MARK: - Mode
-
-public enum SwiftyAdsMode {
-    case production
-    case debug(testDeviceIdentifiers: [String])
-}
-
-// MARK: - Type
-
 public protocol SwiftyAdsType: AnyObject {
     var hasConsent: Bool { get }
     var isRequiredToAskForConsent: Bool { get }

@@ -69,7 +69,7 @@ extension SwiftyAdsConfiguration {
             bannerAdUnitId: "ca-app-pub-3940256099942544/2934735716",
             interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
             rewardedVideoAdUnitId: "ca-app-pub-3940256099942544/1712485313",
-            privacyPolicyURL: "https://developers.google.com/admob/ios/eu-consent",
+            privacyPolicyURL: "https://example.com/privacyPolicy",
             isTaggedForUnderAgeOfConsent: false,
             mediationNetworks: ["Test Mediation Network 1, Test Mediation Network 2"]
         )

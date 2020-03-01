@@ -37,7 +37,7 @@ final class SwiftyAdsRewarded: NSObject {
     
     // MARK: - Properties
     
-    private let adUnitId: () -> String
+    private let adUnitId: String
     private let request: () -> GADRequest
     private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
@@ -48,7 +48,7 @@ final class SwiftyAdsRewarded: NSObject {
     
     // MARK: - Init
     
-    init(adUnitId: @escaping () -> String, request: @escaping () -> GADRequest) {
+    init(adUnitId: String, request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
         self.request = request
     }
@@ -68,7 +68,7 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
     }
     
     func load() {
-        rewardedAd = GADRewardedAd(adUnitID: adUnitId())
+        rewardedAd = GADRewardedAd(adUnitID: adUnitId)
         rewardedAd?.load(request()) { error in
             if let error = error {
                 print(error.localizedDescription)
@@ -83,15 +83,16 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
               onError: ((Error) -> Void)?,
               onNotReady: (() -> Void)?,
               onReward: @escaping (Int) -> Void) {
+        self.onOpen = onOpen
+        self.onClose = onClose
+        self.onError = onError
+        self.onReward = onReward
+        
         if isReady {
             rewardedAd?.present(fromRootViewController: viewController, delegate: self)
         } else {
             onNotReady?()
         }
-        self.onOpen = onOpen
-        self.onClose = onClose
-        self.onError = onError
-        self.onReward = onReward
     }
 }
 

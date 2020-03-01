@@ -36,7 +36,7 @@ final class SwiftyAdsInterstitial: NSObject {
 
     // MARK: - Properties
     
-    private let adUnitId: () -> String
+    private let adUnitId: String
     private let request: () -> GADRequest
     private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
@@ -46,7 +46,7 @@ final class SwiftyAdsInterstitial: NSObject {
     
     // MARK: - Init
     
-    init(adUnitId: @escaping () -> String, request: @escaping () -> GADRequest) {
+    init(adUnitId: String, request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
         self.request = request
     }
@@ -66,7 +66,7 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
     }
     
     func load() {
-        interstitial = GADInterstitial(adUnitID: adUnitId())
+        interstitial = GADInterstitial(adUnitID: adUnitId)
         interstitial?.delegate = self
         interstitial?.load(request())
     }

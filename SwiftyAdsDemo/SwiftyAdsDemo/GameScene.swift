@@ -95,7 +95,7 @@ private extension GameScene {
             }),
             onClose: ({
                 print("SwiftyAds rewarded video ad did close")
-            }),
+            }), 
             onError: ({ error in
                 print("SwiftyAds rewarded video ad error \(error)")
             }),

@@ -41,7 +41,7 @@ final class SwiftyAdsBanner: NSObject {
     
     // MARK: - Properties
     
-    private let adUnitId: () -> String
+    private let adUnitId: String
     private let isLandscape: () -> Bool
     private let request: () -> GADRequest
     private var onOpen: (() -> Void)?
@@ -57,7 +57,7 @@ final class SwiftyAdsBanner: NSObject {
     // MARK: - Init
     
     init(notificationCenter: NotificationCenter,
-         adUnitId: @escaping () -> String,
+         adUnitId: String,
          request: @escaping () -> GADRequest,
          isLandscape: @escaping () -> Bool) {
         self.adUnitId = adUnitId
@@ -101,7 +101,7 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
             return
         }
         
-        bannerAdView.adUnitID = adUnitId()
+        bannerAdView.adUnitID = adUnitId
         bannerAdView.delegate = self
         bannerAdView.rootViewController = viewController
         viewController.view.addSubview(bannerAdView)

@@ -25,13 +25,13 @@ import GoogleMobileAds
 /**
  SwiftyAds
  
- A concret singleton class implementation of SwiftAdsType to display ads from AdMob.
+ A concret class implementation of SwiftAdsType to display ads from AdMob.
  */
 public final class SwiftyAds: NSObject {
     
     // MARK: - Static Properties
     
-    /// The shared instance of SwiftyAds using default non costumizable settings
+    /// The shared instance of SwiftyAds
     public static let shared = SwiftyAds()
     
     // MARK: - Properties
@@ -39,49 +39,11 @@ public final class SwiftyAds: NSObject {
     private let mobileAds: GADMobileAds
     private let intervalTracker: SwiftyAdsIntervalTrackerType
     
+    private var bannerAd: SwiftyAdsBannerType!
+    private var interstitialAd: SwiftyAdsInterstitialType!
+    private var rewardedAd: SwiftyAdsRewardedType!
     private var consentManager: SwiftyAdsConsentManagerType!
-    private var configuration: SwiftyAdsConfiguration!
     private var isDisabled = false
-        
-    private lazy var bannerAd: SwiftyAdsBannerType = {
-        let ad = SwiftyAdsBanner(
-            notificationCenter: .default,
-            adUnitId: ({ [unowned self] in
-                self.configuration.bannerAdUnitId
-            }),
-            request: ({ [unowned self] in
-                self.makeRequest()
-            }),
-            isLandscape: ({
-                UIDevice.current.orientation.isLandscape
-            })
-        )
-        return ad
-    }()
-    
-    private lazy var interstitialAd: SwiftyAdsInterstitialType = {
-        let ad = SwiftyAdsInterstitial(
-            adUnitId: ({ [unowned self] in
-                self.configuration.interstitialAdUnitId
-            }),
-            request: ({ [unowned self] in
-                self.makeRequest()
-            })
-        )
-        return ad
-    }()
-    
-    private lazy var rewardedAd: SwiftyAdsRewardedType = {
-        let ad = SwiftyAdsRewarded(
-            adUnitId: ({ [unowned self] in
-                self.configuration.rewardedVideoAdUnitId
-            }),
-            request: ({ [unowned self] in
-                self.makeRequest()
-            })
-        )
-        return ad
-    }()
         
     // MARK: - Computed Properties
     
@@ -105,9 +67,15 @@ public final class SwiftyAds: NSObject {
     
     // Testing
     init(mobileAds: GADMobileAds,
+         bannerAd: SwiftyAdsBannerType,
+         interstitialAd: SwiftyAdsInterstitialType,
+         rewardedAd: SwiftyAdsRewardedType,
          consentManager: SwiftyAdsConsentManagerType,
          intervalTracker: SwiftyAdsIntervalTrackerType) {
         self.mobileAds = mobileAds
+        self.bannerAd = bannerAd
+        self.interstitialAd = interstitialAd
+        self.rewardedAd = rewardedAd
         self.consentManager = consentManager
         self.intervalTracker = intervalTracker
     }
@@ -152,6 +120,7 @@ extension SwiftyAds: SwiftyAdsType {
                       consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                       handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
         // Update configuration for selected mode
+        let configuration: SwiftyAdsConfiguration
         switch mode {
         case .production:
             configuration = .production
@@ -159,6 +128,32 @@ extension SwiftyAds: SwiftyAdsType {
             configuration = .debug
             mobileAds.requestConfiguration.testDeviceIdentifiers = testDeviceIdentifiers//kGADSimulatorID
         }
+        
+        // Create ads
+        bannerAd = SwiftyAdsBanner(
+            notificationCenter: .default,
+            adUnitId: configuration.bannerAdUnitId,
+            request: ({ [unowned self] in
+                self.requestBuilder.build()
+            }),
+            isLandscape: ({
+                UIDevice.current.orientation.isLandscape
+            })
+        )
+        
+        interstitialAd = SwiftyAdsInterstitial(
+            adUnitId: configuration.interstitialAdUnitId,
+            request: ({ [unowned self] in
+                self.requestBuilder.build()
+            })
+        )
+        
+        rewardedAd = SwiftyAdsRewarded(
+            adUnitId: configuration.rewardedVideoAdUnitId,
+            request: ({ [unowned self] in
+                self.requestBuilder.build()
+            })
+        )
      
         // Create consent manager and make request
         consentManager = SwiftyAdsConsentManager(configuration: configuration, consentStyle: consentStyle)
@@ -268,14 +263,5 @@ extension SwiftyAds: SwiftyAdsType {
         isDisabled = true
         removeBanner()
         interstitialAd.stopLoading()
-    }
-}
-
-// MARK: - Private Methods
-
-private extension SwiftyAds {
-    
-    func makeRequest() -> GADRequest {
-        requestBuilder.build()
     }
 }
