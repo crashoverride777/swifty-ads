@@ -65,9 +65,7 @@ final class SwiftyAdsBanner: NSObject {
     
     // MARK: - Init
     
-    init(notificationCenter: NotificationCenter,
-         adUnitId: String,
-         request: @escaping () -> GADRequest) {
+    init(adUnitId: String, request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
         self.request = request
         super.init()

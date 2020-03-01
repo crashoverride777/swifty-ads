@@ -131,7 +131,6 @@ extension SwiftyAds: SwiftyAdsType {
         
         // Create ads
         bannerAd = SwiftyAdsBanner(
-            notificationCenter: .default,
             adUnitId: configuration.bannerAdUnitId,
             request: ({ [unowned self] in
                 self.requestBuilder.build()
