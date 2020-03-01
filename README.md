@@ -48,9 +48,9 @@ Altenatively you can drag the `Source` folder and its containing files into your
 
 ### Update Info.plist
 
-Add a new entry in your apps info.plist called `GADIsAdManagerApp` (String) with a value of `YES` when using SDK 7.42 or higher
+Add a new entry in your apps info.plist called `GADApplicationIdentifier` (String) and enter your apps admob id
 
-https://developers.google.com/ad-manager/mobile-ads-sdk/ios/quick-start#update_your_infoplist
+https://developers.google.com/admob/ios/quick-start#update_your_infoplist
 
 ### Add SwiftyAds.plist
 
