@@ -56,7 +56,7 @@ https://developers.google.com/ad-manager/mobile-ads-sdk/ios/quick-start#update_y
 
 Create a new `SwiftyAds.plist` file like in the demo project  and update with your ad ids and other settings
 
-[download template ](Downloads/SwiftyAds.zip)
+[Template ](Downloads/SwiftyAds.plist)
 
 ### Setup 
 
