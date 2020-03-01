@@ -107,13 +107,11 @@ extension SwiftyAdsRewarded: GADRewardedAdDelegate {
     }
 
     func rewardedAd(_ rewardedAd: GADRewardedAd, userDidEarn reward: GADAdReward) {
-        print("SwiftyAdsRewarded ad did reward user with \(reward)")
         let rewardAmount = Int(truncating: reward.amount)
         onReward?(rewardAmount)
     }
     
     func rewardedAd(_ rewardedAd: GADRewardedAd, didFailToPresentWithError error: Error) {
-        print("SwiftyAdsRewarded didFailToReceiveAdWithError \(error)")
         onError?(error)
         // Do not reload here as it might cause endless loading loops if no/slow internet
     }

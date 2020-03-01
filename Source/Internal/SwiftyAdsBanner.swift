@@ -171,22 +171,6 @@ extension SwiftyAdsBanner: GADBannerViewDelegate {
         animateToOnScreenPosition(bannerView, from: bannerView.rootViewController)
     }
     
-    func adViewWillPresentScreen(_ bannerView: GADBannerView) {
-        // not firing as expected
-    }
-    
-    func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
-   
-    }
-    
-    func adViewWillDismissScreen(_ bannerView: GADBannerView) {
-        
-    }
-    
-    func adViewDidDismissScreen(_ bannerView: GADBannerView) {
-        // not firing as expected
-    }
-    
     func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
         print("SwiftyAdsBanner didFailToReceiveAdWithError \(error)")
         animateToOffScreenPosition(bannerView, from: bannerView.rootViewController, position: position)

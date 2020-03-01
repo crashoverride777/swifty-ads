@@ -99,25 +99,12 @@ extension SwiftyAdsInterstitial: GADInterstitialDelegate {
         onOpen?()
     }
     
-    func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
-
-    }
-    
-    func interstitialWillDismissScreen(_ ad: GADInterstitial) {
-    
-    }
-    
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
         onClose?()
         load()
     }
     
-    func interstitialDidFail(toPresentScreen ad: GADInterstitial) {
-    
-    }
-    
     func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
-        print("SwiftyAdsInterstitial didFailToReceiveAdWithError \(error)")
         onError?(error)
         // Do not reload here as it might cause endless loading loops if no/slow internet
     }

@@ -214,6 +214,11 @@ extension SwiftyAds: SwiftyAdsType {
         bannerAd.refresh(isLandscape: isLandscape)
     }
     
+    /// Remove banner ads
+    public func removeBanner() {
+        bannerAd.remove()
+    }
+    
     /// Show interstitial ad
     ///
     /// - parameter viewController: The view controller that will present the ad.
@@ -268,11 +273,6 @@ extension SwiftyAds: SwiftyAdsType {
             onNotReady: onNotReady,
             onReward: onReward
         )
-    }
-    
-    /// Remove banner ads
-    public func removeBanner() {
-        bannerAd.remove()
     }
 
     /// Disable ads e.g in app purchases
