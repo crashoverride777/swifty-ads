@@ -4,9 +4,7 @@
 
 # SwiftyAds
 
-A Swift helper to integrate Ads from Google AdMob so you can easily show banner, interstitial and rewarded video ads anywhere in your project.
-
-This helper follows all the best practices in regards to ads, like creating shared banners and correctly preloading interstitial and rewarded video ads so they are always ready to show.
+SwiftyAds is a Swift library to display banner, interstitial and rewarded video ads from AdMob and mediation networks.
 
 ## Requirements
 
@@ -17,7 +15,7 @@ This helper follows all the best practices in regards to ads, like creating shar
 
 https://developers.google.com/ad-manager/mobile-ads-sdk/ios/quick-start
 
-Sign up for a Google [AdMob account](https://support.google.com/admob/answer/3052638?hl=en-GB&ref_topic=3052726) and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Rewarded Videos).
+Sign up for an [AdMob account](https://support.google.com/admob/answer/3052638?hl=en-GB&ref_topic=3052726) and create your required adUnitIDs.
 
 ## GDPR in EEA (European Economic Area)
 
@@ -25,9 +23,7 @@ Sign up for a Google [AdMob account](https://support.google.com/admob/answer/305
 
 ## Mediation
 
-https://developers.google.com/admob/ios/mediation
-
-Make sure to include your mediation networks when setting up SwiftyAds (see Usage-> Add SwiftyAds.plist)
+[READ](https://developers.google.com/admob/ios/mediation)
 
 ## Installation
 
@@ -50,7 +46,7 @@ Altenatively you can drag the `Source` folder and its containing files into your
 
 Add a new entry in your apps info.plist called `GADApplicationIdentifier` (String) and enter your apps admob id
 
-https://developers.google.com/admob/ios/quick-start#update_your_infoplist
+[READ](https://developers.google.com/admob/ios/quick-start#update_your_infoplist)
 
 ### Add SwiftyAds.plist
 
@@ -165,7 +161,7 @@ SwiftyAds.shared.showInterstitial(
 
 Always use a dedicated button to display rewarded videos, never show them automatically as some might be non-skippable.
 
-AdMob provided a new rewarded video API which lets you preload multiple rewarded videos with different AdUnitIds. Currentlty SwiftyAds only supports loading 1 rewarded video ad at a time. I will try to add support for multiple ads very soon.
+AdMob provided a new rewarded video API which lets you preload multiple rewarded videos with different AdUnitIds. While SwiftyAds uses this new API it currently only supports loading 1 rewarded video ad at a time. I will try to add support for multiple ads very soon.
 
 ```swift
 SwiftyAds.shared.showRewardedVideo(
@@ -194,7 +190,7 @@ SwiftyAds.shared.showRewardedVideo(
     }),
     onReward: ({ [weak self] rewardAmount in
         print("SwiftyAds rewarded video ad did reward user with \(rewardAmount)")
-        // Give the user the reward e.g coins, retries etc
+        // Provide the user with the reward e.g coins, retries etc
     })
 )
 ```
