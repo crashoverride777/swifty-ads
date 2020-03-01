@@ -109,7 +109,7 @@ if let viewController = view?.window?.rootViewController {
 }
 ```
 
-### Show Banner Ads
+### Banner Ads
 
 ```swift
 SwiftyAds.shared.showBanner(
@@ -128,7 +128,7 @@ SwiftyAds.shared.showBanner(
 )
 ```
 
-To handle orientation changes call the `updateBannerForOrientationChange` method
+Orientation changes
 
 ```swift
 override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -138,8 +138,13 @@ override func viewWillTransition(to size: CGSize, with coordinator: UIViewContro
     })
 }
 ```
+Remove e.g during gameplay 
 
-### Show Interstitial Ads
+```swift
+SwiftyAds.shared.removeBanner() 
+```
+
+### Interstitial Ads
 
 ```swift
 SwiftyAds.shared.showInterstitial(
@@ -157,7 +162,7 @@ SwiftyAds.shared.showInterstitial(
 )
 ```
 
-### Show Rewarded Ads
+### Rewarded Ads
 
 Always use a dedicated button to display rewarded videos, never show them automatically as some might be non-skippable.
 
@@ -200,16 +205,8 @@ SwiftyAds.shared.showRewardedVideo(
 ```swift
 SwiftyAds.shared.hasConsent // Check if user has given consent
 SwiftyAds.shared.isRequiredToAskForConsent // Check if user in inside EEA and has to ask for consent
-SwiftyAds.shared.isRewardedVideoReady // if false will try to reload add again. Use to e.g show/hide rewarded video button
-SwiftyAds.shared.isInterstitialReady { // if false will try to reload add again
-```
-
-### Remove Banner ads
-
-e.g during gameplay 
-
-```swift
-SwiftyAds.shared.removeBanner() 
+SwiftyAds.shared.isRewardedVideoReady // e.g show/hide rewarded video button
+SwiftyAds.shared.isInterstitialReady { // e.g show custom/in-house ad
 ```
 
 ### Disable ads (In App Purchases)
