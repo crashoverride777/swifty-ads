@@ -25,33 +25,29 @@ import PersonalizedAdConsent
 
 protocol SwiftyAdsConsentManagerType: class {
     var status: SwiftyAdsConsentStatus { get }
-    var isInEEA: Bool { get }
-    var isRequiredToAskForConsent: Bool { get }
-    var hasConsent: Bool { get }
-    var isTaggedForUnderAgeOfConsent: Bool { get }
-    func ask(from viewController: UIViewController,
-             skipAlertIfAlreadyAuthorized: Bool,
-             handler: ((SwiftyAdsConsentStatus) -> Void)?)
+    func requestUpdate(handler: @escaping (SwiftyAdsConsentStatus) -> Void)
+    func showForm(from viewController: UIViewController, handler: ((SwiftyAdsConsentStatus) -> Void)?)
 }
 
 final class SwiftyAdsConsentManager {
 
     // MARK: - Properties
 
+    private let consentInformation: PACConsentInformation
     private let configuration: SwiftyAdsConfiguration
     private let consentStyle: SwiftyAdsConsentStyle
-    private let consentInformation: PACConsentInformation = .sharedInstance
     private let statusDidChange: (SwiftyAdsConsentStatus) -> Void
     
     // MARK: - Init
     
-    init(configuration: SwiftyAdsConfiguration,
+    init(consentInformation: PACConsentInformation,
+         configuration: SwiftyAdsConfiguration,
          consentStyle: SwiftyAdsConsentStyle,
          statusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void) {
+        self.consentInformation = consentInformation
         self.consentStyle = consentStyle
         self.configuration = configuration
         self.statusDidChange = statusDidChange
-        consentInformation.isTaggedForUnderAgeOfConsent = configuration.isTaggedForUnderAgeOfConsent
     }
 }
 
@@ -60,6 +56,14 @@ final class SwiftyAdsConsentManager {
 extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
 
     var status: SwiftyAdsConsentStatus {
+        guard consentInformation.isRequestLocationInEEAOrUnknown else {
+            return .notRequired
+        }
+        
+        guard !configuration.isTaggedForUnderAgeOfConsent else {
+            return .underAge
+        }
+        
         switch consentInformation.consentStatus {
         case .personalized:
             return .personalized
@@ -72,86 +76,43 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
         }
     }
     
-    var isInEEA: Bool {
-        consentInformation.isRequestLocationInEEAOrUnknown
-    }
-    
-    var isRequiredToAskForConsent: Bool {
-        guard isInEEA else { return false }
-        guard !isTaggedForUnderAgeOfConsent else { return false } // must be non personalized only, cannot legally consent
-        return true
-    }
-    
-    var hasConsent: Bool {
-        guard isInEEA else { return true }
-        guard !isTaggedForUnderAgeOfConsent else { return false } // cannot legally consent, so cannot show ad
-        return status != .unknown
-    }
-
-    var isTaggedForUnderAgeOfConsent: Bool {
-        configuration.isTaggedForUnderAgeOfConsent
-    }
-    
-    func ask(from viewController: UIViewController,
-             skipAlertIfAlreadyAuthorized: Bool,
-             handler: ((SwiftyAdsConsentStatus) -> Void)?) {
+    func requestUpdate(handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
         consentInformation.requestConsentInfoUpdate(forPublisherIdentifiers: configuration.ids) { [weak self] (_ error) in
             guard let self = self else { return }
             
-            // Handle error
+            if self.configuration.isTaggedForUnderAgeOfConsent {
+                self.consentInformation.isTaggedForUnderAgeOfConsent = true
+            }
+            
             if let error = error {
                 print("SwiftyAdsConsentManager error requesting consent info update: \(error)")
-                handler?(self.status)
-                self.statusDidChange(self.status)
+                handler(self.status)
                 return
             }
             
-            // We only need to ask for consent if we are in the EEA
-            guard self.isInEEA else {
-                print("SwiftyAdsConsentManager not in EEA, no need to handle consent logic")
-                self.consentInformation.consentStatus = .personalized
-                handler?(.personalized)
-                self.statusDidChange(.personalized)
-                return
+            handler(self.status)
+        }
+    }
+
+    func showForm(from viewController: UIViewController, handler: ((SwiftyAdsConsentStatus) -> Void)?) {
+        switch consentStyle {
+        case .adMob(let shouldOfferAdFree):
+            showDefaultConsentForm(from: viewController, shouldOfferAdFree: shouldOfferAdFree) { [weak self] status in
+                guard let self = self else { return }
+                handler?(status)
+                self.statusDidChange(status)
             }
-            
-            // We also do not need to ask for consent if under age is turned on
-            // because than all add requests have to be non-personalized as a minor
-            // cannot legally consent
-            guard !self.isTaggedForUnderAgeOfConsent else {
-                print("SwiftyAdsConsentManager under age, no need to handle consent logic as it must be non-personalized")
-                handler?(.underAge)
-                self.statusDidChange(.underAge)
-                return
-            }
-            
-            // Skip alert if needed
-            if skipAlertIfAlreadyAuthorized, self.hasConsent {
-                handler?(self.status)
-                self.statusDidChange(self.status)
-                return
-            }
-            
-            // Show consent form
-            switch self.consentStyle {
-            case .adMob(let shouldOfferAdFree):
-                self.showDefaultConsentForm(from: viewController, shouldOfferAdFree: shouldOfferAdFree) { [weak self] status in
-                    guard let self = self else { return }
-                    handler?(status)
-                    self.statusDidChange(status)
-                }
-            case .custom(let content):
-                self.showCustomConsentForm(from: viewController, content: content) { [weak self] status in
-                    guard let self = self else { return }
-                    handler?(status)
-                    self.statusDidChange(status)
-                }
+        case .custom(let content):
+            showCustomConsentForm(from: viewController, content: content) { [weak self] status in
+                guard let self = self else { return }
+                handler?(status)
+                self.statusDidChange(status)
             }
         }
     }
 }
 
-// MARK: - Default Consent Form
+// MARK: - Private Methods
 
 private extension SwiftyAdsConsentManager {
     
@@ -205,12 +166,7 @@ private extension SwiftyAdsConsentManager {
             }
         }
     }
-}
 
-// MARK: - Custom Consent Form
-
-private extension SwiftyAdsConsentManager {
-    
     func showCustomConsentForm(from viewController: UIViewController,
                                content: SwiftyAdsCustomConsentAlertContent,
                                handler: @escaping (SwiftyAdsConsentStatus) -> Void) {

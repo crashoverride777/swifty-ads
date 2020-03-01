@@ -9,6 +9,7 @@
 import Foundation
 
 public enum SwiftyAdsConsentStatus {
+    case notRequired
     case personalized
     case nonPersonalized
     case adFree
@@ -17,7 +18,7 @@ public enum SwiftyAdsConsentStatus {
     
     public var hasConsent: Bool {
         switch self {
-        case .personalized, .nonPersonalized:
+        case .notRequired, .personalized, .nonPersonalized, .underAge:
             return true
         default:
             return false

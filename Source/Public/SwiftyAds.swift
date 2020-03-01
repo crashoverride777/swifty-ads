@@ -49,9 +49,9 @@ public final class SwiftyAds: NSObject {
     
     private var requestBuilder: SwiftyAdsRequestBuilderType {
         SwiftyAdsRequestBuilder(
-            isGDPRRequired: consentManager.isInEEA,
+            isGDPRRequired: consentManager.status != .notRequired,
             isNonPersonalizedOnly: consentManager.status == .nonPersonalized,
-            isTaggedForUnderAgeOfConsent: consentManager.isTaggedForUnderAgeOfConsent
+            isTaggedForUnderAgeOfConsent: consentManager.status == .underAge
         )
     }
     
@@ -87,22 +87,22 @@ extension SwiftyAds: SwiftyAdsType {
     
     /// Check if user has consent e.g to hide rewarded video button
     public var hasConsent: Bool {
-        consentManager.hasConsent
+        consentManager.status.hasConsent
     }
      
     /// Check if we must ask for consent e.g to hide change consent button in apps settings menu (required GDPR requirement)
     public var isRequiredToAskForConsent: Bool {
-        consentManager.isRequiredToAskForConsent
+        guard consentManager.status != .notRequired else { return false }
+        guard consentManager.status != .underAge else { return false } // cannot legally consent
+        return true
     }
      
     /// Check if interstitial video is ready (e.g to show alternative ad like an in house ad)
-    /// Will try to reload an ad if it returns false.
     public var isInterstitialReady: Bool {
         interstitialAd.isReady
     }
      
     /// Check if reward video is ready (e.g to hide/disable the rewarded video button)
-    /// Will try to reload an ad if it returns false.
     public var isRewardedVideoReady: Bool {
         rewardedAd.isReady
     }
@@ -153,28 +153,51 @@ extension SwiftyAds: SwiftyAdsType {
      
         // Create consent manager and make request
         consentManager = SwiftyAdsConsentManager(
+            consentInformation: .sharedInstance,
             configuration: configuration,
             consentStyle: consentStyle,
             statusDidChange: consentStatusDidChange
         )
-        consentManager.ask(from: viewController, skipAlertIfAlreadyAuthorized: true) { [weak self] status in
+        consentManager.requestUpdate { [weak self] status in
             guard let self = self else { return }
-            if status.hasConsent {
+            func loadAds() {
                 if !self.isDisabled {
                     self.interstitialAd.load()
                 }
                 self.rewardedAd.load()
             }
             
-            handler(status)
+            if self.consentManager.status.hasConsent {
+                loadAds()
+                handler(status)
+            } else {
+                self.consentManager.showForm(from: viewController) { status in
+                    if status.hasConsent {
+                        loadAds()
+                        handler(status)
+                    }
+                }
+            }
         }
+        
+//        consentManager.ask(from: viewController, skipAlertIfAlreadyAuthorized: true) { [weak self] status in
+//            guard let self = self else { return }
+//            if status.hasConsent {
+//                if !self.isDisabled {
+//                    self.interstitialAd.load()
+//                }
+//                self.rewardedAd.load()
+//            }
+//
+//            handler(status)
+//        }
     }
 
     /// Ask for consent e.g when consent button is pressed
     ///
     /// - parameter viewController: The view controller that will present the consent form.
     public func askForConsent(from viewController: UIViewController) {
-        consentManager.ask(from: viewController, skipAlertIfAlreadyAuthorized: false, handler: nil)
+        consentManager.showForm(from: viewController, handler: nil)
     }
     
     /// Show banner ad

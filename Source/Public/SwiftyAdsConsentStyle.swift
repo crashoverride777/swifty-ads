@@ -16,20 +16,20 @@ public enum SwiftyAdsConsentStyle {
 public struct SwiftyAdsCustomConsentAlertContent {
     public let title: String
     public let message: String
-    public let actionAdFree: String?
     public let actionAllowPersonalized: String
     public let actionAllowNonPersonalized: String
+    public let actionAdFree: String?
     
     public init(
         title: String,
         message: String,
-        actionAdFree: String?,
         actionAllowPersonalized: String,
-        actionAllowNonPersonalized: String) {
+        actionAllowNonPersonalized: String,
+        actionAdFree: String?) {
         self.title = title
         self.message = message
-        self.actionAdFree = actionAdFree
         self.actionAllowPersonalized = actionAllowPersonalized
         self.actionAllowNonPersonalized = actionAllowNonPersonalized
+        self.actionAdFree = actionAdFree
     }
 }

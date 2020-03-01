@@ -73,9 +73,9 @@ private extension GameViewController {
         let customConsentContent = SwiftyAdsCustomConsentAlertContent(
             title: "Permission to use data",
             message: "We care about your privacy and data security. We keep this app free by showing ads. You can change your choice anytime in the app settings. Our partners will collect data and use a unique identifier on your device to show you ads.",
-            actionAdFree: nil,
             actionAllowPersonalized: "Allow personalized",
-            actionAllowNonPersonalized: "Allow non personalized"
+            actionAllowNonPersonalized: "Allow non personalized",
+            actionAdFree: nil
         )
         
         swiftyAds.setup(
@@ -84,9 +84,13 @@ private extension GameViewController {
             consentStyle: .custom(content: customConsentContent),
             consentStatusDidChange: ({ consentStatus in
                 print("SwiftyAds did change consent status to \(consentStatus)")
-                // update mediation networks if required
                 let skView = self.view as? SKView
                 (skView?.scene as? GameScene)?.refresh()
+                
+                if consentStatus != .notRequired {
+                    // update mediation networks if required
+                }
+                
             }),
             handler: ({ status in
                 guard status.hasConsent else { return }
