@@ -22,7 +22,7 @@ s.resource_bundle = { 'SwiftyAds' => ['Source/Resources/**/*.{strings}'] }
 
 s.static_framework = true
 
-s.dependency = 'Google-Mobile-Ads-SDK'
-s.dependency = 'PersonalizedAdConsent'
+s.dependency = "Google-Mobile-Ads-SDK", "~> 7.56.0"
+s.dependency = "PersonalizedAdConsent", "~> 1.0.5"
 
 end
