@@ -192,8 +192,10 @@ extension SwiftyAds: SwiftyAdsType {
                            onOpen: (() -> Void)?,
                            onClose: (() -> Void)?,
                            onError: ((Error) -> Void)?) {
-        guard !isDisabled else { return }
-        guard hasConsent else { return }
+        guard !isDisabled, hasConsent else {
+            return
+        }
+        
         bannerAd.show(
             from: viewController,
             at: isAtTop ? .top : .bottom,
@@ -224,10 +226,14 @@ extension SwiftyAds: SwiftyAdsType {
                                  onOpen: (() -> Void)?,
                                  onClose: (() -> Void)?,
                                  onError: ((Error) -> Void)?) {
-        guard !isDisabled else { return }
-        guard hasConsent else { return }
-        guard isInterstitialReady else { return }
-        guard intervalTracker.canShow(forInterval: interval) else { return }
+        guard !isDisabled, hasConsent else {
+            return
+        }
+    
+        guard intervalTracker.canShow(forInterval: interval) else {
+            return
+        }
+        
         interstitialAd.show(
             from: viewController,
             onOpen: onOpen,
@@ -250,7 +256,10 @@ extension SwiftyAds: SwiftyAdsType {
                                   onError: ((Error) -> Void)?,
                                   onNotReady: (() -> Void)?,
                                   onReward: @escaping (Int) -> Void) {
-        guard hasConsent else { return }
+        guard hasConsent else {
+            return
+        }
+        
         rewardedAd.show(
             from: viewController,
             onOpen: onOpen,

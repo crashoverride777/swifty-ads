@@ -59,12 +59,7 @@ final class SwiftyAdsRewarded: NSObject {
 extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
     
     var isReady: Bool {
-        guard let rewardedAd = rewardedAd, rewardedAd.isReady else {
-            print("SwiftyRewardedAd reward video is not ready, reloading...")
-            load()
-            return false
-        }
-        return true
+        rewardedAd?.isReady ?? false
     }
     
     func load() {
@@ -91,6 +86,7 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
         if isReady {
             rewardedAd?.present(fromRootViewController: viewController, delegate: self)
         } else {
+            load()
             onNotReady?()
         }
     }

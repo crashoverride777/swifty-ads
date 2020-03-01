@@ -57,12 +57,7 @@ final class SwiftyAdsInterstitial: NSObject {
 extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
 
     var isReady: Bool {
-        guard let interstitial = interstitial, interstitial.isReady else {
-            print("SwiftyAdsInterstitial ad is not ready, reloading...")
-            load()
-            return false
-        }
-        return true
+        interstitial?.isReady ?? false
     }
     
     func load() {
@@ -75,11 +70,15 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?) {
-        guard isReady else { return }
         self.onOpen = onOpen
         self.onClose = onClose
         self.onError = onError
-        interstitial?.present(fromRootViewController: viewController)
+        
+        if isReady {
+            interstitial?.present(fromRootViewController: viewController)
+        } else {
+            load()
+        }
     }
     
     func stopLoading() {

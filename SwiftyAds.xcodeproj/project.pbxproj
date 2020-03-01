@@ -90,8 +90,8 @@
 				6AAD6A0D240BEC98001F4A7D /* SwiftyAdsConsentManager.swift */,
 				6AAD6A0E240BEC98001F4A7D /* SwiftyAdsIntervalTracker.swift */,
 				6AAD6A0C240BEC98001F4A7D /* SwiftyAdsRequestBuilder.swift */,
-				6AAD6A0F240BEC98001F4A7D /* SwiftyAdsInterstitial.swift */,
 				6AAD6A10240BEC98001F4A7D /* SwiftyAdsBanner.swift */,
+				6AAD6A0F240BEC98001F4A7D /* SwiftyAdsInterstitial.swift */,
 				6AAD6A0B240BEC98001F4A7D /* SwiftyAdsRewarded.swift */,
 			);
 			path = Internal;
