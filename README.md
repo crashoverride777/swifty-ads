@@ -54,7 +54,7 @@ https://developers.google.com/ad-manager/mobile-ads-sdk/ios/quick-start#update_y
 
 ### Add SwiftyAds.plist
 
-Create a new `SwiftyAds.plist` file like in the demo project  and update with your ad ids and other settings
+Download the template plist and add it to your projects main bundle. Than enter your required ids and settings.
 
 [Template ](Downloads/SwiftyAdsPlistTemplate.zip)
 
