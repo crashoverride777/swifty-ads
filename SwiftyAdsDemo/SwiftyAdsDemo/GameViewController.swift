@@ -81,6 +81,8 @@ private extension GameViewController {
             consentStatusDidChange: ({ consentStatus in
                 print("SwiftyAds did change consent status to \(consentStatus)")
                 // update mediation networks if required
+                let skView = self.view as? SKView
+                (skView?.scene as? GameScene)?.refresh()
             }),
             handler: ({ status in
                 guard status.hasConsent else { return }

@@ -20,17 +20,11 @@ class GameScene: SKScene {
     private lazy var disableLabel: SKLabelNode = self.childNode(withName: "disableLabel") as! SKLabelNode
     private lazy var consentLabel: SKLabelNode = self.childNode(withName: "consentLabel") as! SKLabelNode
     
-    // MARK: - Init
-    
-    func configure(swiftyAds: SwiftyAdsType) {
-        self.swiftyAds = swiftyAds
-    }
-    
     // MARK: - Life Cycle
     
     override func didMove(to view: SKView) {
         backgroundColor = .gray
-        consentLabel.isHidden = !swiftyAds.isRequiredToAskForConsent
+        refresh()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -64,6 +58,16 @@ class GameScene: SKScene {
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+    }
+    
+    // MARK: - Public Methods
+      
+    func configure(swiftyAds: SwiftyAdsType) {
+        self.swiftyAds = swiftyAds
+    }
+    
+    func refresh() {
+        consentLabel.isHidden = !swiftyAds.isRequiredToAskForConsent
     }
 }
 
