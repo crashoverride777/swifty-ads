@@ -80,18 +80,15 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
         consentInformation.requestConsentInfoUpdate(forPublisherIdentifiers: configuration.ids) { [weak self] (_ error) in
             guard let self = self else { return }
             
-            // Set for under age of consent if required
-            if self.consentInformation.isRequestLocationInEEAOrUnknown, self.configuration.isTaggedForUnderAgeOfConsent {
-                self.consentInformation.isTaggedForUnderAgeOfConsent = true
+            defer {
+                self.updateUnderAgeOfConsent()
+                handler(self.status)
             }
             
             if let error = error {
                 print("SwiftyAdsConsentManager error requesting consent info update: \(error)")
-                handler(self.status)
                 return
             }
-            
-            handler(self.status)
         }
     }
 
@@ -117,6 +114,14 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
 
 private extension SwiftyAdsConsentManager {
     
+    func updateUnderAgeOfConsent() {
+        if consentInformation.isRequestLocationInEEAOrUnknown {
+            consentInformation.isTaggedForUnderAgeOfConsent = configuration.isTaggedForUnderAgeOfConsent
+        } else {
+            consentInformation.isTaggedForUnderAgeOfConsent = false
+        }
+    }
+    
     func showDefaultConsentForm(from viewController: UIViewController,
                                 shouldOfferAdFree: Bool,
                                 handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
@@ -140,7 +145,9 @@ private extension SwiftyAdsConsentManager {
         form.shouldOfferAdFree = shouldOfferAdFree
         
         // Load form
-        form.load { (_ error) in
+        form.load { [weak self] (_ error) in
+            guard let self = self else { return }
+            
             if let error = error {
                 print("SwiftyAdsConsentManager error loading consent form: \(error)")
                 handler(self.status)
@@ -148,7 +155,10 @@ private extension SwiftyAdsConsentManager {
             }
             
             // Loaded successfully, present it
-            form.present(from: viewController) { (error, prefersAdFree) in
+            form.present(from: viewController) { [weak self] (error, prefersAdFree) in
+                guard let self = self else { return }
+                
+                // Check for error
                 if let error = error {
                     print("SwiftyAdsConsentManager error presenting consent form: \(error)")
                     handler(self.status)
@@ -181,14 +191,16 @@ private extension SwiftyAdsConsentManager {
         let alertController = UIAlertController(title: content.title, message: message, preferredStyle: .alert)
         
         // Personalized action
-        let personalizedAction = UIAlertAction(title: content.actionAllowPersonalized, style: .default) { action in
+        let personalizedAction = UIAlertAction(title: content.actionAllowPersonalized, style: .default) { [weak self] action in
+            guard let self = self else { return }
             self.consentInformation.consentStatus = .personalized
             handler(.personalized)
         }
         alertController.addAction(personalizedAction)
         
         // Non-Personalized action
-        let nonPersonalizedAction = UIAlertAction(title: content.actionAllowNonPersonalized, style: .default) { action in
+        let nonPersonalizedAction = UIAlertAction(title: content.actionAllowNonPersonalized, style: .default) { [weak self] action in
+            guard let self = self else { return }
             self.consentInformation.consentStatus = .nonPersonalized
             handler(.nonPersonalized)
         }
@@ -196,7 +208,8 @@ private extension SwiftyAdsConsentManager {
         
         // Ad free action
         if let actionAdFree = content.actionAdFree {
-            let adFreeAction = UIAlertAction(title: actionAdFree, style: .default) { action in
+            let adFreeAction = UIAlertAction(title: actionAdFree, style: .default) { [weak self] action in
+                guard let self = self else { return }
                 self.consentInformation.consentStatus = .unknown
                 handler(.adFree)
             }
