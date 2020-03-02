@@ -85,7 +85,8 @@ public final class SwiftyAds: NSObject {
 
 extension SwiftyAds: SwiftyAdsType {
     
-    /// Check if user has consent e.g to hide rewarded video button
+    /// Check if user has given consent e.g to hide rewarded video button
+    /// Also returns true if used is outside EEA and is therefore not required to provide consent
     public var hasConsent: Bool {
         consentManager.status.hasConsent
     }
