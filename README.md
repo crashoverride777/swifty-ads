@@ -70,18 +70,21 @@ func setupSwiftyAds() {
     let customConsentContent = SwiftyAdsCustomConsentAlertContent(
         title: "Permission to use data",
         message: "We care about your privacy and data security. We keep this app free by showing ads. You can change your choice anytime in the app settings. Our partners will collect data and use a unique identifier on your device to show you ads.",
-        actionAdFree: nil, // we do not want to offer ad free in this example
         actionAllowPersonalized: "Allow personalized",
-        actionAllowNonPersonalized: "Allow non personalized"
+        actionAllowNonPersonalized: "Allow non personalized",
+        actionAdFree: nil, // we do not want to offer ad free in this example
     )
     
     SwiftyAds.shared.setup(
         with: self,
         mode: mode,
-        consentStyle: .custom(content: customConsentContent), // alternatevly set to adMob to use googles native consent form
+        consentStyle: .custom(content: customConsentContent), // alternatively set to adMob to use googles native consent form
         consentStatusDidChange: ({ consentStatus in
             print("SwiftyAds did change consent status to \(consentStatus)")
-            // update mediation networks if required
+            
+            if consentStatus != .notRequired {
+                // update mediation networks if required
+            }
         }),
         handler: ({ status in
             guard status.hasConsent else { return }
@@ -203,7 +206,7 @@ SwiftyAds.shared.showRewardedVideo(
 ### Booleans
 
 ```swift
-SwiftyAds.shared.hasConsent // Check if user has given consent
+SwiftyAds.shared.hasConsent // Check if user has given consent. Also returns true if not required to ask for consent (outside EEA)
 SwiftyAds.shared.isRequiredToAskForConsent // Check if user in inside EEA and has to ask for consent
 SwiftyAds.shared.isRewardedVideoReady // e.g show/hide rewarded video button
 SwiftyAds.shared.isInterstitialReady { // e.g show custom/in-house ad
