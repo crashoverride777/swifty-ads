@@ -79,7 +79,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
     func requestUpdate(handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
         consentInformation.requestConsentInfoUpdate(forPublisherIdentifiers: configuration.ids) { [weak self] (_ error) in
             guard let self = self else { return }
-            
+         
             defer {
                 self.updateUnderAgeOfConsent()
                 handler(self.status)
@@ -182,10 +182,15 @@ private extension SwiftyAdsConsentManager {
                                content: SwiftyAdsCustomConsentAlertContent,
                                handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
         // Create alert message with all ad providers
-        let message =
+        var message =
             content.message +
-            "\n\n" + configuration.adNetworks +
-            "\n\n" + configuration.privacyPolicyURL
+            "\n\n" + configuration.adNetworks
+        
+        if let adProviders = consentInformation.adProviders, !adProviders.isEmpty {
+            message += "\n\n" + adProviders.map { $0.name }.joined(separator: adProviders.count > 1 ? ", " : "")
+        }
+        
+        message += "\n\n" + configuration.privacyPolicyURL
         
         // Create alert controller
         let alertController = UIAlertController(title: content.title, message: message, preferredStyle: .alert)

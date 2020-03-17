@@ -180,18 +180,6 @@ extension SwiftyAds: SwiftyAdsType {
                 }
             }
         }
-        
-//        consentManager.ask(from: viewController, skipAlertIfAlreadyAuthorized: true) { [weak self] status in
-//            guard let self = self else { return }
-//            if status.hasConsent {
-//                if !self.isDisabled {
-//                    self.interstitialAd.load()
-//                }
-//                self.rewardedAd.load()
-//            }
-//
-//            handler(status)
-//        }
     }
 
     /// Ask for consent e.g when consent button is pressed
