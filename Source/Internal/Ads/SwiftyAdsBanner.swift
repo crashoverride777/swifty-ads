@@ -140,24 +140,7 @@ extension SwiftyAdsBanner: GADBannerViewDelegate {
         print("SwiftyAdsBanner did receive ad from: \(bannerView.responseInfo?.adNetworkClassName ?? "")")
         animateToOnScreenPosition(bannerView, from: bannerView.rootViewController)
     }
-    
-    func adViewWillPresentScreen(_ bannerView: GADBannerView) {
-        didOpen()
-    }
-    
-    func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
-        #warning("is this correct?")
-        didOpen()
-    }
-    
-    func adViewWillDismissScreen(_ bannerView: GADBannerView) {
-        
-    }
-    
-    func adViewDidDismissScreen(_ bannerView: GADBannerView) {
-        didClose()
-    }
-    
+
     func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
         print(error.localizedDescription)
         animateToOffScreenPosition(bannerView, from: bannerView.rootViewController, position: position)
@@ -187,7 +170,9 @@ private extension SwiftyAdsBanner {
             viewController.view.layoutIfNeeded()
         }
         
-        animator?.addCompletion { _ in
+        animator?.addCompletion { [weak self] _ in
+            guard let self = self else { return }
+            self.didOpen()
             completion?()
         }
 
@@ -220,8 +205,10 @@ private extension SwiftyAdsBanner {
             viewController.view.layoutIfNeeded()
         }
         
-        animator?.addCompletion { _ in
+        animator?.addCompletion { [weak self] _ in
+            guard let self = self else { return }
             bannerAd.isHidden = true
+            self.didClose()
             completion?()
         }
         
