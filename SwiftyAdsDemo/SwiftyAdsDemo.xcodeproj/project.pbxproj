@@ -116,7 +116,7 @@
 		6A4286032400609E0035487A /* SwiftyAdsDemo */ = {
 			isa = PBXGroup;
 			children = (
-				6AC971BF2401B06600A0BB91 /* Source */,
+				6AC971BF2401B06600A0BB91 /* Sources */,
 				6A4286232400612E0035487A /* GameViewController.swift */,
 				6A4286242400612E0035487A /* GameScene.swift */,
 				6A4286222400612D0035487A /* GameScene.sks */,
@@ -131,14 +131,14 @@
 			path = SwiftyAdsDemo;
 			sourceTree = "<group>";
 		};
-		6AC971BF2401B06600A0BB91 /* Source */ = {
+		6AC971BF2401B06600A0BB91 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				6AC971C62401B06600A0BB91 /* Internal */,
 				6AC971D32401B06600A0BB91 /* Public */,
 			);
-			name = Source;
-			path = ../../Source;
+			name = Sources;
+			path = ../../Sources;
 			sourceTree = "<group>";
 		};
 		6AC971C62401B06600A0BB91 /* Internal */ = {

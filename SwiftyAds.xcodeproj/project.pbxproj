@@ -74,13 +74,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6A4285F724005F560035487A /* Source */ = {
+		6A4285F724005F560035487A /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				6A68DA6523FF69B50006F655 /* Public */,
 				6A68A75C23FF69840030374F /* Internal */,
 			);
-			path = Source;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		6A68A75C23FF69840030374F /* Internal */ = {
@@ -154,7 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				6A38EBA72401916500E645A0 /* README.md */,
-				6A4285F724005F560035487A /* Source */,
+				6A4285F724005F560035487A /* Sources */,
 				B4C1B12A204C298500452094 /* SwiftyAds */,
 				6AAD6A1E240C1CBE001F4A7D /* SwiftyAdsTests */,
 				B4C1B129204C298500452094 /* Products */,
