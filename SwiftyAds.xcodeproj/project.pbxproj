@@ -109,7 +109,7 @@
 			path = Public;
 			sourceTree = "<group>";
 		};
-		6AAD6A1E240C1CBE001F4A7D /* SwiftyAdsTests */ = {
+		6AAD6A1E240C1CBE001F4A7D /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				6AAD6A2C240C1DF9001F4A7D /* Test Plans */,
@@ -118,7 +118,7 @@
 				6AAD6A2F240C1E16001F4A7D /* Test Data */,
 				6AAD6A21240C1CBE001F4A7D /* Info.plist */,
 			);
-			path = SwiftyAdsTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		6AAD6A28240C1CDD001F4A7D /* Internal */ = {
@@ -156,7 +156,7 @@
 				6A38EBA72401916500E645A0 /* README.md */,
 				6A4285F724005F560035487A /* Sources */,
 				B4C1B12A204C298500452094 /* SwiftyAds */,
-				6AAD6A1E240C1CBE001F4A7D /* SwiftyAdsTests */,
+				6AAD6A1E240C1CBE001F4A7D /* Tests */,
 				B4C1B129204C298500452094 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -333,7 +333,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DK88YZ475Z;
-				INFOPLIST_FILE = SwiftyAdsTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -351,7 +351,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DK88YZ475Z;
-				INFOPLIST_FILE = SwiftyAdsTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_FAST_MATH = YES;
