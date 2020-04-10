@@ -39,9 +39,9 @@ public final class SwiftyAds: NSObject {
     private let mobileAds: GADMobileAds
     private let intervalTracker: SwiftyAdsIntervalTrackerType
     
-    private var bannerAd: SwiftyAdsBannerType!
-    private var interstitialAd: SwiftyAdsInterstitialType!
-    private var rewardedAd: SwiftyAdsRewardedType!
+    private var bannerAd: SwiftyAdsBannerType?
+    private var interstitialAd: SwiftyAdsInterstitialType?
+    private var rewardedAd: SwiftyAdsRewardedType?
     private var consentManager: SwiftyAdsConsentManagerType!
     private var isDisabled = false
         
@@ -93,19 +93,22 @@ extension SwiftyAds: SwiftyAdsType {
      
     /// Check if we must ask for consent e.g to hide change consent button in apps settings menu (required GDPR requirement)
     public var isRequiredToAskForConsent: Bool {
-        guard consentManager.status != .notRequired else { return false }
-        guard consentManager.status != .underAge else { return false } // cannot legally consent
-        return true
+        switch consentManager.status {
+        case .notRequired, .underAge: // if under age, cannot legally consent
+            return false
+        default:
+            return true
+        }
     }
      
     /// Check if interstitial video is ready (e.g to show alternative ad like an in house ad)
     public var isInterstitialReady: Bool {
-        interstitialAd.isReady
+        interstitialAd?.isReady ?? false
     }
      
     /// Check if reward video is ready (e.g to hide/disable the rewarded video button)
     public var isRewardedVideoReady: Bool {
-        rewardedAd.isReady
+        rewardedAd?.isReady ?? false
     }
     
     /// Setup swift ad
@@ -114,12 +117,12 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter mode: Set the mode of ads, production or debug.
     /// - parameter consentStyle: The style of the consent alert.
     /// - parameter consentStatusDidChange: A handler that will fire everytime the consent status has changed.
-    /// - parameter handler: A handler that will return the current consent status after the consent alert has been dismissed.
+    /// - parameter completion: A handler that will return the current consent status after the consent alert has been dismissed.
     public func setup(with viewController: UIViewController,
                       mode: SwiftyAdsMode,
                       consentStyle: SwiftyAdsConsentStyle,
                       consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
-                      handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
+                      completion: @escaping (SwiftyAdsConsentStatus) -> Void) {
         // Update configuration for selected mode
         let configuration: SwiftyAdsConfiguration
         switch mode {
@@ -159,23 +162,24 @@ extension SwiftyAds: SwiftyAdsType {
             consentStyle: consentStyle,
             statusDidChange: consentStatusDidChange
         )
+        
         consentManager.requestUpdate { [weak self] status in
             guard let self = self else { return }
             func loadAds() {
                 if !self.isDisabled {
-                    self.interstitialAd.load()
+                    self.interstitialAd?.load()
                 }
-                self.rewardedAd.load()
+                self.rewardedAd?.load()
             }
             
             if self.consentManager.status.hasConsent {
                 loadAds()
-                handler(status)
+                completion(status)
             } else {
                 self.consentManager.showForm(from: viewController) { status in
                     if status.hasConsent {
                         loadAds()
-                        handler(status)
+                        completion(status)
                     }
                 }
             }
@@ -193,23 +197,29 @@ extension SwiftyAds: SwiftyAdsType {
     ///
     /// - parameter viewController: The view controller that will present the ad.
     /// - parameter isAtTop: If set to true the banner will be displayed at the top.
+    /// - parameter ignoresSafeArea: If set to true the banner will ignore safe area margins
     /// - parameter animationDuration: The duration of the banner to animate on/off screen.
     /// - parameter onOpen: An optional callback when the banner was presented.
     /// - parameter onClose: An optional callback when the banner was dismissed or removed.
     /// - parameter onError: An optional callback when an error has occurred.
     public func showBanner(from viewController: UIViewController,
                            atTop isAtTop: Bool,
+                           ignoresSafeArea: Bool,
                            animationDuration: TimeInterval,
                            onOpen: (() -> Void)?,
                            onClose: (() -> Void)?,
                            onError: ((Error) -> Void)?) {
+        guard let bannerAd = bannerAd else {
+            return
+        }
+        
         guard !isDisabled, hasConsent else {
             return
         }
         
         bannerAd.show(
             from: viewController,
-            at: isAtTop ? .top : .bottom,
+            at: isAtTop ? .top(ignoresSafeArea: ignoresSafeArea) : .bottom(ignoresSafeArea: ignoresSafeArea),
             isLandscape: UIDevice.current.orientation.isLandscape,
             animationDuration: animationDuration,
             onOpen: onOpen,
@@ -222,12 +232,12 @@ extension SwiftyAds: SwiftyAdsType {
     ///
     /// - parameter isLandscape: An flag to tell the banner if it should be refreshed for landscape or portrait orientation.
     public func updateBannerForOrientationChange(isLandscape: Bool) {
-        bannerAd.refresh(isLandscape: isLandscape)
+        bannerAd?.refresh(isLandscape: isLandscape)
     }
     
     /// Remove banner ads
     public func removeBanner() {
-        bannerAd.remove()
+        bannerAd?.remove()
     }
     
     /// Show interstitial ad
@@ -242,6 +252,10 @@ extension SwiftyAds: SwiftyAdsType {
                                  onOpen: (() -> Void)?,
                                  onClose: (() -> Void)?,
                                  onError: ((Error) -> Void)?) {
+        guard let interstitialAd = interstitialAd else {
+            return
+        }
+        
         guard !isDisabled, hasConsent else {
             return
         }
@@ -272,6 +286,10 @@ extension SwiftyAds: SwiftyAdsType {
                                   onError: ((Error) -> Void)?,
                                   onNotReady: (() -> Void)?,
                                   onReward: @escaping (Int) -> Void) {
+        guard let rewardedAd = rewardedAd else {
+            return
+        }
+        
         guard hasConsent else {
             return
         }
@@ -290,6 +308,6 @@ extension SwiftyAds: SwiftyAdsType {
     public func disable() {
         isDisabled = true
         removeBanner()
-        interstitialAd.stopLoading()
+        interstitialAd?.stopLoading()
     }
 }

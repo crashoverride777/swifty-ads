@@ -90,9 +90,8 @@ private extension GameViewController {
                 if consentStatus != .notRequired {
                     // update mediation networks if required
                 }
-                
             }),
-            handler: ({ status in
+            completion: ({ status in
                 guard status.hasConsent else { return }
                 DispatchQueue.main.async {
                     self.showBanner()
@@ -105,6 +104,7 @@ private extension GameViewController {
         swiftyAds.showBanner(
             from: self,
             atTop: false,
+            ignoresSafeArea: false,
             animationDuration: 1.5,
             onOpen: ({
                 print("SwiftyAds banner ad did open")

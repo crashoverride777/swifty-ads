@@ -17,10 +17,11 @@ public protocol SwiftyAdsType: AnyObject {
                mode: SwiftyAdsMode,
                consentStyle: SwiftyAdsConsentStyle,
                consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
-               handler: @escaping (SwiftyAdsConsentStatus) -> Void)
+               completion: @escaping (SwiftyAdsConsentStatus) -> Void)
     func askForConsent(from viewController: UIViewController)
     func showBanner(from viewController: UIViewController,
                     atTop isAtTop: Bool,
+                    ignoresSafeArea: Bool,
                     animationDuration: TimeInterval,
                     onOpen: (() -> Void)?,
                     onClose: (() -> Void)?,

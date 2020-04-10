@@ -118,6 +118,7 @@ if let viewController = view?.window?.rootViewController {
 SwiftyAds.shared.showBanner(
     from: self,
     atTop: false,
+    ignoresSafeArea: false,
     animationDuration: 1.5,
     onOpen: ({
         print("SwiftyAds banner ad did open")

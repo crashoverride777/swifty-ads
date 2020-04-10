@@ -23,8 +23,8 @@
 import GoogleMobileAds
 
 enum SwiftyAdsBannerPositition {
-    case top
-    case bottom
+    case top(ignoresSafeArea: Bool)
+    case bottom(ignoresSafeArea: Bool)
 }
 
 protocol SwiftyAdsBannerType: AnyObject {
@@ -50,7 +50,7 @@ final class SwiftyAdsBanner: NSObject {
     private var onError: ((Error) -> Void)?
     
     private var bannerView: GADBannerView?
-    private var position: SwiftyAdsBannerPositition = .bottom
+    private var position: SwiftyAdsBannerPositition = .bottom(ignoresSafeArea: false)
     private var animationDuration: TimeInterval = 1.4
     private var bannerViewConstraint: NSLayoutConstraint?
     private var animator: UIViewPropertyAnimator?
@@ -110,13 +110,21 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
          
         // Add constraints
         // We don't give the banner a width or height constraints, as the provided ad size will give the banner
-        // an intrinsic content size to size the view.
+        // an intrinsic content size
         let layoutGuide = viewController.view.safeAreaLayoutGuide
         switch position {
-        case .top:
-            bannerViewConstraint = bannerView.topAnchor.constraint(equalTo: layoutGuide.topAnchor)
-        case .bottom:
-            bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor)
+        case .top(let ignoresSafeArea):
+            if ignoresSafeArea {
+                bannerViewConstraint = bannerView.topAnchor.constraint(equalTo: viewController.view.topAnchor)
+            } else {
+                bannerViewConstraint = bannerView.topAnchor.constraint(equalTo: layoutGuide.topAnchor)
+            }
+        case .bottom(let ignoresSafeArea):
+            if ignoresSafeArea {
+                bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: viewController.view.bottomAnchor)
+            } else {
+                bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor)
+            }
         }
          
         NSLayoutConstraint.activate([
