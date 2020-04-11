@@ -57,7 +57,6 @@ public final class SwiftyAds: NSObject {
     
     // MARK: - Init
     
-    // Shared instance
     private override init() {
         mobileAds = .sharedInstance()
         intervalTracker = SwiftyAdsIntervalTracker()
@@ -65,7 +64,6 @@ public final class SwiftyAds: NSObject {
         
     }
     
-    // Testing
     init(mobileAds: GADMobileAds,
          bannerAd: SwiftyAdsBannerType,
          interstitialAd: SwiftyAdsInterstitialType,
@@ -232,7 +230,7 @@ extension SwiftyAds: SwiftyAdsType {
     ///
     /// - parameter isLandscape: An flag to tell the banner if it should be refreshed for landscape or portrait orientation.
     public func updateBannerForOrientationChange(isLandscape: Bool) {
-        bannerAd?.refresh(isLandscape: isLandscape)
+        bannerAd?.updateSize(isLandscape: isLandscape)
     }
     
     /// Remove banner ads

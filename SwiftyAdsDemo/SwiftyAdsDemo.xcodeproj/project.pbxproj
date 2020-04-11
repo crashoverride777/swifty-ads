@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6A28F23B240DB69700D8994F /* SwiftyAds.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A28F23A240DB69600D8994F /* SwiftyAds.plist */; };
 		6A4286052400609E0035487A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4286042400609E0035487A /* AppDelegate.swift */; };
 		6A4286102400609E0035487A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A42860E2400609E0035487A /* Main.storyboard */; };
 		6A428612240060A00035487A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A428611240060A00035487A /* Assets.xcassets */; };
@@ -15,7 +14,6 @@
 		6A4286252400612E0035487A /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 6A4286222400612D0035487A /* GameScene.sks */; };
 		6A4286262400612E0035487A /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4286232400612E0035487A /* GameViewController.swift */; };
 		6A4286272400612E0035487A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4286242400612E0035487A /* GameScene.swift */; };
-		6A494E702401B0F800203B0C /* SwiftyAdsDEMO.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A494E6F2401B0F800203B0C /* SwiftyAdsDEMO.plist */; };
 		6AAD69FC240B124A001F4A7D /* SwiftyAdsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD69FB240B124A001F4A7D /* SwiftyAdsType.swift */; };
 		6AAD69FE240B2F0A001F4A7D /* SwiftyAdsConsentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD69FD240B2F0A001F4A7D /* SwiftyAdsConsentStatus.swift */; };
 		6AAD6A00240BDA2B001F4A7D /* SwiftyAdsConsentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD69FF240BDA2B001F4A7D /* SwiftyAdsConsentStyle.swift */; };
@@ -47,7 +45,6 @@
 /* Begin PBXFileReference section */
 		267AC7188365496A1FC367F7 /* Pods_SwiftyAdsDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAdsDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		60E5DBC1C5B02CF664FB6966 /* Pods-SwiftyAdsDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdsDemo.release.xcconfig"; path = "Target Support Files/Pods-SwiftyAdsDemo/Pods-SwiftyAdsDemo.release.xcconfig"; sourceTree = "<group>"; };
-		6A28F23A240DB69600D8994F /* SwiftyAds.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SwiftyAds.plist; sourceTree = "<group>"; };
 		6A4286012400609E0035487A /* SwiftyAdsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyAdsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A4286042400609E0035487A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6A42860F2400609E0035487A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -57,7 +54,6 @@
 		6A4286222400612D0035487A /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		6A4286232400612E0035487A /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		6A4286242400612E0035487A /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		6A494E6F2401B0F800203B0C /* SwiftyAdsDEMO.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SwiftyAdsDEMO.plist; sourceTree = "<group>"; };
 		6AAD69FB240B124A001F4A7D /* SwiftyAdsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsType.swift; sourceTree = "<group>"; };
 		6AAD69FD240B2F0A001F4A7D /* SwiftyAdsConsentStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsConsentStatus.swift; sourceTree = "<group>"; };
 		6AAD69FF240BDA2B001F4A7D /* SwiftyAdsConsentStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsConsentStyle.swift; sourceTree = "<group>"; };
@@ -125,8 +121,6 @@
 				6A428611240060A00035487A /* Assets.xcassets */,
 				6A428613240060A00035487A /* LaunchScreen.storyboard */,
 				6A428616240060A00035487A /* Info.plist */,
-				6A28F23A240DB69600D8994F /* SwiftyAds.plist */,
-				6A494E6F2401B0F800203B0C /* SwiftyAdsDEMO.plist */,
 			);
 			path = SwiftyAdsDemo;
 			sourceTree = "<group>";
@@ -246,8 +240,6 @@
 				6A4286102400609E0035487A /* Main.storyboard in Resources */,
 				6A428612240060A00035487A /* Assets.xcassets in Resources */,
 				6A428615240060A00035487A /* LaunchScreen.storyboard in Resources */,
-				6A494E702401B0F800203B0C /* SwiftyAdsDEMO.plist in Resources */,
-				6A28F23B240DB69700D8994F /* SwiftyAds.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

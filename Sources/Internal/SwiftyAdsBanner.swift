@@ -36,7 +36,7 @@ protocol SwiftyAdsBannerType: AnyObject {
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?)
     func remove()
-    func refresh(isLandscape: Bool)
+    func updateSize(isLandscape: Bool)
 }
 
 final class SwiftyAdsBanner: NSObject {
@@ -60,7 +60,14 @@ final class SwiftyAdsBanner: NSObject {
     
     private var currentViewWidth: CGFloat {
         guard let currentView = currentView else { return 200 }
-        return currentView.frame.inset(by: currentView.safeAreaInsets).size.width
+        switch position {
+        case .top(let ignoresSafeArea), .bottom(let ignoresSafeArea):
+            if ignoresSafeArea {
+                return currentView.frame.size.width
+            } else {
+                return currentView.frame.inset(by: currentView.safeAreaInsets).size.width
+            }
+        }
     }
     
     // MARK: - Init
@@ -132,10 +139,13 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
             bannerViewConstraint!
         ])
         
-        // Refresh the banner
-        refresh(isLandscape: isLandscape)
+        // Update the adaptive banner size
+        updateSize(isLandscape: isLandscape)
         
-        // Move off screen
+        // Create an ad request and load the adaptive banner ad.
+        bannerView.load(request())
+        
+        // Move banner off screen
         animateToOffScreenPosition(bannerView, from: viewController, position: position, animated: false)
     }
     
@@ -152,19 +162,12 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
         onClose?()
     }
     
-    func refresh(isLandscape: Bool) {
-        guard let bannerView = bannerView else {
-            return
-        }
-
+    func updateSize(isLandscape: Bool) {
         if isLandscape {
-            bannerView.adSize = GADLandscapeAnchoredAdaptiveBannerAdSizeWithWidth(currentViewWidth)
+            bannerView?.adSize = GADLandscapeAnchoredAdaptiveBannerAdSizeWithWidth(currentViewWidth)
         } else {
-            bannerView.adSize = GADPortraitAnchoredAdaptiveBannerAdSizeWithWidth(currentViewWidth)
+            bannerView?.adSize = GADPortraitAnchoredAdaptiveBannerAdSizeWithWidth(currentViewWidth)
         }
-        
-        // Create an ad request and load the adaptive banner ad.
-        bannerView.load(request())
     }
 }
 
@@ -178,7 +181,6 @@ extension SwiftyAdsBanner: GADBannerViewDelegate {
     }
     
     func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
-        print("SwiftyAdsBanner didFailToReceiveAdWithError \(error)")
         animateToOffScreenPosition(bannerView, from: bannerView.rootViewController, position: position)
         onError?(error)
     }

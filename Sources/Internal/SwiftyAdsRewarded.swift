@@ -64,9 +64,10 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
     
     func load() {
         rewardedAd = GADRewardedAd(adUnitID: adUnitId)
-        rewardedAd?.load(request()) { error in
+        rewardedAd?.load(request()) { [weak self] error in
+            guard let self = self else { return }
             if let error = error {
-                print(error.localizedDescription)
+                self.onError?(error)
                 return
             }
         }

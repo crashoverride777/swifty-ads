@@ -75,7 +75,7 @@ private extension GameViewController {
             message: "We care about your privacy and data security. We keep this app free by showing ads. You can change your choice anytime in the app settings. Our partners will collect data and use a unique identifier on your device to show you ads.",
             actionAllowPersonalized: "Allow personalized",
             actionAllowNonPersonalized: "Allow non personalized",
-            actionAdFree: nil
+            actionAdFree: nil // no add free option in this demo
         )
         
         swiftyAds.setup(

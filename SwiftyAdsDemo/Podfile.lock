@@ -1,7 +1,7 @@
 PODS:
   - Google-Mobile-Ads-SDK (7.57.0):
     - GoogleAppMeasurement (~> 6.0)
-  - GoogleAppMeasurement (6.4.0):
+  - GoogleAppMeasurement (6.4.1):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
     - GoogleUtilities/Network (~> 6.0)
@@ -44,7 +44,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Google-Mobile-Ads-SDK: ec897018b9ab9b447e7aa4876e7f75aba13ba2de
-  GoogleAppMeasurement: 6e68a94d0eaeb1d73ef6b0ed4f7334e29d63ae29
+  GoogleAppMeasurement: e49be3954045b17d046f271b9cc1ec052bad9702
   GoogleUtilities: ad0f3b691c67909d03a3327cc205222ab8f42e0e
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   PersonalizedAdConsent: dbecabb3467df967c16d9cebc2ef4a8890e4bbd8

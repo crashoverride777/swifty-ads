@@ -101,6 +101,7 @@ extension SwiftyAdsInterstitial: GADInterstitialDelegate {
     
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
         onClose?()
+        // Preload the next ad so its ready for displaying
         load()
     }
     
