@@ -23,14 +23,20 @@
 import GoogleMobileAds
 
 enum SwiftyAdsBannerPositition {
-    case top
-    case bottom
+    case top(ignoresSafeArea: Bool)
+    case bottom(ignoresSafeArea: Bool)
 }
 
 protocol SwiftyAdsBannerType: AnyObject {
-    func show(from viewController: UIViewController, at position: SwiftyAdsBannerPositition)
+    func show(from viewController: UIViewController,
+              at position: SwiftyAdsBannerPositition,
+              isLandscape: Bool,
+              animationDuration: TimeInterval,
+              onOpen: (() -> Void)?,
+              onClose: (() -> Void)?,
+              onError: ((Error) -> Void)?)
     func remove()
-    func updateAnimationDuration(to duration: TimeInterval)
+    func updateSize(isLandscape: Bool)
 }
 
 final class SwiftyAdsBanner: NSObject {
@@ -38,38 +44,38 @@ final class SwiftyAdsBanner: NSObject {
     // MARK: - Properties
     
     private let adUnitId: String
-    private let isLandscape: () -> Bool
     private let request: () -> GADRequest
-    private let didOpen: () -> Void
-    private let didClose: () -> Void
-
+    private var onOpen: (() -> Void)?
+    private var onClose: (() -> Void)?
+    private var onError: ((Error) -> Void)?
+    
     private var bannerView: GADBannerView?
-    private var position: SwiftyAdsBannerPositition = .bottom
+    private var position: SwiftyAdsBannerPositition = .bottom(ignoresSafeArea: false)
     private var animationDuration: TimeInterval = 1.4
     private var bannerViewConstraint: NSLayoutConstraint?
     private var animator: UIViewPropertyAnimator?
+    private var currentView: UIView?
+    
+    // MARK: - Computed Properties
+    
+    private var currentViewWidth: CGFloat {
+        guard let currentView = currentView else { return 200 }
+        switch position {
+        case .top(let ignoresSafeArea), .bottom(let ignoresSafeArea):
+            if ignoresSafeArea {
+                return currentView.frame.size.width
+            } else {
+                return currentView.frame.inset(by: currentView.safeAreaInsets).size.width
+            }
+        }
+    }
     
     // MARK: - Init
     
-    init(adUnitId: String,
-         notificationCenter: NotificationCenter,
-         isLandscape: @escaping () -> Bool,
-         request: @escaping () -> GADRequest,
-         didOpen: @escaping () -> Void,
-         didClose: @escaping () -> Void) {
+    init(adUnitId: String, request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
-        self.isLandscape = isLandscape
         self.request = request
-        self.didOpen = didOpen
-        self.didClose = didClose
         super.init()
-        
-        notificationCenter.addObserver(
-            self,
-            selector: #selector(updateSize),
-            name: UIDevice.orientationDidChangeNotification,
-            object: nil
-        )
     }
 }
  
@@ -77,58 +83,91 @@ final class SwiftyAdsBanner: NSObject {
 
 extension SwiftyAdsBanner: SwiftyAdsBannerType {
     
-    func show(from viewController: UIViewController, at position: SwiftyAdsBannerPositition) {
+    func show(from viewController: UIViewController,
+              at position: SwiftyAdsBannerPositition,
+              isLandscape: Bool,
+              animationDuration: TimeInterval,
+              onOpen: (() -> Void)?,
+              onClose: (() -> Void)?,
+              onError: ((Error) -> Void)?) {
         self.position = position
+        self.animationDuration = animationDuration
+        self.onOpen = onOpen
+        self.onClose = onClose
+        self.onError = onError
         
-        // Remove old banners
+        // Remove old banners if needed
         remove()
         
-        // Create ad
-        bannerView = GADBannerView()
-        updateSize() // to set banner size
+        // Update current view reference
+        currentView = viewController.view
         
-        guard let bannerAdView = bannerView else {
+        // Create new banner ad
+        bannerView = GADBannerView()
+        
+        guard let bannerView = bannerView else {
             return
         }
-        
-        bannerAdView.adUnitID = adUnitId
-        bannerAdView.delegate = self
-        bannerAdView.rootViewController = viewController
-        viewController.view.addSubview(bannerAdView)
-        
+         
+        bannerView.adUnitID = adUnitId
+        bannerView.delegate = self
+        bannerView.rootViewController = viewController
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        viewController.view.addSubview(bannerView)
+         
         // Add constraints
+        // We don't give the banner a width or height constraints, as the provided ad size will give the banner
+        // an intrinsic content size
         let layoutGuide = viewController.view.safeAreaLayoutGuide
-        bannerAdView.translatesAutoresizingMaskIntoConstraints = false
-        
         switch position {
-        case .top:
-            bannerViewConstraint = bannerAdView.topAnchor.constraint(equalTo: layoutGuide.topAnchor)
-        case .bottom:
-            bannerViewConstraint = bannerAdView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor)
+        case .top(let ignoresSafeArea):
+            if ignoresSafeArea {
+                bannerViewConstraint = bannerView.topAnchor.constraint(equalTo: viewController.view.topAnchor)
+            } else {
+                bannerViewConstraint = bannerView.topAnchor.constraint(equalTo: layoutGuide.topAnchor)
+            }
+        case .bottom(let ignoresSafeArea):
+            if ignoresSafeArea {
+                bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: viewController.view.bottomAnchor)
+            } else {
+                bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor)
+            }
         }
-        
+         
         NSLayoutConstraint.activate([
-            bannerAdView.leftAnchor.constraint(equalTo: layoutGuide.leftAnchor),
-            bannerAdView.rightAnchor.constraint(equalTo: layoutGuide.rightAnchor),
+            bannerView.centerXAnchor.constraint(equalTo: layoutGuide.centerXAnchor),
             bannerViewConstraint!
         ])
-       
-        // Move off screen
-        animateToOffScreenPosition(bannerAdView, from: viewController, position: position, animated: false)
         
-        // Request ad
-        bannerAdView.load(request())
+        // Update the adaptive banner size
+        updateSize(isLandscape: isLandscape)
+        
+        // Create an ad request and load the adaptive banner ad.
+        bannerView.load(request())
+        
+        // Move banner off screen
+        animateToOffScreenPosition(bannerView, from: viewController, position: position, animated: false)
     }
     
     func remove() {
+        guard bannerView != nil else {
+            return
+        }
+        
         bannerView?.delegate = nil
         bannerView?.removeFromSuperview()
         bannerView = nil
         bannerViewConstraint = nil
+        currentView = nil
+        onClose?()
     }
     
-    func updateAnimationDuration(to duration: TimeInterval) {
-        animationDuration = duration
+    func updateSize(isLandscape: Bool) {
+        if isLandscape {
+            bannerView?.adSize = GADLandscapeAnchoredAdaptiveBannerAdSizeWithWidth(currentViewWidth)
+        } else {
+            bannerView?.adSize = GADPortraitAnchoredAdaptiveBannerAdSizeWithWidth(currentViewWidth)
+        }
     }
 }
 
@@ -142,18 +181,14 @@ extension SwiftyAdsBanner: GADBannerViewDelegate {
     }
 
     func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
-        print(error.localizedDescription)
         animateToOffScreenPosition(bannerView, from: bannerView.rootViewController, position: position)
+        onError?(error)
     }
 }
 
 // MARK: - Private Methods
 
 private extension SwiftyAdsBanner {
-    
-    @objc func updateSize() {
-        bannerView?.adSize = isLandscape() ? kGADAdSizeSmartBannerLandscape : kGADAdSizeSmartBannerPortrait
-    }
     
     func animateToOnScreenPosition(_ bannerAd: GADBannerView,
                                    from viewController: UIViewController?,
@@ -162,8 +197,12 @@ private extension SwiftyAdsBanner {
             return
         }
         
+        guard let bannerViewConstraint = bannerViewConstraint, bannerViewConstraint.constant > 0 else {
+            return
+        }
+        
         bannerAd.isHidden = false
-        bannerViewConstraint?.constant = 0
+        bannerViewConstraint.constant = 0
         
         stopCurrentAnimatorAnimations()
         animator = UIViewPropertyAnimator(duration: animationDuration, curve: .easeOut) {
@@ -172,7 +211,7 @@ private extension SwiftyAdsBanner {
         
         animator?.addCompletion { [weak self] _ in
             guard let self = self else { return }
-            self.didOpen()
+            self.onOpen?()
             completion?()
         }
 
@@ -188,18 +227,26 @@ private extension SwiftyAdsBanner {
             return
         }
         
+        let newConstant: CGFloat
+        
         switch position {
         case .top:
-            bannerViewConstraint?.constant = 0 - (bannerAd.frame.height * 3) // *3 due to iPhoneX safe area
+            newConstant = 0 - (bannerAd.adSize.size.height * 3) // *3 due to iPhoneX safe area
         case .bottom:
-            bannerViewConstraint?.constant = 0 + (bannerAd.frame.height * 3) // *3 due to iPhoneX safe area
+            newConstant = 0 + (bannerAd.adSize.size.height * 3) // *3 due to iPhoneX safe area
         }
         
+        guard let bannerViewConstraint = bannerViewConstraint, bannerViewConstraint.constant != newConstant else {
+            return
+        }
+             
         guard animated else {
             bannerAd.isHidden = true
+            bannerViewConstraint.constant = newConstant
             return
         }
         
+        bannerViewConstraint.constant = newConstant
         stopCurrentAnimatorAnimations()
         animator = UIViewPropertyAnimator(duration: animationDuration, curve: .easeOut) {
             viewController.view.layoutIfNeeded()
@@ -208,7 +255,7 @@ private extension SwiftyAdsBanner {
         animator?.addCompletion { [weak self] _ in
             guard let self = self else { return }
             bannerAd.isHidden = true
-            self.didClose()
+            self.onClose?()
             completion?()
         }
         

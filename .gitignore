@@ -1,6 +1,15 @@
-**/.DS_Store
-.DS_Store
-*.xcuserstate
+# Project
 project.xcworkspace/
 xcuserdata/
+
+# DS Store
+.DS_Store
+
+# Swift Package Manager
+.build/
+
+# Cocoa Pods
 Pods/
+
+# Other
+*.xcuserstate

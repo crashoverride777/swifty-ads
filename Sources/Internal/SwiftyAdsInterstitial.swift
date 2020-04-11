@@ -25,7 +25,10 @@ import GoogleMobileAds
 protocol SwiftyAdsInterstitialType: AnyObject {
     var isReady: Bool { get }
     func load()
-    func show(from viewController: UIViewController)
+    func show(from viewController: UIViewController,
+              onOpen: (() -> Void)?,
+              onClose: (() -> Void)?,
+              onError: ((Error) -> Void)?)
     func stopLoading()
 }
 
@@ -35,21 +38,17 @@ final class SwiftyAdsInterstitial: NSObject {
     
     private let adUnitId: String
     private let request: () -> GADRequest
-    private let didOpen: () -> Void
-    private let didClose: () -> Void
+    private var onOpen: (() -> Void)?
+    private var onClose: (() -> Void)?
+    private var onError: ((Error) -> Void)?
     
     private var interstitial: GADInterstitial?
     
     // MARK: - Init
     
-    init(adUnitId: String,
-         request: @escaping () -> GADRequest,
-         didOpen: @escaping () -> Void,
-         didClose: @escaping () -> Void) {
+    init(adUnitId: String, request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
         self.request = request
-        self.didOpen = didOpen
-        self.didClose = didClose
     }
 }
 
@@ -58,12 +57,7 @@ final class SwiftyAdsInterstitial: NSObject {
 extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
 
     var isReady: Bool {
-        guard interstitial?.isReady == true else {
-            print("SwiftyAdsInterstitial ad is not ready, reloading...")
-            load()
-            return false
-        }
-        return true
+        interstitial?.isReady ?? false
     }
     
     func load() {
@@ -72,8 +66,19 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
         interstitial?.load(request())
     }
     
-    func show(from viewController: UIViewController) {
-        interstitial?.present(fromRootViewController: viewController)
+    func show(from viewController: UIViewController,
+              onOpen: (() -> Void)?,
+              onClose: (() -> Void)?,
+              onError: ((Error) -> Void)?) {
+        self.onOpen = onOpen
+        self.onClose = onClose
+        self.onError = onError
+        
+        if isReady {
+            interstitial?.present(fromRootViewController: viewController)
+        } else {
+            load()
+        }
     }
     
     func stopLoading() {
@@ -91,27 +96,17 @@ extension SwiftyAdsInterstitial: GADInterstitialDelegate {
     }
     
     func interstitialWillPresentScreen(_ ad: GADInterstitial) {
-        didOpen()
-    }
-    
-    func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
-        #warning("is this correct?")
-        didOpen()
-    }
-    
-    func interstitialWillDismissScreen(_ ad: GADInterstitial) {
+        onOpen?()
     }
     
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
-        didClose()
+        onClose?()
+        // Preload the next ad so its ready for displaying
         load()
     }
     
-    func interstitialDidFail(toPresentScreen ad: GADInterstitial) {
-    }
-    
     func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
-        print(error.localizedDescription)
+        onError?(error)
         // Do not reload here as it might cause endless loading loops if no/slow internet
     }
 }

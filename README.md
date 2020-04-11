@@ -4,14 +4,18 @@
 
 # SwiftyAds
 
-A Swift helper to integrate Ads from Google AdMob so you can easily show banner, interstitial and rewarded video ads anywhere in your project.
-
-This helper follows all the best practices in regards to ads, like creating shared banners and correctly preloading interstitial and rewarded video ads so they are always ready to show.
+SwiftyAds is a Swift library to display banner, interstitial and rewarded video ads from AdMob and supported mediation networks.
 
 ## Requirements
 
 - iOS 11.4+
 - Swift 5.0+
+
+## Create AdMob account
+
+https://developers.google.com/ad-manager/mobile-ads-sdk/ios/quick-start
+
+Sign up for an [AdMob account](https://support.google.com/admob/answer/3052638?hl=en-GB&ref_topic=3052726) and create your required adUnitIDs.
 
 ## GDPR in EEA (European Economic Area)
 
@@ -19,20 +23,7 @@ This helper follows all the best practices in regards to ads, like creating shar
 
 ## Mediation
 
-Admob reward videos will only work when using a 3rd party mediation network such as Chartboost or Vungle. 
-Please read the AdMob mediation guidlines 
-
-https://developers.google.com/admob/ios/mediation
-
-NOTE:
-
-Make sure to include your mediation networks when setting up SwiftyAd (see Usage-> Add SwiftyAds.plist)
-
-## Create AdMob account
-
-https://developers.google.com/ad-manager/mobile-ads-sdk/ios/quick-start
-
-Sign up for a Google [AdMob account](https://support.google.com/admob/answer/3052638?hl=en-GB&ref_topic=3052726) and create your real adUnitIDs for your app, one for each type of ad you will use (Banner, Interstitial, Reward Ads).
+[READ](https://developers.google.com/admob/ios/mediation)
 
 ## Installation
 
@@ -47,128 +38,186 @@ pod 'SwiftyAds'
 
 ### Manually 
 
-Altenatively you can drag the `Source` folder and its containing files into your project.
+Altenatively you can drag the `Sources` folder and its containing files into your project.
 
 ## Usage
 
-### Update Info.plist: 
+### Update Info.plist
 
+<<<<<<< HEAD
 Add a new entry in your apps info.plist called `GADApplicationIdentifier` (String) with your ad mob id when using SDK 7.42 or higher
+=======
+Add a new entry in your apps info.plist called `GADApplicationIdentifier` (String) and enter your apps admob id
+>>>>>>> develop
 
-https://developers.google.com/ad-manager/mobile-ads-sdk/ios/quick-start#update_your_infoplist
+[READ](https://developers.google.com/admob/ios/quick-start#update_your_infoplist)
 
 ### Add SwiftyAds.plist
 
-Create a new `SwiftyAds.plist` file like in the demo project  and update with your ad ids and other settings
+Download the template plist and add it to your projects main bundle. Than enter your required ad unit ids and settings.
 
-### Using SwiftyAds outside a UIViewController
+[Template ](Downloads/SwiftyAdsPlistTemplate.zip)
 
-SwiftyAds requires reference to a UIViewController to present ads. If you are not using SwiftyAds inside a UIViewController you can do the following to get reference the `RootViewController`.
+### Setup 
+
+Create a setup method and call it as soon as your app launches e.g AppDelegate didFinishLaunchingWithOptions. 
+
+```swift
+func setupSwiftyAds() {
+    #if DEBUG
+    let mode: SwiftyAdsMode = .debug(testDeviceIdentifiers: []) // add your test device identifiers if needed
+    #else
+    let mode: SwiftyAdsMode = .production
+    #endif
+    
+    // In this example we want to show a custom consent alert
+    let customConsentContent = SwiftyAdsCustomConsentAlertContent(
+        title: "Permission to use data",
+        message: "We care about your privacy and data security. We keep this app free by showing ads. You can change your choice anytime in the app settings. Our partners will collect data and use a unique identifier on your device to show you ads.",
+        actionAllowPersonalized: "Allow personalized",
+        actionAllowNonPersonalized: "Allow non personalized",
+        actionAdFree: nil, // we do not want to offer ad free in this example
+    )
+    
+    SwiftyAds.shared.setup(
+        with: self,
+        mode: mode,
+        consentStyle: .custom(content: customConsentContent), // alternatively set to adMob to use googles native consent form
+        consentStatusDidChange: ({ consentStatus in
+            print("SwiftyAds did change consent status to \(consentStatus)")
+            
+            if consentStatus != .notRequired {
+                // update mediation networks if required
+            }
+        }),
+        completion: ({ status in
+            guard status.hasConsent else { return }
+            // Show banner for example
+        })
+    )
+}
+```
+
+### Showing ads outside a UIViewController
+
+SwiftyAds requires reference to a UIViewController to present ads. If you are not using SwiftyAds inside a UIViewController you can do the following to get reference the `rootViewController`.
 
 AppDelegate
 ```swift
 if let viewController = window?.rootViewController {
-    SwiftyAds.shared...
+    SwiftyAds.shared.show(...)
 }
 ```
 
 SKScene
 ```swift
 if let viewController = view?.window?.rootViewController {
-    SwiftyAds.shared...
+    SwiftyAds.shared.show(...)
 }
 ```
 
-### Setup 
-
-It is recommended to instantiate and manage SwiftyAds in 1 centralized spot e.g RootViewController or GameViewController (SpriteKit)
-
-Call the setup method as soon as your app launches. 
+### Banner Ads
 
 ```swift
-#if DEBUG
-let swiftyAdsMode: SwiftyAdsMode = .test(devices: [])
-#else
-let swiftyAdsMode: SwiftyAdsMode = .production
-#endif
-
-SwiftyAds.shared.setup(with: self, delegate: self, bannerAnimationDuration: 1.4, mode: swiftyAdsMode) { consentStatus in
-    guard consentStatus.hasConsent else { return }
-    DispatchQueue.main.async {
-        SwiftyAds.shared.showBanner(from: self, atTop: false)
-    }
-}
+SwiftyAds.shared.showBanner(
+    from: self,
+    atTop: false,
+    ignoresSafeArea: false,
+    animationDuration: 1.5,
+    onOpen: ({
+        print("SwiftyAds banner ad did open")
+    }),
+    onClose: ({
+        print("SwiftyAds banner ad did close")
+    }),
+    onError: ({ error in
+        print("SwiftyAds banner ad error \(error)")
+    })
+)
 ```
 
-Than create an extension conforming to the SwiftyAdsDelegate protocol.
-```swift
-extension GameViewController: SwiftyAdsDelegate {
-    func swiftyAdsDidOpen(_ swiftyAds: SwiftyAds) {
-        // pause your game/app if needed
-    }
-    
-    func swiftyAdsDidClose(_ swiftyAds: SwiftyAds) { 
-       // resume your game/app if needed
-    }
-    
-    func swiftyAds(_ swiftyAds: SwiftyAds, didChange consentStatus: SwiftyAdsConsentStatus) {
-        // update your mediation network consent settings if needed e.g Chartboost, Vungle etc
-    }
-    
-    func swiftyAds(_ swiftyAds: SwiftyAds, didRewardUserWithAmount rewardAmount: Int) {
-       // Reward amount is a decimel number I converted to an integer for convenience. This value comes from your AdNetwork.
-       if let scene = (view as? SKView)?.scene as? GameScene {
-            scene.coins += rewardAmount
-        }
-       
-     
-       // You can ignore this and hardcode the value if you would like but than you cannot change the value dynamically without having to update your app.
-       
-       // You could also do something else like unlocking a level or bonus item.
-       
-       // Leave empty if unused
-    }
-}
-```
-
-### Show Ads
+Orientation changes
 
 ```swift
-SwiftyAds.shared.showBanner(from: self, atTop: false) // if atTop = true banner will be anchored to top of screen 
-SwiftyAds.shared.showInterstitial(from: self)
-SwiftyAds.shared.showInterstitial(from: self, withInterval: 4) // Shows an ad every 4th time method is called. Set to nil to always show.
-SwiftyAds.shared.showRewardedVideo(from: self) // Should be called when pressing dedicated button only
-```
-
-Note:
-
-You should only show rewarded videos with a dedicated button and you should only show that button when a video is loaded (see below). If the user presses the rewarded video button and watches a video it might take a few seconds for the next video to reload. Incase the user immediately tries to watch another video this helper will show a "no video is available at the moment" alert. 
-
-AdMob provided a new rewarded video API which lets you preload multiple rewarded videos with different AdUnitIds. Currentlty SwiftyAds only supports loading 1 rewarded video ad at a time. I will try to add support for multiple ads very soon.
-
-### Check if ads are ready
-
-```swift
-if SwiftyAds.shared.isRewardedVideoReady {
-    // show reward video button
+override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    super.viewWillTransition(to: size, with: coordinator)
+    coordinator.animate(alongsideTransition: { _ in
+        SwiftyAds.shared.updateBannerForOrientationChange(isLandscape: size.width > size.height)
+    })
 }
-
-if SwiftyAds.shared.isInterstitialReady {
-    // maybe show custom ad or something similar
-}
-
-// When these return false the helper will try to preload an ad again.
 ```
-
-### Remove Banner ads
-
-e.g during gameplay 
+Remove e.g during gameplay 
 
 ```swift
 SwiftyAds.shared.removeBanner() 
 ```
 
-### Remove/Disable ads (in app purchases)
+### Interstitial Ads
+
+```swift
+SwiftyAds.shared.showInterstitial(
+    from: self,
+    withInterval: 2, // every 2nd time method is called ad will be displayed
+    onOpen: ({
+        print("SwiftyAds interstitial ad did open")
+    }),
+    onClose: ({
+        print("SwiftyAds interstitial ad did close")
+    }),
+    onError: ({ error in
+        print("SwiftyAds interstitial ad error \(error)")
+    })
+)
+```
+
+### Rewarded Ads
+
+Always use a dedicated button to display rewarded videos, never show them automatically as some might be non-skippable.
+
+AdMob provided a new rewarded video API which lets you preload multiple rewarded videos with different AdUnitIds. While SwiftyAds uses this new API it currently only supports loading 1 rewarded video ad at a time. I will try to add support for multiple ads very soon.
+
+```swift
+SwiftyAds.shared.showRewardedVideo(
+    from: self,
+    onOpen: ({
+        print("SwiftyAds rewarded video ad did open")
+    }),
+    onClose: ({
+        print("SwiftyAds rewarded video ad did close")
+    }), 
+    onError: ({ error in
+        print("SwiftyAds rewarded video ad error \(error)")
+    }),
+    onNotReady: ({ [weak self] in
+        guard let self = self else { return }
+        print("SwiftyAds rewarded video ad was not ready")
+        // If the user presses the rewarded video button and watches a video it might take a few seconds for the next video to reload.
+        // Use this callback to display an alert incase the video was not ready. 
+        let alertController = UIAlertController(
+            title: "Sorry",
+            message: "No video available to watch at the moment.",
+            preferredStyle: .alert
+        )
+        alertController.addAction(UIAlertAction(title: "Ok", style: .cancel))
+        self.present(alertController, animated: true)
+    }),
+    onReward: ({ [weak self] rewardAmount in
+        print("SwiftyAds rewarded video ad did reward user with \(rewardAmount)")
+        // Provide the user with the reward e.g coins, retries etc
+    })
+)
+```
+
+### Booleans
+
+```swift
+SwiftyAds.shared.hasConsent // Check if user has given consent. Also returns true if not required to ask for consent (outside EEA)
+SwiftyAds.shared.isRequiredToAskForConsent // Check if user in inside EEA and has to ask for consent
+SwiftyAds.shared.isRewardedVideoReady // e.g show/hide rewarded video button
+SwiftyAds.shared.isInterstitialReady { // e.g show custom/in-house ad
+```
+
+### Disable ads (In App Purchases)
 
 ```swift
 SwiftyAds.shared.disable()
@@ -176,10 +225,10 @@ SwiftyAds.shared.disable()
 
 NOTE:
 
-If set to true the methods to show banner and interstitial ads will not fire anymore and therefore require no further editing. 
-This will not stop rewarded videos from showing as they should have a dedicated button. Some rewarded videos are not skipabble and therefore should never be shown automatically. This way you can remove banner and interstitial ads but still have a rewarded videos. 
+If this method is called banner and interstitial ads will not longer display when calling the `show` method. This will not stop rewarded videos from showing as they should have a dedicated button. This way you can remove banner and interstitial ads but still have a rewarded videos. 
 
-For permanent storage you will need to create your own "removedAdsProduct" property and save it in something like UserDefaults, or preferably Keychain. Than at app launch check if your saved property is set to true and than update the SwiftyAds poperty e.g
+For permanent storage you will need to create your own "removedAdsProduct" property and save it in something like UserDefaults, or preferably Keychain. 
+Than at app launch, after you called `SwiftyAds.shared.setup`  check if your saved property is set to true and than call the `disable()` method
 
 ```swift
 if UserDefaults.standard.bool(forKey: "RemovedAdsKey") == true {
@@ -189,10 +238,12 @@ if UserDefaults.standard.bool(forKey: "RemovedAdsKey") == true {
 
 ### To ask for consent again (GDPR) 
 
-It is required that the user has the option to change their GDPR consent settings, usually via a button in settings.
+It is required that the user has the option to change their GDPR consent settings, usually via a button in settings. 
 
 ```swift
-SwiftyAds.shared.askForConsent(from: viewController)
+func consentButtonPressed() {
+    SwiftyAds.shared.askForConsent(from: self)
+}
 ```
 
 The consent button can be hidden for non EEA users like so
@@ -211,11 +262,3 @@ From my personal experience and from a user perspective you should not spam full
 
 1) Not show an interstitial ad everytime a button is pressed 
 2) Not show an interstitial ad everytime you die in a game
-
-## Final Info
-
-The sample project is the basic Apple spritekit template. It now shows a banner Ad after launch and an interstitial ad randomly when touching the screen. After a certain amount of clicks all ads will be removed to simulate what a remove ads button would do. 
-
-Please feel free to let me know about any bugs or improvements. 
-
-Enjoy

@@ -22,44 +22,56 @@
 
 import Foundation
 
-struct SwiftyAdsConfiguration: Codable {
+struct SwiftyAdsConfiguration: Decodable {
     let bannerAdUnitId: String
     let interstitialAdUnitId: String
     let rewardedVideoAdUnitId: String
-    let gdpr: SwiftyAdsConsentConfiguration
-
-    var ids: [String] {
-        return [bannerAdUnitId, interstitialAdUnitId, rewardedVideoAdUnitId].filter { !$0.isEmpty }
-    }
+    let privacyPolicyURL: String
+    let isTaggedForUnderAgeOfConsent: Bool
+    let mediationNetworks: [String]
 }
+
+// MARK: - Computed
 
 extension SwiftyAdsConfiguration {
     
-    static var propertyList: SwiftyAdsConfiguration {
+    var ids: [String] {
+        [bannerAdUnitId, interstitialAdUnitId, rewardedVideoAdUnitId].filter { !$0.isEmpty }
+    }
+    
+    var adNetworks: String {
+        let networks: [String] = ["Google AdMob"] + mediationNetworks
+        return networks
+            .map({ $0 })
+            .joined(separator: networks.count > 1 ? ", " : "")
+    }
+}
+
+// MARK: - Static
+
+extension SwiftyAdsConfiguration {
+    
+    static var production: SwiftyAdsConfiguration {
         guard let configurationURL = Bundle.main.url(forResource: "SwiftyAds", withExtension: "plist") else {
-            fatalError("SwiftyAdsConfiguration could not find SwiftyAds.plist in the main bundle")
+            fatalError("SwiftyAdsConfiguration could not find SwiftyAds.plist in the main bundle.")
         }
         do {
             let data = try Data(contentsOf: configurationURL)
             let decoder = PropertyListDecoder()
             return try decoder.decode(SwiftyAdsConfiguration.self, from: data)
         } catch {
-            fatalError("SwiftyAdsConfiguration could not decode property list, please ensure all fields are correct")
+            fatalError("SwiftyAdsConfiguration could not decode SwiftyAds.plist, please ensure all fields are correct.")
         }
     }
     
     static var debug: SwiftyAdsConfiguration {
-        return SwiftyAdsConfiguration(
+        SwiftyAdsConfiguration(
             bannerAdUnitId: "ca-app-pub-3940256099942544/2934735716",
             interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
             rewardedVideoAdUnitId: "ca-app-pub-3940256099942544/1712485313",
-            gdpr: SwiftyAdsConsentConfiguration(
-                privacyPolicyURL: "https://developers.google.com/admob/ios/eu-consent",
-                shouldOfferAdFree: false,
-                mediationNetworks: [],
-                isTaggedForUnderAgeOfConsent: false,
-                isCustomForm: true
-            )
+            privacyPolicyURL: "https://example.com/privacyPolicy",
+            isTaggedForUnderAgeOfConsent: false,
+            mediationNetworks: ["Test Mediation Network 1, Test Mediation Network 2"]
         )
     }
 }

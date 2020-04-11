@@ -23,31 +23,23 @@
 import Foundation
 import GoogleMobileAds
   
-enum SwiftyAdsRequestBuilderMode {
-    case production
-    case test(devices: [String])
-}
-
 protocol SwiftyAdsRequestBuilderType: AnyObject {
-    func build(_ mode: SwiftyAdsRequestBuilderMode) -> GADRequest
+    func build() -> GADRequest
 }
 
 final class SwiftyAdsRequestBuilder {
     
     // MARK: - Properties
     
-    private let mobileAds: GADMobileAds
     private let isGDPRRequired: Bool
     private let isNonPersonalizedOnly: Bool
     private let isTaggedForUnderAgeOfConsent: Bool
     
     // MARK: - Init
     
-    init(mobileAds: GADMobileAds,
-         isGDPRRequired: Bool,
+    init(isGDPRRequired: Bool,
          isNonPersonalizedOnly: Bool,
          isTaggedForUnderAgeOfConsent: Bool) {
-        self.mobileAds = mobileAds
         self.isGDPRRequired = isGDPRRequired
         self.isNonPersonalizedOnly = isNonPersonalizedOnly
         self.isTaggedForUnderAgeOfConsent = isTaggedForUnderAgeOfConsent
@@ -58,26 +50,12 @@ final class SwiftyAdsRequestBuilder {
 
 extension SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
   
-    func build(_ mode: SwiftyAdsRequestBuilderMode) -> GADRequest {
+    func build() -> GADRequest {
         let request = GADRequest()
-        switch mode {
-        case .production:
-            break
-        case .test(let devices):
-            mobileAds.requestConfiguration.testDeviceIdentifiers = devices
-        }
-        addGDPRExtrasIfNeeded(for: request)
-        return request
-    }
-}
-
-// MARK: - Private Methods
-
-private extension SwiftyAdsRequestBuilder {
-    
-    func addGDPRExtrasIfNeeded(for request: GADRequest) {
+        
+        // If no GDPR required we do not have to add any extras and can just return default request
         guard isGDPRRequired else {
-            return
+            return request
         }
             
         // Create additional parameters with under age of consent
@@ -94,5 +72,8 @@ private extension SwiftyAdsRequestBuilder {
         
         // Register extras in request
         request.register(extras)
+        
+        // Return the request with the added extras
+        return request
     }
 }

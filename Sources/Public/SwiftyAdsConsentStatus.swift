@@ -22,14 +22,20 @@
 
 import Foundation
 
-struct SwiftyAdsConsentConfiguration: Codable {
-    let privacyPolicyURL: String
-    let shouldOfferAdFree: Bool
-    let mediationNetworks: [String]
-    let isTaggedForUnderAgeOfConsent: Bool
-    let isCustomForm: Bool
+public enum SwiftyAdsConsentStatus {
+    case notRequired
+    case personalized
+    case nonPersonalized
+    case adFree
+    case underAge
+    case unknown
     
-    var mediationNetworksString: String {
-        return mediationNetworks.map({ $0 }).joined(separator: ", ")
+    public var hasConsent: Bool {
+        switch self {
+        case .notRequired, .personalized, .nonPersonalized, .underAge:
+            return true
+        default:
+            return false
+        }
     }
 }

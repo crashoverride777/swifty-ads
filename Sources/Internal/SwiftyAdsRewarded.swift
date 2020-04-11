@@ -25,7 +25,12 @@ import GoogleMobileAds
 protocol SwiftyAdsRewardedType: AnyObject {
     var isReady: Bool { get }
     func load()
-    func show(from viewController: UIViewController)
+    func show(from viewController: UIViewController,
+              onOpen: (() -> Void)?,
+              onClose: (() -> Void)?,
+              onError: ((Error) -> Void)?,
+              onNotReady: (() -> Void)?,
+              onReward: @escaping (Int) -> Void)
 }
 
 final class SwiftyAdsRewarded: NSObject {
@@ -34,24 +39,18 @@ final class SwiftyAdsRewarded: NSObject {
     
     private let adUnitId: String
     private let request: () -> GADRequest
-    private let didOpen: () -> Void
-    private let didClose: () -> Void
-    private let didReward: (Int) -> Void
+    private var onOpen: (() -> Void)?
+    private var onClose: (() -> Void)?
+    private var onReward: ((Int) -> Void)?
+    private var onError: ((Error) -> Void)?
     
     private var rewardedAd: GADRewardedAd?
     
     // MARK: - Init
     
-    init(adUnitId: String,
-         request: @escaping () -> GADRequest,
-         didOpen: @escaping () -> Void,
-         didClose: @escaping () -> Void,
-         didReward: @escaping (Int) -> Void) {
+    init(adUnitId: String, request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
         self.request = request
-        self.didOpen = didOpen
-        self.didClose = didClose
-        self.didReward = didReward
     }
 }
 
@@ -60,35 +59,36 @@ final class SwiftyAdsRewarded: NSObject {
 extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
     
     var isReady: Bool {
-        guard rewardedAd?.isReady == true else {
-            print("SwiftyRewardedAd reward video is not ready, reloading...")
-            load()
-            return false
-        }
-        return true
+        rewardedAd?.isReady ?? false
     }
     
     func load() {
         rewardedAd = GADRewardedAd(adUnitID: adUnitId)
-        rewardedAd?.load(request()) { error in
+        rewardedAd?.load(request()) { [weak self] error in
+            guard let self = self else { return }
             if let error = error {
-                print(error.localizedDescription)
+                self.onError?(error)
                 return
             }
         }
     }
  
-    func show(from viewController: UIViewController) {
+    func show(from viewController: UIViewController,
+              onOpen: (() -> Void)?,
+              onClose: (() -> Void)?,
+              onError: ((Error) -> Void)?,
+              onNotReady: (() -> Void)?,
+              onReward: @escaping (Int) -> Void) {
+        self.onOpen = onOpen
+        self.onClose = onClose
+        self.onError = onError
+        self.onReward = onReward
+        
         if isReady {
             rewardedAd?.present(fromRootViewController: viewController, delegate: self)
         } else {
-            let alertController = UIAlertController(
-                title: SwiftyAdsLocalizedString.sorry,
-                message: SwiftyAdsLocalizedString.noVideo,
-                preferredStyle: .alert
-            )
-            alertController.addAction(UIAlertAction(title: SwiftyAdsLocalizedString.ok, style: .cancel))
-            viewController.present(alertController, animated: true)
+            load()
+            onNotReady?()
         }
     }
 }
@@ -99,22 +99,21 @@ extension SwiftyAdsRewarded: GADRewardedAdDelegate {
     
     func rewardedAdDidPresent(_ rewardedAd: GADRewardedAd) {
         print("SwiftyAdsRewarded did present ad from: \(rewardedAd.responseInfo?.adNetworkClassName ?? "")")
-        didOpen()
+        onOpen?()
     }
     
     func rewardedAdDidDismiss(_ rewardedAd: GADRewardedAd) {
-        didClose()
+        onClose?()
         load()
+    }
+
+    func rewardedAd(_ rewardedAd: GADRewardedAd, userDidEarn reward: GADAdReward) {
+        let rewardAmount = Int(truncating: reward.amount)
+        onReward?(rewardAmount)
     }
     
     func rewardedAd(_ rewardedAd: GADRewardedAd, didFailToPresentWithError error: Error) {
-        print(error.localizedDescription)
+        onError?(error)
         // Do not reload here as it might cause endless loading loops if no/slow internet
-    }
-    
-    func rewardedAd(_ rewardedAd: GADRewardedAd, userDidEarn reward: GADAdReward) {
-        print("SwiftyAdsRewarded ad did reward user with \(reward)")
-        let rewardAmount = Int(truncating: reward.amount)
-        didReward(rewardAmount)
     }
 }
