@@ -173,6 +173,7 @@ extension SwiftyAds: SwiftyAdsType {
             if status.hasConsent {
                 loadAds()
                 completion(status)
+                consentStatusDidChange(status)
             } else {
                 self.consentManager.showForm(from: viewController) { status in
                     if status.hasConsent {
