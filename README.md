@@ -44,11 +44,7 @@ Altenatively you can drag the `Sources` folder and its containing files into you
 
 ### Update Info.plist
 
-<<<<<<< HEAD
-Add a new entry in your apps info.plist called `GADApplicationIdentifier` (String) with your ad mob id when using SDK 7.42 or higher
-=======
 Add a new entry in your apps info.plist called `GADApplicationIdentifier` (String) and enter your apps admob id
->>>>>>> develop
 
 [READ](https://developers.google.com/admob/ios/quick-start#update_your_infoplist)
 
