@@ -21,7 +21,7 @@ s.source_files = 'Sources/**/*.{swift}'
 
 s.static_framework = true
 
-s.dependency = "Google-Mobile-Ads-SDK"
-s.dependency = "PersonalizedAdConsent"
+s.dependency = 'Google-Mobile-Ads-SDK'
+s.dependency = 'PersonalizedAdConsent'
 
 end
