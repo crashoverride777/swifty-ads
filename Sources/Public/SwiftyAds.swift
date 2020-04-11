@@ -170,7 +170,7 @@ extension SwiftyAds: SwiftyAdsType {
                 self.rewardedAd?.load()
             }
             
-            if self.consentManager.status.hasConsent {
+            if status.hasConsent {
                 loadAds()
                 completion(status)
             } else {
