@@ -4,7 +4,7 @@
 
 # SwiftyAds
 
-SwiftyAds is a Swift library to display banner, interstitial and rewarded video ads from AdMob and mediation networks.
+SwiftyAds is a Swift library to display banner, interstitial and rewarded video ads from AdMob and supported mediation networks.
 
 ## Requirements
 
@@ -38,7 +38,7 @@ pod 'SwiftyAds'
 
 ### Manually 
 
-Altenatively you can drag the `Source` folder and its containing files into your project.
+Altenatively you can drag the `Sources` folder and its containing files into your project.
 
 ## Usage
 
@@ -50,7 +50,7 @@ Add a new entry in your apps info.plist called `GADApplicationIdentifier` (Strin
 
 ### Add SwiftyAds.plist
 
-Download the template plist and add it to your projects main bundle. Than enter your required ids and settings.
+Download the template plist and add it to your projects main bundle. Than enter your required ad unit ids and settings.
 
 [Template ](Downloads/SwiftyAdsPlistTemplate.zip)
 
@@ -86,7 +86,7 @@ func setupSwiftyAds() {
                 // update mediation networks if required
             }
         }),
-        handler: ({ status in
+        completion: ({ status in
             guard status.hasConsent else { return }
             // Show banner for example
         })
