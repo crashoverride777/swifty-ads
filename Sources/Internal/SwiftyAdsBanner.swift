@@ -55,6 +55,7 @@ final class SwiftyAdsBanner: NSObject {
     private var bannerViewConstraint: NSLayoutConstraint?
     private var animator: UIViewPropertyAnimator?
     private var currentView: UIView?
+    private var visibleConstant: CGFloat = 0
     
     // MARK: - Computed Properties
     
@@ -193,16 +194,19 @@ private extension SwiftyAdsBanner {
     func animateToOnScreenPosition(_ bannerAd: GADBannerView,
                                    from viewController: UIViewController?,
                                    completion: (() -> Void)? = nil) {
+        // We can only animate the banner to its on-screen position with a valid view controller
         guard let viewController = viewController else {
             return
         }
         
-        guard let bannerViewConstraint = bannerViewConstraint, bannerViewConstraint.constant > 0 else {
+        // We can only animate the banner to its on-screen position if its not already visible
+        guard let bannerViewConstraint = bannerViewConstraint, bannerViewConstraint.constant != visibleConstant else {
             return
         }
         
+        // Animate banner
         bannerAd.isHidden = false
-        bannerViewConstraint.constant = 0
+        bannerViewConstraint.constant = visibleConstant
         
         stopCurrentAnimatorAnimations()
         animator = UIViewPropertyAnimator(duration: animationDuration, curve: .easeOut) {
@@ -223,29 +227,33 @@ private extension SwiftyAdsBanner {
                                     position: SwiftyAdsBannerPositition,
                                     animated: Bool = true,
                                     completion: (() -> Void)? = nil) {
+        // We can only animate the banner to its off-screen position with a valid view controller
         guard let viewController = viewController else {
             return
         }
         
-        let newConstant: CGFloat
+        // We can only animate the banner to its off-screen position if its already visible
+        guard let bannerViewConstraint = bannerViewConstraint, bannerViewConstraint.constant == visibleConstant else {
+            return
+        }
         
+        // Get banner off-screen constant
+        let newConstant: CGFloat
         switch position {
         case .top:
             newConstant = 0 - (bannerAd.adSize.size.height * 3) // *3 due to iPhoneX safe area
         case .bottom:
             newConstant = 0 + (bannerAd.adSize.size.height * 3) // *3 due to iPhoneX safe area
         }
-        
-        guard let bannerViewConstraint = bannerViewConstraint, bannerViewConstraint.constant != newConstant else {
-            return
-        }
-             
+
+        // Only animate the banner if we want it animated
         guard animated else {
             bannerAd.isHidden = true
             bannerViewConstraint.constant = newConstant
             return
         }
         
+        // Animate banner
         bannerViewConstraint.constant = newConstant
         stopCurrentAnimatorAnimations()
         animator = UIViewPropertyAnimator(duration: animationDuration, curve: .easeOut) {
