@@ -54,9 +54,9 @@ private extension AppDelegate {
 //                let skView = self.view as? SKView
 //                (skView?.scene as? GameScene)?.refresh()
 //
-//                if consentStatus != .notRequired {
-//                    // update mediation networks if required
-//                }
+                if consentStatus != .notRequired {
+                    // update mediation networks if required
+                }
             }),
             completion: ({ status in
 //                guard status.hasConsent else { return }
@@ -66,22 +66,4 @@ private extension AppDelegate {
             })
         )
     }
-    
-//    func showBanner() {
-//        swiftyAds.showBanner(
-//            from: self,
-//            atTop: false,
-//            ignoresSafeArea: false,
-//            animationDuration: 1.5,
-//            onOpen: ({
-//                print("SwiftyAds banner ad did open")
-//            }),
-//            onClose: ({
-//                print("SwiftyAds banner ad did close")
-//            }),
-//            onError: ({ error in
-//                print("SwiftyAds banner ad error \(error)")
-//            })
-//        )
-//    }
 }

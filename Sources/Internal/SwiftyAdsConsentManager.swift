@@ -82,6 +82,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
          
             defer {
                 self.updateUnderAgeOfConsent()
+                self.statusDidChange(self.status)
                 handler(self.status)
             }
             
