@@ -119,33 +119,29 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
         // Add constraints
         // We don't give the banner a width or height constraints, as the provided ad size will give the banner
         // an intrinsic content size
-        let layoutGuide: UILayoutGuide
-        if let tabBarController = viewController as? UITabBarController {
-            layoutGuide = tabBarController.tabBar.safeAreaLayoutGuide
-            tabBarController.view.bringSubviewToFront(tabBarController.tabBar)
-        } else {
-            layoutGuide = viewController.view.safeAreaLayoutGuide
-        }
-        
         switch position {
         case .top(let ignoresSafeArea):
             if ignoresSafeArea {
                 bannerViewConstraint = bannerView.topAnchor.constraint(equalTo: viewController.view.topAnchor)
             } else {
-                bannerViewConstraint = bannerView.topAnchor.constraint(equalTo: layoutGuide.topAnchor)
+                bannerViewConstraint = bannerView.topAnchor.constraint(equalTo: viewController.view.safeAreaLayoutGuide.topAnchor)
             }
+            
         case .bottom(let ignoresSafeArea):
-            if viewController is UITabBarController {
-                bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: layoutGuide.topAnchor)
-            } else if ignoresSafeArea {
-                bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: viewController.view.bottomAnchor)
+            if let tabBarController = viewController as? UITabBarController {
+                tabBarController.view.bringSubviewToFront(tabBarController.tabBar)
+                bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: tabBarController.tabBar.safeAreaLayoutGuide.topAnchor)
             } else {
-                bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor)
+                if ignoresSafeArea {
+                    bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: viewController.view.bottomAnchor)
+                } else {
+                    bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: viewController.view.safeAreaLayoutGuide.bottomAnchor)
+                }
             }
         }
          
         NSLayoutConstraint.activate([
-            bannerView.centerXAnchor.constraint(equalTo: layoutGuide.centerXAnchor),
+            bannerView.centerXAnchor.constraint(equalTo: viewController.view.safeAreaLayoutGuide.centerXAnchor),
             bannerViewConstraint!
         ])
         

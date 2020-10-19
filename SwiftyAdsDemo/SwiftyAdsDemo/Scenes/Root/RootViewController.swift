@@ -20,9 +20,9 @@ final class RootViewController: UITableViewController {
         var title: String {
             switch self {
             case .plain:
-                return "Plain View Controller"
+                return "View Controller"
             case .tabBar:
-                return "TabBar View Controller"
+                return "Tab Bar Controller"
             case .game:
                 return "SpriteKit Game Scene"
             }
