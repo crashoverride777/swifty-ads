@@ -9,6 +9,10 @@
 import UIKit
 import SpriteKit
 
+extension Notification.Name {
+    static let adConsentStatusDidChange = Notification.Name("adConsentStatusDidChange")
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -51,18 +55,13 @@ private extension AppDelegate {
             consentStyle: .custom(content: customConsentContent),
             consentStatusDidChange: ({ consentStatus in
                 print("SwiftyAds did change consent status to \(consentStatus)")
-//                let skView = self.view as? SKView
-//                (skView?.scene as? GameScene)?.refresh()
-//
+                NotificationCenter.default.post(name: .adConsentStatusDidChange, object: nil)
                 if consentStatus != .notRequired {
                     // update mediation networks if required
                 }
             }),
-            completion: ({ status in
-//                guard status.hasConsent else { return }
-//                DispatchQueue.main.async {
-//                    self.showBanner()
-//                }
+            completion: ({ consentStatus in
+                print("SwiftyAds did finish setup with consent status \(consentStatus)")
             })
         )
     }

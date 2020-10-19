@@ -80,16 +80,14 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
         consentInformation.requestConsentInfoUpdate(forPublisherIdentifiers: configuration.ids) { [weak self] (_ error) in
             guard let self = self else { return }
          
-            defer {
-                self.updateUnderAgeOfConsent()
-                self.statusDidChange(self.status)
-                handler(self.status)
-            }
-            
             if let error = error {
                 print("SwiftyAdsConsentManager error requesting consent info update: \(error)")
                 return
             }
+            
+            self.updateUnderAgeOfConsent()
+            self.statusDidChange(self.status)
+            handler(self.status)
         }
     }
 

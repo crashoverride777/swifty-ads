@@ -24,6 +24,7 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         backgroundColor = .gray
         refresh()
+        NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .adConsentStatusDidChange, object: nil)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -31,7 +32,7 @@ class GameScene: SKScene {
             let location = touch.location(in: self)
             let node = atPoint(location)
             
-            guard let viewController = view?.window?.rootViewController as? GameViewController else {
+            guard let viewController = view?.window?.rootViewController else {
                 return
             }
             
@@ -60,10 +61,13 @@ class GameScene: SKScene {
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
     }
-    
-    // MARK: - Public
+}
  
-    func refresh() {
+// MARK: - Private
+ 
+private extension GameScene {
+    
+    @objc func refresh() {
         consentLabel.isHidden = !swiftyAds.isRequiredToAskForConsent
     }
 }

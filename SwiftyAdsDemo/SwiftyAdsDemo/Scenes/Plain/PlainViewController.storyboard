@@ -58,6 +58,9 @@
                             <constraint firstItem="EaF-NA-EeH" firstAttribute="centerY" secondItem="o8F-gU-cpo" secondAttribute="centerY" id="T2v-7e-OTc"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="consentFormButton" destination="Sh1-Mi-Q9Z" id="KZE-qI-OuO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gxG-1k-qsZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

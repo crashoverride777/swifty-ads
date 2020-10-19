@@ -10,6 +10,10 @@ import UIKit
 
 final class PlainViewController: UIViewController {
     
+    // MARK: - Outlets
+    
+    @IBOutlet private weak var consentFormButton: UIButton!
+    
     // MARK: - Properties
     
     private let swiftyAds: SwiftyAdsType = SwiftyAds.shared
@@ -19,6 +23,8 @@ final class PlainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        refresh()
+        NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .adConsentStatusDidChange, object: nil)
         AdPresenter.showBanner(from: self)
     }
     
@@ -50,5 +56,9 @@ private extension PlainViewController {
     
     @IBAction func showConsentFormButtonPressed(_ sender: Any) {
         swiftyAds.askForConsent(from: self)
+    }
+    
+    @objc func refresh() {
+        consentFormButton.isHidden = !swiftyAds.isRequiredToAskForConsent
     }
 }
