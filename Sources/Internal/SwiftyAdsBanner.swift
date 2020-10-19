@@ -119,7 +119,14 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
         // Add constraints
         // We don't give the banner a width or height constraints, as the provided ad size will give the banner
         // an intrinsic content size
-        let layoutGuide = viewController.view.safeAreaLayoutGuide
+        let layoutGuide: UILayoutGuide
+        if let tabBarController = viewController as? UITabBarController {
+            layoutGuide = tabBarController.tabBar.safeAreaLayoutGuide
+            tabBarController.view.bringSubviewToFront(tabBarController.tabBar)
+        } else {
+            layoutGuide = viewController.view.safeAreaLayoutGuide
+        }
+        
         switch position {
         case .top(let ignoresSafeArea):
             if ignoresSafeArea {
@@ -128,7 +135,9 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
                 bannerViewConstraint = bannerView.topAnchor.constraint(equalTo: layoutGuide.topAnchor)
             }
         case .bottom(let ignoresSafeArea):
-            if ignoresSafeArea {
+            if viewController is UITabBarController {
+                bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: layoutGuide.topAnchor)
+            } else if ignoresSafeArea {
                 bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: viewController.view.bottomAnchor)
             } else {
                 bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor)

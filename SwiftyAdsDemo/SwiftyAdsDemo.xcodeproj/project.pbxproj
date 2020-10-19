@@ -18,6 +18,8 @@
 		6A520CDA253DA1130034F065 /* PlainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A520CD9253DA1130034F065 /* PlainViewController.swift */; };
 		6A520CDC253DA1350034F065 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A520CDB253DA1350034F065 /* TabBarController.swift */; };
 		6A520CDD253DA1BF0034F065 /* GameViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A185AD1253D9DC8001542BC /* GameViewController.storyboard */; };
+		6A520CDF253DA6170034F065 /* PlainViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A520CDE253DA6170034F065 /* PlainViewController.storyboard */; };
+		6A520CE2253DA95C0034F065 /* AdPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A520CE1253DA95C0034F065 /* AdPresenter.swift */; };
 		6AAD69FC240B124A001F4A7D /* SwiftyAdsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD69FB240B124A001F4A7D /* SwiftyAdsType.swift */; };
 		6AAD69FE240B2F0A001F4A7D /* SwiftyAdsConsentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD69FD240B2F0A001F4A7D /* SwiftyAdsConsentStatus.swift */; };
 		6AAD6A00240BDA2B001F4A7D /* SwiftyAdsConsentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD69FF240BDA2B001F4A7D /* SwiftyAdsConsentStyle.swift */; };
@@ -62,6 +64,8 @@
 		6A4286242400612E0035487A /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		6A520CD9253DA1130034F065 /* PlainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainViewController.swift; sourceTree = "<group>"; };
 		6A520CDB253DA1350034F065 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		6A520CDE253DA6170034F065 /* PlainViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PlainViewController.storyboard; sourceTree = "<group>"; };
+		6A520CE1253DA95C0034F065 /* AdPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdPresenter.swift; sourceTree = "<group>"; };
 		6AAD69FB240B124A001F4A7D /* SwiftyAdsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsType.swift; sourceTree = "<group>"; };
 		6AAD69FD240B2F0A001F4A7D /* SwiftyAdsConsentStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsConsentStatus.swift; sourceTree = "<group>"; };
 		6AAD69FF240BDA2B001F4A7D /* SwiftyAdsConsentStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsConsentStyle.swift; sourceTree = "<group>"; };
@@ -94,6 +98,7 @@
 		6A185ACF253D9DA9001542BC /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				6A520CE0253DA93E0034F065 /* Helpers */,
 				6A185AD4253D9EDB001542BC /* Root */,
 				6A185AD3253D9E10001542BC /* Tab Bar */,
 				6A185AD2253D9E05001542BC /* Plain */,
@@ -117,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				6A520CD9253DA1130034F065 /* PlainViewController.swift */,
+				6A520CDE253DA6170034F065 /* PlainViewController.storyboard */,
 			);
 			path = Plain;
 			sourceTree = "<group>";
@@ -175,6 +181,14 @@
 				6A428616240060A00035487A /* Info.plist */,
 			);
 			path = SwiftyAdsDemo;
+			sourceTree = "<group>";
+		};
+		6A520CE0253DA93E0034F065 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				6A520CE1253DA95C0034F065 /* AdPresenter.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		6AC971BF2401B06600A0BB91 /* Sources */ = {
@@ -290,6 +304,7 @@
 			files = (
 				6A4286252400612E0035487A /* GameScene.sks in Resources */,
 				6A520CDD253DA1BF0034F065 /* GameViewController.storyboard in Resources */,
+				6A520CDF253DA6170034F065 /* PlainViewController.storyboard in Resources */,
 				6A428612240060A00035487A /* Assets.xcassets in Resources */,
 				6A428615240060A00035487A /* LaunchScreen.storyboard in Resources */,
 			);
@@ -361,6 +376,7 @@
 				6AC971D92401B06700A0BB91 /* SwiftyAdsConfiguration.swift in Sources */,
 				6A4286262400612E0035487A /* GameViewController.swift in Sources */,
 				6AC971D82401B06700A0BB91 /* SwiftyAdsBanner.swift in Sources */,
+				6A520CE2253DA95C0034F065 /* AdPresenter.swift in Sources */,
 				6A4286052400609E0035487A /* AppDelegate.swift in Sources */,
 				6AAD6A00240BDA2B001F4A7D /* SwiftyAdsConsentStyle.swift in Sources */,
 			);

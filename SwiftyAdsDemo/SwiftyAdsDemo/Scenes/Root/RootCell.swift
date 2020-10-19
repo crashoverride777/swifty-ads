@@ -10,8 +10,6 @@ import UIKit
 
 final class RootCell: UITableViewCell {
     
-    // MARK: - Public Methods
-    
     func configure(title: String) {
         textLabel?.text = title
     }

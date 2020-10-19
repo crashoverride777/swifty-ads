@@ -48,6 +48,9 @@ final class RootViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Setup navigation item
+        navigationItem.title = "Root View Controller"
+        
         // Setup table view
         tableView.register(RootCell.self, forCellReuseIdentifier: String(describing: RootCell.self))
         
@@ -74,7 +77,8 @@ final class RootViewController: UITableViewController {
         
         switch row {
         case .plain:
-            viewController = PlainViewController()
+            let storyboard = UIStoryboard(name: "PlainViewController", bundle: .main)
+            viewController = storyboard.instantiateInitialViewController()
         case .tabBar:
             viewController = TabBarController()
         case .game:
