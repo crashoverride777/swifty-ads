@@ -50,7 +50,6 @@ final class SwiftyAdsConsentManager {
         self.consentStyle = consentStyle
         self.configuration = configuration
         self.statusDidChange = statusDidChange
-		self.consentInformation.debugGeography = .EEA
     }
 }
 
