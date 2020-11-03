@@ -27,6 +27,8 @@
 		6AC971DE2401B06700A0BB91 /* SwiftyAdsIntervalTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971D22401B06600A0BB91 /* SwiftyAdsIntervalTracker.swift */; };
 		6AC971DF2401B06700A0BB91 /* SwiftyAds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971D42401B06600A0BB91 /* SwiftyAds.swift */; };
 		8255E865472D299AB1EC366F /* Pods_SwiftyAdsDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 267AC7188365496A1FC367F7 /* Pods_SwiftyAdsDemo.framework */; };
+		C08B43ED25514D6100F57239 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C08B43EC25514D6100F57239 /* AppTrackingTransparency.framework */; };
+		C08B43F42551605600F57239 /* SwiftyAds.plist in Resources */ = {isa = PBXBuildFile; fileRef = C08B43F32551605600F57239 /* SwiftyAds.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -68,6 +70,8 @@
 		6AC971D42401B06600A0BB91 /* SwiftyAds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAds.swift; sourceTree = "<group>"; };
 		93FE114651B5F81A8F56C27C /* Pods-SwiftyAdsDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdsDemo.debug.xcconfig"; path = "Target Support Files/Pods-SwiftyAdsDemo/Pods-SwiftyAdsDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		B56AD7736DA9547C2466E236 /* Pods-SwiftyAdDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdDemo.debug.xcconfig"; path = "Target Support Files/Pods-SwiftyAdDemo/Pods-SwiftyAdDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		C08B43EC25514D6100F57239 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
+		C08B43F32551605600F57239 /* SwiftyAds.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SwiftyAds.plist; sourceTree = "<group>"; };
 		FDDECD69B41BFDB543E6E6EC /* Pods-SwiftyAdDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdDemo.release.xcconfig"; path = "Target Support Files/Pods-SwiftyAdDemo/Pods-SwiftyAdDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,6 +81,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8255E865472D299AB1EC366F /* Pods_SwiftyAdsDemo.framework in Frameworks */,
+				C08B43ED25514D6100F57239 /* AppTrackingTransparency.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +91,7 @@
 		6A38EBBB24019DBD00E645A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C08B43EC25514D6100F57239 /* AppTrackingTransparency.framework */,
 				267AC7188365496A1FC367F7 /* Pods_SwiftyAdsDemo.framework */,
 			);
 			name = Frameworks;
@@ -120,6 +126,7 @@
 				6A42860E2400609E0035487A /* Main.storyboard */,
 				6A428611240060A00035487A /* Assets.xcassets */,
 				6A428613240060A00035487A /* LaunchScreen.storyboard */,
+				C08B43F32551605600F57239 /* SwiftyAds.plist */,
 				6A428616240060A00035487A /* Info.plist */,
 			);
 			path = SwiftyAdsDemo;
@@ -240,6 +247,7 @@
 				6A4286102400609E0035487A /* Main.storyboard in Resources */,
 				6A428612240060A00035487A /* Assets.xcassets in Resources */,
 				6A428615240060A00035487A /* LaunchScreen.storyboard in Resources */,
+				C08B43F42551605600F57239 /* SwiftyAds.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,7 +463,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DK88YZ475Z;
+				DEVELOPMENT_TEAM = 35FF4KWVC7;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAdsDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -463,7 +471,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SwiftyAdsDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SwiftyAdsDemo.poc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -477,7 +485,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DK88YZ475Z;
+				DEVELOPMENT_TEAM = 35FF4KWVC7;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAdsDemo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -485,7 +493,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.SwiftyAdsDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.SwiftyAdsDemo.poc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

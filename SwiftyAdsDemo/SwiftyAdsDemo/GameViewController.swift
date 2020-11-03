@@ -15,7 +15,7 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSwiftyAds()
+//        setupSwiftyAds()
         
         if let scene = GameScene(fileNamed: "GameScene") {
             scene.configure(swiftyAds: swiftyAds)

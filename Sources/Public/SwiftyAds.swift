@@ -161,7 +161,7 @@ extension SwiftyAds: SwiftyAdsType {
             statusDidChange: consentStatusDidChange
         )
         
-        consentManager.requestUpdate { [weak self] status in
+        consentManager.requestUpdate(shouldCheckATTracking: true) { [weak self] status in
             guard let self = self else { return }
             func loadAds() {
                 if !self.isDisabled {
@@ -247,6 +247,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter onClose: An optional callback when the ad was dismissed.
     /// - parameter onError: An optional callback when an error has occurred.
 	/// - Returns: Returns `true` when actually start show, else return `false`.
+	@discardableResult
     public func showInterstitial(from viewController: UIViewController,
                                  withInterval interval: Int?,
                                  onOpen: (() -> Void)?,
@@ -283,6 +284,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter onNotReady: An optional callback when the ad was not ready.
     /// - parameter onReward: A callback when the reward has been granted.
 	/// - Returns: Returns `true` when actually start show, else return `false`.
+	@discardableResult
     public func showRewardedVideo(from viewController: UIViewController,
                                   onOpen: (() -> Void)?,
                                   onClose: (() -> Void)?,

@@ -22,10 +22,12 @@
 
 import UIKit
 import PersonalizedAdConsent
+import AppTrackingTransparency
+import AdSupport
 
 protocol SwiftyAdsConsentManagerType: class {
     var status: SwiftyAdsConsentStatus { get }
-    func requestUpdate(handler: @escaping (SwiftyAdsConsentStatus) -> Void)
+    func requestUpdate(shouldCheckATTracking: Bool, handler: @escaping (SwiftyAdsConsentStatus) -> Void)
     func showForm(from viewController: UIViewController, handler: ((SwiftyAdsConsentStatus) -> Void)?)
 }
 
@@ -48,6 +50,7 @@ final class SwiftyAdsConsentManager {
         self.consentStyle = consentStyle
         self.configuration = configuration
         self.statusDidChange = statusDidChange
+		self.consentInformation.debugGeography = .EEA
     }
 }
 
@@ -76,21 +79,42 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
         }
     }
     
-    func requestUpdate(handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
-        consentInformation.requestConsentInfoUpdate(forPublisherIdentifiers: configuration.ids) { [weak self] (_ error) in
-            guard let self = self else { return }
-         
-            defer {
-                self.updateUnderAgeOfConsent()
-                handler(self.status)
-            }
-            
-            if let error = error {
-                print("SwiftyAdsConsentManager error requesting consent info update: \(error)")
-                return
-            }
-        }
+	func requestUpdate(
+		shouldCheckATTracking: Bool,
+		handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
+		
+		if #available(iOS 14.0, *) {
+			if shouldCheckATTracking {
+				ATTrackingManager.requestTrackingAuthorization(completionHandler: { [weak self] status in
+					guard let self = self else { return }
+					// Tracking authorization completed. Start loading ads here.
+					self.requestUpdate(shouldCheckATTracking: false, handler: handler)
+				})
+			} else {
+				
+				self.requestConsentInfoUpdate(handler: handler)
+			}
+		} else {
+			
+			self.requestConsentInfoUpdate(handler: handler)
+		}
     }
+	
+	private func requestConsentInfoUpdate(handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
+		consentInformation.requestConsentInfoUpdate(forPublisherIdentifiers: configuration.ids) { [weak self] (_ error) in
+			guard let self = self else { return }
+			
+			defer {
+				self.updateUnderAgeOfConsent()
+				handler(self.status)
+			}
+			
+			if let error = error {
+				print("SwiftyAdsConsentManager error requesting consent info update: \(error)")
+				return
+			}
+		}
+	}
 
     func showForm(from viewController: UIViewController, handler: ((SwiftyAdsConsentStatus) -> Void)?) {
         switch consentStyle {
