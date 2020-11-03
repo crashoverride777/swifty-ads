@@ -21,9 +21,9 @@
 //    SOFTWARE.
 
 import UIKit
+import AdSupport
 import PersonalizedAdConsent
 import AppTrackingTransparency
-import AdSupport
 
 protocol SwiftyAdsConsentManagerType: class {
     var status: SwiftyAdsConsentStatus { get }
@@ -77,9 +77,15 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
             return .unknown
         }
     }
-    
+	
+	/// Request update for consent information and permission of tracking authorization
+	/// - Parameters:
+	///   - shouldCheckATTracking: A flag that used to check tracking authorization
+	///   - handler: The status of consent
+	///
+	/// https://developers.google.com/admob/ios/ios14
 	func requestUpdate(
-		shouldCheckATTracking: Bool,
+		shouldCheckATTracking: Bool = true,
 		handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
 		
 		if #available(iOS 14.0, *) {
@@ -87,6 +93,8 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
 				ATTrackingManager.requestTrackingAuthorization(completionHandler: { [weak self] status in
 					guard let self = self else { return }
 					// Tracking authorization completed. Start loading ads here.
+					// so here call same function with
+					// shouldCheckATTracking false to continue requestUpdate flow
 					self.requestUpdate(shouldCheckATTracking: false, handler: handler)
 				})
 			} else {
