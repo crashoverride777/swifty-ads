@@ -46,12 +46,12 @@ public protocol SwiftyAdsType: AnyObject {
                           withInterval interval: Int?,
                           onOpen: (() -> Void)?,
                           onClose: (() -> Void)?,
-                          onError: ((Error) -> Void)?)
+                          onError: ((Error) -> Void)?) -> Bool
     func showRewardedVideo(from viewController: UIViewController,
                            onOpen: (() -> Void)?,
                            onClose: (() -> Void)?,
                            onError: ((Error) -> Void)?,
                            onNotReady: (() -> Void)?,
-                           onReward: @escaping (Int) -> Void)
+                           onReward: @escaping (Int) -> Void) -> Bool
     func disable()
 }

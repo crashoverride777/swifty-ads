@@ -246,21 +246,22 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter onOpen: An optional callback when the banner was presented.
     /// - parameter onClose: An optional callback when the ad was dismissed.
     /// - parameter onError: An optional callback when an error has occurred.
+	/// - Returns: Returns `true` when actually start show, else return `false`.
     public func showInterstitial(from viewController: UIViewController,
                                  withInterval interval: Int?,
                                  onOpen: (() -> Void)?,
                                  onClose: (() -> Void)?,
-                                 onError: ((Error) -> Void)?) {
+                                 onError: ((Error) -> Void)?) -> Bool {
         guard let interstitialAd = interstitialAd else {
-            return
+            return false
         }
         
         guard !isDisabled, hasConsent else {
-            return
+            return false
         }
     
         guard intervalTracker.canShow(forInterval: interval) else {
-            return
+            return false
         }
         
         interstitialAd.show(
@@ -269,6 +270,8 @@ extension SwiftyAds: SwiftyAdsType {
             onClose: onClose,
             onError: onError
         )
+		
+		return true
     }
     
     /// Show rewarded video ad
@@ -279,18 +282,19 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter onError: An optional callback when an error has occurred.
     /// - parameter onNotReady: An optional callback when the ad was not ready.
     /// - parameter onReward: A callback when the reward has been granted.
+	/// - Returns: Returns `true` when actually start show, else return `false`.
     public func showRewardedVideo(from viewController: UIViewController,
                                   onOpen: (() -> Void)?,
                                   onClose: (() -> Void)?,
                                   onError: ((Error) -> Void)?,
                                   onNotReady: (() -> Void)?,
-                                  onReward: @escaping (Int) -> Void) {
+                                  onReward: @escaping (Int) -> Void) -> Bool {
         guard let rewardedAd = rewardedAd else {
-            return
+            return false
         }
         
         guard hasConsent else {
-            return
+            return false
         }
         
         rewardedAd.show(
@@ -301,6 +305,8 @@ extension SwiftyAds: SwiftyAdsType {
             onNotReady: onNotReady,
             onReward: onReward
         )
+		
+		return true
     }
 
     /// Disable ads e.g in app purchases
