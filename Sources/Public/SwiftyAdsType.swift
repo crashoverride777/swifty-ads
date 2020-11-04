@@ -48,6 +48,7 @@ public protocol SwiftyAdsType: AnyObject {
                           onClose: (() -> Void)?,
                           onError: ((Error) -> Void)?) -> Bool
     func showRewardedVideo(from viewController: UIViewController,
+						   ssvo: SwiftyAdsServerSideVerificationOptions?,
                            onOpen: (() -> Void)?,
                            onClose: (() -> Void)?,
                            onError: ((Error) -> Void)?,

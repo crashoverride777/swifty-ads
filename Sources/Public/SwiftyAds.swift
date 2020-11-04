@@ -128,7 +128,7 @@ extension SwiftyAds: SwiftyAdsType {
             configuration = .production
         case .debug(let testDeviceIdentifiers):
             configuration = .debug
-            mobileAds.requestConfiguration.testDeviceIdentifiers = testDeviceIdentifiers//kGADSimulatorID
+            mobileAds.requestConfiguration.testDeviceIdentifiers = testDeviceIdentifiers
         }
         
         // Create ads
@@ -278,6 +278,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// Show rewarded video ad
     ///
     /// - parameter viewController: The view controller that will present the ad.
+	/// - parameter ssvo: An optional server side verification options.
     /// - parameter onOpen: An optional callback when the banner was presented.
     /// - parameter onClose: An optional callback when the ad was dismissed.
     /// - parameter onError: An optional callback when an error has occurred.
@@ -286,6 +287,7 @@ extension SwiftyAds: SwiftyAdsType {
 	/// - Returns: Returns `true` when actually start show, else return `false`.
 	@discardableResult
     public func showRewardedVideo(from viewController: UIViewController,
+								  ssvo: SwiftyAdsServerSideVerificationOptions?,
                                   onOpen: (() -> Void)?,
                                   onClose: (() -> Void)?,
                                   onError: ((Error) -> Void)?,
@@ -301,6 +303,7 @@ extension SwiftyAds: SwiftyAdsType {
         
         rewardedAd.show(
             from: viewController,
+			ssvo: ssvo,
             onOpen: onOpen,
             onClose: onClose,
             onError: onError,

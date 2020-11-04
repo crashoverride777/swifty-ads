@@ -26,6 +26,7 @@ protocol SwiftyAdsRewardedType: AnyObject {
     var isReady: Bool { get }
     func load()
     func show(from viewController: UIViewController,
+			  ssvo: SwiftyAdsServerSideVerificationOptions?,
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?,
@@ -39,6 +40,7 @@ final class SwiftyAdsRewarded: NSObject {
     
     private let adUnitId: String
     private let request: () -> GADRequest
+	private var serverSideVerification: SwiftyAdsServerSideVerificationOptions?
     private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
     private var onReward: ((Int) -> Void)?
@@ -48,12 +50,13 @@ final class SwiftyAdsRewarded: NSObject {
     
     // MARK: - Init
     
-    init(adUnitId: String, request: @escaping () -> GADRequest) {
+	init(adUnitId: String, request: @escaping () -> GADRequest) {
+		
         self.adUnitId = adUnitId
         self.request = request
     }
 }
-
+	
 // MARK: - SwiftyAdRewardedType
 
 extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
@@ -63,7 +66,9 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
     }
     
     func load() {
+		
         rewardedAd = GADRewardedAd(adUnitID: adUnitId)
+		setServerSideVerification()
         rewardedAd?.load(request()) { [weak self] error in
             guard let self = self else { return }
             if let error = error {
@@ -74,23 +79,41 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
     }
  
     func show(from viewController: UIViewController,
+			  ssvo: SwiftyAdsServerSideVerificationOptions?,
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?,
               onNotReady: (() -> Void)?,
               onReward: @escaping (Int) -> Void) {
+		self.serverSideVerification = ssvo
         self.onOpen = onOpen
         self.onClose = onClose
         self.onError = onError
         self.onReward = onReward
         
         if isReady {
+			
+			setServerSideVerification()
             rewardedAd?.present(fromRootViewController: viewController, delegate: self)
         } else {
-            load()
+			load()
             onNotReady?()
         }
     }
+	
+	private func setServerSideVerification() {
+		
+		guard let ssv = serverSideVerification,
+			  let rewardedAd = rewardedAd else {
+			self.rewardedAd?.serverSideVerificationOptions = nil
+			return
+		}
+		
+		let ssvo = GADServerSideVerificationOptions()
+		ssvo.userIdentifier = ssv.uid
+		ssvo.customRewardString = ssv.customString
+		rewardedAd.serverSideVerificationOptions = ssvo
+	}
 }
 
 // MARK: - GADRewardedAdDelegate

@@ -29,6 +29,7 @@
 		8255E865472D299AB1EC366F /* Pods_SwiftyAdsDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 267AC7188365496A1FC367F7 /* Pods_SwiftyAdsDemo.framework */; };
 		C08B43ED25514D6100F57239 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C08B43EC25514D6100F57239 /* AppTrackingTransparency.framework */; };
 		C08B43F42551605600F57239 /* SwiftyAds.plist in Resources */ = {isa = PBXBuildFile; fileRef = C08B43F32551605600F57239 /* SwiftyAds.plist */; };
+		C08B44832552FEBD00F57239 /* SwiftyAdsServerSideVerificationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08B44822552FEBD00F57239 /* SwiftyAdsServerSideVerificationOptions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -72,6 +73,7 @@
 		B56AD7736DA9547C2466E236 /* Pods-SwiftyAdDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdDemo.debug.xcconfig"; path = "Target Support Files/Pods-SwiftyAdDemo/Pods-SwiftyAdDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		C08B43EC25514D6100F57239 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		C08B43F32551605600F57239 /* SwiftyAds.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SwiftyAds.plist; sourceTree = "<group>"; };
+		C08B44822552FEBD00F57239 /* SwiftyAdsServerSideVerificationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsServerSideVerificationOptions.swift; sourceTree = "<group>"; };
 		FDDECD69B41BFDB543E6E6EC /* Pods-SwiftyAdDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdDemo.release.xcconfig"; path = "Target Support Files/Pods-SwiftyAdDemo/Pods-SwiftyAdDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -145,12 +147,12 @@
 		6AC971C62401B06600A0BB91 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				6AC971CA2401B06600A0BB91 /* SwiftyAdsBanner.swift */,
 				6AC971CC2401B06600A0BB91 /* SwiftyAdsConfiguration.swift */,
 				6AC971D02401B06600A0BB91 /* SwiftyAdsConsentManager.swift */,
-				6AC971D12401B06600A0BB91 /* SwiftyAdsRequestBuilder.swift */,
-				6AC971D22401B06600A0BB91 /* SwiftyAdsIntervalTracker.swift */,
-				6AC971CA2401B06600A0BB91 /* SwiftyAdsBanner.swift */,
 				6AC971C82401B06600A0BB91 /* SwiftyAdsInterstitial.swift */,
+				6AC971D22401B06600A0BB91 /* SwiftyAdsIntervalTracker.swift */,
+				6AC971D12401B06600A0BB91 /* SwiftyAdsRequestBuilder.swift */,
 				6AC971C92401B06600A0BB91 /* SwiftyAdsRewarded.swift */,
 			);
 			path = Internal;
@@ -159,11 +161,12 @@
 		6AC971D32401B06600A0BB91 /* Public */ = {
 			isa = PBXGroup;
 			children = (
+				6AC971D42401B06600A0BB91 /* SwiftyAds.swift */,
 				6AAD69FD240B2F0A001F4A7D /* SwiftyAdsConsentStatus.swift */,
 				6AAD69FF240BDA2B001F4A7D /* SwiftyAdsConsentStyle.swift */,
 				6AAD6A01240BDA4A001F4A7D /* SwiftyAdsMode.swift */,
+				C08B44822552FEBD00F57239 /* SwiftyAdsServerSideVerificationOptions.swift */,
 				6AAD69FB240B124A001F4A7D /* SwiftyAdsType.swift */,
-				6AC971D42401B06600A0BB91 /* SwiftyAds.swift */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C08B44832552FEBD00F57239 /* SwiftyAdsServerSideVerificationOptions.swift in Sources */,
 				6AAD6A02240BDA4A001F4A7D /* SwiftyAdsMode.swift in Sources */,
 				6AC971DE2401B06700A0BB91 /* SwiftyAdsIntervalTracker.swift in Sources */,
 				6AC971DD2401B06700A0BB91 /* SwiftyAdsRequestBuilder.swift in Sources */,

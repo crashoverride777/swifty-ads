@@ -94,6 +94,7 @@ private extension GameScene {
     func showRewardedAd(from viewController: UIViewController) {
         swiftyAds.showRewardedVideo(
             from: viewController,
+			ssvo: nil,
             onOpen: ({
                 print("SwiftyAds rewarded video ad did open")
             }),
