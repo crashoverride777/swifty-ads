@@ -13,7 +13,7 @@ public final class SwiftyAdsServerSideVerificationOptions {
 	public let uid: String?
 	public let customString: String?
 	
-	init(uid: String? = nil, customString: String? = nil) {
+	public init(uid: String? = nil, customString: String? = nil) {
 		
 		self.uid = uid
 		self.customString = customString
