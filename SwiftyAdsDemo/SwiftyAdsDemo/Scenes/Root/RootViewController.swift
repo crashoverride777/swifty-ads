@@ -13,17 +13,20 @@ final class RootViewController: UITableViewController {
     // MARK: - Types
     
     enum Row: CaseIterable {
-        case plain
-        case tabBar
-        case game
+        case viewController
+        case viewControllerInsideTabBar
+        case tabBarController
+        case spriteKitScene
         
         var title: String {
             switch self {
-            case .plain:
+            case .viewController:
                 return "View Controller"
-            case .tabBar:
+            case .viewControllerInsideTabBar:
+                return "View Controller inside UITabBarController"
+            case .tabBarController:
                 return "Tab Bar Controller"
-            case .game:
+            case .spriteKitScene:
                 return "SpriteKit Game Scene"
             }
         }
@@ -76,12 +79,17 @@ final class RootViewController: UITableViewController {
         let viewController: UIViewController?
         
         switch row {
-        case .plain:
+        case .viewController:
             let storyboard = UIStoryboard(name: "PlainViewController", bundle: .main)
             viewController = storyboard.instantiateInitialViewController()
-        case .tabBar:
-            viewController = TabBarController()
-        case .game:
+        
+        case .viewControllerInsideTabBar:
+            viewController = TabBarControllerNoAd()
+        
+        case .tabBarController:
+            viewController = TabBarControllerAd()
+        
+        case .spriteKitScene:
             let storyboard = UIStoryboard(name: "GameViewController", bundle: .main)
             viewController = storyboard.instantiateInitialViewController()
         }

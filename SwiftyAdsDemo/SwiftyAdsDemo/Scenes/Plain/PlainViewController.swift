@@ -22,7 +22,7 @@ final class PlainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .blue
         refresh()
         NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .adConsentStatusDidChange, object: nil)
         AdPresenter.showBanner(from: self)

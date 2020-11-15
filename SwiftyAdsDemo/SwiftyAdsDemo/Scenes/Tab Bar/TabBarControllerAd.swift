@@ -1,5 +1,5 @@
 //
-//  TabBarController.swift
+//  TabBarControllerAd.swift
 //  SwiftyAdsDemo
 //
 //  Created by Dominik Ringler on 19/10/2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class TabBarController: UITabBarController {
+final class TabBarControllerAd: UITabBarController {
     
     // MARK: - Properties
     
@@ -21,11 +21,11 @@ final class TabBarController: UITabBarController {
         
         // Create tab view controllers
         let firstVC = UIViewController()
-        firstVC.view.backgroundColor = .white
+        firstVC.view.backgroundColor = .blue
         firstVC.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 0)
         
         let secondVC = UIViewController()
-        secondVC.view.backgroundColor = .white
+        secondVC.view.backgroundColor = .red
         secondVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
         
         // Set view controllers

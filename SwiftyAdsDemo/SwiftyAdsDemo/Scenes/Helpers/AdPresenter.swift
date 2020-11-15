@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Convenience helper for this demo project to display ads
 enum AdPresenter {
     
     static func showBanner(from viewController: UIViewController) {
