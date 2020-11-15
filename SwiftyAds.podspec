@@ -17,7 +17,7 @@ s.source = {
     :tag => s.version
 }
 
-s.source_files = 'Sources/**/*.{swift}'
+s.source_files = 'Sources/**/*.{h,m,swift}'
 
 s.static_framework = true
 
