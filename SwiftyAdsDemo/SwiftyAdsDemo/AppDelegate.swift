@@ -7,35 +7,62 @@
 //
 
 import UIKit
+import SpriteKit
+
+extension Notification.Name {
+    static let adConsentStatusDidChange = Notification.Name("adConsentStatusDidChange")
+}
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    private let swiftyAds: SwiftyAdsType = SwiftyAds.shared
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        let rootViewController = RootViewController()
+        let navigationController = UINavigationController(rootViewController: rootViewController)
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
+        
+        setupSwiftyAds(from: navigationController)
         return true
     }
-
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
-    }
-
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-    }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    }
-
-
 }
 
+// MARK: - Private
+
+private extension AppDelegate {
+    
+    func setupSwiftyAds(from rootViewController: UIViewController) {
+        #if DEBUG
+        let mode: SwiftyAdsMode = .debug(testDeviceIdentifiers: [])
+        #else
+        let mode: SwiftyAdsMode = .production
+        #endif
+        let customConsentContent = SwiftyAdsCustomConsentAlertContent(
+            title: "Permission to use data",
+            message: "We care about your privacy and data security. We keep this app free by showing ads. You can change your choice anytime in the app settings. Our partners will collect data and use a unique identifier on your device to show you ads.",
+            actionAllowPersonalized: "Allow personalized",
+            actionAllowNonPersonalized: "Allow non personalized",
+            actionAdFree: nil // no add free option in this demo
+        )
+        
+        swiftyAds.setup(
+            with: rootViewController,
+            mode: mode,
+            consentStyle: .custom(content: customConsentContent),
+            consentStatusDidChange: ({ consentStatus in
+                print("SwiftyAds did change consent status to \(consentStatus)")
+                NotificationCenter.default.post(name: .adConsentStatusDidChange, object: nil)
+                if consentStatus != .notRequired {
+                    // update mediation networks if required
+                }
+            }),
+            completion: ({ consentStatus in
+                print("SwiftyAds did finish setup with consent status \(consentStatus)")
+            })
+        )
+    }
+}

@@ -1,7 +1,11 @@
 Pod::Spec.new do |s|
 
 s.name = 'SwiftyAds'
+<<<<<<< HEAD
 s.version = '11.0.5'
+=======
+s.version = '11.0.4'
+>>>>>>> upstream/master
 s.license = 'MIT'
 s.summary = 'A swift helper to show ads from Google AdMob. GDPR compliant.'
 s.homepage = 'https://github.com/crashoverride777/swifty-ads'
@@ -17,7 +21,7 @@ s.source = {
     :tag => s.version
 }
 
-s.source_files = 'Sources/**/*.{swift}'
+s.source_files = 'Sources/**/*.{h,m,swift}'
 
 s.static_framework = true
 
