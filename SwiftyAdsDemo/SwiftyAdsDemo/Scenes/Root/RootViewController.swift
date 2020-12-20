@@ -17,6 +17,7 @@ final class RootViewController: UITableViewController {
         case viewControllerInsideTabBar
         case tabBarController
         case spriteKitScene
+        case nativeAd
         
         var title: String {
             switch self {
@@ -28,6 +29,8 @@ final class RootViewController: UITableViewController {
                 return "Tab Bar Controller"
             case .spriteKitScene:
                 return "SpriteKit Game Scene"
+            case .nativeAd:
+                return "Native Ad"
             }
         }
     }
@@ -91,6 +94,10 @@ final class RootViewController: UITableViewController {
         
         case .spriteKitScene:
             let storyboard = UIStoryboard(name: "GameViewController", bundle: .main)
+            viewController = storyboard.instantiateInitialViewController()
+
+        case .nativeAd:
+            let storyboard = UIStoryboard(name: "NativeAdViewController", bundle: .main)
             viewController = storyboard.instantiateInitialViewController()
         }
         

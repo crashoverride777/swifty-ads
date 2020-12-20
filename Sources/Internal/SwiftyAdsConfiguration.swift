@@ -26,6 +26,7 @@ struct SwiftyAdsConfiguration: Decodable {
     let bannerAdUnitId: String
     let interstitialAdUnitId: String
     let rewardedVideoAdUnitId: String
+    let nativeAdUnitId: String
     let privacyPolicyURL: String
     let isTaggedForUnderAgeOfConsent: Bool
     let mediationNetworks: [String]
@@ -69,6 +70,7 @@ extension SwiftyAdsConfiguration {
             bannerAdUnitId: "ca-app-pub-3940256099942544/2934735716",
             interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
             rewardedVideoAdUnitId: "ca-app-pub-3940256099942544/1712485313",
+            nativeAdUnitId: "ca-app-pub-3940256099942544/1712485313",
             privacyPolicyURL: "https://example.com/privacyPolicy",
             isTaggedForUnderAgeOfConsent: false,
             mediationNetworks: ["Test Mediation Network 1, Test Mediation Network 2"]

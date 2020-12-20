@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A864BC425900E75005D0789 /* SwiftyAdsNativeAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A864BC325900E75005D0789 /* SwiftyAdsNativeAd.swift */; };
 		6AAD6A07240BEC77001F4A7D /* SwiftyAdsConsentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD6A03240BEC76001F4A7D /* SwiftyAdsConsentStatus.swift */; };
 		6AAD6A08240BEC77001F4A7D /* SwiftyAdsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD6A04240BEC76001F4A7D /* SwiftyAdsType.swift */; };
 		6AAD6A09240BEC77001F4A7D /* SwiftyAdsMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD6A05240BEC76001F4A7D /* SwiftyAdsMode.swift */; };
@@ -35,6 +36,7 @@
 
 /* Begin PBXFileReference section */
 		6A38EBA72401916500E645A0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		6A864BC325900E75005D0789 /* SwiftyAdsNativeAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsNativeAd.swift; sourceTree = "<group>"; };
 		6AAD6A03240BEC76001F4A7D /* SwiftyAdsConsentStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsConsentStatus.swift; sourceTree = "<group>"; };
 		6AAD6A04240BEC76001F4A7D /* SwiftyAdsType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsType.swift; sourceTree = "<group>"; };
 		6AAD6A05240BEC76001F4A7D /* SwiftyAdsMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsMode.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				6AAD6A10240BEC98001F4A7D /* SwiftyAdsBanner.swift */,
 				6AAD6A0F240BEC98001F4A7D /* SwiftyAdsInterstitial.swift */,
 				6AAD6A0B240BEC98001F4A7D /* SwiftyAdsRewarded.swift */,
+				6A864BC325900E75005D0789 /* SwiftyAdsNativeAd.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -303,6 +306,7 @@
 			files = (
 				6AAD6A16240BEC98001F4A7D /* SwiftyAdsInterstitial.swift in Sources */,
 				6AAD6A18240BEC98001F4A7D /* SwiftyAdsConfiguration.swift in Sources */,
+				6A864BC425900E75005D0789 /* SwiftyAdsNativeAd.swift in Sources */,
 				6AAD6A15240BEC98001F4A7D /* SwiftyAdsIntervalTracker.swift in Sources */,
 				6AAD6A17240BEC98001F4A7D /* SwiftyAdsBanner.swift in Sources */,
 				6AAD6A0A240BEC77001F4A7D /* SwiftyAdsConsentStyle.swift in Sources */,

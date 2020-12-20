@@ -42,6 +42,7 @@ public final class SwiftyAds: NSObject {
     private var bannerAd: SwiftyAdsBannerType?
     private var interstitialAd: SwiftyAdsInterstitialType?
     private var rewardedAd: SwiftyAdsRewardedType?
+    private var nativeAd: SwiftyAdsNativeAdType?
     private var consentManager: SwiftyAdsConsentManagerType!
     private var isDisabled = false
         
@@ -68,12 +69,14 @@ public final class SwiftyAds: NSObject {
          bannerAd: SwiftyAdsBannerType,
          interstitialAd: SwiftyAdsInterstitialType,
          rewardedAd: SwiftyAdsRewardedType,
+         nativeAd: SwiftyAdsNativeAdType,
          consentManager: SwiftyAdsConsentManagerType,
          intervalTracker: SwiftyAdsIntervalTrackerType) {
         self.mobileAds = mobileAds
         self.bannerAd = bannerAd
         self.interstitialAd = interstitialAd
         self.rewardedAd = rewardedAd
+        self.nativeAd = nativeAd
         self.consentManager = consentManager
         self.intervalTracker = intervalTracker
     }
@@ -114,11 +117,13 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter mode: Set the mode of ads, production or debug.
     /// - parameter consentStyle: The style of the consent alert.
+    /// - parameter nativeAdOptions: The GADMultipleAdsAdLoaderOptions when loading native ads.
     /// - parameter consentStatusDidChange: A handler that will fire everytime the consent status has changed.
     /// - parameter completion: A handler that will return the current consent status after the consent alert has been dismissed.
     public func setup(with viewController: UIViewController,
                       mode: SwiftyAdsMode,
                       consentStyle: SwiftyAdsConsentStyle,
+                      nativeAdOptions: [GADMultipleAdsAdLoaderOptions] = [],
                       consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                       completion: @escaping (SwiftyAdsConsentStatus) -> Void) {
         // Update configuration for selected mode
@@ -152,6 +157,14 @@ extension SwiftyAds: SwiftyAdsType {
                 self.requestBuilder.build()
             })
         )
+
+        nativeAd = SwiftyAdsNativeAd(
+            adUnitId: configuration.nativeAdUnitId,
+            options: nativeAdOptions,
+            request: ({ [unowned self] in
+                self.requestBuilder.build()
+            })
+        )
      
         // Create consent manager and make request
         consentManager = SwiftyAdsConsentManager(
@@ -166,6 +179,7 @@ extension SwiftyAds: SwiftyAdsType {
             func loadAds() {
                 if !self.isDisabled {
                     self.interstitialAd?.load()
+                    self.nativeAd?.load()
                 }
                 self.rewardedAd?.load()
             }
@@ -207,13 +221,8 @@ extension SwiftyAds: SwiftyAdsType {
                            onOpen: (() -> Void)?,
                            onClose: (() -> Void)?,
                            onError: ((Error) -> Void)?) {
-        guard let bannerAd = bannerAd else {
-            return
-        }
-        
-        guard !isDisabled, hasConsent else {
-            return
-        }
+        guard let bannerAd = bannerAd else { return }
+        guard !isDisabled, hasConsent else { return }
         
         bannerAd.show(
             from: viewController,
@@ -250,17 +259,9 @@ extension SwiftyAds: SwiftyAdsType {
                                  onOpen: (() -> Void)?,
                                  onClose: (() -> Void)?,
                                  onError: ((Error) -> Void)?) {
-        guard let interstitialAd = interstitialAd else {
-            return
-        }
-        
-        guard !isDisabled, hasConsent else {
-            return
-        }
-    
-        guard intervalTracker.canShow(forInterval: interval) else {
-            return
-        }
+        guard let interstitialAd = interstitialAd else { return }
+        guard !isDisabled, hasConsent else { return }
+        guard intervalTracker.canShow(forInterval: interval) else { return }
         
         interstitialAd.show(
             from: viewController,
@@ -284,13 +285,8 @@ extension SwiftyAds: SwiftyAdsType {
                                   onError: ((Error) -> Void)?,
                                   onNotReady: (() -> Void)?,
                                   onReward: @escaping (Int) -> Void) {
-        guard let rewardedAd = rewardedAd else {
-            return
-        }
-        
-        guard hasConsent else {
-            return
-        }
+        guard let rewardedAd = rewardedAd else { return }
+        guard hasConsent else { return }
         
         rewardedAd.show(
             from: viewController,
@@ -300,6 +296,14 @@ extension SwiftyAds: SwiftyAdsType {
             onNotReady: onNotReady,
             onReward: onReward
         )
+    }
+
+    /// Show native ad
+    public func showNativeAd() {
+        guard let nativeAd = nativeAd else { return }
+        guard hasConsent else { return }
+
+        nativeAd.load()
     }
 
     /// Disable ads e.g in app purchases
