@@ -303,13 +303,17 @@ extension SwiftyAds: SwiftyAdsType {
         )
     }
 
-    /// Show native ad
+    /// Load native ad
     ///
     /// - parameter viewController: The view controller that will present the ad.
-    public func showNativeAd(from viewController: UIViewController) {
+    /// - parameter onReceive: The native ad received when load request completed.
+    /// - parameter onError: The error when a load request failed.
+    public func loadNativeAd(from viewController: UIViewController,
+                             onReceive: @escaping (GADUnifiedNativeAd) -> Void,
+                             onError: @escaping (Error) -> Void) {
         guard let nativeAd = nativeAd else { return }
         guard hasConsent else { return }
-        nativeAd.load(from: viewController)
+        nativeAd.load(from: viewController, onReceive: onReceive, onError: onError)
     }
 
     /// Disable ads e.g in app purchases

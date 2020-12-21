@@ -21,6 +21,7 @@
 //    SOFTWARE.
 
 import UIKit
+import GoogleMobileAds
 
 public protocol SwiftyAdsType: AnyObject {
     var hasConsent: Bool { get }
@@ -54,5 +55,8 @@ public protocol SwiftyAdsType: AnyObject {
                            onError: ((Error) -> Void)?,
                            onNotReady: (() -> Void)?,
                            onReward: @escaping (Int) -> Void)
+    func loadNativeAd(from viewController: UIViewController,
+                      onReceive: @escaping (GADUnifiedNativeAd) -> Void,
+                      onError: @escaping (Error) -> Void)
     func disable()
 }

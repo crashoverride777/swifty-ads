@@ -58,7 +58,7 @@ private extension AppDelegate {
                 print("SwiftyAds did change consent status to \(consentStatus)")
                 NotificationCenter.default.post(name: .adConsentStatusDidChange, object: nil)
                 if consentStatus != .notRequired {
-                    // update mediation networks if required
+                    // update mediation networks if required or preload ads
                 }
             }),
             completion: ({ consentStatus in

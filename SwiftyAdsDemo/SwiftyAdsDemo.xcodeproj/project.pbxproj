@@ -10,8 +10,7 @@
 		6A185ACE253D9D77001542BC /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A185ACD253D9D77001542BC /* RootViewController.swift */; };
 		6A185AD6253D9EE5001542BC /* RootCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A185AD5253D9EE5001542BC /* RootCell.swift */; };
 		6A1A53DD25912A3E00981F00 /* SwiftyAdsNativeAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1A53DC25912A3E00981F00 /* SwiftyAdsNativeAd.swift */; };
-		6A1A53E8259131BF00981F00 /* NativeAdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1A53E7259131BF00981F00 /* NativeAdCell.swift */; };
-		6A1A53EA2591323400981F00 /* NativeAdTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1A53E92591323400981F00 /* NativeAdTextCell.swift */; };
+		6A1A53EC259147BC00981F00 /* UnifiedNativeAdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A1A53EB259147BC00981F00 /* UnifiedNativeAdView.xib */; };
 		6A4286052400609E0035487A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4286042400609E0035487A /* AppDelegate.swift */; };
 		6A428612240060A00035487A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A428611240060A00035487A /* Assets.xcassets */; };
 		6A428615240060A00035487A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A428613240060A00035487A /* LaunchScreen.storyboard */; };
@@ -60,8 +59,7 @@
 		6A185AD1253D9DC8001542BC /* GameViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = GameViewController.storyboard; path = "/Users/dominikringler/Dom/swifty-ads/SwiftyAdsDemo/SwiftyAdsDemo/Scenes/Game/GameViewController.storyboard"; sourceTree = "<absolute>"; };
 		6A185AD5253D9EE5001542BC /* RootCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCell.swift; sourceTree = "<group>"; };
 		6A1A53DC25912A3E00981F00 /* SwiftyAdsNativeAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsNativeAd.swift; sourceTree = "<group>"; };
-		6A1A53E7259131BF00981F00 /* NativeAdCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeAdCell.swift; sourceTree = "<group>"; };
-		6A1A53E92591323400981F00 /* NativeAdTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeAdTextCell.swift; sourceTree = "<group>"; };
+		6A1A53EB259147BC00981F00 /* UnifiedNativeAdView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UnifiedNativeAdView.xib; sourceTree = "<group>"; };
 		6A4286012400609E0035487A /* SwiftyAdsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyAdsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A4286042400609E0035487A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6A428611240060A00035487A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -206,8 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				6A864BC825901827005D0789 /* NativeAdViewController.swift */,
-				6A1A53E7259131BF00981F00 /* NativeAdCell.swift */,
-				6A1A53E92591323400981F00 /* NativeAdTextCell.swift */,
+				6A1A53EB259147BC00981F00 /* UnifiedNativeAdView.xib */,
 			);
 			path = Native;
 			sourceTree = "<group>";
@@ -330,6 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A4286252400612E0035487A /* GameScene.sks in Resources */,
+				6A1A53EC259147BC00981F00 /* UnifiedNativeAdView.xib in Resources */,
 				6A520CDD253DA1BF0034F065 /* GameViewController.storyboard in Resources */,
 				6A520CDF253DA6170034F065 /* PlainViewController.storyboard in Resources */,
 				6A428612240060A00035487A /* Assets.xcassets in Resources */,
@@ -387,7 +385,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6AAD6A02240BDA4A001F4A7D /* SwiftyAdsMode.swift in Sources */,
-				6A1A53E8259131BF00981F00 /* NativeAdCell.swift in Sources */,
 				6A1A53DD25912A3E00981F00 /* SwiftyAdsNativeAd.swift in Sources */,
 				6AC971DE2401B06700A0BB91 /* SwiftyAdsIntervalTracker.swift in Sources */,
 				6A520CDA253DA1130034F065 /* PlainViewController.swift in Sources */,
@@ -409,7 +406,6 @@
 				6AC971D82401B06700A0BB91 /* SwiftyAdsBanner.swift in Sources */,
 				6A520CE2253DA95C0034F065 /* AdPresenter.swift in Sources */,
 				6A4286052400609E0035487A /* AppDelegate.swift in Sources */,
-				6A1A53EA2591323400981F00 /* NativeAdTextCell.swift in Sources */,
 				6AAD6A00240BDA2B001F4A7D /* SwiftyAdsConsentStyle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
