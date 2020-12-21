@@ -18,7 +18,8 @@ final class TabBarControllerAd: UITabBarController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        
+        tabBar.barTintColor = .white
+
         // Create tab view controllers
         let firstVC = UIViewController()
         firstVC.view.backgroundColor = .blue

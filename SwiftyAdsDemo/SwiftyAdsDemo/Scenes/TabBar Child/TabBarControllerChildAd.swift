@@ -11,6 +11,7 @@ import UIKit
 final class TabBarControllerNoAd: UITabBarController {
     init() {
         super.init(nibName: nil, bundle: nil)
+        tabBar.barTintColor = .white
         
         // Create tab view controllers
         let storyboard = UIStoryboard(name: "PlainViewController", bundle: .main)

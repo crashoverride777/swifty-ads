@@ -58,6 +58,7 @@ final class RootViewController: UITableViewController {
         navigationItem.title = "Root View Controller"
         
         // Setup table view
+        tableView.backgroundColor = .white
         tableView.register(RootCell.self, forCellReuseIdentifier: String(describing: RootCell.self))
         
     }
@@ -97,7 +98,7 @@ final class RootViewController: UITableViewController {
             viewController = storyboard.instantiateInitialViewController()
 
         case .nativeAd:
-            viewController = NativeAdViewController()
+            viewController = NativeAdViewController(swityAds: .shared)
         }
         
         guard let validViewController = viewController else { return }

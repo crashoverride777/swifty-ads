@@ -13,11 +13,12 @@ final class NativeAdViewController: UIViewController {
 
     // MARK: - Properties
 
-    private let swityAds: SwiftyAds = .shared
+    private let swityAds: SwiftyAds
 
     // MARK: - Init
 
-    init() {
+    init(swityAds: SwiftyAds) {
+        self.swityAds = swityAds
         super.init(nibName: nil, bundle: nil)
     }
 
