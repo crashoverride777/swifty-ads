@@ -10,8 +10,12 @@ import GoogleMobileAds
 
 protocol SwiftyAdsNativeAdType: AnyObject {
     func load(from viewController: UIViewController,
-              onReceive: @escaping (GADUnifiedNativeAd) -> Void,
-              onError: @escaping (Error) -> Void)
+              types: [GADAdLoaderAdType],
+              count: Int?,
+              onReceiveUnified: @escaping (GADUnifiedNativeAd) -> Void,
+              onReceiveCustomTemplate: @escaping (GADNativeCustomTemplateAd) -> Void,
+              onReceiveBannerView: @escaping (DFPBannerView) -> Void,
+              onError: @escaping (GADRequestError) -> Void)
 }
 
 final class SwiftyAdsNativeAd: NSObject {
@@ -19,22 +23,27 @@ final class SwiftyAdsNativeAd: NSObject {
     // MARK: - Properties
 
     private let adUnitId: String
-    private let options: [GADMultipleAdsAdLoaderOptions]?
+    private let nativeCustomTemplateIDs: [String]
+    private let validBannerSizes: [NSValue]
     private let request: () -> GADRequest
     private var adLoader: GADAdLoader?
 
-    private var onReceive: ((GADUnifiedNativeAd) -> Void)?
-    private var onError: ((Error) -> Void)?
+    private var onReceiveUnified: ((GADUnifiedNativeAd) -> Void)?
+    private var onReceiveCustomTemplate: ((GADNativeCustomTemplateAd) -> Void)?
+    private var onReceiveBannerView: ((DFPBannerView) -> Void)?
+    private var onError: ((GADRequestError) -> Void)?
 
     private var isLoading = false
 
     // MARK: - Init
 
     init(adUnitId: String,
-         options: [GADMultipleAdsAdLoaderOptions]?,
+         nativeCustomTemplateIDs: [String],
+         validBannerSizes: [NSValue],
          request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
-        self.options = options
+        self.nativeCustomTemplateIDs = nativeCustomTemplateIDs
+        self.validBannerSizes = validBannerSizes
         self.request = request
     }
 }
@@ -44,21 +53,36 @@ final class SwiftyAdsNativeAd: NSObject {
 extension SwiftyAdsNativeAd: SwiftyAdsNativeAdType {
 
     func load(from viewController: UIViewController,
-              onReceive: @escaping (GADUnifiedNativeAd) -> Void,
-              onError: @escaping (Error) -> Void) {
+              types: [GADAdLoaderAdType],
+              count: Int?,
+              onReceiveUnified: @escaping (GADUnifiedNativeAd) -> Void,
+              onReceiveCustomTemplate: @escaping (GADNativeCustomTemplateAd) -> Void,
+              onReceiveBannerView: @escaping (DFPBannerView) -> Void,
+              onError: @escaping (GADRequestError) -> Void) {
         // When reusing a GADAdLoader, make sure you wait for each request to complete
         // before calling loadRequest: again.
         guard !isLoading else { return }
-        self.onReceive = onReceive
+        self.onReceiveUnified = onReceiveUnified
+        self.onReceiveCustomTemplate = onReceiveCustomTemplate
+        self.onReceiveBannerView = onReceiveBannerView
         self.onError = onError
 
         isLoading = true
 
+        // Create multiple ad options
+        var multipleAdsOptions: [GADMultipleAdsAdLoaderOptions]?
+        if let count = count {
+            let loaderOptions = GADMultipleAdsAdLoaderOptions()
+            loaderOptions.numberOfAds = count
+            multipleAdsOptions = [loaderOptions]
+        }
+
+        // Create ad loader
         adLoader = GADAdLoader(
             adUnitID: adUnitId,
             rootViewController: viewController,
-            adTypes: [.unifiedNative],
-            options: options
+            adTypes: types,
+            options: multipleAdsOptions
         )
         adLoader?.delegate = self
 
@@ -74,7 +98,7 @@ extension SwiftyAdsNativeAd: SwiftyAdsNativeAdType {
 extension SwiftyAdsNativeAd: GADUnifiedNativeAdLoaderDelegate {
 
     func adLoader(_ adLoader: GADAdLoader, didReceive nativeAd: GADUnifiedNativeAd) {
-        onReceive?(nativeAd)
+        onReceiveUnified?(nativeAd)
     }
 
     func adLoaderDidFinishLoading(_ adLoader: GADAdLoader) {
@@ -83,8 +107,33 @@ extension SwiftyAdsNativeAd: GADUnifiedNativeAdLoaderDelegate {
     }
 
     func adLoader(_ adLoader: GADAdLoader, didFailToReceiveAdWithError error: GADRequestError) {
-        // The adLoader has finished with an error.
         isLoading = false
         onError?(error)
+    }
+}
+
+// MARK: - GADNativeCustomTemplateAdLoaderDelegate
+
+extension SwiftyAdsNativeAd: GADNativeCustomTemplateAdLoaderDelegate {
+
+    func nativeCustomTemplateIDs(for adLoader: GADAdLoader) -> [String] {
+        nativeCustomTemplateIDs
+    }
+
+    func adLoader(_ adLoader: GADAdLoader, didReceive nativeCustomTemplateAd: GADNativeCustomTemplateAd) {
+        onReceiveCustomTemplate?(nativeCustomTemplateAd)
+    }
+}
+
+// MARK: - DFPBannerAdLoaderDelegate
+
+extension SwiftyAdsNativeAd: DFPBannerAdLoaderDelegate {
+
+    func validBannerSizes(for adLoader: GADAdLoader) -> [NSValue] {
+        validBannerSizes
+    }
+
+    func adLoader(_ adLoader: GADAdLoader, didReceive bannerView: DFPBannerView) {
+        onReceiveBannerView?(bannerView)
     }
 }

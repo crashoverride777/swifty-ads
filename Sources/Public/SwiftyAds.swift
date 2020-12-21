@@ -117,13 +117,13 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter mode: Set the mode of ads, production or debug.
     /// - parameter consentStyle: The style of the consent alert.
-    /// - parameter numberOfNativeAds: The number of ads to use with GADMultipleAdsAdLoaderOptions. Set to nil to use default options.
+    /// - parameter nativeCustomTemplateIDs: The ids used for custom native template ads.
     /// - parameter consentStatusDidChange: A handler that will fire everytime the consent status has changed.
     /// - parameter completion: A handler that will return the current consent status after the consent alert has been dismissed.
     public func setup(with viewController: UIViewController,
                       mode: SwiftyAdsMode,
                       consentStyle: SwiftyAdsConsentStyle,
-                      numberOfNativeAds: Int?,
+                      nativeCustomTemplateIDs: [String]?,
                       consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                       completion: @escaping (SwiftyAdsConsentStatus) -> Void) {
         // Update configuration for selected mode
@@ -158,16 +158,10 @@ extension SwiftyAds: SwiftyAdsType {
             })
         )
 
-        var nativeAdLoaderOptions: [GADMultipleAdsAdLoaderOptions]? = nil
-        if let numberOfNativeAds = numberOfNativeAds {
-            let options = GADMultipleAdsAdLoaderOptions()
-            options.numberOfAds = numberOfNativeAds
-            nativeAdLoaderOptions = [options]
-        }
-
         nativeAd = SwiftyAdsNativeAd(
             adUnitId: configuration.nativeAdUnitId,
-            options: nativeAdLoaderOptions,
+            nativeCustomTemplateIDs: nativeCustomTemplateIDs ?? [],
+            validBannerSizes: [],
             request: ({ [unowned self] in
                 self.requestBuilder.build()
             })
@@ -305,15 +299,33 @@ extension SwiftyAds: SwiftyAdsType {
 
     /// Load native ad
     ///
-    /// - parameter viewController: The view controller that will present the ad.
-    /// - parameter onReceive: The native ad received when load request completed.
-    /// - parameter onError: The error when a load request failed.
+    /// - parameter viewController: The view controller that will load the native ad.
+    /// - parameter count: The number of ads to load via  GADMultipleAdsAdLoaderOptions. Set to nil to use default options or when using mediation.
+    /// - parameter types: The types of native ads to load.
+    /// - parameter onReceive: The received GADUnifiedNativeAd when the load request has completed.
+    /// - parameter onError: The error when the load request has failed.
+
+    /// - Warning:
+    /// Requests for multiple native ads don't currently work for AdMob ad unit IDs that have been configured for mediation.
+    /// Publishers using mediation should avoid using the GADMultipleAdsAdLoaderOptions class when making requests.
     public func loadNativeAd(from viewController: UIViewController,
-                             onReceive: @escaping (GADUnifiedNativeAd) -> Void,
+                             count: Int?,
+                             types: [GADAdLoaderAdType],
+                             onReceiveUnified: @escaping (GADUnifiedNativeAd) -> Void,
+                             onReceiveCustomTemplate: @escaping (GADNativeCustomTemplateAd) -> Void,
+                             onReceiveBannerView: @escaping (DFPBannerView) -> Void,
                              onError: @escaping (Error) -> Void) {
         guard let nativeAd = nativeAd else { return }
         guard hasConsent else { return }
-        nativeAd.load(from: viewController, onReceive: onReceive, onError: onError)
+        nativeAd.load(
+            from: viewController,
+            types: types,
+            count: count,
+            onReceiveUnified: onReceiveUnified,
+            onReceiveCustomTemplate: onReceiveCustomTemplate,
+            onReceiveBannerView: onReceiveBannerView,
+            onError: onError
+        )
     }
 
     /// Disable ads e.g in app purchases
