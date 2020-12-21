@@ -30,6 +30,7 @@ public protocol SwiftyAdsType: AnyObject {
     func setup(with viewController: UIViewController,
                mode: SwiftyAdsMode,
                consentStyle: SwiftyAdsConsentStyle,
+               numberOfNativeAds: Int?,
                consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                completion: @escaping (SwiftyAdsConsentStatus) -> Void)
     func askForConsent(from viewController: UIViewController)

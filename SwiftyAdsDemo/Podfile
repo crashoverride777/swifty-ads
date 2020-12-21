@@ -1,9 +1,11 @@
+source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '11.4'
 
 target 'SwiftyAdsDemo' do
-  use_frameworks!
+   use_frameworks!
 
-  pod 'Google-Mobile-Ads-SDK'
-  pod 'PersonalizedAdConsent'
+
+   pod 'Google-Mobile-Ads-SDK'
+   pod 'PersonalizedAdConsent'
 
 end

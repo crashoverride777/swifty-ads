@@ -10,7 +10,7 @@ import GoogleMobileAds
 
 protocol SwiftyAdsNativeAdType: AnyObject {
     var isReady: Bool { get }
-    func load()
+    func load(from viewController: UIViewController)
     func show(
         onDidRecordImpression: (() -> Void)?,
         onWillPresentScreen: (() -> Void)?,
@@ -27,7 +27,7 @@ final class SwiftyAdsNativeAd: NSObject {
     // MARK: - Properties
 
     private let adUnitId: String
-    private let options: [GADMultipleAdsAdLoaderOptions]
+    private let options: [GADMultipleAdsAdLoaderOptions]?
     private let request: () -> GADRequest
     private var adLoader: GADAdLoader?
     private var nativeAd: GADUnifiedNativeAd?
@@ -45,7 +45,7 @@ final class SwiftyAdsNativeAd: NSObject {
     // MARK: - Init
 
     init(adUnitId: String,
-         options: [GADMultipleAdsAdLoaderOptions],
+         options: [GADMultipleAdsAdLoaderOptions]?,
          request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
         self.options = options
@@ -58,7 +58,7 @@ final class SwiftyAdsNativeAd: NSObject {
 extension SwiftyAdsNativeAd: SwiftyAdsNativeAdType {
 
     var isReady: Bool {
-        nativeAd?.isReady ?? false
+        nativeAd != nil
     }
 
     // While prefetching ads is a great technique, it's important that you don't keep old ads around forever
@@ -73,15 +73,15 @@ extension SwiftyAdsNativeAd: SwiftyAdsNativeAdType {
         adLoader = GADAdLoader(
             adUnitID: adUnitId,
             rootViewController: viewController,
-            adTypes: [kGADAdLoaderAdTypeUnifiedNative],
+            adTypes: [.unifiedNative],
             options: options
         )
-        adLoader.delegate = self
+        adLoader?.delegate = self
 
         // Requests for multiple native ads don't currently work for AdMob ad unit IDs
         // that have been configured for mediation. Publishers using mediation should avoid
         // using the GADMultipleAdsAdLoaderOptions class when making requests.
-        adLoader.load(request())
+        adLoader?.load(request())
     }
 
     func show(
@@ -105,7 +105,6 @@ extension SwiftyAdsNativeAd: SwiftyAdsNativeAdType {
         if let nativeAd = nativeAd {
             return nativeAd
         } else {
-            load()
             return nil
         }
     }

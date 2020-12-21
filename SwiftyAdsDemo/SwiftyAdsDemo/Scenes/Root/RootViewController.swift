@@ -97,8 +97,7 @@ final class RootViewController: UITableViewController {
             viewController = storyboard.instantiateInitialViewController()
 
         case .nativeAd:
-            let storyboard = UIStoryboard(name: "NativeAdViewController", bundle: .main)
-            viewController = storyboard.instantiateInitialViewController()
+            viewController = NativeAdViewController()
         }
         
         guard let validViewController = viewController else { return }

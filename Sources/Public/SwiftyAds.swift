@@ -117,13 +117,13 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter mode: Set the mode of ads, production or debug.
     /// - parameter consentStyle: The style of the consent alert.
-    /// - parameter nativeAdOptions: The GADMultipleAdsAdLoaderOptions when loading native ads.
+    /// - parameter numberOfNativeAds: The number of ads to use with GADMultipleAdsAdLoaderOptions. Set to nil to use default options.
     /// - parameter consentStatusDidChange: A handler that will fire everytime the consent status has changed.
     /// - parameter completion: A handler that will return the current consent status after the consent alert has been dismissed.
     public func setup(with viewController: UIViewController,
                       mode: SwiftyAdsMode,
                       consentStyle: SwiftyAdsConsentStyle,
-                      nativeAdOptions: [GADMultipleAdsAdLoaderOptions] = [],
+                      numberOfNativeAds: Int?,
                       consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                       completion: @escaping (SwiftyAdsConsentStatus) -> Void) {
         // Update configuration for selected mode
@@ -158,9 +158,16 @@ extension SwiftyAds: SwiftyAdsType {
             })
         )
 
+        var nativeAdLoaderOptions: [GADMultipleAdsAdLoaderOptions]? = nil
+        if let numberOfNativeAds = numberOfNativeAds {
+            let options = GADMultipleAdsAdLoaderOptions()
+            options.numberOfAds = numberOfNativeAds
+            nativeAdLoaderOptions = [options]
+        }
+
         nativeAd = SwiftyAdsNativeAd(
             adUnitId: configuration.nativeAdUnitId,
-            options: nativeAdOptions,
+            options: nativeAdLoaderOptions,
             request: ({ [unowned self] in
                 self.requestBuilder.build()
             })
@@ -179,7 +186,6 @@ extension SwiftyAds: SwiftyAdsType {
             func loadAds() {
                 if !self.isDisabled {
                     self.interstitialAd?.load()
-                    self.nativeAd?.load()
                 }
                 self.rewardedAd?.load()
             }
@@ -287,7 +293,6 @@ extension SwiftyAds: SwiftyAdsType {
                                   onReward: @escaping (Int) -> Void) {
         guard let rewardedAd = rewardedAd else { return }
         guard hasConsent else { return }
-        
         rewardedAd.show(
             from: viewController,
             onOpen: onOpen,
@@ -299,11 +304,12 @@ extension SwiftyAds: SwiftyAdsType {
     }
 
     /// Show native ad
-    public func showNativeAd() {
+    ///
+    /// - parameter viewController: The view controller that will present the ad.
+    public func showNativeAd(from viewController: UIViewController) {
         guard let nativeAd = nativeAd else { return }
         guard hasConsent else { return }
-
-        nativeAd.load()
+        nativeAd.load(from: viewController)
     }
 
     /// Disable ads e.g in app purchases
