@@ -117,13 +117,11 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter mode: Set the mode of ads, production or debug.
     /// - parameter consentStyle: The style of the consent alert.
-    /// - parameter nativeCustomTemplateIDs: The ids used for custom native template ads.
     /// - parameter consentStatusDidChange: A handler that will fire everytime the consent status has changed.
     /// - parameter completion: A handler that will return the current consent status after the consent alert has been dismissed.
     public func setup(with viewController: UIViewController,
                       mode: SwiftyAdsMode,
                       consentStyle: SwiftyAdsConsentStyle,
-                      nativeCustomTemplateIDs: [String]?,
                       consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                       completion: @escaping (SwiftyAdsConsentStatus) -> Void) {
         // Update configuration for selected mode
@@ -160,8 +158,6 @@ extension SwiftyAds: SwiftyAdsType {
 
         nativeAd = SwiftyAdsNativeAd(
             adUnitId: configuration.nativeAdUnitId,
-            nativeCustomTemplateIDs: nativeCustomTemplateIDs ?? [],
-            validBannerSizes: [],
             request: ({ [unowned self] in
                 self.requestBuilder.build()
             })
@@ -301,7 +297,6 @@ extension SwiftyAds: SwiftyAdsType {
     ///
     /// - parameter viewController: The view controller that will load the native ad.
     /// - parameter count: The number of ads to load via  GADMultipleAdsAdLoaderOptions. Set to nil to use default options or when using mediation.
-    /// - parameter types: The types of native ads to load.
     /// - parameter onReceive: The received GADUnifiedNativeAd when the load request has completed.
     /// - parameter onError: The error when the load request has failed.
 
@@ -310,20 +305,14 @@ extension SwiftyAds: SwiftyAdsType {
     /// Publishers using mediation should avoid using the GADMultipleAdsAdLoaderOptions class when making requests.
     public func loadNativeAd(from viewController: UIViewController,
                              count: Int?,
-                             types: [GADAdLoaderAdType],
-                             onReceiveUnified: @escaping (GADUnifiedNativeAd) -> Void,
-                             onReceiveCustomTemplate: @escaping (GADNativeCustomTemplateAd) -> Void,
-                             onReceiveBannerView: @escaping (DFPBannerView) -> Void,
+                             onReceive: @escaping (GADUnifiedNativeAd) -> Void,
                              onError: @escaping (Error) -> Void) {
         guard let nativeAd = nativeAd else { return }
         guard hasConsent else { return }
         nativeAd.load(
             from: viewController,
-            types: types,
             count: count,
-            onReceiveUnified: onReceiveUnified,
-            onReceiveCustomTemplate: onReceiveCustomTemplate,
-            onReceiveBannerView: onReceiveBannerView,
+            onReceive: onReceive,
             onError: onError
         )
     }

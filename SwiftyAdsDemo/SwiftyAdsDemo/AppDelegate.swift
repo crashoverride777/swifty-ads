@@ -53,7 +53,6 @@ private extension AppDelegate {
             with: rootViewController,
             mode: mode,
             consentStyle: .custom(content: customConsentContent),
-            nativeCustomTemplateIDs: [],
             consentStatusDidChange: ({ consentStatus in
                 print("SwiftyAds did change consent status to \(consentStatus)")
                 NotificationCenter.default.post(name: .adConsentStatusDidChange, object: nil)

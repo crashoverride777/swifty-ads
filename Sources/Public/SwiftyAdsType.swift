@@ -31,7 +31,6 @@ public protocol SwiftyAdsType: AnyObject {
     func setup(with viewController: UIViewController,
                mode: SwiftyAdsMode,
                consentStyle: SwiftyAdsConsentStyle,
-               nativeCustomTemplateIDs: [String]?,
                consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                completion: @escaping (SwiftyAdsConsentStatus) -> Void)
     func askForConsent(from viewController: UIViewController)
@@ -57,10 +56,7 @@ public protocol SwiftyAdsType: AnyObject {
                            onReward: @escaping (Int) -> Void)
     func loadNativeAd(from viewController: UIViewController,
                       count: Int?,
-                      types: [GADAdLoaderAdType],
-                      onReceiveUnified: @escaping (GADUnifiedNativeAd) -> Void,
-                      onReceiveCustomTemplate: @escaping (GADNativeCustomTemplateAd) -> Void,
-                      onReceiveBannerView: @escaping (DFPBannerView) -> Void,
+                      onReceive: @escaping (GADUnifiedNativeAd) -> Void,
                       onError: @escaping (Error) -> Void)
     func disable()
 }

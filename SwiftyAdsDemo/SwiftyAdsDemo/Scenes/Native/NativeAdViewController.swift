@@ -33,12 +33,9 @@ final class NativeAdViewController: UIViewController {
         swityAds.loadNativeAd(
             from: self,
             count: nil,
-            types: [.unifiedNative],//, .dfpBanner, .nativeCustomTemplate],
-            onReceiveUnified: { [weak self] nativeAd in
+            onReceive: { [weak self] nativeAd in
                 self?.showUnifiedNativeAd(nativeAd)
             },
-            onReceiveCustomTemplate: { _ in },
-            onReceiveBannerView: { _ in },
             onError: { error in
                 print(error)
             }
