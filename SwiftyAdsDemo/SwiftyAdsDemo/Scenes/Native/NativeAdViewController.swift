@@ -30,11 +30,12 @@ final class NativeAdViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+
         swityAds.loadNativeAd(
             from: self,
             count: nil,
             onReceive: { [weak self] nativeAd in
-                self?.showUnifiedNativeAd(nativeAd)
+                self?.showNativeAd(nativeAd)
             },
             onError: { error in
                 print(error)
@@ -54,7 +55,7 @@ extension NativeAdViewController: GADUnifiedNativeAdDelegate {
 
 private extension NativeAdViewController {
 
-    func showUnifiedNativeAd(_ nativeAd: GADUnifiedNativeAd) {
+    func showNativeAd(_ nativeAd: GADUnifiedNativeAd) {
         // Create and place ad in view hierarchy.
         let nibView = Bundle.main.loadNibNamed("UnifiedNativeAdView", owner: nil, options: nil)?.first
 

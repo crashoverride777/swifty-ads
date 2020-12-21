@@ -204,6 +204,31 @@ SwiftyAds.shared.showRewardedVideo(
 )
 ```
 
+### Native ads
+
+To present a native ad simply call the load method. Once a native ad has been received you can update your custom ad view with the native ad content .
+
+You can set the amount of ads to load (GADMultipleAdsAdLoaderOptions) via the count parameter. Set to nil to use default options.
+
+Requests for multiple native ads don't currently work for AdMob ad unit IDs that have been configured for mediation. Publishers using mediation should avoid using the GADMultipleAdsAdLoaderOptions class when making requests. In that case also set count to nil.
+
+
+```swift
+SwiftyAds.shared.loadNativeAd(
+    from: self,
+    count: nil,
+    onReceive: { nativeAd in
+        // show native ad (see demo app or google documentation)
+    },
+    onError: { error in
+        // handle error
+    }
+)
+```
+
+Note: While prefetching ads is a great technique, it's important that you don't keep old native ads around forever without displaying them. Any native ad objects that have been held without display for longer than an hour should be discarded and replaced with new ads from a new request.
+
+
 ### Booleans
 
 ```swift

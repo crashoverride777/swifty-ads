@@ -70,9 +70,7 @@ extension SwiftyAdsNativeAd: SwiftyAdsNativeAdType {
         )
         adLoader?.delegate = self
 
-        // Requests for multiple native ads don't currently work for AdMob ad unit IDs
-        // that have been configured for mediation. Publishers using mediation should avoid
-        // using the GADMultipleAdsAdLoaderOptions class when making requests.
+        // Load ad with request
         adLoader?.load(request())
     }
 }

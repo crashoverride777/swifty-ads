@@ -302,7 +302,7 @@ extension SwiftyAds: SwiftyAdsType {
 
     /// - Warning:
     /// Requests for multiple native ads don't currently work for AdMob ad unit IDs that have been configured for mediation.
-    /// Publishers using mediation should avoid using the GADMultipleAdsAdLoaderOptions class when making requests.
+    /// Publishers using mediation should avoid using the GADMultipleAdsAdLoaderOptions class when making requests i.e. set count to nil.
     public func loadNativeAd(from viewController: UIViewController,
                              count: Int?,
                              onReceive: @escaping (GADUnifiedNativeAd) -> Void,
