@@ -14,7 +14,6 @@ final class NativeAdViewController: UIViewController {
     // MARK: - Properties
 
     private let swityAds: SwiftyAds = .shared
-    private var nativeAdView: GADUnifiedNativeAdView?
 
     // MARK: - Init
 
@@ -43,6 +42,13 @@ final class NativeAdViewController: UIViewController {
     }
 }
 
+// MARK: - GADUnifiedNativeAdDelegate
+
+extension NativeAdViewController: GADUnifiedNativeAdDelegate {
+
+
+}
+
 // MARK: - Private Methods
 
 private extension NativeAdViewController {
@@ -50,12 +56,11 @@ private extension NativeAdViewController {
     func showNativeAd(_ nativeAd: GADUnifiedNativeAd) {
         // Create and place ad in view hierarchy.
         let nibView = Bundle.main.loadNibNamed("UnifiedNativeAdView", owner: nil, options: nil)?.first
-        self.nativeAdView?.removeFromSuperview()
 
         guard let nativeAdView = nibView as? GADUnifiedNativeAdView else {
             return
         }
-        self.nativeAdView = nativeAdView
+        nativeAd.delegate = self
 
         // Add native ad
         view.addSubview(nativeAdView)
@@ -63,10 +68,10 @@ private extension NativeAdViewController {
         NSLayoutConstraint.activate([
             nativeAdView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             nativeAdView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
-            nativeAdView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor),
-            nativeAdView.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor),
-            nativeAdView.leadingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leadingAnchor),
-            nativeAdView.trailingAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.trailingAnchor)
+            nativeAdView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            nativeAdView.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            nativeAdView.leadingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            nativeAdView.trailingAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
         
         // Set the mediaContent on the GADMediaView to populate it with available
