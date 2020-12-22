@@ -45,8 +45,6 @@ extension SwiftyAdsNativeAd: SwiftyAdsNativeAdType {
               count: Int?,
               onReceive: @escaping (GADUnifiedNativeAd) -> Void,
               onError: @escaping (GADRequestError) -> Void) {
-        // When reusing a GADAdLoader, make sure you wait for each request to complete
-        // before calling loadRequest: again.
         guard !isLoading else { return }
         self.onReceive = onReceive
         self.onError = onError
