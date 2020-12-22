@@ -2,6 +2,10 @@
 [![Platform](https://img.shields.io/cocoapods/p/SwiftyAds.svg?style=flat)]()
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/SwiftyAds.svg)](https://img.shields.io/cocoapods/v/SwiftyAds.svg)
 
+# SwiftyAds
+
+SwiftyAds is a Swift library to display banner, interstitial and rewarded video ads from AdMob and supported mediation networks.
+
 # Note
 
 - Currently having trouble getting cocoa pods to push newer versions to due me being on holiday and only having my work laptop with me that blocks cocoa pods
@@ -14,10 +18,6 @@ on my personal projects.
 - iOS 14 app tracking transparency 
 - Swift package support
 - Multiple ad unit ids
-
-# SwiftyAds
-
-SwiftyAds is a Swift library to display banner, interstitial and rewarded video ads from AdMob and supported mediation networks.
 
 ## Requirements
 
