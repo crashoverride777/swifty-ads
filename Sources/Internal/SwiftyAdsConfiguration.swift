@@ -23,10 +23,10 @@
 import Foundation
 
 struct SwiftyAdsConfiguration: Decodable {
-    let bannerAdUnitId: String
-    let interstitialAdUnitId: String
-    let rewardedVideoAdUnitId: String
-    let nativeAdUnitId: String
+    let bannerAdUnitId: String?
+    let interstitialAdUnitId: String?
+    let rewardedVideoAdUnitId: String?
+    let nativeAdUnitId: String?
     let privacyPolicyURL: String
     let isTaggedForUnderAgeOfConsent: Bool
     let mediationNetworks: [String]
@@ -37,7 +37,9 @@ struct SwiftyAdsConfiguration: Decodable {
 extension SwiftyAdsConfiguration {
     
     var ids: [String] {
-        [bannerAdUnitId, interstitialAdUnitId, rewardedVideoAdUnitId].filter { !$0.isEmpty }
+        [bannerAdUnitId, interstitialAdUnitId, rewardedVideoAdUnitId, nativeAdUnitId]
+            .compactMap { $0 }
+            .filter { !$0.isEmpty }
     }
     
     var adNetworks: String {
@@ -61,7 +63,7 @@ extension SwiftyAdsConfiguration {
             let decoder = PropertyListDecoder()
             return try decoder.decode(SwiftyAdsConfiguration.self, from: data)
         } catch {
-            fatalError("SwiftyAdsConfiguration could not decode SwiftyAds.plist, please ensure all fields are correct.")
+            fatalError("SwiftyAdsConfiguration decoding SwiftyAds.plist error \(error)")
         }
     }
     

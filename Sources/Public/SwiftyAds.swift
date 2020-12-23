@@ -135,33 +135,41 @@ extension SwiftyAds: SwiftyAdsType {
         }
         
         // Create ads
-        bannerAd = SwiftyAdsBanner(
-            adUnitId: configuration.bannerAdUnitId,
-            request: ({ [unowned self] in
-                self.requestBuilder.build()
-            })
-        )
-        
-        interstitialAd = SwiftyAdsInterstitial(
-            adUnitId: configuration.interstitialAdUnitId,
-            request: ({ [unowned self] in
-                self.requestBuilder.build()
-            })
-        )
-        
-        rewardedAd = SwiftyAdsRewarded(
-            adUnitId: configuration.rewardedVideoAdUnitId,
-            request: ({ [unowned self] in
-                self.requestBuilder.build()
-            })
-        )
+        if let bannerAdUnitId = configuration.bannerAdUnitId {
+            bannerAd = SwiftyAdsBanner(
+                adUnitId: bannerAdUnitId,
+                request: ({ [unowned self] in
+                    self.requestBuilder.build()
+                })
+            )
+        }
 
-        nativeAd = SwiftyAdsNativeAd(
-            adUnitId: configuration.nativeAdUnitId,
-            request: ({ [unowned self] in
-                self.requestBuilder.build()
-            })
-        )
+        if let interstitialAdUnitId = configuration.interstitialAdUnitId {
+            interstitialAd = SwiftyAdsInterstitial(
+                adUnitId: interstitialAdUnitId,
+                request: ({ [unowned self] in
+                    self.requestBuilder.build()
+                })
+            )
+        }
+
+        if let rewardedVideoAdUnitId = configuration.rewardedVideoAdUnitId {
+            rewardedAd = SwiftyAdsRewarded(
+                adUnitId: rewardedVideoAdUnitId,
+                request: ({ [unowned self] in
+                    self.requestBuilder.build()
+                })
+            )
+        }
+
+        if let nativeAdUnitId = configuration.nativeAdUnitId {
+            nativeAd = SwiftyAdsNativeAd(
+                adUnitId: nativeAdUnitId,
+                request: ({ [unowned self] in
+                    self.requestBuilder.build()
+                })
+            )
+        }
      
         // Create consent manager and make request
         consentManager = SwiftyAdsConsentManager(
