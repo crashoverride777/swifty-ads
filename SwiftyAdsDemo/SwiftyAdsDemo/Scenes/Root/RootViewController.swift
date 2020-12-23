@@ -55,7 +55,7 @@ final class RootViewController: UITableViewController {
         super.viewDidLoad()
         
         // Setup navigation item
-        navigationItem.title = "Root View Controller"
+        navigationItem.title = "Swifty Ads Demo"
         
         // Setup table view
         tableView.backgroundColor = .white
