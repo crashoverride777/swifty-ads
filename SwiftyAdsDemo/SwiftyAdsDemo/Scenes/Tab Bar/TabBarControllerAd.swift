@@ -12,11 +12,12 @@ final class TabBarControllerAd: UITabBarController {
     
     // MARK: - Properties
     
-    private let swiftyAds: SwiftyAdsType = SwiftyAds.shared
+    private let swiftyAds: SwiftyAdsType
     
-    // MARK: - Init
+    // MARK: - Initialization
     
-    init() {
+    init(swiftyAds: SwiftyAdsType) {
+        self.swiftyAds = swiftyAds
         super.init(nibName: nil, bundle: nil)
         tabBar.barTintColor = .white
 
@@ -41,7 +42,7 @@ final class TabBarControllerAd: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        AdPresenter.showBanner(from: self)
+        AdPresenter.showBanner(from: self, swiftyAds: swiftyAds)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

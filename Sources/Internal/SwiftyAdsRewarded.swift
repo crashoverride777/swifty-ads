@@ -1,6 +1,6 @@
 //    The MIT License (MIT)
 //
-//    Copyright (c) 2015-2020 Dominik Ringler
+//    Copyright (c) 2015-2021 Dominik Ringler
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy
 //    of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@ final class SwiftyAdsRewarded: NSObject {
     
     private var rewardedAd: GADRewardedAd?
     
-    // MARK: - Init
+    // MARK: - Initialization
     
     init(adUnitId: String, request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
@@ -104,6 +104,7 @@ extension SwiftyAdsRewarded: GADRewardedAdDelegate {
     
     func rewardedAdDidDismiss(_ rewardedAd: GADRewardedAd) {
         onClose?()
+        // Load the next ad so its ready for displaying
         load()
     }
 

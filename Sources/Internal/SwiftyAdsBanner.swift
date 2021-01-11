@@ -1,6 +1,6 @@
 //    The MIT License (MIT)
 //
-//    Copyright (c) 2015-2020 Dominik Ringler
+//    Copyright (c) 2015-2021 Dominik Ringler
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy
 //    of this software and associated documentation files (the "Software"), to deal
@@ -22,14 +22,14 @@
 
 import GoogleMobileAds
 
-enum SwiftyAdsBannerPositition {
+enum BannerAdPositition {
     case top(ignoresSafeArea: Bool)
     case bottom(ignoresSafeArea: Bool)
 }
 
 protocol SwiftyAdsBannerType: AnyObject {
     func show(from viewController: UIViewController,
-              at position: SwiftyAdsBannerPositition,
+              at position: BannerAdPositition,
               isLandscape: Bool,
               animationDuration: TimeInterval,
               onOpen: (() -> Void)?,
@@ -50,7 +50,7 @@ final class SwiftyAdsBanner: NSObject {
     private var onError: ((Error) -> Void)?
     
     private var bannerView: GADBannerView?
-    private var position: SwiftyAdsBannerPositition = .bottom(ignoresSafeArea: false)
+    private var position: BannerAdPositition = .bottom(ignoresSafeArea: false)
     private var animationDuration: TimeInterval = 1.4
     private var bannerViewConstraint: NSLayoutConstraint?
     private var animator: UIViewPropertyAnimator?
@@ -71,7 +71,7 @@ final class SwiftyAdsBanner: NSObject {
         }
     }
     
-    // MARK: - Init
+    // MARK: - Initialization
     
     init(adUnitId: String, request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
@@ -85,7 +85,7 @@ final class SwiftyAdsBanner: NSObject {
 extension SwiftyAdsBanner: SwiftyAdsBannerType {
     
     func show(from viewController: UIViewController,
-              at position: SwiftyAdsBannerPositition,
+              at position: BannerAdPositition,
               isLandscape: Bool,
               animationDuration: TimeInterval,
               onOpen: (() -> Void)?,
@@ -229,7 +229,7 @@ private extension SwiftyAdsBanner {
     
     func animateToOffScreenPosition(_ bannerAd: GADBannerView,
                                     from viewController: UIViewController?,
-                                    position: SwiftyAdsBannerPositition,
+                                    position: BannerAdPositition,
                                     animated: Bool = true,
                                     completion: (() -> Void)? = nil) {
         // We can only animate the banner to its off-screen position with a valid view controller

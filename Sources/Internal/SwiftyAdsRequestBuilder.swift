@@ -1,6 +1,6 @@
 //    The MIT License (MIT)
 //
-//    Copyright (c) 2015-2020 Dominik Ringler
+//    Copyright (c) 2015-2021 Dominik Ringler
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy
 //    of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ final class SwiftyAdsRequestBuilder {
     private let isNonPersonalizedOnly: Bool
     private let isTaggedForUnderAgeOfConsent: Bool
     
-    // MARK: - Init
+    // MARK: - Initialization
     
     init(isGDPRRequired: Bool,
          isNonPersonalizedOnly: Bool,

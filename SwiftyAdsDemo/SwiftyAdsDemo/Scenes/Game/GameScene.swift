@@ -12,7 +12,7 @@ class GameScene: SKScene {
     
     // MARK: - Properties
     
-    private var swiftyAds: SwiftyAdsType = SwiftyAds.shared
+    private var swiftyAds: SwiftyAdsType!
     
     private lazy var interstitialLabel: SKLabelNode = self.childNode(withName: "interstitialLabel") as! SKLabelNode
     private lazy var rewardedLabel: SKLabelNode = self.childNode(withName: "rewardedLabel") as! SKLabelNode
@@ -38,9 +38,9 @@ class GameScene: SKScene {
             
             switch node {
             case interstitialLabel:
-                AdPresenter.showInterstitialAd(from: viewController)
+                AdPresenter.showInterstitialAd(from: viewController, swiftyAds: swiftyAds)
             case rewardedLabel:
-                AdPresenter.showRewardedAd(from: viewController, onReward: { rewardAmount in
+                AdPresenter.showRewardedAd(from: viewController, swiftyAds: swiftyAds, onReward: { rewardAmount in
                     // update coins, diamonds etc
                 })
             case disableLabel:
@@ -60,10 +60,17 @@ class GameScene: SKScene {
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+
+    }
+
+    // MARK: - Public Methods
+
+    func configure(swiftyAds: SwiftyAdsType) {
+        self.swiftyAds = swiftyAds
     }
 }
  
-// MARK: - Private
+// MARK: - Private Methods
  
 private extension GameScene {
     

@@ -32,14 +32,14 @@ PODS:
   - nanopb/decode (2.30906.0)
   - nanopb/encode (2.30906.0)
   - PersonalizedAdConsent (1.0.5)
-  - PromisesObjC (1.2.11)
+  - PromisesObjC (1.2.12)
 
 DEPENDENCIES:
   - Google-Mobile-Ads-SDK
   - PersonalizedAdConsent
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
     - GoogleUserMessagingPlatform
@@ -55,8 +55,8 @@ SPEC CHECKSUMS:
   GoogleUtilities: 3dc4ff0d5e4840e2fa8eef0889620e8c33d4218c
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   PersonalizedAdConsent: dbecabb3467df967c16d9cebc2ef4a8890e4bbd8
-  PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
+  PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
 
-PODFILE CHECKSUM: ed2fea3e235b7153672e62e77870fb1cdd1f9ffb
+PODFILE CHECKSUM: 679651cc7b0996c064fa96ce00c643e06921d0b4
 
 COCOAPODS: 1.10.0

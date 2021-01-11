@@ -1,6 +1,6 @@
 //    The MIT License (MIT)
 //
-//    Copyright (c) 2015-2020 Dominik Ringler
+//    Copyright (c) 2015-2021 Dominik Ringler
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy
 //    of this software and associated documentation files (the "Software"), to deal
@@ -30,12 +30,7 @@ struct SwiftyAdsConfiguration: Decodable {
     let privacyPolicyURL: String
     let isTaggedForUnderAgeOfConsent: Bool
     let mediationNetworks: [String]
-}
 
-// MARK: - Computed
-
-extension SwiftyAdsConfiguration {
-    
     var ids: [String] {
         [bannerAdUnitId, interstitialAdUnitId, rewardedVideoAdUnitId, nativeAdUnitId]
             .compactMap { $0 }

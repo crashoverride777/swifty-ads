@@ -15,8 +15,8 @@ final class PlainViewController: UIViewController {
     @IBOutlet private weak var consentFormButton: UIButton!
     
     // MARK: - Properties
-    
-    private let swiftyAds: SwiftyAdsType = SwiftyAds.shared
+
+    private var swiftyAds: SwiftyAdsType!
     
     // MARK: - Life Cycle
     
@@ -25,7 +25,7 @@ final class PlainViewController: UIViewController {
         view.backgroundColor = .blue
         refresh()
         NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .adConsentStatusDidChange, object: nil)
-        AdPresenter.showBanner(from: self)
+        AdPresenter.showBanner(from: self, swiftyAds: swiftyAds)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -34,18 +34,24 @@ final class PlainViewController: UIViewController {
             self.swiftyAds.updateBannerForOrientationChange(isLandscape: size.width > size.height)
         })
     }
+
+    // MARK: - Public Methods
+
+    func configure(swiftyAds: SwiftyAdsType) {
+        self.swiftyAds = swiftyAds
+    }
 }
 
-// MARK: - Private
+// MARK: - Private Methods
 
 private extension PlainViewController {
     
     @IBAction func showInterstitialAdButtonPressed(_ sender: Any) {
-        AdPresenter.showInterstitialAd(from: self)
+        AdPresenter.showInterstitialAd(from: self, swiftyAds: swiftyAds)
     }
     
     @IBAction func showRewardedAdButtonPressed(_ sender: Any) {
-        AdPresenter.showRewardedAd(from: self, onReward: { rewardAmount in
+        AdPresenter.showRewardedAd(from: self, swiftyAds: swiftyAds, onReward: { rewardAmount in
             // update coins, diamonds etc
         })
     }

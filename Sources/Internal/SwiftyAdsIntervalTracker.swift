@@ -1,6 +1,6 @@
 //    The MIT License (MIT)
 //
-//    Copyright (c) 2015-2020 Dominik Ringler
+//    Copyright (c) 2015-2021 Dominik Ringler
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy
 //    of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
 
 import Foundation
 
-protocol SwiftyAdsIntervalTrackerType: AnyObject {
+protocol IntervalTracker: AnyObject {
     func canShow(forInterval interval: Int?) -> Bool
 }
 
@@ -30,7 +30,7 @@ final class SwiftyAdsIntervalTracker {
     private var intervalCounter = 0
 }
 
-extension SwiftyAdsIntervalTracker: SwiftyAdsIntervalTrackerType {
+extension SwiftyAdsIntervalTracker: IntervalTracker {
     
     func canShow(forInterval interval: Int?) -> Bool {
         guard let interval = interval else {

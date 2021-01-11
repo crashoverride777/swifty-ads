@@ -1,4 +1,3 @@
-source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '11.4'
 
 target 'SwiftyAdsDemo' do

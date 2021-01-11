@@ -36,12 +36,14 @@ final class RootViewController: UITableViewController {
     }
     
     // MARK: - Properties
-    
+
+    private let swiftyAds: SwiftyAdsType
     private let rows = Row.allCases
     
-    // MARK: - Init
+    // MARK: - Initialization
     
-    init() {
+    init(swiftyAds: SwiftyAdsType) {
+        self.swiftyAds = swiftyAds
         super.init(style: .grouped)
     }
     
@@ -85,20 +87,24 @@ final class RootViewController: UITableViewController {
         switch row {
         case .viewController:
             let storyboard = UIStoryboard(name: "PlainViewController", bundle: .main)
-            viewController = storyboard.instantiateInitialViewController()
-        
+            let plainViewController = storyboard.instantiateInitialViewController() as! PlainViewController
+            plainViewController.configure(swiftyAds: swiftyAds)
+            viewController = plainViewController
+
         case .viewControllerInsideTabBar:
-            viewController = TabBarControllerNoAd()
+            viewController = TabBarControllerNoAd(swiftyAds: swiftyAds)
         
         case .tabBarController:
-            viewController = TabBarControllerAd()
+            viewController = TabBarControllerAd(swiftyAds: swiftyAds)
         
         case .spriteKitScene:
             let storyboard = UIStoryboard(name: "GameViewController", bundle: .main)
-            viewController = storyboard.instantiateInitialViewController()
+            let gameViewController = storyboard.instantiateInitialViewController() as! GameViewController
+            gameViewController.configure(swiftyAds: swiftyAds)
+            viewController = gameViewController
 
         case .nativeAd:
-            viewController = NativeAdViewController(swityAds: .shared)
+            viewController = NativeAdViewController(swityAds: swiftyAds)
         }
         
         guard let validViewController = viewController else { return }

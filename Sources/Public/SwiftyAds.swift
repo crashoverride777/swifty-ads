@@ -1,6 +1,6 @@
 //    The MIT License (MIT)
 //
-//    Copyright (c) 2015-2020 Dominik Ringler
+//    Copyright (c) 2015-2021 Dominik Ringler
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy
 //    of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@ public final class SwiftyAds: NSObject {
     // MARK: - Properties
     
     private let mobileAds: GADMobileAds
-    private let intervalTracker: SwiftyAdsIntervalTrackerType
+    private let intervalTracker: IntervalTracker
     
     private var bannerAd: SwiftyAdsBannerType?
     private var interstitialAd: SwiftyAdsInterstitialType?
@@ -56,7 +56,7 @@ public final class SwiftyAds: NSObject {
         )
     }
     
-    // MARK: - Init
+    // MARK: - Initialization
     
     private override init() {
         mobileAds = .sharedInstance()
@@ -66,12 +66,12 @@ public final class SwiftyAds: NSObject {
     }
     
     init(mobileAds: GADMobileAds,
-         bannerAd: SwiftyAdsBannerType,
-         interstitialAd: SwiftyAdsInterstitialType,
-         rewardedAd: SwiftyAdsRewardedType,
-         nativeAd: SwiftyAdsNativeAdType,
+         bannerAd: SwiftyAdsBannerType?,
+         interstitialAd: SwiftyAdsInterstitialType?,
+         rewardedAd: SwiftyAdsRewardedType?,
+         nativeAd: SwiftyAdsNativeAdType?,
          consentManager: SwiftyAdsConsentManagerType,
-         intervalTracker: SwiftyAdsIntervalTrackerType) {
+         intervalTracker: IntervalTracker) {
         self.mobileAds = mobileAds
         self.bannerAd = bannerAd
         self.interstitialAd = interstitialAd
@@ -82,7 +82,7 @@ public final class SwiftyAds: NSObject {
     }
 }
 
-// MARK: - SwiftyAdType
+// MARK: - SwiftyAdsType
 
 extension SwiftyAds: SwiftyAdsType {
     

@@ -18,9 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     private let swiftyAds: SwiftyAdsType = SwiftyAds.shared
+    private let notificationCenter: NotificationCenter = .default
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let rootViewController = RootViewController()
+        let rootViewController = RootViewController(swiftyAds: swiftyAds)
         let navigationController = UINavigationController(rootViewController: rootViewController)
         navigationController.navigationBar.barTintColor = .white
 
@@ -34,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-// MARK: - Private
+// MARK: - Private Methods
 
 private extension AppDelegate {
     
@@ -56,12 +57,11 @@ private extension AppDelegate {
             with: rootViewController,
             mode: mode,
             consentStyle: .custom(content: customConsentContent),
-            consentStatusDidChange: ({ consentStatus in
+            consentStatusDidChange: ({ [weak self] consentStatus in
+                guard let self = self else { return }
                 print("SwiftyAds did change consent status to \(consentStatus)")
-                NotificationCenter.default.post(name: .adConsentStatusDidChange, object: nil)
-                if consentStatus != .notRequired {
-                    // update mediation networks if required or preload ads
-                }
+                self.notificationCenter.post(name: .adConsentStatusDidChange, object: nil)
+                // update mediation networks if required or preload ads
             }),
             completion: ({ consentStatus in
                 print("SwiftyAds did finish setup with consent status \(consentStatus)")

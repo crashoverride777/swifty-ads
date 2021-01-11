@@ -29,7 +29,7 @@ final class SwiftyAdsNativeAd: NSObject {
 
     private var isLoading = false
 
-    // MARK: - Init
+    // MARK: - Initialization
 
     init(adUnitId: String, request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
@@ -48,7 +48,6 @@ extension SwiftyAdsNativeAd: SwiftyAdsNativeAdType {
         guard !isLoading else { return }
         self.onReceive = onReceive
         self.onError = onError
-
         isLoading = true
 
         // Create multiple ad options
@@ -59,13 +58,15 @@ extension SwiftyAdsNativeAd: SwiftyAdsNativeAdType {
             multipleAdsOptions = [loaderOptions]
         }
 
-        // Create ad loader
+        // Create GADAdLoader
         adLoader = GADAdLoader(
             adUnitID: adUnitId,
             rootViewController: viewController,
             adTypes: [.unifiedNative],
             options: multipleAdsOptions
         )
+
+        // Set the GADAdLoader delegate
         adLoader?.delegate = self
 
         // Load ad with request

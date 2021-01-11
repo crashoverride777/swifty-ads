@@ -9,22 +9,30 @@
 import UIKit
 
 final class TabBarControllerNoAd: UITabBarController {
-    init() {
+
+    // MARK: - Properties
+
+    private let swiftyAds: SwiftyAdsType
+
+    // MARK: - Initialization
+
+    init(swiftyAds: SwiftyAdsType) {
+        self.swiftyAds = swiftyAds
         super.init(nibName: nil, bundle: nil)
         tabBar.barTintColor = .white
         
         // Create tab view controllers
         let storyboard = UIStoryboard(name: "PlainViewController", bundle: .main)
-        let firstVC = storyboard.instantiateInitialViewController()!
-        firstVC.view.backgroundColor = .blue
-        firstVC.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 0)
+        let plainVC = storyboard.instantiateInitialViewController() as! PlainViewController
+        plainVC.configure(swiftyAds: swiftyAds)
+        plainVC.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 0)
         
         let secondVC = UIViewController()
         secondVC.view.backgroundColor = .red
         secondVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
         
         // Set view controllers
-        viewControllers = [firstVC, secondVC]
+        viewControllers = [plainVC, secondVC]
     }
     
     required init?(coder: NSCoder) {
