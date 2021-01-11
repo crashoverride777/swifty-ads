@@ -87,7 +87,7 @@ public final class SwiftyAds: NSObject {
 extension SwiftyAds: SwiftyAdsType {
     
     /// Check if user has given consent e.g to hide rewarded video button
-    /// Also returns true if used is outside EEA and is therefore not required to provide consent
+    /// Also returns true if user is outside EEA and is therefore not required to provide consent
     public var hasConsent: Bool {
         consentManager.status.hasConsent
     }
@@ -115,18 +115,18 @@ extension SwiftyAds: SwiftyAdsType {
     /// Setup swift ad
     ///
     /// - parameter viewController: The view controller that will present the consent alert if needed.
-    /// - parameter mode: Set the mode of ads, production or debug.
+    /// - parameter environment: Sets the environment fof swifty ads to display ads.
     /// - parameter consentStyle: The style of the consent alert.
     /// - parameter consentStatusDidChange: A handler that will fire everytime the consent status has changed.
     /// - parameter completion: A handler that will return the current consent status after the consent alert has been dismissed.
     public func setup(with viewController: UIViewController,
-                      mode: SwiftyAdsMode,
+                      environment: SwiftyAdsEnvironment,
                       consentStyle: SwiftyAdsConsentStyle,
                       consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                       completion: @escaping (SwiftyAdsConsentStatus) -> Void) {
-        // Update configuration for selected mode
+        // Update configuration for selected environment
         let configuration: SwiftyAdsConfiguration
-        switch mode {
+        switch environment {
         case .production:
             configuration = .production
         case .debug(let testDeviceIdentifiers):

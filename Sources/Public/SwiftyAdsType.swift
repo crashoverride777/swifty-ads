@@ -29,7 +29,7 @@ public protocol SwiftyAdsType: AnyObject {
     var isInterstitialReady: Bool { get }
     var isRewardedVideoReady: Bool { get }
     func setup(with viewController: UIViewController,
-               mode: SwiftyAdsMode,
+               environment: SwiftyAdsEnvironment,
                consentStyle: SwiftyAdsConsentStyle,
                consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                completion: @escaping (SwiftyAdsConsentStatus) -> Void)

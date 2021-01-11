@@ -41,9 +41,9 @@ private extension AppDelegate {
     
     func setupSwiftyAds(from rootViewController: UIViewController) {
         #if DEBUG
-        let mode: SwiftyAdsMode = .debug(testDeviceIdentifiers: [])
+        let environment: SwiftyAdsEnvironment = .debug(testDeviceIdentifiers: [])
         #else
-        let mode: SwiftyAdsMode = .production
+        let environment: SwiftyAdsEnvironment = .production
         #endif
         let customConsentContent = SwiftyAdsCustomConsentAlertContent(
             title: "Permission to use data",
@@ -55,7 +55,7 @@ private extension AppDelegate {
         
         swiftyAds.setup(
             with: rootViewController,
-            mode: mode,
+            environment: environment,
             consentStyle: .custom(content: customConsentContent),
             consentStatusDidChange: ({ [weak self] consentStatus in
                 guard let self = self else { return }

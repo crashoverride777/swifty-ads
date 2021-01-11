@@ -22,7 +22,7 @@
 
 import Foundation
 
-public enum SwiftyAdsMode {
+public enum SwiftyAdsEnvironment {
     case production
     case debug(testDeviceIdentifiers: [String])
 }
