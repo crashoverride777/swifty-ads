@@ -22,6 +22,44 @@
 
 import GoogleMobileAds
 
+public protocol SwiftyAdsType: AnyObject {
+    var hasConsent: Bool { get }
+    var isRequiredToAskForConsent: Bool { get }
+    var isInterstitialReady: Bool { get }
+    var isRewardedVideoReady: Bool { get }
+    func setup(with viewController: UIViewController,
+               environment: SwiftyAdsEnvironment,
+               consentStyle: SwiftyAdsConsentStyle,
+               consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
+               completion: @escaping (SwiftyAdsConsentStatus) -> Void)
+    func askForConsent(from viewController: UIViewController)
+    func showBanner(from viewController: UIViewController,
+                    atTop isAtTop: Bool,
+                    ignoresSafeArea: Bool,
+                    animationDuration: TimeInterval,
+                    onOpen: (() -> Void)?,
+                    onClose: (() -> Void)?,
+                    onError: ((Error) -> Void)?)
+    func updateBannerForOrientationChange(isLandscape: Bool)
+    func removeBanner()
+    func showInterstitial(from viewController: UIViewController,
+                          withInterval interval: Int?,
+                          onOpen: (() -> Void)?,
+                          onClose: (() -> Void)?,
+                          onError: ((Error) -> Void)?)
+    func showRewardedVideo(from viewController: UIViewController,
+                           onOpen: (() -> Void)?,
+                           onClose: (() -> Void)?,
+                           onError: ((Error) -> Void)?,
+                           onNotReady: (() -> Void)?,
+                           onReward: @escaping (Int) -> Void)
+    func loadNativeAd(from viewController: UIViewController,
+                      count: Int?,
+                      onReceive: @escaping (GADUnifiedNativeAd) -> Void,
+                      onError: @escaping (Error) -> Void)
+    func disable()
+}
+
 /**
  SwiftyAds
  
@@ -42,7 +80,7 @@ public final class SwiftyAds: NSObject {
     private var bannerAd: SwiftyAdsBannerType?
     private var interstitialAd: SwiftyAdsInterstitialType?
     private var rewardedAd: SwiftyAdsRewardedType?
-    private var nativeAd: SwiftyAdsNativeAdType?
+    private var nativeAd: SwiftyAdsNativeType?
     private var consentManager: SwiftyAdsConsentManagerType!
     private var isDisabled = false
         
@@ -69,7 +107,7 @@ public final class SwiftyAds: NSObject {
          bannerAd: SwiftyAdsBannerType?,
          interstitialAd: SwiftyAdsInterstitialType?,
          rewardedAd: SwiftyAdsRewardedType?,
-         nativeAd: SwiftyAdsNativeAdType?,
+         nativeAd: SwiftyAdsNativeType?,
          consentManager: SwiftyAdsConsentManagerType,
          intervalTracker: IntervalTracker) {
         self.mobileAds = mobileAds
@@ -163,7 +201,7 @@ extension SwiftyAds: SwiftyAdsType {
         }
 
         if let nativeAdUnitId = configuration.nativeAdUnitId {
-            nativeAd = SwiftyAdsNativeAd(
+            nativeAd = SwiftyAdsNative(
                 adUnitId: nativeAdUnitId,
                 request: ({ [unowned self] in
                     self.requestBuilder.build()
