@@ -7,7 +7,7 @@ s.summary = 'A swift helper to show Google AdMob ads. GDPR compliant.'
 s.homepage = 'https://github.com/crashoverride777/swifty-ads'
 s.authors = { 'Dominik' => 'overrideinteractive@icloud.com' }
 
-s.swift_version = '5.3'
+s.swift_version = '5'
 s.requires_arc = true
 s.ios.deployment_target = '11.4'
 
