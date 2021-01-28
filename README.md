@@ -13,19 +13,6 @@ SwiftyAds is a Swift library to display banner, interstitial, rewarded videos an
 - Multiple ad unit ids
 - Swift package manager support
 
-# Note
-
-- Currently having trouble getting cocoa pods to push newer versions to due me being on holiday and only having my work laptop with me that blocks cocoa pods
-on my personal projects. 
-- If you want the latest version (tab bar fix and native ads) you will have to manually manage this yourself. The latest version will be on dedicated release branches.
-
-# 2021 Roadmap/Plans
-
-- Fix cocoa pods ASAP
-- iOS 14 app tracking transparency 
-- Swift package support
-- Multiple ad unit ids
-
 ## Requirements
 
 - iOS 11.4+
