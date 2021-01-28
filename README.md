@@ -4,7 +4,14 @@
 
 # SwiftyAds
 
-SwiftyAds is a Swift library to display banner, interstitial and rewarded video ads from AdMob and supported mediation networks.
+SwiftyAds is a Swift library to display banner, interstitial, rewarded videos and native ads from AdMob and its supported mediation networks.
+
+# 2021 Roadmap
+
+- Replace deprecated PersonalAdConsent SDK with User messaging platform (GDPR)
+- iOS 14 app tracking transparency
+- Multiple ad unit ids
+- Swift package manager support
 
 ## Requirements
 
@@ -38,19 +45,27 @@ pod 'SwiftyAds'
 
 ### Manually 
 
-Altenatively you can drag the `Sources` folder and its containing files into your project.
+Altenatively you can copy the `Sources` folder and its containing files into your project. Than install the required Google dependencies either via cocoa pods
+
+```swift
+pod 'Google-Mobile-Ads-SDK'
+pod 'PersonalizedAdConsent'
+```
+
+or manually
+
+[AdMob](https://developers.google.com/admob/ios/quick-start#manual_download)
+[PersonalAdConsent](https://developers.google.com/admob/ios/quick-start#manual_download)
 
 ## Usage
 
 ### Update Info.plist
 
-Add a new entry in your apps info.plist called `GADApplicationIdentifier` (String) and enter your apps admob id
-
 [READ](https://developers.google.com/admob/ios/quick-start#update_your_infoplist)
 
 ### Add SwiftyAds.plist
 
-Download the template plist and add it to your projects main bundle. Than enter your required ad unit ids and settings.
+Download the template plist and add it to your projects main bundle. Than enter your required ad unit ids and settings. You can remove unused ad unit ids from the plist as they are optional.
 
 [Template ](Downloads/SwiftyAdsPlistTemplate.zip)
 
