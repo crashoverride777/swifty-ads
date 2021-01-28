@@ -17,6 +17,7 @@ final class RootViewController: UITableViewController {
         case viewControllerInsideTabBar
         case tabBarController
         case spriteKitScene
+        case nativeAd
         
         var title: String {
             switch self {
@@ -28,17 +29,21 @@ final class RootViewController: UITableViewController {
                 return "Tab Bar Controller"
             case .spriteKitScene:
                 return "SpriteKit Game Scene"
+            case .nativeAd:
+                return "Native Ad"
             }
         }
     }
     
     // MARK: - Properties
-    
+
+    private let swiftyAds: SwiftyAdsType
     private let rows = Row.allCases
     
-    // MARK: - Init
+    // MARK: - Initialization
     
-    init() {
+    init(swiftyAds: SwiftyAdsType) {
+        self.swiftyAds = swiftyAds
         super.init(style: .grouped)
     }
     
@@ -52,9 +57,10 @@ final class RootViewController: UITableViewController {
         super.viewDidLoad()
         
         // Setup navigation item
-        navigationItem.title = "Root View Controller"
+        navigationItem.title = "Swifty Ads Demo"
         
         // Setup table view
+        tableView.backgroundColor = .white
         tableView.register(RootCell.self, forCellReuseIdentifier: String(describing: RootCell.self))
         
     }
@@ -81,17 +87,24 @@ final class RootViewController: UITableViewController {
         switch row {
         case .viewController:
             let storyboard = UIStoryboard(name: "PlainViewController", bundle: .main)
-            viewController = storyboard.instantiateInitialViewController()
-        
+            let plainViewController = storyboard.instantiateInitialViewController() as! PlainViewController
+            plainViewController.configure(swiftyAds: swiftyAds)
+            viewController = plainViewController
+
         case .viewControllerInsideTabBar:
-            viewController = TabBarControllerNoAd()
+            viewController = TabBarControllerNoAd(swiftyAds: swiftyAds)
         
         case .tabBarController:
-            viewController = TabBarControllerAd()
+            viewController = TabBarControllerAd(swiftyAds: swiftyAds)
         
         case .spriteKitScene:
             let storyboard = UIStoryboard(name: "GameViewController", bundle: .main)
-            viewController = storyboard.instantiateInitialViewController()
+            let gameViewController = storyboard.instantiateInitialViewController() as! GameViewController
+            gameViewController.configure(swiftyAds: swiftyAds)
+            viewController = gameViewController
+
+        case .nativeAd:
+            viewController = NativeAdViewController(swityAds: swiftyAds)
         }
         
         guard let validViewController = viewController else { return }
@@ -99,3 +112,4 @@ final class RootViewController: UITableViewController {
         navigationController?.pushViewController(validViewController, animated: true)
     }
 }
+

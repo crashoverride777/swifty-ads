@@ -11,5 +11,8 @@ xcuserdata/
 # Cocoa Pods
 Pods/
 
+# SDK
+SDK/
+
 # Other
 *.xcuserstate

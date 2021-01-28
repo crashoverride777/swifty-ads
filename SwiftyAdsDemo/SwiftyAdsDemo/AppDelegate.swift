@@ -18,11 +18,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     private let swiftyAds: SwiftyAdsType = SwiftyAds.shared
+    private let notificationCenter: NotificationCenter = .default
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let rootViewController = RootViewController()
+        let rootViewController = RootViewController(swiftyAds: swiftyAds)
         let navigationController = UINavigationController(rootViewController: rootViewController)
+        navigationController.navigationBar.barTintColor = .white
+
         window = UIWindow(frame: UIScreen.main.bounds)
+        window?.backgroundColor = .white
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         
@@ -31,15 +35,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-// MARK: - Private
+// MARK: - Private Methods
 
 private extension AppDelegate {
     
     func setupSwiftyAds(from rootViewController: UIViewController) {
         #if DEBUG
-        let mode: SwiftyAdsMode = .debug(testDeviceIdentifiers: [])
+        let environment: SwiftyAdsEnvironment = .debug(testDeviceIdentifiers: [])
         #else
-        let mode: SwiftyAdsMode = .production
+        let environment: SwiftyAdsEnvironment = .production
         #endif
         let customConsentContent = SwiftyAdsCustomConsentAlertContent(
             title: "Permission to use data",
@@ -51,14 +55,13 @@ private extension AppDelegate {
         
         swiftyAds.setup(
             with: rootViewController,
-            mode: mode,
+            environment: environment,
             consentStyle: .custom(content: customConsentContent),
-            consentStatusDidChange: ({ consentStatus in
+            consentStatusDidChange: ({ [weak self] consentStatus in
+                guard let self = self else { return }
                 print("SwiftyAds did change consent status to \(consentStatus)")
-                NotificationCenter.default.post(name: .adConsentStatusDidChange, object: nil)
-                if consentStatus != .notRequired {
-                    // update mediation networks if required
-                }
+                self.notificationCenter.post(name: .adConsentStatusDidChange, object: nil)
+                // update mediation networks if required or preload ads
             }),
             completion: ({ consentStatus in
                 print("SwiftyAds did finish setup with consent status \(consentStatus)")

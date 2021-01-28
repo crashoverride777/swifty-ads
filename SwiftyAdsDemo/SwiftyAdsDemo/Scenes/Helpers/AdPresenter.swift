@@ -11,8 +11,8 @@ import UIKit
 // Convenience helper for this demo project to display ads
 enum AdPresenter {
     
-    static func showBanner(from viewController: UIViewController) {
-        SwiftyAds.shared.showBanner(
+    static func showBanner(from viewController: UIViewController, swiftyAds: SwiftyAdsType) {
+        swiftyAds.showBanner(
             from: viewController,
             atTop: false,
             ignoresSafeArea: false,
@@ -29,8 +29,8 @@ enum AdPresenter {
         )
     }
     
-    static func showInterstitialAd(from viewController: UIViewController) {
-        SwiftyAds.shared.showInterstitial(
+    static func showInterstitialAd(from viewController: UIViewController, swiftyAds: SwiftyAdsType) {
+        swiftyAds.showInterstitial(
             from: viewController,
             withInterval: 2,
             onOpen: ({
@@ -45,8 +45,10 @@ enum AdPresenter {
         )
     }
     
-    static func showRewardedAd(from viewController: UIViewController, onReward: @escaping (Int) -> Void) {
-        SwiftyAds.shared.showRewardedVideo(
+    static func showRewardedAd(from viewController: UIViewController,
+                               swiftyAds: SwiftyAdsType,
+                               onReward: @escaping (Int) -> Void) {
+        swiftyAds.showRewardedVideo(
             from: viewController,
             onOpen: ({
                 print("SwiftyAds rewarded video ad did open")

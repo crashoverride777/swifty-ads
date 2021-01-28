@@ -3,13 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A864BC425900E75005D0789 /* SwiftyAdsNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A864BC325900E75005D0789 /* SwiftyAdsNative.swift */; };
 		6AAD6A07240BEC77001F4A7D /* SwiftyAdsConsentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD6A03240BEC76001F4A7D /* SwiftyAdsConsentStatus.swift */; };
-		6AAD6A08240BEC77001F4A7D /* SwiftyAdsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD6A04240BEC76001F4A7D /* SwiftyAdsType.swift */; };
-		6AAD6A09240BEC77001F4A7D /* SwiftyAdsMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD6A05240BEC76001F4A7D /* SwiftyAdsMode.swift */; };
+		6AAD6A09240BEC77001F4A7D /* SwiftyAdsEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD6A05240BEC76001F4A7D /* SwiftyAdsEnvironment.swift */; };
 		6AAD6A0A240BEC77001F4A7D /* SwiftyAdsConsentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD6A06240BEC76001F4A7D /* SwiftyAdsConsentStyle.swift */; };
 		6AAD6A12240BEC98001F4A7D /* SwiftyAdsRewarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD6A0B240BEC98001F4A7D /* SwiftyAdsRewarded.swift */; };
 		6AAD6A13240BEC98001F4A7D /* SwiftyAdsRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD6A0C240BEC98001F4A7D /* SwiftyAdsRequestBuilder.swift */; };
@@ -35,9 +35,9 @@
 
 /* Begin PBXFileReference section */
 		6A38EBA72401916500E645A0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		6A864BC325900E75005D0789 /* SwiftyAdsNative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsNative.swift; sourceTree = "<group>"; };
 		6AAD6A03240BEC76001F4A7D /* SwiftyAdsConsentStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsConsentStatus.swift; sourceTree = "<group>"; };
-		6AAD6A04240BEC76001F4A7D /* SwiftyAdsType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsType.swift; sourceTree = "<group>"; };
-		6AAD6A05240BEC76001F4A7D /* SwiftyAdsMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsMode.swift; sourceTree = "<group>"; };
+		6AAD6A05240BEC76001F4A7D /* SwiftyAdsEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsEnvironment.swift; sourceTree = "<group>"; };
 		6AAD6A06240BEC76001F4A7D /* SwiftyAdsConsentStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsConsentStyle.swift; sourceTree = "<group>"; };
 		6AAD6A0B240BEC98001F4A7D /* SwiftyAdsRewarded.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsRewarded.swift; sourceTree = "<group>"; };
 		6AAD6A0C240BEC98001F4A7D /* SwiftyAdsRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsRequestBuilder.swift; sourceTree = "<group>"; };
@@ -93,6 +93,7 @@
 				6AAD6A10240BEC98001F4A7D /* SwiftyAdsBanner.swift */,
 				6AAD6A0F240BEC98001F4A7D /* SwiftyAdsInterstitial.swift */,
 				6AAD6A0B240BEC98001F4A7D /* SwiftyAdsRewarded.swift */,
+				6A864BC325900E75005D0789 /* SwiftyAdsNative.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -102,8 +103,7 @@
 			children = (
 				6AAD6A03240BEC76001F4A7D /* SwiftyAdsConsentStatus.swift */,
 				6AAD6A06240BEC76001F4A7D /* SwiftyAdsConsentStyle.swift */,
-				6AAD6A05240BEC76001F4A7D /* SwiftyAdsMode.swift */,
-				6AAD6A04240BEC76001F4A7D /* SwiftyAdsType.swift */,
+				6AAD6A05240BEC76001F4A7D /* SwiftyAdsEnvironment.swift */,
 				6AE482F22294B7660063B22F /* SwiftyAds.swift */,
 			);
 			path = Public;
@@ -113,19 +113,9 @@
 			isa = PBXGroup;
 			children = (
 				6AAD6A2C240C1DF9001F4A7D /* Test Plans */,
-				6AAD6A2E240C1E0F001F4A7D /* Public */,
-				6AAD6A28240C1CDD001F4A7D /* Internal */,
-				6AAD6A2F240C1E16001F4A7D /* Test Data */,
 				6AAD6A21240C1CBE001F4A7D /* Info.plist */,
 			);
 			path = Tests;
-			sourceTree = "<group>";
-		};
-		6AAD6A28240C1CDD001F4A7D /* Internal */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Internal;
 			sourceTree = "<group>";
 		};
 		6AAD6A2C240C1DF9001F4A7D /* Test Plans */ = {
@@ -134,20 +124,6 @@
 				6AAD6A2D240C1DF9001F4A7D /* UnitTests.xctestplan */,
 			);
 			path = "Test Plans";
-			sourceTree = "<group>";
-		};
-		6AAD6A2E240C1E0F001F4A7D /* Public */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Public;
-			sourceTree = "<group>";
-		};
-		6AAD6A2F240C1E16001F4A7D /* Test Data */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Test Data";
 			sourceTree = "<group>";
 		};
 		B4C1B11E204C298500452094 = {
@@ -236,7 +212,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1220;
+				LastUpgradeCheck = 1230;
 				ORGANIZATIONNAME = Dominik;
 				TargetAttributes = {
 					6AAD6A1C240C1CBE001F4A7D = {
@@ -251,7 +227,7 @@
 				};
 			};
 			buildConfigurationList = B4C1B122204C298500452094 /* Build configuration list for PBXProject "SwiftyAds" */;
-			compatibilityVersion = "Xcode 8.0";
+			compatibilityVersion = "Xcode 11.4";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -303,6 +279,7 @@
 			files = (
 				6AAD6A16240BEC98001F4A7D /* SwiftyAdsInterstitial.swift in Sources */,
 				6AAD6A18240BEC98001F4A7D /* SwiftyAdsConfiguration.swift in Sources */,
+				6A864BC425900E75005D0789 /* SwiftyAdsNative.swift in Sources */,
 				6AAD6A15240BEC98001F4A7D /* SwiftyAdsIntervalTracker.swift in Sources */,
 				6AAD6A17240BEC98001F4A7D /* SwiftyAdsBanner.swift in Sources */,
 				6AAD6A0A240BEC77001F4A7D /* SwiftyAdsConsentStyle.swift in Sources */,
@@ -310,9 +287,8 @@
 				6AAD6A07240BEC77001F4A7D /* SwiftyAdsConsentStatus.swift in Sources */,
 				6AAD6A14240BEC98001F4A7D /* SwiftyAdsConsentManager.swift in Sources */,
 				6AE482F42294B7660063B22F /* SwiftyAds.swift in Sources */,
-				6AAD6A08240BEC77001F4A7D /* SwiftyAdsType.swift in Sources */,
 				6AAD6A12240BEC98001F4A7D /* SwiftyAdsRewarded.swift in Sources */,
-				6AAD6A09240BEC77001F4A7D /* SwiftyAdsMode.swift in Sources */,
+				6AAD6A09240BEC77001F4A7D /* SwiftyAdsEnvironment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,7 +311,11 @@
 				DEVELOPMENT_TEAM = DK88YZ475Z;
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dominik.SwiftyAdsTests;
@@ -353,7 +333,11 @@
 				DEVELOPMENT_TEAM = DK88YZ475Z;
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dominik.SwiftyAdsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -415,7 +399,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -474,10 +458,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -491,7 +476,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1485;
+				CURRENT_PROJECT_VERSION = 1487;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = DK88YZ475Z;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -500,9 +485,13 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAds/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 11.0.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 11.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SwiftyAds;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -519,7 +508,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1485;
+				CURRENT_PROJECT_VERSION = 1487;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = DK88YZ475Z;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -528,9 +517,13 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAds/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 11.0.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 11.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SwiftyAds;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;

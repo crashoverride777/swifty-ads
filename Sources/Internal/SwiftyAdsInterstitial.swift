@@ -1,6 +1,6 @@
 //    The MIT License (MIT)
 //
-//    Copyright (c) 2015-2020 Dominik Ringler
+//    Copyright (c) 2015-2021 Dominik Ringler
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy
 //    of this software and associated documentation files (the "Software"), to deal
@@ -44,7 +44,7 @@ final class SwiftyAdsInterstitial: NSObject {
     
     private var interstitial: GADInterstitial?
     
-    // MARK: - Init
+    // MARK: - Initialization
     
     init(adUnitId: String, request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
@@ -101,7 +101,7 @@ extension SwiftyAdsInterstitial: GADInterstitialDelegate {
     
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
         onClose?()
-        // Preload the next ad so its ready for displaying
+        // Load the next ad so its ready for displaying
         load()
     }
     

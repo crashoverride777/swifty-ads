@@ -11,13 +11,15 @@ import SpriteKit
 
 class GameViewController: UIViewController {
     
-    private let swiftyAds: SwiftyAdsType = SwiftyAds.shared
+    private var swiftyAds: SwiftyAdsType!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        AdPresenter.showBanner(from: self)
+        AdPresenter.showBanner(from: self, swiftyAds: swiftyAds)
         
         if let scene = GameScene(fileNamed: "GameScene") {
+            scene.configure(swiftyAds: swiftyAds)
+            
             // Configure the view.
             let skView = self.view as! SKView
             skView.showsFPS = true
@@ -55,5 +57,9 @@ class GameViewController: UIViewController {
         coordinator.animate(alongsideTransition: { _ in
             self.swiftyAds.updateBannerForOrientationChange(isLandscape: size.width > size.height)
         })
+    }
+
+    func configure(swiftyAds: SwiftyAdsType) {
+        self.swiftyAds = swiftyAds
     }
 }
