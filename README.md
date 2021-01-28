@@ -68,7 +68,7 @@ pod 'PersonalizedAdConsent'
 or manually
 
 [AdMob](https://developers.google.com/admob/ios/quick-start#manual_download)
-[PersonalAdConsent](https://developers.google.com/admob/ios/quick-start#manual_download)
+[PersonalAdConsent](https://developers.google.com/admob/ios/eu-consent)
 
 ## Usage
 
