@@ -7,9 +7,11 @@ s.summary = 'A swift helper to show Google AdMob ads. GDPR compliant.'
 s.homepage = 'https://github.com/crashoverride777/swifty-ads'
 s.authors = { 'Dominik' => 'overrideinteractive@icloud.com' }
 
-s.swift_version = '5'
-s.requires_arc = true
+s.swift_versions = ['5.1', '5.2', '5.3']
 s.ios.deployment_target = '11.4'
+
+s.requires_arc = true
+s.static_framework = true
 
 s.source = {
     :git => 'https://github.com/crashoverride777/swifty-ads.git',
@@ -18,7 +20,7 @@ s.source = {
 
 s.source_files = 'Sources/**/*.{h,m,swift}'
 
-s.dependency 'Google-Mobile-Ads-SDK', '7.69.0'
-s.dependency 'PersonalizedAdConsent', '1.0.5'
+s.dependency 'Google-Mobile-Ads-SDK', ~> '7.69.0'
+s.dependency 'PersonalizedAdConsent', ~> '1.0.5'
 
 end
