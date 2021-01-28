@@ -35,8 +35,8 @@ PODS:
   - PromisesObjC (1.2.12)
 
 DEPENDENCIES:
-  - Google-Mobile-Ads-SDK
-  - PersonalizedAdConsent
+  - Google-Mobile-Ads-SDK (~> 7.69.0)
+  - PersonalizedAdConsent (~> 1.0.5)
 
 SPEC REPOS:
   trunk:
@@ -57,6 +57,6 @@ SPEC CHECKSUMS:
   PersonalizedAdConsent: dbecabb3467df967c16d9cebc2ef4a8890e4bbd8
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
 
-PODFILE CHECKSUM: 679651cc7b0996c064fa96ce00c643e06921d0b4
+PODFILE CHECKSUM: c94178e391e89a4a49812b40dc69b130b9ed051c
 
 COCOAPODS: 1.10.1
