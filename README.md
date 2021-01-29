@@ -77,9 +77,9 @@ Create a setup method and call it as soon as your app launches e.g AppDelegate d
 ```swift
 func setupSwiftyAds() {
     #if DEBUG
-    let mode: SwiftyAdsMode = .debug(testDeviceIdentifiers: []) // add your test device identifiers if needed
+    let environment: SwiftyAdsEnvironment = .debug(testDeviceIdentifiers: []) // add your test device identifiers if needed
     #else
-    let mode: SwiftyAdsMode = .production
+    let environment: SwiftyAdsEnvironment = .production
     #endif
     
     // In this example we want to show a custom consent alert
@@ -93,7 +93,7 @@ func setupSwiftyAds() {
     
     SwiftyAds.shared.setup(
         with: self,
-        mode: mode,
+        environment: environment,
         consentStyle: .custom(content: customConsentContent), // alternatively set to adMob to use googles native consent form
         consentStatusDidChange: ({ consentStatus in
             print("SwiftyAds did change consent status to \(consentStatus)")
