@@ -186,7 +186,7 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
 extension SwiftyAdsBanner: GADBannerViewDelegate {
     
     func adViewDidReceiveAd(_ bannerView: GADBannerView) {
-        print("SwiftyAdsBanner did receive ad from: \(bannerView.responseInfo?.adNetworkClassName ?? "")")
+        print("SwiftyAdsBanner did receive ad from: \(bannerView.responseInfo?.adNetworkClassName ?? "not found")")
         animateToOnScreenPosition(bannerView, from: bannerView.rootViewController)
     }
 

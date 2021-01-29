@@ -92,7 +92,7 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
 extension SwiftyAdsInterstitial: GADInterstitialDelegate {
     
     func interstitialDidReceiveAd(_ ad: GADInterstitial) {
-        print("SwiftyAdsInterstitial did receive ad from: \(ad.responseInfo?.adNetworkClassName ?? "")")
+        print("SwiftyAdsInterstitial did receive ad from: \(ad.responseInfo?.adNetworkClassName ?? "not found")")
     }
     
     func interstitialWillPresentScreen(_ ad: GADInterstitial) {

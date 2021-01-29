@@ -31,16 +31,16 @@ final class SwiftyAdsRequestBuilder {
     
     // MARK: - Properties
     
-    private let isRequiredToAskForConsent: Bool
+    private let isConsentRequired: Bool
     //private let isNonPersonalizedOnly: Bool
     private let isTaggedForUnderAgeOfConsent: Bool
     
     // MARK: - Initialization
     
-    init(isRequiredToAskForConsent: Bool,
+    init(isConsentRequired: Bool,
          //isNonPersonalizedOnly: Bool,
          isTaggedForUnderAgeOfConsent: Bool) {
-        self.isRequiredToAskForConsent = isRequiredToAskForConsent
+        self.isConsentRequired = isConsentRequired
         //self.isNonPersonalizedOnly = isNonPersonalizedOnly
         self.isTaggedForUnderAgeOfConsent = isTaggedForUnderAgeOfConsent
     }
@@ -54,7 +54,7 @@ extension SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
         let request = GADRequest()
         
         // If no GDPR required we do not have to add any extras and can just return default request
-        guard isRequiredToAskForConsent else {
+        guard isConsentRequired else {
             return request
         }
             

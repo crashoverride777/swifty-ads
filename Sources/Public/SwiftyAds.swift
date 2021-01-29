@@ -21,10 +21,18 @@
 //    SOFTWARE.
 
 import GoogleMobileAds
+import UserMessagingPlatform
+
+public typealias SwiftyAdsConsentStatus = UMPConsentStatus
+
+public enum SwiftyAdsEnvironment {
+    case production
+    case debug(testDeviceIdentifiers: [String], geography: UMPDebugGeography, resetConsentInfo: Bool)
+}
 
 public protocol SwiftyAdsType: AnyObject {
+    var isConsentRequired: Bool { get }
     var hasConsent: Bool { get }
-    var isRequiredToAskForConsent: Bool { get }
     var isInterstitialReady: Bool { get }
     var isRewardedVideoReady: Bool { get }
     func setup(with viewController: UIViewController,
@@ -62,13 +70,13 @@ public protocol SwiftyAdsType: AnyObject {
 /**
  SwiftyAds
  
- A concret class implementation of SwiftAdsType to display ads from AdMob.
+ A concret class implementation of SwiftAdsType to display ads from Google AdMob.
  */
 public final class SwiftyAds: NSObject {
     
     // MARK: - Static Properties
     
-    /// The shared instance of SwiftyAds
+    /// The shared SwiftyAds instance
     public static let shared = SwiftyAds()
     
     // MARK: - Properties
@@ -88,7 +96,7 @@ public final class SwiftyAds: NSObject {
     
     private var requestBuilder: SwiftyAdsRequestBuilderType {
         SwiftyAdsRequestBuilder(
-            isRequiredToAskForConsent: isRequiredToAskForConsent,
+            isConsentRequired: isConsentRequired,
             //isNonPersonalizedOnly: consentManager.status == .nonPersonalized,
             isTaggedForUnderAgeOfConsent: configuration?.isTaggedForUnderAgeOfConsent ?? true
         )
@@ -104,35 +112,39 @@ public final class SwiftyAds: NSObject {
     }
     
     init(mobileAds: GADMobileAds,
+         consentManager: SwiftyAdsConsentManagerType,
+         intervalTracker: IntervalTracker,
          bannerAd: SwiftyAdsBannerType?,
          interstitialAd: SwiftyAdsInterstitialType?,
          rewardedAd: SwiftyAdsRewardedType?,
-         nativeAd: SwiftyAdsNativeType?,
-         consentManager: SwiftyAdsConsentManagerType,
-         intervalTracker: IntervalTracker) {
+         nativeAd: SwiftyAdsNativeType?) {
         self.mobileAds = mobileAds
+        self.consentManager = consentManager
+        self.intervalTracker = intervalTracker
         self.bannerAd = bannerAd
         self.interstitialAd = interstitialAd
         self.rewardedAd = rewardedAd
         self.nativeAd = nativeAd
-        self.consentManager = consentManager
-        self.intervalTracker = intervalTracker
     }
 }
 
 // MARK: - SwiftyAdsType
 
 extension SwiftyAds: SwiftyAdsType {
-    
-    /// Check if user has given consent e.g to hide rewarded video button
-    /// Also returns true if user is outside EEA and is therefore not required to provide consent
-    public var hasConsent: Bool {
-        consentManager.status == .obtained
-    }
-     
-    /// Check if we must ask for consent e.g to hide change consent button in apps settings menu (required GDPR requirement)
-    public var isRequiredToAskForConsent: Bool {
+
+    /// Check if we must ask user for consent.
+    public var isConsentRequired: Bool {
         consentManager.status != .notRequired
+    }
+
+    /// Check if user has given consent or is not required to provide consent.
+    public var hasConsent: Bool {
+        switch consentManager.status {
+        case .notRequired, .obtained:
+            return true
+        default:
+            return false
+        }
     }
      
     /// Check if interstitial video is ready (e.g to show alternative ad like an in house ad)
@@ -148,8 +160,8 @@ extension SwiftyAds: SwiftyAdsType {
     /// Setup swift ad
     ///
     /// - parameter viewController: The view controller that will present the consent alert if needed.
-    /// - parameter environment: Sets the environment for ads to display.
-    /// - parameter completion: A handler that will return the current consent status after the consent alert has been dismissed.
+    /// - parameter environment: The environment for ads to be displayed.
+    /// - parameter completion: A completion handler that will return the current consent status after the consent flow has finished.
     public func setup(with viewController: UIViewController,
                       environment: SwiftyAdsEnvironment,
                       completion: @escaping (SwiftyAdsConsentStatus) -> Void) {
@@ -166,40 +178,35 @@ extension SwiftyAds: SwiftyAdsType {
         // Keep reference to configuration
         self.configuration = configuration
         
-        // Create ads
+        // Create banner ad if we have an AdUnitId
         if let bannerAdUnitId = configuration.bannerAdUnitId {
             bannerAd = SwiftyAdsBanner(
                 adUnitId: bannerAdUnitId,
-                request: ({ [unowned self] in
-                    self.requestBuilder.build()
-                })
+                request: requestBuilder.build
             )
         }
 
+        // Create interstitial ad if we have an AdUnitId
         if let interstitialAdUnitId = configuration.interstitialAdUnitId {
             interstitialAd = SwiftyAdsInterstitial(
                 adUnitId: interstitialAdUnitId,
-                request: ({ [unowned self] in
-                    self.requestBuilder.build()
-                })
+                request: requestBuilder.build
             )
         }
 
+        // Create rewarded ad if we have an AdUnitId
         if let rewardedVideoAdUnitId = configuration.rewardedVideoAdUnitId {
             rewardedAd = SwiftyAdsRewarded(
                 adUnitId: rewardedVideoAdUnitId,
-                request: ({ [unowned self] in
-                    self.requestBuilder.build()
-                })
+                request: requestBuilder.build
             )
         }
 
+        // Create native ad if we have an AdUnitId
         if let nativeAdUnitId = configuration.nativeAdUnitId {
             nativeAd = SwiftyAdsNative(
                 adUnitId: nativeAdUnitId,
-                request: ({ [unowned self] in
-                    self.requestBuilder.build()
-                })
+                request: requestBuilder.build
             )
         }
      
@@ -245,27 +252,19 @@ extension SwiftyAds: SwiftyAdsType {
         }
     }
 
-    /// Ask for consent again, for example when consent button is pressed
+    /// Under GDPR users must be able to change their consent at any time.
     ///
     /// - parameter viewController: The view controller that will present the consent form.
-    /// - parameter completion: A handler that will return the updated consent status.
+    /// - parameter completion: A completion handler that will return the updated consent status.
     public func askForConsent(from viewController: UIViewController,
                          completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
-        // Request consent update
         DispatchQueue.main.async {
             self.consentManager.requestUpdate { [weak self] result in
                 guard let self = self else { return }
                 switch result {
                 case .success:
                     DispatchQueue.main.async {
-                        self.consentManager.showForm(from: viewController) { result in
-                            switch result {
-                            case .success(let status):
-                                completion(.success(status))
-                            case .failure(let error):
-                                completion(.failure(error))
-                            }
-                        }
+                        self.consentManager.showForm(from: viewController, completion: completion)
                     }
                 case .failure(let error):
                     completion(.failure(error))
@@ -290,8 +289,9 @@ extension SwiftyAds: SwiftyAdsType {
                            onOpen: (() -> Void)?,
                            onClose: (() -> Void)?,
                            onError: ((Error) -> Void)?) {
+        guard !isDisabled else { return }
+        guard hasConsent else { return }
         guard let bannerAd = bannerAd else { return }
-        guard !isDisabled, hasConsent else { return }
         
         bannerAd.show(
             from: viewController,
@@ -328,10 +328,11 @@ extension SwiftyAds: SwiftyAdsType {
                                  onOpen: (() -> Void)?,
                                  onClose: (() -> Void)?,
                                  onError: ((Error) -> Void)?) {
-        guard let interstitialAd = interstitialAd else { return }
-        guard !isDisabled, hasConsent else { return }
+        guard !isDisabled else { return }
+        guard hasConsent else { return }
         guard intervalTracker.canShow(forInterval: interval) else { return }
-        
+        guard let interstitialAd = interstitialAd else { return }
+
         interstitialAd.show(
             from: viewController,
             onOpen: onOpen,
@@ -354,8 +355,9 @@ extension SwiftyAds: SwiftyAdsType {
                                   onError: ((Error) -> Void)?,
                                   onNotReady: (() -> Void)?,
                                   onReward: @escaping (Int) -> Void) {
-        guard let rewardedAd = rewardedAd else { return }
         guard hasConsent else { return }
+        guard let rewardedAd = rewardedAd else { return }
+
         rewardedAd.show(
             from: viewController,
             onOpen: onOpen,
@@ -390,7 +392,7 @@ extension SwiftyAds: SwiftyAdsType {
         )
     }
 
-    /// Disable ads e.g in app purchases
+    /// Disable ads for example when providing a remove ads in app purchase.
     public func disable() {
         isDisabled = true
         removeBanner()

@@ -98,7 +98,7 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
 extension SwiftyAdsRewarded: GADRewardedAdDelegate {
     
     func rewardedAdDidPresent(_ rewardedAd: GADRewardedAd) {
-        print("SwiftyAdsRewarded did present ad from: \(rewardedAd.responseInfo?.adNetworkClassName ?? "")")
+        print("SwiftyAdsRewarded did present ad from: \(rewardedAd.responseInfo?.adNetworkClassName ?? "not found")")
         onOpen?()
     }
     
