@@ -20,34 +20,53 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-import UIKit
-import PersonalizedAdConsent
+import UserMessagingPlatform
+
+/*
+The SDK is designed to be used in a linear fashion. The steps for using the SDK are:
+
+Request the latest consent information.
+Check if consent is required.
+Check if a form is available and if so load a form.
+Present the form.
+Provide a way for users to change their consent.
+*/
+
+enum SwiftyAdsConsentManagerError: Error {
+    case formNotLoaded
+
+    var localizedDescription: String {
+        switch self {
+        case .formNotLoaded:
+            return "The form was not loaded, call requestUpdate"
+        }
+    }
+}
 
 protocol SwiftyAdsConsentManagerType: class {
     var status: SwiftyAdsConsentStatus { get }
-    func requestUpdate(handler: @escaping (SwiftyAdsConsentStatus) -> Void)
-    func showForm(from viewController: UIViewController, handler: ((SwiftyAdsConsentStatus) -> Void)?)
+    func requestUpdate(completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
+    func showForm(from viewController: UIViewController, completion: ((Result<SwiftyAdsConsentStatus, Error>) -> Void)?)
 }
 
 final class SwiftyAdsConsentManager {
 
     // MARK: - Properties
 
-    private let consentInformation: PACConsentInformation
+    private let consentInformation: UMPConsentInformation
     private let configuration: SwiftyAdsConfiguration
-    private let consentStyle: SwiftyAdsConsentStyle
-    private let statusDidChange: (SwiftyAdsConsentStatus) -> Void
-    
+    private let environment: SwiftyAdsEnvironment
+    private var form: UMPConsentForm?
+
     // MARK: - Initialization
-    
-    init(consentInformation: PACConsentInformation,
+
+    init(consentInformation: UMPConsentInformation,
          configuration: SwiftyAdsConfiguration,
-         consentStyle: SwiftyAdsConsentStyle,
-         statusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void) {
+         environment: SwiftyAdsEnvironment
+    ) {
         self.consentInformation = consentInformation
-        self.consentStyle = consentStyle
         self.configuration = configuration
-        self.statusDidChange = statusDidChange
+        self.environment = environment
     }
 }
 
@@ -56,55 +75,96 @@ final class SwiftyAdsConsentManager {
 extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
 
     var status: SwiftyAdsConsentStatus {
-        guard consentInformation.isRequestLocationInEEAOrUnknown else {
-            return .notRequired
-        }
-        
         guard !configuration.isTaggedForUnderAgeOfConsent else {
             return .underAge
         }
         
         switch consentInformation.consentStatus {
-        case .personalized:
-            return .personalized
-        case .nonPersonalized:
-            return .nonPersonalized
+        case .obtained:
+            return .obtained
+        case .required:
+            return .required
+        case .notRequired:
+            return .notRequired
         case .unknown:
             return .unknown
         @unknown default:
             return .unknown
         }
     }
-    
-    func requestUpdate(handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
-        consentInformation.requestConsentInfoUpdate(forPublisherIdentifiers: configuration.ids) { [weak self] (_ error) in
+
+    func requestUpdate(completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
+        // Create a UMPRequestParameters object.
+        let parameters = UMPRequestParameters()
+
+        // Debug settings
+        if case .debug(let testDeviceIdentifiers) = environment {
+            let debugSettings = UMPDebugSettings()
+            debugSettings.testDeviceIdentifiers = testDeviceIdentifiers
+            debugSettings.geography = .disabled
+            parameters.debugSettings = debugSettings
+        }
+        
+        // Set tag for under age of consent. Here false means users are not under age.
+        parameters.tagForUnderAgeOfConsent = configuration.isTaggedForUnderAgeOfConsent
+
+        // Request an update to the consent information.
+        consentInformation.requestConsentInfoUpdate(with: parameters) { [weak self] error in
             guard let self = self else { return }
-         
+
+            // The consent information state could not be updated
             if let error = error {
-                print("SwiftyAdsConsentManager error requesting consent info update: \(error)")
+                completion(.failure(error))
                 return
             }
-            
-            self.updateUnderAgeOfConsent()
-            self.statusDidChange(self.status)
-            handler(self.status)
+
+            // The consent information state was updated.
+            // You are now ready to see if a form is available.
+            switch self.consentInformation.formStatus {
+            case .available:
+                self.loadForm { [weak self] result in
+                    guard let self = self else { return }
+                    switch result {
+                    case .success(let form):
+                        self.form = form
+                        completion(.success(self.status))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                }
+            case .unavailable:
+                #warning("handle")
+            case .unknown:
+                #warning("handle")
+            @unknown default:
+                #warning("handle")
+            }
         }
     }
 
-    func showForm(from viewController: UIViewController, handler: ((SwiftyAdsConsentStatus) -> Void)?) {
-        switch consentStyle {
-        case .adMob(let shouldOfferAdFree):
-            showDefaultConsentForm(from: viewController, shouldOfferAdFree: shouldOfferAdFree) { [weak self] status in
-                guard let self = self else { return }
-                handler?(status)
-                self.statusDidChange(status)
+    func showForm(from viewController: UIViewController, completion: ((Result<SwiftyAdsConsentStatus, Error>) -> Void)?) {
+        // Only display form if consent is required
+        guard consentInformation.consentStatus == .required else {
+            completion?(.success(.notRequired))
+            return
+        }
+        
+        // Ensure form is loaded
+        guard let form = form else {
+            completion?(.failure(SwiftyAdsConsentManagerError.formNotLoaded))
+            return
+        }
+
+        // Present the form
+        form.present(from: viewController) { [weak self] error in
+            guard let self = self else { return }
+
+            if let error = error {
+                completion?(.failure(error))
+                return
             }
-        case .custom(let content):
-            showCustomConsentForm(from: viewController, content: content) { [weak self] status in
-                guard let self = self else { return }
-                handler?(status)
-                self.statusDidChange(status)
-            }
+
+            completion?(.success(self.status))
         }
     }
 }
@@ -112,117 +172,15 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
 // MARK: - Private Methods
 
 private extension SwiftyAdsConsentManager {
-    
-    func updateUnderAgeOfConsent() {
-        if consentInformation.isRequestLocationInEEAOrUnknown {
-            consentInformation.isTaggedForUnderAgeOfConsent = configuration.isTaggedForUnderAgeOfConsent
-        } else {
-            consentInformation.isTaggedForUnderAgeOfConsent = false
-        }
-    }
-    
-    func showDefaultConsentForm(from viewController: UIViewController,
-                                shouldOfferAdFree: Bool,
-                                handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
-        // Make sure we have a valid privacy policy url
-        guard let url = URL(string: configuration.privacyPolicyURL) else {
-            print("SwiftyAdsConsentManager invalid privacy policy URL")
-            handler(status)
-            return
-        }
-        
-        // Make sure we have a valid consent form
-        guard let form = PACConsentForm(applicationPrivacyPolicyURL: url) else {
-            print("SwiftyAdsConsentManager PACConsentForm nil")
-            handler(status)
-            return
-        }
-        
-        // Set form properties
-        form.shouldOfferPersonalizedAds = true
-        form.shouldOfferNonPersonalizedAds = true
-        form.shouldOfferAdFree = shouldOfferAdFree
-        
-        // Load form
-        form.load { [weak self] (_ error) in
-            guard let self = self else { return }
-            
+
+    func loadForm(completion: @escaping (Result<UMPConsentForm?, Error>) -> Void) {
+        UMPConsentForm.load { (form, error) in
             if let error = error {
-                print("SwiftyAdsConsentManager error loading consent form: \(error)")
-                handler(self.status)
+                completion(.failure(error))
                 return
             }
-            
-            // Loaded successfully, present it
-            form.present(from: viewController) { [weak self] (error, prefersAdFree) in
-                guard let self = self else { return }
-                
-                // Check for error
-                if let error = error {
-                    print("SwiftyAdsConsentManager error presenting consent form: \(error)")
-                    handler(self.status)
-                    return
-                }
-                
-                // Check if user prefers to use a paid version of the app (shouldOfferAdFree button)
-                guard !prefersAdFree else {
-                    self.consentInformation.consentStatus = .unknown
-                    handler(.adFree)
-                    return
-                }
-                
-                // Consent info update succeeded. The shared PACConsentInformation instance has been updated
-                handler(self.status)
-            }
-        }
-    }
 
-    func showCustomConsentForm(from viewController: UIViewController,
-                               content: SwiftyAdsCustomConsentAlertContent,
-                               handler: @escaping (SwiftyAdsConsentStatus) -> Void) {
-        // Create alert message with all ad providers
-        var message =
-            content.message +
-            "\n\n" + configuration.adNetworks
-        
-        if let adProviders = consentInformation.adProviders, !adProviders.isEmpty {
-            message += "\n\n" + adProviders.map { $0.name }.joined(separator: adProviders.count > 1 ? ", " : "")
-        }
-        
-        message += "\n\n" + configuration.privacyPolicyURL
-        
-        // Create alert controller
-        let alertController = UIAlertController(title: content.title, message: message, preferredStyle: .alert)
-        
-        // Personalized action
-        let personalizedAction = UIAlertAction(title: content.actionAllowPersonalized, style: .default) { [weak self] action in
-            guard let self = self else { return }
-            self.consentInformation.consentStatus = .personalized
-            handler(.personalized)
-        }
-        alertController.addAction(personalizedAction)
-        
-        // Non-Personalized action
-        let nonPersonalizedAction = UIAlertAction(title: content.actionAllowNonPersonalized, style: .default) { [weak self] action in
-            guard let self = self else { return }
-            self.consentInformation.consentStatus = .nonPersonalized
-            handler(.nonPersonalized)
-        }
-        alertController.addAction(nonPersonalizedAction)
-        
-        // Ad free action
-        if let actionAdFree = content.actionAdFree {
-            let adFreeAction = UIAlertAction(title: actionAdFree, style: .default) { [weak self] action in
-                guard let self = self else { return }
-                self.consentInformation.consentStatus = .unknown
-                handler(.adFree)
-            }
-            alertController.addAction(adFreeAction)
-        }
-        
-        // Present alert
-        DispatchQueue.main.async {
-            viewController.present(alertController, animated: true)
+            completion(.success(form))
         }
     }
 }

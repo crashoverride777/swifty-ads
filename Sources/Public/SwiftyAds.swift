@@ -89,7 +89,7 @@ public final class SwiftyAds: NSObject {
     private var requestBuilder: SwiftyAdsRequestBuilderType {
         SwiftyAdsRequestBuilder(
             isGDPRRequired: consentManager.status != .notRequired,
-            isNonPersonalizedOnly: consentManager.status == .nonPersonalized,
+            //isNonPersonalizedOnly: consentManager.status == .nonPersonalized,
             isTaggedForUnderAgeOfConsent: consentManager.status == .underAge
         )
     }
@@ -213,11 +213,12 @@ extension SwiftyAds: SwiftyAdsType {
         consentManager = SwiftyAdsConsentManager(
             consentInformation: .sharedInstance,
             configuration: configuration,
-            consentStyle: consentStyle,
-            statusDidChange: consentStatusDidChange
+            environment: environment
+            //consentStyle: consentStyle,
+            //statusDidChange: consentStatusDidChange
         )
         
-        consentManager.requestUpdate { [weak self] status in
+        consentManager.requestUpdate { [weak self] result in
             guard let self = self else { return }
             func loadAds() {
                 if !self.isDisabled {
@@ -225,17 +226,29 @@ extension SwiftyAds: SwiftyAdsType {
                 }
                 self.rewardedAd?.load()
             }
-            
-            if status.hasConsent {
-                loadAds()
-                completion(status)
-            } else {
-                self.consentManager.showForm(from: viewController) { status in
-                    if status.hasConsent {
-                        loadAds()
-                        completion(status)
+
+            switch result {
+            case .success(let status):
+                if status.hasConsent {
+                    loadAds()
+                    completion(status)
+                } else {
+                    self.consentManager.showForm(from: viewController) { result in
+                        switch result {
+                        case .success(let status):
+                            if status.hasConsent {
+                                loadAds()
+                                completion(status)
+                            }
+                        case .failure(let error):
+                            print(error)
+                            #warning("fix")
+                        }
                     }
                 }
+            case .failure(let error):
+                print(error)
+                #warning("fix")
             }
         }
     }
@@ -244,7 +257,8 @@ extension SwiftyAds: SwiftyAdsType {
     ///
     /// - parameter viewController: The view controller that will present the consent form.
     public func askForConsent(from viewController: UIViewController) {
-        consentManager.showForm(from: viewController, handler: nil)
+        #warning("handle completion")
+        consentManager.showForm(from: viewController, completion: nil)
     }
     
     /// Show banner ad

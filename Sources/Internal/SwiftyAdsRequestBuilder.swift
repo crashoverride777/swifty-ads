@@ -32,16 +32,16 @@ final class SwiftyAdsRequestBuilder {
     // MARK: - Properties
     
     private let isGDPRRequired: Bool
-    private let isNonPersonalizedOnly: Bool
+    //private let isNonPersonalizedOnly: Bool
     private let isTaggedForUnderAgeOfConsent: Bool
     
     // MARK: - Initialization
     
     init(isGDPRRequired: Bool,
-         isNonPersonalizedOnly: Bool,
+         //isNonPersonalizedOnly: Bool,
          isTaggedForUnderAgeOfConsent: Bool) {
         self.isGDPRRequired = isGDPRRequired
-        self.isNonPersonalizedOnly = isNonPersonalizedOnly
+        //self.isNonPersonalizedOnly = isNonPersonalizedOnly
         self.isTaggedForUnderAgeOfConsent = isTaggedForUnderAgeOfConsent
     }
 }
@@ -60,11 +60,12 @@ extension SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
             
         // Create additional parameters with under age of consent
         var additionalParameters: [String: Any] = ["tag_for_under_age_of_consent": isTaggedForUnderAgeOfConsent]
-      
-        // Update for non personalized if needed
-        if isNonPersonalizedOnly {
-            additionalParameters["npa"] = "1"
-        }
+
+        #warning("no longer exists?")
+//        // Update for non personalized if needed
+//        if isNonPersonalizedOnly {
+//            additionalParameters["npa"] = "1"
+//        }
         
         // Create extras
         let extras = GADExtras()

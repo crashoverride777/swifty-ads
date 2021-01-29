@@ -24,15 +24,14 @@ import Foundation
 
 public enum SwiftyAdsConsentStatus {
     case notRequired
-    case personalized
-    case nonPersonalized
-    case adFree
+    case required
+    case obtained
     case underAge
     case unknown
-    
+
     public var hasConsent: Bool {
         switch self {
-        case .notRequired, .personalized, .nonPersonalized, .underAge:
+        case .obtained, .underAge:
             return true
         default:
             return false
