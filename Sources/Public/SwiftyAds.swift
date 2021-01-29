@@ -29,10 +29,9 @@ public protocol SwiftyAdsType: AnyObject {
     var isRewardedVideoReady: Bool { get }
     func setup(with viewController: UIViewController,
                environment: SwiftyAdsEnvironment,
-               consentStyle: SwiftyAdsConsentStyle,
-               consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                completion: @escaping (SwiftyAdsConsentStatus) -> Void)
-    func askForConsent(from viewController: UIViewController)
+    func askForConsent(from viewController: UIViewController,
+                       completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
     func showBanner(from viewController: UIViewController,
                     atTop isAtTop: Bool,
                     ignoresSafeArea: Bool,
@@ -153,21 +152,17 @@ extension SwiftyAds: SwiftyAdsType {
     /// Setup swift ad
     ///
     /// - parameter viewController: The view controller that will present the consent alert if needed.
-    /// - parameter environment: Sets the environment fof swifty ads to display ads.
-    /// - parameter consentStyle: The style of the consent alert.
-    /// - parameter consentStatusDidChange: A handler that will fire everytime the consent status has changed.
+    /// - parameter environment: Sets the environment for ads to display.
     /// - parameter completion: A handler that will return the current consent status after the consent alert has been dismissed.
     public func setup(with viewController: UIViewController,
                       environment: SwiftyAdsEnvironment,
-                      consentStyle: SwiftyAdsConsentStyle,
-                      consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                       completion: @escaping (SwiftyAdsConsentStatus) -> Void) {
         // Update configuration for selected environment
         let configuration: SwiftyAdsConfiguration
         switch environment {
         case .production:
             configuration = .production
-        case .debug(let testDeviceIdentifiers):
+        case .debug(let testDeviceIdentifiers, _, _):
             configuration = .debug
             mobileAds.requestConfiguration.testDeviceIdentifiers = testDeviceIdentifiers//kGADSimulatorID
         }
@@ -209,56 +204,57 @@ extension SwiftyAds: SwiftyAdsType {
             )
         }
      
-        // Create consent manager and make request
+        // Create consent
         consentManager = SwiftyAdsConsentManager(
             consentInformation: .sharedInstance,
             configuration: configuration,
             environment: environment
-            //consentStyle: consentStyle,
-            //statusDidChange: consentStatusDidChange
         )
-        
-        consentManager.requestUpdate { [weak self] result in
-            guard let self = self else { return }
-            func loadAds() {
-                if !self.isDisabled {
-                    self.interstitialAd?.load()
-                }
-                self.rewardedAd?.load()
-            }
 
-            switch result {
-            case .success(let status):
-                if status.hasConsent {
-                    loadAds()
-                    completion(status)
-                } else {
-                    self.consentManager.showForm(from: viewController) { result in
-                        switch result {
-                        case .success(let status):
-                            if status.hasConsent {
-                                loadAds()
-                                completion(status)
+        // Request consent update
+        DispatchQueue.main.async {
+            self.consentManager.requestUpdate { [weak self] result in
+                guard let self = self else { return }
+                func loadAds() {
+                    if !self.isDisabled {
+                        self.interstitialAd?.load()
+                    }
+                    self.rewardedAd?.load()
+                }
+
+                switch result {
+                case .success(let status):
+                    if status.hasConsent {
+                        loadAds()
+                        completion(status)
+                    } else {
+                        self.consentManager.showForm(from: viewController) { result in
+                            switch result {
+                            case .success(let status):
+                                if status.hasConsent {
+                                    loadAds()
+                                    completion(status)
+                                }
+                            case .failure(let error):
+                                print(error)
+                                #warning("fix")
                             }
-                        case .failure(let error):
-                            print(error)
-                            #warning("fix")
                         }
                     }
+                case .failure(let error):
+                    print(error)
+                    #warning("fix")
                 }
-            case .failure(let error):
-                print(error)
-                #warning("fix")
             }
         }
     }
 
-    /// Ask for consent e.g when consent button is pressed
+    /// Ask for consent again, for example when consent button is pressed
     ///
     /// - parameter viewController: The view controller that will present the consent form.
-    public func askForConsent(from viewController: UIViewController) {
-        #warning("handle completion")
-        consentManager.showForm(from: viewController, completion: nil)
+    /// - parameter completion: A handler that will return the updated consent status.
+    public func askForConsent(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
+        consentManager.showForm(from: viewController, completion: completion)
     }
     
     /// Show banner ad

@@ -26,7 +26,7 @@ Sign up for an [AdMob account](https://support.google.com/admob/answer/3052638?h
 
 ## GDPR in EEA (European Economic Area)
 
-[READ](https://developers.google.com/admob/ios/eu-consent#collect_consent)
+[READ](https://developers.google.com/admob/ump/ios/quick-start)
 
 ## Mediation
 

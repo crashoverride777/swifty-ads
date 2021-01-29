@@ -27,21 +27,12 @@ struct SwiftyAdsConfiguration: Decodable {
     let interstitialAdUnitId: String?
     let rewardedVideoAdUnitId: String?
     let nativeAdUnitId: String?
-    let privacyPolicyURL: String
     let isTaggedForUnderAgeOfConsent: Bool
-    let mediationNetworks: [String]
 
     var ids: [String] {
         [bannerAdUnitId, interstitialAdUnitId, rewardedVideoAdUnitId, nativeAdUnitId]
             .compactMap { $0 }
             .filter { !$0.isEmpty }
-    }
-    
-    var adNetworks: String {
-        let networks: [String] = ["Google AdMob"] + mediationNetworks
-        return networks
-            .map({ $0 })
-            .joined(separator: networks.count > 1 ? ", " : "")
     }
 }
 
@@ -68,9 +59,7 @@ extension SwiftyAdsConfiguration {
             interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
             rewardedVideoAdUnitId: "ca-app-pub-3940256099942544/1712485313",
             nativeAdUnitId: "ca-app-pub-3940256099942544/3986624511",
-            privacyPolicyURL: "https://example.com/privacyPolicy",
-            isTaggedForUnderAgeOfConsent: false,
-            mediationNetworks: ["Test Mediation Network 1, Test Mediation Network 2"]
+            isTaggedForUnderAgeOfConsent: false
         )
     }
 }

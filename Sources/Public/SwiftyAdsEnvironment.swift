@@ -21,8 +21,9 @@
 //    SOFTWARE.
 
 import Foundation
+import UserMessagingPlatform
 
 public enum SwiftyAdsEnvironment {
     case production
-    case debug(testDeviceIdentifiers: [String])
+    case debug(testDeviceIdentifiers: [String], geography: UMPDebugGeography, resetConsentInfo: Bool)
 }

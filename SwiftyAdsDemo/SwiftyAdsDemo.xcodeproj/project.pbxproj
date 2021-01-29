@@ -24,7 +24,6 @@
 		6A520CE2253DA95C0034F065 /* AdPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A520CE1253DA95C0034F065 /* AdPresenter.swift */; };
 		6A864BC925901827005D0789 /* NativeAdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A864BC825901827005D0789 /* NativeAdViewController.swift */; };
 		6AAD69FE240B2F0A001F4A7D /* SwiftyAdsConsentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD69FD240B2F0A001F4A7D /* SwiftyAdsConsentStatus.swift */; };
-		6AAD6A00240BDA2B001F4A7D /* SwiftyAdsConsentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD69FF240BDA2B001F4A7D /* SwiftyAdsConsentStyle.swift */; };
 		6AAD6A02240BDA4A001F4A7D /* SwiftyAdsEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD6A01240BDA4A001F4A7D /* SwiftyAdsEnvironment.swift */; };
 		6AC971D62401B06700A0BB91 /* SwiftyAdsInterstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971C82401B06600A0BB91 /* SwiftyAdsInterstitial.swift */; };
 		6AC971D72401B06700A0BB91 /* SwiftyAdsRewarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971C92401B06600A0BB91 /* SwiftyAdsRewarded.swift */; };
@@ -73,7 +72,6 @@
 		6A520CE1253DA95C0034F065 /* AdPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdPresenter.swift; sourceTree = "<group>"; };
 		6A864BC825901827005D0789 /* NativeAdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeAdViewController.swift; sourceTree = "<group>"; };
 		6AAD69FD240B2F0A001F4A7D /* SwiftyAdsConsentStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsConsentStatus.swift; sourceTree = "<group>"; };
-		6AAD69FF240BDA2B001F4A7D /* SwiftyAdsConsentStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsConsentStyle.swift; sourceTree = "<group>"; };
 		6AAD6A01240BDA4A001F4A7D /* SwiftyAdsEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsEnvironment.swift; sourceTree = "<group>"; };
 		6AC971C82401B06600A0BB91 /* SwiftyAdsInterstitial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsInterstitial.swift; sourceTree = "<group>"; };
 		6AC971C92401B06600A0BB91 /* SwiftyAdsRewarded.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsRewarded.swift; sourceTree = "<group>"; };
@@ -244,7 +242,6 @@
 			isa = PBXGroup;
 			children = (
 				6AAD69FD240B2F0A001F4A7D /* SwiftyAdsConsentStatus.swift */,
-				6AAD69FF240BDA2B001F4A7D /* SwiftyAdsConsentStyle.swift */,
 				6AAD6A01240BDA4A001F4A7D /* SwiftyAdsEnvironment.swift */,
 				6AC971D42401B06600A0BB91 /* SwiftyAds.swift */,
 			);
@@ -402,7 +399,6 @@
 				6AC971D82401B06700A0BB91 /* SwiftyAdsBanner.swift in Sources */,
 				6A520CE2253DA95C0034F065 /* AdPresenter.swift in Sources */,
 				6A4286052400609E0035487A /* AppDelegate.swift in Sources */,
-				6AAD6A00240BDA2B001F4A7D /* SwiftyAdsConsentStyle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -18,6 +18,7 @@ final class RootViewController: UITableViewController {
         case tabBarController
         case spriteKitScene
         case nativeAd
+        case updateConsent
         
         var title: String {
             switch self {
@@ -31,6 +32,8 @@ final class RootViewController: UITableViewController {
                 return "SpriteKit Game Scene"
             case .nativeAd:
                 return "Native Ad"
+            case .updateConsent:
+                return "Update Consent Status"
             }
         }
     }
@@ -105,6 +108,17 @@ final class RootViewController: UITableViewController {
 
         case .nativeAd:
             viewController = NativeAdViewController(swityAds: swiftyAds)
+
+        case .updateConsent:
+            swiftyAds.askForConsent(from: self) { result in
+                switch result {
+                case .success(let status):
+                    print("SwiftyAds did change consent status to \(status)")
+                case .failure(let error):
+                    print("SwiftyAds consent status change error \(error)")
+                }
+            }
+            return
         }
         
         guard let validViewController = viewController else { return }

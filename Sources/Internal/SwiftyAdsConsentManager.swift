@@ -38,7 +38,7 @@ enum SwiftyAdsConsentManagerError: Error {
     var localizedDescription: String {
         switch self {
         case .formNotLoaded:
-            return "The form was not loaded, call requestUpdate"
+            return "The form was not loaded, try calling requestUpdate again"
         }
     }
 }
@@ -46,7 +46,7 @@ enum SwiftyAdsConsentManagerError: Error {
 protocol SwiftyAdsConsentManagerType: class {
     var status: SwiftyAdsConsentStatus { get }
     func requestUpdate(completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
-    func showForm(from viewController: UIViewController, completion: ((Result<SwiftyAdsConsentStatus, Error>) -> Void)?)
+    func showForm(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
 }
 
 final class SwiftyAdsConsentManager {
@@ -98,10 +98,14 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
         let parameters = UMPRequestParameters()
 
         // Debug settings
-        if case .debug(let testDeviceIdentifiers) = environment {
+        if case .debug(let testDeviceIdentifiers, let geography, let resetConsentInfo) = environment {
+            if resetConsentInfo {
+                consentInformation.reset()
+            }
+
             let debugSettings = UMPDebugSettings()
             debugSettings.testDeviceIdentifiers = testDeviceIdentifiers
-            debugSettings.geography = .disabled
+            debugSettings.geography = geography
             parameters.debugSettings = debugSettings
         }
         
@@ -122,36 +126,38 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
             // You are now ready to see if a form is available.
             switch self.consentInformation.formStatus {
             case .available:
-                self.loadForm { [weak self] result in
-                    guard let self = self else { return }
-                    switch result {
-                    case .success(let form):
-                        self.form = form
-                        completion(.success(self.status))
-                    case .failure(let error):
-                        completion(.failure(error))
+                DispatchQueue.main.async {
+                    self.loadForm { [weak self] result in
+                        guard let self = self else { return }
+                        switch result {
+                        case .success(let form):
+                            self.form = form
+                            completion(.success(self.status))
+                        case .failure(let error):
+                            completion(.failure(error))
+                        }
                     }
                 }
             case .unavailable:
-                #warning("handle")
+                completion(.success(self.status))
             case .unknown:
-                #warning("handle")
+                completion(.success(self.status))
             @unknown default:
-                #warning("handle")
+                completion(.success(self.status))
             }
         }
     }
 
-    func showForm(from viewController: UIViewController, completion: ((Result<SwiftyAdsConsentStatus, Error>) -> Void)?) {
+    func showForm(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
         // Only display form if consent is required
         guard consentInformation.consentStatus == .required else {
-            completion?(.success(.notRequired))
+            completion(.success(self.status))
             return
         }
         
         // Ensure form is loaded
         guard let form = form else {
-            completion?(.failure(SwiftyAdsConsentManagerError.formNotLoaded))
+            completion(.failure(SwiftyAdsConsentManagerError.formNotLoaded))
             return
         }
 
@@ -160,11 +166,11 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
             guard let self = self else { return }
 
             if let error = error {
-                completion?(.failure(error))
+                completion(.failure(error))
                 return
             }
 
-            completion?(.success(self.status))
+            completion(.success(self.status))
         }
     }
 }

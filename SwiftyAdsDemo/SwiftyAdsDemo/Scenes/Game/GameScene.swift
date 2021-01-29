@@ -17,14 +17,11 @@ class GameScene: SKScene {
     private lazy var interstitialLabel: SKLabelNode = self.childNode(withName: "interstitialLabel") as! SKLabelNode
     private lazy var rewardedLabel: SKLabelNode = self.childNode(withName: "rewardedLabel") as! SKLabelNode
     private lazy var disableLabel: SKLabelNode = self.childNode(withName: "disableLabel") as! SKLabelNode
-    private lazy var consentLabel: SKLabelNode = self.childNode(withName: "consentLabel") as! SKLabelNode
     
     // MARK: - Life Cycle
     
     override func didMove(to view: SKView) {
         backgroundColor = .gray
-        refresh()
-        NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .adConsentStatusDidChange, object: nil)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -45,8 +42,6 @@ class GameScene: SKScene {
                 })
             case disableLabel:
                 swiftyAds.disable()
-            case consentLabel:
-                swiftyAds.askForConsent(from: viewController)
             default:
                 break
             }
@@ -67,14 +62,5 @@ class GameScene: SKScene {
 
     func configure(swiftyAds: SwiftyAdsType) {
         self.swiftyAds = swiftyAds
-    }
-}
- 
-// MARK: - Private Methods
- 
-private extension GameScene {
-    
-    @objc func refresh() {
-        consentLabel.isHidden = !swiftyAds.isRequiredToAskForConsent
     }
 }
