@@ -36,20 +36,19 @@ struct SwiftyAdsConfiguration: Decodable {
     }
 }
 
-// MARK: - Static
-
 extension SwiftyAdsConfiguration {
     
     static var production: SwiftyAdsConfiguration {
         guard let configurationURL = Bundle.main.url(forResource: "SwiftyAds", withExtension: "plist") else {
-            fatalError("SwiftyAdsConfiguration could not find SwiftyAds.plist in the main bundle.")
+            fatalError("SwiftyAds could not find SwiftyAds.plist in the main bundle.")
         }
+
         do {
             let data = try Data(contentsOf: configurationURL)
             let decoder = PropertyListDecoder()
             return try decoder.decode(SwiftyAdsConfiguration.self, from: data)
         } catch {
-            fatalError("SwiftyAdsConfiguration decoding SwiftyAds.plist error \(error)")
+            fatalError("SwiftyAds decoding SwiftyAds.plist error \(error)")
         }
     }
     

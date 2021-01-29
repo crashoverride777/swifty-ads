@@ -20,21 +20,23 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-import Foundation
+import UserMessagingPlatform
 
-public enum SwiftyAdsConsentStatus {
-    case notRequired
-    case required
-    case obtained
-    case underAge
-    case unknown
+public typealias SwiftyAdsConsentStatus = UMPConsentStatus
 
-    public var hasConsent: Bool {
-        switch self {
-        case .obtained, .underAge:
-            return true
-        default:
-            return false
-        }
-    }
-}
+//public enum SwiftyAdsConsentStatus {
+//    case notRequired
+//    case required
+//    case obtained
+//    case underAge
+//    case unknown
+//
+//    public var hasConsent: Bool {
+//        switch self {
+//        case .obtained, .underAge:
+//            return true
+//        default:
+//            return false
+//        }
+//    }
+//}

@@ -110,6 +110,8 @@ final class RootViewController: UITableViewController {
             viewController = NativeAdViewController(swityAds: swiftyAds)
 
         case .updateConsent:
+            tableView.deselectRow(at: indexPath, animated: true)
+            
             swiftyAds.askForConsent(from: self) { result in
                 switch result {
                 case .success(let status):

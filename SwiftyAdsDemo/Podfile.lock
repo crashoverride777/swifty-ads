@@ -31,12 +31,10 @@ PODS:
     - nanopb/encode (= 2.30907.0)
   - nanopb/decode (2.30907.0)
   - nanopb/encode (2.30907.0)
-  - PersonalizedAdConsent (1.0.5)
   - PromisesObjC (1.2.12)
 
 DEPENDENCIES:
   - Google-Mobile-Ads-SDK (~> 7.69.0)
-  - PersonalizedAdConsent (~> 1.0.5)
 
 SPEC REPOS:
   trunk:
@@ -45,7 +43,6 @@ SPEC REPOS:
     - GoogleUserMessagingPlatform
     - GoogleUtilities
     - nanopb
-    - PersonalizedAdConsent
     - PromisesObjC
 
 SPEC CHECKSUMS:
@@ -54,9 +51,8 @@ SPEC CHECKSUMS:
   GoogleUserMessagingPlatform: b168e8c46cd8f92aa3e34b584c4ca78a411ce367
   GoogleUtilities: d866834472f1324d080496bc67ab3ce5d0d46027
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
-  PersonalizedAdConsent: dbecabb3467df967c16d9cebc2ef4a8890e4bbd8
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
 
-PODFILE CHECKSUM: c94178e391e89a4a49812b40dc69b130b9ed051c
+PODFILE CHECKSUM: 45954b3f362920a5e9e32301e634cfabd15779ea
 
 COCOAPODS: 1.10.1

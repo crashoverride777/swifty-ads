@@ -139,10 +139,14 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
                 }
             }
         }
+
+        guard let bannerViewConstraint = bannerViewConstraint else {
+            fatalError("SwiftyAdsBanner constraint not set")
+        }
          
         NSLayoutConstraint.activate([
             bannerView.centerXAnchor.constraint(equalTo: viewController.view.safeAreaLayoutGuide.centerXAnchor),
-            bannerViewConstraint!
+            bannerViewConstraint
         ])
         
         // Update the adaptive banner size

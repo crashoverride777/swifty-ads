@@ -75,21 +75,22 @@ public final class SwiftyAds: NSObject {
     
     private let mobileAds: GADMobileAds
     private let intervalTracker: IntervalTracker
-    
+
     private var bannerAd: SwiftyAdsBannerType?
     private var interstitialAd: SwiftyAdsInterstitialType?
     private var rewardedAd: SwiftyAdsRewardedType?
     private var nativeAd: SwiftyAdsNativeType?
     private var consentManager: SwiftyAdsConsentManagerType!
+    private var configuration: SwiftyAdsConfiguration?
     private var isDisabled = false
         
     // MARK: - Computed Properties
     
     private var requestBuilder: SwiftyAdsRequestBuilderType {
         SwiftyAdsRequestBuilder(
-            isGDPRRequired: consentManager.status != .notRequired,
+            isRequiredToAskForConsent: isRequiredToAskForConsent,
             //isNonPersonalizedOnly: consentManager.status == .nonPersonalized,
-            isTaggedForUnderAgeOfConsent: consentManager.status == .underAge
+            isTaggedForUnderAgeOfConsent: configuration?.isTaggedForUnderAgeOfConsent ?? true
         )
     }
     
@@ -126,17 +127,12 @@ extension SwiftyAds: SwiftyAdsType {
     /// Check if user has given consent e.g to hide rewarded video button
     /// Also returns true if user is outside EEA and is therefore not required to provide consent
     public var hasConsent: Bool {
-        consentManager.status.hasConsent
+        consentManager.status == .obtained
     }
      
     /// Check if we must ask for consent e.g to hide change consent button in apps settings menu (required GDPR requirement)
     public var isRequiredToAskForConsent: Bool {
-        switch consentManager.status {
-        case .notRequired, .underAge: // if under age, cannot legally consent
-            return false
-        default:
-            return true
-        }
+        consentManager.status != .notRequired
     }
      
     /// Check if interstitial video is ready (e.g to show alternative ad like an in house ad)
@@ -166,6 +162,9 @@ extension SwiftyAds: SwiftyAdsType {
             configuration = .debug
             mobileAds.requestConfiguration.testDeviceIdentifiers = testDeviceIdentifiers//kGADSimulatorID
         }
+
+        // Keep reference to configuration
+        self.configuration = configuration
         
         // Create ads
         if let bannerAdUnitId = configuration.bannerAdUnitId {
@@ -204,7 +203,7 @@ extension SwiftyAds: SwiftyAdsType {
             )
         }
      
-        // Create consent
+        // Create consent manager
         consentManager = SwiftyAdsConsentManager(
             consentInformation: .sharedInstance,
             configuration: configuration,
@@ -215,34 +214,31 @@ extension SwiftyAds: SwiftyAdsType {
         DispatchQueue.main.async {
             self.consentManager.requestUpdate { [weak self] result in
                 guard let self = self else { return }
-                func loadAds() {
-                    if !self.isDisabled {
-                        self.interstitialAd?.load()
-                    }
-                    self.rewardedAd?.load()
-                }
-
                 switch result {
                 case .success(let status):
-                    if status.hasConsent {
-                        loadAds()
+                    if status == .obtained {
+                        self.loadAds()
                         completion(status)
-                    } else {
-                        self.consentManager.showForm(from: viewController) { result in
-                            switch result {
-                            case .success(let status):
-                                if status.hasConsent {
-                                    loadAds()
-                                    completion(status)
+                    } else if status == .required {
+                        DispatchQueue.main.async {
+                            self.consentManager.showForm(from: viewController) { result in
+                                switch result {
+                                case .success(let status):
+                                    if status == .obtained {
+                                        self.loadAds()
+                                        completion(status)
+                                    }
+                                case .failure(let error):
+                                    print(error)
+                                    completion(self.consentManager.status)
+                                    #warning("fix")
                                 }
-                            case .failure(let error):
-                                print(error)
-                                #warning("fix")
                             }
                         }
                     }
                 case .failure(let error):
                     print(error)
+                    completion(self.consentManager.status)
                     #warning("fix")
                 }
             }
@@ -253,8 +249,29 @@ extension SwiftyAds: SwiftyAdsType {
     ///
     /// - parameter viewController: The view controller that will present the consent form.
     /// - parameter completion: A handler that will return the updated consent status.
-    public func askForConsent(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
-        consentManager.showForm(from: viewController, completion: completion)
+    public func askForConsent(from viewController: UIViewController,
+                         completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
+        // Request consent update
+        DispatchQueue.main.async {
+            self.consentManager.requestUpdate { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success:
+                    DispatchQueue.main.async {
+                        self.consentManager.showForm(from: viewController) { result in
+                            switch result {
+                            case .success(let status):
+                                completion(.success(status))
+                            case .failure(let error):
+                                completion(.failure(error))
+                            }
+                        }
+                    }
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
     }
     
     /// Show banner ad
@@ -378,5 +395,16 @@ extension SwiftyAds: SwiftyAdsType {
         isDisabled = true
         removeBanner()
         interstitialAd?.stopLoading()
+    }
+}
+
+// MARK: - Private Methods
+
+private extension SwiftyAds {
+
+    func loadAds() {
+        rewardedAd?.load()
+        guard !isDisabled else { return }
+        interstitialAd?.load()
     }
 }

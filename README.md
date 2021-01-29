@@ -77,7 +77,7 @@ Create a setup method and call it as soon as your app launches e.g AppDelegate d
 ```swift
 func setupSwiftyAds() {
     #if DEBUG
-    let mode: SwiftyAdsMode = .debug(testDeviceIdentifiers: []) // add your test device identifiers if needed
+    let mode: SwiftyAdsMode = .debug(testDeviceIdentifiers: [], geography: .disabled, resetConsentInfo: true)
     #else
     let mode: SwiftyAdsMode = .production
     #endif

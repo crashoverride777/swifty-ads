@@ -32,17 +32,6 @@ Present the form.
 Provide a way for users to change their consent.
 */
 
-enum SwiftyAdsConsentManagerError: Error {
-    case formNotLoaded
-
-    var localizedDescription: String {
-        switch self {
-        case .formNotLoaded:
-            return "The form was not loaded, try calling requestUpdate again"
-        }
-    }
-}
-
 protocol SwiftyAdsConsentManagerType: class {
     var status: SwiftyAdsConsentStatus { get }
     func requestUpdate(completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
@@ -50,6 +39,12 @@ protocol SwiftyAdsConsentManagerType: class {
 }
 
 final class SwiftyAdsConsentManager {
+
+    // MARK: - Types
+
+    enum FormError: Error {
+        case notAvailable
+    }
 
     // MARK: - Properties
 
@@ -75,10 +70,6 @@ final class SwiftyAdsConsentManager {
 extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
 
     var status: SwiftyAdsConsentStatus {
-        guard !configuration.isTaggedForUnderAgeOfConsent else {
-            return .underAge
-        }
-        
         switch consentInformation.consentStatus {
         case .obtained:
             return .obtained
@@ -97,19 +88,19 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
         // Create a UMPRequestParameters object.
         let parameters = UMPRequestParameters()
 
-        // Debug settings
+        // Set debug settings
         if case .debug(let testDeviceIdentifiers, let geography, let resetConsentInfo) = environment {
-            if resetConsentInfo {
-                consentInformation.reset()
-            }
-
             let debugSettings = UMPDebugSettings()
             debugSettings.testDeviceIdentifiers = testDeviceIdentifiers
             debugSettings.geography = geography
             parameters.debugSettings = debugSettings
+
+            if resetConsentInfo {
+                consentInformation.reset()
+            }
         }
         
-        // Set tag for under age of consent. Here false means users are not under age.
+        // Set tag for under age of consent. False means users are not under age.
         parameters.tagForUnderAgeOfConsent = configuration.isTaggedForUnderAgeOfConsent
 
         // Request an update to the consent information.
@@ -122,20 +113,18 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
                 return
             }
 
-            // The consent information state was updated.
-            // You are now ready to see if a form is available.
+            // The consent information state was updated and we can now check if a form is available.
             switch self.consentInformation.formStatus {
             case .available:
                 DispatchQueue.main.async {
-                    self.loadForm { [weak self] result in
-                        guard let self = self else { return }
-                        switch result {
-                        case .success(let form):
-                            self.form = form
-                            completion(.success(self.status))
-                        case .failure(let error):
+                    UMPConsentForm.load { (form, error) in
+                        if let error = error {
                             completion(.failure(error))
+                            return
                         }
+
+                        self.form = form
+                        completion(.success(self.status))
                     }
                 }
             case .unavailable:
@@ -149,15 +138,9 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
     }
 
     func showForm(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
-        // Only display form if consent is required
-        guard consentInformation.consentStatus == .required else {
-            completion(.success(self.status))
-            return
-        }
-        
         // Ensure form is loaded
         guard let form = form else {
-            completion(.failure(SwiftyAdsConsentManagerError.formNotLoaded))
+            completion(.failure(FormError.notAvailable))
             return
         }
 
@@ -171,22 +154,6 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
             }
 
             completion(.success(self.status))
-        }
-    }
-}
-
-// MARK: - Private Methods
-
-private extension SwiftyAdsConsentManager {
-
-    func loadForm(completion: @escaping (Result<UMPConsentForm?, Error>) -> Void) {
-        UMPConsentForm.load { (form, error) in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-
-            completion(.success(form))
         }
     }
 }
