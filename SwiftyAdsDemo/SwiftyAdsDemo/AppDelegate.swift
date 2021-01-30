@@ -46,8 +46,8 @@ private extension AppDelegate {
         let environment: SwiftyAdsEnvironment = .production
         #endif
         swiftyAds.setup(
-            with: rootViewController,
-            environment: environment,
+            from: rootViewController,
+            in: environment,
             completion: ({ consentStatus in
                 print("SwiftyAds did finish setup with consent status \(consentStatus)")
             })

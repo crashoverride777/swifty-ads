@@ -35,8 +35,8 @@ public protocol SwiftyAdsType: AnyObject {
     var hasConsent: Bool { get }
     var isInterstitialReady: Bool { get }
     var isRewardedVideoReady: Bool { get }
-    func setup(with viewController: UIViewController,
-               environment: SwiftyAdsEnvironment,
+    func setup(from viewController: UIViewController,
+               in environment: SwiftyAdsEnvironment,
                completion: @escaping (SwiftyAdsConsentStatus) -> Void)
     func askForConsent(from viewController: UIViewController,
                        completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
@@ -162,8 +162,8 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter environment: The environment for ads to be displayed.
     /// - parameter completion: A completion handler that will return the current consent status after the consent flow has finished.
-    public func setup(with viewController: UIViewController,
-                      environment: SwiftyAdsEnvironment,
+    public func setup(from viewController: UIViewController,
+                      in environment: SwiftyAdsEnvironment,
                       completion: @escaping (SwiftyAdsConsentStatus) -> Void) {
         // Update configuration for selected environment
         let configuration: SwiftyAdsConfiguration
@@ -182,7 +182,9 @@ extension SwiftyAds: SwiftyAdsType {
         if let bannerAdUnitId = configuration.bannerAdUnitId {
             bannerAd = SwiftyAdsBanner(
                 adUnitId: bannerAdUnitId,
-                request: requestBuilder.build
+                request: { [unowned self] in
+                    self.requestBuilder.build()
+                }
             )
         }
 
@@ -190,7 +192,9 @@ extension SwiftyAds: SwiftyAdsType {
         if let interstitialAdUnitId = configuration.interstitialAdUnitId {
             interstitialAd = SwiftyAdsInterstitial(
                 adUnitId: interstitialAdUnitId,
-                request: requestBuilder.build
+                request: { [unowned self] in
+                    self.requestBuilder.build()
+                }
             )
         }
 
@@ -198,7 +202,9 @@ extension SwiftyAds: SwiftyAdsType {
         if let rewardedVideoAdUnitId = configuration.rewardedVideoAdUnitId {
             rewardedAd = SwiftyAdsRewarded(
                 adUnitId: rewardedVideoAdUnitId,
-                request: requestBuilder.build
+                request: { [unowned self] in
+                    self.requestBuilder.build()
+                }
             )
         }
 
@@ -206,7 +212,9 @@ extension SwiftyAds: SwiftyAdsType {
         if let nativeAdUnitId = configuration.nativeAdUnitId {
             nativeAd = SwiftyAdsNative(
                 adUnitId: nativeAdUnitId,
-                request: requestBuilder.build
+                request: { [unowned self] in
+                    self.requestBuilder.build()
+                }
             )
         }
      
