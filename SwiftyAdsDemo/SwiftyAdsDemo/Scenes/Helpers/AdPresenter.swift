@@ -11,9 +11,9 @@ import UIKit
 // Convenience helper for this demo project to display ads
 enum AdPresenter {
     
-    static func showBanner(from viewController: UIViewController, swiftyAds: SwiftyAdsType) {
-        swiftyAds.showBanner(
-            from: viewController,
+    static func prepareBanner(in viewController: UIViewController, swiftyAds: SwiftyAdsType) {
+        swiftyAds.prepareBanner(
+            in: viewController,
             atTop: false,
             isUsingSafeArea: true,
             animationDuration: 1.5,
@@ -27,6 +27,10 @@ enum AdPresenter {
                 print("SwiftyAds banner ad error \(error)")
             })
         )
+    }
+
+    static func showBanner(isLandscape: Bool, swiftyAds: SwiftyAdsType) {
+        swiftyAds.showBanner(isLandscape: isLandscape)
     }
     
     static func showInterstitialAd(from viewController: UIViewController, swiftyAds: SwiftyAdsType) {

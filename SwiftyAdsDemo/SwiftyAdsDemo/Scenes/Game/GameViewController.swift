@@ -7,7 +7,7 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        AdPresenter.showBanner(from: self, swiftyAds: swiftyAds)
+        AdPresenter.prepareBanner(in: self, swiftyAds: swiftyAds)
         
         if let scene = GameScene(fileNamed: "GameScene") {
             scene.configure(swiftyAds: swiftyAds)
@@ -25,6 +25,11 @@ class GameViewController: UIViewController {
             
             skView.presentScene(scene)
         }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        AdPresenter.showBanner(isLandscape: view.frame.size.width > view.frame.size.height, swiftyAds: swiftyAds)
     }
     
     override var shouldAutorotate: Bool {
@@ -46,8 +51,9 @@ class GameViewController: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate(alongsideTransition: { _ in
-            self.swiftyAds.updateBannerForOrientationChange(isLandscape: size.width > size.height)
+        coordinator.animate(alongsideTransition: { [weak self] _ in
+            guard let self = self else { return }
+            AdPresenter.showBanner(isLandscape: size.width > size.height, swiftyAds: self.swiftyAds)
         })
     }
 

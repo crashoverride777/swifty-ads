@@ -41,14 +41,14 @@ public protocol SwiftyAdsType: AnyObject {
                completion: @escaping (SwiftyAdsConsentStatus) -> Void)
     func askForConsent(from viewController: UIViewController,
                        completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
-    func showBanner(from viewController: UIViewController,
-                    atTop isAtTop: Bool,
-                    isUsingSafeArea: Bool,
-                    animationDuration: TimeInterval,
-                    onOpen: (() -> Void)?,
-                    onClose: (() -> Void)?,
-                    onError: ((Error) -> Void)?)
-    func updateBannerForOrientationChange(isLandscape: Bool)
+    func prepareBanner(in viewController: UIViewController,
+                       atTop isAtTop: Bool,
+                       isUsingSafeArea: Bool,
+                       animationDuration: TimeInterval,
+                       onOpen: (() -> Void)?,
+                       onClose: (() -> Void)?,
+                       onError: ((Error) -> Void)?)
+    func showBanner(isLandscape: Bool)
     func removeBanner()
     func showInterstitial(from viewController: UIViewController,
                           withInterval interval: Int?,
@@ -291,35 +291,35 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter onOpen: An optional callback when the banner was presented.
     /// - parameter onClose: An optional callback when the banner was dismissed or removed.
     /// - parameter onError: An optional callback when an error has occurred.
-    public func showBanner(from viewController: UIViewController,
-                           atTop isAtTop: Bool,
-                           isUsingSafeArea: Bool,
-                           animationDuration: TimeInterval,
-                           onOpen: (() -> Void)?,
-                           onClose: (() -> Void)?,
-                           onError: ((Error) -> Void)?) {
+    public func prepareBanner(in viewController: UIViewController,
+                              atTop isAtTop: Bool,
+                              isUsingSafeArea: Bool,
+                              animationDuration: TimeInterval,
+                              onOpen: (() -> Void)?,
+                              onClose: (() -> Void)?,
+                              onError: ((Error) -> Void)?) {
         guard !isDisabled else { return }
         guard hasConsent else { return }
-        guard let bannerAd = bannerAd else { return }
-        
-        bannerAd.show(
-            from: viewController,
+
+        bannerAd?.prepare(
+            in: viewController,
             at: isAtTop ? .top(isUsingSafeArea: isUsingSafeArea) : .bottom(isUsingSafeArea: isUsingSafeArea),
-            isLandscape: UIDevice.current.orientation.isLandscape,
             animationDuration: animationDuration,
             onOpen: onOpen,
             onClose: onClose,
             onError: onError
         )
     }
-    
-    /// Update banner for orientation change
+
+    /// Show the prepared banner
     ///
-    /// - parameter isLandscape: An flag to tell the banner if it should be refreshed for landscape or portrait orientation.
-    public func updateBannerForOrientationChange(isLandscape: Bool) {
-        bannerAd?.updateSize(isLandscape: isLandscape)
+    /// - parameter isLandscape: If true banner is sized for landscape, otherwise portrait.
+    public func showBanner(isLandscape: Bool) {
+        guard !isDisabled else { return }
+        guard hasConsent else { return }
+        bannerAd?.show(isLandscape: isLandscape)
     }
-    
+
     /// Remove banner ads
     public func removeBanner() {
         bannerAd?.remove()

@@ -28,15 +28,14 @@ enum BannerAdPositition {
 }
 
 protocol SwiftyAdsBannerType: AnyObject {
-    func show(from viewController: UIViewController,
-              at position: BannerAdPositition,
-              isLandscape: Bool,
-              animationDuration: TimeInterval,
-              onOpen: (() -> Void)?,
-              onClose: (() -> Void)?,
-              onError: ((Error) -> Void)?)
+    func prepare(in viewController: UIViewController,
+                 at position: BannerAdPositition,
+                 animationDuration: TimeInterval,
+                 onOpen: (() -> Void)?,
+                 onClose: (() -> Void)?,
+                 onError: ((Error) -> Void)?)
+    func show(isLandscape: Bool)
     func remove()
-    func updateSize(isLandscape: Bool)
 }
 
 final class SwiftyAdsBanner: NSObject {
@@ -56,20 +55,7 @@ final class SwiftyAdsBanner: NSObject {
     private var animator: UIViewPropertyAnimator?
     private var currentView: UIView?
     private var visibleConstant: CGFloat = 0
-    
-    // MARK: - Computed Properties
-    
-    private var currentViewWidth: CGFloat {
-        guard let currentView = currentView else { return 200 }
-        switch position {
-        case .top(let isUsingSafeArea), .bottom(let isUsingSafeArea):
-            if isUsingSafeArea {
-                return currentView.frame.inset(by: currentView.safeAreaInsets).size.width
-            } else {
-                return currentView.frame.size.width
-            }
-        }
-    }
+    private var hiddenConstant: CGFloat = 400
     
     // MARK: - Initialization
     
@@ -84,13 +70,12 @@ final class SwiftyAdsBanner: NSObject {
 
 extension SwiftyAdsBanner: SwiftyAdsBannerType {
     
-    func show(from viewController: UIViewController,
-              at position: BannerAdPositition,
-              isLandscape: Bool,
-              animationDuration: TimeInterval,
-              onOpen: (() -> Void)?,
-              onClose: (() -> Void)?,
-              onError: ((Error) -> Void)?) {
+    func prepare(in viewController: UIViewController,
+                 at position: BannerAdPositition,
+                 animationDuration: TimeInterval,
+                 onOpen: (() -> Void)?,
+                 onClose: (() -> Void)?,
+                 onError: ((Error) -> Void)?) {
         self.position = position
         self.animationDuration = animationDuration
         self.onOpen = onOpen
@@ -117,7 +102,7 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
         viewController.view.addSubview(bannerView)
          
         // Add constraints
-        // We don't give the banner a width or height constraints, as the provided ad size will give the banner
+        // We don't give the banner a width or height constraint, as the provided ad size will give the banner
         // an intrinsic content size
         switch position {
         case .top(let isUsingSafeArea):
@@ -143,20 +128,47 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
         guard let bannerViewConstraint = bannerViewConstraint else {
             fatalError("SwiftyAdsBanner constraint not set")
         }
-         
+
+        // Activate constraints
         NSLayoutConstraint.activate([
             bannerView.centerXAnchor.constraint(equalTo: viewController.view.safeAreaLayoutGuide.centerXAnchor),
             bannerViewConstraint
         ])
-        
-        // Update the adaptive banner size
-        updateSize(isLandscape: isLandscape)
-        
-        // Create an ad request and load the adaptive banner ad.
-        bannerView.load(request())
-        
+
         // Move banner off screen
         animateToOffScreenPosition(bannerView, from: viewController, position: position, animated: false)
+    }
+
+    func show(isLandscape: Bool) {
+        guard let bannerView = bannerView else {
+            fatalError("SwiftyAds cannot show an unprepared banner, must call prepareBanner first")
+        }
+
+        guard let currentView = currentView else {
+            return
+        }
+
+        // Determine the view width to use for the ad width.
+        let frame = { () -> CGRect in
+            switch position {
+            case .top(let isUsingSafeArea), .bottom(let isUsingSafeArea):
+                if isUsingSafeArea {
+                    return currentView.frame.inset(by: currentView.safeAreaInsets)
+                } else {
+                    return currentView.frame
+                }
+            }
+        }()
+
+        // Get Adaptive GADAdSize and set the ad view.
+        if isLandscape {
+            bannerView.adSize = GADLandscapeAnchoredAdaptiveBannerAdSizeWithWidth(frame.size.width)
+        } else {
+            bannerView.adSize = GADPortraitAnchoredAdaptiveBannerAdSizeWithWidth(frame.size.width)
+        }
+
+        // Create an ad request and load the adaptive banner ad.
+        bannerView.load(request())
     }
     
     func remove() {
@@ -170,14 +182,6 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
         bannerViewConstraint = nil
         currentView = nil
         onClose?()
-    }
-    
-    func updateSize(isLandscape: Bool) {
-        if isLandscape {
-            bannerView?.adSize = GADLandscapeAnchoredAdaptiveBannerAdSizeWithWidth(currentViewWidth)
-        } else {
-            bannerView?.adSize = GADPortraitAnchoredAdaptiveBannerAdSizeWithWidth(currentViewWidth)
-        }
     }
 }
 
@@ -199,7 +203,7 @@ extension SwiftyAdsBanner: GADBannerViewDelegate {
 // MARK: - Private Methods
 
 private extension SwiftyAdsBanner {
-    
+
     func animateToOnScreenPosition(_ bannerAd: GADBannerView,
                                    from viewController: UIViewController?,
                                    completion: (() -> Void)? = nil) {
@@ -250,9 +254,9 @@ private extension SwiftyAdsBanner {
         let newConstant: CGFloat
         switch position {
         case .top:
-            newConstant = 0 - (bannerAd.adSize.size.height * 3) // *3 due to iPhoneX safe area
+            newConstant = -hiddenConstant
         case .bottom:
-            newConstant = 0 + (bannerAd.adSize.size.height * 3) // *3 due to iPhoneX safe area
+            newConstant = hiddenConstant
         }
 
         // Only animate the banner if we want it animated

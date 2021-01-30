@@ -34,13 +34,19 @@ final class TabBarControllerAd: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        AdPresenter.showBanner(from: self, swiftyAds: swiftyAds)
+        AdPresenter.prepareBanner(in: self, swiftyAds: swiftyAds)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        AdPresenter.showBanner(isLandscape: view.frame.width > view.frame.height, swiftyAds: swiftyAds)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate(alongsideTransition: { _ in
-            self.swiftyAds.updateBannerForOrientationChange(isLandscape: size.width > size.height)
+        coordinator.animate(alongsideTransition: { [weak self] _ in
+            guard let self = self else { return }
+            AdPresenter.showBanner(isLandscape: size.width > size.height, swiftyAds: self.swiftyAds)
         })
     }
 }
