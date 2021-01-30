@@ -20,13 +20,13 @@ A Swift library to display banner, interstitial, rewarded videos and native ads 
 
 Sign up for an [AdMob account](https://admob.google.com/home/get-started/) and create your required adUnitIDs. 
 
-## GDPR in EEA (European Economic Area)
-
-[READ](https://developers.google.com/admob/ump/ios/quick-start)
-
 ## Mediation
 
 [READ](https://developers.google.com/admob/ios/mediation)
+
+## ATT and GDPR
+
+SwiftyAds use Google`s [UMP](https://developers.google.com/admob/ump/ios/quick-start) (User Messaging Platform) SDK to handle user consent. This SDK handles both GDPR requests and also the iOS 14 ATT alert. Please read the Funding Choices [documentation](https://support.google.com/fundingchoices/answer/9180084) to ensure they are setup up correctly for ATT and GDPR.
 
 ## Installation
 
@@ -56,7 +56,8 @@ or manually
 
 ### Update Info.plist
 
-[READ](https://developers.google.com/admob/ios/quick-start#update_your_infoplist)
+- [AdMob](https://developers.google.com/admob/ios/quick-start#update_your_infoplist)
+- [UMP](https://developers.google.com/admob/ump/ios/quick-start#update_your_infoplist)
 
 ### Add SwiftyAds.plist
 
@@ -66,7 +67,7 @@ Download the template plist and add it to your projects main bundle. Than enter 
 
 ### Setup 
 
-Create a setup method and call it as soon as your app launches e.g `AppDelegate` didFinishLaunchingWithOptions. 
+Create a setup method and call it as soon as your app launches e.g `AppDelegate` didFinishLaunchingWithOptions. This method will also trigger the initial consent flow (GDPR and ATT).
 
 ```swift
 func setupSwiftyAds() {
@@ -255,7 +256,7 @@ if UserDefaults.standard.bool(forKey: "RemovedAdsKey") == true {
 }
 ```
 
-### Ask for consent again (GDPR) 
+### Ask for consent again
 
 It is required that the user has the option to change their GDPR consent settings, usually via a button in settings. 
 
