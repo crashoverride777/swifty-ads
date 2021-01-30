@@ -24,10 +24,11 @@ import GoogleMobileAds
 import UserMessagingPlatform
 
 public typealias SwiftyAdsConsentStatus = UMPConsentStatus
+public typealias SwiftyAdsDebugGeography = UMPDebugGeography
 
 public enum SwiftyAdsEnvironment {
     case production
-    case debug(testDeviceIdentifiers: [String], geography: UMPDebugGeography, resetConsentInfo: Bool)
+    case debug(testDeviceIdentifiers: [String], geography: SwiftyAdsDebugGeography, resetConsentInfo: Bool)
 }
 
 public protocol SwiftyAdsType: AnyObject {
@@ -42,7 +43,7 @@ public protocol SwiftyAdsType: AnyObject {
                        completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
     func showBanner(from viewController: UIViewController,
                     atTop isAtTop: Bool,
-                    ignoresSafeArea: Bool,
+                    isUsingSafeArea: Bool,
                     animationDuration: TimeInterval,
                     onOpen: (() -> Void)?,
                     onClose: (() -> Void)?,
@@ -285,14 +286,14 @@ extension SwiftyAds: SwiftyAdsType {
     ///
     /// - parameter viewController: The view controller that will present the ad.
     /// - parameter isAtTop: If set to true the banner will be displayed at the top.
-    /// - parameter ignoresSafeArea: If set to true the banner will ignore safe area margins
+    /// - parameter isUsingSafeArea: If set to true the banner will use the safe area margins.
     /// - parameter animationDuration: The duration of the banner to animate on/off screen.
     /// - parameter onOpen: An optional callback when the banner was presented.
     /// - parameter onClose: An optional callback when the banner was dismissed or removed.
     /// - parameter onError: An optional callback when an error has occurred.
     public func showBanner(from viewController: UIViewController,
                            atTop isAtTop: Bool,
-                           ignoresSafeArea: Bool,
+                           isUsingSafeArea: Bool,
                            animationDuration: TimeInterval,
                            onOpen: (() -> Void)?,
                            onClose: (() -> Void)?,
@@ -303,7 +304,7 @@ extension SwiftyAds: SwiftyAdsType {
         
         bannerAd.show(
             from: viewController,
-            at: isAtTop ? .top(ignoresSafeArea: ignoresSafeArea) : .bottom(ignoresSafeArea: ignoresSafeArea),
+            at: isAtTop ? .top(isUsingSafeArea: isUsingSafeArea) : .bottom(isUsingSafeArea: isUsingSafeArea),
             isLandscape: UIDevice.current.orientation.isLandscape,
             animationDuration: animationDuration,
             onOpen: onOpen,

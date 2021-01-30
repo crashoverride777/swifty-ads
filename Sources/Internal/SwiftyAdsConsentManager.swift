@@ -70,18 +70,7 @@ final class SwiftyAdsConsentManager {
 extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
 
     var status: SwiftyAdsConsentStatus {
-        switch consentInformation.consentStatus {
-        case .obtained:
-            return .obtained
-        case .required:
-            return .required
-        case .notRequired:
-            return .notRequired
-        case .unknown:
-            return .unknown
-        @unknown default:
-            return .unknown
-        }
+        consentInformation.consentStatus
     }
 
     func requestUpdate(completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {

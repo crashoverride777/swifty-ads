@@ -36,7 +36,7 @@ extension SwiftyAdsIntervalTracker: IntervalTracker {
         guard let interval = interval else {
             return true
         }
-        
+
         intervalCounter += 1
         
         guard intervalCounter >= interval else {

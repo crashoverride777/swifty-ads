@@ -23,8 +23,8 @@
 import GoogleMobileAds
 
 enum BannerAdPositition {
-    case top(ignoresSafeArea: Bool)
-    case bottom(ignoresSafeArea: Bool)
+    case top(isUsingSafeArea: Bool)
+    case bottom(isUsingSafeArea: Bool)
 }
 
 protocol SwiftyAdsBannerType: AnyObject {
@@ -50,7 +50,7 @@ final class SwiftyAdsBanner: NSObject {
     private var onError: ((Error) -> Void)?
     
     private var bannerView: GADBannerView?
-    private var position: BannerAdPositition = .bottom(ignoresSafeArea: false)
+    private var position: BannerAdPositition = .bottom(isUsingSafeArea: true)
     private var animationDuration: TimeInterval = 1.4
     private var bannerViewConstraint: NSLayoutConstraint?
     private var animator: UIViewPropertyAnimator?
@@ -62,11 +62,11 @@ final class SwiftyAdsBanner: NSObject {
     private var currentViewWidth: CGFloat {
         guard let currentView = currentView else { return 200 }
         switch position {
-        case .top(let ignoresSafeArea), .bottom(let ignoresSafeArea):
-            if ignoresSafeArea {
-                return currentView.frame.size.width
-            } else {
+        case .top(let isUsingSafeArea), .bottom(let isUsingSafeArea):
+            if isUsingSafeArea {
                 return currentView.frame.inset(by: currentView.safeAreaInsets).size.width
+            } else {
+                return currentView.frame.size.width
             }
         }
     }
@@ -120,22 +120,22 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
         // We don't give the banner a width or height constraints, as the provided ad size will give the banner
         // an intrinsic content size
         switch position {
-        case .top(let ignoresSafeArea):
-            if ignoresSafeArea {
-                bannerViewConstraint = bannerView.topAnchor.constraint(equalTo: viewController.view.topAnchor)
-            } else {
+        case .top(let isUsingSafeArea):
+            if isUsingSafeArea {
                 bannerViewConstraint = bannerView.topAnchor.constraint(equalTo: viewController.view.safeAreaLayoutGuide.topAnchor)
+            } else {
+                bannerViewConstraint = bannerView.topAnchor.constraint(equalTo: viewController.view.topAnchor)
             }
             
-        case .bottom(let ignoresSafeArea):
+        case .bottom(let isUsingSafeArea):
             if let tabBarController = viewController as? UITabBarController {
                 tabBarController.view.bringSubviewToFront(tabBarController.tabBar)
                 bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: tabBarController.tabBar.safeAreaLayoutGuide.topAnchor)
             } else {
-                if ignoresSafeArea {
-                    bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: viewController.view.bottomAnchor)
-                } else {
+                if isUsingSafeArea {
                     bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: viewController.view.safeAreaLayoutGuide.bottomAnchor)
+                } else {
+                    bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: viewController.view.bottomAnchor)
                 }
             }
         }

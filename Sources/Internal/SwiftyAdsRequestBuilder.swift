@@ -32,16 +32,12 @@ final class SwiftyAdsRequestBuilder {
     // MARK: - Properties
     
     private let isConsentRequired: Bool
-    //private let isNonPersonalizedOnly: Bool
     private let isTaggedForUnderAgeOfConsent: Bool
     
     // MARK: - Initialization
     
-    init(isConsentRequired: Bool,
-         //isNonPersonalizedOnly: Bool,
-         isTaggedForUnderAgeOfConsent: Bool) {
+    init(isConsentRequired: Bool, isTaggedForUnderAgeOfConsent: Bool) {
         self.isConsentRequired = isConsentRequired
-        //self.isNonPersonalizedOnly = isNonPersonalizedOnly
         self.isTaggedForUnderAgeOfConsent = isTaggedForUnderAgeOfConsent
     }
 }
@@ -49,7 +45,7 @@ final class SwiftyAdsRequestBuilder {
 // MARK: - SwiftyAdsRequestBuilderType
 
 extension SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
-  
+    #warning("Still needed with UMP?")
     func build() -> GADRequest {
         let request = GADRequest()
         
@@ -61,7 +57,6 @@ extension SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
         // Create additional parameters with under age of consent
         var additionalParameters: [String: Any] = ["tag_for_under_age_of_consent": isTaggedForUnderAgeOfConsent]
 
-        #warning("FIX")
 //        // Update for non personalized if needed
 //        if isNonPersonalizedOnly {
 //            additionalParameters["npa"] = "1"

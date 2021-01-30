@@ -1,18 +1,30 @@
-//
-//  RootViewController.swift
-//  SwiftyAdsDemo
-//
-//  Created by Dominik Ringler on 19/10/2020.
-//  Copyright © 2020 Dominik Ringler. All rights reserved.
-//
-
 import UIKit
 
 final class RootViewController: UITableViewController {
     
     // MARK: - Types
+
+    enum Section: CaseIterable {
+        case main
+        case consent
+
+        var rows: [Row] {
+            switch self {
+            case .main:
+                return [
+                    .viewController,
+                    .viewControllerInsideTabBar,
+                    .tabBarController,
+                    .spriteKitScene,
+                    .nativeAd,
+                ]
+            case .consent:
+                return [.updateConsent]
+            }
+        }
+    }
     
-    enum Row: CaseIterable {
+    enum Row {
         case viewController
         case viewControllerInsideTabBar
         case tabBarController
@@ -23,13 +35,13 @@ final class RootViewController: UITableViewController {
         var title: String {
             switch self {
             case .viewController:
-                return "View Controller"
+                return "UIViewController"
             case .viewControllerInsideTabBar:
-                return "View Controller inside UITabBarController"
+                return "UIViewController inside UITabBarController"
             case .tabBarController:
-                return "Tab Bar Controller"
+                return "UITabBarController"
             case .spriteKitScene:
-                return "SpriteKit Game Scene"
+                return "SKScene"
             case .nativeAd:
                 return "Native Ad"
             case .updateConsent:
@@ -41,13 +53,17 @@ final class RootViewController: UITableViewController {
     // MARK: - Properties
 
     private let swiftyAds: SwiftyAdsType
-    private let rows = Row.allCases
+    private let sections = Section.allCases
     
     // MARK: - Initialization
     
     init(swiftyAds: SwiftyAdsType) {
         self.swiftyAds = swiftyAds
-        super.init(style: .grouped)
+        if #available(iOS 13.0, *) {
+            super.init(style: .insetGrouped)
+        } else {
+            super.init(style: .grouped)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -58,24 +74,23 @@ final class RootViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Setup navigation item
         navigationItem.title = "Swifty Ads Demo"
-        
-        // Setup table view
-        tableView.backgroundColor = .white
         tableView.register(RootCell.self, forCellReuseIdentifier: String(describing: RootCell.self))
         
     }
     
     // MARK: - UITableViewDataSource
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        sections.count
+    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        rows.count
+        sections[section].rows.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let row = rows[indexPath.row]
+        let row = sections[indexPath.section].rows[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: RootCell.self), for: indexPath) as! RootCell
         cell.configure(title: row.title)
         return cell
@@ -84,7 +99,7 @@ final class RootViewController: UITableViewController {
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let row = rows[indexPath.row]
+        let row = sections[indexPath.section].rows[indexPath.row]
         let viewController: UIViewController?
         
         switch row {

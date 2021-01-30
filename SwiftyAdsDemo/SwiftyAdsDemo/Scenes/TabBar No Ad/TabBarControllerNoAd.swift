@@ -1,11 +1,3 @@
-//
-//  TabBarControllerNoAd.swift
-//  SwiftyAdsDemo
-//
-//  Created by Dominik Ringler on 15/11/2020.
-//  Copyright © 2020 Dominik Ringler. All rights reserved.
-//
-
 import UIKit
 
 final class TabBarControllerNoAd: UITabBarController {

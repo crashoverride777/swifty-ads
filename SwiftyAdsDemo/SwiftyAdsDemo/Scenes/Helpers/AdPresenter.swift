@@ -15,7 +15,7 @@ enum AdPresenter {
         swiftyAds.showBanner(
             from: viewController,
             atTop: false,
-            ignoresSafeArea: false,
+            isUsingSafeArea: true,
             animationDuration: 1.5,
             onOpen: ({
                 print("SwiftyAds banner ad did open")

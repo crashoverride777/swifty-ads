@@ -1,11 +1,3 @@
-//
-//  GameScene.swift
-//  Example
-//
-//  Created by Dominik Ringler on 23/05/2019.
-//  Copyright © 2019 Dominik. All rights reserved.
-//
-
 import SpriteKit
 
 class GameScene: SKScene {
