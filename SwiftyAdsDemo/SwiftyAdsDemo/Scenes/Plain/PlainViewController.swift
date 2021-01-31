@@ -11,18 +11,33 @@ final class PlainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .blue
-        AdPresenter.prepareBanner(in: self, swiftyAds: swiftyAds)
+
+        swiftyAds.prepareBanner(
+            in: self,
+            atTop: false,
+            isUsingSafeArea: true,
+            animationDuration: 1.5,
+            onOpen: ({
+                print("SwiftyAds banner ad did open")
+            }),
+            onClose: ({
+                print("SwiftyAds banner ad did close")
+            }),
+            onError: ({ error in
+                print("SwiftyAds banner ad error \(error)")
+            })
+        )
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        AdPresenter.showBanner(isLandscape: view.frame.width > view.frame.height, swiftyAds: swiftyAds)
+        swiftyAds.showBanner(isLandscape: view.frame.width > view.frame.height)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate(alongsideTransition: { _ in
-            self.swiftyAds.showBanner(isLandscape: size.width > size.height)
+        coordinator.animate(alongsideTransition: { [weak self] _ in
+            self?.swiftyAds.showBanner(isLandscape: size.width > size.height)
         })
     }
 
@@ -38,13 +53,49 @@ final class PlainViewController: UIViewController {
 private extension PlainViewController {
     
     @IBAction func showInterstitialAdButtonPressed(_ sender: Any) {
-        AdPresenter.showInterstitialAd(from: self, swiftyAds: swiftyAds)
+        swiftyAds.showInterstitial(
+            from: self,
+            withInterval: 2,
+            onOpen: ({
+                print("SwiftyAds interstitial ad did open")
+            }),
+            onClose: ({
+                print("SwiftyAds interstitial ad did close")
+            }),
+            onError: ({ error in
+                print("SwiftyAds interstitial ad error \(error)")
+            })
+        )
     }
     
     @IBAction func showRewardedAdButtonPressed(_ sender: Any) {
-        AdPresenter.showRewardedAd(from: self, swiftyAds: swiftyAds, onReward: { rewardAmount in
-            // update coins, diamonds etc
-        })
+        swiftyAds.showRewardedVideo(
+            from: self,
+            onOpen: ({
+                print("SwiftyAds rewarded video ad did open")
+            }),
+            onClose: ({
+                print("SwiftyAds rewarded video ad did close")
+            }),
+            onError: ({ error in
+                print("SwiftyAds rewarded video ad error \(error)")
+            }),
+            onNotReady: ({ [weak self] in
+                guard let self = self else { return }
+                let alertController = UIAlertController(
+                    title: "Sorry",
+                    message: "No video available to watch at the moment.",
+                    preferredStyle: .alert
+                )
+                alertController.addAction(UIAlertAction(title: "Ok", style: .cancel))
+                DispatchQueue.main.async {
+                    self.present(alertController, animated: true)
+                }
+            }),
+            onReward: ({ rewardAmount in
+                print("SwiftyAds rewarded video ad did reward user with \(rewardAmount)")
+            })
+        )
     }
     
     @IBAction func disableAdsButtonPressed(_ sender: Any) {

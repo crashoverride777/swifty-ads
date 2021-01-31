@@ -34,19 +34,33 @@ final class TabBarControllerAd: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        AdPresenter.prepareBanner(in: self, swiftyAds: swiftyAds)
+
+        swiftyAds.prepareBanner(
+            in: self,
+            atTop: false,
+            isUsingSafeArea: true,
+            animationDuration: 1.5,
+            onOpen: ({
+                print("SwiftyAds banner ad did open")
+            }),
+            onClose: ({
+                print("SwiftyAds banner ad did close")
+            }),
+            onError: ({ error in
+                print("SwiftyAds banner ad error \(error)")
+            })
+        )
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        AdPresenter.showBanner(isLandscape: view.frame.width > view.frame.height, swiftyAds: swiftyAds)
+        swiftyAds.showBanner(isLandscape: view.frame.width > view.frame.height)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { [weak self] _ in
-            guard let self = self else { return }
-            AdPresenter.showBanner(isLandscape: size.width > size.height, swiftyAds: self.swiftyAds)
+            self?.swiftyAds.showBanner(isLandscape: size.width > size.height)
         })
     }
 }

@@ -7,7 +7,22 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        AdPresenter.prepareBanner(in: self, swiftyAds: swiftyAds)
+
+        swiftyAds.prepareBanner(
+            in: self,
+            atTop: false,
+            isUsingSafeArea: true,
+            animationDuration: 1.5,
+            onOpen: ({
+                print("SwiftyAds banner ad did open")
+            }),
+            onClose: ({
+                print("SwiftyAds banner ad did close")
+            }),
+            onError: ({ error in
+                print("SwiftyAds banner ad error \(error)")
+            })
+        )
         
         if let scene = GameScene(fileNamed: "GameScene") {
             scene.configure(swiftyAds: swiftyAds)
@@ -29,7 +44,7 @@ class GameViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        AdPresenter.showBanner(isLandscape: view.frame.size.width > view.frame.size.height, swiftyAds: swiftyAds)
+        swiftyAds.showBanner(isLandscape: view.frame.size.width > view.frame.size.height)
     }
     
     override var shouldAutorotate: Bool {
@@ -39,12 +54,7 @@ class GameViewController: UIViewController {
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .all
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Release any cached data, images, etc that aren't in use.
-    }
-    
+
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -52,8 +62,7 @@ class GameViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { [weak self] _ in
-            guard let self = self else { return }
-            AdPresenter.showBanner(isLandscape: size.width > size.height, swiftyAds: self.swiftyAds)
+            self?.swiftyAds.showBanner(isLandscape: size.width > size.height)
         })
     }
 

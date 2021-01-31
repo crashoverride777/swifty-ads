@@ -26,14 +26,53 @@ class GameScene: SKScene {
             }
             
             switch node {
+
             case interstitialLabel:
-                AdPresenter.showInterstitialAd(from: viewController, swiftyAds: swiftyAds)
+                swiftyAds.showInterstitial(
+                    from: viewController,
+                    withInterval: 2,
+                    onOpen: ({
+                        print("SwiftyAds interstitial ad did open")
+                    }),
+                    onClose: ({
+                        print("SwiftyAds interstitial ad did close")
+                    }),
+                    onError: ({ error in
+                        print("SwiftyAds interstitial ad error \(error)")
+                    })
+                )
+
             case rewardedLabel:
-                AdPresenter.showRewardedAd(from: viewController, swiftyAds: swiftyAds, onReward: { rewardAmount in
-                    // update coins, diamonds etc
-                })
+                swiftyAds.showRewardedVideo(
+                    from: viewController,
+                    onOpen: ({
+                        print("SwiftyAds rewarded video ad did open")
+                    }),
+                    onClose: ({
+                        print("SwiftyAds rewarded video ad did close")
+                    }),
+                    onError: ({ error in
+                        print("SwiftyAds rewarded video ad error \(error)")
+                    }),
+                    onNotReady: ({
+                        let alertController = UIAlertController(
+                            title: "Sorry",
+                            message: "No video available to watch at the moment.",
+                            preferredStyle: .alert
+                        )
+                        alertController.addAction(UIAlertAction(title: "Ok", style: .cancel))
+                        DispatchQueue.main.async {
+                            viewController.present(alertController, animated: true)
+                        }
+                    }),
+                    onReward: ({ rewardAmount in
+                        print("SwiftyAds rewarded video ad did reward user with \(rewardAmount)")
+                    })
+                )
+
             case disableLabel:
                 swiftyAds.disable()
+
             default:
                 break
             }
