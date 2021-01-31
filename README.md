@@ -107,35 +107,52 @@ if let viewController = view?.window?.rootViewController {
 
 ### Banner Ads
 
+Prepare the banner in `viewDidLoad`
+
 ```swift
-SwiftyAds.shared.showBanner(
-    from: self,
-    atTop: false,
-    ignoresSafeArea: false,
-    animationDuration: 1.5,
-    onOpen: ({
-        print("SwiftyAds banner ad did open")
-    }),
-    onClose: ({
-        print("SwiftyAds banner ad did close")
-    }),
-    onError: ({ error in
-        print("SwiftyAds banner ad error \(error)")
-    })
-)
+override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    SwiftyAds.shared.prepareBanner(
+        in: self,
+        atTop: false,
+        ignoresSafeArea: false,
+        animationDuration: 1.5,
+        onOpen: ({
+            print("SwiftyAds banner ad did open")
+        }),
+        onClose: ({
+            print("SwiftyAds banner ad did close")
+        }),
+        onError: ({ error in
+            print("SwiftyAds banner ad error \(error)")
+        })
+    )
+}
 ```
 
-Orientation changes
+and show it in `viewDidAppear`. This is to ensure that the view has been layed out correctly and has a valid safe area.
+
+```swift
+override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    SwiftyAds.shared.showBanner(isLandscape: view.frame.width > view.frame.height)
+}
+```
+
+To handle orientation changes, simply call the show method again in `viewWillTransition`
 
 ```swift
 override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransition(to: size, with: coordinator)
     coordinator.animate(alongsideTransition: { _ in
-        SwiftyAds.shared.updateBannerForOrientationChange(isLandscape: size.width > size.height)
+        SwiftyAds.shared.showBanner(isLandscape: size.width > size.height)
     })
 }
 ```
-Remove
+
+You can remove the banner by calling the `removeBanner` method.
 
 ```swift
 SwiftyAds.shared.removeBanner() 
