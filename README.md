@@ -41,7 +41,7 @@ pod 'SwiftyAds'
 
 ### Manually 
 
-Altenatively you can copy the `Sources` folder and its containing files into your project. Than install the required dependencies either via Cocoa Pods
+Alternatively you can copy the `Sources` folder and its containing files into your project. Than install the required dependencies either via Cocoa Pods
 
 ```swift
 pod 'Google-Mobile-Ads-SDK'
@@ -115,6 +115,7 @@ override func viewDidLoad() {
     
     SwiftyAds.shared.prepareBanner(
         in: self,
+        adUnitIdType: .plist, // set to .custom to add a different AdUnitId
         atTop: false,
         ignoresSafeArea: false,
         animationDuration: 1.5,
@@ -146,6 +147,7 @@ To handle orientation changes, simply call the show method again in `viewWillTra
 ```swift
 override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransition(to: size, with: coordinator)
+    
     coordinator.animate(alongsideTransition: { _ in
         SwiftyAds.shared.showBanner(isLandscape: size.width > size.height)
     })
@@ -226,6 +228,7 @@ Requests for multiple native ads don't currently work for AdMob ad unit IDs that
 ```swift
 SwiftyAds.shared.loadNativeAd(
     from: self,
+    adUnitIdType: .plist, // set to .custom to add a different AdUnitId
     count: nil,
     onReceive: { nativeAd in
         // show native ad (see demo app or google documentation)

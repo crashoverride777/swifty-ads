@@ -10,6 +10,7 @@ class GameViewController: UIViewController {
 
         swiftyAds.prepareBanner(
             in: self,
+            adUnitIdType: .plist,
             atTop: false,
             isUsingSafeArea: true,
             animationDuration: 1.5,

@@ -24,6 +24,7 @@ import GoogleMobileAds
 
 protocol SwiftyAdsNativeType: AnyObject {
     func load(from viewController: UIViewController,
+              adUnitIdType: SwiftyAdsAdUnitIdType,
               count: Int?,
               onReceive: @escaping (GADUnifiedNativeAd) -> Void,
               onError: @escaping (GADRequestError) -> Void)
@@ -55,6 +56,7 @@ final class SwiftyAdsNative: NSObject {
 extension SwiftyAdsNative: SwiftyAdsNativeType {
 
     func load(from viewController: UIViewController,
+              adUnitIdType: SwiftyAdsAdUnitIdType,
               count: Int?,
               onReceive: @escaping (GADUnifiedNativeAd) -> Void,
               onError: @escaping (GADRequestError) -> Void) {
@@ -69,6 +71,12 @@ extension SwiftyAdsNative: SwiftyAdsNativeType {
             let loaderOptions = GADMultipleAdsAdLoaderOptions()
             loaderOptions.numberOfAds = count
             multipleAdsOptions = [loaderOptions]
+        }
+
+        // Set the ad unit id
+        var adUnitId = self.adUnitId
+        if case .custom(let id) = adUnitIdType {
+            adUnitId = id
         }
 
         // Create GADAdLoader

@@ -31,6 +31,11 @@ public enum SwiftyAdsEnvironment {
     case debug(testDeviceIdentifiers: [String], geography: SwiftyAdsDebugGeography, resetConsentInfo: Bool)
 }
 
+public enum SwiftyAdsAdUnitIdType {
+    case plist
+    case custom(String)
+}
+
 public protocol SwiftyAdsType: AnyObject {
     var isConsentRequired: Bool { get }
     var hasConsent: Bool { get }
@@ -42,6 +47,7 @@ public protocol SwiftyAdsType: AnyObject {
     func askForConsent(from viewController: UIViewController,
                        completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
     func prepareBanner(in viewController: UIViewController,
+                       adUnitIdType: SwiftyAdsAdUnitIdType,
                        atTop isAtTop: Bool,
                        isUsingSafeArea: Bool,
                        animationDuration: TimeInterval,
@@ -62,6 +68,7 @@ public protocol SwiftyAdsType: AnyObject {
                            onNotReady: (() -> Void)?,
                            onReward: @escaping (Int) -> Void)
     func loadNativeAd(from viewController: UIViewController,
+                      adUnitIdType: SwiftyAdsAdUnitIdType,
                       count: Int?,
                       onReceive: @escaping (GADUnifiedNativeAd) -> Void,
                       onError: @escaping (Error) -> Void)
@@ -98,7 +105,6 @@ public final class SwiftyAds: NSObject {
     private var requestBuilder: SwiftyAdsRequestBuilderType {
         SwiftyAdsRequestBuilder(
             isConsentRequired: isConsentRequired,
-            //isNonPersonalizedOnly: consentManager.status == .nonPersonalized,
             isTaggedForUnderAgeOfConsent: configuration?.isTaggedForUnderAgeOfConsent ?? true
         )
     }
@@ -285,6 +291,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// Show banner ad
     ///
     /// - parameter viewController: The view controller that will present the ad.
+    /// - parameter adUnitIdType: The adUnitId type for the ad, either plist or custom.
     /// - parameter isAtTop: If set to true the banner will be displayed at the top.
     /// - parameter isUsingSafeArea: If set to true the banner will use the safe area margins.
     /// - parameter animationDuration: The duration of the banner to animate on/off screen.
@@ -292,6 +299,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter onClose: An optional callback when the banner was dismissed or removed.
     /// - parameter onError: An optional callback when an error has occurred.
     public func prepareBanner(in viewController: UIViewController,
+                              adUnitIdType: SwiftyAdsAdUnitIdType,
                               atTop isAtTop: Bool,
                               isUsingSafeArea: Bool,
                               animationDuration: TimeInterval,
@@ -303,6 +311,7 @@ extension SwiftyAds: SwiftyAdsType {
 
         bannerAd?.prepare(
             in: viewController,
+            adUnitIdType: adUnitIdType,
             at: isAtTop ? .top(isUsingSafeArea: isUsingSafeArea) : .bottom(isUsingSafeArea: isUsingSafeArea),
             animationDuration: animationDuration,
             onOpen: onOpen,
@@ -380,6 +389,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// Load native ad
     ///
     /// - parameter viewController: The view controller that will load the native ad.
+    /// - parameter adUnitIdType: The adUnitId type for the ad, either plist or custom.
     /// - parameter count: The number of ads to load via  GADMultipleAdsAdLoaderOptions. Set to nil to use default options or when using mediation.
     /// - parameter onReceive: The received GADUnifiedNativeAd when the load request has completed.
     /// - parameter onError: The error when the load request has failed.
@@ -388,6 +398,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// Requests for multiple native ads don't currently work for AdMob ad unit IDs that have been configured for mediation.
     /// Publishers using mediation should avoid using the GADMultipleAdsAdLoaderOptions class when making requests i.e. set count to nil.
     public func loadNativeAd(from viewController: UIViewController,
+                             adUnitIdType: SwiftyAdsAdUnitIdType,
                              count: Int?,
                              onReceive: @escaping (GADUnifiedNativeAd) -> Void,
                              onError: @escaping (Error) -> Void) {
@@ -395,6 +406,7 @@ extension SwiftyAds: SwiftyAdsType {
         guard hasConsent else { return }
         nativeAd.load(
             from: viewController,
+            adUnitIdType: adUnitIdType,
             count: count,
             onReceive: onReceive,
             onError: onError

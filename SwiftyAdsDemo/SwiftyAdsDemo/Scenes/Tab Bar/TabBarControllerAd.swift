@@ -37,6 +37,7 @@ final class TabBarControllerAd: UITabBarController {
 
         swiftyAds.prepareBanner(
             in: self,
+            adUnitIdType: .plist,
             atTop: false,
             isUsingSafeArea: true,
             animationDuration: 1.5,

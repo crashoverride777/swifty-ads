@@ -29,6 +29,7 @@ enum BannerAdPositition {
 
 protocol SwiftyAdsBannerType: AnyObject {
     func prepare(in viewController: UIViewController,
+                 adUnitIdType: SwiftyAdsAdUnitIdType,
                  at position: BannerAdPositition,
                  animationDuration: TimeInterval,
                  onOpen: (() -> Void)?,
@@ -71,6 +72,7 @@ final class SwiftyAdsBanner: NSObject {
 extension SwiftyAdsBanner: SwiftyAdsBannerType {
     
     func prepare(in viewController: UIViewController,
+                 adUnitIdType: SwiftyAdsAdUnitIdType,
                  at position: BannerAdPositition,
                  animationDuration: TimeInterval,
                  onOpen: (() -> Void)?,
@@ -94,10 +96,21 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
         guard let bannerView = bannerView else {
             return
         }
-         
-        bannerView.adUnitID = adUnitId
+
+        // Set ad unit id
+        if case .custom(let adUnitId) = adUnitIdType {
+            bannerView.adUnitID = adUnitId
+        } else {
+            bannerView.adUnitID = adUnitId
+        }
+
+        // Set the banner view delegate
         bannerView.delegate = self
+
+        // Set the root view controller that will display the banner
         bannerView.rootViewController = viewController
+
+        // Add banner view to view controller
         bannerView.translatesAutoresizingMaskIntoConstraints = false
         viewController.view.addSubview(bannerView)
          

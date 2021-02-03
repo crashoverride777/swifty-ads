@@ -26,6 +26,7 @@ final class NativeAdViewController: UIViewController {
 
         swityAds.loadNativeAd(
             from: self,
+            adUnitIdType: .plist,
             count: nil,
             onReceive: { [weak self] nativeAd in
                 self?.showNativeAd(nativeAd)
