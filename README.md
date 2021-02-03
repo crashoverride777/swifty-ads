@@ -45,7 +45,7 @@ pod 'SwiftyAds'
 
 ### Manually 
 
-Altenatively you can copy the `Sources` folder and its containing files into your project. Than install the required Google dependencies either via cocoa pods
+Alternatively you can copy the `Sources` folder and its containing files into your project. Than install the required Google dependencies either via cocoa pods
 
 ```swift
 pod 'Google-Mobile-Ads-SDK'
