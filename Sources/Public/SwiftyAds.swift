@@ -354,7 +354,7 @@ extension SwiftyAds: SwiftyAdsType {
                              onReceive: @escaping (GADUnifiedNativeAd) -> Void,
                              onError: @escaping (Error) -> Void) {
         guard let nativeAd = nativeAd else { return }
-        guard hasConsent else { return }
+        guard !isDisabled, hasConsent else { return }
         nativeAd.load(
             from: viewController,
             count: count,
