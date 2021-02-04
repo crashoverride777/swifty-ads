@@ -309,6 +309,15 @@ extension SwiftyAds: SwiftyAdsType {
         guard !isDisabled else { return }
         guard hasConsent else { return }
 
+        if case .custom(let adUnitId) = adUnitIdType, bannerAd == nil {
+            bannerAd = SwiftyAdsBanner(
+                adUnitId: adUnitId,
+                request: { [unowned self] in
+                    self.requestBuilder.build()
+                }
+            )
+        }
+
         bannerAd?.prepare(
             in: viewController,
             adUnitIdType: adUnitIdType,
@@ -402,9 +411,19 @@ extension SwiftyAds: SwiftyAdsType {
                              count: Int?,
                              onReceive: @escaping (GADUnifiedNativeAd) -> Void,
                              onError: @escaping (Error) -> Void) {
-        guard let nativeAd = nativeAd else { return }
+        guard !isDisabled else { return }
         guard hasConsent else { return }
-        nativeAd.load(
+
+        if case .custom(let adUnitId) = adUnitIdType, nativeAd == nil {
+            nativeAd = SwiftyAdsNative(
+                adUnitId: adUnitId,
+                request: { [unowned self] in
+                    self.requestBuilder.build()
+                }
+            )
+        }
+
+        nativeAd?.load(
             from: viewController,
             adUnitIdType: adUnitIdType,
             count: count,
