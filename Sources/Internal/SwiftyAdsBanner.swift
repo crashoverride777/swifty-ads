@@ -30,7 +30,7 @@ enum BannerAdPositition {
 protocol SwiftyAdsBannerType: AnyObject {
     func prepare(in viewController: UIViewController,
                  adUnitIdType: SwiftyAdsAdUnitIdType,
-                 at position: BannerAdPositition,
+                 position: BannerAdPositition,
                  animationDuration: TimeInterval,
                  onOpen: (() -> Void)?,
                  onClose: (() -> Void)?,
@@ -73,7 +73,7 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
     
     func prepare(in viewController: UIViewController,
                  adUnitIdType: SwiftyAdsAdUnitIdType,
-                 at position: BannerAdPositition,
+                 position: BannerAdPositition,
                  animationDuration: TimeInterval,
                  onOpen: (() -> Void)?,
                  onClose: (() -> Void)?,

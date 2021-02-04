@@ -48,7 +48,7 @@ public protocol SwiftyAdsType: AnyObject {
                        completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
     func prepareBanner(in viewController: UIViewController,
                        adUnitIdType: SwiftyAdsAdUnitIdType,
-                       atTop isAtTop: Bool,
+                       isAtTop: Bool,
                        isUsingSafeArea: Bool,
                        animationDuration: TimeInterval,
                        onOpen: (() -> Void)?,
@@ -300,7 +300,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter onError: An optional callback when an error has occurred.
     public func prepareBanner(in viewController: UIViewController,
                               adUnitIdType: SwiftyAdsAdUnitIdType,
-                              atTop isAtTop: Bool,
+                              isAtTop: Bool,
                               isUsingSafeArea: Bool,
                               animationDuration: TimeInterval,
                               onOpen: (() -> Void)?,
@@ -321,7 +321,7 @@ extension SwiftyAds: SwiftyAdsType {
         bannerAd?.prepare(
             in: viewController,
             adUnitIdType: adUnitIdType,
-            at: isAtTop ? .top(isUsingSafeArea: isUsingSafeArea) : .bottom(isUsingSafeArea: isUsingSafeArea),
+            position: isAtTop ? .top(isUsingSafeArea: isUsingSafeArea) : .bottom(isUsingSafeArea: isUsingSafeArea),
             animationDuration: animationDuration,
             onOpen: onOpen,
             onClose: onClose,

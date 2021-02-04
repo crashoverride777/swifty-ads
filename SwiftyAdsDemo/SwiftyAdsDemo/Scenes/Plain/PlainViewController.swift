@@ -15,7 +15,7 @@ final class PlainViewController: UIViewController {
         swiftyAds.prepareBanner(
             in: self,
             adUnitIdType: .plist,
-            atTop: false,
+            isAtTop: false,
             isUsingSafeArea: true,
             animationDuration: 1.5,
             onOpen: ({
