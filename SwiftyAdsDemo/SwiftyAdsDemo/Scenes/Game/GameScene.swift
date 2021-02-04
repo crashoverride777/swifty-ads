@@ -8,8 +8,7 @@ class GameScene: SKScene {
     
     private lazy var interstitialLabel: SKLabelNode = self.childNode(withName: "interstitialLabel") as! SKLabelNode
     private lazy var rewardedLabel: SKLabelNode = self.childNode(withName: "rewardedLabel") as! SKLabelNode
-    private lazy var disableLabel: SKLabelNode = self.childNode(withName: "disableLabel") as! SKLabelNode
-    
+   
     // MARK: - Life Cycle
     
     override func didMove(to view: SKView) {
@@ -69,9 +68,6 @@ class GameScene: SKScene {
                         print("SwiftyAds rewarded video ad did reward user with \(rewardAmount)")
                     })
                 )
-
-            case disableLabel:
-                swiftyAds.disable()
 
             default:
                 break

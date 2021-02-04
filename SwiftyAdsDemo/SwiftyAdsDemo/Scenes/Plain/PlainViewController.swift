@@ -98,8 +98,4 @@ private extension PlainViewController {
             })
         )
     }
-    
-    @IBAction func disableAdsButtonPressed(_ sender: Any) {
-        swiftyAds.disable()
-    }
 }

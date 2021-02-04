@@ -6,7 +6,7 @@ final class RootViewController: UITableViewController {
 
     enum Section: CaseIterable {
         case main
-        case consent
+        case secondary
 
         var rows: [Row] {
             switch self {
@@ -16,10 +16,13 @@ final class RootViewController: UITableViewController {
                     .viewControllerInsideTabBar,
                     .tabBarController,
                     .spriteKitScene,
-                    .nativeAd,
+                    .nativeAd
                 ]
-            case .consent:
-                return [.updateConsent]
+            case .secondary:
+                return [
+                    .updateConsent,
+                    .disable
+                ]
             }
         }
     }
@@ -30,8 +33,10 @@ final class RootViewController: UITableViewController {
         case tabBarController
         case spriteKitScene
         case nativeAd
+
         case updateConsent
-        
+        case disable
+
         var title: String {
             switch self {
             case .viewController:
@@ -46,6 +51,17 @@ final class RootViewController: UITableViewController {
                 return "Native Ad"
             case .updateConsent:
                 return "Update Consent Status"
+            case .disable:
+                return "Disable Ads"
+            }
+        }
+
+        var shouldDeselect: Bool {
+            switch self {
+            case .updateConsent, .disable:
+                return true
+            default:
+                return false
             }
         }
     }
@@ -54,7 +70,8 @@ final class RootViewController: UITableViewController {
 
     private let swiftyAds: SwiftyAdsType
     private let sections = Section.allCases
-    
+    private let notificationCenter: NotificationCenter = .default
+
     // MARK: - Initialization
     
     init(swiftyAds: SwiftyAdsType) {
@@ -76,7 +93,38 @@ final class RootViewController: UITableViewController {
         super.viewDidLoad()
         navigationItem.title = "Swifty Ads Demo"
         tableView.register(RootCell.self, forCellReuseIdentifier: String(describing: RootCell.self))
-        
+
+        swiftyAds.prepareBanner(
+            in: self,
+            adUnitIdType: .plist,
+            atTop: false,
+            isUsingSafeArea: true,
+            animationDuration: 1.5,
+            onOpen: ({
+                print("SwiftyAds banner ad did open")
+            }),
+            onClose: ({
+                print("SwiftyAds banner ad did close")
+            }),
+            onError: ({ error in
+                print("SwiftyAds banner ad error \(error)")
+            })
+        )
+
+        notificationCenter.addObserver(self, selector: #selector(consentDidChange), name: .adConsentStatusDidChange, object: nil)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        guard swiftyAds.hasConsent else { return } // for demo purposes to make sure it does not get called before consent did change notification
+        swiftyAds.showBanner(isLandscape: view.frame.width > view.frame.height)
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: { [weak self] _ in
+            self?.swiftyAds.showBanner(isLandscape: size.width > size.height)
+        })
     }
     
     // MARK: - UITableViewDataSource
@@ -100,7 +148,11 @@ final class RootViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = sections[indexPath.section].rows[indexPath.row]
-        let viewController: UIViewController?
+        var viewController: UIViewController?
+
+        if row.shouldDeselect {
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
         
         switch row {
         case .viewController:
@@ -125,8 +177,6 @@ final class RootViewController: UITableViewController {
             viewController = NativeAdViewController(swityAds: swiftyAds)
 
         case .updateConsent:
-            tableView.deselectRow(at: indexPath, animated: true)
-            
             swiftyAds.askForConsent(from: self) { result in
                 switch result {
                 case .success(let status):
@@ -135,7 +185,9 @@ final class RootViewController: UITableViewController {
                     print("SwiftyAds consent status change error \(error)")
                 }
             }
-            return
+
+        case .disable:
+            swiftyAds.disable()
         }
         
         guard let validViewController = viewController else { return }
@@ -144,3 +196,11 @@ final class RootViewController: UITableViewController {
     }
 }
 
+// MARK: - Private Methods
+
+private extension RootViewController {
+
+    @objc func consentDidChange() {
+        swiftyAds.showBanner(isLandscape: view.frame.width > view.frame.height)
+    }
+}

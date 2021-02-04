@@ -48,8 +48,9 @@ private extension AppDelegate {
         swiftyAds.setup(
             from: rootViewController,
             in: environment,
-            completion: ({ consentStatus in
+            completion: ({ [weak self] consentStatus in
                 print("SwiftyAds did finish setup with consent status \(consentStatus)")
+                self?.notificationCenter.post(name: .adConsentStatusDidChange, object: nil)
             })
         )
     }
