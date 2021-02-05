@@ -42,7 +42,7 @@ final class SwiftyAdsInterstitial: NSObject {
     private var onClose: (() -> Void)?
     private var onError: ((Error) -> Void)?
     
-    private var interstitial: GADInterstitial?
+    private var interstitial: GADInterstitialAd?
     
     // MARK: - Initialization
     
@@ -57,13 +57,21 @@ final class SwiftyAdsInterstitial: NSObject {
 extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
 
     var isReady: Bool {
-        interstitial?.isReady ?? false
+        interstitial != nil
     }
     
     func load() {
-        interstitial = GADInterstitial(adUnitID: adUnitId)
-        interstitial?.delegate = self
-        interstitial?.load(request())
+        GADInterstitialAd.load(withAdUnitID: adUnitId, request: request()) { [weak self] (ad, error) in
+            guard let self = self else { return }
+
+            if let error = error {
+                self.onError?(error)
+                return
+            }
+
+            self.interstitial = ad
+            self.interstitial?.fullScreenContentDelegate = self
+        }
     }
     
     func show(from viewController: UIViewController,
@@ -82,31 +90,33 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
     }
     
     func stopLoading() {
-        interstitial?.delegate = nil
+        interstitial?.fullScreenContentDelegate = nil
         interstitial = nil
     }
 }
 
-// MARK: - GADInterstitialDelegate
+// MARK: - GADFullScreenContentDelegate
 
-extension SwiftyAdsInterstitial: GADInterstitialDelegate {
-    
-    func interstitialDidReceiveAd(_ ad: GADInterstitial) {
-        print("SwiftyAdsInterstitial did receive ad from: \(ad.responseInfo?.adNetworkClassName ?? "not found")")
+extension SwiftyAdsInterstitial: GADFullScreenContentDelegate {
+
+    func adDidRecordImpression(_ ad: GADFullScreenPresentingAd) {
+        print("SwiftyAdsInterstitial did record impression for ad: \(ad)")
     }
-    
-    func interstitialWillPresentScreen(_ ad: GADInterstitial) {
+
+    func adDidPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
         onOpen?()
     }
-    
-    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+
+    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        // Clear out references
+        interstitial = nil
+        // Send callback
         onClose?()
         // Load the next ad so its ready for displaying
         load()
     }
-    
-    func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
+
+    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
         onError?(error)
-        // Do not reload here as it might cause endless loading loops if no/slow internet
     }
 }

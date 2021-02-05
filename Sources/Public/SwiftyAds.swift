@@ -70,7 +70,7 @@ public protocol SwiftyAdsType: AnyObject {
     func loadNativeAd(from viewController: UIViewController,
                       adUnitIdType: SwiftyAdsAdUnitIdType,
                       count: Int?,
-                      onReceive: @escaping (GADUnifiedNativeAd) -> Void,
+                      onReceive: @escaping (GADNativeAd) -> Void,
                       onError: @escaping (Error) -> Void)
     func disable()
 }
@@ -400,7 +400,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter viewController: The view controller that will load the native ad.
     /// - parameter adUnitIdType: The adUnitId type for the ad, either plist or custom.
     /// - parameter count: The number of ads to load via  GADMultipleAdsAdLoaderOptions. Set to nil to use default options or when using mediation.
-    /// - parameter onReceive: The received GADUnifiedNativeAd when the load request has completed.
+    /// - parameter onReceive: The received GADNativeAd when the load request has completed.
     /// - parameter onError: The error when the load request has failed.
 
     /// - Warning:
@@ -409,7 +409,7 @@ extension SwiftyAds: SwiftyAdsType {
     public func loadNativeAd(from viewController: UIViewController,
                              adUnitIdType: SwiftyAdsAdUnitIdType,
                              count: Int?,
-                             onReceive: @escaping (GADUnifiedNativeAd) -> Void,
+                             onReceive: @escaping (GADNativeAd) -> Void,
                              onError: @escaping (Error) -> Void) {
         guard !isDisabled else { return }
         guard hasConsent else { return }

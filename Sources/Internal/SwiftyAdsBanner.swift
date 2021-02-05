@@ -201,13 +201,17 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
 // MARK: - GADBannerViewDelegate
 
 extension SwiftyAdsBanner: GADBannerViewDelegate {
+
+    func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
+        print("SwiftyAdsBanner did record impression for ad: \(bannerView)")
+    }
     
-    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
         print("SwiftyAdsBanner did receive ad from: \(bannerView.responseInfo?.adNetworkClassName ?? "not found")")
         animateToOnScreenPosition(bannerView, from: bannerView.rootViewController)
     }
 
-    func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
+    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
         animateToOffScreenPosition(bannerView, from: bannerView.rootViewController, position: position)
         onError?(error)
     }
