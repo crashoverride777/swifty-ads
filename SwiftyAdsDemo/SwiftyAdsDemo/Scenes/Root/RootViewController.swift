@@ -116,7 +116,6 @@ final class RootViewController: UITableViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        guard swiftyAds.hasConsent else { return } // for demo purposes to make sure it does not get called before consent did change notification
         swiftyAds.showBanner(isLandscape: view.frame.width > view.frame.height)
     }
 

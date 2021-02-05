@@ -154,7 +154,7 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
 
     func show(isLandscape: Bool) {
         guard let bannerView = bannerView else {
-            fatalError("SwiftyAds cannot show an unprepared banner, must call prepareBanner first")
+            return
         }
 
         guard let currentView = currentView else {

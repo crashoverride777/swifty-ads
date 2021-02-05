@@ -42,7 +42,7 @@ final class SwiftyAdsInterstitial: NSObject {
     private var onClose: (() -> Void)?
     private var onError: ((Error) -> Void)?
     
-    private var interstitial: GADInterstitialAd?
+    private var interstitialAd: GADInterstitialAd?
     
     // MARK: - Initialization
     
@@ -57,7 +57,7 @@ final class SwiftyAdsInterstitial: NSObject {
 extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
 
     var isReady: Bool {
-        interstitial != nil
+        interstitialAd != nil
     }
     
     func load() {
@@ -69,8 +69,8 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
                 return
             }
 
-            self.interstitial = ad
-            self.interstitial?.fullScreenContentDelegate = self
+            self.interstitialAd = ad
+            self.interstitialAd?.fullScreenContentDelegate = self
         }
     }
     
@@ -82,16 +82,16 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
         self.onClose = onClose
         self.onError = onError
         
-        if isReady {
-            interstitial?.present(fromRootViewController: viewController)
+        if let interstitialAd = interstitialAd {
+            interstitialAd.present(fromRootViewController: viewController)
         } else {
             load()
         }
     }
     
     func stopLoading() {
-        interstitial?.fullScreenContentDelegate = nil
-        interstitial = nil
+        interstitialAd?.fullScreenContentDelegate = nil
+        interstitialAd = nil
     }
 }
 
@@ -109,7 +109,7 @@ extension SwiftyAdsInterstitial: GADFullScreenContentDelegate {
 
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
         // Clear out references
-        interstitial = nil
+        interstitialAd = nil
         // Send callback
         onClose?()
         // Load the next ad so its ready for displaying
