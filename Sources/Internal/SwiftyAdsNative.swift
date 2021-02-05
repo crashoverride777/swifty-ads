@@ -28,6 +28,7 @@ protocol SwiftyAdsNativeType: AnyObject {
               count: Int?,
               onReceive: @escaping (GADUnifiedNativeAd) -> Void,
               onError: @escaping (GADRequestError) -> Void)
+    func stopLoading()
 }
 
 final class SwiftyAdsNative: NSObject {
@@ -92,6 +93,11 @@ extension SwiftyAdsNative: SwiftyAdsNativeType {
 
         // Load ad with request
         adLoader?.load(request())
+    }
+
+    func stopLoading() {
+        adLoader?.delegate = nil
+        adLoader = nil
     }
 }
 

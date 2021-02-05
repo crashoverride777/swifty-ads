@@ -222,7 +222,7 @@ To present a native ad simply call the load method. Once a native ad has been re
 
 You can set the amount of ads to load (`GADMultipleAdsAdLoaderOptions`) via the count parameter. Set to nil to use default options.
 
-Requests for multiple native ads don't currently work for AdMob ad unit IDs that have been configured for mediation. Publishers using mediation should avoid using the GADMultipleAdsAdLoaderOptions class when making requests. In that case also set the count parameter to nil.
+As per Googles documentation, requests for multiple native ads don't currently work for AdMob ad unit IDs that have been configured for mediation. Publishers using mediation should avoid using the GADMultipleAdsAdLoaderOptions class when making requests. In that case you can also set the count parameter to nil.
 
 
 ```swift

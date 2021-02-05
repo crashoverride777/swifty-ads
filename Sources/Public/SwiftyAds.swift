@@ -437,6 +437,7 @@ extension SwiftyAds: SwiftyAdsType {
         isDisabled = true
         removeBanner()
         interstitialAd?.stopLoading()
+        nativeAd?.stopLoading()
     }
 }
 
