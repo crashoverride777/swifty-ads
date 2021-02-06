@@ -85,11 +85,6 @@ public protocol SwiftyAdsType: AnyObject {
  A concret class implementation of SwiftAdsType to display ads from Google AdMob.
  */
 public final class SwiftyAds: NSObject {
-    
-    // MARK: - Static Properties
-    
-    /// The shared SwiftyAds instance
-    public static let shared = SwiftyAds()
 
     // MARK: - Types
 
@@ -118,7 +113,7 @@ public final class SwiftyAds: NSObject {
     
     // MARK: - Initialization
     
-    private override init() {
+    public override init() {
         mobileAds = .sharedInstance()
         intervalTracker = SwiftyAdsIntervalTracker()
         super.init()
