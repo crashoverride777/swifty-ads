@@ -20,6 +20,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
+import GoogleMobileAds
 import UserMessagingPlatform
 
 /*
@@ -51,17 +52,20 @@ final class SwiftyAdsConsentManager {
     private let consentInformation: UMPConsentInformation
     private let configuration: SwiftyAdsConfiguration
     private let environment: SwiftyAdsEnvironment
+    private let mobileAds: GADMobileAds
     private var form: UMPConsentForm?
 
     // MARK: - Initialization
 
     init(consentInformation: UMPConsentInformation,
          configuration: SwiftyAdsConfiguration,
-         environment: SwiftyAdsEnvironment
+         environment: SwiftyAdsEnvironment,
+         mobileAds: GADMobileAds
     ) {
         self.consentInformation = consentInformation
         self.configuration = configuration
         self.environment = environment
+        self.mobileAds = mobileAds
     }
 }
 
@@ -100,6 +104,19 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
             if let error = error {
                 completion(.failure(error))
                 return
+            }
+
+            // Update request configuration for under age of consent
+            #warning("refine, ATT sets status to .required on first launch?, afterwards its notRequired?")
+            print("STATUS123 \(self.status == .notRequired)")
+            print("STATUS123 \(self.status == .obtained)")
+            print("STATUS123 \(self.status == .required)")
+            switch self.status {
+            case .notRequired:
+                self.mobileAds.requestConfiguration.tagForUnderAge(ofConsent: false)
+            default:
+                let isTaggedForUnderAgeOfConsent = self.configuration.isTaggedForUnderAgeOfConsent
+                self.mobileAds.requestConfiguration.tagForUnderAge(ofConsent: isTaggedForUnderAgeOfConsent)
             }
 
             // The consent information state was updated and we can now check if a form is available.

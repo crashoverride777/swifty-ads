@@ -115,7 +115,7 @@ extension SwiftyAdsInterstitial: GADFullScreenContentDelegate {
     }
 
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
-        // Clear out references
+        // Nil out reference
         interstitialAd = nil
         // Send callback
         onClose?()

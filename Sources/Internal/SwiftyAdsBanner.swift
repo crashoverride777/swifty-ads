@@ -171,9 +171,7 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
     }
     
     func remove() {
-        guard bannerView != nil else {
-            return
-        }
+        guard bannerView != nil else { return }
         
         bannerView?.delegate = nil
         bannerView?.removeFromSuperview()

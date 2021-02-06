@@ -52,7 +52,7 @@ extension SwiftyAdsConfiguration {
             interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
             rewardedAdUnitId: "ca-app-pub-3940256099942544/1712485313",
             nativeAdUnitId: "ca-app-pub-3940256099942544/3986624511",
-            isTaggedForUnderAgeOfConsent: false
+            isTaggedForUnderAgeOfConsent: true
         )
     }
 }

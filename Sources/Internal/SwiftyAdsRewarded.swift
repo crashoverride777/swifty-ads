@@ -120,7 +120,7 @@ extension SwiftyAdsRewarded: GADFullScreenContentDelegate {
     }
 
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
-        // Clear out references
+        // Nil out reference
         rewardedAd = nil
         // Send callback
         onClose?()

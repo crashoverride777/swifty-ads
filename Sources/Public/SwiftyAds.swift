@@ -113,10 +113,7 @@ public final class SwiftyAds: NSObject {
     // MARK: - Computed Properties
     
     private var requestBuilder: SwiftyAdsRequestBuilderType {
-        SwiftyAdsRequestBuilder(
-            isConsentRequired: isConsentRequired,
-            isTaggedForUnderAgeOfConsent: configuration?.isTaggedForUnderAgeOfConsent ?? true
-        )
+        SwiftyAdsRequestBuilder()
     }
     
     // MARK: - Initialization
@@ -241,7 +238,8 @@ extension SwiftyAds: SwiftyAdsType {
         let consentManager = SwiftyAdsConsentManager(
             consentInformation: .sharedInstance,
             configuration: configuration,
-            environment: environment
+            environment: environment,
+            mobileAds: mobileAds
         )
 
         // Keep reference to consent manager
