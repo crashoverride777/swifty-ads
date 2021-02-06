@@ -92,6 +92,11 @@ public final class SwiftyAds: NSObject {
         case noConsentManager
     }
 
+    // MARK: - Static Properties
+
+    /// The shared SwiftyAds instance.
+    public static let shared = SwiftyAds()
+
     // MARK: - Properties
     
     private let mobileAds: GADMobileAds
@@ -113,7 +118,7 @@ public final class SwiftyAds: NSObject {
     
     // MARK: - Initialization
     
-    public override init() {
+    private override init() {
         mobileAds = .sharedInstance()
         intervalTracker = SwiftyAdsIntervalTracker()
         super.init()
@@ -183,7 +188,8 @@ extension SwiftyAds: SwiftyAdsType {
             configuration = .production
         case .debug(let testDeviceIdentifiers, _, _):
             configuration = .debug
-            mobileAds.requestConfiguration.testDeviceIdentifiers = testDeviceIdentifiers//kGADSimulatorID
+            let simulatorId = kGADSimulatorID as? String
+            mobileAds.requestConfiguration.testDeviceIdentifiers = [simulatorId].compactMap { $0 } + testDeviceIdentifiers
         }
 
         // Keep reference to configuration
