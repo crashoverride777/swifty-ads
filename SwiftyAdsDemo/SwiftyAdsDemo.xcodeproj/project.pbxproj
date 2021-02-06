@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,7 +11,6 @@
 		6A185ACE253D9D77001542BC /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A185ACD253D9D77001542BC /* RootViewController.swift */; };
 		6A185AD6253D9EE5001542BC /* RootCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A185AD5253D9EE5001542BC /* RootCell.swift */; };
 		6A1A53DD25912A3E00981F00 /* SwiftyAdsNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1A53DC25912A3E00981F00 /* SwiftyAdsNative.swift */; };
-		6A1A53EC259147BC00981F00 /* UnifiedNativeAdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A1A53EB259147BC00981F00 /* UnifiedNativeAdView.xib */; };
 		6A4286052400609E0035487A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4286042400609E0035487A /* AppDelegate.swift */; };
 		6A428612240060A00035487A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A428611240060A00035487A /* Assets.xcassets */; };
 		6A428615240060A00035487A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A428613240060A00035487A /* LaunchScreen.storyboard */; };
@@ -31,6 +30,7 @@
 		6AC971DE2401B06700A0BB91 /* SwiftyAdsIntervalTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971D22401B06600A0BB91 /* SwiftyAdsIntervalTracker.swift */; };
 		6AC971DF2401B06700A0BB91 /* SwiftyAds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971D42401B06600A0BB91 /* SwiftyAds.swift */; };
 		6AD3988A25CE970A0038C9B0 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AD3988925CE970A0038C9B0 /* AppTrackingTransparency.framework */; };
+		6AD3989625CEDB100038C9B0 /* NativeAdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6AD3989525CEDB100038C9B0 /* NativeAdView.xib */; };
 		6AEF6C2E2560CC1200780DFB /* TabBarControllerNoAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEF6C2D2560CC1200780DFB /* TabBarControllerNoAd.swift */; };
 		D64A98124421A48FA4C9D54A /* Pods_SwiftyAdsDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58AB3BECA27AE6BDA2F5A936 /* Pods_SwiftyAdsDemo.framework */; };
 /* End PBXBuildFile section */
@@ -55,7 +55,6 @@
 		6A185ACD253D9D77001542BC /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		6A185AD5253D9EE5001542BC /* RootCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCell.swift; sourceTree = "<group>"; };
 		6A1A53DC25912A3E00981F00 /* SwiftyAdsNative.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsNative.swift; sourceTree = "<group>"; };
-		6A1A53EB259147BC00981F00 /* UnifiedNativeAdView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UnifiedNativeAdView.xib; sourceTree = "<group>"; };
 		6A4286012400609E0035487A /* SwiftyAdsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyAdsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A4286042400609E0035487A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6A428611240060A00035487A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -77,6 +76,7 @@
 		6AC971D22401B06600A0BB91 /* SwiftyAdsIntervalTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsIntervalTracker.swift; sourceTree = "<group>"; };
 		6AC971D42401B06600A0BB91 /* SwiftyAds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAds.swift; sourceTree = "<group>"; };
 		6AD3988925CE970A0038C9B0 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
+		6AD3989525CEDB100038C9B0 /* NativeAdView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NativeAdView.xib; sourceTree = "<group>"; };
 		6AEF6C2D2560CC1200780DFB /* TabBarControllerNoAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarControllerNoAd.swift; sourceTree = "<group>"; };
 		976A9AB78CF3F7B4C96D7D05 /* Pods-SwiftyAdsDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdsDemo.release.xcconfig"; path = "Target Support Files/Pods-SwiftyAdsDemo/Pods-SwiftyAdsDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -188,7 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				6A864BC825901827005D0789 /* NativeAdViewController.swift */,
-				6A1A53EB259147BC00981F00 /* UnifiedNativeAdView.xib */,
+				6AD3989525CEDB100038C9B0 /* NativeAdView.xib */,
 			);
 			path = Native;
 			sourceTree = "<group>";
@@ -282,7 +282,7 @@
 				};
 			};
 			buildConfigurationList = 6A4285FC2400609E0035487A /* Build configuration list for PBXProject "SwiftyAdsDemo" */;
-			compatibilityVersion = "Xcode 11.4";
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -308,7 +308,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A4286252400612E0035487A /* GameScene.sks in Resources */,
-				6A1A53EC259147BC00981F00 /* UnifiedNativeAdView.xib in Resources */,
+				6AD3989625CEDB100038C9B0 /* NativeAdView.xib in Resources */,
 				6A520CDF253DA6170034F065 /* PlainViewController.storyboard in Resources */,
 				6A06E44C2593DDE9005EAD20 /* GameViewController.storyboard in Resources */,
 				6A428612240060A00035487A /* Assets.xcassets in Resources */,
