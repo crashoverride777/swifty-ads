@@ -87,7 +87,13 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
             return
         }
 
-        interstitialAd.present(fromRootViewController: viewController)
+        do {
+            try interstitialAd.canPresent(fromRootViewController: viewController)
+            interstitialAd.present(fromRootViewController: viewController)
+        } catch {
+            load()
+            onError?(error)
+        }
     }
     
     func stopLoading() {

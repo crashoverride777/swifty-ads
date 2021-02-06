@@ -92,9 +92,17 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
             return
         }
 
-        let rewardAmount = Int(truncating: rewardedAd.adReward.amount)
-        rewardedAd.present(fromRootViewController: viewController) {
-            onReward(rewardAmount)
+        do {
+            try rewardedAd.canPresent(fromRootViewController: viewController)
+            let rewardAmount = Int(truncating: rewardedAd.adReward.amount)
+            rewardedAd.present(fromRootViewController: viewController) {
+                onReward(rewardAmount)
+            }
+        } catch {
+            load()
+            onError?(error)
+            onNotReady?()
+            return
         }
     }
 }
