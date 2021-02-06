@@ -26,7 +26,7 @@ Sign up for an [AdMob account](https://admob.google.com/home/get-started/) and c
 
 ## ATT and GDPR
 
-SwiftyAds use Google`s [UMP](https://developers.google.com/admob/ump/ios/quick-start) (User Messaging Platform) SDK to handle user consent. This SDK handles both GDPR requests and also the iOS 14 ATT alert. Please read the Funding Choices [documentation](https://support.google.com/fundingchoices/answer/9180084) to ensure they are setup up correctly for ATT and GDPR.
+SwiftyAds use Google`s [UMP](https://developers.google.com/admob/ump/ios/quick-start) (User Messaging Platform) SDK to handle user consent. This SDK handles both GDPR requests and also the iOS 14 ATT alert if required. Please read the Funding Choices [documentation](https://support.google.com/fundingchoices/answer/9180084) to ensure they are setup up correctly for ATT and GDPR.
 
 ## Installation
 
@@ -79,9 +79,14 @@ func setupSwiftyAds() {
     
     SwiftyAds.shared.setup(
         from: self,
-        in: environment,
-        completion: ({ consentStatus in
-            // Show banner for example if consent is obtained or not required
+        for: environment,
+        completion: ({ result in
+            switch result {
+            case .success(let consentStatus):
+                print("Setup successful with consent status: \(consentStatus)")
+            case .failure(let error):
+                print("Setup errir: \(error)")
+            }
         })
     )
 }
@@ -113,11 +118,10 @@ Prepare the banner in `viewDidLoad`
 override func viewDidLoad() {
     super.viewDidLoad()
     
-    SwiftyAds.shared.prepareBanner(
+    SwiftyAds.shared.prepareBannerAd(
         in: self,
         adUnitIdType: .plist, // set to .custom to add a different AdUnitId
-        atTop: false,
-        ignoresSafeArea: false,
+        position: .bottom(isUsingSafeArea: true) // banner is pinned to bottom and follows safe area layout guide
         animationDuration: 1.5,
         onOpen: ({
             print("SwiftyAds banner ad did open")
@@ -138,7 +142,7 @@ and show it in `viewDidAppear`. This is to ensure that the view has been layed o
 override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
-    SwiftyAds.shared.showBanner(isLandscape: view.frame.width > view.frame.height)
+    SwiftyAds.shared.showBannerAd(isLandscape: view.frame.width > view.frame.height)
 }
 ```
 
@@ -149,7 +153,7 @@ override func viewWillTransition(to size: CGSize, with coordinator: UIViewContro
     super.viewWillTransition(to: size, with: coordinator)
     
     coordinator.animate(alongsideTransition: { _ in
-        SwiftyAds.shared.showBanner(isLandscape: size.width > size.height)
+        SwiftyAds.shared.showBannerAd(isLandscape: size.width > size.height)
     })
 }
 ```
@@ -157,13 +161,13 @@ override func viewWillTransition(to size: CGSize, with coordinator: UIViewContro
 You can remove the banner by calling the `removeBanner` method.
 
 ```swift
-SwiftyAds.shared.removeBanner() 
+SwiftyAds.shared.removeBannerAd() 
 ```
 
 ### Interstitial Ads
 
 ```swift
-SwiftyAds.shared.showInterstitial(
+SwiftyAds.shared.showInterstitialAd(
     from: self,
     withInterval: 2, // every 2nd time method is called ad will be displayed
     onOpen: ({
@@ -185,7 +189,7 @@ Always use a dedicated button to display rewarded videos. You should never show 
 AdMob provided a new rewarded video API which lets you preload multiple rewarded videos with different AdUnitIds. While SwiftyAds uses this new API it currently only supports loading 1 rewarded video ad at a time.
 
 ```swift
-SwiftyAds.shared.showRewardedVideo(
+SwiftyAds.shared.showRewardedAd(
     from: self,
     onOpen: ({
         print("SwiftyAds rewarded video ad did open")
@@ -252,10 +256,10 @@ SwiftyAds.shared.isConsentRequired
 SwiftyAds.shared.hasConsent
 
 // Check if rewarded video is ready, for example to show/hide button
-SwiftyAds.shared.isRewardedVideoReady
+SwiftyAds.shared.isRewardedAdReady
 
 // Check if interstitial ad is ready, for example to show an alternative ad
-SwiftyAds.shared.isInterstitialReady
+SwiftyAds.shared.isInterstitialAdReady
 ```
 
 ### Disable Ads (In App Purchases)
