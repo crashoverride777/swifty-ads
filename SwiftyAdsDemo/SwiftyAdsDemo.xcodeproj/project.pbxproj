@@ -30,6 +30,7 @@
 		6AC971DD2401B06700A0BB91 /* SwiftyAdsRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971D12401B06600A0BB91 /* SwiftyAdsRequestBuilder.swift */; };
 		6AC971DE2401B06700A0BB91 /* SwiftyAdsIntervalTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971D22401B06600A0BB91 /* SwiftyAdsIntervalTracker.swift */; };
 		6AC971DF2401B06700A0BB91 /* SwiftyAds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971D42401B06600A0BB91 /* SwiftyAds.swift */; };
+		6AD3988A25CE970A0038C9B0 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AD3988925CE970A0038C9B0 /* AppTrackingTransparency.framework */; };
 		6AEF6C2E2560CC1200780DFB /* TabBarControllerNoAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEF6C2D2560CC1200780DFB /* TabBarControllerNoAd.swift */; };
 		D64A98124421A48FA4C9D54A /* Pods_SwiftyAdsDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58AB3BECA27AE6BDA2F5A936 /* Pods_SwiftyAdsDemo.framework */; };
 /* End PBXBuildFile section */
@@ -75,6 +76,7 @@
 		6AC971D12401B06600A0BB91 /* SwiftyAdsRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsRequestBuilder.swift; sourceTree = "<group>"; };
 		6AC971D22401B06600A0BB91 /* SwiftyAdsIntervalTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsIntervalTracker.swift; sourceTree = "<group>"; };
 		6AC971D42401B06600A0BB91 /* SwiftyAds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAds.swift; sourceTree = "<group>"; };
+		6AD3988925CE970A0038C9B0 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		6AEF6C2D2560CC1200780DFB /* TabBarControllerNoAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarControllerNoAd.swift; sourceTree = "<group>"; };
 		976A9AB78CF3F7B4C96D7D05 /* Pods-SwiftyAdsDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdsDemo.release.xcconfig"; path = "Target Support Files/Pods-SwiftyAdsDemo/Pods-SwiftyAdsDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -85,6 +87,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D64A98124421A48FA4C9D54A /* Pods_SwiftyAdsDemo.framework in Frameworks */,
+				6AD3988A25CE970A0038C9B0 /* AppTrackingTransparency.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,6 +196,7 @@
 		6A864BCC25901ADE005D0789 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6AD3988925CE970A0038C9B0 /* AppTrackingTransparency.framework */,
 				58AB3BECA27AE6BDA2F5A936 /* Pods_SwiftyAdsDemo.framework */,
 			);
 			name = Frameworks;
