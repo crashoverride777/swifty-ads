@@ -86,14 +86,15 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
         self.onClose = onClose
         self.onError = onError
         
-        if let rewardedAd = rewardedAd {
-            let rewardAmount = Int(truncating: rewardedAd.adReward.amount)
-            rewardedAd.present(fromRootViewController: viewController) {
-                onReward(rewardAmount)
-            }
-        } else {
+        guard let rewardedAd = rewardedAd else {
             load()
             onNotReady?()
+            return
+        }
+
+        let rewardAmount = Int(truncating: rewardedAd.adReward.amount)
+        rewardedAd.present(fromRootViewController: viewController) {
+            onReward(rewardAmount)
         }
     }
 }

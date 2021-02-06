@@ -21,7 +21,7 @@
 //    SOFTWARE.
 
 import GoogleMobileAds
-
+#warning("fix console warning: Set rootVC before loading request")
 enum BannerAdPositition {
     case top(isUsingSafeArea: Bool)
     case bottom(isUsingSafeArea: Bool)
@@ -104,11 +104,11 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
             bannerView.adUnitID = adUnitId
         }
 
-        // Set the banner view delegate
-        bannerView.delegate = self
-
         // Set the root view controller that will display the banner
         bannerView.rootViewController = viewController
+
+        // Set the banner view delegate
+        bannerView.delegate = self
 
         // Add banner view to view controller
         bannerView.translatesAutoresizingMaskIntoConstraints = false
@@ -153,13 +153,8 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
     }
 
     func show(isLandscape: Bool) {
-        guard let bannerView = bannerView else {
-            return
-        }
-
-        guard let currentView = currentView else {
-            return
-        }
+        guard let bannerView = bannerView else { return }
+        guard let currentView = currentView else { return }
 
         // Determine the view width to use for the ad width.
         let frame = { () -> CGRect in

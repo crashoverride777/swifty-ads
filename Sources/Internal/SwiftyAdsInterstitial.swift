@@ -82,11 +82,12 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
         self.onClose = onClose
         self.onError = onError
         
-        if let interstitialAd = interstitialAd {
-            interstitialAd.present(fromRootViewController: viewController)
-        } else {
+        guard let interstitialAd = interstitialAd else {
             load()
+            return
         }
+
+        interstitialAd.present(fromRootViewController: viewController)
     }
     
     func stopLoading() {
