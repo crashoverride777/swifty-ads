@@ -66,7 +66,7 @@ extension SwiftyAdsNative: SwiftyAdsNativeType {
         self.onError = onError
         isLoading = true
 
-        // Create multiple ad options
+        // Create multiple ads ad loader options
         var multipleAdsOptions: [GADMultipleAdsAdLoaderOptions]?
         if let count = count {
             let loaderOptions = GADMultipleAdsAdLoaderOptions()

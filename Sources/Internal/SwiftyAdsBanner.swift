@@ -22,15 +22,11 @@
 
 import GoogleMobileAds
 #warning("fix console warning: Set rootVC before loading request")
-enum BannerAdPositition {
-    case top(isUsingSafeArea: Bool)
-    case bottom(isUsingSafeArea: Bool)
-}
 
 protocol SwiftyAdsBannerType: AnyObject {
     func prepare(in viewController: UIViewController,
                  adUnitIdType: SwiftyAdsAdUnitIdType,
-                 position: BannerAdPositition,
+                 position: SwiftyAdsBannerAdPosition,
                  animationDuration: TimeInterval,
                  onOpen: (() -> Void)?,
                  onClose: (() -> Void)?,
@@ -50,13 +46,12 @@ final class SwiftyAdsBanner: NSObject {
     private var onError: ((Error) -> Void)?
     
     private var bannerView: GADBannerView?
-    private var position: BannerAdPositition = .bottom(isUsingSafeArea: true)
+    private var position: SwiftyAdsBannerAdPosition = .bottom(isUsingSafeArea: true)
     private var animationDuration: TimeInterval = 1.4
     private var bannerViewConstraint: NSLayoutConstraint?
     private var animator: UIViewPropertyAnimator?
-    private var currentView: UIView?
-    private var visibleConstant: CGFloat = 0
-    private var hiddenConstant: CGFloat = 400
+    private let visibleConstant: CGFloat = 0
+    private let hiddenConstant: CGFloat = 400
     
     // MARK: - Initialization
     
@@ -73,7 +68,7 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
     
     func prepare(in viewController: UIViewController,
                  adUnitIdType: SwiftyAdsAdUnitIdType,
-                 position: BannerAdPositition,
+                 position: SwiftyAdsBannerAdPosition,
                  animationDuration: TimeInterval,
                  onOpen: (() -> Void)?,
                  onClose: (() -> Void)?,
@@ -86,16 +81,12 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
         
         // Remove old banners if needed
         remove()
-        
-        // Update current view reference
-        currentView = viewController.view
-        
+
         // Create new banner ad
-        bannerView = GADBannerView()
+        let bannerView = GADBannerView()
         
-        guard let bannerView = bannerView else {
-            return
-        }
+        // Keep reference to created banner view
+        self.bannerView = bannerView
 
         // Set ad unit id
         if case .custom(let adUnitId) = adUnitIdType {
@@ -154,7 +145,7 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
 
     func show(isLandscape: Bool) {
         guard let bannerView = bannerView else { return }
-        guard let currentView = currentView else { return }
+        guard let currentView = bannerView.rootViewController?.view else { return }
 
         // Determine the view width to use for the ad width.
         let frame = { () -> CGRect in
@@ -188,7 +179,6 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
         bannerView?.removeFromSuperview()
         bannerView = nil
         bannerViewConstraint = nil
-        currentView = nil
         onClose?()
     }
 }
@@ -249,7 +239,7 @@ private extension SwiftyAdsBanner {
     
     func animateToOffScreenPosition(_ bannerAd: GADBannerView,
                                     from viewController: UIViewController?,
-                                    position: BannerAdPositition,
+                                    position: SwiftyAdsBannerAdPosition,
                                     animated: Bool = true,
                                     completion: (() -> Void)? = nil) {
         // We can only animate the banner to its off-screen position with a valid view controller

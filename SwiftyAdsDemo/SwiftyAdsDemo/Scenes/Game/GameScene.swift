@@ -27,7 +27,7 @@ class GameScene: SKScene {
             switch node {
 
             case interstitialLabel:
-                swiftyAds.showInterstitial(
+                swiftyAds.showInterstitialAd(
                     from: viewController,
                     withInterval: 2,
                     onOpen: ({
@@ -42,7 +42,7 @@ class GameScene: SKScene {
                 )
 
             case rewardedLabel:
-                swiftyAds.showRewardedVideo(
+                swiftyAds.showRewardedAd(
                     from: viewController,
                     onOpen: ({
                         print("SwiftyAds rewarded video ad did open")

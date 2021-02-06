@@ -35,11 +35,10 @@ final class TabBarControllerAd: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        swiftyAds.prepareBanner(
+        swiftyAds.prepareBannerAd(
             in: self,
             adUnitIdType: .plist,
-            isAtTop: false,
-            isUsingSafeArea: true,
+            position: .bottom(isUsingSafeArea: true),
             animationDuration: 1.5,
             onOpen: ({
                 print("SwiftyAds banner ad did open")
@@ -55,13 +54,13 @@ final class TabBarControllerAd: UITabBarController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        swiftyAds.showBanner(isLandscape: view.frame.width > view.frame.height)
+        swiftyAds.showBannerAd(isLandscape: view.frame.width > view.frame.height)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { [weak self] _ in
-            self?.swiftyAds.showBanner(isLandscape: size.width > size.height)
+            self?.swiftyAds.showBannerAd(isLandscape: size.width > size.height)
         })
     }
 }

@@ -25,15 +25,9 @@ import Foundation
 struct SwiftyAdsConfiguration: Decodable {
     let bannerAdUnitId: String?
     let interstitialAdUnitId: String?
-    let rewardedVideoAdUnitId: String?
+    let rewardedAdUnitId: String?
     let nativeAdUnitId: String?
     let isTaggedForUnderAgeOfConsent: Bool
-
-    var ids: [String] {
-        [bannerAdUnitId, interstitialAdUnitId, rewardedVideoAdUnitId, nativeAdUnitId]
-            .compactMap { $0 }
-            .filter { !$0.isEmpty }
-    }
 }
 
 extension SwiftyAdsConfiguration {
@@ -56,7 +50,7 @@ extension SwiftyAdsConfiguration {
         SwiftyAdsConfiguration(
             bannerAdUnitId: "ca-app-pub-3940256099942544/2934735716",
             interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
-            rewardedVideoAdUnitId: "ca-app-pub-3940256099942544/1712485313",
+            rewardedAdUnitId: "ca-app-pub-3940256099942544/1712485313",
             nativeAdUnitId: "ca-app-pub-3940256099942544/3986624511",
             isTaggedForUnderAgeOfConsent: false
         )

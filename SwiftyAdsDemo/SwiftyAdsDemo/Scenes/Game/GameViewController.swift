@@ -4,15 +4,26 @@ import SpriteKit
 class GameViewController: UIViewController {
     
     private var swiftyAds: SwiftyAdsType!
-    
+
+    override var shouldAutorotate: Bool {
+        true
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        .all
+    }
+
+    override var prefersStatusBarHidden: Bool {
+        true
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        swiftyAds.prepareBanner(
+        swiftyAds.prepareBannerAd(
             in: self,
             adUnitIdType: .plist,
-            isAtTop: false,
-            isUsingSafeArea: true,
+            position: .bottom(isUsingSafeArea: true),
             animationDuration: 1.5,
             onOpen: ({
                 print("SwiftyAds banner ad did open")
@@ -45,25 +56,13 @@ class GameViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        swiftyAds.showBanner(isLandscape: view.frame.size.width > view.frame.size.height)
-    }
-    
-    override var shouldAutorotate: Bool {
-        return true
-    }
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .all
-    }
-
-    override var prefersStatusBarHidden: Bool {
-        return true
+        swiftyAds.showBannerAd(isLandscape: view.frame.size.width > view.frame.size.height)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { [weak self] _ in
-            self?.swiftyAds.showBanner(isLandscape: size.width > size.height)
+            self?.swiftyAds.showBannerAd(isLandscape: size.width > size.height)
         })
     }
 

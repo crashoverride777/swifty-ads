@@ -47,22 +47,28 @@ private extension AppDelegate {
         #endif
         swiftyAds.setup(
             from: rootViewController,
-            in: environment,
-            completion: ({ [weak self] consentStatus in
-                switch consentStatus {
-                case .notRequired:
-                    print("SwiftyAds did finish setup with consent status: notRequired")
-                case .required:
-                    print("SwiftyAds did finish setup with consent status: required")
-                case .obtained:
-                    print("SwiftyAds did finish setup with consent status: obtained")
-                case .unknown:
-                    print("SwiftyAds did finish setup with consent status: unknown")
-                @unknown default:
-                    print("SwiftyAds did finish setup with consent status: unknown")
+            for: environment,
+            completion: ({ [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let consentStatus):
+                    switch consentStatus {
+                    case .notRequired:
+                        print("SwiftyAds did finish setup with consent status: notRequired")
+                    case .required:
+                        print("SwiftyAds did finish setup with consent status: required")
+                    case .obtained:
+                        print("SwiftyAds did finish setup with consent status: obtained")
+                    case .unknown:
+                        print("SwiftyAds did finish setup with consent status: unknown")
+                    @unknown default:
+                        print("SwiftyAds did finish setup with consent status: unknown")
+                    }
+                case .failure(let error):
+                    print("SwiftyAds did finish setup with error: \(error)")
                 }
 
-                self?.notificationCenter.post(name: .adConsentStatusDidChange, object: nil)
+                self.notificationCenter.post(name: .adConsentStatusDidChange, object: nil)
             })
         )
     }
