@@ -186,7 +186,7 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
 extension SwiftyAdsBanner: GADBannerViewDelegate {
 
     func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
-        print("SwiftyAdsBanner did record impression for ad: \(bannerView)")
+        print("SwiftyAdsBanner did record impression for banner ad")
     }
     
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
