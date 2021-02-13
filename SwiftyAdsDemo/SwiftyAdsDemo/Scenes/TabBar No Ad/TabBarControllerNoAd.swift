@@ -14,9 +14,7 @@ final class TabBarControllerNoAd: UITabBarController {
         tabBar.barTintColor = .white
         
         // Create tab view controllers
-        let storyboard = UIStoryboard(name: "PlainViewController", bundle: .main)
-        let plainVC = storyboard.instantiateInitialViewController() as! PlainViewController
-        plainVC.configure(swiftyAds: swiftyAds)
+        let plainVC = PlainViewController(swiftyAds: swiftyAds)
         plainVC.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 0)
         
         let secondVC = UIViewController()

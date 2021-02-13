@@ -125,9 +125,7 @@ final class RootViewController: UITableViewController {
         
         switch row {
         case .viewController:
-            let storyboard = UIStoryboard(name: "PlainViewController", bundle: .main)
-            let plainViewController = storyboard.instantiateInitialViewController() as! PlainViewController
-            plainViewController.configure(swiftyAds: swiftyAds)
+            let plainViewController = PlainViewController(swiftyAds: swiftyAds)
             viewController = plainViewController
 
         case .viewControllerInsideTabBar:

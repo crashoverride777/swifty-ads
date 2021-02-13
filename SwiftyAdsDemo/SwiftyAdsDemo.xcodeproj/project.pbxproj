@@ -20,7 +20,6 @@
 		6A4286272400612E0035487A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4286242400612E0035487A /* GameScene.swift */; };
 		6A520CDA253DA1130034F065 /* PlainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A520CD9253DA1130034F065 /* PlainViewController.swift */; };
 		6A520CDC253DA1350034F065 /* TabBarControllerAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A520CDB253DA1350034F065 /* TabBarControllerAd.swift */; };
-		6A520CDF253DA6170034F065 /* PlainViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A520CDE253DA6170034F065 /* PlainViewController.storyboard */; };
 		6A864BC925901827005D0789 /* NativeAdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A864BC825901827005D0789 /* NativeAdViewController.swift */; };
 		6AC971D62401B06700A0BB91 /* SwiftyAdsInterstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971C82401B06600A0BB91 /* SwiftyAdsInterstitial.swift */; };
 		6AC971D72401B06700A0BB91 /* SwiftyAdsRewarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971C92401B06600A0BB91 /* SwiftyAdsRewarded.swift */; };
@@ -66,7 +65,6 @@
 		6A4286242400612E0035487A /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		6A520CD9253DA1130034F065 /* PlainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainViewController.swift; sourceTree = "<group>"; };
 		6A520CDB253DA1350034F065 /* TabBarControllerAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarControllerAd.swift; sourceTree = "<group>"; };
-		6A520CDE253DA6170034F065 /* PlainViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PlainViewController.storyboard; sourceTree = "<group>"; };
 		6A864BC825901827005D0789 /* NativeAdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeAdViewController.swift; sourceTree = "<group>"; };
 		6AC971C82401B06600A0BB91 /* SwiftyAdsInterstitial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsInterstitial.swift; sourceTree = "<group>"; };
 		6AC971C92401B06600A0BB91 /* SwiftyAdsRewarded.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsRewarded.swift; sourceTree = "<group>"; };
@@ -122,7 +120,6 @@
 			isa = PBXGroup;
 			children = (
 				6A520CD9253DA1130034F065 /* PlainViewController.swift */,
-				6A520CDE253DA6170034F065 /* PlainViewController.storyboard */,
 			);
 			path = Plain;
 			sourceTree = "<group>";
@@ -309,7 +306,6 @@
 			files = (
 				6A4286252400612E0035487A /* GameScene.sks in Resources */,
 				6A3C586025D7DC6000047F9A /* CustomAdView.xib in Resources */,
-				6A520CDF253DA6170034F065 /* PlainViewController.storyboard in Resources */,
 				6A06E44C2593DDE9005EAD20 /* GameViewController.storyboard in Resources */,
 				6A428612240060A00035487A /* Assets.xcassets in Resources */,
 				6A428615240060A00035487A /* LaunchScreen.storyboard in Resources */,

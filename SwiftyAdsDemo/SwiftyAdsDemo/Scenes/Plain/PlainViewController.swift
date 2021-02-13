@@ -4,13 +4,49 @@ final class PlainViewController: UIViewController {
 
     // MARK: - Properties
 
-    private var swiftyAds: SwiftyAdsType!
+    private let swiftyAds: SwiftyAdsType
+
+    private lazy var interstitialAdButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Show Interstitial ad (2 interval)", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(showInterstitialAdButtonPressed), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var rewardedAdButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Show rewarded ad", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(showRewardedAdButtonPressed), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [interstitialAdButton, rewardedAdButton])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 32
+        return stackView
+    }()
+
+    // MARK: - Init
+
+    init(swiftyAds: SwiftyAdsType) {
+        self.swiftyAds = swiftyAds
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .blue
+        addSubviews()
 
         swiftyAds.prepareBannerAd(
             in: self,
@@ -40,19 +76,22 @@ final class PlainViewController: UIViewController {
             self?.swiftyAds.showBannerAd(isLandscape: size.width > size.height)
         })
     }
-
-    // MARK: - Public Methods
-
-    func configure(swiftyAds: SwiftyAdsType) {
-        self.swiftyAds = swiftyAds
-    }
 }
 
 // MARK: - Private Methods
 
 private extension PlainViewController {
+
+    func addSubviews() {
+        view.addSubview(stackView)
+
+        NSLayoutConstraint.activate([
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+    }
     
-    @IBAction func showInterstitialAdButtonPressed(_ sender: Any) {
+    @objc func showInterstitialAdButtonPressed() {
         swiftyAds.showInterstitialAd(
             from: self,
             withInterval: 2,
@@ -68,7 +107,7 @@ private extension PlainViewController {
         )
     }
     
-    @IBAction func showRewardedAdButtonPressed(_ sender: Any) {
+    @objc func showRewardedAdButtonPressed() {
         swiftyAds.showRewardedAd(
             from: self,
             onOpen: ({
