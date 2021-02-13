@@ -93,36 +93,7 @@ final class RootViewController: UITableViewController {
         super.viewDidLoad()
         navigationItem.title = "Swifty Ads Demo"
         tableView.register(RootCell.self, forCellReuseIdentifier: String(describing: RootCell.self))
-
-        swiftyAds.prepareBannerAd(
-            in: self,
-            adUnitIdType: .plist,
-            position: .bottom(isUsingSafeArea: true),
-            animationDuration: 1.5,
-            onOpen: ({
-                print("SwiftyAds banner ad did open")
-            }),
-            onClose: ({
-                print("SwiftyAds banner ad did close")
-            }),
-            onError: ({ error in
-                print("SwiftyAds banner ad error \(error)")
-            })
-        )
-
         notificationCenter.addObserver(self, selector: #selector(consentDidChange), name: .adConsentStatusDidChange, object: nil)
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        swiftyAds.showBannerAd(isLandscape: view.frame.width > view.frame.height)
-    }
-
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate(alongsideTransition: { [weak self] _ in
-            self?.swiftyAds.showBannerAd(isLandscape: size.width > size.height)
-        })
     }
     
     // MARK: - UITableViewDataSource
@@ -186,6 +157,7 @@ final class RootViewController: UITableViewController {
 
         case .disable:
             swiftyAds.disable()
+            showDisabledAlert()
         }
         
         guard let validViewController = viewController else { return }
@@ -200,5 +172,14 @@ private extension RootViewController {
 
     @objc func consentDidChange() {
         swiftyAds.showBannerAd(isLandscape: view.frame.width > view.frame.height)
+    }
+
+    func showDisabledAlert() {
+        let alertController = UIAlertController(title: "Ads Disabled", message: "Ads have been disabled and will no longer display", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default) { _ in }
+        alertController.addAction(okAction)
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true)
+        }
     }
 }
