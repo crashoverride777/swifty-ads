@@ -262,15 +262,19 @@ SwiftyAds.shared.loadNativeAd(
 Note: While prefetching ads is a great technique, it's important that you don't keep old native ads around forever without displaying them. Any native ad objects that have been held without display for longer than an hour should be discarded and replaced with new ads from a new request.
 
 
+### Consent Status/Type
+
+```swift
+// Check current consent status
+SwiftyAds.shared.consentStatus
+
+// Check type of consent provided
+SwiftyAds.shared.consentType
+```
+
 ### Booleans
 
 ```swift
-// Check if user is required to provide consent
-SwiftyAds.shared.isConsentRequired
-
-// Check if user has given consent
-SwiftyAds.shared.hasConsent
-
 // Check if rewarded video is ready, for example to show/hide button
 SwiftyAds.shared.isRewardedAdReady
 
