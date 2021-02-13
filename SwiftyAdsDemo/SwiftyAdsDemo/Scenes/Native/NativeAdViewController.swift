@@ -51,7 +51,8 @@ private extension NativeAdViewController {
 
     func showNativeAd(_ nativeAd: GADNativeAd) {
         // Create and place ad in view hierarchy.
-        let nibView = Bundle.main.loadNibNamed("NativeAdView", owner: nil, options: nil)?.first
+        let bundle = Bundle(for: NativeAdViewController.self)
+        let nibView = bundle.loadNibNamed("CustomAdView", owner: nil, options: nil)?.first
 
         guard let nativeAdView = nibView as? GADNativeAdView else {
             fatalError("NativeAdViewController could not create GADNativeAdView from nib")
