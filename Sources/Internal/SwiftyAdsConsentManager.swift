@@ -89,7 +89,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
         // Create a UMPRequestParameters object.
         let parameters = UMPRequestParameters()
 
-        // Set debug settings
+        // Set UMPDebugSettings if in debug environment.
         if case .debug(let testDeviceIdentifiers, let geography, let resetConsentInfo) = environment {
             let debugSettings = UMPDebugSettings()
             debugSettings.testDeviceIdentifiers = testDeviceIdentifiers
@@ -101,7 +101,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
             }
         }
         
-        // Set tag for under age of consent. False means users are not under age.
+        // Update parameters for under age of consent.
         parameters.tagForUnderAgeOfConsent = configuration.isTaggedForUnderAgeOfConsent
 
         // Request an update to the consent information.
@@ -110,13 +110,12 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
         consentInformation.requestConsentInfoUpdate(with: parameters) { [weak self] error in
             guard let self = self else { return }
 
-            // The consent information state could not be updated
             if let error = error {
                 completion(.failure(error))
                 return
             }
 
-            // Update for under age of consent
+            // Update for under age of consent.
             self.updateForUnderAgeOfConsent(self.status)
 
             // The consent information state was updated and we can now check if a form is available.
@@ -150,7 +149,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
             return
         }
 
-        // Present the form (also includes ATT)
+        // Present the form
         form.present(from: viewController) { [weak self] error in
             guard let self = self else { return }
 
@@ -159,11 +158,11 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
                 return
             }
 
-            // Update under age of consent again, as status now might return `.notRequired`
-            // if outside EEA and ATT alert has been displayed
+            // Update under age of consent again, as status might now return `.notRequired`
+            // if outside of EEA and ATT alert has been displayed
             self.updateForUnderAgeOfConsent(self.status)
 
-            // Fire did change handler
+            // Fire status did change handler
             self.consentStatusDidChange?(self.status)
 
             // Fire completion handler
