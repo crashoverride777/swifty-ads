@@ -5,7 +5,8 @@ final class PlainViewController: UIViewController {
     // MARK: - Properties
 
     private let swiftyAds: SwiftyAdsType
-
+    private var bannerAd: SwiftyAdsBannerType?
+    
     private lazy var interstitialAdButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Show Interstitial ad (2 interval)", for: .normal)
@@ -48,7 +49,7 @@ final class PlainViewController: UIViewController {
         view.backgroundColor = .blue
         addSubviews()
 
-        swiftyAds.prepareBannerAd(
+        bannerAd = swiftyAds.makeBannerAd(
             in: self,
             adUnitIdType: .plist,
             position: .bottom(isUsingSafeArea: true),
@@ -67,13 +68,13 @@ final class PlainViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        swiftyAds.showBannerAd(isLandscape: view.frame.width > view.frame.height)
+        bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { [weak self] _ in
-            self?.swiftyAds.showBannerAd(isLandscape: size.width > size.height)
+            self?.bannerAd?.show(isLandscape: size.width > size.height)
         })
     }
 }
@@ -94,7 +95,7 @@ private extension PlainViewController {
     @objc func showInterstitialAdButtonPressed() {
         swiftyAds.showInterstitialAd(
             from: self,
-            withInterval: 2,
+            afterInterval: 2,
             onOpen: ({
                 print("SwiftyAds interstitial ad did open")
             }),

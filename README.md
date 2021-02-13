@@ -113,13 +113,22 @@ if let viewController = view?.window?.rootViewController {
 
 ### Banner Ads
 
+Create a property in your `UIViewController` for the banner to be displayed
+
+```swift
+class SomeViewController: UIViewController {
+
+    private var bannerAd: SwiftyAdsBannerType?
+}
+```
+
 Prepare the banner in `viewDidLoad`
 
 ```swift
 override func viewDidLoad() {
     super.viewDidLoad()
     
-    SwiftyAds.shared.prepareBannerAd(
+    bannerAd = SwiftyAds.shared.prepareBannerAd(
         in: self,
         adUnitIdType: .plist, // set to .custom to add a different AdUnitId
         position: .bottom(isUsingSafeArea: true) // banner is pinned to bottom and follows safe area layout guide
@@ -143,7 +152,7 @@ and show it in `viewDidAppear`. This is to ensure that the view has been layed o
 override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
-    SwiftyAds.shared.showBannerAd(isLandscape: view.frame.width > view.frame.height)
+    bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
 }
 ```
 
@@ -153,16 +162,22 @@ To handle orientation changes, simply call the show method again in `viewWillTra
 override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransition(to: size, with: coordinator)
     
-    coordinator.animate(alongsideTransition: { _ in
-        SwiftyAds.shared.showBannerAd(isLandscape: size.width > size.height)
+    coordinator.animate(alongsideTransition: { [weak self] _ in
+        self?.bannerAd?.show(isLandscape: size.width > size.height)
     })
 }
 ```
 
-You can remove the banner by calling the `removeBanner` method.
+You can hide the banner by calling the `hide` method. 
 
 ```swift
-SwiftyAds.shared.removeBannerAd() 
+bannerAd?.hide(animated: true) 
+```
+
+You can remove the banner from its superview by calling the `remove` method.
+
+```swift
+bannerAd?.remove() 
 ```
 
 ### Interstitial Ads
@@ -170,7 +185,7 @@ SwiftyAds.shared.removeBannerAd()
 ```swift
 SwiftyAds.shared.showInterstitialAd(
     from: self,
-    withInterval: 2, // every 2nd time method is called ad will be displayed
+    afterInterval: 2, // every 2nd time method is called ad will be displayed
     onOpen: ({
         print("SwiftyAds interstitial ad did open")
     }),

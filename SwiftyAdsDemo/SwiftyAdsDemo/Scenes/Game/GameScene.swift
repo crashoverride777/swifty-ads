@@ -29,7 +29,7 @@ class GameScene: SKScene {
             case interstitialLabel:
                 swiftyAds.showInterstitialAd(
                     from: viewController,
-                    withInterval: 2,
+                    afterInterval: 2,
                     onOpen: ({
                         print("SwiftyAds interstitial ad did open")
                     }),

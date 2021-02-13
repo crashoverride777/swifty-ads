@@ -4,6 +4,7 @@ import SpriteKit
 class GameViewController: UIViewController {
     
     private var swiftyAds: SwiftyAdsType!
+    private var bannerAd: SwiftyAdsBannerType?
 
     override var shouldAutorotate: Bool {
         true
@@ -20,7 +21,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        swiftyAds.prepareBannerAd(
+        bannerAd = swiftyAds.makeBannerAd(
             in: self,
             adUnitIdType: .plist,
             position: .bottom(isUsingSafeArea: true),
@@ -56,13 +57,13 @@ class GameViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        swiftyAds.showBannerAd(isLandscape: view.frame.size.width > view.frame.size.height)
+        bannerAd?.show(isLandscape: view.frame.size.width > view.frame.size.height)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { [weak self] _ in
-            self?.swiftyAds.showBannerAd(isLandscape: size.width > size.height)
+            self?.bannerAd?.show(isLandscape: size.width > size.height)
         })
     }
 

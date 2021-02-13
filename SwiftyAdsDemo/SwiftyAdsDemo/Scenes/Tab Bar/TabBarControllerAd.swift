@@ -5,6 +5,7 @@ final class TabBarControllerAd: UITabBarController {
     // MARK: - Properties
     
     private let swiftyAds: SwiftyAdsType
+    private var bannerAd: SwiftyAdsBannerType?
     
     // MARK: - Initialization
     
@@ -35,7 +36,7 @@ final class TabBarControllerAd: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        swiftyAds.prepareBannerAd(
+        bannerAd = swiftyAds.makeBannerAd(
             in: self,
             adUnitIdType: .plist,
             position: .bottom(isUsingSafeArea: true),
@@ -54,13 +55,13 @@ final class TabBarControllerAd: UITabBarController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        swiftyAds.showBannerAd(isLandscape: view.frame.width > view.frame.height)
+        bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { [weak self] _ in
-            self?.swiftyAds.showBannerAd(isLandscape: size.width > size.height)
+            self?.bannerAd?.show(isLandscape: size.width > size.height)
         })
     }
 }

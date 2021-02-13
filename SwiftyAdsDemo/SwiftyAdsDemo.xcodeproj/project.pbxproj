@@ -12,6 +12,10 @@
 		6A185AD6253D9EE5001542BC /* RootCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A185AD5253D9EE5001542BC /* RootCell.swift */; };
 		6A1A53DD25912A3E00981F00 /* SwiftyAdsNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1A53DC25912A3E00981F00 /* SwiftyAdsNative.swift */; };
 		6A3C586025D7DC6000047F9A /* AdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A3C585F25D7DC6000047F9A /* AdView.xib */; };
+		6A3C586225D81F4700047F9A /* SwiftyAdsBannerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3C586125D81F4700047F9A /* SwiftyAdsBannerType.swift */; };
+		6A3C586425D8292D00047F9A /* SwiftyAdsEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3C586325D8292D00047F9A /* SwiftyAdsEnvironment.swift */; };
+		6A3C586625D8295700047F9A /* SwiftyAdsAdUnitIdType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3C586525D8295700047F9A /* SwiftyAdsAdUnitIdType.swift */; };
+		6A3C586825D8297100047F9A /* SwiftyAdsBannerAdPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3C586725D8297100047F9A /* SwiftyAdsBannerAdPosition.swift */; };
 		6A4286052400609E0035487A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4286042400609E0035487A /* AppDelegate.swift */; };
 		6A428612240060A00035487A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A428611240060A00035487A /* Assets.xcassets */; };
 		6A428615240060A00035487A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A428613240060A00035487A /* LaunchScreen.storyboard */; };
@@ -55,6 +59,10 @@
 		6A185AD5253D9EE5001542BC /* RootCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCell.swift; sourceTree = "<group>"; };
 		6A1A53DC25912A3E00981F00 /* SwiftyAdsNative.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsNative.swift; sourceTree = "<group>"; };
 		6A3C585F25D7DC6000047F9A /* AdView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AdView.xib; sourceTree = "<group>"; };
+		6A3C586125D81F4700047F9A /* SwiftyAdsBannerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsBannerType.swift; sourceTree = "<group>"; };
+		6A3C586325D8292D00047F9A /* SwiftyAdsEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsEnvironment.swift; sourceTree = "<group>"; };
+		6A3C586525D8295700047F9A /* SwiftyAdsAdUnitIdType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsAdUnitIdType.swift; sourceTree = "<group>"; };
+		6A3C586725D8297100047F9A /* SwiftyAdsBannerAdPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsBannerAdPosition.swift; sourceTree = "<group>"; };
 		6A4286012400609E0035487A /* SwiftyAdsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyAdsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A4286042400609E0035487A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6A428611240060A00035487A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -228,6 +236,10 @@
 			isa = PBXGroup;
 			children = (
 				6AC971D42401B06600A0BB91 /* SwiftyAds.swift */,
+				6A3C586125D81F4700047F9A /* SwiftyAdsBannerType.swift */,
+				6A3C586725D8297100047F9A /* SwiftyAdsBannerAdPosition.swift */,
+				6A3C586325D8292D00047F9A /* SwiftyAdsEnvironment.swift */,
+				6A3C586525D8295700047F9A /* SwiftyAdsAdUnitIdType.swift */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -365,6 +377,7 @@
 				6AC971DE2401B06700A0BB91 /* SwiftyAdsIntervalTracker.swift in Sources */,
 				6A520CDA253DA1130034F065 /* PlainViewController.swift in Sources */,
 				6AC971DD2401B06700A0BB91 /* SwiftyAdsRequestBuilder.swift in Sources */,
+				6A3C586825D8297100047F9A /* SwiftyAdsBannerAdPosition.swift in Sources */,
 				6AC971DF2401B06700A0BB91 /* SwiftyAds.swift in Sources */,
 				6AC971D72401B06700A0BB91 /* SwiftyAdsRewarded.swift in Sources */,
 				6AC971D62401B06700A0BB91 /* SwiftyAdsInterstitial.swift in Sources */,
@@ -374,11 +387,14 @@
 				6AC971DC2401B06700A0BB91 /* SwiftyAdsConsentManager.swift in Sources */,
 				6A4286272400612E0035487A /* GameScene.swift in Sources */,
 				6AC971D92401B06700A0BB91 /* SwiftyAdsConfiguration.swift in Sources */,
+				6A3C586625D8295700047F9A /* SwiftyAdsAdUnitIdType.swift in Sources */,
 				6AEF6C2E2560CC1200780DFB /* TabBarControllerNoAd.swift in Sources */,
 				6A864BC925901827005D0789 /* NativeAdViewController.swift in Sources */,
 				6A4286262400612E0035487A /* GameViewController.swift in Sources */,
+				6A3C586425D8292D00047F9A /* SwiftyAdsEnvironment.swift in Sources */,
 				6AC971D82401B06700A0BB91 /* SwiftyAdsBanner.swift in Sources */,
 				6A4286052400609E0035487A /* AppDelegate.swift in Sources */,
+				6A3C586225D81F4700047F9A /* SwiftyAdsBannerType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

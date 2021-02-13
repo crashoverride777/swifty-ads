@@ -21,25 +21,14 @@
 //    SOFTWARE.
 
 import GoogleMobileAds
-#warning("fix console warning: Set rootVC before loading request")
-
-protocol SwiftyAdsBannerType: AnyObject {
-    func prepare(in viewController: UIViewController,
-                 adUnitIdType: SwiftyAdsAdUnitIdType,
-                 position: SwiftyAdsBannerAdPosition,
-                 animationDuration: TimeInterval,
-                 onOpen: (() -> Void)?,
-                 onClose: (() -> Void)?,
-                 onError: ((Error) -> Void)?)
-    func show(isLandscape: Bool)
-    func remove()
-}
 
 final class SwiftyAdsBanner: NSObject {
     
     // MARK: - Properties
     
     private let adUnitId: String
+    private let isDisabled: () -> Bool
+    private let hasConsent: () -> Bool
     private let request: () -> GADRequest
     private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
@@ -55,16 +44,18 @@ final class SwiftyAdsBanner: NSObject {
     
     // MARK: - Initialization
     
-    init(adUnitId: String, request: @escaping () -> GADRequest) {
+    init(adUnitId: String,
+         isDisabled: @escaping () -> Bool,
+         hasConsent: @escaping () -> Bool,
+         request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
+        self.isDisabled = isDisabled
+        self.hasConsent = hasConsent
         self.request = request
         super.init()
     }
-}
- 
-// MARK: - SwiftyAdBannerType
 
-extension SwiftyAdsBanner: SwiftyAdsBannerType {
+    // MARK: - Methods
     
     func prepare(in viewController: UIViewController,
                  adUnitIdType: SwiftyAdsAdUnitIdType,
@@ -79,9 +70,6 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
         self.onClose = onClose
         self.onError = onError
         
-        // Remove old banners if needed
-        remove()
-
         // Create new banner ad
         let bannerView = GADBannerView()
         
@@ -142,8 +130,15 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
         // Move banner off screen
         animateToOffScreenPosition(bannerView, from: viewController, position: position, animated: false)
     }
+}
+
+// MARK: - SwiftyAdBannerType
+
+extension SwiftyAdsBanner: SwiftyAdsBannerType {
 
     func show(isLandscape: Bool) {
+        guard !isDisabled() else { return }
+        guard hasConsent() else { return }
         guard let bannerView = bannerView else { return }
         guard let currentView = bannerView.rootViewController?.view else { return }
 
@@ -168,6 +163,18 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
 
         // Create an ad request and load the adaptive banner ad.
         bannerView.load(request())
+    }
+
+    func hide(animated: Bool) {
+        guard let bannerView = bannerView else { return }
+        guard let rootViewController = bannerView.rootViewController else { return }
+
+        animateToOffScreenPosition(
+            bannerView,
+            from: rootViewController,
+            position: position,
+            animated: animated
+        )
     }
     
     func remove() {

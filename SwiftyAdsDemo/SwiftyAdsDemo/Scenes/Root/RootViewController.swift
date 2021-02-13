@@ -71,7 +71,8 @@ final class RootViewController: UITableViewController {
     private let swiftyAds: SwiftyAdsType
     private let sections = Section.allCases
     private let notificationCenter: NotificationCenter = .default
-
+    private var bannerAd: SwiftyAdsBannerType?
+    
     // MARK: - Initialization
     
     init(swiftyAds: SwiftyAdsType) {
@@ -94,6 +95,34 @@ final class RootViewController: UITableViewController {
         navigationItem.title = "Swifty Ads Demo"
         tableView.register(RootCell.self, forCellReuseIdentifier: String(describing: RootCell.self))
         notificationCenter.addObserver(self, selector: #selector(consentDidChange), name: .adConsentStatusDidChange, object: nil)
+
+        bannerAd = swiftyAds.makeBannerAd(
+            in: self,
+            adUnitIdType: .plist,
+            position: .bottom(isUsingSafeArea: true),
+            animationDuration: 1.5,
+            onOpen: ({
+                print("SwiftyAds banner ad did open")
+            }),
+            onClose: ({
+                print("SwiftyAds banner ad did close")
+            }),
+            onError: ({ error in
+                print("SwiftyAds banner ad error \(error)")
+            })
+        )
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: { [weak self] _ in
+            self?.bannerAd?.show(isLandscape: size.width > size.height)
+        })
     }
     
     // MARK: - UITableViewDataSource
@@ -155,6 +184,8 @@ final class RootViewController: UITableViewController {
 
         case .disable:
             swiftyAds.disable()
+            bannerAd?.remove()
+            bannerAd = nil
             showDisabledAlert()
         }
         
@@ -169,7 +200,7 @@ final class RootViewController: UITableViewController {
 private extension RootViewController {
 
     @objc func consentDidChange() {
-        swiftyAds.showBannerAd(isLandscape: view.frame.width > view.frame.height)
+        bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
     }
 
     func showDisabledAlert() {
