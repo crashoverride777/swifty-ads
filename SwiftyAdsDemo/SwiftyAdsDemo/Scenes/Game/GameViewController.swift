@@ -18,6 +18,10 @@ class GameViewController: UIViewController {
         true
     }
 
+    func configure(swiftyAds: SwiftyAdsType) {
+        self.swiftyAds = swiftyAds
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -65,9 +69,5 @@ class GameViewController: UIViewController {
         coordinator.animate(alongsideTransition: { [weak self] _ in
             self?.bannerAd?.show(isLandscape: size.width > size.height)
         })
-    }
-
-    func configure(swiftyAds: SwiftyAdsType) {
-        self.swiftyAds = swiftyAds
     }
 }

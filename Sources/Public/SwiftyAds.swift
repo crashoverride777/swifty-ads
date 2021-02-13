@@ -34,7 +34,7 @@ public protocol SwiftyAdsType: AnyObject {
     var isRewardedAdReady: Bool { get }
     func setup(from viewController: UIViewController,
                for environment: SwiftyAdsEnvironment,
-               consentStatusDidChange: ((SwiftyAdsConsentStatus) -> Void)?,
+               consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
     func askForConsent(from viewController: UIViewController,
                        completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
@@ -168,7 +168,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter completion: A completion handler that will return the current consent status after the consent flow has finished.
     public func setup(from viewController: UIViewController,
                       for environment: SwiftyAdsEnvironment,
-                      consentStatusDidChange: ((SwiftyAdsConsentStatus) -> Void)?,
+                      consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                       completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
         self.consentStatusDidChange = consentStatusDidChange
         
@@ -416,7 +416,7 @@ extension SwiftyAds: SwiftyAdsType {
         guard !isDisabled else { return }
         guard hasConsent else { return }
 
-        if case .custom(let adUnitId) = adUnitIdType, nativeAd == nil {
+        if case .custom(let adUnitId) = adUnitIdType {
             nativeAd = SwiftyAdsNative(
                 adUnitId: adUnitId,
                 request: { [unowned self] in

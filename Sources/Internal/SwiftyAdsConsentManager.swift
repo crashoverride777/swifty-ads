@@ -54,8 +54,9 @@ final class SwiftyAdsConsentManager {
     private let configuration: SwiftyAdsConfiguration
     private let environment: SwiftyAdsEnvironment
     private let mobileAds: GADMobileAds
+    private let consentStatusDidChange: (SwiftyAdsConsentStatus) -> Void
+
     private var form: UMPConsentForm?
-    private var consentStatusDidChange: ((SwiftyAdsConsentStatus) -> Void)?
 
     // MARK: - Initialization
 
@@ -63,7 +64,7 @@ final class SwiftyAdsConsentManager {
          configuration: SwiftyAdsConfiguration,
          environment: SwiftyAdsEnvironment,
          mobileAds: GADMobileAds,
-         consentStatusDidChange: ((SwiftyAdsConsentStatus) -> Void)?
+         consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void
     ) {
         self.consentInformation = consentInformation
         self.configuration = configuration
@@ -163,7 +164,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
             self.updateForUnderAgeOfConsent(self.status)
 
             // Fire status did change handler
-            self.consentStatusDidChange?(self.status)
+            self.consentStatusDidChange(self.status)
 
             // Fire completion handler
             completion(.success(self.status))

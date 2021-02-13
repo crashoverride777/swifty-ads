@@ -6,9 +6,15 @@ class GameScene: SKScene {
     
     private var swiftyAds: SwiftyAdsType!
     
-    private lazy var interstitialLabel: SKLabelNode = self.childNode(withName: "interstitialLabel") as! SKLabelNode
-    private lazy var rewardedLabel: SKLabelNode = self.childNode(withName: "rewardedLabel") as! SKLabelNode
-   
+    private lazy var interstitialLabel: SKLabelNode = childNode(withName: "interstitialLabel") as! SKLabelNode
+    private lazy var rewardedLabel: SKLabelNode = childNode(withName: "rewardedLabel") as! SKLabelNode
+
+    // MARK: - Configure
+    
+    func configure(swiftyAds: SwiftyAdsType) {
+        self.swiftyAds = swiftyAds
+    }
+
     // MARK: - Life Cycle
     
     override func didMove(to view: SKView) {
@@ -83,11 +89,5 @@ class GameScene: SKScene {
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
 
-    }
-
-    // MARK: - Public Methods
-
-    func configure(swiftyAds: SwiftyAdsType) {
-        self.swiftyAds = swiftyAds
     }
 }
