@@ -105,6 +105,8 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
         parameters.tagForUnderAgeOfConsent = configuration.isTaggedForUnderAgeOfConsent
 
         // Request an update to the consent information.
+        // The first time we request consent information, even if outside of EEA, the status
+        // may return `.required` as the ATT alert has not yet been displayed.
         consentInformation.requestConsentInfoUpdate(with: parameters) { [weak self] error in
             guard let self = self else { return }
 
@@ -114,18 +116,8 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
                 return
             }
 
-            // Update request configuration for under age of consent
-            #warning("refine, ATT sets status to .required on first launch?, afterwards its notRequired?")
-            print("STATUS123 \(self.status == .notRequired)")
-            print("STATUS123 \(self.status == .obtained)")
-            print("STATUS123 \(self.status == .required)")
-            switch self.status {
-            case .notRequired:
-                self.mobileAds.requestConfiguration.tagForUnderAge(ofConsent: false)
-            default:
-                let isTaggedForUnderAgeOfConsent = self.configuration.isTaggedForUnderAgeOfConsent
-                self.mobileAds.requestConfiguration.tagForUnderAge(ofConsent: isTaggedForUnderAgeOfConsent)
-            }
+            // Update for under age of consent
+            self.updateForUnderAgeOfConsent(self.status)
 
             // The consent information state was updated and we can now check if a form is available.
             switch self.consentInformation.formStatus {
@@ -158,7 +150,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
             return
         }
 
-        // Present the form
+        // Present the form (also includes ATT)
         form.present(from: viewController) { [weak self] error in
             guard let self = self else { return }
 
@@ -167,8 +159,29 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
                 return
             }
 
+            // Update under age of consent again, as status now might return `.notRequired`
+            // if outside EEA and ATT alert has been displayed
+            self.updateForUnderAgeOfConsent(self.status)
+
+            // Fire did change handler
             self.consentStatusDidChange?(self.status)
+
+            // Fire completion handler
             completion(.success(self.status))
+        }
+    }
+}
+
+// MARK: - Private Methods
+
+private extension SwiftyAdsConsentManager {
+
+    func updateForUnderAgeOfConsent(_ consentStatus: SwiftyAdsConsentStatus) {
+        switch consentStatus {
+        case .notRequired:
+            mobileAds.requestConfiguration.tagForUnderAge(ofConsent: false)
+        default:
+            mobileAds.requestConfiguration.tagForUnderAge(ofConsent: configuration.isTaggedForUnderAgeOfConsent)
         }
     }
 }
