@@ -34,6 +34,7 @@ public protocol SwiftyAdsType: AnyObject {
     var isRewardedAdReady: Bool { get }
     func setup(from viewController: UIViewController,
                for environment: SwiftyAdsEnvironment,
+               consentStatusDidChange: ((SwiftyAdsConsentStatus) -> Void)?,
                completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
     func askForConsent(from viewController: UIViewController,
                        completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
@@ -93,7 +94,8 @@ public final class SwiftyAds: NSObject {
     private var consentManager: SwiftyAdsConsentManagerType?
     private var configuration: SwiftyAdsConfiguration?
     private var isDisabled = false
-        
+    private var consentStatusDidChange: ((SwiftyAdsConsentStatus) -> Void)?
+
     // MARK: - Computed Properties
     
     private var requestBuilder: SwiftyAdsRequestBuilderType {
@@ -164,10 +166,14 @@ extension SwiftyAds: SwiftyAdsType {
     ///
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter environment: The environment for ads to be displayed.
+    /// - parameter consentStatusDidChange: A handler that will be called everytime the consent status has changed.
     /// - parameter completion: A completion handler that will return the current consent status after the consent flow has finished.
     public func setup(from viewController: UIViewController,
                       for environment: SwiftyAdsEnvironment,
+                      consentStatusDidChange: ((SwiftyAdsConsentStatus) -> Void)?,
                       completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
+        self.consentStatusDidChange = consentStatusDidChange
+        
         // Update configuration for selected environment
         let configuration: SwiftyAdsConfiguration
         switch environment {
@@ -217,7 +223,8 @@ extension SwiftyAds: SwiftyAdsType {
             consentInformation: .sharedInstance,
             configuration: configuration,
             environment: environment,
-            mobileAds: mobileAds
+            mobileAds: mobileAds,
+            consentStatusDidChange: consentStatusDidChange
         )
 
         // Keep reference to consent manager

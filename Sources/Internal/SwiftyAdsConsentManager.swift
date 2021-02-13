@@ -55,18 +55,21 @@ final class SwiftyAdsConsentManager {
     private let environment: SwiftyAdsEnvironment
     private let mobileAds: GADMobileAds
     private var form: UMPConsentForm?
+    private var consentStatusDidChange: ((SwiftyAdsConsentStatus) -> Void)?
 
     // MARK: - Initialization
 
     init(consentInformation: UMPConsentInformation,
          configuration: SwiftyAdsConfiguration,
          environment: SwiftyAdsEnvironment,
-         mobileAds: GADMobileAds
+         mobileAds: GADMobileAds,
+         consentStatusDidChange: ((SwiftyAdsConsentStatus) -> Void)?
     ) {
         self.consentInformation = consentInformation
         self.configuration = configuration
         self.environment = environment
         self.mobileAds = mobileAds
+        self.consentStatusDidChange = consentStatusDidChange
     }
 }
 
@@ -165,6 +168,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
             }
 
             completion(.success(self.status))
+            self.consentStatusDidChange?(self.status)
         }
     }
 }

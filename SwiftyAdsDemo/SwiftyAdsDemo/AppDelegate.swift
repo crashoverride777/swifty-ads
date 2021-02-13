@@ -48,6 +48,20 @@ private extension AppDelegate {
         swiftyAds.setup(
             from: rootViewController,
             for: environment,
+            consentStatusDidChange: { consentStatus in
+                switch consentStatus {
+                case .notRequired:
+                    print("SwiftyAds did change consent status: notRequired")
+                case .required:
+                    print("SwiftyAds did change consent status: required")
+                case .obtained:
+                    print("SwiftyAds did change consent status: obtained")
+                case .unknown:
+                    print("SwiftyAds did change consent status: unknown")
+                @unknown default:
+                    print("SwiftyAds did change consent status: unknown default")
+                }
+            },
             completion: ({ [weak self] result in
                 guard let self = self else { return }
                 switch result {
@@ -62,7 +76,7 @@ private extension AppDelegate {
                     case .unknown:
                         print("SwiftyAds did finish setup with consent status: unknown")
                     @unknown default:
-                        print("SwiftyAds did finish setup with consent status: unknown")
+                        print("SwiftyAds did finish setup with consent status: unknown default")
                     }
                 case .failure(let error):
                     print("SwiftyAds did finish setup with error: \(error)")
