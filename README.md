@@ -81,6 +81,9 @@ func setupSwiftyAds() {
     SwiftyAds.shared.setup(
         from: self,
         for: environment,
+        consentStatusDidChange: { consentStatus in
+            // The consent status has changed
+        },
         completion: ({ result in
             switch result {
             case .success(let consentStatus):
