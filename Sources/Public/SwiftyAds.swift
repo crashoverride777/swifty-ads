@@ -24,11 +24,12 @@ import GoogleMobileAds
 import UserMessagingPlatform
 
 public typealias SwiftyAdsConsentStatus = UMPConsentStatus
+public typealias SwiftyAdsConsentType = UMPConsentType
 public typealias SwiftyAdsDebugGeography = UMPDebugGeography
 
 public protocol SwiftyAdsType: AnyObject {
-    var isConsentRequired: Bool { get }
-    var hasConsent: Bool { get }
+    var consentStatus: SwiftyAdsConsentStatus { get }
+    var consentType: SwiftyAdsConsentType { get }
     var isInterstitialAdReady: Bool { get }
     var isRewardedAdReady: Bool { get }
     func setup(from viewController: UIViewController,
@@ -98,6 +99,16 @@ public final class SwiftyAds: NSObject {
     private var requestBuilder: SwiftyAdsRequestBuilderType {
         SwiftyAdsRequestBuilder()
     }
+
+    private var hasConsent: Bool {
+        guard let consentManager = consentManager else { return true }
+        switch consentManager.status {
+        case .notRequired, .obtained:
+            return true
+        default:
+            return false
+        }
+    }
     
     // MARK: - Initialization
     
@@ -127,21 +138,16 @@ public final class SwiftyAds: NSObject {
 
 extension SwiftyAds: SwiftyAdsType {
 
-    /// Check if we must ask user for consent.
-    public var isConsentRequired: Bool {
-        guard let consentManager = consentManager else { return false }
-        return consentManager.status != .notRequired
+    /// The current consent status
+    public var consentStatus: SwiftyAdsConsentStatus {
+        guard let consentManager = consentManager else { return .obtained }
+        return consentManager.status
     }
 
-    /// Check if user has given consent or is not required to provide consent.
-    public var hasConsent: Bool {
-        guard let consentManager = consentManager else { return true }
-        switch consentManager.status {
-        case .notRequired, .obtained:
-            return true
-        default:
-            return false
-        }
+    /// The type of consent provided
+    public var consentType: SwiftyAdsConsentType {
+        guard let consentManager = consentManager else { return .personalized }
+        return consentManager.type
     }
      
     /// Check if interstitial ad is ready (e.g to show alternative ad like an in house ad)
