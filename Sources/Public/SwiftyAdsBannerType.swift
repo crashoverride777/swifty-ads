@@ -23,14 +23,16 @@
 import Foundation
 
 public protocol SwiftyAdsBannerType: AnyObject {
-    /// Show the prepared banner
+    /// Show the banner ad.
     ///
     /// - parameter isLandscape: If true banner is sized for landscape, otherwise portrait.
     func show(isLandscape: Bool)
 
-    /// Hide the banner.
+    /// Hide the banner ad.
+    ///
+    /// - parameter animated: Animates the banner if set to true.
     func hide(animated: Bool)
 
-    /// Removes the banner from its superview.
+    /// Removes the banner ad from its superview.
     func remove()
 }

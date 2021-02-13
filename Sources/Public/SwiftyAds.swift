@@ -224,7 +224,7 @@ extension SwiftyAds: SwiftyAdsType {
                 switch result {
                 case .success(let status):
                     switch status {
-                    case .obtained:
+                    case .obtained, .notRequired:
                         self.loadAds()
                         completion(.success(status))
                     case .required:
@@ -326,7 +326,6 @@ extension SwiftyAds: SwiftyAdsType {
 
         bannerAd.prepare(
             in: viewController,
-            adUnitIdType: adUnitIdType,
             position: position,
             animationDuration: animationDuration,
             onOpen: onOpen,
@@ -352,9 +351,8 @@ extension SwiftyAds: SwiftyAdsType {
         guard !isDisabled else { return }
         guard hasConsent else { return }
         guard intervalTracker.canShow(forInterval: interval) else { return }
-        guard let interstitialAd = interstitialAd else { return }
 
-        interstitialAd.show(
+        interstitialAd?.show(
             from: viewController,
             onOpen: onOpen,
             onClose: onClose,
@@ -377,9 +375,8 @@ extension SwiftyAds: SwiftyAdsType {
                                onNotReady: (() -> Void)?,
                                onReward: @escaping (Int) -> Void) {
         guard hasConsent else { return }
-        guard let rewardedAd = rewardedAd else { return }
 
-        rewardedAd.show(
+        rewardedAd?.show(
             from: viewController,
             onOpen: onOpen,
             onClose: onClose,
@@ -426,7 +423,7 @@ extension SwiftyAds: SwiftyAdsType {
         )
     }
 
-    /// Disable ads for example when providing a remove ads in app purchase.
+    /// Disable ads e.g. in app purchase.
     public func disable() {
         isDisabled = true
         interstitialAd?.stopLoading()

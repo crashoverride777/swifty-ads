@@ -25,14 +25,20 @@ import GoogleMobileAds
 protocol SwiftyAdsInterstitialType: AnyObject {
     var isReady: Bool { get }
     func load()
+    func stopLoading()
     func show(from viewController: UIViewController,
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?)
-    func stopLoading()
 }
 
 final class SwiftyAdsInterstitial: NSObject {
+
+    // MARK: - Types
+
+    enum InterstitialAdError: Error {
+        case notLoaded
+    }
 
     // MARK: - Properties
     
@@ -89,6 +95,7 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
         
         guard let interstitialAd = interstitialAd else {
             load()
+            onError?(InterstitialAdError.notLoaded)
             return
         }
 

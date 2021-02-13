@@ -43,8 +43,8 @@ final class SwiftyAdsConsentManager {
 
     // MARK: - Types
 
-    enum FormError: Error {
-        case notAvailable
+    enum ConsentError: Error {
+        case formNotAvailable
     }
 
     // MARK: - Properties
@@ -146,7 +146,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
     func showForm(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
         // Ensure form is loaded
         guard let form = form else {
-            completion(.failure(FormError.notAvailable))
+            completion(.failure(ConsentError.formNotAvailable))
             return
         }
 

@@ -58,7 +58,6 @@ final class SwiftyAdsBanner: NSObject {
     // MARK: - Methods
     
     func prepare(in viewController: UIViewController,
-                 adUnitIdType: SwiftyAdsAdUnitIdType,
                  position: SwiftyAdsBannerAdPosition,
                  animationDuration: TimeInterval,
                  onOpen: (() -> Void)?,
@@ -77,13 +76,9 @@ final class SwiftyAdsBanner: NSObject {
         self.bannerView = bannerView
 
         // Set ad unit id
-        if case .custom(let adUnitId) = adUnitIdType {
-            bannerView.adUnitID = adUnitId
-        } else {
-            bannerView.adUnitID = adUnitId
-        }
+        bannerView.adUnitID = adUnitId
 
-        // Set the root view controller that will display the banner
+        // Set the root view controller that will display the banner view
         bannerView.rootViewController = viewController
 
         // Set the banner view delegate
