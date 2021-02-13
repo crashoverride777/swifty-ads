@@ -167,8 +167,8 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
                 return
             }
 
-            completion(.success(self.status))
             self.consentStatusDidChange?(self.status)
+            completion(.success(self.status))
         }
     }
 }

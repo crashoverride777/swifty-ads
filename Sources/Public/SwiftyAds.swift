@@ -142,14 +142,12 @@ extension SwiftyAds: SwiftyAdsType {
 
     /// The current consent status
     public var consentStatus: SwiftyAdsConsentStatus {
-        guard let consentManager = consentManager else { return .obtained }
-        return consentManager.status
+        consentManager?.status ?? .unknown
     }
 
     /// The type of consent provided
     public var consentType: SwiftyAdsConsentType {
-        guard let consentManager = consentManager else { return .personalized }
-        return consentManager.type
+        consentManager?.type ?? .unknown
     }
      
     /// Check if interstitial ad is ready (e.g to show alternative ad like an in house ad)

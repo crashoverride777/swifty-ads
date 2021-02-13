@@ -39,17 +39,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 private extension AppDelegate {
     
-    func setupSwiftyAds(from rootViewController: UIViewController) {
+    func setupSwiftyAds(from viewController: UIViewController) {
         #if DEBUG
         let environment: SwiftyAdsEnvironment = .debug(testDeviceIdentifiers: [], geography: .EEA, resetConsentInfo: true)
         #else
         let environment: SwiftyAdsEnvironment = .production
         #endif
         swiftyAds.setup(
-            from: rootViewController,
+            from: viewController,
             for: environment,
-            consentStatusDidChange: { consentStatus in
-                switch consentStatus {
+            consentStatusDidChange: { status in
+                switch status {
                 case .notRequired:
                     print("SwiftyAds did change consent status: notRequired")
                 case .required:

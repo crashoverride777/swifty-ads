@@ -158,14 +158,7 @@ final class RootViewController: UITableViewController {
             viewController = NativeAdViewController(swityAds: swiftyAds)
 
         case .updateConsent:
-            swiftyAds.askForConsent(from: self) { result in
-                switch result {
-                case .success(let status):
-                    print("SwiftyAds did change consent status to \(status)")
-                case .failure(let error):
-                    print("SwiftyAds consent status change error \(error)")
-                }
-            }
+            swiftyAds.askForConsent(from: self) { result in }
 
         case .disable:
             swiftyAds.disable()
