@@ -79,8 +79,8 @@
 		6A4285F724005F560035487A /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				6A68DA6523FF69B50006F655 /* Public */,
 				6A68A75C23FF69840030374F /* Internal */,
+				6A68DA6523FF69B50006F655 /* Public */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -90,8 +90,8 @@
 			children = (
 				6AAD6A11240BEC98001F4A7D /* SwiftyAdsConfiguration.swift */,
 				6A692C2C25C4823D0021FB2C /* SwiftyAdsConsentManager.swift */,
-				6AAD6A0E240BEC98001F4A7D /* SwiftyAdsIntervalTracker.swift */,
 				6AAD6A0C240BEC98001F4A7D /* SwiftyAdsRequestBuilder.swift */,
+				6AAD6A0E240BEC98001F4A7D /* SwiftyAdsIntervalTracker.swift */,
 				6AAD6A10240BEC98001F4A7D /* SwiftyAdsBanner.swift */,
 				6AAD6A0F240BEC98001F4A7D /* SwiftyAdsInterstitial.swift */,
 				6AAD6A0B240BEC98001F4A7D /* SwiftyAdsRewarded.swift */,
@@ -104,10 +104,10 @@
 			isa = PBXGroup;
 			children = (
 				6AE482F22294B7660063B22F /* SwiftyAds.swift */,
+				6A3C586D25D82B0F00047F9A /* SwiftyAdsEnvironment.swift */,
 				6A3C586E25D82B0F00047F9A /* SwiftyAdsAdUnitIdType.swift */,
 				6A3C586C25D82B0F00047F9A /* SwiftyAdsBannerAdPosition.swift */,
 				6A3C586B25D82B0F00047F9A /* SwiftyAdsBannerType.swift */,
-				6A3C586D25D82B0F00047F9A /* SwiftyAdsEnvironment.swift */,
 			);
 			path = Public;
 			sourceTree = "<group>";
