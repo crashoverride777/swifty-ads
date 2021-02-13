@@ -71,7 +71,14 @@ Download the template plist and add it to your projects main bundle. Than enter 
 Create a setup method and call it as soon as your app launches e.g `AppDelegate` didFinishLaunchingWithOptions. This method will also trigger the initial consent flow (GDPR and ATT).
 
 ```swift
-func setupSwiftyAds() {
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    if let rootViewController = window?.rootViewController {
+        setupSwiftyAds(from: rootViewController)
+    }
+    return true
+}
+
+private func setupSwiftyAds(from viewController: UIViewController) {
     #if DEBUG
     let mode: SwiftyAdsEnvironment = .debug(testDeviceIdentifiers: [], geography: .disabled, resetConsentInfo: true)
     #else
@@ -79,19 +86,19 @@ func setupSwiftyAds() {
     #endif
     
     SwiftyAds.shared.setup(
-        from: self,
+        from: viewController,
         for: environment,
-        consentStatusDidChange: { consentStatus in
-            // The consent status has changed
+        consentStatusDidChange: { status in
+            print("The consent status has changed: \(status)")
         },
-        completion: ({ result in
+        completion: { result in
             switch result {
             case .success(let consentStatus):
                 print("Setup successful with consent status: \(consentStatus)")
             case .failure(let error):
                 print("Setup error: \(error)")
             }
-        })
+        }
     )
 }
 ```
