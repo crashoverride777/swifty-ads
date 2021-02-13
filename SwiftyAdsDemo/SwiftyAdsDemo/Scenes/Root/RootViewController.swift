@@ -95,8 +95,6 @@ final class RootViewController: UITableViewController {
         navigationItem.title = "Swifty Ads Demo"
         tableView.register(RootCell.self, forCellReuseIdentifier: String(describing: RootCell.self))
         notificationCenter.addObserver(self, selector: #selector(consentDidChange), name: .adConsentStatusDidChange, object: nil)
-
-        guard swiftyAds.hasConsent else { return }
         makeBanner()
     }
 

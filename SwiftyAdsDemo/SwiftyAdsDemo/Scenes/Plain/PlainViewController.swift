@@ -10,7 +10,7 @@ final class PlainViewController: UIViewController {
     private lazy var interstitialAdButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Show Interstitial ad (2 interval)", for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(showInterstitialAdButtonPressed), for: .touchUpInside)
         return button
     }()
@@ -18,7 +18,7 @@ final class PlainViewController: UIViewController {
     private lazy var rewardedAdButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Show rewarded ad", for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(showRewardedAdButtonPressed), for: .touchUpInside)
         return button
     }()
@@ -46,7 +46,7 @@ final class PlainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .blue
+        view.backgroundColor = .white
         addSubviews()
 
         bannerAd = swiftyAds.makeBannerAd(

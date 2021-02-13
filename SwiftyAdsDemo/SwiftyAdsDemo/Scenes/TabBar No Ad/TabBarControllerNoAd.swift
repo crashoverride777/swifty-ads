@@ -14,15 +14,14 @@ final class TabBarControllerNoAd: UITabBarController {
         tabBar.barTintColor = .white
         
         // Create tab view controllers
-        let plainVC = PlainViewController(swiftyAds: swiftyAds)
-        plainVC.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 0)
+        let plainViewController = PlainViewController(swiftyAds: swiftyAds)
+        plainViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 0)
         
-        let secondVC = UIViewController()
-        secondVC.view.backgroundColor = .red
-        secondVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
+        let secondViewController = UIViewController()
+        secondViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
         
         // Set view controllers
-        viewControllers = [plainVC, secondVC]
+        viewControllers = [plainViewController, secondViewController]
     }
     
     required init?(coder: NSCoder) {

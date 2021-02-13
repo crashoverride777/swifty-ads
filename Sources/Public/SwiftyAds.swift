@@ -43,7 +43,6 @@ public protocol SwiftyAdsType: AnyObject {
                       onOpen: (() -> Void)?,
                       onClose: (() -> Void)?,
                       onError: ((Error) -> Void)?) -> SwiftyAdsBannerType?
-
     func showInterstitialAd(from viewController: UIViewController,
                             afterInterval interval: Int?,
                             onOpen: (() -> Void)?,

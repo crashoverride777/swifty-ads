@@ -15,16 +15,16 @@ final class TabBarControllerAd: UITabBarController {
         tabBar.barTintColor = .white
 
         // Create tab view controllers
-        let firstVC = UIViewController()
-        firstVC.view.backgroundColor = .blue
-        firstVC.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 0)
+        let firstViewController = UIViewController()
+        firstViewController.view.backgroundColor = .blue
+        firstViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 0)
         
-        let secondVC = UIViewController()
-        secondVC.view.backgroundColor = .red
-        secondVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
+        let secondViewController = UIViewController()
+        secondViewController.view.backgroundColor = .red
+        secondViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
         
         // Set view controllers
-        viewControllers = [firstVC, secondVC]
+        viewControllers = [firstViewController, secondViewController]
     }
     
     required init?(coder: NSCoder) {
