@@ -73,6 +73,11 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
             self.interstitialAd?.fullScreenContentDelegate = self
         }
     }
+
+    func stopLoading() {
+        interstitialAd?.fullScreenContentDelegate = nil
+        interstitialAd = nil
+    }
     
     func show(from viewController: UIViewController,
               onOpen: (() -> Void)?,
@@ -94,11 +99,6 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
             load()
             onError?(error)
         }
-    }
-    
-    func stopLoading() {
-        interstitialAd?.fullScreenContentDelegate = nil
-        interstitialAd = nil
     }
 }
 

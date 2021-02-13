@@ -96,21 +96,8 @@ final class RootViewController: UITableViewController {
         tableView.register(RootCell.self, forCellReuseIdentifier: String(describing: RootCell.self))
         notificationCenter.addObserver(self, selector: #selector(consentDidChange), name: .adConsentStatusDidChange, object: nil)
 
-        bannerAd = swiftyAds.makeBannerAd(
-            in: self,
-            adUnitIdType: .plist,
-            position: .bottom(isUsingSafeArea: true),
-            animationDuration: 1.5,
-            onOpen: ({
-                print("SwiftyAds banner ad did open")
-            }),
-            onClose: ({
-                print("SwiftyAds banner ad did close")
-            }),
-            onError: ({ error in
-                print("SwiftyAds banner ad error \(error)")
-            })
-        )
+        guard swiftyAds.hasConsent else { return }
+        makeBanner()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -200,7 +187,28 @@ final class RootViewController: UITableViewController {
 private extension RootViewController {
 
     @objc func consentDidChange() {
+        if bannerAd == nil {
+            makeBanner()
+        }
         bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
+    }
+
+    func makeBanner() {
+        bannerAd = swiftyAds.makeBannerAd(
+            in: self,
+            adUnitIdType: .plist,
+            position: .bottom(isUsingSafeArea: true),
+            animationDuration: 1.5,
+            onOpen: ({
+                print("SwiftyAds banner ad did open")
+            }),
+            onClose: ({
+                print("SwiftyAds banner ad did close")
+            }),
+            onError: ({ error in
+                print("SwiftyAds banner ad error \(error)")
+            })
+        )
     }
 
     func showDisabledAlert() {

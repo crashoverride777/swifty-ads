@@ -95,9 +95,9 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
         do {
             try rewardedAd.canPresent(fromRootViewController: viewController)
             let rewardAmount = Int(truncating: rewardedAd.adReward.amount)
-            rewardedAd.present(fromRootViewController: viewController) {
+            rewardedAd.present(fromRootViewController: viewController, userDidEarnRewardHandler: {
                 onReward(rewardAmount)
-            }
+            })
         } catch {
             load()
             onError?(error)
