@@ -9,6 +9,7 @@ A Swift library to display banner, interstitial, rewarded videos and native ads 
 # 2021 Roadmap
 
 - Multiple ad unit ids
+- Banner improvements
 - Swift package manager support
 
 ## Requirements
@@ -85,7 +86,7 @@ func setupSwiftyAds() {
             case .success(let consentStatus):
                 print("Setup successful with consent status: \(consentStatus)")
             case .failure(let error):
-                print("Setup errir: \(error)")
+                print("Setup error: \(error)")
             }
         })
     )
