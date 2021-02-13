@@ -138,7 +138,7 @@ Prepare the banner in `viewDidLoad`
 override func viewDidLoad() {
     super.viewDidLoad()
     
-    bannerAd = SwiftyAds.shared.prepareBannerAd(
+    bannerAd = SwiftyAds.shared.makeBannerAd(
         in: self,
         adUnitIdType: .plist, // set to .custom to add a different AdUnitId
         position: .bottom(isUsingSafeArea: true) // banner is pinned to bottom and follows safe area layout guide
@@ -330,9 +330,5 @@ func consentButtonPressed() {
 The consent button can be hidden if consent is not required.
 
 ```swift
-consentButton.isHidden = !SwiftyAds.shared.isConsentRequired
+consentButton.isHidden = SwiftyAds.shared.consentStatus == .notRequired
 ```
-
-## When you submit your app to Apple
-
-When you submit your app to Apple on iTunes connect do not forget to select YES for "Does your app use an advertising identifier", otherwise it will get rejected. If you use reward videos you should also select the 3rd bulletpoint.
