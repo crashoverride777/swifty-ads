@@ -11,7 +11,7 @@
 		6A185ACE253D9D77001542BC /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A185ACD253D9D77001542BC /* RootViewController.swift */; };
 		6A185AD6253D9EE5001542BC /* RootCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A185AD5253D9EE5001542BC /* RootCell.swift */; };
 		6A1A53DD25912A3E00981F00 /* SwiftyAdsNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1A53DC25912A3E00981F00 /* SwiftyAdsNative.swift */; };
-		6A3C586025D7DC6000047F9A /* CustomAdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A3C585F25D7DC6000047F9A /* CustomAdView.xib */; };
+		6A3C586025D7DC6000047F9A /* AdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A3C585F25D7DC6000047F9A /* AdView.xib */; };
 		6A4286052400609E0035487A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4286042400609E0035487A /* AppDelegate.swift */; };
 		6A428612240060A00035487A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A428611240060A00035487A /* Assets.xcassets */; };
 		6A428615240060A00035487A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A428613240060A00035487A /* LaunchScreen.storyboard */; };
@@ -54,7 +54,7 @@
 		6A185ACD253D9D77001542BC /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		6A185AD5253D9EE5001542BC /* RootCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCell.swift; sourceTree = "<group>"; };
 		6A1A53DC25912A3E00981F00 /* SwiftyAdsNative.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsNative.swift; sourceTree = "<group>"; };
-		6A3C585F25D7DC6000047F9A /* CustomAdView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomAdView.xib; sourceTree = "<group>"; };
+		6A3C585F25D7DC6000047F9A /* AdView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AdView.xib; sourceTree = "<group>"; };
 		6A4286012400609E0035487A /* SwiftyAdsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyAdsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A4286042400609E0035487A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6A428611240060A00035487A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -185,7 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				6A864BC825901827005D0789 /* NativeAdViewController.swift */,
-				6A3C585F25D7DC6000047F9A /* CustomAdView.xib */,
+				6A3C585F25D7DC6000047F9A /* AdView.xib */,
 			);
 			path = Native;
 			sourceTree = "<group>";
@@ -305,7 +305,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A4286252400612E0035487A /* GameScene.sks in Resources */,
-				6A3C586025D7DC6000047F9A /* CustomAdView.xib in Resources */,
+				6A3C586025D7DC6000047F9A /* AdView.xib in Resources */,
 				6A06E44C2593DDE9005EAD20 /* GameViewController.storyboard in Resources */,
 				6A428612240060A00035487A /* Assets.xcassets in Resources */,
 				6A428615240060A00035487A /* LaunchScreen.storyboard in Resources */,
