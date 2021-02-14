@@ -30,6 +30,7 @@ final class SwiftyAdsBanner: NSObject {
     private let isDisabled: () -> Bool
     private let hasConsent: () -> Bool
     private let request: () -> GADRequest
+
     private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
     private var onError: ((Error) -> Void)?
@@ -69,7 +70,7 @@ final class SwiftyAdsBanner: NSObject {
         self.onClose = onClose
         self.onError = onError
         
-        // Create new banner ad
+        // Create banner view
         let bannerView = GADBannerView()
         
         // Keep reference to created banner view
@@ -101,8 +102,7 @@ final class SwiftyAdsBanner: NSObject {
             
         case .bottom(let isUsingSafeArea):
             if let tabBarController = viewController as? UITabBarController {
-                tabBarController.view.bringSubviewToFront(tabBarController.tabBar)
-                bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: tabBarController.tabBar.safeAreaLayoutGuide.topAnchor)
+                bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: tabBarController.tabBar.topAnchor)
             } else {
                 if isUsingSafeArea {
                     bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: viewController.view.safeAreaLayoutGuide.bottomAnchor)
@@ -112,22 +112,18 @@ final class SwiftyAdsBanner: NSObject {
             }
         }
 
-        guard let bannerViewConstraint = bannerViewConstraint else {
-            fatalError("SwiftyAdsBanner constraint not set")
-        }
-
         // Activate constraints
         NSLayoutConstraint.activate([
             bannerView.centerXAnchor.constraint(equalTo: viewController.view.safeAreaLayoutGuide.centerXAnchor),
             bannerViewConstraint
-        ])
+        ].compactMap { $0 })
 
         // Move banner off screen
         animateToOffScreenPosition(bannerView, from: viewController, position: position, animated: false)
     }
 }
 
-// MARK: - SwiftyAdBannerType
+// MARK: - SwiftyAdsBannerType
 
 extension SwiftyAdsBanner: SwiftyAdsBannerType {
 

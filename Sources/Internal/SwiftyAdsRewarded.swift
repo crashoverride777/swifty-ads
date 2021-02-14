@@ -59,7 +59,7 @@ final class SwiftyAdsRewarded: NSObject {
     }
 }
 
-// MARK: - SwiftyAdRewardedType
+// MARK: - SwiftyAdsRewardedType
 
 extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
     

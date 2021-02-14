@@ -58,7 +58,7 @@ final class SwiftyAdsInterstitial: NSObject {
     }
 }
 
-// MARK: - SwiftyAdInterstitialType
+// MARK: - SwiftyAdsInterstitialType
 
 extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
 

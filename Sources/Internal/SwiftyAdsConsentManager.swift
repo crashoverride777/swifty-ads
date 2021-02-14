@@ -34,8 +34,8 @@ Provide a way for users to change their consent.
 */
 
 protocol SwiftyAdsConsentManagerType: class {
-    var status: SwiftyAdsConsentStatus { get }
-    var type: SwiftyAdsConsentType { get }
+    var consentStatus: SwiftyAdsConsentStatus { get }
+    var consentType: SwiftyAdsConsentType { get }
     func requestUpdate(completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
     func showForm(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
 }
@@ -78,11 +78,11 @@ final class SwiftyAdsConsentManager {
 
 extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
 
-    var status: SwiftyAdsConsentStatus {
+    var consentStatus: SwiftyAdsConsentStatus {
         consentInformation.consentStatus
     }
 
-    var type: SwiftyAdsConsentType {
+    var consentType: SwiftyAdsConsentType {
         consentInformation.consentType
     }
 
@@ -117,28 +117,30 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
             }
 
             // Update for under age of consent.
-            self.updateForUnderAgeOfConsent(self.status)
+            self.updateUnderAgeOfConsent(for: self.consentStatus)
 
             // The consent information state was updated and we can now check if a form is available.
             switch self.consentInformation.formStatus {
             case .available:
                 DispatchQueue.main.async {
-                    UMPConsentForm.load { (form, error) in
+                    UMPConsentForm.load { [weak self ] (form, error) in
+                        guard let self = self else { return }
+                        
                         if let error = error {
                             completion(.failure(error))
                             return
                         }
 
                         self.form = form
-                        completion(.success(self.status))
+                        completion(.success(self.consentStatus))
                     }
                 }
             case .unavailable:
-                completion(.success(self.status))
+                completion(.success(self.consentStatus))
             case .unknown:
-                completion(.success(self.status))
+                completion(.success(self.consentStatus))
             @unknown default:
-                completion(.success(self.status))
+                completion(.success(self.consentStatus))
             }
         }
     }
@@ -161,13 +163,13 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
 
             // Update under age of consent again, as status might now return `.notRequired`
             // if outside of EEA and ATT alert has been displayed
-            self.updateForUnderAgeOfConsent(self.status)
+            self.updateUnderAgeOfConsent(for: self.consentStatus)
 
             // Fire status did change handler
-            self.consentStatusDidChange(self.status)
+            self.consentStatusDidChange(self.consentStatus)
 
             // Fire completion handler
-            completion(.success(self.status))
+            completion(.success(self.consentStatus))
         }
     }
 }
@@ -176,7 +178,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
 
 private extension SwiftyAdsConsentManager {
 
-    func updateForUnderAgeOfConsent(_ consentStatus: SwiftyAdsConsentStatus) {
+    func updateUnderAgeOfConsent(for consentStatus: SwiftyAdsConsentStatus) {
         switch consentStatus {
         case .notRequired:
             mobileAds.requestConfiguration.tagForUnderAge(ofConsent: false)

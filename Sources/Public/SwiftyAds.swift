@@ -94,7 +94,6 @@ public final class SwiftyAds: NSObject {
     private var consentManager: SwiftyAdsConsentManagerType?
     private var configuration: SwiftyAdsConfiguration?
     private var isDisabled = false
-    private var consentStatusDidChange: ((SwiftyAdsConsentStatus) -> Void)?
 
     // MARK: - Computed Properties
     
@@ -104,7 +103,7 @@ public final class SwiftyAds: NSObject {
 
     private var hasConsent: Bool {
         guard let consentManager = consentManager else { return true }
-        switch consentManager.status {
+        switch consentManager.consentStatus {
         case .notRequired, .obtained:
             return true
         default:
@@ -142,12 +141,12 @@ extension SwiftyAds: SwiftyAdsType {
 
     /// The current consent status
     public var consentStatus: SwiftyAdsConsentStatus {
-        consentManager?.status ?? .unknown
+        consentManager?.consentStatus ?? .unknown
     }
 
     /// The type of consent provided
     public var consentType: SwiftyAdsConsentType {
-        consentManager?.type ?? .unknown
+        consentManager?.consentType ?? .unknown
     }
      
     /// Check if interstitial ad is ready (e.g to show alternative ad like an in house ad)
@@ -170,8 +169,6 @@ extension SwiftyAds: SwiftyAdsType {
                       for environment: SwiftyAdsEnvironment,
                       consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                       completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
-        self.consentStatusDidChange = consentStatusDidChange
-        
         // Update configuration for selected environment
         let configuration: SwiftyAdsConfiguration
         switch environment {
@@ -244,7 +241,7 @@ extension SwiftyAds: SwiftyAdsType {
                                 guard let self = self else { return }
                                 switch result {
                                 case .success(let status):
-                                    if status == .obtained {
+                                    if status == .obtained || status == .notRequired {
                                         self.loadAds()
                                     }
                                     completion(.success(status))
@@ -434,7 +431,7 @@ extension SwiftyAds: SwiftyAdsType {
         )
     }
 
-    /// Disable ads e.g. in app purchase.
+    /// Disable ads
     public func disable() {
         isDisabled = true
         interstitialAd?.stopLoading()
