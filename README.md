@@ -66,6 +66,10 @@ Download the template plist and add it to your projects main bundle. Than enter 
 
 [Template ](Downloads/SwiftyAdsPlistTemplate.zip)
 
+### Link AppTrackingTransparency framework
+
+- [Link](https://developers.google.com/admob/ump/ios/quick-start#update_your_infoplist) the AppTrackingTransparency framework otherwise ATT alerts will not display
+
 ### Setup 
 
 Create a setup method and call it as soon as your app launches e.g `AppDelegate` didFinishLaunchingWithOptions. This method will also trigger the initial consent flow (GDPR and ATT).
