@@ -203,7 +203,11 @@ private extension RootViewController {
     }
 
     func showDisabledAlert() {
-        let alertController = UIAlertController(title: "Ads Disabled", message: "Ads have been disabled and will no longer display", preferredStyle: .alert)
+        let alertController = UIAlertController(
+            title: "Ads Disabled",
+            message: "All ads, except rewarded ads, have been disabled and will no longer display",
+            preferredStyle: .alert
+        )
         let okAction = UIAlertAction(title: "Ok", style: .default) { _ in }
         alertController.addAction(okAction)
         DispatchQueue.main.async {
