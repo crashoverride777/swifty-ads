@@ -30,6 +30,7 @@ public typealias SwiftyAdsDebugGeography = UMPDebugGeography
 public protocol SwiftyAdsType: AnyObject {
     var consentStatus: SwiftyAdsConsentStatus { get }
     var consentType: SwiftyAdsConsentType { get }
+    var isTaggedForUnderAgeOfConsent: Bool { get }
     var isInterstitialAdReady: Bool { get }
     var isRewardedAdReady: Bool { get }
     func setup(from viewController: UIViewController,
@@ -147,6 +148,11 @@ extension SwiftyAds: SwiftyAdsType {
     /// The type of consent provided
     public var consentType: SwiftyAdsConsentType {
         consentManager?.consentType ?? .unknown
+    }
+
+    /// Returns true if configured for under age of consent (GDPR).
+    public var isTaggedForUnderAgeOfConsent: Bool {
+        configuration?.isTaggedForUnderAgeOfConsent ?? false
     }
      
     /// Check if interstitial ad is ready (e.g to show alternative ad like an in house ad)
