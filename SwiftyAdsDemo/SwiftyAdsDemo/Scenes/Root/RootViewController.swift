@@ -56,6 +56,15 @@ final class RootViewController: UITableViewController {
             }
         }
 
+        var accessoryType: UITableViewCell.AccessoryType {
+            switch self {
+            case .updateConsent, .disable:
+                return .none
+            default:
+                return .disclosureIndicator
+            }
+        }
+
         var shouldDeselect: Bool {
             switch self {
             case .updateConsent, .disable:
@@ -123,7 +132,7 @@ final class RootViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = sections[indexPath.section].rows[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: RootCell.self), for: indexPath) as! RootCell
-        cell.configure(title: row.title)
+        cell.configure(title: row.title, accessoryType: row.accessoryType)
         return cell
     }
     
