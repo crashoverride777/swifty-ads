@@ -62,13 +62,13 @@ or manually
 
 ### Add SwiftyAds.plist
 
-Download the template plist and add it to your projects main bundle. Than enter your required ad unit ids and under age settings. You can remove unused ad unit ids from the plist as they are optional.
+Download the template plist and add it to your projects main bundle. Than enter your required ad unit ids and under age of consent setting. You can remove unused ad unit ids from the plist as they are optional.
 
 [Template ](Downloads/SwiftyAdsPlistTemplate.zip)
 
 ### Link AppTrackingTransparency framework
 
-- [Link](https://developers.google.com/admob/ump/ios/quick-start#update_your_infoplist) the AppTrackingTransparency framework otherwise ATT alerts will not display
+[Link](https://developers.google.com/admob/ump/ios/quick-start#update_your_infoplist) the AppTrackingTransparency framework otherwise ATT alerts will not display
 
 ### Setup 
 
