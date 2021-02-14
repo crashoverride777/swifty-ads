@@ -4,12 +4,11 @@
 
 # SwiftyAds
 
-A Swift library to display banner, interstitial, rewarded videos and native ads from Google AdMob and its supported mediation partners.
+A Swift library to display banner, interstitial, rewarded videos and native ads from Google AdMob and supported mediation partners.
 
 # 2021 Roadmap
 
 - Multiple ad unit ids
-- Banner improvements
 - Swift package manager support
 
 ## Requirements
@@ -19,7 +18,7 @@ A Swift library to display banner, interstitial, rewarded videos and native ads 
 
 ## Create AdMob account
 
-Sign up for an [AdMob account](https://admob.google.com/home/get-started/) and create your required adUnitIDs. 
+Sign up for an [AdMob account](https://admob.google.com/home/get-started/) and create your required adUnitIDs for the types of ads you would like to display. 
 
 ## Mediation
 
@@ -42,7 +41,7 @@ pod 'SwiftyAds'
 
 ### Manually 
 
-Alternatively you can copy the `Sources` folder and its containing files into your project. Than install the required dependencies either via Cocoa Pods
+Alternatively you can copy the `Sources` folder and its containing files into your project. Install the required dependencies either via Cocoa Pods
 
 ```swift
 pod 'Google-Mobile-Ads-SDK'
@@ -68,7 +67,7 @@ Download the template plist and add it to your projects main bundle. Than enter 
 
 ### Link AppTrackingTransparency framework
 
-[Link](https://developers.google.com/admob/ump/ios/quick-start#update_your_infoplist) the AppTrackingTransparency framework otherwise ATT alerts will not display
+[Link](https://developers.google.com/admob/ump/ios/quick-start#update_your_infoplist) the AppTrackingTransparency framework otherwise ATT alerts will not display.
 
 ### Setup 
 
