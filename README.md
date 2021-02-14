@@ -72,7 +72,7 @@ Download the template plist and add it to your projects main bundle. Than enter 
 
 ### Setup 
 
-Create a setup method and call it as soon as your app launches e.g `AppDelegate` didFinishLaunchingWithOptions. This method will also trigger the initial consent flow (GDPR and ATT).
+Create a setup method and call it as soon as your app launches e.g. AppDelegate `didFinishLaunchingWithOptions`. This will also trigger the initial consent flow (GDPR and ATT).
 
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
