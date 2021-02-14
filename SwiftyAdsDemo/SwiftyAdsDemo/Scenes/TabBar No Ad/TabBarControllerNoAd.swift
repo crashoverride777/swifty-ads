@@ -1,11 +1,3 @@
-//
-//  TabBarControllerNoAd.swift
-//  SwiftyAdsDemo
-//
-//  Created by Dominik Ringler on 15/11/2020.
-//  Copyright © 2020 Dominik Ringler. All rights reserved.
-//
-
 import UIKit
 
 final class TabBarControllerNoAd: UITabBarController {
@@ -22,17 +14,14 @@ final class TabBarControllerNoAd: UITabBarController {
         tabBar.barTintColor = .white
         
         // Create tab view controllers
-        let storyboard = UIStoryboard(name: "PlainViewController", bundle: .main)
-        let plainVC = storyboard.instantiateInitialViewController() as! PlainViewController
-        plainVC.configure(swiftyAds: swiftyAds)
-        plainVC.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 0)
+        let plainViewController = PlainViewController(swiftyAds: swiftyAds)
+        plainViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 0)
         
-        let secondVC = UIViewController()
-        secondVC.view.backgroundColor = .red
-        secondVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
+        let secondViewController = UIViewController()
+        secondViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
         
         // Set view controllers
-        viewControllers = [plainVC, secondVC]
+        viewControllers = [plainViewController, secondViewController]
     }
     
     required init?(coder: NSCoder) {

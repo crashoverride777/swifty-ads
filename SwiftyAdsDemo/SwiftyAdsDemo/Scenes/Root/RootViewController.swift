@@ -1,36 +1,76 @@
-//
-//  RootViewController.swift
-//  SwiftyAdsDemo
-//
-//  Created by Dominik Ringler on 19/10/2020.
-//  Copyright © 2020 Dominik Ringler. All rights reserved.
-//
-
 import UIKit
 
 final class RootViewController: UITableViewController {
     
     // MARK: - Types
+
+    enum Section: CaseIterable {
+        case main
+        case secondary
+
+        var rows: [Row] {
+            switch self {
+            case .main:
+                return [
+                    .viewController,
+                    .viewControllerInsideTabBar,
+                    .tabBarController,
+                    .spriteKitScene,
+                    .nativeAd
+                ]
+            case .secondary:
+                return [
+                    .updateConsent,
+                    .disable
+                ]
+            }
+        }
+    }
     
-    enum Row: CaseIterable {
+    enum Row {
         case viewController
         case viewControllerInsideTabBar
         case tabBarController
         case spriteKitScene
         case nativeAd
-        
+
+        case updateConsent
+        case disable
+
         var title: String {
             switch self {
             case .viewController:
-                return "View Controller"
+                return "UIViewController"
             case .viewControllerInsideTabBar:
-                return "View Controller inside UITabBarController"
+                return "UIViewController inside UITabBarController"
             case .tabBarController:
-                return "Tab Bar Controller"
+                return "UITabBarController"
             case .spriteKitScene:
-                return "SpriteKit Game Scene"
+                return "SKScene"
             case .nativeAd:
                 return "Native Ad"
+            case .updateConsent:
+                return "Update Consent Status"
+            case .disable:
+                return "Disable Ads"
+            }
+        }
+
+        var accessoryType: UITableViewCell.AccessoryType {
+            switch self {
+            case .updateConsent, .disable:
+                return .none
+            default:
+                return .disclosureIndicator
+            }
+        }
+
+        var shouldDeselect: Bool {
+            switch self {
+            case .updateConsent, .disable:
+                return true
+            default:
+                return false
             }
         }
     }
@@ -38,13 +78,19 @@ final class RootViewController: UITableViewController {
     // MARK: - Properties
 
     private let swiftyAds: SwiftyAdsType
-    private let rows = Row.allCases
+    private let sections = Section.allCases
+    private let notificationCenter: NotificationCenter = .default
+    private var bannerAd: SwiftyAdsBannerType?
     
     // MARK: - Initialization
     
     init(swiftyAds: SwiftyAdsType) {
         self.swiftyAds = swiftyAds
-        super.init(style: .grouped)
+        if #available(iOS 13.0, *) {
+            super.init(style: .insetGrouped)
+        } else {
+            super.init(style: .grouped)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -55,40 +101,54 @@ final class RootViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Setup navigation item
         navigationItem.title = "Swifty Ads Demo"
-        
-        // Setup table view
-        tableView.backgroundColor = .white
         tableView.register(RootCell.self, forCellReuseIdentifier: String(describing: RootCell.self))
-        
+        notificationCenter.addObserver(self, selector: #selector(consentDidChange), name: .adConsentStatusDidChange, object: nil)
+        makeBanner()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: { [weak self] _ in
+            self?.bannerAd?.show(isLandscape: size.width > size.height)
+        })
     }
     
     // MARK: - UITableViewDataSource
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        sections.count
+    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        rows.count
+        sections[section].rows.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let row = rows[indexPath.row]
+        let row = sections[indexPath.section].rows[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: RootCell.self), for: indexPath) as! RootCell
-        cell.configure(title: row.title)
+        cell.configure(title: row.title, accessoryType: row.accessoryType)
         return cell
     }
     
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let row = rows[indexPath.row]
-        let viewController: UIViewController?
+        let row = sections[indexPath.section].rows[indexPath.row]
+        var viewController: UIViewController?
+
+        if row.shouldDeselect {
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
         
         switch row {
         case .viewController:
-            let storyboard = UIStoryboard(name: "PlainViewController", bundle: .main)
-            let plainViewController = storyboard.instantiateInitialViewController() as! PlainViewController
-            plainViewController.configure(swiftyAds: swiftyAds)
+            let plainViewController = PlainViewController(swiftyAds: swiftyAds)
             viewController = plainViewController
 
         case .viewControllerInsideTabBar:
@@ -105,6 +165,15 @@ final class RootViewController: UITableViewController {
 
         case .nativeAd:
             viewController = NativeAdViewController(swityAds: swiftyAds)
+
+        case .updateConsent:
+            swiftyAds.askForConsent(from: self) { result in }
+
+        case .disable:
+            swiftyAds.disable()
+            bannerAd?.remove()
+            bannerAd = nil
+            showDisabledAlert()
         }
         
         guard let validViewController = viewController else { return }
@@ -113,3 +182,45 @@ final class RootViewController: UITableViewController {
     }
 }
 
+// MARK: - Private Methods
+
+private extension RootViewController {
+
+    @objc func consentDidChange() {
+        if bannerAd == nil {
+            makeBanner()
+        }
+        bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
+    }
+
+    func makeBanner() {
+        bannerAd = swiftyAds.makeBannerAd(
+            in: self,
+            adUnitIdType: .plist,
+            position: .bottom(isUsingSafeArea: true),
+            animationDuration: 1.5,
+            onOpen: ({
+                print("SwiftyAds banner ad did open")
+            }),
+            onClose: ({
+                print("SwiftyAds banner ad did close")
+            }),
+            onError: ({ error in
+                print("SwiftyAds banner ad error \(error)")
+            })
+        )
+    }
+
+    func showDisabledAlert() {
+        let alertController = UIAlertController(
+            title: "Ads Disabled",
+            message: "All ads, except rewarded ads, have been disabled and will no longer display",
+            preferredStyle: .alert
+        )
+        let okAction = UIAlertAction(title: "Ok", style: .default) { _ in }
+        alertController.addAction(okAction)
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true)
+        }
+    }
+}

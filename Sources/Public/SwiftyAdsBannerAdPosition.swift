@@ -22,20 +22,7 @@
 
 import Foundation
 
-public enum SwiftyAdsConsentStatus {
-    case notRequired
-    case personalized
-    case nonPersonalized
-    case adFree
-    case underAge
-    case unknown
-    
-    public var hasConsent: Bool {
-        switch self {
-        case .notRequired, .personalized, .nonPersonalized, .underAge:
-            return true
-        default:
-            return false
-        }
-    }
+public enum SwiftyAdsBannerAdPosition {
+    case top(isUsingSafeArea: Bool)
+    case bottom(isUsingSafeArea: Bool)
 }

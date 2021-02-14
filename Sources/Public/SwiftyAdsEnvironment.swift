@@ -24,5 +24,5 @@ import Foundation
 
 public enum SwiftyAdsEnvironment {
     case production
-    case debug(testDeviceIdentifiers: [String])
+    case debug(testDeviceIdentifiers: [String], geography: SwiftyAdsDebugGeography, resetConsentInfo: Bool)
 }

@@ -1,11 +1,3 @@
-//
-//  TabBarControllerAd.swift
-//  SwiftyAdsDemo
-//
-//  Created by Dominik Ringler on 19/10/2020.
-//  Copyright © 2020 Dominik Ringler. All rights reserved.
-//
-
 import UIKit
 
 final class TabBarControllerAd: UITabBarController {
@@ -13,6 +5,7 @@ final class TabBarControllerAd: UITabBarController {
     // MARK: - Properties
     
     private let swiftyAds: SwiftyAdsType
+    private var bannerAd: SwiftyAdsBannerType?
     
     // MARK: - Initialization
     
@@ -22,16 +15,16 @@ final class TabBarControllerAd: UITabBarController {
         tabBar.barTintColor = .white
 
         // Create tab view controllers
-        let firstVC = UIViewController()
-        firstVC.view.backgroundColor = .blue
-        firstVC.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 0)
+        let firstViewController = UIViewController()
+        firstViewController.view.backgroundColor = .blue
+        firstViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 0)
         
-        let secondVC = UIViewController()
-        secondVC.view.backgroundColor = .red
-        secondVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
+        let secondViewController = UIViewController()
+        secondViewController.view.backgroundColor = .red
+        secondViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
         
         // Set view controllers
-        viewControllers = [firstVC, secondVC]
+        viewControllers = [firstViewController, secondViewController]
     }
     
     required init?(coder: NSCoder) {
@@ -42,13 +35,33 @@ final class TabBarControllerAd: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        AdPresenter.showBanner(from: self, swiftyAds: swiftyAds)
+
+        bannerAd = swiftyAds.makeBannerAd(
+            in: self,
+            adUnitIdType: .plist,
+            position: .bottom(isUsingSafeArea: true),
+            animationDuration: 1.5,
+            onOpen: ({
+                print("SwiftyAds banner ad did open")
+            }),
+            onClose: ({
+                print("SwiftyAds banner ad did close")
+            }),
+            onError: ({ error in
+                print("SwiftyAds banner ad error \(error)")
+            })
+        )
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate(alongsideTransition: { _ in
-            self.swiftyAds.updateBannerForOrientationChange(isLandscape: size.width > size.height)
+        coordinator.animate(alongsideTransition: { [weak self] _ in
+            self?.bannerAd?.show(isLandscape: size.width > size.height)
         })
     }
 }

@@ -25,14 +25,20 @@ import GoogleMobileAds
 protocol SwiftyAdsInterstitialType: AnyObject {
     var isReady: Bool { get }
     func load()
+    func stopLoading()
     func show(from viewController: UIViewController,
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?)
-    func stopLoading()
 }
 
 final class SwiftyAdsInterstitial: NSObject {
+
+    // MARK: - Types
+
+    enum InterstitialAdError: Error {
+        case notLoaded
+    }
 
     // MARK: - Properties
     
@@ -42,7 +48,7 @@ final class SwiftyAdsInterstitial: NSObject {
     private var onClose: (() -> Void)?
     private var onError: ((Error) -> Void)?
     
-    private var interstitial: GADInterstitial?
+    private var interstitialAd: GADInterstitialAd?
     
     // MARK: - Initialization
     
@@ -52,18 +58,31 @@ final class SwiftyAdsInterstitial: NSObject {
     }
 }
 
-// MARK: - SwiftyAdInterstitialType
+// MARK: - SwiftyAdsInterstitialType
 
 extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
 
     var isReady: Bool {
-        interstitial?.isReady ?? false
+        interstitialAd != nil
     }
     
     func load() {
-        interstitial = GADInterstitial(adUnitID: adUnitId)
-        interstitial?.delegate = self
-        interstitial?.load(request())
+        GADInterstitialAd.load(withAdUnitID: adUnitId, request: request()) { [weak self] (ad, error) in
+            guard let self = self else { return }
+
+            if let error = error {
+                self.onError?(error)
+                return
+            }
+
+            self.interstitialAd = ad
+            self.interstitialAd?.fullScreenContentDelegate = self
+        }
+    }
+
+    func stopLoading() {
+        interstitialAd?.fullScreenContentDelegate = nil
+        interstitialAd = nil
     }
     
     func show(from viewController: UIViewController,
@@ -74,39 +93,44 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
         self.onClose = onClose
         self.onError = onError
         
-        if isReady {
-            interstitial?.present(fromRootViewController: viewController)
-        } else {
+        guard let interstitialAd = interstitialAd else {
             load()
+            onError?(InterstitialAdError.notLoaded)
+            return
         }
-    }
-    
-    func stopLoading() {
-        interstitial?.delegate = nil
-        interstitial = nil
+
+        do {
+            try interstitialAd.canPresent(fromRootViewController: viewController)
+            interstitialAd.present(fromRootViewController: viewController)
+        } catch {
+            load()
+            onError?(error)
+        }
     }
 }
 
-// MARK: - GADInterstitialDelegate
+// MARK: - GADFullScreenContentDelegate
 
-extension SwiftyAdsInterstitial: GADInterstitialDelegate {
-    
-    func interstitialDidReceiveAd(_ ad: GADInterstitial) {
-        print("SwiftyAdsInterstitial did receive ad from: \(ad.responseInfo?.adNetworkClassName ?? "")")
+extension SwiftyAdsInterstitial: GADFullScreenContentDelegate {
+
+    func adDidRecordImpression(_ ad: GADFullScreenPresentingAd) {
+        print("SwiftyAdsInterstitial did record impression for ad: \(ad)")
     }
-    
-    func interstitialWillPresentScreen(_ ad: GADInterstitial) {
+
+    func adDidPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
         onOpen?()
     }
-    
-    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+
+    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        // Nil out reference
+        interstitialAd = nil
+        // Send callback
         onClose?()
         // Load the next ad so its ready for displaying
         load()
     }
-    
-    func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
+
+    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
         onError?(error)
-        // Do not reload here as it might cause endless loading loops if no/slow internet
     }
 }

@@ -1,11 +1,3 @@
-//
-//  NativeAdViewController.swift
-//  SwiftyAdsDemo
-//
-//  Created by Dominik Ringler on 21/12/2020.
-//  Copyright © 2020 Dominik Ringler. All rights reserved.
-//
-
 import UIKit
 import GoogleMobileAds
 
@@ -34,6 +26,7 @@ final class NativeAdViewController: UIViewController {
 
         swityAds.loadNativeAd(
             from: self,
+            adUnitIdType: .plist,
             count: nil,
             onReceive: { [weak self] nativeAd in
                 self?.showNativeAd(nativeAd)
@@ -47,7 +40,7 @@ final class NativeAdViewController: UIViewController {
 
 // MARK: - GADUnifiedNativeAdDelegate
 
-extension NativeAdViewController: GADUnifiedNativeAdDelegate {
+extension NativeAdViewController: GADNativeAdDelegate {
 
 
 }
@@ -56,12 +49,13 @@ extension NativeAdViewController: GADUnifiedNativeAdDelegate {
 
 private extension NativeAdViewController {
 
-    func showNativeAd(_ nativeAd: GADUnifiedNativeAd) {
+    func showNativeAd(_ nativeAd: GADNativeAd) {
         // Create and place ad in view hierarchy.
-        let nibView = Bundle.main.loadNibNamed("UnifiedNativeAdView", owner: nil, options: nil)?.first
+        let bundle = Bundle(for: NativeAdViewController.self)
+        let nibView = bundle.loadNibNamed("AdView", owner: nil, options: nil)?.first
 
-        guard let nativeAdView = nibView as? GADUnifiedNativeAdView else {
-            return
+        guard let nativeAdView = nibView as? GADNativeAdView else {
+            fatalError("NativeAdViewController could not create GADNativeAdView from nib")
         }
         nativeAd.delegate = self
 

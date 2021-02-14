@@ -22,27 +22,17 @@
 
 import Foundation
 
-public enum SwiftyAdsConsentStyle {
-    case adMob(shouldOfferAdFree: Bool)
-    case custom(content: SwiftyAdsCustomConsentAlertContent)
-}
+public protocol SwiftyAdsBannerType: AnyObject {
+    /// Show the banner ad.
+    ///
+    /// - parameter isLandscape: If true banner is sized for landscape, otherwise portrait.
+    func show(isLandscape: Bool)
 
-public struct SwiftyAdsCustomConsentAlertContent {
-    public let title: String
-    public let message: String
-    public let actionAllowPersonalized: String
-    public let actionAllowNonPersonalized: String
-    public let actionAdFree: String?
-    
-    public init(title: String,
-                message: String,
-                actionAllowPersonalized: String,
-                actionAllowNonPersonalized: String,
-                actionAdFree: String?) {
-        self.title = title
-        self.message = message
-        self.actionAllowPersonalized = actionAllowPersonalized
-        self.actionAllowNonPersonalized = actionAllowNonPersonalized
-        self.actionAdFree = actionAdFree
-    }
+    /// Hide the banner ad.
+    ///
+    /// - parameter animated: Animates the banner if set to true.
+    func hide(animated: Bool)
+
+    /// Removes the banner ad from its superview.
+    func remove()
 }

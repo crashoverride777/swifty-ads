@@ -27,53 +27,11 @@ protocol SwiftyAdsRequestBuilderType: AnyObject {
     func build() -> GADRequest
 }
 
-final class SwiftyAdsRequestBuilder {
-    
-    // MARK: - Properties
-    
-    private let isGDPRRequired: Bool
-    private let isNonPersonalizedOnly: Bool
-    private let isTaggedForUnderAgeOfConsent: Bool
-    
-    // MARK: - Initialization
-    
-    init(isGDPRRequired: Bool,
-         isNonPersonalizedOnly: Bool,
-         isTaggedForUnderAgeOfConsent: Bool) {
-        self.isGDPRRequired = isGDPRRequired
-        self.isNonPersonalizedOnly = isNonPersonalizedOnly
-        self.isTaggedForUnderAgeOfConsent = isTaggedForUnderAgeOfConsent
-    }
-}
-
-// MARK: - SwiftyAdsRequestBuilderType
+final class SwiftyAdsRequestBuilder {}
 
 extension SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
-  
+
     func build() -> GADRequest {
-        let request = GADRequest()
-        
-        // If no GDPR required we do not have to add any extras and can just return default request
-        guard isGDPRRequired else {
-            return request
-        }
-            
-        // Create additional parameters with under age of consent
-        var additionalParameters: [String: Any] = ["tag_for_under_age_of_consent": isTaggedForUnderAgeOfConsent]
-      
-        // Update for non personalized if needed
-        if isNonPersonalizedOnly {
-            additionalParameters["npa"] = "1"
-        }
-        
-        // Create extras
-        let extras = GADExtras()
-        extras.additionalParameters = additionalParameters
-        
-        // Register extras in request
-        request.register(extras)
-        
-        // Return the request with the added extras
-        return request
+        GADRequest()
     }
 }

@@ -1,11 +1,3 @@
-//
-//  GameScene.swift
-//  Example
-//
-//  Created by Dominik Ringler on 23/05/2019.
-//  Copyright © 2019 Dominik. All rights reserved.
-//
-
 import SpriteKit
 
 class GameScene: SKScene {
@@ -14,17 +6,19 @@ class GameScene: SKScene {
     
     private var swiftyAds: SwiftyAdsType!
     
-    private lazy var interstitialLabel: SKLabelNode = self.childNode(withName: "interstitialLabel") as! SKLabelNode
-    private lazy var rewardedLabel: SKLabelNode = self.childNode(withName: "rewardedLabel") as! SKLabelNode
-    private lazy var disableLabel: SKLabelNode = self.childNode(withName: "disableLabel") as! SKLabelNode
-    private lazy var consentLabel: SKLabelNode = self.childNode(withName: "consentLabel") as! SKLabelNode
+    private lazy var interstitialLabel: SKLabelNode = childNode(withName: "interstitialLabel") as! SKLabelNode
+    private lazy var rewardedLabel: SKLabelNode = childNode(withName: "rewardedLabel") as! SKLabelNode
+
+    // MARK: - Configure
     
+    func configure(swiftyAds: SwiftyAdsType) {
+        self.swiftyAds = swiftyAds
+    }
+
     // MARK: - Life Cycle
     
     override func didMove(to view: SKView) {
         backgroundColor = .gray
-        refresh()
-        NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .adConsentStatusDidChange, object: nil)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -37,16 +31,50 @@ class GameScene: SKScene {
             }
             
             switch node {
+
             case interstitialLabel:
-                AdPresenter.showInterstitialAd(from: viewController, swiftyAds: swiftyAds)
+                swiftyAds.showInterstitialAd(
+                    from: viewController,
+                    afterInterval: 2,
+                    onOpen: ({
+                        print("SwiftyAds interstitial ad did open")
+                    }),
+                    onClose: ({
+                        print("SwiftyAds interstitial ad did close")
+                    }),
+                    onError: ({ error in
+                        print("SwiftyAds interstitial ad error \(error)")
+                    })
+                )
+
             case rewardedLabel:
-                AdPresenter.showRewardedAd(from: viewController, swiftyAds: swiftyAds, onReward: { rewardAmount in
-                    // update coins, diamonds etc
-                })
-            case disableLabel:
-                swiftyAds.disable()
-            case consentLabel:
-                swiftyAds.askForConsent(from: viewController)
+                swiftyAds.showRewardedAd(
+                    from: viewController,
+                    onOpen: ({
+                        print("SwiftyAds rewarded video ad did open")
+                    }),
+                    onClose: ({
+                        print("SwiftyAds rewarded video ad did close")
+                    }),
+                    onError: ({ error in
+                        print("SwiftyAds rewarded video ad error \(error)")
+                    }),
+                    onNotReady: ({
+                        let alertController = UIAlertController(
+                            title: "Sorry",
+                            message: "No video available to watch at the moment.",
+                            preferredStyle: .alert
+                        )
+                        alertController.addAction(UIAlertAction(title: "Ok", style: .cancel))
+                        DispatchQueue.main.async {
+                            viewController.present(alertController, animated: true)
+                        }
+                    }),
+                    onReward: ({ rewardAmount in
+                        print("SwiftyAds rewarded video ad did reward user with \(rewardAmount)")
+                    })
+                )
+
             default:
                 break
             }
@@ -61,20 +89,5 @@ class GameScene: SKScene {
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
 
-    }
-
-    // MARK: - Public Methods
-
-    func configure(swiftyAds: SwiftyAdsType) {
-        self.swiftyAds = swiftyAds
-    }
-}
- 
-// MARK: - Private Methods
- 
-private extension GameScene {
-    
-    @objc func refresh() {
-        consentLabel.isHidden = !swiftyAds.isRequiredToAskForConsent
     }
 }
