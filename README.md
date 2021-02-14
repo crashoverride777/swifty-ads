@@ -187,10 +187,11 @@ You can hide the banner by calling the `hide` method.
 bannerAd?.hide(animated: true) 
 ```
 
-You can remove the banner from its superview by calling the `remove` method.
+You can remove the banner from its superview by calling the `remove` method and afterwards nil out the reference.
 
 ```swift
 bannerAd?.remove() 
+bannerAd = nil
 ```
 
 ### Interstitial Ads
