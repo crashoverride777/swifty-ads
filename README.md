@@ -67,7 +67,9 @@ Download the template plist and add it to your projects main bundle. Than enter 
 
 ### Link AppTrackingTransparency framework
 
-[Link](https://developers.google.com/admob/ump/ios/quick-start#update_your_infoplist) the AppTrackingTransparency framework otherwise ATT alerts will not display.
+[Link](https://developers.google.com/admob/ump/ios/quick-start#update_your_infoplist) the AppTrackingTransparency framework in `Framework, Libraries and Embedded Content` under the general tab, otherwise ATT alerts will not display.
+
+If you are supporting iOS 13 and below you will also have to make it optional in `BuildPhases->Link Binary With Libraries` to avoid a crash.
 
 ### Setup 
 
