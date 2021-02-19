@@ -296,6 +296,9 @@ SwiftyAds.shared.isRewardedAdReady
 
 // Check if interstitial ad is ready, for example to show an alternative ad
 SwiftyAds.shared.isInterstitialAdReady
+
+// Check if under age of consent is tagged on/off (SwiftyAds.plist)
+SwiftyAds.shared.isTaggedForUnderAgeOfConsent
 ```
 
 ### Disable Ads (In App Purchases)
