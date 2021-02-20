@@ -31,6 +31,7 @@ public protocol SwiftyAdsType: AnyObject {
     var consentStatus: SwiftyAdsConsentStatus { get }
     var consentType: SwiftyAdsConsentType { get }
     var isTaggedForUnderAgeOfConsent: Bool { get }
+    var isTaggedForChildDirectedTreatment: Bool? { get }
     var isInterstitialAdReady: Bool { get }
     var isRewardedAdReady: Bool { get }
     func setup(from viewController: UIViewController,
@@ -154,6 +155,11 @@ extension SwiftyAds: SwiftyAdsType {
     public var isTaggedForUnderAgeOfConsent: Bool {
         configuration?.isTaggedForUnderAgeOfConsent ?? false
     }
+
+    /// Returns true if configured for child directed treatment (COPPA).
+    public var isTaggedForChildDirectedTreatment: Bool? {
+        configuration?.isTaggedForChildDirectedTreatment
+    }
      
     /// Check if interstitial ad is ready (e.g to show alternative ad like an in house ad)
     public var isInterstitialAdReady: Bool {
@@ -188,6 +194,11 @@ extension SwiftyAds: SwiftyAdsType {
 
         // Keep reference to configuration
         self.configuration = configuration
+
+        // Set child directed treatment if needed (COPPA)
+        if let isTaggedForChildDirectedTreatment = configuration.isTaggedForChildDirectedTreatment {
+            mobileAds.requestConfiguration.tag(forChildDirectedTreatment: isTaggedForChildDirectedTreatment)
+        }
 
         // Create interstitial ad if we have an AdUnitId
         if let interstitialAdUnitId = configuration.interstitialAdUnitId {
