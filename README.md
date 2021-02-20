@@ -66,7 +66,7 @@ Download the [template ](Resources/SwiftyAdsPlistTemplate.zip) plist and add it 
 Mandatory fields:
 - isTaggedForUnderAgeOfConsent ([GDPR](https://developers.google.com/admob/ios/targeting#users_under_the_age_of_consent))
 
-Optional fields
+Optional fields:
 - bannerAdUnitId
 - interstitialAdUnitId
 - rewardedAdUnitId
