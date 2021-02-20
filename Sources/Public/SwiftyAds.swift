@@ -30,8 +30,8 @@ public typealias SwiftyAdsDebugGeography = UMPDebugGeography
 public protocol SwiftyAdsType: AnyObject {
     var consentStatus: SwiftyAdsConsentStatus { get }
     var consentType: SwiftyAdsConsentType { get }
-    var isTaggedForUnderAgeOfConsent: Bool { get }
     var isTaggedForChildDirectedTreatment: Bool? { get }
+    var isTaggedForUnderAgeOfConsent: Bool { get }
     var isInterstitialAdReady: Bool { get }
     var isRewardedAdReady: Bool { get }
     func setup(from viewController: UIViewController,
@@ -151,14 +151,14 @@ extension SwiftyAds: SwiftyAdsType {
         consentManager?.consentType ?? .unknown
     }
 
+    /// Returns true if configured for child directed treatment or nil if ignored (COPPA).
+    public var isTaggedForChildDirectedTreatment: Bool? {
+        configuration?.isTaggedForChildDirectedTreatment
+    }
+
     /// Returns true if configured for under age of consent (GDPR).
     public var isTaggedForUnderAgeOfConsent: Bool {
         configuration?.isTaggedForUnderAgeOfConsent ?? false
-    }
-
-    /// Returns true if configured for child directed treatment (COPPA).
-    public var isTaggedForChildDirectedTreatment: Bool? {
-        configuration?.isTaggedForChildDirectedTreatment
     }
      
     /// Check if interstitial ad is ready (e.g to show alternative ad like an in house ad)
@@ -195,7 +195,7 @@ extension SwiftyAds: SwiftyAdsType {
         // Keep reference to configuration
         self.configuration = configuration
 
-        // Set child directed treatment if needed (COPPA)
+        // Tag for child directed treatment if needed (COPPA)
         if let isTaggedForChildDirectedTreatment = configuration.isTaggedForChildDirectedTreatment {
             mobileAds.requestConfiguration.tag(forChildDirectedTreatment: isTaggedForChildDirectedTreatment)
         }
