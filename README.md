@@ -64,14 +64,14 @@ or manually
 Download the [template ](Resources/SwiftyAdsPlistTemplate.zip) plist and add it to your projects main bundle. Than enter your required ad unit ids and set the isTaggedForUnderAgeOfConsent flag.
 
 Mandatory fields:
-- isTaggedForUnderAgeOfConsent [GDPR](https://developers.google.com/admob/ios/targeting#users_under_the_age_of_consent)
+- isTaggedForUnderAgeOfConsent ([GDPR](https://developers.google.com/admob/ios/targeting#users_under_the_age_of_consent))
 
 Optional fields
 - bannerAdUnitId
 - interstitialAdUnitId
 - rewardedAdUnitId
 - nativeAdUnitId
-- isTaggedForChildDirectedTreatment [COPPA](https://developers.google.com/admob/ios/targeting#child-directed_setting)
+- isTaggedForChildDirectedTreatment ([COPPA](https://developers.google.com/admob/ios/targeting#child-directed_setting))
 
 ### Link AppTrackingTransparency framework
 
