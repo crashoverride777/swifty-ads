@@ -26,7 +26,7 @@ Sign up for an [AdMob account](https://admob.google.com/home/get-started/) and c
 
 ## ATT and GDPR
 
-SwiftyAds use Google`s [UMP](https://developers.google.com/admob/ump/ios/quick-start) (User Messaging Platform) SDK to handle user consent. This SDK handles both GDPR requests and also the iOS 14 ATT alert if required. Please read the Funding Choices [documentation](https://support.google.com/fundingchoices/answer/9180084) to ensure they are setup up correctly for ATT and GDPR.
+SwiftyAds use Google`s [User Messaging Platform](https://developers.google.com/admob/ump/ios/quick-start) (UMP) SDK to handle user consent. This SDK handles both GDPR requests and also the iOS 14 ATT alert if required. Please read the Funding Choices [documentation](https://support.google.com/fundingchoices/answer/9180084) to ensure they are setup up correctly for your requirements.
 
 ## Installation
 
