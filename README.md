@@ -305,7 +305,7 @@ SwiftyAds.shared.isRewardedAdReady
 // Check if interstitial ad is ready, for example to show an alternative ad
 SwiftyAds.shared.isInterstitialAdReady
 
-// Check if child directed treatment is tagged on/off. Nil if not indicated how treated. (COPPA)
+// Check if child directed treatment is tagged on/off. Nil if not indicated how to be treated. (COPPA)
 SwiftyAds.shared.isTaggedForChildDirectedTreatment
 
 // Check if under age of consent is tagged on/off (GDPR)
