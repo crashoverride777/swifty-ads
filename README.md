@@ -112,6 +112,7 @@ private func setupSwiftyAds(from viewController: UIViewController) {
         for: environment,
         consentStatusDidChange: { status in
             print("The consent status has changed: \(status)")
+            // Update mediation networks with under age of consent and other settings if required (see mediation network documentation)
         },
         completion: { result in
             switch result {
