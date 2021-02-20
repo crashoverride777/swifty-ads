@@ -337,7 +337,6 @@ extension SwiftyAds: SwiftyAdsType {
         }
 
         let bannerAd = SwiftyAdsBanner(
-            adUnitId: validAdUnitId,
             isDisabled: { [weak self] in
                 self?.isDisabled ?? false
             },
@@ -350,6 +349,7 @@ extension SwiftyAds: SwiftyAdsType {
         )
 
         bannerAd.prepare(
+            withAdUnitId: validAdUnitId,
             in: viewController,
             position: position,
             animationDuration: animationDuration,
