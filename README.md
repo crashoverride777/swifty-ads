@@ -79,7 +79,7 @@ Optional fields:
 
 If you are supporting iOS 13 and below you will also have to make it optional in `BuildPhases->Link Binary With Libraries` to avoid a crash.
 
-[](https://github.com/crashoverride777/swifty-ads/blob/develop/Resources/ATT.png)
+[ATT](<ATT.png>)
 
 
 ### Setup 
