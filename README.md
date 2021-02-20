@@ -26,7 +26,7 @@ Sign up for an [AdMob account](https://admob.google.com/home/get-started/) and c
 
 ## ATT and GDPR
 
-SwiftyAds use Google`s [UMP](https://developers.google.com/admob/ump/ios/quick-start) (User Messaging Platform) SDK to handle user consent. This SDK handles both GDPR requests and also the iOS 14 ATT alert if required. Please read the Funding Choices [documentation](https://support.google.com/fundingchoices/answer/9180084) to ensure they are setup up correctly for ATT and GDPR.
+SwiftyAds use Google`s [User Messaging Platform](https://developers.google.com/admob/ump/ios/quick-start) (UMP) SDK to handle user consent. This SDK handles both GDPR requests and also the iOS 14 ATT alert if required. Please read the Funding Choices [documentation](https://support.google.com/fundingchoices/answer/9180084) to ensure they are setup up correctly for your requirements.
 
 ## Installation
 
@@ -61,15 +61,31 @@ or manually
 
 ### Add SwiftyAds.plist
 
-Download the template plist and add it to your projects main bundle. Than enter your required ad unit ids and under age of consent setting. You can remove unused ad unit ids from the plist as they are optional.
+Download the [template ](Resources/SwiftyAdsPlistTemplate.zip) plist and add it to your projects main bundle. Than enter your required ad unit ids and set the isTaggedForUnderAgeOfConsent flag.
 
-[Template ](Downloads/SwiftyAdsPlistTemplate.zip)
+Mandatory fields:
+- isTaggedForUnderAgeOfConsent ([GDPR](https://developers.google.com/admob/ios/targeting#users_under_the_age_of_consent))
+
+Optional fields:
+- bannerAdUnitId
+- interstitialAdUnitId
+- rewardedAdUnitId
+- nativeAdUnitId
+- isTaggedForChildDirectedTreatment ([COPPA](https://developers.google.com/admob/ios/targeting#child-directed_setting))
 
 ### Link AppTrackingTransparency framework
 
 [Link](https://developers.google.com/admob/ump/ios/quick-start#update_your_infoplist) the AppTrackingTransparency framework in `Framework, Libraries and Embedded Content` under the general tab, otherwise ATT alerts will not display.
 
 If you are supporting iOS 13 and below you will also have to make it optional in `BuildPhases->Link Binary With Libraries` to avoid a crash.
+
+### Add import (CocoaPods)
+
+- Add the import statement to your swift file(s) when you installed via CocoaPods
+
+```swift
+import SwiftyAds
+```
 
 ### Setup 
 
@@ -85,7 +101,8 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 private func setupSwiftyAds(from viewController: UIViewController) {
     #if DEBUG
-    let environment: SwiftyAdsEnvironment = .debug(testDeviceIdentifiers: [], geography: .disabled, resetConsentInfo: true)
+    // Use the geography enum to set your location for GDPR consent debug purposes.
+    let environment: SwiftyAdsEnvironment = .debug(testDeviceIdentifiers: [], geography: .EEA, resetConsentInfo: true)
     #else
     let environment: SwiftyAdsEnvironment = .production
     #endif
@@ -296,6 +313,12 @@ SwiftyAds.shared.isRewardedAdReady
 
 // Check if interstitial ad is ready, for example to show an alternative ad
 SwiftyAds.shared.isInterstitialAdReady
+
+// Check if child directed treatment is tagged on/off. Nil if not indicated how to be treated. (COPPA)
+SwiftyAds.shared.isTaggedForChildDirectedTreatment
+
+// Check if under age of consent is tagged on/off (GDPR)
+SwiftyAds.shared.isTaggedForUnderAgeOfConsent
 ```
 
 ### Disable Ads (In App Purchases)

@@ -30,6 +30,8 @@ public typealias SwiftyAdsDebugGeography = UMPDebugGeography
 public protocol SwiftyAdsType: AnyObject {
     var consentStatus: SwiftyAdsConsentStatus { get }
     var consentType: SwiftyAdsConsentType { get }
+    var isTaggedForChildDirectedTreatment: Bool? { get }
+    var isTaggedForUnderAgeOfConsent: Bool { get }
     var isInterstitialAdReady: Bool { get }
     var isRewardedAdReady: Bool { get }
     func setup(from viewController: UIViewController,
@@ -148,6 +150,16 @@ extension SwiftyAds: SwiftyAdsType {
     public var consentType: SwiftyAdsConsentType {
         consentManager?.consentType ?? .unknown
     }
+
+    /// Returns true if configured for child directed treatment or nil if ignored (COPPA).
+    public var isTaggedForChildDirectedTreatment: Bool? {
+        configuration?.isTaggedForChildDirectedTreatment
+    }
+
+    /// Returns true if configured for under age of consent (GDPR).
+    public var isTaggedForUnderAgeOfConsent: Bool {
+        configuration?.isTaggedForUnderAgeOfConsent ?? false
+    }
      
     /// Check if interstitial ad is ready (e.g to show alternative ad like an in house ad)
     public var isInterstitialAdReady: Bool {
@@ -182,6 +194,11 @@ extension SwiftyAds: SwiftyAdsType {
 
         // Keep reference to configuration
         self.configuration = configuration
+
+        // Tag for child directed treatment if needed (COPPA)
+        if let isTaggedForChildDirectedTreatment = configuration.isTaggedForChildDirectedTreatment {
+            mobileAds.requestConfiguration.tag(forChildDirectedTreatment: isTaggedForChildDirectedTreatment)
+        }
 
         // Create interstitial ad if we have an AdUnitId
         if let interstitialAdUnitId = configuration.interstitialAdUnitId {
@@ -320,7 +337,6 @@ extension SwiftyAds: SwiftyAdsType {
         }
 
         let bannerAd = SwiftyAdsBanner(
-            adUnitId: validAdUnitId,
             isDisabled: { [weak self] in
                 self?.isDisabled ?? false
             },
@@ -333,6 +349,7 @@ extension SwiftyAds: SwiftyAdsType {
         )
 
         bannerAd.prepare(
+            withAdUnitId: validAdUnitId,
             in: viewController,
             position: position,
             animationDuration: animationDuration,

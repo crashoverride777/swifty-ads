@@ -27,7 +27,8 @@ struct SwiftyAdsConfiguration: Decodable {
     let interstitialAdUnitId: String?
     let rewardedAdUnitId: String?
     let nativeAdUnitId: String?
-    let isTaggedForUnderAgeOfConsent: Bool
+    let isTaggedForChildDirectedTreatment: Bool? // COPPA
+    let isTaggedForUnderAgeOfConsent: Bool  // GDPR
 }
 
 extension SwiftyAdsConfiguration {
@@ -52,6 +53,7 @@ extension SwiftyAdsConfiguration {
             interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
             rewardedAdUnitId: "ca-app-pub-3940256099942544/1712485313",
             nativeAdUnitId: "ca-app-pub-3940256099942544/3986624511",
+            isTaggedForChildDirectedTreatment: nil,
             isTaggedForUnderAgeOfConsent: false
         )
     }

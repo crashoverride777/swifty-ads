@@ -25,8 +25,7 @@ import GoogleMobileAds
 final class SwiftyAdsBanner: NSObject {
     
     // MARK: - Properties
-    
-    private let adUnitId: String
+
     private let isDisabled: () -> Bool
     private let hasConsent: () -> Bool
     private let request: () -> GADRequest
@@ -45,11 +44,9 @@ final class SwiftyAdsBanner: NSObject {
     
     // MARK: - Initialization
     
-    init(adUnitId: String,
-         isDisabled: @escaping () -> Bool,
+    init(isDisabled: @escaping () -> Bool,
          hasConsent: @escaping () -> Bool,
          request: @escaping () -> GADRequest) {
-        self.adUnitId = adUnitId
         self.isDisabled = isDisabled
         self.hasConsent = hasConsent
         self.request = request
@@ -58,7 +55,8 @@ final class SwiftyAdsBanner: NSObject {
 
     // MARK: - Methods
     
-    func prepare(in viewController: UIViewController,
+    func prepare(withAdUnitId adUnitId: String,
+                 in viewController: UIViewController,
                  position: SwiftyAdsBannerAdPosition,
                  animationDuration: TimeInterval,
                  onOpen: (() -> Void)?,

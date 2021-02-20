@@ -34,7 +34,7 @@
 		6AC971DD2401B06700A0BB91 /* SwiftyAdsRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971D12401B06600A0BB91 /* SwiftyAdsRequestBuilder.swift */; };
 		6AC971DE2401B06700A0BB91 /* SwiftyAdsIntervalTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971D22401B06600A0BB91 /* SwiftyAdsIntervalTracker.swift */; };
 		6AC971DF2401B06700A0BB91 /* SwiftyAds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971D42401B06600A0BB91 /* SwiftyAds.swift */; };
-		6AD3988A25CE970A0038C9B0 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AD3988925CE970A0038C9B0 /* AppTrackingTransparency.framework */; };
+		6AD3988A25CE970A0038C9B0 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AD3988925CE970A0038C9B0 /* AppTrackingTransparency.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		6AEF6C2E2560CC1200780DFB /* TabBarControllerNoAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEF6C2D2560CC1200780DFB /* TabBarControllerNoAd.swift */; };
 		D64A98124421A48FA4C9D54A /* Pods_SwiftyAdsDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58AB3BECA27AE6BDA2F5A936 /* Pods_SwiftyAdsDemo.framework */; };
 /* End PBXBuildFile section */

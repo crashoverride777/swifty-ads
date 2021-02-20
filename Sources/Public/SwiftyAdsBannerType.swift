@@ -33,6 +33,6 @@ public protocol SwiftyAdsBannerType: AnyObject {
     /// - parameter animated: Animates the banner if set to true.
     func hide(animated: Bool)
 
-    /// Removes the banner ad from its superview.
+    /// Removes the banner from its superview.
     func remove()
 }

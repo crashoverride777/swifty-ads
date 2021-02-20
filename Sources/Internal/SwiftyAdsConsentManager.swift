@@ -183,6 +183,17 @@ private extension SwiftyAdsConsentManager {
         case .notRequired:
             mobileAds.requestConfiguration.tagForUnderAge(ofConsent: false)
         default:
+            // The tags to enable the child-directed setting and tagForUnderAgeOfConsent
+            // should not both simultaneously be set to true.
+            // If they are, the child-directed setting takes precedence.
+            // https://developers.google.com/admob/ios/targeting#child-directed_setting
+            if
+                configuration.isTaggedForUnderAgeOfConsent,
+                let isTaggedForChildDirectedTreatment = configuration.isTaggedForChildDirectedTreatment,
+                isTaggedForChildDirectedTreatment {
+                return
+            }
+
             mobileAds.requestConfiguration.tagForUnderAge(ofConsent: configuration.isTaggedForUnderAgeOfConsent)
         }
     }
