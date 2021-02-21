@@ -165,7 +165,7 @@ override func viewDidLoad() {
         in: self,
         adUnitIdType: .plist, // set to .custom to add a different AdUnitId
         position: .bottom(isUsingSafeArea: true) // banner is pinned to bottom and follows safe area layout guide
-        animationDuration: 1.5,
+        animation: .slide(duration: 1.5),
         onOpen: ({
             print("SwiftyAds banner ad did open")
         }),
@@ -204,7 +204,7 @@ override func viewWillTransition(to size: CGSize, with coordinator: UIViewContro
 You can hide the banner by calling the `hide` method. 
 
 ```swift
-bannerAd?.hide(animated: true) 
+bannerAd?.hide() 
 ```
 
 You can remove the banner from its superview by calling the `remove` method and afterwards nil out the reference.
@@ -284,11 +284,14 @@ SwiftyAds.shared.loadNativeAd(
     from: self,
     adUnitIdType: .plist, // set to .custom to add a different AdUnitId
     count: nil,
-    onReceive: { nativeAd in
-        // show native ad (see demo app or google documentation)
+    onFinishLoading: {
+        // Native ad has finished loading
     },
     onError: { error in
         // handle error
+    },
+    onReceive: { nativeAd in
+        // show native ad (see demo app or google documentation)
     }
 )
 ```
@@ -320,6 +323,9 @@ SwiftyAds.shared.isTaggedForChildDirectedTreatment
 
 // Check if under age of consent is tagged on/off (GDPR)
 SwiftyAds.shared.isTaggedForUnderAgeOfConsent
+
+// Check if ads have been disabled
+SwiftyAds.shared.isDisabled
 ```
 
 ### Disable Ads (In App Purchases)
