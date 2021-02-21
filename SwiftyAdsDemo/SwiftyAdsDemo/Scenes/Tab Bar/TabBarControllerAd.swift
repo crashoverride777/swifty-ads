@@ -30,7 +30,13 @@ final class TabBarControllerAd: UITabBarController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    // MARK: - De-Initialization
+
+    deinit {
+        print("Deinit TabBarControllerAd")
+    }
+
     // MARK: - Life Cycle
     
     override func viewDidLoad() {

@@ -40,13 +40,13 @@ final class RootViewController: UITableViewController {
         var title: String {
             switch self {
             case .viewController:
-                return "UIViewController"
+                return "ViewController"
             case .viewControllerInsideTabBar:
-                return "UIViewController inside UITabBarController"
+                return "ViewController inside TabBarController"
             case .tabBarController:
-                return "UITabBarController"
+                return "TabBarController"
             case .spriteKitScene:
-                return "SKScene"
+                return "SpriteKit Scene"
             case .nativeAd:
                 return "Native Ad"
             case .updateConsent:

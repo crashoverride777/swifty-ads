@@ -2,7 +2,9 @@ import UIKit
 import SpriteKit
 
 class GameViewController: UIViewController {
-    
+
+    // MARK: - Properties
+
     private var swiftyAds: SwiftyAdsType!
     private var bannerAd: SwiftyAdsBannerType?
 
@@ -18,9 +20,19 @@ class GameViewController: UIViewController {
         true
     }
 
+    // MARK: - Initialization
+
     func configure(swiftyAds: SwiftyAdsType) {
         self.swiftyAds = swiftyAds
     }
+
+    // MARK: - De-Initialization
+
+    deinit {
+        print("Deinit GameViewController")
+    }
+
+    // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()

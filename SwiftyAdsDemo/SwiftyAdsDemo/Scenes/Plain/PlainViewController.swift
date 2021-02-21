@@ -41,6 +41,12 @@ final class PlainViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - De-Initialization
+
+    deinit {
+        print("Deinit PlainViewController")
+    }
     
     // MARK: - Life Cycle
     

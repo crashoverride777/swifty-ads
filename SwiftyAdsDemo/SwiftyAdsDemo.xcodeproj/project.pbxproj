@@ -238,8 +238,8 @@
 			children = (
 				6AC971D42401B06600A0BB91 /* SwiftyAds.swift */,
 				6AEB36F725E2C9E700AFA313 /* SwiftyAdsType.swift */,
-				6AEB370025E2DA1D00AFA313 /* SwiftyAdsError.swift */,
 				6A3C586125D81F4700047F9A /* SwiftyAdsBannerType.swift */,
+				6AEB370025E2DA1D00AFA313 /* SwiftyAdsError.swift */,
 			);
 			path = Public;
 			sourceTree = "<group>";

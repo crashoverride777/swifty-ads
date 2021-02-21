@@ -18,6 +18,12 @@ final class NativeAdViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - De-Initialization
+
+    deinit {
+        print("Deinit NativeAdViewController")
+    }
+
     // MARK: - Life Cycle
 
     override func viewDidLoad() {

@@ -69,22 +69,6 @@ public final class SwiftyAds: NSObject {
         super.init()
         
     }
-    
-    init(mobileAds: GADMobileAds,
-         consentManager: SwiftyAdsConsentManagerType,
-         requestBuilder: SwiftyAdsRequestBuilderType,
-         interstitialAdIntervalTracker: SwiftyAdsIntervalTrackerType,
-         interstitialAd: SwiftyAdsInterstitialType?,
-         rewardedAd: SwiftyAdsRewardedType?,
-         nativeAd: SwiftyAdsNativeType?) {
-        self.mobileAds = mobileAds
-        self.consentManager = consentManager
-        self.requestBuilder = requestBuilder
-        self.interstitialAdIntervalTracker = interstitialAdIntervalTracker
-        self.interstitialAd = interstitialAd
-        self.rewardedAd = rewardedAd
-        self.nativeAd = nativeAd
-    }
 }
 
 // MARK: - SwiftyAdsType
@@ -146,8 +130,6 @@ extension SwiftyAds: SwiftyAdsType {
             let simulatorId = kGADSimulatorID as? String
             mobileAds.requestConfiguration.testDeviceIdentifiers = [simulatorId].compactMap { $0 } + testDeviceIdentifiers
         }
-
-        // Keep reference to configuration
         self.configuration = configuration
 
         // Tag for child directed treatment if needed (COPPA)
@@ -155,36 +137,9 @@ extension SwiftyAds: SwiftyAdsType {
             mobileAds.requestConfiguration.tag(forChildDirectedTreatment: isTaggedForChildDirectedTreatment)
         }
 
-        // Create interstitial ad if we have an AdUnitId
-        if let interstitialAdUnitId = configuration.interstitialAdUnitId {
-            interstitialAd = SwiftyAdsInterstitial(
-                adUnitId: interstitialAdUnitId,
-                request: { [unowned self] in
-                    self.requestBuilder.build()
-                }
-            )
-        }
+        // Set ads
+        setAds(for: configuration)
 
-        // Create rewarded ad if we have an AdUnitId
-        if let rewardedAdUnitId = configuration.rewardedAdUnitId {
-            rewardedAd = SwiftyAdsRewarded(
-                adUnitId: rewardedAdUnitId,
-                request: { [unowned self] in
-                    self.requestBuilder.build()
-                }
-            )
-        }
-
-        // Create native ad if we have an AdUnitId
-        if let nativeAdUnitId = configuration.nativeAdUnitId {
-            nativeAd = SwiftyAdsNative(
-                adUnitId: nativeAdUnitId,
-                request: { [unowned self] in
-                    self.requestBuilder.build()
-                }
-            )
-        }
-     
         // Create consent manager
         let consentManager = SwiftyAdsConsentManager(
             consentInformation: .sharedInstance,
@@ -193,43 +148,10 @@ extension SwiftyAds: SwiftyAdsType {
             mobileAds: mobileAds,
             consentStatusDidChange: consentStatusDidChange
         )
-
-        // Keep reference to consent manager
         self.consentManager = consentManager
 
-        // Request consent update
-        DispatchQueue.main.async {
-            consentManager.requestUpdate { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .success(let status):
-                    switch status {
-                    case .obtained, .notRequired:
-                        self.loadAds()
-                        completion(.success(status))
-                    case .required:
-                        DispatchQueue.main.async {
-                            consentManager.showForm(from: viewController) { [weak self] result in
-                                guard let self = self else { return }
-                                switch result {
-                                case .success(let status):
-                                    if status == .obtained || status == .notRequired {
-                                        self.loadAds()
-                                    }
-                                    completion(.success(status))
-                                case .failure(let error):
-                                    completion(.failure(error))
-                                }
-                            }
-                        }
-                    default:
-                        completion(.success(status))
-                    }
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
-        }
+        // Request initial consent
+        requestInitialConsent(from: viewController, consentManager: consentManager, completion: completion)
     }
 
     /// Under GDPR users must be able to change their consent at any time.
@@ -473,6 +395,75 @@ public extension SwiftyAds {
 // MARK: - Private Methods
 
 private extension SwiftyAds {
+
+    func setAds(for configuration: SwiftyAdsConfiguration) {
+        // Create interstitial ad if we have an AdUnitId
+        if let interstitialAdUnitId = configuration.interstitialAdUnitId {
+            interstitialAd = SwiftyAdsInterstitial(
+                adUnitId: interstitialAdUnitId,
+                request: { [unowned self] in
+                    self.requestBuilder.build()
+                }
+            )
+        }
+
+        // Create rewarded ad if we have an AdUnitId
+        if let rewardedAdUnitId = configuration.rewardedAdUnitId {
+            rewardedAd = SwiftyAdsRewarded(
+                adUnitId: rewardedAdUnitId,
+                request: { [unowned self] in
+                    self.requestBuilder.build()
+                }
+            )
+        }
+
+        // Create native ad if we have an AdUnitId
+        if let nativeAdUnitId = configuration.nativeAdUnitId {
+            nativeAd = SwiftyAdsNative(
+                adUnitId: nativeAdUnitId,
+                request: { [unowned self] in
+                    self.requestBuilder.build()
+                }
+            )
+        }
+    }
+
+    func requestInitialConsent(from viewController: UIViewController,
+                               consentManager: SwiftyAdsConsentManagerType,
+                               completion: @escaping SwiftyAdsConsentResultHandler) {
+        DispatchQueue.main.async {
+            consentManager.requestUpdate { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let status):
+                    switch status {
+                    case .obtained, .notRequired:
+                        self.loadAds()
+                        completion(.success(status))
+                    case .required:
+                        DispatchQueue.main.async {
+                            consentManager.showForm(from: viewController) { [weak self] result in
+                                guard let self = self else { return }
+                                switch result {
+                                case .success(let status):
+                                    if status == .obtained || status == .notRequired {
+                                        self.loadAds()
+                                    }
+                                    completion(.success(status))
+                                case .failure(let error):
+                                    completion(.failure(error))
+                                }
+                            }
+                        }
+                    default:
+                        completion(.success(status))
+                    }
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
 
     func loadAds() {
         rewardedAd?.load()
