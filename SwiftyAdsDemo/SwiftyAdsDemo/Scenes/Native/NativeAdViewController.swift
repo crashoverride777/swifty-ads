@@ -28,11 +28,14 @@ final class NativeAdViewController: UIViewController {
             from: self,
             adUnitIdType: .plist,
             count: nil,
-            onReceive: { [weak self] nativeAd in
-                self?.showNativeAd(nativeAd)
+            onFinishLoading: {
+                print("NativeAdViewController ad finished loading")
             },
             onError: { error in
                 print(error)
+            },
+            onReceive: { [weak self] nativeAd in
+                self?.showNativeAd(nativeAd)
             }
         )
     }

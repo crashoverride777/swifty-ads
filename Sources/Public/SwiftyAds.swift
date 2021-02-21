@@ -61,8 +61,9 @@ public protocol SwiftyAdsType: AnyObject {
     func loadNativeAd(from viewController: UIViewController,
                       adUnitIdType: SwiftyAdsAdUnitIdType,
                       count: Int?,
-                      onReceive: @escaping (GADNativeAd) -> Void,
-                      onError: @escaping (Error) -> Void)
+                      onFinishLoading: (() -> Void)?,
+                      onError: ((Error) -> Void)?,
+                      onReceive: @escaping (GADNativeAd) -> Void)
     func disable()
 }
 
@@ -416,8 +417,9 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter viewController: The view controller that will load the native ad.
     /// - parameter adUnitIdType: The adUnitId type for the ad, either plist or custom.
     /// - parameter count: The number of ads to load via  GADMultipleAdsAdLoaderOptions. Set to nil to use default options or when using mediation.
-    /// - parameter onReceive: The received GADNativeAd when the load request has completed.
-    /// - parameter onError: The error when the load request has failed.
+    /// - parameter onFinishLoading: An optional callback when the load request has finished.
+    /// - parameter onError: An optional callback when an error has occurred.
+    /// - parameter onReceive: A callback when the GADNativeAd has been received.
 
     /// - Warning:
     /// Requests for multiple native ads don't currently work for AdMob ad unit IDs that have been configured for mediation.
@@ -425,8 +427,9 @@ extension SwiftyAds: SwiftyAdsType {
     public func loadNativeAd(from viewController: UIViewController,
                              adUnitIdType: SwiftyAdsAdUnitIdType,
                              count: Int?,
-                             onReceive: @escaping (GADNativeAd) -> Void,
-                             onError: @escaping (Error) -> Void) {
+                             onFinishLoading: (() -> Void)?,
+                             onError: ((Error) -> Void)?,
+                             onReceive: @escaping (GADNativeAd) -> Void) {
         guard !isDisabled else { return }
         guard hasConsent else { return }
 
@@ -443,8 +446,9 @@ extension SwiftyAds: SwiftyAdsType {
             from: viewController,
             adUnitIdType: adUnitIdType,
             count: count,
-            onReceive: onReceive,
-            onError: onError
+            onFinishLoading: onFinishLoading,
+            onError: onError,
+            onReceive: onReceive
         )
     }
 
