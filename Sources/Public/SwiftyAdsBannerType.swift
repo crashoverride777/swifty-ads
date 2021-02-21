@@ -29,10 +29,12 @@ public protocol SwiftyAdsBannerType: AnyObject {
     func show(isLandscape: Bool)
 
     /// Hide the banner ad.
-    ///
-    /// - parameter animated: Animates the banner if set to true.
-    func hide(animated: Bool)
+    func hide()
 
     /// Removes the banner from its superview.
     func remove()
+
+    // MARK: Deperecated
+    @available(*, deprecated, message: "Please use new hide method without animated parameter")
+    func hide(animated: Bool)
 }

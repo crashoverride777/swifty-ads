@@ -129,7 +129,7 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
         bannerView.load(request())
     }
 
-    func hide(animated: Bool) {
+    func hide() {
         guard let bannerView = bannerView else { return }
         guard let rootViewController = bannerView.rootViewController else { return }
         hide(bannerView, from: rootViewController, animation: animation, position: position)
@@ -162,6 +162,16 @@ extension SwiftyAdsBanner: GADBannerViewDelegate {
     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
         hide(bannerView, from: bannerView.rootViewController, animation: animation, position: position)
         onError?(error)
+    }
+}
+
+// MARK: - Deprecated
+
+extension SwiftyAdsBanner {
+
+    @available(*, deprecated, message: "Please use new hide method without animated parameter")
+    func hide(animated: Bool) {
+        hide()
     }
 }
 
