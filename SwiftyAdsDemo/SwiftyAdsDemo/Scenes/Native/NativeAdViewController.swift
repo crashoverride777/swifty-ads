@@ -32,7 +32,7 @@ final class NativeAdViewController: UIViewController {
                 print("NativeAdViewController ad finished loading")
             },
             onError: { error in
-                print(error)
+                print("NativeAdViewController ad loading error \(error)")
             },
             onReceive: { [weak self] nativeAd in
                 self?.showNativeAd(nativeAd)

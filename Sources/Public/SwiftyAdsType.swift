@@ -102,4 +102,11 @@ public protocol SwiftyAdsType: AnyObject {
                       onOpen: (() -> Void)?,
                       onClose: (() -> Void)?,
                       onError: ((Error) -> Void)?) -> SwiftyAdsBannerType?
+
+    @available(*, deprecated, message: "Please use new loadNativeAd method with onFinishLoading callback")
+    func loadNativeAd(from viewController: UIViewController,
+                      adUnitIdType: SwiftyAdsAdUnitIdType,
+                      count: Int?,
+                      onReceive: @escaping (GADNativeAd) -> Void,
+                      onError: @escaping (Error) -> Void)
 }

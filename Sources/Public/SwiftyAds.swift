@@ -451,6 +451,22 @@ public extension SwiftyAds {
             onError: onError
         )
     }
+
+    @available(*, deprecated, message: "Please use new loadNativeAd method with onFinishLoading callback")
+    func loadNativeAd(from viewController: UIViewController,
+                      adUnitIdType: SwiftyAdsAdUnitIdType,
+                      count: Int?,
+                      onReceive: @escaping (GADNativeAd) -> Void,
+                      onError: @escaping (Error) -> Void) {
+        loadNativeAd(
+            from: viewController,
+            adUnitIdType: adUnitIdType,
+            count: count,
+            onFinishLoading: nil,
+            onError: onError,
+            onReceive: onReceive
+        )
+    }
 }
 
 // MARK: - Private Methods
