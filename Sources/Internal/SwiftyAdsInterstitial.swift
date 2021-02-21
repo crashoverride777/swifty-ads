@@ -34,12 +34,6 @@ protocol SwiftyAdsInterstitialType: AnyObject {
 
 final class SwiftyAdsInterstitial: NSObject {
 
-    // MARK: - Types
-
-    enum InterstitialAdError: Error {
-        case notLoaded
-    }
-
     // MARK: - Properties
     
     private let adUnitId: String
@@ -95,7 +89,7 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
         
         guard let interstitialAd = interstitialAd else {
             load()
-            onError?(InterstitialAdError.notLoaded)
+            onError?(SwiftyAdsError.interstitialAdNotLoaded)
             return
         }
 

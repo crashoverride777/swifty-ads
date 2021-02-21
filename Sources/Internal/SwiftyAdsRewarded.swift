@@ -35,12 +35,6 @@ protocol SwiftyAdsRewardedType: AnyObject {
 
 final class SwiftyAdsRewarded: NSObject {
 
-    // MARK: - Types
-
-    enum RewardedAdError: Error {
-        case notLoaded
-    }
-
     // MARK: - Properties
     
     private let adUnitId: String
@@ -94,7 +88,7 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
         
         guard let rewardedAd = rewardedAd else {
             load()
-            onError?(RewardedAdError.notLoaded)
+            onError?(SwiftyAdsError.rewardedAdNotLoaded)
             onNotReady?()
             return
         }

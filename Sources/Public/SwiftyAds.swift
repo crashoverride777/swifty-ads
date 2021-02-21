@@ -30,13 +30,6 @@ import UserMessagingPlatform
  */
 public final class SwiftyAds: NSObject {
 
-    // MARK: - Types
-
-    enum SwiftyAdsError: Error {
-        case noConsentManager
-        case missingBannerAdUnitId
-    }
-
     // MARK: - Static Properties
 
     /// The shared SwiftyAds instance.
@@ -45,20 +38,17 @@ public final class SwiftyAds: NSObject {
     // MARK: - Properties
     
     private let mobileAds: GADMobileAds
-    private let intervalTracker: IntervalTracker
+    private let requestBuilder: SwiftyAdsRequestBuilderType
+    private let interstitialAdIntervalTracker: SwiftyAdsIntervalTrackerType
 
     private var interstitialAd: SwiftyAdsInterstitialType?
     private var rewardedAd: SwiftyAdsRewardedType?
     private var nativeAd: SwiftyAdsNativeType?
     private var consentManager: SwiftyAdsConsentManagerType?
     private var configuration: SwiftyAdsConfiguration?
-    private var isDisabled = false
+    private var disabled = false
 
     // MARK: - Computed Properties
-    
-    private var requestBuilder: SwiftyAdsRequestBuilderType {
-        SwiftyAdsRequestBuilder()
-    }
 
     private var hasConsent: Bool {
         guard let consentManager = consentManager else { return true }
@@ -74,20 +64,23 @@ public final class SwiftyAds: NSObject {
     
     private override init() {
         mobileAds = .sharedInstance()
-        intervalTracker = SwiftyAdsIntervalTracker()
+        requestBuilder = SwiftyAdsRequestBuilder()
+        interstitialAdIntervalTracker = SwiftyAdsIntervalTracker()
         super.init()
         
     }
     
     init(mobileAds: GADMobileAds,
          consentManager: SwiftyAdsConsentManagerType,
-         intervalTracker: IntervalTracker,
+         requestBuilder: SwiftyAdsRequestBuilderType,
+         interstitialAdIntervalTracker: SwiftyAdsIntervalTrackerType,
          interstitialAd: SwiftyAdsInterstitialType?,
          rewardedAd: SwiftyAdsRewardedType?,
          nativeAd: SwiftyAdsNativeType?) {
         self.mobileAds = mobileAds
         self.consentManager = consentManager
-        self.intervalTracker = intervalTracker
+        self.requestBuilder = requestBuilder
+        self.interstitialAdIntervalTracker = interstitialAdIntervalTracker
         self.interstitialAd = interstitialAd
         self.rewardedAd = rewardedAd
         self.nativeAd = nativeAd
@@ -127,6 +120,11 @@ extension SwiftyAds: SwiftyAdsType {
     public var isRewardedAdReady: Bool {
         rewardedAd?.isReady ?? false
     }
+
+    /// Returns true if SwiftyAds has been disabled
+    public var isDisabled: Bool {
+        disabled
+    }
     
     /// Configure SwiftyAds
     ///
@@ -137,7 +135,7 @@ extension SwiftyAds: SwiftyAdsType {
     public func configure(from viewController: UIViewController,
                           for environment: SwiftyAdsEnvironment,
                           consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
-                          completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
+                          completion: @escaping SwiftyAdsConsentResultHandler) {
         // Update configuration for selected environment
         let configuration: SwiftyAdsConfiguration
         switch environment {
@@ -239,9 +237,9 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter viewController: The view controller that will present the consent form.
     /// - parameter completion: A completion handler that will return the updated consent status.
     public func askForConsent(from viewController: UIViewController,
-                              completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
+                              completion: @escaping SwiftyAdsConsentResultHandler) {
         guard let consentManager = consentManager else {
-            completion(.failure(SwiftyAdsError.noConsentManager))
+            completion(.failure(SwiftyAdsError.consentManagerNotAvailable))
             return
         }
         
@@ -279,17 +277,17 @@ extension SwiftyAds: SwiftyAdsType {
         guard !isDisabled else { return nil }
         guard hasConsent else { return nil }
 
-        let adUnitId: String?
-
-        switch adUnitIdType {
-        case .plist:
-            adUnitId = configuration?.bannerAdUnitId
-        case .custom(let id):
-            adUnitId = id
+        var adUnitId: String? {
+            switch adUnitIdType {
+            case .plist:
+                return configuration?.bannerAdUnitId
+            case .custom(let id):
+                return id
+            }
         }
 
         guard let validAdUnitId = adUnitId else {
-            onError?(SwiftyAdsError.missingBannerAdUnitId)
+            onError?(SwiftyAdsError.bannerAdMissingAdUnitId)
             return nil
         }
 
@@ -332,8 +330,11 @@ extension SwiftyAds: SwiftyAdsType {
                                    onError: ((Error) -> Void)?) {
         guard !isDisabled else { return }
         guard hasConsent else { return }
-        guard intervalTracker.canShow(forInterval: interval) else { return }
 
+        if let interval = interval {
+            guard interstitialAdIntervalTracker.canShow(forInterval: interval) else { return }
+        }
+        
         interstitialAd?.show(
             from: viewController,
             onOpen: onOpen,
@@ -410,7 +411,7 @@ extension SwiftyAds: SwiftyAdsType {
 
     /// Disable ads
     public func disable() {
-        isDisabled = true
+        disabled = true
         interstitialAd?.stopLoading()
         nativeAd?.stopLoading()
     }
@@ -424,7 +425,7 @@ public extension SwiftyAds {
     func setup(from viewController: UIViewController,
                for environment: SwiftyAdsEnvironment,
                consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
-               completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
+               completion: @escaping SwiftyAdsConsentResultHandler) {
         configure(
             from: viewController,
             for: environment,

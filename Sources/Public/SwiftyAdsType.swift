@@ -26,6 +26,7 @@ import UserMessagingPlatform
 public typealias SwiftyAdsConsentStatus = UMPConsentStatus
 public typealias SwiftyAdsConsentType = UMPConsentType
 public typealias SwiftyAdsDebugGeography = UMPDebugGeography
+public typealias SwiftyAdsConsentResultHandler = (Result<SwiftyAdsConsentStatus, Error>) -> Void
 
 public enum SwiftyAdsEnvironment {
     case production
@@ -54,12 +55,13 @@ public protocol SwiftyAdsType: AnyObject {
     var isTaggedForUnderAgeOfConsent: Bool { get }
     var isInterstitialAdReady: Bool { get }
     var isRewardedAdReady: Bool { get }
+    var isDisabled: Bool { get }
     func configure(from viewController: UIViewController,
                    for environment: SwiftyAdsEnvironment,
                    consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
-                   completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
+                   completion: @escaping SwiftyAdsConsentResultHandler)
     func askForConsent(from viewController: UIViewController,
-                       completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
+                       completion: @escaping SwiftyAdsConsentResultHandler)
     func makeBannerAd(in viewController: UIViewController,
                       adUnitIdType: SwiftyAdsAdUnitIdType,
                       position: SwiftyAdsBannerAdPosition,
@@ -92,7 +94,7 @@ public protocol SwiftyAdsType: AnyObject {
     func setup(from viewController: UIViewController,
                for environment: SwiftyAdsEnvironment,
                consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
-               completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
+               completion: @escaping SwiftyAdsConsentResultHandler)
 
     @available(*, deprecated, message: "Please use new makeBanner method with animation parameter")
     func makeBannerAd(in viewController: UIViewController,

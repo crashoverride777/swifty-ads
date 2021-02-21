@@ -36,17 +36,11 @@ Provide a way for users to change their consent.
 protocol SwiftyAdsConsentManagerType: class {
     var consentStatus: SwiftyAdsConsentStatus { get }
     var consentType: SwiftyAdsConsentType { get }
-    func requestUpdate(completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
-    func showForm(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
+    func requestUpdate(completion: @escaping SwiftyAdsConsentResultHandler)
+    func showForm(from viewController: UIViewController, completion: @escaping SwiftyAdsConsentResultHandler)
 }
 
 final class SwiftyAdsConsentManager {
-
-    // MARK: - Types
-
-    enum ConsentError: Error {
-        case formNotAvailable
-    }
 
     // MARK: - Properties
 
@@ -86,7 +80,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
         consentInformation.consentType
     }
 
-    func requestUpdate(completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
+    func requestUpdate(completion: @escaping SwiftyAdsConsentResultHandler) {
         // Create a UMPRequestParameters object.
         let parameters = UMPRequestParameters()
 
@@ -111,6 +105,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
         consentInformation.requestConsentInfoUpdate(with: parameters) { [weak self] error in
             guard let self = self else { return }
 
+            // Handle error
             if let error = error {
                 completion(.failure(error))
                 return
@@ -145,10 +140,10 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
         }
     }
 
-    func showForm(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
+    func showForm(from viewController: UIViewController, completion: @escaping SwiftyAdsConsentResultHandler) {
         // Ensure form is loaded
         guard let form = form else {
-            completion(.failure(ConsentError.formNotAvailable))
+            completion(.failure(SwiftyAdsError.consentFormNotAvailable))
             return
         }
 
@@ -156,19 +151,20 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
         form.present(from: viewController) { [weak self] error in
             guard let self = self else { return }
 
+            /// Handle error
             if let error = error {
                 completion(.failure(error))
                 return
             }
 
-            // Update under age of consent again, as status might now return `.notRequired`
-            // if outside of EEA and ATT alert has been displayed
+            /// Update under age of consent again, as status might now return `.notRequired`
+            /// if outside of EEA and ATT alert has been displayed
             self.updateUnderAgeOfConsent(for: self.consentStatus)
 
-            // Fire status did change handler
+            /// Fire status did change handler
             self.consentStatusDidChange(self.consentStatus)
 
-            // Fire completion handler
+            /// Fire completion handler
             completion(.success(self.consentStatus))
         }
     }

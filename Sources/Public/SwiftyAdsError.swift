@@ -22,22 +22,25 @@
 
 import Foundation
 
-protocol SwiftyAdsIntervalTrackerType: AnyObject {
-    func canShow(forInterval interval: Int) -> Bool
-}
+public enum SwiftyAdsError: LocalizedError {
+    case consentManagerNotAvailable
+    case consentFormNotAvailable
+    case interstitialAdNotLoaded
+    case rewardedAdNotLoaded
+    case bannerAdMissingAdUnitId
 
-final class SwiftyAdsIntervalTracker {
-    private var counter = 0
-}
-
-extension SwiftyAdsIntervalTracker: SwiftyAdsIntervalTrackerType {
-    
-    func canShow(forInterval interval: Int) -> Bool {
-        counter += 1
-        
-        guard counter >= interval else { return false }
-        
-        counter = 0
-        return true
+    public var errorDescription: String? {
+        switch self {
+        case .consentManagerNotAvailable:
+            return "Consent manager not available"
+        case .consentFormNotAvailable:
+            return "Consent form not available"
+        case .interstitialAdNotLoaded:
+            return "Interstitial ad not loaded"
+        case .rewardedAdNotLoaded:
+            return "Rewarded ad not loaded"
+        case .bannerAdMissingAdUnitId:
+            return "Banner ad has no AdUnitId"
+        }
     }
 }
