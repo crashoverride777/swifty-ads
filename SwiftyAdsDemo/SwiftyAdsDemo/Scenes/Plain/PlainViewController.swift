@@ -53,7 +53,7 @@ final class PlainViewController: UIViewController {
             in: self,
             adUnitIdType: .plist,
             position: .bottom(isUsingSafeArea: true),
-            animationDuration: 1.5,
+            animation: .slide(duration: 1.5),
             onOpen: ({
                 print("SwiftyAds banner ad did open")
             }),

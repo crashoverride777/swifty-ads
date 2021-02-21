@@ -23,50 +23,6 @@
 import GoogleMobileAds
 import UserMessagingPlatform
 
-public typealias SwiftyAdsConsentStatus = UMPConsentStatus
-public typealias SwiftyAdsConsentType = UMPConsentType
-public typealias SwiftyAdsDebugGeography = UMPDebugGeography
-
-public protocol SwiftyAdsType: AnyObject {
-    var consentStatus: SwiftyAdsConsentStatus { get }
-    var consentType: SwiftyAdsConsentType { get }
-    var isTaggedForChildDirectedTreatment: Bool? { get }
-    var isTaggedForUnderAgeOfConsent: Bool { get }
-    var isInterstitialAdReady: Bool { get }
-    var isRewardedAdReady: Bool { get }
-    func setup(from viewController: UIViewController,
-               for environment: SwiftyAdsEnvironment,
-               consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
-               completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
-    func askForConsent(from viewController: UIViewController,
-                       completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
-    func makeBannerAd(in viewController: UIViewController,
-                      adUnitIdType: SwiftyAdsAdUnitIdType,
-                      position: SwiftyAdsBannerAdPosition,
-                      animationDuration: TimeInterval,
-                      onOpen: (() -> Void)?,
-                      onClose: (() -> Void)?,
-                      onError: ((Error) -> Void)?) -> SwiftyAdsBannerType?
-    func showInterstitialAd(from viewController: UIViewController,
-                            afterInterval interval: Int?,
-                            onOpen: (() -> Void)?,
-                            onClose: (() -> Void)?,
-                            onError: ((Error) -> Void)?)
-    func showRewardedAd(from viewController: UIViewController,
-                        onOpen: (() -> Void)?,
-                        onClose: (() -> Void)?,
-                        onError: ((Error) -> Void)?,
-                        onNotReady: (() -> Void)?,
-                        onReward: @escaping (Int) -> Void)
-    func loadNativeAd(from viewController: UIViewController,
-                      adUnitIdType: SwiftyAdsAdUnitIdType,
-                      count: Int?,
-                      onFinishLoading: (() -> Void)?,
-                      onError: ((Error) -> Void)?,
-                      onReceive: @escaping (GADNativeAd) -> Void)
-    func disable()
-}
-
 /**
  SwiftyAds
  
@@ -172,16 +128,16 @@ extension SwiftyAds: SwiftyAdsType {
         rewardedAd?.isReady ?? false
     }
     
-    /// Setup swift ad
+    /// Configure SwiftyAds
     ///
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter environment: The environment for ads to be displayed.
     /// - parameter consentStatusDidChange: A handler that will be called everytime the consent status has changed.
     /// - parameter completion: A completion handler that will return the current consent status after the consent flow has finished.
-    public func setup(from viewController: UIViewController,
-                      for environment: SwiftyAdsEnvironment,
-                      consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
-                      completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
+    public func configure(from viewController: UIViewController,
+                          for environment: SwiftyAdsEnvironment,
+                          consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
+                          completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
         // Update configuration for selected environment
         let configuration: SwiftyAdsConfiguration
         switch environment {
@@ -308,7 +264,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter viewController: The view controller that will present the ad.
     /// - parameter adUnitIdType: The adUnitId type for the ad, either plist or custom.
     /// - parameter position: The position of the banner.
-    /// - parameter animationDuration: The duration of the banner to animate on/off screen.
+    /// - parameter animation: The animation of the banner.
     /// - parameter onOpen: An optional callback when the banner was presented.
     /// - parameter onClose: An optional callback when the banner was dismissed or removed.
     /// - parameter onError: An optional callback when an error has occurred.
@@ -316,7 +272,7 @@ extension SwiftyAds: SwiftyAdsType {
     public func makeBannerAd(in viewController: UIViewController,
                              adUnitIdType: SwiftyAdsAdUnitIdType,
                              position: SwiftyAdsBannerAdPosition,
-                             animationDuration: TimeInterval,
+                             animation: SwiftyAdsBannerAdAnimation,
                              onOpen: (() -> Void)?,
                              onClose: (() -> Void)?,
                              onError: ((Error) -> Void)?) -> SwiftyAdsBannerType? {
@@ -353,7 +309,7 @@ extension SwiftyAds: SwiftyAdsType {
             withAdUnitId: validAdUnitId,
             in: viewController,
             position: position,
-            animationDuration: animationDuration,
+            animation: animation,
             onOpen: onOpen,
             onClose: onClose,
             onError: onError
@@ -457,6 +413,43 @@ extension SwiftyAds: SwiftyAdsType {
         isDisabled = true
         interstitialAd?.stopLoading()
         nativeAd?.stopLoading()
+    }
+}
+
+// MARK: - Deprecated
+
+public extension SwiftyAds {
+    /// Setup SwiftyAds
+    @available(*, deprecated, message: "Please use configure method")
+    func setup(from viewController: UIViewController,
+               for environment: SwiftyAdsEnvironment,
+               consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
+               completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
+        configure(
+            from: viewController,
+            for: environment,
+            consentStatusDidChange: consentStatusDidChange,
+            completion: completion
+        )
+    }
+
+    @available(*, deprecated, message: "Please use new makeBanner method with animation parameter")
+    func makeBannerAd(in viewController: UIViewController,
+                      adUnitIdType: SwiftyAdsAdUnitIdType,
+                      position: SwiftyAdsBannerAdPosition,
+                      animationDuration: TimeInterval,
+                      onOpen: (() -> Void)?,
+                      onClose: (() -> Void)?,
+                      onError: ((Error) -> Void)?) -> SwiftyAdsBannerType? {
+        makeBannerAd(
+            in: viewController,
+            adUnitIdType: adUnitIdType,
+            position: position,
+            animation: .slide(duration: animationDuration),
+            onOpen: onOpen,
+            onClose: onClose,
+            onError: onError
+        )
     }
 }
 

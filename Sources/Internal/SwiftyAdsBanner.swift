@@ -23,6 +23,13 @@
 import GoogleMobileAds
 
 final class SwiftyAdsBanner: NSObject {
+
+    // MARK: - Types
+
+    private enum Configuration {
+        static let visibleConstant: CGFloat = 0
+        static let hiddenConstant: CGFloat = 400
+    }
     
     // MARK: - Properties
 
@@ -36,11 +43,9 @@ final class SwiftyAdsBanner: NSObject {
     
     private var bannerView: GADBannerView?
     private var position: SwiftyAdsBannerAdPosition = .bottom(isUsingSafeArea: true)
-    private var animationDuration: TimeInterval = 1.4
+    private var animation: SwiftyAdsBannerAdAnimation = .none
     private var bannerViewConstraint: NSLayoutConstraint?
     private var animator: UIViewPropertyAnimator?
-    private let visibleConstant: CGFloat = 0
-    private let hiddenConstant: CGFloat = 400
     
     // MARK: - Initialization
     
@@ -58,12 +63,12 @@ final class SwiftyAdsBanner: NSObject {
     func prepare(withAdUnitId adUnitId: String,
                  in viewController: UIViewController,
                  position: SwiftyAdsBannerAdPosition,
-                 animationDuration: TimeInterval,
+                 animation: SwiftyAdsBannerAdAnimation,
                  onOpen: (() -> Void)?,
                  onClose: (() -> Void)?,
                  onError: ((Error) -> Void)?) {
         self.position = position
-        self.animationDuration = animationDuration
+        self.animation = animation
         self.onOpen = onOpen
         self.onClose = onClose
         self.onError = onError
@@ -84,40 +89,10 @@ final class SwiftyAdsBanner: NSObject {
         bannerView.delegate = self
 
         // Add banner view to view controller
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-        viewController.view.addSubview(bannerView)
-         
-        // Add constraints
-        // We don't give the banner a width or height constraint, as the provided ad size will give the banner
-        // an intrinsic content size
-        switch position {
-        case .top(let isUsingSafeArea):
-            if isUsingSafeArea {
-                bannerViewConstraint = bannerView.topAnchor.constraint(equalTo: viewController.view.safeAreaLayoutGuide.topAnchor)
-            } else {
-                bannerViewConstraint = bannerView.topAnchor.constraint(equalTo: viewController.view.topAnchor)
-            }
-            
-        case .bottom(let isUsingSafeArea):
-            if let tabBarController = viewController as? UITabBarController {
-                bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: tabBarController.tabBar.topAnchor)
-            } else {
-                if isUsingSafeArea {
-                    bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: viewController.view.safeAreaLayoutGuide.bottomAnchor)
-                } else {
-                    bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: viewController.view.bottomAnchor)
-                }
-            }
-        }
+        add(bannerView, to: viewController)
 
-        // Activate constraints
-        NSLayoutConstraint.activate([
-            bannerView.centerXAnchor.constraint(equalTo: viewController.view.safeAreaLayoutGuide.centerXAnchor),
-            bannerViewConstraint
-        ].compactMap { $0 })
-
-        // Move banner off screen
-        animateToOffScreenPosition(bannerView, from: viewController, position: position, animated: false)
+        // Hide banner without animation
+        hide(bannerView, from: viewController, animation: .none, position: position)
     }
 }
 
@@ -157,13 +132,7 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
     func hide(animated: Bool) {
         guard let bannerView = bannerView else { return }
         guard let rootViewController = bannerView.rootViewController else { return }
-
-        animateToOffScreenPosition(
-            bannerView,
-            from: rootViewController,
-            position: position,
-            animated: animated
-        )
+        hide(bannerView, from: rootViewController, animation: animation, position: position)
     }
     
     func remove() {
@@ -187,11 +156,11 @@ extension SwiftyAdsBanner: GADBannerViewDelegate {
     
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
         print("SwiftyAdsBanner did receive ad from: \(bannerView.responseInfo?.adNetworkClassName ?? "not found")")
-        animateToOnScreenPosition(bannerView, from: bannerView.rootViewController)
+        show(bannerView, from: bannerView.rootViewController, animation: animation)
     }
 
     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
-        animateToOffScreenPosition(bannerView, from: bannerView.rootViewController, position: position)
+        hide(bannerView, from: bannerView.rootViewController, animation: animation, position: position)
         onError?(error)
     }
 }
@@ -200,83 +169,125 @@ extension SwiftyAdsBanner: GADBannerViewDelegate {
 
 private extension SwiftyAdsBanner {
 
-    func animateToOnScreenPosition(_ bannerAd: GADBannerView,
-                                   from viewController: UIViewController?,
-                                   completion: (() -> Void)? = nil) {
-        // We can only animate the banner to its on-screen position with a valid view controller
-        guard let viewController = viewController else {
-            return
-        }
-        
-        // We can only animate the banner to its on-screen position if its not already visible
-        guard let bannerViewConstraint = bannerViewConstraint, bannerViewConstraint.constant != visibleConstant else {
-            return
-        }
-        
-        // Animate banner
-        bannerAd.isHidden = false
-        bannerViewConstraint.constant = visibleConstant
-        
-        stopCurrentAnimatorAnimations()
-        animator = UIViewPropertyAnimator(duration: animationDuration, curve: .easeOut) {
-            viewController.view.layoutIfNeeded()
-        }
-        
-        animator?.addCompletion { [weak self] _ in
-            guard let self = self else { return }
-            self.onOpen?()
-            completion?()
+    func add(_ bannerView: GADBannerView, to viewController: UIViewController) {
+        // Add banner view to view controller
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        viewController.view.addSubview(bannerView)
+
+        // Add constraints
+        // We don't give the banner a width or height constraint, as the provided ad size will give the banner
+        // an intrinsic content size
+        switch position {
+        case .top(let isUsingSafeArea):
+            if isUsingSafeArea {
+                bannerViewConstraint = bannerView.topAnchor.constraint(equalTo: viewController.view.safeAreaLayoutGuide.topAnchor)
+            } else {
+                bannerViewConstraint = bannerView.topAnchor.constraint(equalTo: viewController.view.topAnchor)
+            }
+
+        case .bottom(let isUsingSafeArea):
+            if let tabBarController = viewController as? UITabBarController {
+                bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: tabBarController.tabBar.topAnchor)
+            } else {
+                if isUsingSafeArea {
+                    bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: viewController.view.safeAreaLayoutGuide.bottomAnchor)
+                } else {
+                    bannerViewConstraint = bannerView.bottomAnchor.constraint(equalTo: viewController.view.bottomAnchor)
+                }
+            }
         }
 
-        animator?.startAnimation()
+        // Activate constraints
+        NSLayoutConstraint.activate([
+            bannerView.centerXAnchor.constraint(equalTo: viewController.view.safeAreaLayoutGuide.centerXAnchor),
+            bannerViewConstraint
+        ].compactMap { $0 })
+    }
+
+    func show(_ bannerAd: GADBannerView,
+              from viewController: UIViewController?,
+              animation: SwiftyAdsBannerAdAnimation,
+              completion: (() -> Void)? = nil) {
+        // We can only animate the banner to its on-screen position with a valid view controller
+        guard let viewController = viewController else { return }
+        
+        // We can only animate the banner to its on-screen position if it has a constraint
+        guard let bannerViewConstraint = bannerViewConstraint else { return }
+
+        // We can only animate the banner to its on-screen position if its not already visible
+        guard bannerViewConstraint.constant != Configuration.visibleConstant else { return }
+
+        // Show banner incase it was hidden
+        bannerAd.isHidden = false
+
+        // Set banner constraint
+        bannerViewConstraint.constant = Configuration.visibleConstant
+
+        // Animate if needed
+        switch animation {
+        case .none:
+            break
+        case .slide(let animationDuration):
+            stopCurrentAnimatorAnimations()
+            animator = UIViewPropertyAnimator(duration: animationDuration, curve: .easeOut) {
+                viewController.view.layoutIfNeeded()
+            }
+
+            animator?.addCompletion { [weak self] _ in
+                guard let self = self else { return }
+                self.onOpen?()
+                completion?()
+            }
+
+            animator?.startAnimation()
+        }
     }
     
-    func animateToOffScreenPosition(_ bannerAd: GADBannerView,
-                                    from viewController: UIViewController?,
-                                    position: SwiftyAdsBannerAdPosition,
-                                    animated: Bool = true,
-                                    completion: (() -> Void)? = nil) {
+    func hide(_ bannerAd: GADBannerView,
+              from viewController: UIViewController?,
+              animation: SwiftyAdsBannerAdAnimation,
+              position: SwiftyAdsBannerAdPosition,
+              completion: (() -> Void)? = nil) {
         // We can only animate the banner to its off-screen position with a valid view controller
-        guard let viewController = viewController else {
-            return
-        }
+        guard let viewController = viewController else { return }
         
+        // We can only animate the banner to its off-screen position if it has a constraint
+        guard let bannerViewConstraint = bannerViewConstraint else { return }
+
         // We can only animate the banner to its off-screen position if its already visible
-        guard let bannerViewConstraint = bannerViewConstraint, bannerViewConstraint.constant == visibleConstant else {
-            return
-        }
+        guard bannerViewConstraint.constant == Configuration.visibleConstant else { return }
         
         // Get banner off-screen constant
         let newConstant: CGFloat
         switch position {
         case .top:
-            newConstant = -hiddenConstant
+            newConstant = -Configuration.hiddenConstant
         case .bottom:
-            newConstant = hiddenConstant
+            newConstant = Configuration.hiddenConstant
         }
 
-        // Only animate the banner if we want it animated
-        guard animated else {
-            bannerAd.isHidden = true
-            bannerViewConstraint.constant = newConstant
-            return
-        }
-        
-        // Animate banner
+        // Set banner constraint
         bannerViewConstraint.constant = newConstant
-        stopCurrentAnimatorAnimations()
-        animator = UIViewPropertyAnimator(duration: animationDuration, curve: .easeOut) {
-            viewController.view.layoutIfNeeded()
-        }
-        
-        animator?.addCompletion { [weak self] _ in
-            guard let self = self else { return }
+
+        // Animate if needed
+        switch animation {
+        case .none:
             bannerAd.isHidden = true
-            self.onClose?()
-            completion?()
+        case .slide(let animationDuration):
+            stopCurrentAnimatorAnimations()
+            animator = UIViewPropertyAnimator(duration: animationDuration, curve: .easeOut) {
+                viewController.view.layoutIfNeeded()
+            }
+
+            animator?.addCompletion { [weak self] _ in
+                guard let self = self else { return }
+                bannerAd.isHidden = true
+                self.onClose?()
+                completion?()
+            }
+
+            animator?.startAnimation()
         }
-        
-        animator?.startAnimation()
     }
 
     func stopCurrentAnimatorAnimations() {

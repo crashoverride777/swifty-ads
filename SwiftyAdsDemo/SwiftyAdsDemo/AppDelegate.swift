@@ -45,7 +45,7 @@ private extension AppDelegate {
         #else
         let environment: SwiftyAdsEnvironment = .production
         #endif
-        swiftyAds.setup(
+        swiftyAds.configure(
             from: viewController,
             for: environment,
             consentStatusDidChange: { status in
