@@ -1,6 +1,6 @@
 import UIKit
 
-final class RootViewController: UITableViewController {
+final class DemoSelectionViewController: UITableViewController {
     
     // MARK: - Types
 
@@ -8,7 +8,7 @@ final class RootViewController: UITableViewController {
         case main
         case secondary
 
-        var rows: [Row] {
+        func rows(isRequiredToAskForConsent: Bool) -> [Row] {
             switch self {
             case .main:
                 return [
@@ -20,9 +20,9 @@ final class RootViewController: UITableViewController {
                 ]
             case .secondary:
                 return [
-                    .updateConsent,
+                    isRequiredToAskForConsent ? .updateConsent : nil,
                     .disable
-                ]
+                ].compactMap { $0 }
             }
         }
     }
@@ -78,14 +78,20 @@ final class RootViewController: UITableViewController {
     // MARK: - Properties
 
     private let swiftyAds: SwiftyAdsType
+    private let geography: SwiftyAdsDebugGeography
     private let sections = Section.allCases
     private let notificationCenter: NotificationCenter = .default
     private var bannerAd: SwiftyAdsBannerType?
-    
+
+    private var isRequiredToAskForConsent: Bool {
+        swiftyAds.consentStatus != .notRequired
+    }
+
     // MARK: - Initialization
     
-    init(swiftyAds: SwiftyAdsType) {
+    init(swiftyAds: SwiftyAdsType, geography: SwiftyAdsDebugGeography) {
         self.swiftyAds = swiftyAds
+        self.geography = geography
         if #available(iOS 13.0, *) {
             super.init(style: .insetGrouped)
         } else {
@@ -95,6 +101,12 @@ final class RootViewController: UITableViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - De-Initialization
+
+    deinit {
+        print("Deinit DemoSelectionViewController")
     }
     
     // MARK: - Life Cycle
@@ -126,11 +138,11 @@ final class RootViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        sections[section].rows.count
+        sections[section].rows(isRequiredToAskForConsent: isRequiredToAskForConsent).count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let row = sections[indexPath.section].rows[indexPath.row]
+        let row = sections[indexPath.section].rows(isRequiredToAskForConsent: isRequiredToAskForConsent)[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: RootCell.self), for: indexPath) as! RootCell
         cell.configure(title: row.title, accessoryType: row.accessoryType)
         return cell
@@ -139,7 +151,7 @@ final class RootViewController: UITableViewController {
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let row = sections[indexPath.section].rows[indexPath.row]
+        let row = sections[indexPath.section].rows(isRequiredToAskForConsent: isRequiredToAskForConsent)[indexPath.row]
         var viewController: UIViewController?
 
         if row.shouldDeselect {
@@ -167,7 +179,9 @@ final class RootViewController: UITableViewController {
             viewController = NativeAdViewController(swityAds: swiftyAds)
 
         case .updateConsent:
-            swiftyAds.askForConsent(from: self) { result in }
+            swiftyAds.askForConsent(from: self) { [weak self] result in
+                self?.tableView.reloadData()
+            }
 
         case .disable:
             swiftyAds.disable()
@@ -184,13 +198,14 @@ final class RootViewController: UITableViewController {
 
 // MARK: - Private Methods
 
-private extension RootViewController {
+private extension DemoSelectionViewController {
 
     @objc func consentDidChange() {
         if bannerAd == nil {
             makeBanner()
         }
         bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
+        tableView.reloadData()
     }
 
     func makeBanner() {

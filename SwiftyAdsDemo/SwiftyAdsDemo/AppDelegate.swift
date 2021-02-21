@@ -21,16 +21,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let notificationCenter: NotificationCenter = .default
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let rootViewController = RootViewController(swiftyAds: swiftyAds)
-        let navigationController = UINavigationController(rootViewController: rootViewController)
-        navigationController.navigationBar.barTintColor = .white
+        let rootViewController = RootViewController(swiftyAds: swiftyAds) { geography in
+            let rootVC = self.window!.rootViewController!
+            self.setupSwiftyAds(from: rootVC.presentedViewController ?? rootVC, geography: geography)
+        }
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = .white
-        window?.rootViewController = navigationController
+        window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
-        
-        setupSwiftyAds(from: navigationController)
         return true
     }
 }
@@ -39,9 +38,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 private extension AppDelegate {
     
-    func setupSwiftyAds(from viewController: UIViewController) {
+    func setupSwiftyAds(from viewController: UIViewController, geography: SwiftyAdsDebugGeography) {
         #if DEBUG
-        let environment: SwiftyAdsEnvironment = .debug(testDeviceIdentifiers: [], geography: .EEA, resetConsentInfo: true)
+        let environment: SwiftyAdsEnvironment = .debug(testDeviceIdentifiers: [], geography: geography, resetConsentInfo: true)
         #else
         let environment: SwiftyAdsEnvironment = .production
         #endif
