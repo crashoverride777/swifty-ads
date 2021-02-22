@@ -114,7 +114,7 @@ final class DemoSelectionViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Swifty Ads Demo"
-        tableView.register(RootCell.self, forCellReuseIdentifier: String(describing: RootCell.self))
+        tableView.register(BasicCell.self, forCellReuseIdentifier: String(describing: BasicCell.self))
         notificationCenter.addObserver(self, selector: #selector(consentDidChange), name: .adConsentStatusDidChange, object: nil)
         makeBanner()
     }
@@ -143,7 +143,7 @@ final class DemoSelectionViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = sections[indexPath.section].rows(isRequiredToAskForConsent: isRequiredToAskForConsent)[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: RootCell.self), for: indexPath) as! RootCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: BasicCell.self), for: indexPath) as! BasicCell
         cell.configure(title: row.title, accessoryType: row.accessoryType)
         return cell
     }

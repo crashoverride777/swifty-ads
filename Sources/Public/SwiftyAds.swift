@@ -41,14 +41,12 @@ public final class SwiftyAds: NSObject {
     private let requestBuilder: SwiftyAdsRequestBuilderType
     private let interstitialAdIntervalTracker: SwiftyAdsIntervalTrackerType
 
+    private var configuration: SwiftyAdsConfiguration?
     private var interstitialAd: SwiftyAdsInterstitialType?
     private var rewardedAd: SwiftyAdsRewardedType?
     private var nativeAd: SwiftyAdsNativeType?
     private var consentManager: SwiftyAdsConsentManagerType?
-    private var configuration: SwiftyAdsConfiguration?
     private var disabled = false
-
-    // MARK: - Computed Properties
 
     private var hasConsent: Bool {
         guard let consentManager = consentManager else { return true }
@@ -242,7 +240,7 @@ extension SwiftyAds: SwiftyAdsType {
     ///
     /// - parameter viewController: The view controller that will present the ad.
     /// - parameter interval: The interval of when to show the ad, e.g every 4th time the method is called. Set to nil to always show.
-    /// - parameter onOpen: An optional callback when the banner was presented.
+    /// - parameter onOpen: An optional callback when the ad was presented.
     /// - parameter onClose: An optional callback when the ad was dismissed.
     /// - parameter onError: An optional callback when an error has occurred.
     public func showInterstitialAd(from viewController: UIViewController,
@@ -265,10 +263,10 @@ extension SwiftyAds: SwiftyAdsType {
         )
     }
     
-    /// Show rewarded video ad
+    /// Show rewarded ad
     ///
     /// - parameter viewController: The view controller that will present the ad.
-    /// - parameter onOpen: An optional callback when the banner was presented.
+    /// - parameter onOpen: An optional callback when the ad was presented.
     /// - parameter onClose: An optional callback when the ad was dismissed.
     /// - parameter onError: An optional callback when an error has occurred.
     /// - parameter onNotReady: An optional callback when the ad was not ready.
@@ -312,7 +310,7 @@ extension SwiftyAds: SwiftyAdsType {
         guard !isDisabled else { return }
         guard hasConsent else { return }
 
-        if case .custom(let adUnitId) = adUnitIdType {
+        if nativeAd == nil, case .custom(let adUnitId) = adUnitIdType {
             nativeAd = SwiftyAdsNative(
                 adUnitId: adUnitId,
                 request: { [unowned self] in

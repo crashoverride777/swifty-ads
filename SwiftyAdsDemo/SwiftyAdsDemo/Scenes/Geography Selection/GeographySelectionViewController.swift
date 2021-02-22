@@ -1,5 +1,5 @@
 //
-//  RootViewController.swift
+//  GeographySelectionViewController.swift
 //  SwiftyAdsDemo
 //
 //  Created by Dominik Ringler on 21/02/2021.
@@ -8,20 +8,20 @@
 
 import UIKit
 
-final class RootViewController: UITableViewController {
+final class GeographySelectionViewController: UITableViewController {
 
     // MARK: - Types
 
-    enum Row: CaseIterable {
+    private enum Row: CaseIterable {
         case EEA
         case notEEA
 
         var title: String {
             switch self {
             case .EEA:
-                return "Inside EEA"
+                return "Inside EEA (GDPR)"
             case .notEEA:
-                return "Outside EEA"
+                return "Outside EEA (no GDPR)"
             }
         }
     }
@@ -53,7 +53,7 @@ final class RootViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Select Demo Geography"
-        tableView.register(RootCell.self, forCellReuseIdentifier: String(describing: RootCell.self))
+        tableView.register(BasicCell.self, forCellReuseIdentifier: String(describing: BasicCell.self))
     }
 
     // MARK: - UITableViewDataSource
@@ -68,7 +68,7 @@ final class RootViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = rows[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: RootCell.self), for: indexPath) as! RootCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: BasicCell.self), for: indexPath) as! BasicCell
         cell.configure(title: row.title, accessoryType: .disclosureIndicator)
         return cell
     }
@@ -80,16 +80,8 @@ final class RootViewController: UITableViewController {
         switch row {
         case .EEA:
             selectedRow(.EEA)
-            let demoSelectionViewController = DemoSelectionViewController(swiftyAds: swiftyAds, geography: .EEA)
-            let navigationController = UINavigationController(rootViewController: demoSelectionViewController)
-            navigationController.modalPresentationStyle = .overFullScreen
-            present(navigationController, animated: true)
         case .notEEA:
             selectedRow(.notEEA)
-            let demoSelectionViewController = DemoSelectionViewController(swiftyAds: swiftyAds, geography: .notEEA)
-            let navigationController = UINavigationController(rootViewController: demoSelectionViewController)
-            navigationController.modalPresentationStyle = .overFullScreen
-            present(navigationController, animated: true)
         }
     }
 }

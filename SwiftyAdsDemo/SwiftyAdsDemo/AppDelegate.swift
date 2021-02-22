@@ -21,14 +21,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let notificationCenter: NotificationCenter = .default
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let rootViewController = RootViewController(swiftyAds: swiftyAds) { geography in
-            let rootVC = self.window!.rootViewController!
-            self.setupSwiftyAds(from: rootVC.presentedViewController ?? rootVC, geography: geography)
+        let navigationController = UINavigationController()
+        let geographySelectionViewController = GeographySelectionViewController(swiftyAds: swiftyAds) { geography in
+            let demoSelectionViewController = DemoSelectionViewController(swiftyAds: self.swiftyAds, geography: geography)
+            navigationController.setViewControllers([demoSelectionViewController], animated: true)
+            self.setupSwiftyAds(from: navigationController, geography: geography)
         }
+
+        navigationController.setViewControllers([geographySelectionViewController], animated: false)
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = .white
-        window?.rootViewController = rootViewController
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         return true
     }

@@ -1,6 +1,6 @@
 import UIKit
 
-final class RootCell: UITableViewCell {
+final class BasicCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

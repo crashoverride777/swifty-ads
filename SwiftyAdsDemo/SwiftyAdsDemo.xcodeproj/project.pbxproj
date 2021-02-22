@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		6A06E44C2593DDE9005EAD20 /* GameViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A06E44B2593DDE9005EAD20 /* GameViewController.storyboard */; };
 		6A185ACE253D9D77001542BC /* DemoSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A185ACD253D9D77001542BC /* DemoSelectionViewController.swift */; };
-		6A185AD6253D9EE5001542BC /* RootCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A185AD5253D9EE5001542BC /* RootCell.swift */; };
+		6A185AD6253D9EE5001542BC /* BasicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A185AD5253D9EE5001542BC /* BasicCell.swift */; };
 		6A1A53DD25912A3E00981F00 /* SwiftyAdsNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1A53DC25912A3E00981F00 /* SwiftyAdsNative.swift */; };
 		6A3C586025D7DC6000047F9A /* AdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A3C585F25D7DC6000047F9A /* AdView.xib */; };
 		6A3C586225D81F4700047F9A /* SwiftyAdsBannerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3C586125D81F4700047F9A /* SwiftyAdsBannerType.swift */; };
@@ -34,7 +34,7 @@
 		6AD3988A25CE970A0038C9B0 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AD3988925CE970A0038C9B0 /* AppTrackingTransparency.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		6AEB36F825E2C9E700AFA313 /* SwiftyAdsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEB36F725E2C9E700AFA313 /* SwiftyAdsType.swift */; };
 		6AEB370125E2DA1D00AFA313 /* SwiftyAdsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEB370025E2DA1D00AFA313 /* SwiftyAdsError.swift */; };
-		6AEB371525E2F3A100AFA313 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEB371425E2F3A100AFA313 /* RootViewController.swift */; };
+		6AEB371525E2F3A100AFA313 /* GeographySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEB371425E2F3A100AFA313 /* GeographySelectionViewController.swift */; };
 		6AEF6C2E2560CC1200780DFB /* TabBarControllerNoAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEF6C2D2560CC1200780DFB /* TabBarControllerNoAd.swift */; };
 		D64A98124421A48FA4C9D54A /* Pods_SwiftyAdsDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58AB3BECA27AE6BDA2F5A936 /* Pods_SwiftyAdsDemo.framework */; };
 /* End PBXBuildFile section */
@@ -57,7 +57,7 @@
 		58AB3BECA27AE6BDA2F5A936 /* Pods_SwiftyAdsDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAdsDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A06E44B2593DDE9005EAD20 /* GameViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = GameViewController.storyboard; sourceTree = "<group>"; };
 		6A185ACD253D9D77001542BC /* DemoSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoSelectionViewController.swift; sourceTree = "<group>"; };
-		6A185AD5253D9EE5001542BC /* RootCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCell.swift; sourceTree = "<group>"; };
+		6A185AD5253D9EE5001542BC /* BasicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCell.swift; sourceTree = "<group>"; };
 		6A1A53DC25912A3E00981F00 /* SwiftyAdsNative.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsNative.swift; sourceTree = "<group>"; };
 		6A3C585F25D7DC6000047F9A /* AdView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AdView.xib; sourceTree = "<group>"; };
 		6A3C586125D81F4700047F9A /* SwiftyAdsBannerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsBannerType.swift; sourceTree = "<group>"; };
@@ -84,7 +84,7 @@
 		6AD3988925CE970A0038C9B0 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		6AEB36F725E2C9E700AFA313 /* SwiftyAdsType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsType.swift; sourceTree = "<group>"; };
 		6AEB370025E2DA1D00AFA313 /* SwiftyAdsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsError.swift; sourceTree = "<group>"; };
-		6AEB371425E2F3A100AFA313 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		6AEB371425E2F3A100AFA313 /* GeographySelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeographySelectionViewController.swift; sourceTree = "<group>"; };
 		6AEF6C2D2560CC1200780DFB /* TabBarControllerNoAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarControllerNoAd.swift; sourceTree = "<group>"; };
 		976A9AB78CF3F7B4C96D7D05 /* Pods-SwiftyAdsDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdsDemo.release.xcconfig"; path = "Target Support Files/Pods-SwiftyAdsDemo/Pods-SwiftyAdsDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -105,7 +105,9 @@
 		6A185ACF253D9DA9001542BC /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				6AEB380825E4623B00AFA313 /* Geography Selection */,
 				6AEB371625E2F4B900AFA313 /* Demo */,
+				6AEB380925E4624400AFA313 /* Shared */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -135,15 +137,6 @@
 				6A520CDB253DA1350034F065 /* TabBarControllerAd.swift */,
 			);
 			path = "Tab Bar";
-			sourceTree = "<group>";
-		};
-		6A185AD4253D9EDB001542BC /* Root */ = {
-			isa = PBXGroup;
-			children = (
-				6AEB371425E2F3A100AFA313 /* RootViewController.swift */,
-				6A185AD5253D9EE5001542BC /* RootCell.swift */,
-			);
-			path = Root;
 			sourceTree = "<group>";
 		};
 		6A1B42ED0A26F56738580346 /* Pods */ = {
@@ -179,10 +172,10 @@
 				6AC971BF2401B06600A0BB91 /* Sources */,
 				6A185ACF253D9DA9001542BC /* Scenes */,
 				6A4286042400609E0035487A /* AppDelegate.swift */,
-				6A3C587C25D8496400047F9A /* SwiftyAds.plist */,
 				6A428611240060A00035487A /* Assets.xcassets */,
 				6A428613240060A00035487A /* LaunchScreen.storyboard */,
 				6A428616240060A00035487A /* Info.plist */,
+				6A3C587C25D8496400047F9A /* SwiftyAds.plist */,
 			);
 			path = SwiftyAdsDemo;
 			sourceTree = "<group>";
@@ -244,7 +237,6 @@
 		6AEB371625E2F4B900AFA313 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				6A185AD4253D9EDB001542BC /* Root */,
 				6AEB371725E2F4D000AFA313 /* Detail */,
 				6A185ACD253D9D77001542BC /* DemoSelectionViewController.swift */,
 			);
@@ -261,6 +253,22 @@
 				6A864BC725901809005D0789 /* Native */,
 			);
 			path = Detail;
+			sourceTree = "<group>";
+		};
+		6AEB380825E4623B00AFA313 /* Geography Selection */ = {
+			isa = PBXGroup;
+			children = (
+				6AEB371425E2F3A100AFA313 /* GeographySelectionViewController.swift */,
+			);
+			path = "Geography Selection";
+			sourceTree = "<group>";
+		};
+		6AEB380925E4624400AFA313 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				6A185AD5253D9EE5001542BC /* BasicCell.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		6AEF6C2C2560CBF200780DFB /* TabBar No Ad */ = {
@@ -402,7 +410,7 @@
 				6AC971D62401B06700A0BB91 /* SwiftyAdsInterstitial.swift in Sources */,
 				6A185ACE253D9D77001542BC /* DemoSelectionViewController.swift in Sources */,
 				6A520CDC253DA1350034F065 /* TabBarControllerAd.swift in Sources */,
-				6A185AD6253D9EE5001542BC /* RootCell.swift in Sources */,
+				6A185AD6253D9EE5001542BC /* BasicCell.swift in Sources */,
 				6AC971DC2401B06700A0BB91 /* SwiftyAdsConsentManager.swift in Sources */,
 				6A4286272400612E0035487A /* GameScene.swift in Sources */,
 				6AC971D92401B06700A0BB91 /* SwiftyAdsConfiguration.swift in Sources */,
@@ -412,7 +420,7 @@
 				6AC971D82401B06700A0BB91 /* SwiftyAdsBanner.swift in Sources */,
 				6AEB36F825E2C9E700AFA313 /* SwiftyAdsType.swift in Sources */,
 				6A4286052400609E0035487A /* AppDelegate.swift in Sources */,
-				6AEB371525E2F3A100AFA313 /* RootViewController.swift in Sources */,
+				6AEB371525E2F3A100AFA313 /* GeographySelectionViewController.swift in Sources */,
 				6A3C586225D81F4700047F9A /* SwiftyAdsBannerType.swift in Sources */,
 				6AEB370125E2DA1D00AFA313 /* SwiftyAdsError.swift in Sources */,
 			);
