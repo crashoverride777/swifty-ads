@@ -305,7 +305,8 @@ Note: While prefetching ads is a great technique, it's important that you don't 
 // Check current consent status
 SwiftyAds.shared.consentStatus
 
-// Check type of consent provided
+// Check type of consent provided (returns unknown if using IAB TCF v2 framework)
+// https://stackoverflow.com/questions/63415275/obtaining-consent-with-the-user-messaging-platform-android
 SwiftyAds.shared.consentType
 ```
 
