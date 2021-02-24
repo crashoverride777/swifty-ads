@@ -78,7 +78,7 @@ extension SwiftyAds: SwiftyAdsType {
         consentManager?.consentStatus ?? .unknown
     }
 
-    /// The type of consent provided
+    /// The type of consent provided when not using IAB TCF v2 framework
     ///
     /// - Warning:
     /// Always returns unknown if using IAB TCF v2 framework
