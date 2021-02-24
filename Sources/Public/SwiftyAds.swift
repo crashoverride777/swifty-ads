@@ -79,6 +79,10 @@ extension SwiftyAds: SwiftyAdsType {
     }
 
     /// The type of consent provided
+    ///
+    /// - Warning:
+    /// Always returns unknown if using IAB TCF v2 framework
+    /// https://stackoverflow.com/questions/63415275/obtaining-consent-with-the-user-messaging-platform-android
     public var consentType: SwiftyAdsConsentType {
         consentManager?.consentType ?? .unknown
     }
