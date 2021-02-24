@@ -24,9 +24,11 @@ Sign up for an [AdMob account](https://admob.google.com/home/get-started/) and c
 
 [READ](https://developers.google.com/admob/ios/mediation)
 
-## ATT and GDPR
+## App Tracking Transparency (ATT) and GDPR
 
-SwiftyAds use Google`s [User Messaging Platform](https://developers.google.com/admob/ump/ios/quick-start) (UMP) SDK to handle user consent. This SDK handles both GDPR requests and also the iOS 14 ATT alert if required. Please read the Funding Choices [documentation](https://support.google.com/fundingchoices/answer/9180084) to ensure they are setup up correctly for your requirements.
+SwiftyAds use Google`s [User Messaging Platform](https://developers.google.com/admob/ump/ios/quick-start) (UMP) SDK to handle user consent. This SDK can handle both GDPR requests and also the iOS 14 ATT alert if required. Please read the Funding Choices [documentation](https://support.google.com/fundingchoices/answer/9180084) to ensure they are setup up correctly for your requirements.
+
+Note: Currently it seems Apple is rejecting apps that use the UMP SDK to display the iOS 14 ATT alert because Google is displaying an explainer message before the actual ATT alert. As a workaround you can manually display the ATT alert before configuring SwiftyAds.
 
 ## Installation
 
