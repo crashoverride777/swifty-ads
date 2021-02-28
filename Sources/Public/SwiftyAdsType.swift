@@ -88,6 +88,11 @@ public protocol SwiftyAdsType: AnyObject {
                         onError: ((Error) -> Void)?,
                         onNotReady: (() -> Void)?,
                         onReward: @escaping (Int) -> Void)
+    func showRewardedInterstitialAd(from viewController: UIViewController,
+                                    onOpen: (() -> Void)?,
+                                    onClose: (() -> Void)?,
+                                    onError: ((Error) -> Void)?,
+                                    onReward: @escaping (Int) -> Void)
     func loadNativeAd(from viewController: UIViewController,
                       adUnitIdType: SwiftyAdsAdUnitIdType,
                       loaderOptions: SwiftyAdsNativeAdLoaderOptions,

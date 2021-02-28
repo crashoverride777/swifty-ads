@@ -45,6 +45,7 @@ public final class SwiftyAds: NSObject {
     private var environment: SwiftyAdsEnvironment = .production
     private var interstitialAd: SwiftyAdsInterstitialType?
     private var rewardedAd: SwiftyAdsRewardedType?
+    private var rewardedInterstitialAd: SwiftyAdsRewardedInterstitialType?
     private var nativeAd: SwiftyAdsNativeType?
     private var consentManager: SwiftyAdsConsentManagerType?
     private var disabled = false
@@ -143,15 +144,35 @@ extension SwiftyAds: SwiftyAdsType {
 
         // Create ads
         if let interstitialAdUnitId = configuration.interstitialAdUnitId {
-            interstitialAd = SwiftyAdsInterstitial(environment: environment, adUnitId: interstitialAdUnitId, request: requestBuilder.build)
+            interstitialAd = SwiftyAdsInterstitial(
+                environment: environment,
+                adUnitId: interstitialAdUnitId,
+                request: requestBuilder.build
+            )
         }
 
         if let rewardedAdUnitId = configuration.rewardedAdUnitId {
-            rewardedAd = SwiftyAdsRewarded(environment: environment, adUnitId: rewardedAdUnitId, request: requestBuilder.build)
+            rewardedAd = SwiftyAdsRewarded(
+                environment: environment,
+                adUnitId: rewardedAdUnitId,
+                request: requestBuilder.build
+            )
+        }
+
+        if let rewardedInterstitialAdUnitId = configuration.rewardedInterstitialAdUnitId {
+            rewardedInterstitialAd = SwiftyAdsRewardedInterstitial(
+                environment: environment,
+                adUnitId: rewardedInterstitialAdUnitId,
+                request: requestBuilder.build
+            )
         }
 
         if let nativeAdUnitId = configuration.nativeAdUnitId {
-            nativeAd = SwiftyAdsNative(adUnitId: nativeAdUnitId, request: requestBuilder.build)
+            nativeAd = SwiftyAdsNative(
+                environment: environment,
+                adUnitId: nativeAdUnitId,
+                request: requestBuilder.build
+            )
         }
 
         // Create consent manager
@@ -224,6 +245,9 @@ extension SwiftyAds: SwiftyAdsType {
             case .plist:
                 return configuration?.bannerAdUnitId
             case .custom(let id):
+                if case .debug = environment {
+                    return configuration?.bannerAdUnitId
+                }
                 return id
             }
         }
@@ -313,6 +337,35 @@ extension SwiftyAds: SwiftyAdsType {
         )
     }
 
+    /// Show rewarded interstitial ad
+    ///
+    /// - parameter viewController: The view controller that will present the ad.
+    /// - parameter onOpen: An optional callback when the ad was presented.
+    /// - parameter onClose: An optional callback when the ad was dismissed.
+    /// - parameter onError: An optional callback when an error has occurred.
+    /// - parameter onReward: A callback when the reward has been granted.
+    ///
+    /// - Warning:
+    /// Before displaying a rewarded interstitial ad to users, you must present the user with an intro screen that provides clear reward messaging
+    /// and an option to skip the ad before it starts.
+    /// https://support.google.com/admob/answer/9884467
+    public func showRewardedInterstitialAd(from viewController: UIViewController,
+                                           onOpen: (() -> Void)?,
+                                           onClose: (() -> Void)?,
+                                           onError: ((Error) -> Void)?,
+                                           onReward: @escaping (Int) -> Void) {
+        guard !isDisabled else { return }
+        guard hasConsent else { return }
+
+        rewardedInterstitialAd?.show(
+            from: viewController,
+            onOpen: onOpen,
+            onClose: onClose,
+            onError: onError,
+            onReward: onReward
+        )
+    }
+
     /// Load native ad
     ///
     /// - parameter viewController: The view controller that will load the native ad.
@@ -321,7 +374,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter onFinishLoading: An optional callback when the load request has finished.
     /// - parameter onError: An optional callback when an error has occurred.
     /// - parameter onReceive: A callback when the GADNativeAd has been received.
-
+    ///
     /// - Warning:
     /// Requests for multiple native ads don't currently work for AdMob ad unit IDs that have been configured for mediation.
     /// Publishers using mediation should avoid using the GADMultipleAdsAdLoaderOptions class when making requests i.e. set loaderOptions parameter to .single.
@@ -336,6 +389,7 @@ extension SwiftyAds: SwiftyAdsType {
 
         if nativeAd == nil, case .custom(let adUnitId) = adUnitIdType {
             nativeAd = SwiftyAdsNative(
+                environment: environment,
                 adUnitId: adUnitId,
                 request: { [unowned self] in
                     self.requestBuilder.build()

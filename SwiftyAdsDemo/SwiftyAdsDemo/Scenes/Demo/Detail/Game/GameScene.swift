@@ -6,8 +6,9 @@ class GameScene: SKScene {
     
     private var swiftyAds: SwiftyAdsType!
     
-    private lazy var interstitialLabel: SKLabelNode = childNode(withName: "interstitialLabel") as! SKLabelNode
-    private lazy var rewardedLabel: SKLabelNode = childNode(withName: "rewardedLabel") as! SKLabelNode
+    private lazy var interstitialLabel = childNode(withName: "interstitialLabel") as! SKLabelNode
+    private lazy var rewardedLabel = childNode(withName: "rewardedLabel") as! SKLabelNode
+    private lazy var rewardedInterstitialLabel = childNode(withName: "rewardedInterstitialLabel") as! SKLabelNode
 
     // MARK: - Configure
     
@@ -36,30 +37,30 @@ class GameScene: SKScene {
                 swiftyAds.showInterstitialAd(
                     from: viewController,
                     afterInterval: 2,
-                    onOpen: ({
+                    onOpen: {
                         print("SwiftyAds interstitial ad did open")
-                    }),
-                    onClose: ({
+                    },
+                    onClose: {
                         print("SwiftyAds interstitial ad did close")
-                    }),
-                    onError: ({ error in
+                    },
+                    onError: { error in
                         print("SwiftyAds interstitial ad error \(error)")
-                    })
+                    }
                 )
 
             case rewardedLabel:
                 swiftyAds.showRewardedAd(
                     from: viewController,
-                    onOpen: ({
-                        print("SwiftyAds rewarded video ad did open")
-                    }),
-                    onClose: ({
-                        print("SwiftyAds rewarded video ad did close")
-                    }),
-                    onError: ({ error in
-                        print("SwiftyAds rewarded video ad error \(error)")
-                    }),
-                    onNotReady: ({
+                    onOpen: {
+                        print("SwiftyAds rewarded ad did open")
+                    },
+                    onClose: {
+                        print("SwiftyAds rewarded ad did close")
+                    },
+                    onError: { error in
+                        print("SwiftyAds rewarded ad error \(error)")
+                    },
+                    onNotReady: {
                         let alertController = UIAlertController(
                             title: "Sorry",
                             message: "No video available to watch at the moment.",
@@ -69,10 +70,27 @@ class GameScene: SKScene {
                         DispatchQueue.main.async {
                             viewController.present(alertController, animated: true)
                         }
-                    }),
-                    onReward: ({ rewardAmount in
-                        print("SwiftyAds rewarded video ad did reward user with \(rewardAmount)")
-                    })
+                    },
+                    onReward: { rewardAmount in
+                        print("SwiftyAds rewarded ad did reward user with \(rewardAmount)")
+                    }
+                )
+
+            case rewardedInterstitialLabel:
+                swiftyAds.showRewardedInterstitialAd(
+                    from: viewController,
+                    onOpen: {
+                        print("SwiftyAds rewarded interstitial ad did open")
+                    },
+                    onClose: {
+                        print("SwiftyAds rewarded interstitial ad did close")
+                    },
+                    onError: { error in
+                        print("SwiftyAds rewarded interstitial ad error \(error)")
+                    },
+                    onReward: { rewardAmount in
+                        print("SwiftyAds rewarded interstitial ad did reward user with \(rewardAmount)")
+                    }
                 )
 
             default:

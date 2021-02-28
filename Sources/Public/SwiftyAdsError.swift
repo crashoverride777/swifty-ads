@@ -27,6 +27,7 @@ public enum SwiftyAdsError: LocalizedError {
     case consentFormNotAvailable
     case interstitialAdNotLoaded
     case rewardedAdNotLoaded
+    case rewardedInterstitialAdNotLoaded
     case bannerAdMissingAdUnitId
 
     public var errorDescription: String? {
@@ -39,6 +40,8 @@ public enum SwiftyAdsError: LocalizedError {
             return "Interstitial ad not loaded"
         case .rewardedAdNotLoaded:
             return "Rewarded ad not loaded"
+        case .rewardedInterstitialAdNotLoaded:
+            return "Rewarded interstitial ad not loaded"
         case .bannerAdMissingAdUnitId:
             return "Banner ad has no AdUnitId"
         }

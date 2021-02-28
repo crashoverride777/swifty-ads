@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bannerAdUnitId</key>
+	<string>Enter id or remove key if unused</string>
+	<key>interstitialAdUnitId</key>
+	<string>Enter id or remove key if unused</string>
+	<key>rewardedAdUnitId</key>
+	<string>Enter id or remove key if unused</string>
+	<key>rewardedInterstitialAdUnitId</key>
+	<string>Enter id or remove key if unused</string>
+	<key>nativeAdUnitId</key>
+	<string>Enter id or remove key if unused</string>
+	<key>isTaggedForChildDirectedTreatment</key>
+	<false/>
+	<key>isTaggedForUnderAgeOfConsent</key>
+	<false/>
+</dict>
+</plist>

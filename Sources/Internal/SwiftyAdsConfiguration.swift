@@ -26,6 +26,7 @@ struct SwiftyAdsConfiguration: Decodable {
     let bannerAdUnitId: String?
     let interstitialAdUnitId: String?
     let rewardedAdUnitId: String?
+    let rewardedInterstitialAdUnitId: String?
     let nativeAdUnitId: String?
     let isTaggedForChildDirectedTreatment: Bool? // COPPA
     let isTaggedForUnderAgeOfConsent: Bool  // GDPR
@@ -46,12 +47,14 @@ extension SwiftyAdsConfiguration {
             fatalError("SwiftyAds decoding SwiftyAds.plist error \(error).")
         }
     }
-    
+
+    /// https://developers.google.com/admob/ios/test-ads
     static var debug: SwiftyAdsConfiguration {
         SwiftyAdsConfiguration(
             bannerAdUnitId: "ca-app-pub-3940256099942544/2934735716",
             interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
             rewardedAdUnitId: "ca-app-pub-3940256099942544/1712485313",
+            rewardedInterstitialAdUnitId: "ca-app-pub-3940256099942544/6978759866",
             nativeAdUnitId: "ca-app-pub-3940256099942544/3986624511",
             isTaggedForChildDirectedTreatment: nil,
             isTaggedForUnderAgeOfConsent: false

@@ -37,6 +37,7 @@ final class SwiftyAdsNative: NSObject {
 
     // MARK: - Properties
 
+    private let environment: SwiftyAdsEnvironment
     private let adUnitId: String
     private let request: () -> GADRequest
 
@@ -48,7 +49,8 @@ final class SwiftyAdsNative: NSObject {
     
     // MARK: - Initialization
 
-    init(adUnitId: String, request: @escaping () -> GADRequest) {
+    init(environment: SwiftyAdsEnvironment, adUnitId: String, request: @escaping () -> GADRequest) {
+        self.environment = environment
         self.adUnitId = adUnitId
         self.request = request
     }
@@ -90,6 +92,9 @@ extension SwiftyAdsNative: SwiftyAdsNativeType {
             case .plist:
                 return self.adUnitId
             case .custom(let id):
+                if case .debug = environment {
+                    return self.adUnitId
+                }
                 return id
             }
         }
