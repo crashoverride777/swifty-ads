@@ -25,6 +25,7 @@ import GoogleMobileAds
 protocol SwiftyAdsRewardedInterstitialType: AnyObject {
     var isReady: Bool { get }
     func load()
+    func stopLoading()
     func show(from viewController: UIViewController,
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
@@ -75,6 +76,11 @@ extension SwiftyAdsRewardedInterstitial: SwiftyAdsRewardedInterstitialType {
             self.rewardedInterstitialAd?.fullScreenContentDelegate = self
 
         }
+    }
+
+    func stopLoading() {
+        rewardedInterstitialAd?.fullScreenContentDelegate = nil
+        rewardedInterstitialAd = nil
     }
 
     func show(from viewController: UIViewController,

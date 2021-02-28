@@ -61,6 +61,7 @@ public protocol SwiftyAdsType: AnyObject {
     var isTaggedForUnderAgeOfConsent: Bool { get }
     var isInterstitialAdReady: Bool { get }
     var isRewardedAdReady: Bool { get }
+    var isRewardedInterstitialAdReady: Bool { get }
     var isDisabled: Bool { get }
     func configure(from viewController: UIViewController,
                    for environment: SwiftyAdsEnvironment,

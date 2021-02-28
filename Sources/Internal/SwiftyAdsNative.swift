@@ -41,11 +41,11 @@ final class SwiftyAdsNative: NSObject {
     private let adUnitId: String
     private let request: () -> GADRequest
 
-    private var adLoader: GADAdLoader?
-
     private var onFinishLoading: (() -> Void)?
     private var onError: ((Error) -> Void)?
     private var onReceive: ((GADNativeAd) -> Void)?
+    
+    private var adLoader: GADAdLoader?
     
     // MARK: - Initialization
 

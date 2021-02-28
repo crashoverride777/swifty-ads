@@ -106,9 +106,14 @@ extension SwiftyAds: SwiftyAdsType {
         interstitialAd?.isReady ?? false
     }
      
-    /// Check if reward ad is ready to be displayed.
+    /// Check if rewarded ad is ready to be displayed.
     public var isRewardedAdReady: Bool {
         rewardedAd?.isReady ?? false
+    }
+
+    /// Check if rewarded interstitial ad is ready to be displayed.
+    public var isRewardedInterstitialAdReady: Bool {
+        rewardedInterstitialAd?.isReady ?? false
     }
 
     /// Returns true if ads have been disabled.
@@ -437,6 +442,7 @@ extension SwiftyAds: SwiftyAdsType {
     public func disable() {
         disabled = true
         interstitialAd?.stopLoading()
+        rewardedInterstitialAd?.stopLoading()
         nativeAd?.stopLoading()
     }
 }
