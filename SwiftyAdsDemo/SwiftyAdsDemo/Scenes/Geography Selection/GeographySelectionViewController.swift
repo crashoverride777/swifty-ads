@@ -1,11 +1,3 @@
-//
-//  GeographySelectionViewController.swift
-//  SwiftyAdsDemo
-//
-//  Created by Dominik Ringler on 21/02/2021.
-//  Copyright © 2021 Dominik Ringler. All rights reserved.
-//
-
 import UIKit
 
 final class GeographySelectionViewController: UITableViewController {
@@ -52,7 +44,7 @@ final class GeographySelectionViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Select Demo Geography"
+        navigationItem.title = "Select Geography"
         tableView.register(BasicCell.self, forCellReuseIdentifier: String(describing: BasicCell.self))
     }
 
