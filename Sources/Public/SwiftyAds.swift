@@ -40,6 +40,7 @@ public final class SwiftyAds: NSObject {
     private let mobileAds: GADMobileAds
     private let requestBuilder: SwiftyAdsRequestBuilderType
     private let interstitialAdIntervalTracker: SwiftyAdsIntervalTrackerType
+    private let rewardedInterstitialAdIntervalTracker: SwiftyAdsIntervalTrackerType
 
     private var configuration: SwiftyAdsConfiguration?
     private var environment: SwiftyAdsEnvironment = .production
@@ -66,6 +67,7 @@ public final class SwiftyAds: NSObject {
         mobileAds = .sharedInstance()
         requestBuilder = SwiftyAdsRequestBuilder()
         interstitialAdIntervalTracker = SwiftyAdsIntervalTracker()
+        rewardedInterstitialAdIntervalTracker = SwiftyAdsIntervalTracker()
         super.init()
         
     }
@@ -113,6 +115,8 @@ extension SwiftyAds: SwiftyAdsType {
     public var isDisabled: Bool {
         disabled
     }
+
+    // MARK: Configure
     
     /// Configure SwiftyAds
     ///
@@ -189,6 +193,8 @@ extension SwiftyAds: SwiftyAdsType {
         requestInitialConsent(from: viewController, consentManager: consentManager, completion: completion)
     }
 
+    // MARK: Consent
+
     /// Under GDPR users must be able to change their consent at any time.
     ///
     /// - parameter viewController: The view controller that will present the consent form.
@@ -213,6 +219,8 @@ extension SwiftyAds: SwiftyAdsType {
             }
         }
     }
+
+    // MARK: Banner Ads
     
     /// Make banner ad
     ///
@@ -283,6 +291,8 @@ extension SwiftyAds: SwiftyAdsType {
 
         return bannerAd
     }
+
+    // MARK: Interstitial Ads
     
     /// Show interstitial ad
     ///
@@ -310,6 +320,8 @@ extension SwiftyAds: SwiftyAdsType {
             onError: onError
         )
     }
+
+    // MARK: Rewarded Ads
     
     /// Show rewarded ad
     ///
@@ -343,6 +355,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// Show rewarded interstitial ad
     ///
     /// - parameter viewController: The view controller that will present the ad.
+    /// - parameter interval: The interval of when to show the ad, e.g every 4th time the method is called. Set to nil to always show.
     /// - parameter onOpen: An optional callback when the ad was presented.
     /// - parameter onClose: An optional callback when the ad was dismissed.
     /// - parameter onError: An optional callback when an error has occurred.
@@ -353,12 +366,17 @@ extension SwiftyAds: SwiftyAdsType {
     /// and an option to skip the ad before it starts.
     /// https://support.google.com/admob/answer/9884467
     public func showRewardedInterstitialAd(from viewController: UIViewController,
+                                           afterInterval interval: Int?,
                                            onOpen: (() -> Void)?,
                                            onClose: (() -> Void)?,
                                            onError: ((Error) -> Void)?,
                                            onReward: @escaping (Int) -> Void) {
         guard !isDisabled else { return }
         guard hasConsent else { return }
+
+        if let interval = interval {
+            guard rewardedInterstitialAdIntervalTracker.canShow(forInterval: interval) else { return }
+        }
 
         rewardedInterstitialAd?.show(
             from: viewController,
@@ -368,6 +386,8 @@ extension SwiftyAds: SwiftyAdsType {
             onReward: onReward
         )
     }
+
+    // MARK: Native Ads
 
     /// Load native ad
     ///
@@ -411,11 +431,61 @@ extension SwiftyAds: SwiftyAdsType {
         )
     }
 
+    // MARK: Disable
+
     /// Disable ads
     public func disable() {
         disabled = true
         interstitialAd?.stopLoading()
         nativeAd?.stopLoading()
+    }
+}
+
+// MARK: - Private Methods
+
+private extension SwiftyAds {
+
+    func requestInitialConsent(from viewController: UIViewController,
+                               consentManager: SwiftyAdsConsentManagerType,
+                               completion: @escaping SwiftyAdsConsentResultHandler) {
+        DispatchQueue.main.async {
+            consentManager.requestUpdate { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let status):
+                    switch status {
+                    case .obtained, .notRequired:
+                        self.loadAds()
+                        completion(.success(status))
+                    case .required:
+                        DispatchQueue.main.async {
+                            consentManager.showForm(from: viewController) { [weak self] result in
+                                guard let self = self else { return }
+                                switch result {
+                                case .success(let status):
+                                    if status == .obtained || status == .notRequired {
+                                        self.loadAds()
+                                    }
+                                    completion(.success(status))
+                                case .failure(let error):
+                                    completion(.failure(error))
+                                }
+                            }
+                        }
+                    default:
+                        completion(.success(status))
+                    }
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+
+    func loadAds() {
+        rewardedAd?.load()
+        guard !isDisabled else { return }
+        interstitialAd?.load()
     }
 }
 
@@ -472,53 +542,5 @@ public extension SwiftyAds {
             onError: onError,
             onReceive: onReceive
         )
-    }
-}
-
-// MARK: - Private Methods
-
-private extension SwiftyAds {
-
-    func requestInitialConsent(from viewController: UIViewController,
-                               consentManager: SwiftyAdsConsentManagerType,
-                               completion: @escaping SwiftyAdsConsentResultHandler) {
-        DispatchQueue.main.async {
-            consentManager.requestUpdate { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .success(let status):
-                    switch status {
-                    case .obtained, .notRequired:
-                        self.loadAds()
-                        completion(.success(status))
-                    case .required:
-                        DispatchQueue.main.async {
-                            consentManager.showForm(from: viewController) { [weak self] result in
-                                guard let self = self else { return }
-                                switch result {
-                                case .success(let status):
-                                    if status == .obtained || status == .notRequired {
-                                        self.loadAds()
-                                    }
-                                    completion(.success(status))
-                                case .failure(let error):
-                                    completion(.failure(error))
-                                }
-                            }
-                        }
-                    default:
-                        completion(.success(status))
-                    }
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
-        }
-    }
-
-    func loadAds() {
-        rewardedAd?.load()
-        guard !isDisabled else { return }
-        interstitialAd?.load()
     }
 }

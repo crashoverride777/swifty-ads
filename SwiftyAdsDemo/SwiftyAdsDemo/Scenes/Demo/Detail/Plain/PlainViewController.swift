@@ -164,6 +164,7 @@ private extension PlainViewController {
     @objc func showRewardedInterstitialAdButtonPressed() {
         swiftyAds.showRewardedInterstitialAd(
             from: self,
+            afterInterval: nil,
             onOpen: {
                 print("SwiftyAds rewarded interstitial ad did open")
             },

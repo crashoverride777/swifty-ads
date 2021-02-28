@@ -79,6 +79,7 @@ class GameScene: SKScene {
             case rewardedInterstitialLabel:
                 swiftyAds.showRewardedInterstitialAd(
                     from: viewController,
+                    afterInterval: nil,
                     onOpen: {
                         print("SwiftyAds rewarded interstitial ad did open")
                     },
