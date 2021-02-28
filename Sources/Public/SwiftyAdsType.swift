@@ -50,7 +50,7 @@ public enum SwiftyAdsBannerAdPosition {
 
 public enum SwiftyAdsNativeAdLoaderOptions {
     case single
-    case multiple(numberOfAds: Int)
+    case multiple(Int)
 }
 
 public protocol SwiftyAdsType: AnyObject {
@@ -73,7 +73,10 @@ public protocol SwiftyAdsType: AnyObject {
                       animation: SwiftyAdsBannerAdAnimation,
                       onOpen: (() -> Void)?,
                       onClose: (() -> Void)?,
-                      onError: ((Error) -> Void)?) -> SwiftyAdsBannerType?
+                      onError: ((Error) -> Void)?,
+                      onWillPresentScreen: (() -> Void)?,
+                      onWillDismissScreen: (() -> Void)?,
+                      onDidDismissScreen: (() -> Void)?) -> SwiftyAdsBannerType?
     func showInterstitialAd(from viewController: UIViewController,
                             afterInterval interval: Int?,
                             onOpen: (() -> Void)?,

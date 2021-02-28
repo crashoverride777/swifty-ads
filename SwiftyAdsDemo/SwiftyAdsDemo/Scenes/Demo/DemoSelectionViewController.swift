@@ -214,15 +214,24 @@ private extension DemoSelectionViewController {
             adUnitIdType: .plist,
             position: .bottom(isUsingSafeArea: true),
             animation: .slide(duration: 1.5),
-            onOpen: ({
+            onOpen: {
                 print("SwiftyAds banner ad did open")
-            }),
-            onClose: ({
+            },
+            onClose: {
                 print("SwiftyAds banner ad did close")
-            }),
-            onError: ({ error in
+            },
+            onError: { error in
                 print("SwiftyAds banner ad error \(error)")
-            })
+            },
+            onWillPresentScreen: {
+                print("SwiftyAds banner ad was tapped and is about to present screen")
+            },
+            onWillDismissScreen: {
+                print("SwiftyAds banner ad screen is about to be dismissed")
+            },
+            onDidDismissScreen: {
+                print("SwiftyAds banner did dismiss screen")
+            }
         )
     }
 

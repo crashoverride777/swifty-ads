@@ -40,7 +40,11 @@ final class SwiftyAdsBanner: NSObject {
     private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
     private var onError: ((Error) -> Void)?
-    
+
+    private var onWillPresentScreen: (() -> Void)?
+    private var onWillDismissScreen: (() -> Void)?
+    private var onDidDismissScreen: (() -> Void)?
+
     private var bannerView: GADBannerView?
     private var position: SwiftyAdsBannerAdPosition = .bottom(isUsingSafeArea: true)
     private var animation: SwiftyAdsBannerAdAnimation = .none
@@ -66,12 +70,18 @@ final class SwiftyAdsBanner: NSObject {
                  animation: SwiftyAdsBannerAdAnimation,
                  onOpen: (() -> Void)?,
                  onClose: (() -> Void)?,
-                 onError: ((Error) -> Void)?) {
+                 onError: ((Error) -> Void)?,
+                 onWillPresentScreen: (() -> Void)?,
+                 onWillDismissScreen: (() -> Void)?,
+                 onDidDismissScreen: (() -> Void)?) {
         self.position = position
         self.animation = animation
         self.onOpen = onOpen
         self.onClose = onClose
         self.onError = onError
+        self.onWillPresentScreen = onWillPresentScreen
+        self.onWillDismissScreen = onWillDismissScreen
+        self.onDidDismissScreen = onDidDismissScreen
         
         // Create banner view
         let bannerView = GADBannerView()
@@ -150,6 +160,7 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
 
 extension SwiftyAdsBanner: GADBannerViewDelegate {
 
+    // Request lifecycle events
     func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
         print("SwiftyAdsBanner did record impression for banner ad")
     }
@@ -162,6 +173,19 @@ extension SwiftyAdsBanner: GADBannerViewDelegate {
     func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
         hide(bannerView, from: bannerView.rootViewController, animation: animation, position: position)
         onError?(error)
+    }
+
+    // Click-Time lifecycle events
+    func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+        onWillPresentScreen?()
+    }
+
+    func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
+        onWillDismissScreen?()
+    }
+
+    func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
+        onDidDismissScreen?()
     }
 }
 

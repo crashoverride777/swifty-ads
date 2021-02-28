@@ -200,6 +200,9 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter onOpen: An optional callback when the banner was presented.
     /// - parameter onClose: An optional callback when the banner was dismissed or removed.
     /// - parameter onError: An optional callback when an error has occurred.
+    /// - parameter onWillPresentScreen: An optional callback when the banner was tapped and is about to present a screen.
+    /// - parameter onWillDismissScreen: An optional callback when the banner is about dismiss a presented screen.
+    /// - parameter onDidDismissScreen: An optional callback when the banner did dismiss a presented screen.
     /// - returns SwiftyAdsBannerType to show, hide or remove the prepared banner ad.
     public func makeBannerAd(in viewController: UIViewController,
                              adUnitIdType: SwiftyAdsAdUnitIdType,
@@ -207,7 +210,10 @@ extension SwiftyAds: SwiftyAdsType {
                              animation: SwiftyAdsBannerAdAnimation,
                              onOpen: (() -> Void)?,
                              onClose: (() -> Void)?,
-                             onError: ((Error) -> Void)?) -> SwiftyAdsBannerType? {
+                             onError: ((Error) -> Void)?,
+                             onWillPresentScreen: (() -> Void)?,
+                             onWillDismissScreen: (() -> Void)?,
+                             onDidDismissScreen: (() -> Void)?) -> SwiftyAdsBannerType? {
         guard !isDisabled else { return nil }
         guard hasConsent else { return nil }
 
@@ -242,7 +248,10 @@ extension SwiftyAds: SwiftyAdsType {
             animation: animation,
             onOpen: onOpen,
             onClose: onClose,
-            onError: onError
+            onError: onError,
+            onWillPresentScreen: onWillPresentScreen,
+            onWillDismissScreen: onWillDismissScreen,
+            onDidDismissScreen: onDidDismissScreen
         )
 
         return bannerAd
@@ -382,7 +391,10 @@ public extension SwiftyAds {
             animation: .slide(duration: animationDuration),
             onOpen: onOpen,
             onClose: onClose,
-            onError: onError
+            onError: onError,
+            onWillPresentScreen: nil,
+            onWillDismissScreen: nil,
+            onDidDismissScreen: nil
         )
     }
 
@@ -395,7 +407,7 @@ public extension SwiftyAds {
         loadNativeAd(
             from: viewController,
             adUnitIdType: adUnitIdType,
-            loaderOptions: count.flatMap { .multiple(numberOfAds: $0) } ?? .single,
+            loaderOptions: count.flatMap { .multiple($0) } ?? .single,
             onFinishLoading: nil,
             onError: onError,
             onReceive: onReceive
