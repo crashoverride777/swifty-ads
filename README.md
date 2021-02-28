@@ -72,6 +72,7 @@ Optional fields:
 - bannerAdUnitId (String)
 - interstitialAdUnitId (String)
 - rewardedAdUnitId (String)
+- rewardedInterstitialAdUnitId (String)
 - nativeAdUnitId (String)
 - isTaggedForChildDirectedTreatment (Boolean) ([COPPA](https://developers.google.com/admob/ios/targeting#child-directed_setting))
 
@@ -272,17 +273,17 @@ Always use a dedicated button to display rewarded ads as some might be non-skipp
 SwiftyAds.shared.showRewardedAd(
     from: self,
     onOpen: {
-        print("SwiftyAds rewarded video ad did open")
+        print("SwiftyAds rewarded ad did open")
     },
     onClose: {
-        print("SwiftyAds rewarded video ad did close")
+        print("SwiftyAds rewarded ad did close")
     }, 
     onError: { error in
-        print("SwiftyAds rewarded video ad error \(error)")
+        print("SwiftyAds rewarded ad error \(error)")
     },
     onNotReady: { [weak self] in
         guard let self = self else { return }
-        print("SwiftyAds rewarded video ad was not ready")
+        print("SwiftyAds rewarded ad was not ready")
         // If the user presses the rewarded video button and watches a video it might take a few seconds for the next video to reload.
         // Use this callback to display an alert incase the video was not ready. 
         let alertController = UIAlertController(
@@ -294,13 +295,38 @@ SwiftyAds.shared.showRewardedAd(
         self.present(alertController, animated: true)
     },
     onReward: { [weak self] rewardAmount in
-        print("SwiftyAds rewarded video ad did reward user with \(rewardAmount)")
+        print("SwiftyAds rewarded ad did reward user with \(rewardAmount)")
         // Provide the user with the reward e.g coins, diamonds etc
     }
 )
 ```
 
 NOTE: AdMob provided a new rewarded video API which lets you preload multiple rewarded videos with different AdUnitIds. While SwiftyAds uses this new API it currently only supports loading 1 rewarded video ad at a time.
+
+### Rewarded Interstitial Ads
+
+Rewared interstitial ads can be presented naturally in your app flow, similar to interstitial ads, and do not require a dedicated button like regular rewarded ads.
+
+```swift
+SwiftyAds.shared.showRewardedInterstitialAd(
+    from: self,
+    onOpen: {
+        print("SwiftyAds rewarded interstitial ad did open")
+    },
+    onClose: {
+        print("SwiftyAds rewarded interstitial ad did close")
+    }, 
+    onError: { error in
+        print("SwiftyAds rewarded interstitial ad error \(error)")
+    },
+    onReward: { [weak self] rewardAmount in
+        print("SwiftyAds rewarded interstitial ad did reward user with \(rewardAmount)")
+        // Provide the user with the reward e.g coins, diamonds etc
+    }
+)
+```
+
+NOTE: Before displaying a rewarded interstitial ad to users, you must present the user with an [intro screen]((https://support.google.com/admob/answer/9884467)) that provides clear reward messaging and an option to skip the ad before it starts.
 
 ### Native Ads
 
