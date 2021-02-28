@@ -189,15 +189,24 @@ override func viewDidLoad() {
         adUnitIdType: .plist, // set to `.custom("AdUnitId")` to add a different AdUnitId for this particular banner ad
         position: .bottom(isUsingSafeArea: true) // banner is pinned to bottom and follows the safe area layout guide
         animation: .slide(duration: 1.5),
-        onOpen: ({
-            print("SwiftyAds banner ad did open")
-        }),
-        onClose: ({
+        onOpen: {
+            print("SwiftyAds banner ad did receive ad and was opened")
+        },
+        onClose: {
             print("SwiftyAds banner ad did close")
-        }),
-        onError: ({ error in
+        },
+        onError: { error in
             print("SwiftyAds banner ad error \(error)")
-        })
+        },
+        onWillPresentScreen: {
+            print("SwiftyAds banner ad was tapped and is about to present screen")
+        },
+        onWillDismissScreen: {
+            print("SwiftyAds banner ad presented screen is about to be dismissed")
+        },
+        onDidDismissScreen: {
+            print("SwiftyAds banner did dismiss presented screen")
+        }
     )
 }
 ```
@@ -243,15 +252,15 @@ bannerAd = nil
 SwiftyAds.shared.showInterstitialAd(
     from: self,
     afterInterval: 2, // every 2nd time method is called ad will be displayed
-    onOpen: ({
+    onOpen: {
         print("SwiftyAds interstitial ad did open")
-    }),
-    onClose: ({
+    },
+    onClose: {
         print("SwiftyAds interstitial ad did close")
-    }),
-    onError: ({ error in
+    },
+    onError: { error in
         print("SwiftyAds interstitial ad error \(error)")
-    })
+    }
 )
 ```
 
@@ -262,16 +271,16 @@ Always use a dedicated button to display rewarded ads as some might be non-skipp
 ```swift
 SwiftyAds.shared.showRewardedAd(
     from: self,
-    onOpen: ({
+    onOpen: {
         print("SwiftyAds rewarded video ad did open")
-    }),
-    onClose: ({
+    },
+    onClose: {
         print("SwiftyAds rewarded video ad did close")
-    }), 
-    onError: ({ error in
+    }, 
+    onError: { error in
         print("SwiftyAds rewarded video ad error \(error)")
-    }),
-    onNotReady: ({ [weak self] in
+    },
+    onNotReady: { [weak self] in
         guard let self = self else { return }
         print("SwiftyAds rewarded video ad was not ready")
         // If the user presses the rewarded video button and watches a video it might take a few seconds for the next video to reload.
@@ -283,11 +292,11 @@ SwiftyAds.shared.showRewardedAd(
         )
         alertController.addAction(UIAlertAction(title: "Ok", style: .cancel))
         self.present(alertController, animated: true)
-    }),
-    onReward: ({ [weak self] rewardAmount in
+    },
+    onReward: { [weak self] rewardAmount in
         print("SwiftyAds rewarded video ad did reward user with \(rewardAmount)")
         // Provide the user with the reward e.g coins, diamonds etc
-    })
+    }
 )
 ```
 
@@ -306,7 +315,7 @@ As per Googles documentation, requests for multiple native ads don't currently w
 SwiftyAds.shared.loadNativeAd(
     from: self,
     adUnitIdType: .plist, // set to `.custom("AdUnitId")` to add a different AdUnitId for this particular native ad
-    loaderOptions: .single, // set to `.multiple(numberOfAds: 2)` to load multiple ads
+    loaderOptions: .single, // set to `.multiple(2)` to load multiple ads for example 2
     onFinishLoading: {
         // Native ad has finished loading and new ads can now be loaded
     },
