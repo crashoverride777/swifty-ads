@@ -42,6 +42,7 @@ public final class SwiftyAds: NSObject {
     private let interstitialAdIntervalTracker: SwiftyAdsIntervalTrackerType
 
     private var configuration: SwiftyAdsConfiguration?
+    private var environment: SwiftyAdsEnvironment = .production
     private var interstitialAd: SwiftyAdsInterstitialType?
     private var rewardedAd: SwiftyAdsRewardedType?
     private var nativeAd: SwiftyAdsNativeType?
@@ -133,6 +134,7 @@ extension SwiftyAds: SwiftyAdsType {
             mobileAds.requestConfiguration.testDeviceIdentifiers = [simulatorId].compactMap { $0 } + testDeviceIdentifiers
         }
         self.configuration = configuration
+        self.environment = environment
 
         // Tag for child directed treatment if needed (COPPA)
         if let isTaggedForChildDirectedTreatment = configuration.isTaggedForChildDirectedTreatment {
@@ -141,11 +143,11 @@ extension SwiftyAds: SwiftyAdsType {
 
         // Create ads
         if let interstitialAdUnitId = configuration.interstitialAdUnitId {
-            interstitialAd = SwiftyAdsInterstitial(adUnitId: interstitialAdUnitId, request: requestBuilder.build)
+            interstitialAd = SwiftyAdsInterstitial(environment: environment, adUnitId: interstitialAdUnitId, request: requestBuilder.build)
         }
 
         if let rewardedAdUnitId = configuration.rewardedAdUnitId {
-            rewardedAd = SwiftyAdsRewarded(adUnitId: rewardedAdUnitId, request: requestBuilder.build)
+            rewardedAd = SwiftyAdsRewarded(environment: environment, adUnitId: rewardedAdUnitId, request: requestBuilder.build)
         }
 
         if let nativeAdUnitId = configuration.nativeAdUnitId {
@@ -232,6 +234,7 @@ extension SwiftyAds: SwiftyAdsType {
         }
 
         let bannerAd = SwiftyAdsBanner(
+            environment: environment,
             isDisabled: { [weak self] in
                 self?.isDisabled ?? false
             },
