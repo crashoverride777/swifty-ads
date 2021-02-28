@@ -267,7 +267,7 @@ SwiftyAds.shared.showInterstitialAd(
 
 ### Rewarded Ads
 
-Always use a dedicated button to display rewarded ads as some might be non-skippable.
+Rewared ads may be non-skippable and should only be presented when pressing a dedicated button.
 
 ```swift
 SwiftyAds.shared.showRewardedAd(
@@ -403,8 +403,8 @@ SwiftyAds.shared.isDisabled
 
 ### Disable Ads (In App Purchases)
 
-Call the `disable()` method and banner and interstitial ads will no longer display. 
-This will not stop rewarded videos from displaying as they should have a dedicated button. This way you can remove banner and interstitial ads but still have rewarded videos. 
+Call the `disable()` method and banner, interstitial and rewarded interstitial ads will no longer display. 
+This will not stop regular rewarded videos from displaying as they should have a dedicated button. This way you can remove banner, interstitial and rewarded interstitial ads but still have regular rewarded videos. 
 
 ```swift
 SwiftyAds.shared.disable()
@@ -441,3 +441,7 @@ The consent button can be hidden if consent is not required.
 ```swift
 consentButton.isHidden = SwiftyAds.shared.consentStatus == .notRequired
 ```
+
+### App Store release information
+
+Make sure to prepare for Apple's App Store data disclosure [requirements](https://developers.google.com/admob/ios/data-disclosure)
