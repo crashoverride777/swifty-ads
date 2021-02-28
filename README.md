@@ -252,7 +252,7 @@ bannerAd = nil
 ```swift
 SwiftyAds.shared.showInterstitialAd(
     from: self,
-    afterInterval: 2, // every 2nd time method is called ad will be displayed
+    afterInterval: 2, // every 2nd time method is called ad will be displayed. Set to nil to always display.
     onOpen: {
         print("SwiftyAds interstitial ad did open")
     },
@@ -310,6 +310,7 @@ Rewared interstitial ads can be presented naturally in your app flow, similar to
 ```swift
 SwiftyAds.shared.showRewardedInterstitialAd(
     from: self,
+    afterInterval: 2, // every 2nd time method is called ad will be displayed. Set to nil to always display.
     onOpen: {
         print("SwiftyAds rewarded interstitial ad did open")
     },
