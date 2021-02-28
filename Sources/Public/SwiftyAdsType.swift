@@ -40,6 +40,7 @@ public enum SwiftyAdsAdUnitIdType {
 
 public enum SwiftyAdsBannerAdAnimation {
     case none
+    case fade(duration: TimeInterval)
     case slide(duration: TimeInterval)
 }
 
