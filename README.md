@@ -326,7 +326,7 @@ SwiftyAds.shared.showRewardedInterstitialAd(
 )
 ```
 
-NOTE: Before displaying a rewarded interstitial ad to users, you must present the user with an [intro screen]((https://support.google.com/admob/answer/9884467)) that provides clear reward messaging and an option to skip the ad before it starts.
+NOTE: Before displaying a rewarded interstitial ad to users, you must present the user with an [intro screen](https://support.google.com/admob/answer/9884467) that provides clear reward messaging and an option to skip the ad before it starts.
 
 ### Native Ads
 
