@@ -213,7 +213,7 @@ private extension DemoSelectionViewController {
             in: self,
             adUnitIdType: .plist,
             position: .bottom(isUsingSafeArea: true),
-            animation: .slide(duration: 1.5),
+            animation: .fade(duration: 1.5),
             onOpen: {
                 print("SwiftyAds banner ad did open")
             },

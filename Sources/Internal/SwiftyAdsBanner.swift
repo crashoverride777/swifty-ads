@@ -195,16 +195,6 @@ extension SwiftyAdsBanner: GADBannerViewDelegate {
     }
 }
 
-// MARK: - Deprecated
-
-extension SwiftyAdsBanner {
-
-    @available(*, deprecated, message: "Please use new hide method without animated parameter")
-    func hide(animated: Bool) {
-        hide()
-    }
-}
-
 // MARK: - Private Methods
 
 private extension SwiftyAdsBanner {
@@ -294,6 +284,7 @@ private extension SwiftyAdsBanner {
         // Animate if needed
         switch animation {
         case .none:
+            animator = nil
             bannerAd.isHidden = true
         case .fade(let duration):
             if skipAnimation {
@@ -344,12 +335,18 @@ private extension SwiftyAdsBanner {
         animator?.startAnimation()
     }
 
-    func hideInitially() {
-
-    }
-
     func stopCurrentAnimatorAnimations() {
         animator?.stopAnimation(false)
         animator?.finishAnimation(at: .current)
+    }
+}
+
+// MARK: - Deprecated
+
+extension SwiftyAdsBanner {
+
+    @available(*, deprecated, message: "Please use new hide method without animated parameter")
+    func hide(animated: Bool) {
+        hide()
     }
 }
