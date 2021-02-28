@@ -202,7 +202,7 @@ override func viewDidLoad() {
 }
 ```
 
-and show it in `viewDidAppear`. This is to ensure that the view has been layed out correctly and has a valid safe area.
+and show it in `viewDidAppear`. This is to ensure that the view has been layed out correctly and has a valid safe area. If you do not rely on the safe area you can also call this in `viewDidLoad`.
 
 ```swift
 override func viewDidAppear(_ animated: Bool) {
