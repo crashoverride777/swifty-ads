@@ -41,7 +41,6 @@ final class SwiftyAdsBanner: NSObject {
     private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
     private var onError: ((Error) -> Void)?
-
     private var onWillPresentScreen: (() -> Void)?
     private var onWillDismissScreen: (() -> Void)?
     private var onDidDismissScreen: (() -> Void)?

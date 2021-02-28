@@ -422,7 +422,7 @@ extension SwiftyAds: SwiftyAdsType {
 // MARK: - Deprecated
 
 public extension SwiftyAds {
-    /// Setup SwiftyAds
+
     @available(*, deprecated, message: "Please use configure method")
     func setup(from viewController: UIViewController,
                for environment: SwiftyAdsEnvironment,

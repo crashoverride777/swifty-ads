@@ -48,7 +48,7 @@ extension SwiftyAdsConfiguration {
         }
     }
 
-    /// https://developers.google.com/admob/ios/test-ads
+    // https://developers.google.com/admob/ios/test-ads
     static var debug: SwiftyAdsConfiguration {
         SwiftyAdsConfiguration(
             bannerAdUnitId: "ca-app-pub-3940256099942544/2934735716",
