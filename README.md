@@ -335,7 +335,7 @@ SwiftyAds.shared.disable()
 ```
 
 For permanent storage you will need to create your own boolean logic and save it in something like `NSUserDefaults`, or preferably `Keychain`. 
-Than at app launch, after you have called `SwiftyAds.shared.setup(...)`, check your saved boolean and disable the ads if required.
+Than at app launch, before you have called `SwiftyAds.shared.setup(...)`, check your saved boolean and disable the ads if required.
 
 ```swift
 if UserDefaults.standard.bool(forKey: "RemovedAdsKey") == true {
