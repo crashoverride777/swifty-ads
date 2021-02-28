@@ -319,6 +319,9 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter onError: An optional callback when an error has occurred.
     /// - parameter onNotReady: An optional callback when the ad was not ready.
     /// - parameter onReward: A callback when the reward has been granted.
+    ///
+    /// - Warning:
+    /// Rewarded ads may be non-skippable and should only be displayed after pressing a dedicated button.
     public func showRewardedAd(from viewController: UIViewController,
                                onOpen: (() -> Void)?,
                                onClose: (() -> Void)?,
