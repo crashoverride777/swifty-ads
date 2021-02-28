@@ -33,7 +33,7 @@ final class NativeAdViewController: UIViewController {
         swityAds.loadNativeAd(
             from: self,
             adUnitIdType: .plist,
-            count: nil,
+            loaderOptions: .single,
             onFinishLoading: {
                 print("NativeAdViewController ad finished loading")
             },

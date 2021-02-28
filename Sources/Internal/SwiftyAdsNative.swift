@@ -25,7 +25,7 @@ import GoogleMobileAds
 protocol SwiftyAdsNativeType: AnyObject {
     func load(from viewController: UIViewController,
               adUnitIdType: SwiftyAdsAdUnitIdType,
-              count: Int?,
+              loaderOptions: SwiftyAdsNativeAdLoaderOptions,
               onFinishLoading: (() -> Void)?,
               onError: ((Error) -> Void)?,
               onReceive: @escaping (GADNativeAd) -> Void)
@@ -59,7 +59,7 @@ extension SwiftyAdsNative: SwiftyAdsNativeType {
 
     func load(from viewController: UIViewController,
               adUnitIdType: SwiftyAdsAdUnitIdType,
-              count: Int?,
+              loaderOptions: SwiftyAdsNativeAdLoaderOptions,
               onFinishLoading: (() -> Void)?,
               onError: ((Error) -> Void)?,
               onReceive: @escaping (GADNativeAd) -> Void) {
@@ -71,17 +71,25 @@ extension SwiftyAdsNative: SwiftyAdsNativeType {
         if let adLoader = adLoader, adLoader.isLoading { return }
 
         // Create multiple ads ad loader options
-        var multipleAdsOptions: [GADMultipleAdsAdLoaderOptions]?
-        if let count = count {
-            let loaderOptions = GADMultipleAdsAdLoaderOptions()
-            loaderOptions.numberOfAds = count
-            multipleAdsOptions = [loaderOptions]
+        var multipleAdsAdLoaderOptions: [GADMultipleAdsAdLoaderOptions]? {
+            switch loaderOptions {
+            case .single:
+                return nil
+            case .multiple(let numberOfAds):
+                let options = GADMultipleAdsAdLoaderOptions()
+                options.numberOfAds = numberOfAds
+                return [options]
+            }
         }
 
         // Set the ad unit id
-        var adUnitId = self.adUnitId
-        if case .custom(let id) = adUnitIdType {
-            adUnitId = id
+        var adUnitId: String {
+            switch adUnitIdType {
+            case .plist:
+                return self.adUnitId
+            case .custom(let id):
+                return id
+            }
         }
 
         // Create GADAdLoader
@@ -89,7 +97,7 @@ extension SwiftyAdsNative: SwiftyAdsNativeType {
             adUnitID: adUnitId,
             rootViewController: viewController,
             adTypes: [.native],
-            options: multipleAdsOptions
+            options: multipleAdsAdLoaderOptions
         )
 
         // Set the GADAdLoader delegate

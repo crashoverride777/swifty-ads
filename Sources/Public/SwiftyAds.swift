@@ -297,7 +297,7 @@ extension SwiftyAds: SwiftyAdsType {
     ///
     /// - parameter viewController: The view controller that will load the native ad.
     /// - parameter adUnitIdType: The adUnitId type for the ad, either plist or custom.
-    /// - parameter count: The number of ads to load via  GADMultipleAdsAdLoaderOptions. Set to nil to use default options or when using mediation.
+    /// - parameter loaderOptions: The loader options for GADMultipleAdsAdLoaderOptions, single or multiple.
     /// - parameter onFinishLoading: An optional callback when the load request has finished.
     /// - parameter onError: An optional callback when an error has occurred.
     /// - parameter onReceive: A callback when the GADNativeAd has been received.
@@ -307,7 +307,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// Publishers using mediation should avoid using the GADMultipleAdsAdLoaderOptions class when making requests i.e. set count to nil.
     public func loadNativeAd(from viewController: UIViewController,
                              adUnitIdType: SwiftyAdsAdUnitIdType,
-                             count: Int?,
+                             loaderOptions: SwiftyAdsNativeAdLoaderOptions,
                              onFinishLoading: (() -> Void)?,
                              onError: ((Error) -> Void)?,
                              onReceive: @escaping (GADNativeAd) -> Void) {
@@ -326,7 +326,7 @@ extension SwiftyAds: SwiftyAdsType {
         nativeAd?.load(
             from: viewController,
             adUnitIdType: adUnitIdType,
-            count: count,
+            loaderOptions: loaderOptions,
             onFinishLoading: onFinishLoading,
             onError: onError,
             onReceive: onReceive
@@ -358,7 +358,7 @@ public extension SwiftyAds {
         )
     }
 
-    @available(*, deprecated, message: "Please use new makeBanner method with animation parameter")
+    @available(*, deprecated, message: "Please use new makeBanner method")
     func makeBannerAd(in viewController: UIViewController,
                       adUnitIdType: SwiftyAdsAdUnitIdType,
                       position: SwiftyAdsBannerAdPosition,
@@ -377,7 +377,7 @@ public extension SwiftyAds {
         )
     }
 
-    @available(*, deprecated, message: "Please use new loadNativeAd method with onFinishLoading callback")
+    @available(*, deprecated, message: "Please use new loadNativeAd method")
     func loadNativeAd(from viewController: UIViewController,
                       adUnitIdType: SwiftyAdsAdUnitIdType,
                       count: Int?,
@@ -386,7 +386,7 @@ public extension SwiftyAds {
         loadNativeAd(
             from: viewController,
             adUnitIdType: adUnitIdType,
-            count: count,
+            loaderOptions: count.flatMap { .multiple(numberOfAds: $0) } ?? .single,
             onFinishLoading: nil,
             onError: onError,
             onReceive: onReceive

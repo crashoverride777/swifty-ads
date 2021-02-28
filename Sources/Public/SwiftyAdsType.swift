@@ -48,6 +48,11 @@ public enum SwiftyAdsBannerAdPosition {
     case bottom(isUsingSafeArea: Bool)
 }
 
+public enum SwiftyAdsNativeAdLoaderOptions {
+    case single
+    case multiple(numberOfAds: Int)
+}
+
 public protocol SwiftyAdsType: AnyObject {
     var consentStatus: SwiftyAdsConsentStatus { get }
     var consentType: SwiftyAdsConsentType { get }
@@ -82,7 +87,7 @@ public protocol SwiftyAdsType: AnyObject {
                         onReward: @escaping (Int) -> Void)
     func loadNativeAd(from viewController: UIViewController,
                       adUnitIdType: SwiftyAdsAdUnitIdType,
-                      count: Int?,
+                      loaderOptions: SwiftyAdsNativeAdLoaderOptions,
                       onFinishLoading: (() -> Void)?,
                       onError: ((Error) -> Void)?,
                       onReceive: @escaping (GADNativeAd) -> Void)
@@ -96,7 +101,7 @@ public protocol SwiftyAdsType: AnyObject {
                consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                completion: @escaping SwiftyAdsConsentResultHandler)
 
-    @available(*, deprecated, message: "Please use new makeBanner method with animation parameter")
+    @available(*, deprecated, message: "Please use new makeBanner method")
     func makeBannerAd(in viewController: UIViewController,
                       adUnitIdType: SwiftyAdsAdUnitIdType,
                       position: SwiftyAdsBannerAdPosition,
@@ -105,7 +110,7 @@ public protocol SwiftyAdsType: AnyObject {
                       onClose: (() -> Void)?,
                       onError: ((Error) -> Void)?) -> SwiftyAdsBannerType?
 
-    @available(*, deprecated, message: "Please use new loadNativeAd method with onFinishLoading callback")
+    @available(*, deprecated, message: "Please use new loadNativeAd method")
     func loadNativeAd(from viewController: UIViewController,
                       adUnitIdType: SwiftyAdsAdUnitIdType,
                       count: Int?,
