@@ -386,11 +386,14 @@ SwiftyAds.shared.consentType
 ### Booleans
 
 ```swift
-// Check if rewarded video is ready, for example to show/hide button
-SwiftyAds.shared.isRewardedAdReady
-
 // Check if interstitial ad is ready, for example to show an alternative ad
 SwiftyAds.shared.isInterstitialAdReady
+
+// Check if rewarded ad is ready, for example to show/hide button
+SwiftyAds.shared.isRewardedAdReady
+
+// Check if rewarded interstitial ad is ready, for example to show an alternative ad
+SwiftyAds.shared.isRewardedInterstitialAdReady
 
 // Check if child directed treatment is tagged on/off. Nil if not indicated how to be treated. (COPPA)
 SwiftyAds.shared.isTaggedForChildDirectedTreatment
