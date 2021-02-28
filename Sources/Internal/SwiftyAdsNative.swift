@@ -26,6 +26,7 @@ protocol SwiftyAdsNativeType: AnyObject {
     func load(from viewController: UIViewController,
               adUnitIdType: SwiftyAdsAdUnitIdType,
               loaderOptions: SwiftyAdsNativeAdLoaderOptions,
+              adTypes: [GADAdLoaderAdType],
               onFinishLoading: (() -> Void)?,
               onError: ((Error) -> Void)?,
               onReceive: @escaping (GADNativeAd) -> Void)
@@ -60,6 +61,7 @@ extension SwiftyAdsNative: SwiftyAdsNativeType {
     func load(from viewController: UIViewController,
               adUnitIdType: SwiftyAdsAdUnitIdType,
               loaderOptions: SwiftyAdsNativeAdLoaderOptions,
+              adTypes: [GADAdLoaderAdType],
               onFinishLoading: (() -> Void)?,
               onError: ((Error) -> Void)?,
               onReceive: @escaping (GADNativeAd) -> Void) {
@@ -96,7 +98,7 @@ extension SwiftyAdsNative: SwiftyAdsNativeType {
         adLoader = GADAdLoader(
             adUnitID: adUnitId,
             rootViewController: viewController,
-            adTypes: [.native],
+            adTypes: adTypes,
             options: multipleAdsAdLoaderOptions
         )
 

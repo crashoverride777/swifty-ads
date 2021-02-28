@@ -73,12 +73,12 @@ public final class SwiftyAds: NSObject {
 
 extension SwiftyAds: SwiftyAdsType {
 
-    /// The current consent status
+    /// The current consent status.
     public var consentStatus: SwiftyAdsConsentStatus {
         consentManager?.consentStatus ?? .unknown
     }
 
-    /// The type of consent provided when not using IAB TCF v2 framework
+    /// The type of consent provided when not using IAB TCF v2 framework.
     ///
     /// - Warning:
     /// Always returns unknown if using IAB TCF v2 framework
@@ -97,17 +97,17 @@ extension SwiftyAds: SwiftyAdsType {
         configuration?.isTaggedForUnderAgeOfConsent ?? false
     }
      
-    /// Check if interstitial ad is ready (e.g to show alternative ad like an in house ad)
+    /// Check if interstitial ad is ready to be displayed.
     public var isInterstitialAdReady: Bool {
         interstitialAd?.isReady ?? false
     }
      
-    /// Check if reward ad is ready (e.g to hide/disable the rewarded video button)
+    /// Check if reward ad is ready to be displayed.
     public var isRewardedAdReady: Bool {
         rewardedAd?.isReady ?? false
     }
 
-    /// Returns true if SwiftyAds has been disabled
+    /// Returns true if ads have been disabled.
     public var isDisabled: Bool {
         disabled
     }
@@ -117,7 +117,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter environment: The environment for ads to be displayed.
     /// - parameter consentStatusDidChange: A handler that will be called everytime the consent status has changed.
-    /// - parameter completion: A completion handler that will return the current consent status after the consent flow has finished.
+    /// - parameter completion: A completion handler that will return the current consent status after the initial consent flow has finished.
     public func configure(from viewController: UIViewController,
                           for environment: SwiftyAdsEnvironment,
                           consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
@@ -139,8 +139,18 @@ extension SwiftyAds: SwiftyAdsType {
             mobileAds.requestConfiguration.tag(forChildDirectedTreatment: isTaggedForChildDirectedTreatment)
         }
 
-        // Set ads
-        setAds(for: configuration)
+        // Create ads
+        if let interstitialAdUnitId = configuration.interstitialAdUnitId {
+            interstitialAd = SwiftyAdsInterstitial(adUnitId: interstitialAdUnitId, request: requestBuilder.build)
+        }
+
+        if let rewardedAdUnitId = configuration.rewardedAdUnitId {
+            rewardedAd = SwiftyAdsRewarded(adUnitId: rewardedAdUnitId, request: requestBuilder.build)
+        }
+
+        if let nativeAdUnitId = configuration.nativeAdUnitId {
+            nativeAd = SwiftyAdsNative(adUnitId: nativeAdUnitId, request: requestBuilder.build)
+        }
 
         // Create consent manager
         let consentManager = SwiftyAdsConsentManager(
@@ -222,9 +232,7 @@ extension SwiftyAds: SwiftyAdsType {
             hasConsent: { [weak self] in
                 self?.hasConsent ?? true
             },
-            request: { [unowned self] in
-                self.requestBuilder.build()
-            }
+            request: requestBuilder.build
         )
 
         bannerAd.prepare(
@@ -304,7 +312,7 @@ extension SwiftyAds: SwiftyAdsType {
 
     /// - Warning:
     /// Requests for multiple native ads don't currently work for AdMob ad unit IDs that have been configured for mediation.
-    /// Publishers using mediation should avoid using the GADMultipleAdsAdLoaderOptions class when making requests i.e. set count to nil.
+    /// Publishers using mediation should avoid using the GADMultipleAdsAdLoaderOptions class when making requests i.e. set loaderOptions parameter to .single.
     public func loadNativeAd(from viewController: UIViewController,
                              adUnitIdType: SwiftyAdsAdUnitIdType,
                              loaderOptions: SwiftyAdsNativeAdLoaderOptions,
@@ -327,6 +335,7 @@ extension SwiftyAds: SwiftyAdsType {
             from: viewController,
             adUnitIdType: adUnitIdType,
             loaderOptions: loaderOptions,
+            adTypes: [.native],
             onFinishLoading: onFinishLoading,
             onError: onError,
             onReceive: onReceive
@@ -397,38 +406,6 @@ public extension SwiftyAds {
 // MARK: - Private Methods
 
 private extension SwiftyAds {
-
-    func setAds(for configuration: SwiftyAdsConfiguration) {
-        // Create interstitial ad if we have an AdUnitId
-        if let interstitialAdUnitId = configuration.interstitialAdUnitId {
-            interstitialAd = SwiftyAdsInterstitial(
-                adUnitId: interstitialAdUnitId,
-                request: { [unowned self] in
-                    self.requestBuilder.build()
-                }
-            )
-        }
-
-        // Create rewarded ad if we have an AdUnitId
-        if let rewardedAdUnitId = configuration.rewardedAdUnitId {
-            rewardedAd = SwiftyAdsRewarded(
-                adUnitId: rewardedAdUnitId,
-                request: { [unowned self] in
-                    self.requestBuilder.build()
-                }
-            )
-        }
-
-        // Create native ad if we have an AdUnitId
-        if let nativeAdUnitId = configuration.nativeAdUnitId {
-            nativeAd = SwiftyAdsNative(
-                adUnitId: nativeAdUnitId,
-                request: { [unowned self] in
-                    self.requestBuilder.build()
-                }
-            )
-        }
-    }
 
     func requestInitialConsent(from viewController: UIViewController,
                                consentManager: SwiftyAdsConsentManagerType,
