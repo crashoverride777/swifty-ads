@@ -88,13 +88,13 @@ extension SwiftyAdsNative: SwiftyAdsNativeType {
 
         // Set the ad unit id
         var adUnitId: String {
+            if case .debug = environment {
+                return self.adUnitId
+            }
             switch adUnitIdType {
             case .plist:
                 return self.adUnitId
             case .custom(let id):
-                if case .debug = environment {
-                    return self.adUnitId
-                }
                 return id
             }
         }

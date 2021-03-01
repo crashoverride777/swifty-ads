@@ -40,6 +40,7 @@ final class SwiftyAdsRewardedInterstitial: NSObject {
     private let environment: SwiftyAdsEnvironment
     private let adUnitId: String
     private let request: () -> GADRequest
+    
     private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
     private var onError: ((Error) -> Void)?
