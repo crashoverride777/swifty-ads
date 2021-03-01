@@ -267,7 +267,7 @@ SwiftyAds.shared.showInterstitialAd(
 
 ### Rewarded Ads
 
-Rewared ads may be non-skippable and should only be presented when pressing a dedicated button.
+Rewarded ads may be non-skippable and should only be presented when pressing a dedicated button.
 
 ```swift
 SwiftyAds.shared.showRewardedAd(
@@ -305,7 +305,7 @@ NOTE: AdMob provided a new rewarded video API which lets you preload multiple re
 
 ### Rewarded Interstitial Ads
 
-Rewared interstitial ads can be presented naturally in your app flow, similar to interstitial ads, and do not require a dedicated button like regular rewarded ads.
+Rewarded interstitial ads can be presented naturally in your app flow, similar to interstitial ads, and do not require a dedicated button like regular rewarded ads.
 
 ```swift
 SwiftyAds.shared.showRewardedInterstitialAd(
@@ -359,7 +359,7 @@ NOTE: While prefetching ads is a great technique, it's important that you don't 
 
 ### Errors
 
-Use can use the `SwiftyAdsError` enum to handle received errors more granuarly if required.
+Use can use the `SwiftyAdsError` enum to handle SwiftyAds specific errors.
 
 ```swift
 if let swiftyAdsError = error as? SwiftyAdsError {
@@ -449,3 +449,4 @@ consentButton.isHidden = SwiftyAds.shared.consentStatus == .notRequired
 ### App Store release information
 
 Make sure to prepare for Apple's App Store data disclosure [requirements](https://developers.google.com/admob/ios/data-disclosure)
+
