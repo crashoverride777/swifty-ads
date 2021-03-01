@@ -23,62 +23,12 @@
 import GoogleMobileAds
 import UserMessagingPlatform
 
-public typealias SwiftyAdsConsentStatus = UMPConsentStatus
-public typealias SwiftyAdsConsentType = UMPConsentType
-public typealias SwiftyAdsDebugGeography = UMPDebugGeography
-
-public protocol SwiftyAdsType: AnyObject {
-    var consentStatus: SwiftyAdsConsentStatus { get }
-    var consentType: SwiftyAdsConsentType { get }
-    var isTaggedForChildDirectedTreatment: Bool? { get }
-    var isTaggedForUnderAgeOfConsent: Bool { get }
-    var isInterstitialAdReady: Bool { get }
-    var isRewardedAdReady: Bool { get }
-    func setup(from viewController: UIViewController,
-               for environment: SwiftyAdsEnvironment,
-               consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
-               completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
-    func askForConsent(from viewController: UIViewController,
-                       completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
-    func makeBannerAd(in viewController: UIViewController,
-                      adUnitIdType: SwiftyAdsAdUnitIdType,
-                      position: SwiftyAdsBannerAdPosition,
-                      animationDuration: TimeInterval,
-                      onOpen: (() -> Void)?,
-                      onClose: (() -> Void)?,
-                      onError: ((Error) -> Void)?) -> SwiftyAdsBannerType?
-    func showInterstitialAd(from viewController: UIViewController,
-                            afterInterval interval: Int?,
-                            onOpen: (() -> Void)?,
-                            onClose: (() -> Void)?,
-                            onError: ((Error) -> Void)?)
-    func showRewardedAd(from viewController: UIViewController,
-                        onOpen: (() -> Void)?,
-                        onClose: (() -> Void)?,
-                        onError: ((Error) -> Void)?,
-                        onNotReady: (() -> Void)?,
-                        onReward: @escaping (Int) -> Void)
-    func loadNativeAd(from viewController: UIViewController,
-                      adUnitIdType: SwiftyAdsAdUnitIdType,
-                      count: Int?,
-                      onReceive: @escaping (GADNativeAd) -> Void,
-                      onError: @escaping (Error) -> Void)
-    func disable()
-}
-
 /**
  SwiftyAds
  
  A concret class implementation of SwiftAdsType to display ads from Google AdMob.
  */
 public final class SwiftyAds: NSObject {
-
-    // MARK: - Types
-
-    enum SwiftyAdsError: Error {
-        case noConsentManager
-        case missingBannerAdUnitId
-    }
 
     // MARK: - Static Properties
 
@@ -88,20 +38,18 @@ public final class SwiftyAds: NSObject {
     // MARK: - Properties
     
     private let mobileAds: GADMobileAds
-    private let intervalTracker: IntervalTracker
+    private let requestBuilder: SwiftyAdsRequestBuilderType
+    private let interstitialAdIntervalTracker: SwiftyAdsIntervalTrackerType
+    private let rewardedInterstitialAdIntervalTracker: SwiftyAdsIntervalTrackerType
 
+    private var configuration: SwiftyAdsConfiguration?
+    private var environment: SwiftyAdsEnvironment = .production
     private var interstitialAd: SwiftyAdsInterstitialType?
     private var rewardedAd: SwiftyAdsRewardedType?
+    private var rewardedInterstitialAd: SwiftyAdsRewardedInterstitialType?
     private var nativeAd: SwiftyAdsNativeType?
     private var consentManager: SwiftyAdsConsentManagerType?
-    private var configuration: SwiftyAdsConfiguration?
-    private var isDisabled = false
-
-    // MARK: - Computed Properties
-    
-    private var requestBuilder: SwiftyAdsRequestBuilderType {
-        SwiftyAdsRequestBuilder()
-    }
+    private var disabled = false
 
     private var hasConsent: Bool {
         guard let consentManager = consentManager else { return true }
@@ -117,23 +65,11 @@ public final class SwiftyAds: NSObject {
     
     private override init() {
         mobileAds = .sharedInstance()
-        intervalTracker = SwiftyAdsIntervalTracker()
+        requestBuilder = SwiftyAdsRequestBuilder()
+        interstitialAdIntervalTracker = SwiftyAdsIntervalTracker()
+        rewardedInterstitialAdIntervalTracker = SwiftyAdsIntervalTracker()
         super.init()
         
-    }
-    
-    init(mobileAds: GADMobileAds,
-         consentManager: SwiftyAdsConsentManagerType,
-         intervalTracker: IntervalTracker,
-         interstitialAd: SwiftyAdsInterstitialType?,
-         rewardedAd: SwiftyAdsRewardedType?,
-         nativeAd: SwiftyAdsNativeType?) {
-        self.mobileAds = mobileAds
-        self.consentManager = consentManager
-        self.intervalTracker = intervalTracker
-        self.interstitialAd = interstitialAd
-        self.rewardedAd = rewardedAd
-        self.nativeAd = nativeAd
     }
 }
 
@@ -141,12 +77,16 @@ public final class SwiftyAds: NSObject {
 
 extension SwiftyAds: SwiftyAdsType {
 
-    /// The current consent status
+    /// The current consent status.
     public var consentStatus: SwiftyAdsConsentStatus {
         consentManager?.consentStatus ?? .unknown
     }
 
-    /// The type of consent provided
+    /// The type of consent provided when not using IAB TCF v2 framework.
+    ///
+    /// - Warning:
+    /// Always returns unknown if using IAB TCF v2 framework
+    /// https://stackoverflow.com/questions/63415275/obtaining-consent-with-the-user-messaging-platform-android
     public var consentType: SwiftyAdsConsentType {
         consentManager?.consentType ?? .unknown
     }
@@ -161,26 +101,38 @@ extension SwiftyAds: SwiftyAdsType {
         configuration?.isTaggedForUnderAgeOfConsent ?? false
     }
      
-    /// Check if interstitial ad is ready (e.g to show alternative ad like an in house ad)
+    /// Check if interstitial ad is ready to be displayed.
     public var isInterstitialAdReady: Bool {
         interstitialAd?.isReady ?? false
     }
      
-    /// Check if reward ad is ready (e.g to hide/disable the rewarded video button)
+    /// Check if rewarded ad is ready to be displayed.
     public var isRewardedAdReady: Bool {
         rewardedAd?.isReady ?? false
     }
+
+    /// Check if rewarded interstitial ad is ready to be displayed.
+    public var isRewardedInterstitialAdReady: Bool {
+        rewardedInterstitialAd?.isReady ?? false
+    }
+
+    /// Returns true if ads have been disabled.
+    public var isDisabled: Bool {
+        disabled
+    }
+
+    // MARK: Configure
     
-    /// Setup swift ad
+    /// Configure SwiftyAds
     ///
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter environment: The environment for ads to be displayed.
     /// - parameter consentStatusDidChange: A handler that will be called everytime the consent status has changed.
-    /// - parameter completion: A completion handler that will return the current consent status after the consent flow has finished.
-    public func setup(from viewController: UIViewController,
-                      for environment: SwiftyAdsEnvironment,
-                      consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
-                      completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
+    /// - parameter completion: A completion handler that will return the current consent status after the initial consent flow has finished.
+    public func configure(from viewController: UIViewController,
+                          for environment: SwiftyAdsEnvironment,
+                          consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
+                          completion: @escaping SwiftyAdsConsentResultHandler) {
         // Update configuration for selected environment
         let configuration: SwiftyAdsConfiguration
         switch environment {
@@ -191,45 +143,47 @@ extension SwiftyAds: SwiftyAdsType {
             let simulatorId = kGADSimulatorID as? String
             mobileAds.requestConfiguration.testDeviceIdentifiers = [simulatorId].compactMap { $0 } + testDeviceIdentifiers
         }
-
-        // Keep reference to configuration
         self.configuration = configuration
+        self.environment = environment
 
         // Tag for child directed treatment if needed (COPPA)
         if let isTaggedForChildDirectedTreatment = configuration.isTaggedForChildDirectedTreatment {
             mobileAds.requestConfiguration.tag(forChildDirectedTreatment: isTaggedForChildDirectedTreatment)
         }
 
-        // Create interstitial ad if we have an AdUnitId
+        // Create ads
         if let interstitialAdUnitId = configuration.interstitialAdUnitId {
             interstitialAd = SwiftyAdsInterstitial(
+                environment: environment,
                 adUnitId: interstitialAdUnitId,
-                request: { [unowned self] in
-                    self.requestBuilder.build()
-                }
+                request: requestBuilder.build
             )
         }
 
-        // Create rewarded ad if we have an AdUnitId
         if let rewardedAdUnitId = configuration.rewardedAdUnitId {
             rewardedAd = SwiftyAdsRewarded(
+                environment: environment,
                 adUnitId: rewardedAdUnitId,
-                request: { [unowned self] in
-                    self.requestBuilder.build()
-                }
+                request: requestBuilder.build
             )
         }
 
-        // Create native ad if we have an AdUnitId
-        if let nativeAdUnitId = configuration.nativeAdUnitId {
-            nativeAd = SwiftyAdsNative(
-                adUnitId: nativeAdUnitId,
-                request: { [unowned self] in
-                    self.requestBuilder.build()
-                }
+        if let rewardedInterstitialAdUnitId = configuration.rewardedInterstitialAdUnitId {
+            rewardedInterstitialAd = SwiftyAdsRewardedInterstitial(
+                environment: environment,
+                adUnitId: rewardedInterstitialAdUnitId,
+                request: requestBuilder.build
             )
         }
-     
+
+        if let nativeAdUnitId = configuration.nativeAdUnitId {
+            nativeAd = SwiftyAdsNative(
+                environment: environment,
+                adUnitId: nativeAdUnitId,
+                request: requestBuilder.build
+            )
+        }
+
         // Create consent manager
         let consentManager = SwiftyAdsConsentManager(
             consentInformation: .sharedInstance,
@@ -238,11 +192,268 @@ extension SwiftyAds: SwiftyAdsType {
             mobileAds: mobileAds,
             consentStatusDidChange: consentStatusDidChange
         )
-
-        // Keep reference to consent manager
         self.consentManager = consentManager
 
-        // Request consent update
+        // Request initial consent
+        requestInitialConsent(from: viewController, consentManager: consentManager, completion: completion)
+    }
+
+    // MARK: Consent
+
+    /// Under GDPR users must be able to change their consent at any time.
+    ///
+    /// - parameter viewController: The view controller that will present the consent form.
+    /// - parameter completion: A completion handler that will return the updated consent status.
+    public func askForConsent(from viewController: UIViewController,
+                              completion: @escaping SwiftyAdsConsentResultHandler) {
+        guard let consentManager = consentManager else {
+            completion(.failure(SwiftyAdsError.consentManagerNotAvailable))
+            return
+        }
+        
+        DispatchQueue.main.async {
+            consentManager.requestUpdate { result in
+                switch result {
+                case .success:
+                    DispatchQueue.main.async {
+                        consentManager.showForm(from: viewController, completion: completion)
+                    }
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+
+    // MARK: Banner Ads
+    
+    /// Make banner ad
+    ///
+    /// - parameter viewController: The view controller that will present the ad.
+    /// - parameter adUnitIdType: The adUnitId type for the ad, either plist or custom.
+    /// - parameter position: The position of the banner.
+    /// - parameter animation: The animation of the banner.
+    /// - parameter onOpen: An optional callback when the banner was presented.
+    /// - parameter onClose: An optional callback when the banner was dismissed or removed.
+    /// - parameter onError: An optional callback when an error has occurred.
+    /// - parameter onWillPresentScreen: An optional callback when the banner was tapped and is about to present a screen.
+    /// - parameter onWillDismissScreen: An optional callback when the banner is about dismiss a presented screen.
+    /// - parameter onDidDismissScreen: An optional callback when the banner did dismiss a presented screen.
+    /// - returns SwiftyAdsBannerType to show, hide or remove the prepared banner ad.
+    public func makeBannerAd(in viewController: UIViewController,
+                             adUnitIdType: SwiftyAdsAdUnitIdType,
+                             position: SwiftyAdsBannerAdPosition,
+                             animation: SwiftyAdsBannerAdAnimation,
+                             onOpen: (() -> Void)?,
+                             onClose: (() -> Void)?,
+                             onError: ((Error) -> Void)?,
+                             onWillPresentScreen: (() -> Void)?,
+                             onWillDismissScreen: (() -> Void)?,
+                             onDidDismissScreen: (() -> Void)?) -> SwiftyAdsBannerType? {
+        guard !isDisabled else { return nil }
+        guard hasConsent else { return nil }
+
+        var adUnitId: String? {
+            switch adUnitIdType {
+            case .plist:
+                return configuration?.bannerAdUnitId
+            case .custom(let id):
+                if case .debug = environment {
+                    return configuration?.bannerAdUnitId
+                }
+                return id
+            }
+        }
+
+        guard let validAdUnitId = adUnitId else {
+            onError?(SwiftyAdsError.bannerAdMissingAdUnitId)
+            return nil
+        }
+
+        let bannerAd = SwiftyAdsBanner(
+            environment: environment,
+            isDisabled: { [weak self] in
+                self?.isDisabled ?? false
+            },
+            hasConsent: { [weak self] in
+                self?.hasConsent ?? true
+            },
+            request: requestBuilder.build
+        )
+
+        bannerAd.prepare(
+            withAdUnitId: validAdUnitId,
+            in: viewController,
+            position: position,
+            animation: animation,
+            onOpen: onOpen,
+            onClose: onClose,
+            onError: onError,
+            onWillPresentScreen: onWillPresentScreen,
+            onWillDismissScreen: onWillDismissScreen,
+            onDidDismissScreen: onDidDismissScreen
+        )
+
+        return bannerAd
+    }
+
+    // MARK: Interstitial Ads
+    
+    /// Show interstitial ad
+    ///
+    /// - parameter viewController: The view controller that will present the ad.
+    /// - parameter interval: The interval of when to show the ad, e.g every 4th time the method is called. Set to nil to always show.
+    /// - parameter onOpen: An optional callback when the ad was presented.
+    /// - parameter onClose: An optional callback when the ad was dismissed.
+    /// - parameter onError: An optional callback when an error has occurred.
+    public func showInterstitialAd(from viewController: UIViewController,
+                                   afterInterval interval: Int?,
+                                   onOpen: (() -> Void)?,
+                                   onClose: (() -> Void)?,
+                                   onError: ((Error) -> Void)?) {
+        guard !isDisabled else { return }
+        guard hasConsent else { return }
+
+        if let interval = interval {
+            guard interstitialAdIntervalTracker.canShow(forInterval: interval) else { return }
+        }
+        
+        interstitialAd?.show(
+            from: viewController,
+            onOpen: onOpen,
+            onClose: onClose,
+            onError: onError
+        )
+    }
+
+    // MARK: Rewarded Ads
+    
+    /// Show rewarded ad
+    ///
+    /// - parameter viewController: The view controller that will present the ad.
+    /// - parameter onOpen: An optional callback when the ad was presented.
+    /// - parameter onClose: An optional callback when the ad was dismissed.
+    /// - parameter onError: An optional callback when an error has occurred.
+    /// - parameter onNotReady: An optional callback when the ad was not ready.
+    /// - parameter onReward: A callback when the reward has been granted.
+    ///
+    /// - Warning:
+    /// Rewarded ads may be non-skippable and should only be displayed after pressing a dedicated button.
+    public func showRewardedAd(from viewController: UIViewController,
+                               onOpen: (() -> Void)?,
+                               onClose: (() -> Void)?,
+                               onError: ((Error) -> Void)?,
+                               onNotReady: (() -> Void)?,
+                               onReward: @escaping (Int) -> Void) {
+        guard hasConsent else { return }
+
+        rewardedAd?.show(
+            from: viewController,
+            onOpen: onOpen,
+            onClose: onClose,
+            onError: onError,
+            onNotReady: onNotReady,
+            onReward: onReward
+        )
+    }
+
+    /// Show rewarded interstitial ad
+    ///
+    /// - parameter viewController: The view controller that will present the ad.
+    /// - parameter interval: The interval of when to show the ad, e.g every 4th time the method is called. Set to nil to always show.
+    /// - parameter onOpen: An optional callback when the ad was presented.
+    /// - parameter onClose: An optional callback when the ad was dismissed.
+    /// - parameter onError: An optional callback when an error has occurred.
+    /// - parameter onReward: A callback when the reward has been granted.
+    ///
+    /// - Warning:
+    /// Before displaying a rewarded interstitial ad to users, you must present the user with an intro screen that provides clear reward messaging
+    /// and an option to skip the ad before it starts.
+    /// https://support.google.com/admob/answer/9884467
+    public func showRewardedInterstitialAd(from viewController: UIViewController,
+                                           afterInterval interval: Int?,
+                                           onOpen: (() -> Void)?,
+                                           onClose: (() -> Void)?,
+                                           onError: ((Error) -> Void)?,
+                                           onReward: @escaping (Int) -> Void) {
+        guard !isDisabled else { return }
+        guard hasConsent else { return }
+
+        if let interval = interval {
+            guard rewardedInterstitialAdIntervalTracker.canShow(forInterval: interval) else { return }
+        }
+
+        rewardedInterstitialAd?.show(
+            from: viewController,
+            onOpen: onOpen,
+            onClose: onClose,
+            onError: onError,
+            onReward: onReward
+        )
+    }
+
+    // MARK: Native Ads
+
+    /// Load native ad
+    ///
+    /// - parameter viewController: The view controller that will load the native ad.
+    /// - parameter adUnitIdType: The adUnitId type for the ad, either plist or custom.
+    /// - parameter loaderOptions: The loader options for GADMultipleAdsAdLoaderOptions, single or multiple.
+    /// - parameter onFinishLoading: An optional callback when the load request has finished.
+    /// - parameter onError: An optional callback when an error has occurred.
+    /// - parameter onReceive: A callback when the GADNativeAd has been received.
+    ///
+    /// - Warning:
+    /// Requests for multiple native ads don't currently work for AdMob ad unit IDs that have been configured for mediation.
+    /// Publishers using mediation should avoid using the GADMultipleAdsAdLoaderOptions class when making requests i.e. set loaderOptions parameter to .single.
+    public func loadNativeAd(from viewController: UIViewController,
+                             adUnitIdType: SwiftyAdsAdUnitIdType,
+                             loaderOptions: SwiftyAdsNativeAdLoaderOptions,
+                             onFinishLoading: (() -> Void)?,
+                             onError: ((Error) -> Void)?,
+                             onReceive: @escaping (GADNativeAd) -> Void) {
+        guard !isDisabled else { return }
+        guard hasConsent else { return }
+
+        if nativeAd == nil, case .custom(let adUnitId) = adUnitIdType {
+            nativeAd = SwiftyAdsNative(
+                environment: environment,
+                adUnitId: adUnitId,
+                request: { [unowned self] in
+                    self.requestBuilder.build()
+                }
+            )
+        }
+
+        nativeAd?.load(
+            from: viewController,
+            adUnitIdType: adUnitIdType,
+            loaderOptions: loaderOptions,
+            adTypes: [.native],
+            onFinishLoading: onFinishLoading,
+            onError: onError,
+            onReceive: onReceive
+        )
+    }
+
+    // MARK: Disable
+
+    /// Disable ads
+    public func disable() {
+        disabled = true
+        interstitialAd?.stopLoading()
+        rewardedInterstitialAd?.stopLoading()
+        nativeAd?.stopLoading()
+    }
+}
+
+// MARK: - Private Methods
+
+private extension SwiftyAds {
+
+    func requestInitialConsent(from viewController: UIViewController,
+                               consentManager: SwiftyAdsConsentManagerType,
+                               completion: @escaping SwiftyAdsConsentResultHandler) {
         DispatchQueue.main.async {
             consentManager.requestUpdate { [weak self] result in
                 guard let self = self else { return }
@@ -277,192 +488,65 @@ extension SwiftyAds: SwiftyAdsType {
         }
     }
 
-    /// Under GDPR users must be able to change their consent at any time.
-    ///
-    /// - parameter viewController: The view controller that will present the consent form.
-    /// - parameter completion: A completion handler that will return the updated consent status.
-    public func askForConsent(from viewController: UIViewController,
-                              completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
-        guard let consentManager = consentManager else {
-            completion(.failure(SwiftyAdsError.noConsentManager))
-            return
-        }
-        
-        DispatchQueue.main.async {
-            consentManager.requestUpdate { result in
-                switch result {
-                case .success:
-                    DispatchQueue.main.async {
-                        consentManager.showForm(from: viewController, completion: completion)
-                    }
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
-        }
-    }
-    
-    /// Make banner ad
-    ///
-    /// - parameter viewController: The view controller that will present the ad.
-    /// - parameter adUnitIdType: The adUnitId type for the ad, either plist or custom.
-    /// - parameter position: The position of the banner.
-    /// - parameter animationDuration: The duration of the banner to animate on/off screen.
-    /// - parameter onOpen: An optional callback when the banner was presented.
-    /// - parameter onClose: An optional callback when the banner was dismissed or removed.
-    /// - parameter onError: An optional callback when an error has occurred.
-    /// - returns SwiftyAdsBannerType to show, hide or remove the prepared banner ad.
-    public func makeBannerAd(in viewController: UIViewController,
-                             adUnitIdType: SwiftyAdsAdUnitIdType,
-                             position: SwiftyAdsBannerAdPosition,
-                             animationDuration: TimeInterval,
-                             onOpen: (() -> Void)?,
-                             onClose: (() -> Void)?,
-                             onError: ((Error) -> Void)?) -> SwiftyAdsBannerType? {
-        guard !isDisabled else { return nil }
-        guard hasConsent else { return nil }
-
-        let adUnitId: String?
-
-        switch adUnitIdType {
-        case .plist:
-            adUnitId = configuration?.bannerAdUnitId
-        case .custom(let id):
-            adUnitId = id
-        }
-
-        guard let validAdUnitId = adUnitId else {
-            onError?(SwiftyAdsError.missingBannerAdUnitId)
-            return nil
-        }
-
-        let bannerAd = SwiftyAdsBanner(
-            isDisabled: { [weak self] in
-                self?.isDisabled ?? false
-            },
-            hasConsent: { [weak self] in
-                self?.hasConsent ?? true
-            },
-            request: { [unowned self] in
-                self.requestBuilder.build()
-            }
-        )
-
-        bannerAd.prepare(
-            withAdUnitId: validAdUnitId,
-            in: viewController,
-            position: position,
-            animationDuration: animationDuration,
-            onOpen: onOpen,
-            onClose: onClose,
-            onError: onError
-        )
-
-        return bannerAd
-    }
-    
-    /// Show interstitial ad
-    ///
-    /// - parameter viewController: The view controller that will present the ad.
-    /// - parameter interval: The interval of when to show the ad, e.g every 4th time the method is called. Set to nil to always show.
-    /// - parameter onOpen: An optional callback when the banner was presented.
-    /// - parameter onClose: An optional callback when the ad was dismissed.
-    /// - parameter onError: An optional callback when an error has occurred.
-    public func showInterstitialAd(from viewController: UIViewController,
-                                   afterInterval interval: Int?,
-                                   onOpen: (() -> Void)?,
-                                   onClose: (() -> Void)?,
-                                   onError: ((Error) -> Void)?) {
-        guard !isDisabled else { return }
-        guard hasConsent else { return }
-        guard intervalTracker.canShow(forInterval: interval) else { return }
-
-        interstitialAd?.show(
-            from: viewController,
-            onOpen: onOpen,
-            onClose: onClose,
-            onError: onError
-        )
-    }
-    
-    /// Show rewarded video ad
-    ///
-    /// - parameter viewController: The view controller that will present the ad.
-    /// - parameter onOpen: An optional callback when the banner was presented.
-    /// - parameter onClose: An optional callback when the ad was dismissed.
-    /// - parameter onError: An optional callback when an error has occurred.
-    /// - parameter onNotReady: An optional callback when the ad was not ready.
-    /// - parameter onReward: A callback when the reward has been granted.
-    public func showRewardedAd(from viewController: UIViewController,
-                               onOpen: (() -> Void)?,
-                               onClose: (() -> Void)?,
-                               onError: ((Error) -> Void)?,
-                               onNotReady: (() -> Void)?,
-                               onReward: @escaping (Int) -> Void) {
-        guard hasConsent else { return }
-
-        rewardedAd?.show(
-            from: viewController,
-            onOpen: onOpen,
-            onClose: onClose,
-            onError: onError,
-            onNotReady: onNotReady,
-            onReward: onReward
-        )
-    }
-
-    /// Load native ad
-    ///
-    /// - parameter viewController: The view controller that will load the native ad.
-    /// - parameter adUnitIdType: The adUnitId type for the ad, either plist or custom.
-    /// - parameter count: The number of ads to load via  GADMultipleAdsAdLoaderOptions. Set to nil to use default options or when using mediation.
-    /// - parameter onReceive: The received GADNativeAd when the load request has completed.
-    /// - parameter onError: The error when the load request has failed.
-
-    /// - Warning:
-    /// Requests for multiple native ads don't currently work for AdMob ad unit IDs that have been configured for mediation.
-    /// Publishers using mediation should avoid using the GADMultipleAdsAdLoaderOptions class when making requests i.e. set count to nil.
-    public func loadNativeAd(from viewController: UIViewController,
-                             adUnitIdType: SwiftyAdsAdUnitIdType,
-                             count: Int?,
-                             onReceive: @escaping (GADNativeAd) -> Void,
-                             onError: @escaping (Error) -> Void) {
-        guard !isDisabled else { return }
-        guard hasConsent else { return }
-
-        if case .custom(let adUnitId) = adUnitIdType {
-            nativeAd = SwiftyAdsNative(
-                adUnitId: adUnitId,
-                request: { [unowned self] in
-                    self.requestBuilder.build()
-                }
-            )
-        }
-
-        nativeAd?.load(
-            from: viewController,
-            adUnitIdType: adUnitIdType,
-            count: count,
-            onReceive: onReceive,
-            onError: onError
-        )
-    }
-
-    /// Disable ads
-    public func disable() {
-        isDisabled = true
-        interstitialAd?.stopLoading()
-        nativeAd?.stopLoading()
-    }
-}
-
-// MARK: - Private Methods
-
-private extension SwiftyAds {
-
     func loadAds() {
         rewardedAd?.load()
         guard !isDisabled else { return }
         interstitialAd?.load()
+    }
+}
+
+// MARK: - Deprecated
+
+public extension SwiftyAds {
+
+    @available(*, deprecated, message: "Please use configure method")
+    func setup(from viewController: UIViewController,
+               for environment: SwiftyAdsEnvironment,
+               consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
+               completion: @escaping SwiftyAdsConsentResultHandler) {
+        configure(
+            from: viewController,
+            for: environment,
+            consentStatusDidChange: consentStatusDidChange,
+            completion: completion
+        )
+    }
+
+    @available(*, deprecated, message: "Please use new makeBanner method")
+    func makeBannerAd(in viewController: UIViewController,
+                      adUnitIdType: SwiftyAdsAdUnitIdType,
+                      position: SwiftyAdsBannerAdPosition,
+                      animationDuration: TimeInterval,
+                      onOpen: (() -> Void)?,
+                      onClose: (() -> Void)?,
+                      onError: ((Error) -> Void)?) -> SwiftyAdsBannerType? {
+        makeBannerAd(
+            in: viewController,
+            adUnitIdType: adUnitIdType,
+            position: position,
+            animation: .slide(duration: animationDuration),
+            onOpen: onOpen,
+            onClose: onClose,
+            onError: onError,
+            onWillPresentScreen: nil,
+            onWillDismissScreen: nil,
+            onDidDismissScreen: nil
+        )
+    }
+
+    @available(*, deprecated, message: "Please use new loadNativeAd method")
+    func loadNativeAd(from viewController: UIViewController,
+                      adUnitIdType: SwiftyAdsAdUnitIdType,
+                      count: Int?,
+                      onReceive: @escaping (GADNativeAd) -> Void,
+                      onError: @escaping (Error) -> Void) {
+        loadNativeAd(
+            from: viewController,
+            adUnitIdType: adUnitIdType,
+            loaderOptions: count.flatMap { .multiple($0) } ?? .single,
+            onFinishLoading: nil,
+            onError: onError,
+            onReceive: onReceive
+        )
     }
 }

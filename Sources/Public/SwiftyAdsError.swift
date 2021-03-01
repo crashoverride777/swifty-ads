@@ -22,7 +22,28 @@
 
 import Foundation
 
-public enum SwiftyAdsEnvironment {
-    case production
-    case debug(testDeviceIdentifiers: [String], geography: SwiftyAdsDebugGeography, resetConsentInfo: Bool)
+public enum SwiftyAdsError: LocalizedError {
+    case consentManagerNotAvailable
+    case consentFormNotAvailable
+    case interstitialAdNotLoaded
+    case rewardedAdNotLoaded
+    case rewardedInterstitialAdNotLoaded
+    case bannerAdMissingAdUnitId
+
+    public var errorDescription: String? {
+        switch self {
+        case .consentManagerNotAvailable:
+            return "Consent manager not available"
+        case .consentFormNotAvailable:
+            return "Consent form not available"
+        case .interstitialAdNotLoaded:
+            return "Interstitial ad not loaded"
+        case .rewardedAdNotLoaded:
+            return "Rewarded ad not loaded"
+        case .rewardedInterstitialAdNotLoaded:
+            return "Rewarded interstitial ad not loaded"
+        case .bannerAdMissingAdUnitId:
+            return "Banner ad has no AdUnitId"
+        }
+    }
 }

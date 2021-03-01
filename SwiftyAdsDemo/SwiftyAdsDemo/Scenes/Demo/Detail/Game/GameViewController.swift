@@ -2,7 +2,9 @@ import UIKit
 import SpriteKit
 
 class GameViewController: UIViewController {
-    
+
+    // MARK: - Properties
+
     private var swiftyAds: SwiftyAdsType!
     private var bannerAd: SwiftyAdsBannerType?
 
@@ -18,9 +20,19 @@ class GameViewController: UIViewController {
         true
     }
 
+    // MARK: - Initialization
+
     func configure(swiftyAds: SwiftyAdsType) {
         self.swiftyAds = swiftyAds
     }
+
+    // MARK: - De-Initialization
+
+    deinit {
+        print("Deinit GameViewController")
+    }
+
+    // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,16 +41,25 @@ class GameViewController: UIViewController {
             in: self,
             adUnitIdType: .plist,
             position: .bottom(isUsingSafeArea: true),
-            animationDuration: 1.5,
-            onOpen: ({
+            animation: .slide(duration: 1.5),
+            onOpen: {
                 print("SwiftyAds banner ad did open")
-            }),
-            onClose: ({
+            },
+            onClose: {
                 print("SwiftyAds banner ad did close")
-            }),
-            onError: ({ error in
+            },
+            onError: { error in
                 print("SwiftyAds banner ad error \(error)")
-            })
+            },
+            onWillPresentScreen: {
+                print("SwiftyAds banner ad was tapped and is about to present screen")
+            },
+            onWillDismissScreen: {
+                print("SwiftyAds banner ad screen is about to be dismissed")
+            },
+            onDidDismissScreen: {
+                print("SwiftyAds banner did dismiss screen")
+            }
         )
         
         if let scene = GameScene(fileNamed: "GameScene") {

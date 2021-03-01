@@ -30,7 +30,13 @@ final class TabBarControllerAd: UITabBarController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    // MARK: - De-Initialization
+
+    deinit {
+        print("Deinit TabBarControllerAd")
+    }
+
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -40,16 +46,25 @@ final class TabBarControllerAd: UITabBarController {
             in: self,
             adUnitIdType: .plist,
             position: .bottom(isUsingSafeArea: true),
-            animationDuration: 1.5,
-            onOpen: ({
+            animation: .slide(duration: 1.5),
+            onOpen: {
                 print("SwiftyAds banner ad did open")
-            }),
-            onClose: ({
+            },
+            onClose: {
                 print("SwiftyAds banner ad did close")
-            }),
-            onError: ({ error in
+            },
+            onError: { error in
                 print("SwiftyAds banner ad error \(error)")
-            })
+            },
+            onWillPresentScreen: {
+                print("SwiftyAds banner ad was tapped and is about to present screen")
+            },
+            onWillDismissScreen: {
+                print("SwiftyAds banner ad screen is about to be dismissed")
+            },
+            onDidDismissScreen: {
+                print("SwiftyAds banner did dismiss screen")
+            }
         )
     }
 

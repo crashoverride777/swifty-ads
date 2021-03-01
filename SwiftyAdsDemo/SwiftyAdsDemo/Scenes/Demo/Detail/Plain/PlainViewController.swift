@@ -23,8 +23,16 @@ final class PlainViewController: UIViewController {
         return button
     }()
 
+    private lazy var rewardedInterstitialAdButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Show rewarded interstitial ad", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(showRewardedInterstitialAdButtonPressed), for: .touchUpInside)
+        return button
+    }()
+
     private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [interstitialAdButton, rewardedAdButton])
+        let stackView = UIStackView(arrangedSubviews: [interstitialAdButton, rewardedAdButton, rewardedInterstitialAdButton])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 32
@@ -41,6 +49,12 @@ final class PlainViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - De-Initialization
+
+    deinit {
+        print("Deinit PlainViewController")
+    }
     
     // MARK: - Life Cycle
     
@@ -53,16 +67,25 @@ final class PlainViewController: UIViewController {
             in: self,
             adUnitIdType: .plist,
             position: .bottom(isUsingSafeArea: true),
-            animationDuration: 1.5,
-            onOpen: ({
+            animation: .slide(duration: 1.5),
+            onOpen: {
                 print("SwiftyAds banner ad did open")
-            }),
-            onClose: ({
+            },
+            onClose: {
                 print("SwiftyAds banner ad did close")
-            }),
-            onError: ({ error in
+            },
+            onError: { error in
                 print("SwiftyAds banner ad error \(error)")
-            })
+            },
+            onWillPresentScreen: {
+                print("SwiftyAds banner ad was tapped and is about to present screen")
+            },
+            onWillDismissScreen: {
+                print("SwiftyAds banner ad screen is about to be dismissed")
+            },
+            onDidDismissScreen: {
+                print("SwiftyAds banner did dismiss screen")
+            }
         )
     }
 
@@ -96,31 +119,31 @@ private extension PlainViewController {
         swiftyAds.showInterstitialAd(
             from: self,
             afterInterval: 2,
-            onOpen: ({
+            onOpen: {
                 print("SwiftyAds interstitial ad did open")
-            }),
-            onClose: ({
+            },
+            onClose: {
                 print("SwiftyAds interstitial ad did close")
-            }),
-            onError: ({ error in
+            },
+            onError: { error in
                 print("SwiftyAds interstitial ad error \(error)")
-            })
+            }
         )
     }
     
     @objc func showRewardedAdButtonPressed() {
         swiftyAds.showRewardedAd(
             from: self,
-            onOpen: ({
-                print("SwiftyAds rewarded video ad did open")
-            }),
-            onClose: ({
-                print("SwiftyAds rewarded video ad did close")
-            }),
-            onError: ({ error in
-                print("SwiftyAds rewarded video ad error \(error)")
-            }),
-            onNotReady: ({ [weak self] in
+            onOpen: {
+                print("SwiftyAds rewarded ad did open")
+            },
+            onClose: {
+                print("SwiftyAds rewarded ad did close")
+            },
+            onError: { error in
+                print("SwiftyAds rewarded ad error \(error)")
+            },
+            onNotReady: { [weak self] in
                 guard let self = self else { return }
                 let alertController = UIAlertController(
                     title: "Sorry",
@@ -131,10 +154,29 @@ private extension PlainViewController {
                 DispatchQueue.main.async {
                     self.present(alertController, animated: true)
                 }
-            }),
+            },
             onReward: ({ rewardAmount in
-                print("SwiftyAds rewarded video ad did reward user with \(rewardAmount)")
+                print("SwiftyAds rewarded ad did reward user with \(rewardAmount)")
             })
+        )
+    }
+
+    @objc func showRewardedInterstitialAdButtonPressed() {
+        swiftyAds.showRewardedInterstitialAd(
+            from: self,
+            afterInterval: nil,
+            onOpen: {
+                print("SwiftyAds rewarded interstitial ad did open")
+            },
+            onClose: {
+                print("SwiftyAds rewarded interstitial ad did close")
+            },
+            onError: { error in
+                print("SwiftyAds rewarded interstitial ad error \(error)")
+            },
+            onReward: { rewardAmount in
+                print("SwiftyAds rewarded interstitial ad did reward user with \(rewardAmount)")
+            }
         )
     }
 }

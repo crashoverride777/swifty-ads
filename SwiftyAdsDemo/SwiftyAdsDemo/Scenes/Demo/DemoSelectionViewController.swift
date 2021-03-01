@@ -1,6 +1,6 @@
 import UIKit
 
-final class RootViewController: UITableViewController {
+final class DemoSelectionViewController: UITableViewController {
     
     // MARK: - Types
 
@@ -8,7 +8,7 @@ final class RootViewController: UITableViewController {
         case main
         case secondary
 
-        var rows: [Row] {
+        func rows(isRequiredToAskForConsent: Bool) -> [Row] {
             switch self {
             case .main:
                 return [
@@ -20,9 +20,9 @@ final class RootViewController: UITableViewController {
                 ]
             case .secondary:
                 return [
-                    .updateConsent,
+                    isRequiredToAskForConsent ? .updateConsent : nil,
                     .disable
-                ]
+                ].compactMap { $0 }
             }
         }
     }
@@ -40,13 +40,13 @@ final class RootViewController: UITableViewController {
         var title: String {
             switch self {
             case .viewController:
-                return "UIViewController"
+                return "ViewController"
             case .viewControllerInsideTabBar:
-                return "UIViewController inside UITabBarController"
+                return "ViewController inside TabBarController"
             case .tabBarController:
-                return "UITabBarController"
+                return "TabBarController"
             case .spriteKitScene:
-                return "SKScene"
+                return "SpriteKit Scene"
             case .nativeAd:
                 return "Native Ad"
             case .updateConsent:
@@ -78,14 +78,20 @@ final class RootViewController: UITableViewController {
     // MARK: - Properties
 
     private let swiftyAds: SwiftyAdsType
+    private let geography: SwiftyAdsDebugGeography
     private let sections = Section.allCases
     private let notificationCenter: NotificationCenter = .default
     private var bannerAd: SwiftyAdsBannerType?
-    
+
+    private var isRequiredToAskForConsent: Bool {
+        swiftyAds.consentStatus != .notRequired
+    }
+
     // MARK: - Initialization
     
-    init(swiftyAds: SwiftyAdsType) {
+    init(swiftyAds: SwiftyAdsType, geography: SwiftyAdsDebugGeography) {
         self.swiftyAds = swiftyAds
+        self.geography = geography
         if #available(iOS 13.0, *) {
             super.init(style: .insetGrouped)
         } else {
@@ -96,13 +102,19 @@ final class RootViewController: UITableViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - De-Initialization
+
+    deinit {
+        print("Deinit DemoSelectionViewController")
+    }
     
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Swifty Ads Demo"
-        tableView.register(RootCell.self, forCellReuseIdentifier: String(describing: RootCell.self))
+        tableView.register(BasicCell.self, forCellReuseIdentifier: String(describing: BasicCell.self))
         notificationCenter.addObserver(self, selector: #selector(consentDidChange), name: .adConsentStatusDidChange, object: nil)
         makeBanner()
     }
@@ -126,12 +138,12 @@ final class RootViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        sections[section].rows.count
+        sections[section].rows(isRequiredToAskForConsent: isRequiredToAskForConsent).count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let row = sections[indexPath.section].rows[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: RootCell.self), for: indexPath) as! RootCell
+        let row = sections[indexPath.section].rows(isRequiredToAskForConsent: isRequiredToAskForConsent)[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: BasicCell.self), for: indexPath) as! BasicCell
         cell.configure(title: row.title, accessoryType: row.accessoryType)
         return cell
     }
@@ -139,7 +151,7 @@ final class RootViewController: UITableViewController {
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let row = sections[indexPath.section].rows[indexPath.row]
+        let row = sections[indexPath.section].rows(isRequiredToAskForConsent: isRequiredToAskForConsent)[indexPath.row]
         var viewController: UIViewController?
 
         if row.shouldDeselect {
@@ -167,7 +179,9 @@ final class RootViewController: UITableViewController {
             viewController = NativeAdViewController(swityAds: swiftyAds)
 
         case .updateConsent:
-            swiftyAds.askForConsent(from: self) { result in }
+            swiftyAds.askForConsent(from: self) { [weak self] result in
+                self?.tableView.reloadData()
+            }
 
         case .disable:
             swiftyAds.disable()
@@ -184,13 +198,14 @@ final class RootViewController: UITableViewController {
 
 // MARK: - Private Methods
 
-private extension RootViewController {
+private extension DemoSelectionViewController {
 
     @objc func consentDidChange() {
         if bannerAd == nil {
             makeBanner()
         }
         bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
+        tableView.reloadData()
     }
 
     func makeBanner() {
@@ -198,16 +213,25 @@ private extension RootViewController {
             in: self,
             adUnitIdType: .plist,
             position: .bottom(isUsingSafeArea: true),
-            animationDuration: 1.5,
-            onOpen: ({
+            animation: .fade(duration: 1.5),
+            onOpen: {
                 print("SwiftyAds banner ad did open")
-            }),
-            onClose: ({
+            },
+            onClose: {
                 print("SwiftyAds banner ad did close")
-            }),
-            onError: ({ error in
+            },
+            onError: { error in
                 print("SwiftyAds banner ad error \(error)")
-            })
+            },
+            onWillPresentScreen: {
+                print("SwiftyAds banner ad was tapped and is about to present screen")
+            },
+            onWillDismissScreen: {
+                print("SwiftyAds banner ad screen is about to be dismissed")
+            },
+            onDidDismissScreen: {
+                print("SwiftyAds banner did dismiss screen")
+            }
         )
     }
 

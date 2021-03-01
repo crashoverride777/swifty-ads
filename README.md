@@ -4,7 +4,7 @@
 
 # SwiftyAds
 
-A Swift library to display banner, interstitial, rewarded videos and native ads from Google AdMob and supported mediation partners.
+A Swift library to display banner, interstitial, rewarded and native ads from Google AdMob and supported mediation partners.
 
 # 2021 Roadmap
 
@@ -20,15 +20,15 @@ A Swift library to display banner, interstitial, rewarded videos and native ads 
 
 Sign up for an [AdMob account](https://admob.google.com/home/get-started/) and create your required adUnitIDs for the types of ads you would like to display. 
 
-## Mediation
-
-[READ](https://developers.google.com/admob/ios/mediation)
-
-## App Tracking Transparency (ATT) and GDPR
+## Create Funding Choices account and messages (GDPR and App Tracking Transparency)
 
 SwiftyAds uses Google`s [User Messaging Platform](https://developers.google.com/admob/ump/ios/quick-start) (UMP) SDK to handle user consent. This SDK can handle both GDPR requests and also the iOS 14 [ATT](https://developers.google.com/admob/ios/ios14) alert if required. Please read the Funding Choices [documentation](https://support.google.com/fundingchoices/answer/9180084) to ensure they are setup up correctly for your requirements.
 
 Note: Currently it seems Apple is rejecting apps that use the UMP SDK to display the iOS 14 ATT alert because Google is displaying an explainer message and/or the GDPR message before the actual ATT alert. As a workaround you can [manually](https://github.com/crashoverride777/swifty-ads/issues/50) display the ATT alert before configuring SwiftyAds. 
+
+## Mediation
+
+[READ](https://developers.google.com/admob/ios/mediation)
 
 ## Installation
 
@@ -72,6 +72,7 @@ Optional fields:
 - bannerAdUnitId (String)
 - interstitialAdUnitId (String)
 - rewardedAdUnitId (String)
+- rewardedInterstitialAdUnitId (String)
 - nativeAdUnitId (String)
 - isTaggedForChildDirectedTreatment (Boolean) ([COPPA](https://developers.google.com/admob/ios/targeting#child-directed_setting))
 
@@ -103,7 +104,9 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 private func setupSwiftyAds(from viewController: UIViewController) {
     #if DEBUG
-    // Use the geography enum to set your location for GDPR consent debug purposes.
+    // testDeviceIdentifiers: The test device indentifiers used for debugging purposes.
+    // geography: Set your debug location for GDPR consent debugging purposes.
+    // resetConsentInfo: If set to true resets the consent info as if they have not been set previously.
     let environment: SwiftyAdsEnvironment = .debug(testDeviceIdentifiers: [], geography: .EEA, resetConsentInfo: true)
     #else
     let environment: SwiftyAdsEnvironment = .production
@@ -114,17 +117,36 @@ private func setupSwiftyAds(from viewController: UIViewController) {
         for: environment,
         consentStatusDidChange: { status in
             print("The consent status has changed: \(status)")
-            // Update mediation networks with under age of consent and other settings if required (see mediation network documentation)
+            // Update mediation networks with under age of consent and other settings if required, 
+            // for example when not using IAB TCF v2 framework in Google funding choices
+            // See mediation network documentation
         },
         completion: { result in
             switch result {
             case .success(let consentStatus):
-                print("Setup successful with consent status: \(consentStatus)")
+                print("Setup successful")
             case .failure(let error):
                 print("Setup error: \(error)")
             }
         }
     )
+}
+```
+
+NOTE: Currently it seems Apple is rejecting apps that use the UMP SDK to display the iOS 14 ATT alert because Google is displaying an explainer message and/or the GDPR message before the actual ATT alert. As a workaround you can disable the ATT message from Funding Choices and [manually](https://github.com/crashoverride777/swifty-ads/issues/50) display the ATT alert before configuring SwiftyAds. 
+
+```swift
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    if let rootViewController = window?.rootViewController {
+        if  #available(iOS 14, *)  {
+            ATTrackingManager.requestTrackingAuthorization { status in
+                self.setupSwiftyAds(from: rootViewController)
+            }
+        } else {
+            setupSwiftyAds(from: rootViewController)
+        }
+    }
+    return true
 }
 ```
 
@@ -165,18 +187,27 @@ override func viewDidLoad() {
     
     bannerAd = SwiftyAds.shared.makeBannerAd(
         in: self,
-        adUnitIdType: .plist, // set to .custom to add a different AdUnitId
-        position: .bottom(isUsingSafeArea: true) // banner is pinned to bottom and follows safe area layout guide
-        animationDuration: 1.5,
-        onOpen: ({
-            print("SwiftyAds banner ad did open")
-        }),
-        onClose: ({
+        adUnitIdType: .plist, // set to `.custom("AdUnitId")` to add a different AdUnitId for this particular banner ad
+        position: .bottom(isUsingSafeArea: true) // banner is pinned to bottom and follows the safe area layout guide
+        animation: .slide(duration: 1.5),
+        onOpen: {
+            print("SwiftyAds banner ad did receive ad and was opened")
+        },
+        onClose: {
             print("SwiftyAds banner ad did close")
-        }),
-        onError: ({ error in
+        },
+        onError: { error in
             print("SwiftyAds banner ad error \(error)")
-        })
+        },
+        onWillPresentScreen: {
+            print("SwiftyAds banner ad was tapped and is about to present screen")
+        },
+        onWillDismissScreen: {
+            print("SwiftyAds banner ad presented screen is about to be dismissed")
+        },
+        onDidDismissScreen: {
+            print("SwiftyAds banner did dismiss presented screen")
+        }
     )
 }
 ```
@@ -206,7 +237,7 @@ override func viewWillTransition(to size: CGSize, with coordinator: UIViewContro
 You can hide the banner by calling the `hide` method. 
 
 ```swift
-bannerAd?.hide(animated: true) 
+bannerAd?.hide() 
 ```
 
 You can remove the banner from its superview by calling the `remove` method and afterwards nil out the reference.
@@ -221,40 +252,38 @@ bannerAd = nil
 ```swift
 SwiftyAds.shared.showInterstitialAd(
     from: self,
-    afterInterval: 2, // every 2nd time method is called ad will be displayed
-    onOpen: ({
+    afterInterval: 2, // every 2nd time method is called ad will be displayed. Set to nil to always display.
+    onOpen: {
         print("SwiftyAds interstitial ad did open")
-    }),
-    onClose: ({
+    },
+    onClose: {
         print("SwiftyAds interstitial ad did close")
-    }),
-    onError: ({ error in
+    },
+    onError: { error in
         print("SwiftyAds interstitial ad error \(error)")
-    })
+    }
 )
 ```
 
 ### Rewarded Ads
 
-Always use a dedicated button to display rewarded videos. You should never show them automatically as some might be non-skippable.
-
-AdMob provided a new rewarded video API which lets you preload multiple rewarded videos with different AdUnitIds. While SwiftyAds uses this new API it currently only supports loading 1 rewarded video ad at a time.
+Rewared ads may be non-skippable and should only be presented when pressing a dedicated button.
 
 ```swift
 SwiftyAds.shared.showRewardedAd(
     from: self,
-    onOpen: ({
-        print("SwiftyAds rewarded video ad did open")
-    }),
-    onClose: ({
-        print("SwiftyAds rewarded video ad did close")
-    }), 
-    onError: ({ error in
-        print("SwiftyAds rewarded video ad error \(error)")
-    }),
-    onNotReady: ({ [weak self] in
+    onOpen: {
+        print("SwiftyAds rewarded ad did open")
+    },
+    onClose: {
+        print("SwiftyAds rewarded ad did close")
+    }, 
+    onError: { error in
+        print("SwiftyAds rewarded ad error \(error)")
+    },
+    onNotReady: { [weak self] in
         guard let self = self else { return }
-        print("SwiftyAds rewarded video ad was not ready")
+        print("SwiftyAds rewarded ad was not ready")
         // If the user presses the rewarded video button and watches a video it might take a few seconds for the next video to reload.
         // Use this callback to display an alert incase the video was not ready. 
         let alertController = UIAlertController(
@@ -264,39 +293,84 @@ SwiftyAds.shared.showRewardedAd(
         )
         alertController.addAction(UIAlertAction(title: "Ok", style: .cancel))
         self.present(alertController, animated: true)
-    }),
-    onReward: ({ [weak self] rewardAmount in
-        print("SwiftyAds rewarded video ad did reward user with \(rewardAmount)")
+    },
+    onReward: { [weak self] rewardAmount in
+        print("SwiftyAds rewarded ad did reward user with \(rewardAmount)")
         // Provide the user with the reward e.g coins, diamonds etc
-    })
+    }
 )
 ```
+
+NOTE: AdMob provided a new rewarded video API which lets you preload multiple rewarded videos with different AdUnitIds. While SwiftyAds uses this new API it currently only supports loading 1 rewarded video ad at a time.
+
+### Rewarded Interstitial Ads
+
+Rewared interstitial ads can be presented naturally in your app flow, similar to interstitial ads, and do not require a dedicated button like regular rewarded ads.
+
+```swift
+SwiftyAds.shared.showRewardedInterstitialAd(
+    from: self,
+    afterInterval: 2, // every 2nd time method is called ad will be displayed. Set to nil to always display.
+    onOpen: {
+        print("SwiftyAds rewarded interstitial ad did open")
+    },
+    onClose: {
+        print("SwiftyAds rewarded interstitial ad did close")
+    }, 
+    onError: { error in
+        print("SwiftyAds rewarded interstitial ad error \(error)")
+    },
+    onReward: { [weak self] rewardAmount in
+        print("SwiftyAds rewarded interstitial ad did reward user with \(rewardAmount)")
+        // Provide the user with the reward e.g coins, diamonds etc
+    }
+)
+```
+
+NOTE: Before displaying a rewarded interstitial ad to users, you must present the user with an [intro screen](https://support.google.com/admob/answer/9884467) that provides clear reward messaging and an option to skip the ad before it starts.
 
 ### Native Ads
 
 To present a native ad simply call the load method. Once a native ad has been received you can update your custom ad view with the native ad content.
 
-You can set the amount of ads to load (`GADMultipleAdsAdLoaderOptions`) via the count parameter. Set to nil to use default options.
+You can set the amount of ads to load (`GADMultipleAdsAdLoaderOptions`) via the `loaderOptions` parameter. Set to `.single` to use the default options.
 
-As per Googles documentation, requests for multiple native ads don't currently work for AdMob ad unit IDs that have been configured for mediation. Publishers using mediation should avoid using the GADMultipleAdsAdLoaderOptions class when making requests. In that case you can also set the count parameter to nil.
+As per Googles documentation, requests for multiple native ads don't currently work for AdMob ad unit IDs that have been configured for mediation. Publishers using mediation should avoid using the GADMultipleAdsAdLoaderOptions class when making requests. In that case you can also set the `loaderOptions` parameter to `.single`.
 
 
 ```swift
 SwiftyAds.shared.loadNativeAd(
     from: self,
-    adUnitIdType: .plist, // set to .custom to add a different AdUnitId
-    count: nil,
-    onReceive: { nativeAd in
-        // show native ad (see demo app or google documentation)
+    adUnitIdType: .plist, // set to `.custom("AdUnitId")` to add a different AdUnitId for this particular native ad
+    loaderOptions: .single, // set to `.multiple(2)` to load multiple ads for example 2
+    onFinishLoading: {
+        // Native ad has finished loading and new ads can now be loaded
     },
     onError: { error in
-        // handle error
+        // Native ad could not load ad due to error
+    },
+    onReceive: { nativeAd in
+        // show native ad (see demo app or google documentation)
     }
 )
 ```
 
-Note: While prefetching ads is a great technique, it's important that you don't keep old native ads around forever without displaying them. Any native ad objects that have been held without display for longer than an hour should be discarded and replaced with new ads from a new request.
+NOTE: While prefetching ads is a great technique, it's important that you don't keep old native ads around forever without displaying them. Any native ad objects that have been held without display for longer than an hour should be discarded and replaced with new ads from a new request.
 
+### Errors
+
+Use can use the `SwiftyAdsError` enum to handle received errors more granuarly if required.
+
+```swift
+if let swiftyAdsError = error as? SwiftyAdsError {
+    switch swiftyAdsError { 
+    case .interstitialAdNotLoaded:
+        // Ad was not loaded
+    default:
+        break
+    }
+}
+```
 
 ### Consent Status/Type
 
@@ -312,23 +386,29 @@ SwiftyAds.shared.consentType
 ### Booleans
 
 ```swift
-// Check if rewarded video is ready, for example to show/hide button
-SwiftyAds.shared.isRewardedAdReady
-
 // Check if interstitial ad is ready, for example to show an alternative ad
 SwiftyAds.shared.isInterstitialAdReady
+
+// Check if rewarded ad is ready, for example to show/hide button
+SwiftyAds.shared.isRewardedAdReady
+
+// Check if rewarded interstitial ad is ready, for example to show an alternative ad
+SwiftyAds.shared.isRewardedInterstitialAdReady
 
 // Check if child directed treatment is tagged on/off. Nil if not indicated how to be treated. (COPPA)
 SwiftyAds.shared.isTaggedForChildDirectedTreatment
 
 // Check if under age of consent is tagged on/off (GDPR)
 SwiftyAds.shared.isTaggedForUnderAgeOfConsent
+
+// Check if ads have been disabled
+SwiftyAds.shared.isDisabled
 ```
 
 ### Disable Ads (In App Purchases)
 
-Call the `disable()` method and banner and interstitial ads will no longer display. 
-This will not stop rewarded videos from displaying as they should have a dedicated button. This way you can remove banner and interstitial ads but still have rewarded videos. 
+Call the `disable()` method and banner, interstitial and rewarded interstitial ads will no longer display. 
+This will not stop regular rewarded videos from displaying as they should have a dedicated button. This way you can remove banner, interstitial and rewarded interstitial ads but still have regular rewarded videos. 
 
 ```swift
 SwiftyAds.shared.disable()
@@ -352,7 +432,7 @@ func consentButtonPressed() {
     SwiftyAds.shared.askForConsent(from: self) { result in
         switch result {
         case .success(let status):
-            print("Did change consent status to \(status)")
+            print("Did change consent status")
         case .failure(let error):
             print("Consent status change error \(error)")
         }
@@ -365,3 +445,7 @@ The consent button can be hidden if consent is not required.
 ```swift
 consentButton.isHidden = SwiftyAds.shared.consentStatus == .notRequired
 ```
+
+### App Store release information
+
+Make sure to prepare for Apple's App Store data disclosure [requirements](https://developers.google.com/admob/ios/data-disclosure)

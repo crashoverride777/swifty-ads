@@ -8,6 +8,8 @@
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>rewardedAdUnitId</key>
 	<string>ca-app-pub-3940256099942544/1712485313</string>
+	<key>rewardedInterstitialAdUnitId</key>
+	<string>ca-app-pub-3940256099942544/6978759866</string>
 	<key>nativeAdUnitId</key>
 	<string>ca-app-pub-3940256099942544/3986624511</string>
 	<key>isTaggedForUnderAgeOfConsent</key>

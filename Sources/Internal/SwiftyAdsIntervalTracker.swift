@@ -22,28 +22,22 @@
 
 import Foundation
 
-protocol IntervalTracker: AnyObject {
-    func canShow(forInterval interval: Int?) -> Bool
+protocol SwiftyAdsIntervalTrackerType: AnyObject {
+    func canShow(forInterval interval: Int) -> Bool
 }
 
 final class SwiftyAdsIntervalTracker {
-    private var intervalCounter = 0
+    private var counter = 0
 }
 
-extension SwiftyAdsIntervalTracker: IntervalTracker {
+extension SwiftyAdsIntervalTracker: SwiftyAdsIntervalTrackerType {
     
-    func canShow(forInterval interval: Int?) -> Bool {
-        guard let interval = interval else {
-            return true
-        }
-
-        intervalCounter += 1
+    func canShow(forInterval interval: Int) -> Bool {
+        counter += 1
         
-        guard intervalCounter >= interval else {
-            return false
-        }
+        guard counter >= interval else { return false }
         
-        intervalCounter = 0
+        counter = 0
         return true
     }
 }

@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  Example
-//
-//  Created by Dominik Ringler on 21/02/2020.
-//  Copyright © 2020 Dominik Ringler. All rights reserved.
-//
-
 import UIKit
 import SpriteKit
 
@@ -21,16 +13,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let notificationCenter: NotificationCenter = .default
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let rootViewController = RootViewController(swiftyAds: swiftyAds)
-        let navigationController = UINavigationController(rootViewController: rootViewController)
-        navigationController.navigationBar.barTintColor = .white
+        let navigationController = UINavigationController()
+        let geographySelectionViewController = GeographySelectionViewController(swiftyAds: swiftyAds) { geography in
+            let demoSelectionViewController = DemoSelectionViewController(swiftyAds: self.swiftyAds, geography: geography)
+            navigationController.setViewControllers([demoSelectionViewController], animated: true)
+            self.setupSwiftyAds(from: navigationController, geography: geography)
+        }
+
+        navigationController.setViewControllers([geographySelectionViewController], animated: false)
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = .white
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
-        
-        setupSwiftyAds(from: navigationController)
         return true
     }
 }
@@ -39,13 +34,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 private extension AppDelegate {
     
-    func setupSwiftyAds(from viewController: UIViewController) {
+    func setupSwiftyAds(from viewController: UIViewController, geography: SwiftyAdsDebugGeography) {
         #if DEBUG
-        let environment: SwiftyAdsEnvironment = .debug(testDeviceIdentifiers: [], geography: .EEA, resetConsentInfo: true)
+        let environment: SwiftyAdsEnvironment = .debug(testDeviceIdentifiers: [], geography: geography, resetConsentInfo: true)
         #else
         let environment: SwiftyAdsEnvironment = .production
         #endif
-        swiftyAds.setup(
+        swiftyAds.configure(
             from: viewController,
             for: environment,
             consentStatusDidChange: { status in
