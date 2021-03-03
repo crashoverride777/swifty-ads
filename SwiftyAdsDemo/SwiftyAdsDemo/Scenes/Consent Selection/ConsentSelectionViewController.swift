@@ -1,6 +1,6 @@
 import UIKit
 
-final class GeographySelectionViewController: UITableViewController {
+final class ConsentSelectionViewController: UITableViewController {
 
     // MARK: - Types
 
@@ -16,7 +16,7 @@ final class GeographySelectionViewController: UITableViewController {
             case .notEEA:
                 return "Outside EEA (no GDPR)"
             case .disabled:
-                return "Disabled (No UMP SDK Used)"
+                return "Disabled"
             }
         }
     }
@@ -25,11 +25,11 @@ final class GeographySelectionViewController: UITableViewController {
 
     private let swiftyAds: SwiftyAdsType
     private let rows = Row.allCases
-    private var selectedRow: (SwiftyAdsDebugGeography) -> Void
+    private var selectedRow: (SwiftyAdsEnvironment.ConsentConfiguration) -> Void
 
     // MARK: - Initialization
 
-    init(swiftyAds: SwiftyAdsType, selectedRow: @escaping (SwiftyAdsDebugGeography) -> Void) {
+    init(swiftyAds: SwiftyAdsType, selectedRow: @escaping (SwiftyAdsEnvironment.ConsentConfiguration) -> Void) {
         self.swiftyAds = swiftyAds
         self.selectedRow = selectedRow
         if #available(iOS 13.0, *) {
@@ -47,7 +47,7 @@ final class GeographySelectionViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Select Geography"
+        navigationItem.title = "Consent Configuration"
         tableView.register(BasicCell.self, forCellReuseIdentifier: String(describing: BasicCell.self))
     }
 
@@ -74,9 +74,9 @@ final class GeographySelectionViewController: UITableViewController {
         let row = rows[indexPath.row]
         switch row {
         case .EEA:
-            selectedRow(.EEA)
+            selectedRow(.resetOnLaunch(geography: .EEA, isTaggedForUnderAgeOfConsent: false))
         case .notEEA:
-            selectedRow(.notEEA)
+            selectedRow(.resetOnLaunch(geography: .notEEA, isTaggedForUnderAgeOfConsent: false))
         case .disabled:
             selectedRow(.disabled)
         }

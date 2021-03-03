@@ -14,13 +14,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let navigationController = UINavigationController()
-        let geographySelectionViewController = GeographySelectionViewController(swiftyAds: swiftyAds) { geography in
-            let demoSelectionViewController = DemoSelectionViewController(swiftyAds: self.swiftyAds, geography: geography)
+        let consentSelectionViewController = ConsentSelectionViewController(swiftyAds: swiftyAds) { consentConfiguration in
+            let demoSelectionViewController = DemoSelectionViewController(
+                swiftyAds: self.swiftyAds,
+                geography: consentConfiguration.geography
+            )
             navigationController.setViewControllers([demoSelectionViewController], animated: true)
-            self.setupSwiftyAds(from: navigationController, geography: geography)
+            self.configureSwiftyAds(from: navigationController, consentConfiguration: consentConfiguration)
         }
 
-        navigationController.setViewControllers([geographySelectionViewController], animated: false)
+        navigationController.setViewControllers([consentSelectionViewController], animated: false)
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = .white
@@ -34,12 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 private extension AppDelegate {
     
-    func setupSwiftyAds(from viewController: UIViewController, geography: SwiftyAdsDebugGeography) {
+    func configureSwiftyAds(from viewController: UIViewController, consentConfiguration: SwiftyAdsEnvironment.ConsentConfiguration) {
         #if DEBUG
-        let environment: SwiftyAdsEnvironment = .development(
-            testDeviceIdentifiers: [],
-            consentConfiguration: geography == .disabled ? .disabled : .resetOnLaunch(geography: .EEA, isTaggedForUnderAgeOfConsent: false)
-        )
+        let environment: SwiftyAdsEnvironment = .development(testDeviceIdentifiers: [], consentConfiguration: consentConfiguration)
         #else
         let environment: SwiftyAdsEnvironment = .production
         #endif
