@@ -20,9 +20,9 @@ A Swift library to display banner, interstitial, rewarded and native ads from Go
 
 Sign up for an [AdMob account](https://admob.google.com/home/get-started/) and create your required adUnitIDs for the types of ads you would like to display. 
 
-## Create Funding Choices account and messages (GDPR and App Tracking Transparency) 
+## Create Funding Choices account and messages (GDPR and App Tracking Transparency) if required.
 
-SwiftyAds uses Google`s [User Messaging Platform](https://developers.google.com/admob/ump/ios/quick-start) (UMP) SDK to handle user consent unless disabled. This SDK can handle both GDPR requests and also the iOS 14 [ATT](https://developers.google.com/admob/ios/ios14) alert if required. Please read the Funding Choices [documentation](https://support.google.com/fundingchoices/answer/9180084) to ensure they are setup up correctly for your requirements.
+SwiftyAds uses Google`s [User Messaging Platform](https://developers.google.com/admob/ump/ios/quick-start) (UMP) SDK to handle user consen. This SDK can handle both GDPR requests and also the iOS 14 [ATT](https://developers.google.com/admob/ios/ios14) alert if required. Please read the Funding Choices [documentation](https://support.google.com/fundingchoices/answer/9180084) to ensure they are setup up correctly for your requirements.
 
 NOTE: This step can be skipped if you would like to disable user consent requests (see Add SwiftyAds.plist section below)
 
@@ -113,7 +113,8 @@ private func setupSwiftyAds(from viewController: UIViewController) {
     // testDeviceIdentifiers: The test device indentifiers used for debugging purposes.
     // geography: Set your debug location for GDPR consent debugging purposes.
     // resetConsentInfo: If set to true resets the consent info as if they have not been set previously.
-    let environment: SwiftyAdsEnvironment = .debug(testDeviceIdentifiers: [], geography: .EEA, resetConsentInfo: true)
+    // isConsentDisabled: If set to true UMP SDK is disabled and does not trigger consent messages.
+    let environment: SwiftyAdsEnvironment = .debug(testDeviceIdentifiers: [], geography: .EEA, resetConsentInfo: true, isConsentDisabled: false)
     #else
     let environment: SwiftyAdsEnvironment = .production
     #endif
