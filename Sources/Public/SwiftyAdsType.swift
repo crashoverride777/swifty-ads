@@ -30,15 +30,38 @@ public typealias SwiftyAdsConsentResultHandler = (Result<SwiftyAdsConsentStatus,
 
 public enum SwiftyAdsEnvironment {
     case production
-    case development(testDeviceIdentifiers: [String], geography: SwiftyAdsDebugGeography, consentConfiguration: ConsentConfiguration)
+    case development(testDeviceIdentifiers: [String], consentConfiguration: ConsentConfiguration)
 
     public enum ConsentConfiguration {
         // Default consent settings
-        case `default`
+        case `default`(geography: SwiftyAdsDebugGeography, isTaggedForUnderAgeOfConsent: Bool)
         // Resets consent info every time app is launched
-        case resetOnLaunch
+        case resetOnLaunch(geography: SwiftyAdsDebugGeography, isTaggedForUnderAgeOfConsent: Bool)
         // Disables UMP consent
         case disabled
+
+        var geography: SwiftyAdsDebugGeography {
+            switch self {
+            case .default(let geography, _), .resetOnLaunch(let geography, _):
+                return geography
+            case .disabled:
+                return .disabled
+            }
+        }
+
+        var isTaggedForUnderAgeOfConsent: Bool {
+            switch self {
+            case .default(_, let isTaggedForUnderAgeOfConsent), .resetOnLaunch(_, let isTaggedForUnderAgeOfConsent):
+                return isTaggedForUnderAgeOfConsent
+            case .disabled:
+                return false
+            }
+        }
+
+        var isDisabled: Bool {
+            if case .disabled = self { return true }
+            return false
+        }
     }
 
     @available(*, deprecated, message: "Please use .development")

@@ -38,8 +38,7 @@ private extension AppDelegate {
         #if DEBUG
         let environment: SwiftyAdsEnvironment = .development(
             testDeviceIdentifiers: [],
-            geography: geography,
-            consentConfiguration: geography == .disabled ? .disabled : .resetOnLaunch
+            consentConfiguration: geography == .disabled ? .disabled : .resetOnLaunch(geography: .EEA, isTaggedForUnderAgeOfConsent: false)
         )
         #else
         let environment: SwiftyAdsEnvironment = .production

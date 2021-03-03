@@ -141,12 +141,15 @@ extension SwiftyAds: SwiftyAdsType {
         switch environment {
         case .production:
             configuration = .production
-        case .development(let testDeviceIdentifiers, _, let consentConfiguration):
-            configuration = .debug(isUMPDisabled: consentConfiguration == .disabled)
+        case .development(let testDeviceIdentifiers, let consentConfiguration):
+            configuration = .debug(
+                isTaggedForUnderAgeOfConsent: consentConfiguration.isTaggedForUnderAgeOfConsent,
+                isUMPDisabled: consentConfiguration.isDisabled
+            )
             let simulatorId = kGADSimulatorID as? String
             mobileAds.requestConfiguration.testDeviceIdentifiers = [simulatorId].compactMap { $0 } + testDeviceIdentifiers
         case .debug(let testDeviceIdentifiers, _, _):
-            configuration = .debug(isUMPDisabled: false)
+            configuration = .debug(isTaggedForUnderAgeOfConsent: false, isUMPDisabled: false)
             let simulatorId = kGADSimulatorID as? String
             mobileAds.requestConfiguration.testDeviceIdentifiers = [simulatorId].compactMap { $0 } + testDeviceIdentifiers
         }

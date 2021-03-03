@@ -50,7 +50,7 @@ extension SwiftyAdsConfiguration {
     }
 
     // https://developers.google.com/admob/ios/test-ads
-    static func debug(isUMPDisabled: Bool) -> SwiftyAdsConfiguration {
+    static func debug(isTaggedForUnderAgeOfConsent: Bool, isUMPDisabled: Bool) -> SwiftyAdsConfiguration {
         SwiftyAdsConfiguration(
             bannerAdUnitId: "ca-app-pub-3940256099942544/2934735716",
             interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
@@ -58,7 +58,7 @@ extension SwiftyAdsConfiguration {
             rewardedInterstitialAdUnitId: "ca-app-pub-3940256099942544/6978759866",
             nativeAdUnitId: "ca-app-pub-3940256099942544/3986624511",
             isTaggedForChildDirectedTreatment: nil,
-            isTaggedForUnderAgeOfConsent: false,
+            isTaggedForUnderAgeOfConsent: isTaggedForUnderAgeOfConsent,
             isUMPDisabled: isUMPDisabled
         )
     }
