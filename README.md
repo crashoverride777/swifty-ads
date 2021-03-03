@@ -112,9 +112,8 @@ private func setupSwiftyAds(from viewController: UIViewController) {
     #if DEBUG
     // testDeviceIdentifiers: The test device indentifiers used for debugging purposes.
     // geography: Set your debug location for GDPR consent debugging purposes.
-    // resetConsentInfo: If set to true resets the consent info as if they have not been set previously.
-    // isConsentDisabled: If set to true UMP SDK is disabled and does not trigger consent messages.
-    let environment: SwiftyAdsEnvironment = .debug(testDeviceIdentifiers: [], geography: .EEA, resetConsentInfo: true, isConsentDisabled: false)
+    // consentConfiguration: The debug consent configuration, .default, .resetOnLaunch or .disabled.
+    let environment: SwiftyAdsEnvironment = .development(testDeviceIdentifiers: [], geography: .EEA, consentConfiguration: .default)
     #else
     let environment: SwiftyAdsEnvironment = .production
     #endif
