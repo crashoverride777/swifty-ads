@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let consentSelectionViewController = ConsentSelectionViewController(swiftyAds: swiftyAds) { consentConfiguration in
             let demoSelectionViewController = DemoSelectionViewController(
                 swiftyAds: self.swiftyAds,
-                geography: consentConfiguration.geography
+                consentConfiguration: consentConfiguration
             )
             navigationController.setViewControllers([demoSelectionViewController], animated: true)
             self.configureSwiftyAds(from: navigationController, consentConfiguration: consentConfiguration)

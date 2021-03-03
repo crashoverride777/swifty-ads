@@ -78,21 +78,21 @@ final class DemoSelectionViewController: UITableViewController {
     // MARK: - Properties
 
     private let swiftyAds: SwiftyAdsType
-    private let geography: SwiftyAdsDebugGeography
+    private let consentConfiguration: SwiftyAdsEnvironment.ConsentConfiguration
     private let sections = Section.allCases
     private let notificationCenter: NotificationCenter = .default
     private var bannerAd: SwiftyAdsBannerType?
 
     private var isRequiredToAskForConsent: Bool {
-        guard geography != .disabled else { return false }
+        guard !consentConfiguration.isDisabled else { return false }
         return swiftyAds.consentStatus != .notRequired
     }
 
     // MARK: - Initialization
     
-    init(swiftyAds: SwiftyAdsType, geography: SwiftyAdsDebugGeography) {
+    init(swiftyAds: SwiftyAdsType, consentConfiguration: SwiftyAdsEnvironment.ConsentConfiguration) {
         self.swiftyAds = swiftyAds
-        self.geography = geography
+        self.consentConfiguration = consentConfiguration
         if #available(iOS 13.0, *) {
             super.init(style: .insetGrouped)
         } else {
