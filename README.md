@@ -115,9 +115,15 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 private func configureSwiftyAds(from viewController: UIViewController) {
     #if DEBUG
     // testDeviceIdentifiers: The test device identifiers used for debugging purposes.
-    // geography: Set your debug location for GDPR consent debugging purposes.
-    // consentConfiguration: The debug consent configuration, .default, .resetOnLaunch or .disabled.
-    let environment: SwiftyAdsEnvironment = .development(testDeviceIdentifiers: [], geography: .EEA, consentConfiguration: .default)
+    // consentConfiguration: The debug consent configuration:
+        1) .default(geography: .EEA, isTaggedForUnderAgeOfConsent: false), 
+        2) .resetOnLaunch(geography: .EEA, isTaggedForUnderAgeOfConsent: false) 
+        3) .disabled
+        
+    let environment: SwiftyAdsEnvironment = .development(
+        testDeviceIdentifiers: [], 
+        consentConfiguration: .resetOnLaunch(geography: .EEA, isTaggedForUnderAgeOfConsent: false)
+    )
     #else
     let environment: SwiftyAdsEnvironment = .production
     #endif
