@@ -133,7 +133,7 @@ private func setupSwiftyAds(from viewController: UIViewController) {
 }
 ```
 
-NOTE: Currently it seems Apple is rejecting apps that use the UMP SDK to display the iOS 14 ATT alert because Google is displaying an explainer message and/or the GDPR message before the actual ATT alert. As a workaround you can disable the ATT message from Funding Choices and [manually](https://github.com/crashoverride777/swifty-ads/issues/50) display the ATT alert before configuring SwiftyAds. 
+NOTE: If you do not use the Google UMP SDK to display the iOS 14 App Tracking Transparency (ATT) alert, it is recommended to ask for permission before configuring SwiftyAds.
 
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
