@@ -75,6 +75,10 @@ Optional fields:
 - rewardedInterstitialAdUnitId (String)
 - nativeAdUnitId (String)
 - isTaggedForChildDirectedTreatment (Boolean) ([COPPA](https://developers.google.com/admob/ios/targeting#child-directed_setting))
+- isConsentDisabled (Boolean)
+
+NOTE: Adding the `isConsentDisabled` field and setting it to true means SwiftyAds will not carry out any consent requests using the UMP SDK. 
+This means you will have to manually support GDPR and ATT requirements if required.
 
 ### Link AppTrackingTransparency framework
 
