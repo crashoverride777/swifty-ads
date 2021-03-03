@@ -65,6 +65,7 @@ public enum SwiftyAdsEnvironment {
         }
     }
 
+    // Deprecated
     @available(*, deprecated, message: "Please use .development")
     case debug(testDeviceIdentifiers: [String],
                geography: SwiftyAdsEnvironment.ConsentConfiguration.Geography,
