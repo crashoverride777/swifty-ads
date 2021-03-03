@@ -80,7 +80,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// The current consent status.
     ///
     /// - Warning:
-    /// Returns .notRequired if consent is disabled and therefore does not support GDPR requirements.
+    /// Returns .notRequired if consent has been disabled. This means you might be breaking GDPR legislation if releasing in EEA.
     public var consentStatus: SwiftyAdsConsentStatus {
         consentManager?.consentStatus ?? .notRequired
     }
@@ -187,8 +187,8 @@ extension SwiftyAds: SwiftyAdsType {
             )
         }
 
-        // If consent is disabled skip consent flow
-        if let isConsentDisabled = configuration.isConsentDisabled, isConsentDisabled {
+        // If UMP consent is disabled skip consent flow completely
+        if let isUMPConsentDisabled = configuration.isUMPConsentDisabled, isUMPConsentDisabled {
             completion(.success(.notRequired))
             return
         }

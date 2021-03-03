@@ -30,7 +30,7 @@ struct SwiftyAdsConfiguration: Decodable {
     let nativeAdUnitId: String?
     let isTaggedForChildDirectedTreatment: Bool? // COPPA
     let isTaggedForUnderAgeOfConsent: Bool  // GDPR
-    let isConsentDisabled: Bool?
+    let isUMPConsentDisabled: Bool? // Disables User Messaging Platform (UMP) SDK
 }
 
 extension SwiftyAdsConfiguration {
@@ -59,7 +59,7 @@ extension SwiftyAdsConfiguration {
             nativeAdUnitId: "ca-app-pub-3940256099942544/3986624511",
             isTaggedForChildDirectedTreatment: nil,
             isTaggedForUnderAgeOfConsent: false,
-            isConsentDisabled: false
+            isUMPConsentDisabled: false
         )
     }
 }
