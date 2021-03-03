@@ -7,6 +7,7 @@ final class GeographySelectionViewController: UITableViewController {
     private enum Row: CaseIterable {
         case EEA
         case notEEA
+        case disabled
 
         var title: String {
             switch self {
@@ -14,6 +15,8 @@ final class GeographySelectionViewController: UITableViewController {
                 return "Inside EEA (GDPR)"
             case .notEEA:
                 return "Outside EEA (no GDPR)"
+            case .disabled:
+                return "Disabled (No UMP SDK Used)"
             }
         }
     }
@@ -74,6 +77,8 @@ final class GeographySelectionViewController: UITableViewController {
             selectedRow(.EEA)
         case .notEEA:
             selectedRow(.notEEA)
+        case .disabled:
+            selectedRow(.disabled)
         }
     }
 }

@@ -78,11 +78,8 @@ public final class SwiftyAds: NSObject {
 extension SwiftyAds: SwiftyAdsType {
 
     /// The current consent status.
-    ///
-    /// - Warning:
-    /// Returns .notRequired if consent has been disabled. This means you might be breaking GDPR legislation if releasing in EEA.
     public var consentStatus: SwiftyAdsConsentStatus {
-        consentManager?.consentStatus ?? .notRequired
+        consentManager?.consentStatus ?? .unknown
     }
 
     /// The type of consent provided when not using IAB TCF v2 framework.
@@ -141,8 +138,8 @@ extension SwiftyAds: SwiftyAdsType {
         switch environment {
         case .production:
             configuration = .production
-        case .debug(let testDeviceIdentifiers, _, _):
-            configuration = .debug
+        case .debug(let testDeviceIdentifiers, _, _, let isConsentDisabled):
+            configuration = .debug(isUMPConsentDisabled: isConsentDisabled)
             let simulatorId = kGADSimulatorID as? String
             mobileAds.requestConfiguration.testDeviceIdentifiers = [simulatorId].compactMap { $0 } + testDeviceIdentifiers
         }

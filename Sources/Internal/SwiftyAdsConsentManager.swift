@@ -85,7 +85,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
         let parameters = UMPRequestParameters()
 
         // Set UMPDebugSettings if in debug environment.
-        if case .debug(let testDeviceIdentifiers, let geography, let resetConsentInfo) = environment {
+        if case .debug(let testDeviceIdentifiers, let geography, let resetConsentInfo, _) = environment {
             let debugSettings = UMPDebugSettings()
             debugSettings.testDeviceIdentifiers = testDeviceIdentifiers
             debugSettings.geography = geography

@@ -30,7 +30,7 @@ public typealias SwiftyAdsConsentResultHandler = (Result<SwiftyAdsConsentStatus,
 
 public enum SwiftyAdsEnvironment {
     case production
-    case debug(testDeviceIdentifiers: [String], geography: SwiftyAdsDebugGeography, resetConsentInfo: Bool)
+    case debug(testDeviceIdentifiers: [String], geography: SwiftyAdsDebugGeography, resetConsentInfo: Bool, isConsentDisabled: Bool)
 }
 
 public enum SwiftyAdsAdUnitIdType {
