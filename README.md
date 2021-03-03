@@ -20,11 +20,13 @@ A Swift library to display banner, interstitial, rewarded and native ads from Go
 
 Sign up for an [AdMob account](https://admob.google.com/home/get-started/) and create your required adUnitIDs for the types of ads you would like to display. 
 
-## Create Funding Choices account and messages (GDPR and App Tracking Transparency)
+## Create Funding Choices account and messages (GDPR and App Tracking Transparency) 
 
-SwiftyAds uses Google`s [User Messaging Platform](https://developers.google.com/admob/ump/ios/quick-start) (UMP) SDK to handle user consent. This SDK can handle both GDPR requests and also the iOS 14 [ATT](https://developers.google.com/admob/ios/ios14) alert if required. Please read the Funding Choices [documentation](https://support.google.com/fundingchoices/answer/9180084) to ensure they are setup up correctly for your requirements.
+SwiftyAds uses Google`s [User Messaging Platform](https://developers.google.com/admob/ump/ios/quick-start) (UMP) SDK to handle user consent unless disabled. This SDK can handle both GDPR requests and also the iOS 14 [ATT](https://developers.google.com/admob/ios/ios14) alert if required. Please read the Funding Choices [documentation](https://support.google.com/fundingchoices/answer/9180084) to ensure they are setup up correctly for your requirements.
 
-Note: Currently it seems Apple is rejecting apps that use the UMP SDK to display the iOS 14 ATT alert because Google is displaying an explainer message and/or the GDPR message before the actual ATT alert. As a workaround you can [manually](https://github.com/crashoverride777/swifty-ads/issues/50) display the ATT alert before configuring SwiftyAds. 
+NOTE: This step can be skipped if you would like to disable user consent requests (see Add SwiftyAds.plist section below)
+
+NOTE: Currently it seems Apple is rejecting apps that use the UMP SDK to display the iOS 14 ATT alert because Google is displaying an explainer message and/or the GDPR message before the actual ATT alert. As a workaround you can [manually](https://github.com/crashoverride777/swifty-ads/issues/50) display the ATT alert before configuring SwiftyAds. 
 
 ## Mediation
 
@@ -75,10 +77,10 @@ Optional fields:
 - rewardedInterstitialAdUnitId (String)
 - nativeAdUnitId (String)
 - isTaggedForChildDirectedTreatment (Boolean) ([COPPA](https://developers.google.com/admob/ios/targeting#child-directed_setting))
-- isConsentDisabled (Boolean)
+- isUMPConsentDisabled (Boolean)
 
-NOTE: Adding the `isConsentDisabled` field and setting it to true means SwiftyAds will not carry out any consent requests using the UMP SDK. 
-This means you will have to manually support GDPR and ATT requirements if required.
+NOTE: Adding the `isUMPConsentDisabled` field and setting it to true means SwiftyAds will not carry out any consent requests using the User Messaging Platform (UMP) SDK. 
+This means you will have to manually support GDPR (EEA) and ATT (Apple) alerts if required.
 
 ### Link AppTrackingTransparency framework
 
@@ -96,7 +98,7 @@ import SwiftyAds
 
 ### Setup 
 
-Create a setup method and call it as soon as your app launches e.g. AppDelegate `didFinishLaunchingWithOptions`. This will also trigger the initial consent flow (GDPR and ATT).
+Create a setup method and call it as soon as your app launches e.g. AppDelegate `didFinishLaunchingWithOptions`. This will also trigger the initial consent flow (GDPR and ATT) if consent has not been disabled.
 
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
