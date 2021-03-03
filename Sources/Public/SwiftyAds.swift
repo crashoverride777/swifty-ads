@@ -78,8 +78,11 @@ public final class SwiftyAds: NSObject {
 extension SwiftyAds: SwiftyAdsType {
 
     /// The current consent status.
+    ///
+    /// - Warning:
+    /// Returns .notRequired if consent has been disabled via SwiftyAds.plist isUMPConsentDisabled entry.
     public var consentStatus: SwiftyAdsConsentStatus {
-        consentManager?.consentStatus ?? .unknown
+        consentManager?.consentStatus ?? .notRequired
     }
 
     /// The type of consent provided when not using IAB TCF v2 framework.
@@ -139,11 +142,11 @@ extension SwiftyAds: SwiftyAdsType {
         case .production:
             configuration = .production
         case .development(let testDeviceIdentifiers, _, let consentConfiguration):
-            configuration = .debug(isUMPConsentDisabled: consentConfiguration == .disabled)
+            configuration = .debug(isUMPDisabled: consentConfiguration == .disabled)
             let simulatorId = kGADSimulatorID as? String
             mobileAds.requestConfiguration.testDeviceIdentifiers = [simulatorId].compactMap { $0 } + testDeviceIdentifiers
         case .debug(let testDeviceIdentifiers, _, _):
-            configuration = .debug(isUMPConsentDisabled: false)
+            configuration = .debug(isUMPDisabled: false)
             let simulatorId = kGADSimulatorID as? String
             mobileAds.requestConfiguration.testDeviceIdentifiers = [simulatorId].compactMap { $0 } + testDeviceIdentifiers
         }
@@ -188,8 +191,8 @@ extension SwiftyAds: SwiftyAdsType {
             )
         }
 
-        // If UMP consent is disabled skip consent flow completely
-        if let isUMPConsentDisabled = configuration.isUMPConsentDisabled, isUMPConsentDisabled {
+        // If UMP SDK is disabled skip consent flow completely
+        if let isUMPDisabled = configuration.isUMPDisabled, isUMPDisabled {
             completion(.success(.notRequired))
             return
         }

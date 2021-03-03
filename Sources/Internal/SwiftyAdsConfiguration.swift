@@ -30,7 +30,7 @@ struct SwiftyAdsConfiguration: Decodable {
     let nativeAdUnitId: String?
     let isTaggedForChildDirectedTreatment: Bool? // COPPA
     let isTaggedForUnderAgeOfConsent: Bool  // GDPR
-    let isUMPConsentDisabled: Bool? // Disables User Messaging Platform (UMP) SDK
+    let isUMPDisabled: Bool? // Disables User Messaging Platform (UMP) SDK
 }
 
 extension SwiftyAdsConfiguration {
@@ -50,7 +50,7 @@ extension SwiftyAdsConfiguration {
     }
 
     // https://developers.google.com/admob/ios/test-ads
-    static func debug(isUMPConsentDisabled: Bool) -> SwiftyAdsConfiguration {
+    static func debug(isUMPDisabled: Bool) -> SwiftyAdsConfiguration {
         SwiftyAdsConfiguration(
             bannerAdUnitId: "ca-app-pub-3940256099942544/2934735716",
             interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
@@ -59,7 +59,7 @@ extension SwiftyAdsConfiguration {
             nativeAdUnitId: "ca-app-pub-3940256099942544/3986624511",
             isTaggedForChildDirectedTreatment: nil,
             isTaggedForUnderAgeOfConsent: false,
-            isUMPConsentDisabled: isUMPConsentDisabled
+            isUMPDisabled: isUMPDisabled
         )
     }
 }
