@@ -24,7 +24,7 @@ Sign up for an [AdMob account](https://admob.google.com/home/get-started/) and c
 
 SwiftyAds uses Google`s [User Messaging Platform](https://developers.google.com/admob/ump/ios/quick-start) (UMP) SDK to handle user consent if required. This SDK can handle both GDPR requests and also the iOS 14 [ATT](https://developers.google.com/admob/ios/ios14) alert. Please read the Funding Choices [documentation](https://support.google.com/fundingchoices/answer/9180084) to ensure they are setup up correctly for your requirements.
 
-NOTE: This step can be skipped if you would like to disable user consent requests, see [SwiftyAds.plist part of installation section](#-installation)
+NOTE: This step can be skipped if you would like to disable user consent requests, see add SwiftyAds.plist part of [installation section](#installation)
 
 NOTE: Apple may be rejecting apps that use the UMP SDK to display the iOS 14 ATT alert. As a workaround you may have to tweak the wording of the [explainer message](https://github.com/Gimu/admob_consent/issues/6#issuecomment-772349196) or you can [manually](https://github.com/crashoverride777/swifty-ads/issues/50) display the ATT alert before configuring SwiftyAds. 
 
@@ -97,19 +97,19 @@ If you are supporting iOS 13 and below you will also have to make it optional in
 import SwiftyAds
 ```
 
-## Setup 
+## Configure 
 
-Create a setup method and call it as soon as your app launches e.g. AppDelegate `didFinishLaunchingWithOptions`. This will also trigger the initial consent flow (GDPR and ATT) if consent has not been disabled.
+Create a configure method and call it as soon as your app launches e.g. AppDelegate `didFinishLaunchingWithOptions`. This will also trigger the initial consent flow (GDPR and ATT) if consent has not been disabled.
 
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     if let rootViewController = window?.rootViewController {
-        setupSwiftyAds(from: rootViewController)
+        configureSwiftyAds(from: rootViewController)
     }
     return true
 }
 
-private func setupSwiftyAds(from viewController: UIViewController) {
+private func configureSwiftyAds(from viewController: UIViewController) {
     #if DEBUG
     // testDeviceIdentifiers: The test device indentifiers used for debugging purposes.
     // geography: Set your debug location for GDPR consent debugging purposes.
@@ -147,10 +147,10 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
     if let rootViewController = window?.rootViewController {
         if  #available(iOS 14, *)  {
             ATTrackingManager.requestTrackingAuthorization { status in
-                self.setupSwiftyAds(from: rootViewController)
+                self.configureSwiftyAds(from: rootViewController)
             }
         } else {
-            setupSwiftyAds(from: rootViewController)
+            configureSwiftyAds(from: rootViewController)
         }
     }
     return true
