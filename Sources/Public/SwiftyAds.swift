@@ -138,8 +138,12 @@ extension SwiftyAds: SwiftyAdsType {
         switch environment {
         case .production:
             configuration = .production
-        case .debug(let testDeviceIdentifiers, _, _, let isConsentDisabled):
-            configuration = .debug(isUMPConsentDisabled: isConsentDisabled)
+        case .development(let testDeviceIdentifiers, _, let consentConfiguration):
+            configuration = .debug(isUMPConsentDisabled: consentConfiguration == .disabled)
+            let simulatorId = kGADSimulatorID as? String
+            mobileAds.requestConfiguration.testDeviceIdentifiers = [simulatorId].compactMap { $0 } + testDeviceIdentifiers
+        case .debug(let testDeviceIdentifiers, _, _):
+            configuration = .debug(isUMPConsentDisabled: false)
             let simulatorId = kGADSimulatorID as? String
             mobileAds.requestConfiguration.testDeviceIdentifiers = [simulatorId].compactMap { $0 } + testDeviceIdentifiers
         }
@@ -264,7 +268,7 @@ extension SwiftyAds: SwiftyAdsType {
             case .plist:
                 return configuration?.bannerAdUnitId
             case .custom(let id):
-                if case .debug = environment {
+                if case .development = environment {
                     return configuration?.bannerAdUnitId
                 }
                 return id

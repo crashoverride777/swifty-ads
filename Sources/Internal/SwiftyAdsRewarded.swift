@@ -116,7 +116,7 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
 extension SwiftyAdsRewarded: GADFullScreenContentDelegate {
 
     func adDidRecordImpression(_ ad: GADFullScreenPresentingAd) {
-        if case .debug = environment {
+        if case .development = environment {
             print("SwiftyAdsRewarded did record impression for ad: \(ad)")
         }
     }

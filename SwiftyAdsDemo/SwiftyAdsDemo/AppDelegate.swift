@@ -36,11 +36,10 @@ private extension AppDelegate {
     
     func setupSwiftyAds(from viewController: UIViewController, geography: SwiftyAdsDebugGeography) {
         #if DEBUG
-        let environment: SwiftyAdsEnvironment = .debug(
+        let environment: SwiftyAdsEnvironment = .development(
             testDeviceIdentifiers: [],
             geography: geography,
-            resetConsentInfo: true,
-            isConsentDisabled: geography == .disabled
+            consentConfiguration: geography == .disabled ? .disabled : .resetOnLaunch
         )
         #else
         let environment: SwiftyAdsEnvironment = .production

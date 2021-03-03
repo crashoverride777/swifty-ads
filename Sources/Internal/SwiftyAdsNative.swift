@@ -88,7 +88,7 @@ extension SwiftyAdsNative: SwiftyAdsNativeType {
 
         // Set the ad unit id
         var adUnitId: String {
-            if case .debug = environment {
+            if case .development = environment {
                 return self.adUnitId
             }
             switch adUnitIdType {

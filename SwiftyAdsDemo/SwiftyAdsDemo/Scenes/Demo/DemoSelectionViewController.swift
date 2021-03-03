@@ -84,7 +84,8 @@ final class DemoSelectionViewController: UITableViewController {
     private var bannerAd: SwiftyAdsBannerType?
 
     private var isRequiredToAskForConsent: Bool {
-        swiftyAds.consentStatus != .notRequired
+        guard geography != .disabled else { return false }
+        return swiftyAds.consentStatus != .notRequired
     }
 
     // MARK: - Initialization
