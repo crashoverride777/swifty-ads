@@ -274,6 +274,9 @@ extension SwiftyAds: SwiftyAdsType {
                 if case .development = environment {
                     return configuration?.bannerAdUnitId
                 }
+                if case .debug = environment {
+                    return configuration?.bannerAdUnitId
+                }
                 return id
             }
         }

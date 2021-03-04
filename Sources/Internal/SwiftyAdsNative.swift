@@ -91,6 +91,9 @@ extension SwiftyAdsNative: SwiftyAdsNativeType {
             if case .development = environment {
                 return self.adUnitId
             }
+            if case .debug = environment {
+                return self.adUnitId
+            }
             switch adUnitIdType {
             case .plist:
                 return self.adUnitId
