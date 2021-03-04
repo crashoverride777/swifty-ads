@@ -193,6 +193,7 @@ extension SwiftyAds: SwiftyAdsType {
 
         // If UMP SDK is disabled skip consent flow completely
         if let isUMPDisabled = configuration.isUMPDisabled, isUMPDisabled {
+            loadAds()
             completion(.success(.notRequired))
             return
         }
