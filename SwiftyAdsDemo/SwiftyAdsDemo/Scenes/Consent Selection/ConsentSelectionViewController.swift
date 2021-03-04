@@ -74,9 +74,9 @@ final class ConsentSelectionViewController: UITableViewController {
         let row = rows[indexPath.row]
         switch row {
         case .EEA:
-            selectedRow(.resetOnLaunch(geography: .EEA, isTaggedForUnderAgeOfConsent: false))
+            selectedRow(.resetOnLaunch(geography: .EEA))
         case .notEEA:
-            selectedRow(.resetOnLaunch(geography: .notEEA, isTaggedForUnderAgeOfConsent: false))
+            selectedRow(.resetOnLaunch(geography: .notEEA))
         case .disabled:
             selectedRow(.disabled)
         }

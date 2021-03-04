@@ -35,27 +35,18 @@ public enum SwiftyAdsEnvironment {
         public typealias Geography = UMPDebugGeography
 
         // Default consent settings
-        case `default`(geography: Geography, isTaggedForUnderAgeOfConsent: Bool)
+        case `default`(geography: Geography)
         // Resets consent info every time app is launched
-        case resetOnLaunch(geography: Geography, isTaggedForUnderAgeOfConsent: Bool)
+        case resetOnLaunch(geography: Geography)
         // Disables UMP consent
         case disabled
 
         var geography: Geography {
             switch self {
-            case .default(let geography, _), .resetOnLaunch(let geography, _):
+            case .default(let geography), .resetOnLaunch(let geography):
                 return geography
             case .disabled:
                 return .disabled
-            }
-        }
-
-        var isTaggedForUnderAgeOfConsent: Bool {
-            switch self {
-            case .default(_, let isTaggedForUnderAgeOfConsent), .resetOnLaunch(_, let isTaggedForUnderAgeOfConsent):
-                return isTaggedForUnderAgeOfConsent
-            case .disabled:
-                return false
             }
         }
 

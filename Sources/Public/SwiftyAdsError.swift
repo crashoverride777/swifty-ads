@@ -33,7 +33,7 @@ public enum SwiftyAdsError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .consentManagerNotAvailable:
-            return "Consent manager not available. Remove isUMPConsentDisabled field from SwiftyAds.plist"
+            return "Consent manager not available. Remove isUMPConsentDisabled entry from SwiftyAds.plist"
         case .consentFormNotAvailable:
             return "Consent form not available"
         case .interstitialAdNotLoaded:
