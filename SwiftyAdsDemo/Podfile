@@ -1,4 +1,4 @@
-platform :ios, '13.6'
+platform :ios, '12.3'
 
 target 'SwiftyAdsDemo' do
    use_frameworks!
