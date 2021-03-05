@@ -164,14 +164,14 @@ extension SwiftyAdsBanner: GADBannerViewDelegate {
 
     // Request lifecycle events
     func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
-        if case .debug = environment {
+        if case .development = environment {
             print("SwiftyAdsBanner did record impression for banner ad")
         }
     }
     
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
         show(bannerView, from: bannerView.rootViewController)
-        if case .debug = environment {
+        if case .development = environment {
             print("SwiftyAdsBanner did receive ad from: \(bannerView.responseInfo?.adNetworkClassName ?? "not found")")
         }
     }

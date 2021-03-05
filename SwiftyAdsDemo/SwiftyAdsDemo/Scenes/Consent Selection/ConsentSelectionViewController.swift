@@ -1,12 +1,13 @@
 import UIKit
 
-final class GeographySelectionViewController: UITableViewController {
+final class ConsentSelectionViewController: UITableViewController {
 
     // MARK: - Types
 
     private enum Row: CaseIterable {
         case EEA
         case notEEA
+        case disabled
 
         var title: String {
             switch self {
@@ -14,6 +15,8 @@ final class GeographySelectionViewController: UITableViewController {
                 return "Inside EEA (GDPR)"
             case .notEEA:
                 return "Outside EEA (no GDPR)"
+            case .disabled:
+                return "Disabled"
             }
         }
     }
@@ -22,11 +25,11 @@ final class GeographySelectionViewController: UITableViewController {
 
     private let swiftyAds: SwiftyAdsType
     private let rows = Row.allCases
-    private var selectedRow: (SwiftyAdsDebugGeography) -> Void
+    private var selectedRow: (SwiftyAdsEnvironment.ConsentConfiguration.Geography) -> Void
 
     // MARK: - Initialization
 
-    init(swiftyAds: SwiftyAdsType, selectedRow: @escaping (SwiftyAdsDebugGeography) -> Void) {
+    init(swiftyAds: SwiftyAdsType, selectedRow: @escaping (SwiftyAdsEnvironment.ConsentConfiguration.Geography) -> Void) {
         self.swiftyAds = swiftyAds
         self.selectedRow = selectedRow
         if #available(iOS 13.0, *) {
@@ -44,7 +47,7 @@ final class GeographySelectionViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Select Geography"
+        navigationItem.title = "Consent Configuration"
         tableView.register(BasicCell.self, forCellReuseIdentifier: String(describing: BasicCell.self))
     }
 
@@ -74,6 +77,8 @@ final class GeographySelectionViewController: UITableViewController {
             selectedRow(.EEA)
         case .notEEA:
             selectedRow(.notEEA)
+        case .disabled:
+            selectedRow(.disabled)
         }
     }
 }

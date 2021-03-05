@@ -52,8 +52,7 @@ public final class SwiftyAds: NSObject {
     private var disabled = false
 
     private var hasConsent: Bool {
-        guard let consentManager = consentManager else { return true }
-        switch consentManager.consentStatus {
+        switch consentStatus {
         case .notRequired, .obtained:
             return true
         default:
@@ -78,14 +77,17 @@ public final class SwiftyAds: NSObject {
 extension SwiftyAds: SwiftyAdsType {
 
     /// The current consent status.
+    ///
+    /// - Warning:
+    /// Returns .notRequired if consent has been disabled via SwiftyAds.plist isUMPDisabled entry.
     public var consentStatus: SwiftyAdsConsentStatus {
-        consentManager?.consentStatus ?? .unknown
+        consentManager?.consentStatus ?? .notRequired
     }
 
     /// The type of consent provided when not using IAB TCF v2 framework.
     ///
     /// - Warning:
-    /// Always returns unknown if using IAB TCF v2 framework
+    /// Always returns .unknown if using IAB TCF v2 framework
     /// https://stackoverflow.com/questions/63415275/obtaining-consent-with-the-user-messaging-platform-android
     public var consentType: SwiftyAdsConsentType {
         consentManager?.consentType ?? .unknown
@@ -129,6 +131,9 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter environment: The environment for ads to be displayed.
     /// - parameter consentStatusDidChange: A handler that will be called everytime the consent status has changed.
     /// - parameter completion: A completion handler that will return the current consent status after the initial consent flow has finished.
+    ///
+    /// - Warning:
+    /// Returns .notRequired in the completion handler if consent has been disabled via SwiftyAds.plist isUMPDisabled entry.
     public func configure(from viewController: UIViewController,
                           for environment: SwiftyAdsEnvironment,
                           consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
@@ -138,8 +143,12 @@ extension SwiftyAds: SwiftyAdsType {
         switch environment {
         case .production:
             configuration = .production
+        case .development(let testDeviceIdentifiers, let consentConfiguration):
+            configuration = .debug(isUMPDisabled: consentConfiguration.isDisabled)
+            let simulatorId = kGADSimulatorID as? String
+            mobileAds.requestConfiguration.testDeviceIdentifiers = [simulatorId].compactMap { $0 } + testDeviceIdentifiers
         case .debug(let testDeviceIdentifiers, _, _):
-            configuration = .debug
+            configuration = .debug(isUMPDisabled: false)
             let simulatorId = kGADSimulatorID as? String
             mobileAds.requestConfiguration.testDeviceIdentifiers = [simulatorId].compactMap { $0 } + testDeviceIdentifiers
         }
@@ -182,6 +191,13 @@ extension SwiftyAds: SwiftyAdsType {
                 adUnitId: nativeAdUnitId,
                 request: requestBuilder.build
             )
+        }
+
+        // If UMP SDK is disabled skip consent flow completely
+        if let isUMPDisabled = configuration.isUMPDisabled, isUMPDisabled {
+            loadAds()
+            completion(.success(.notRequired))
+            return
         }
 
         // Create consent manager
@@ -258,6 +274,9 @@ extension SwiftyAds: SwiftyAdsType {
             case .plist:
                 return configuration?.bannerAdUnitId
             case .custom(let id):
+                if case .development = environment {
+                    return configuration?.bannerAdUnitId
+                }
                 if case .debug = environment {
                     return configuration?.bannerAdUnitId
                 }
@@ -492,6 +511,7 @@ private extension SwiftyAds {
         rewardedAd?.load()
         guard !isDisabled else { return }
         interstitialAd?.load()
+        rewardedInterstitialAd?.load()
     }
 }
 

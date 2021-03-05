@@ -11,28 +11,32 @@ A Swift library to display banner, interstitial, rewarded and native ads from Go
 - Multiple ad unit ids
 - Swift package manager support
 
-## Requirements
+# Requirements
 
 - iOS 11.4+
 - Swift 5.0+
 
-## Create AdMob account
+# Create Accounts
 
-Sign up for an [AdMob account](https://admob.google.com/home/get-started/) and create your required adUnitIDs for the types of ads you would like to display. 
+## AdMob
 
-## Create Funding Choices account and messages (GDPR and App Tracking Transparency)
+Sign up for an [AdMob account](https://admob.google.com/home/get-started/) and create your required AdUnitIDs for the types of ads you would like to display. 
 
-SwiftyAds uses Google`s [User Messaging Platform](https://developers.google.com/admob/ump/ios/quick-start) (UMP) SDK to handle user consent. This SDK can handle both GDPR requests and also the iOS 14 [ATT](https://developers.google.com/admob/ios/ios14) alert if required. Please read the Funding Choices [documentation](https://support.google.com/fundingchoices/answer/9180084) to ensure they are setup up correctly for your requirements.
+## Funding Choices (optional)
+
+SwiftyAds uses Google`s [User Messaging Platform](https://developers.google.com/admob/ump/ios/quick-start) (UMP) SDK to handle user consent if required. This SDK can handle both GDPR requests and also the iOS 14 [ATT](https://developers.google.com/admob/ios/ios14) alert. 
+
+This step can be skipped if you would like to disable user consent requests, see `Add SwiftyAds.plist` part of [pre-usage section](#pre-usage) below. Otherwise please read the Funding Choices [documentation](https://support.google.com/fundingchoices/answer/9180084) to ensure they are setup up correctly for your requirements.
 
 NOTE: Apple may be rejecting apps that use the UMP SDK to display the iOS 14 ATT alert. As a workaround you may have to tweak the wording of the [explainer message](https://github.com/Gimu/admob_consent/issues/6#issuecomment-772349196) or you can [manually](https://github.com/crashoverride777/swifty-ads/issues/50) display the ATT alert before configuring SwiftyAds. 
 
-## Mediation
+# Mediation
 
-[READ](https://developers.google.com/admob/ios/mediation)
+To support mediation networks please read the AdMob [documentation](https://developers.google.com/admob/ios/mediation)
 
-## Installation
+# Installation
 
-### Cocoa Pods
+## Cocoa Pods
 
 [CocoaPods](https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods) is a dependency manager for Cocoa projects. 
 Simply install the pod by adding the following line to your pod file
@@ -41,7 +45,7 @@ Simply install the pod by adding the following line to your pod file
 pod 'SwiftyAds'
 ```
 
-### Manually 
+## Manually 
 
 Alternatively you can copy the `Sources` folder and its containing files into your project. Install the required dependencies either via Cocoa Pods.
 
@@ -54,65 +58,74 @@ or manually
 - [AdMob](https://developers.google.com/admob/ios/quick-start#manual_download)
 - [UMP](https://developers.google.com/admob/ump/ios/quick-start#manual_download)
 
-## Usage
+# Pre-Usage
 
-### Update Info.plist
+## Update Info.plist
 
 - [AdMob](https://developers.google.com/admob/ios/quick-start#update_your_infoplist)
 - [UMP](https://developers.google.com/admob/ump/ios/quick-start#update_your_infoplist)
 
-### Add SwiftyAds.plist
+## Add SwiftyAds.plist
 
 Download the [template ](Resources/SwiftyAdsPlistTemplate.zip) plist and add it to your projects main bundle. Than enter your required ad unit ids and set the isTaggedForUnderAgeOfConsent flag.
 
-Mandatory fields:
+Mandatory entries:
 - isTaggedForUnderAgeOfConsent (Boolean) ([GDPR](https://developers.google.com/admob/ios/targeting#users_under_the_age_of_consent))
 
-Optional fields:
+Optional entries:
 - bannerAdUnitId (String)
 - interstitialAdUnitId (String)
 - rewardedAdUnitId (String)
 - rewardedInterstitialAdUnitId (String)
 - nativeAdUnitId (String)
 - isTaggedForChildDirectedTreatment (Boolean) ([COPPA](https://developers.google.com/admob/ios/targeting#child-directed_setting))
+- isUMPDisabled (Boolean)
 
-### Link AppTrackingTransparency framework
+NOTE: Adding the `isUMPDisabled` entry and setting it to true means SwiftyAds will not carry out any consent requests using the User Messaging Platform (UMP) SDK. 
+In that case you will have to manually support GDPR (EEA) and ATT (Apple) alerts if required.
 
-[Link](https://developers.google.com/admob/ump/ios/quick-start#update_your_infoplist) the AppTrackingTransparency framework in `Framework, Libraries and Embedded Content` under the general tab, otherwise ATT alerts will not display.
+## Link AppTrackingTransparency framework (optional)
+
+[Link](https://developers.google.com/admob/ump/ios/quick-start#update_your_infoplist) the AppTrackingTransparency framework in `Framework, Libraries and Embedded Content` under the general tab, otherwise iOS ATT alerts will not display.
 
 If you are supporting iOS 13 and below you will also have to make it optional in `BuildPhases->Link Binary With Libraries` to avoid a crash.
 
-### Add import (CocoaPods)
+# Usage
 
-- Add the import statement to your swift file(s) when you installed via CocoaPods
+## Add import (CocoaPods)
+
+- Add the import statement to your swift file(s) if you installed via CocoaPods
 
 ```swift
 import SwiftyAds
 ```
 
-### Setup 
+## Configure 
 
-Create a setup method and call it as soon as your app launches e.g. AppDelegate `didFinishLaunchingWithOptions`. This will also trigger the initial consent flow (GDPR and ATT).
+Create a configure method and call it as soon as your app launches e.g. AppDelegate `didFinishLaunchingWithOptions`. This will also trigger the initial consent flow if consent has not been disabled.
 
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     if let rootViewController = window?.rootViewController {
-        setupSwiftyAds(from: rootViewController)
+        configureSwiftyAds(from: rootViewController)
     }
     return true
 }
 
-private func setupSwiftyAds(from viewController: UIViewController) {
+private func configureSwiftyAds(from viewController: UIViewController) {
     #if DEBUG
-    // testDeviceIdentifiers: The test device indentifiers used for debugging purposes.
-    // geography: Set your debug location for GDPR consent debugging purposes.
-    // resetConsentInfo: If set to true resets the consent info as if they have not been set previously.
-    let environment: SwiftyAdsEnvironment = .debug(testDeviceIdentifiers: [], geography: .EEA, resetConsentInfo: true)
+    // testDeviceIdentifiers: The test device identifiers used for debugging purposes.
+    // consentConfiguration: The debug consent configuration:
+        1) .default(geography: UMPDebugGeography), 
+        2) .resetOnLaunch(geography: UMPDebugGeography) 
+        3) .disabled
+        
+    let environment: SwiftyAdsEnvironment = .development(testDeviceIdentifiers: [], consentConfiguration: .resetOnLaunch(geography: .EEA))
     #else
     let environment: SwiftyAdsEnvironment = .production
     #endif
     
-    SwiftyAds.shared.setup(
+    SwiftyAds.shared.configure(
         from: viewController,
         for: environment,
         consentStatusDidChange: { status in
@@ -133,24 +146,24 @@ private func setupSwiftyAds(from viewController: UIViewController) {
 }
 ```
 
-NOTE: If you do not use the Google UMP SDK to display the iOS 14 App Tracking Transparency (ATT) alert, it is recommended to ask for permission before configuring SwiftyAds.
+NOTE: If you do not use the Google UMP SDK to display the iOS 14 App Tracking Transparency (ATT) alert, it is recommended to ask for permission before configuring SwiftyAds. 
 
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     if let rootViewController = window?.rootViewController {
         if  #available(iOS 14, *)  {
             ATTrackingManager.requestTrackingAuthorization { status in
-                self.setupSwiftyAds(from: rootViewController)
+                self.configureSwiftyAds(from: rootViewController)
             }
         } else {
-            setupSwiftyAds(from: rootViewController)
+            configureSwiftyAds(from: rootViewController)
         }
     }
     return true
 }
 ```
 
-### Showing ads outside a UIViewController
+## Showing ads outside a UIViewController
 
 SwiftyAds requires reference to a `UIViewController` to present ads. If you are not using SwiftyAds inside a `UIViewController` you can do the following to get reference the rootViewController.
 
@@ -168,7 +181,7 @@ if let viewController = view?.window?.rootViewController {
 }
 ```
 
-### Banner Ads
+## Banner Ads
 
 Create a property in your `UIViewController` for the banner to be displayed
 
@@ -247,7 +260,7 @@ bannerAd?.remove()
 bannerAd = nil
 ```
 
-### Interstitial Ads
+## Interstitial Ads
 
 ```swift
 SwiftyAds.shared.showInterstitialAd(
@@ -265,7 +278,7 @@ SwiftyAds.shared.showInterstitialAd(
 )
 ```
 
-### Rewarded Ads
+## Rewarded Ads
 
 Rewarded ads may be non-skippable and should only be presented when pressing a dedicated button.
 
@@ -284,6 +297,7 @@ SwiftyAds.shared.showRewardedAd(
     onNotReady: { [weak self] in
         guard let self = self else { return }
         print("SwiftyAds rewarded ad was not ready")
+        
         // If the user presses the rewarded video button and watches a video it might take a few seconds for the next video to reload.
         // Use this callback to display an alert incase the video was not ready. 
         let alertController = UIAlertController(
@@ -292,7 +306,9 @@ SwiftyAds.shared.showRewardedAd(
             preferredStyle: .alert
         )
         alertController.addAction(UIAlertAction(title: "Ok", style: .cancel))
-        self.present(alertController, animated: true)
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true)
+        }
     },
     onReward: { [weak self] rewardAmount in
         print("SwiftyAds rewarded ad did reward user with \(rewardAmount)")
@@ -301,11 +317,12 @@ SwiftyAds.shared.showRewardedAd(
 )
 ```
 
-NOTE: AdMob provided a new rewarded video API which lets you preload multiple rewarded videos with different AdUnitIds. While SwiftyAds uses this new API it currently only supports loading 1 rewarded video ad at a time.
+NOTE: AdMob provided a new rewarded video API which lets you preload multiple rewarded videos with different AdUnitIds. While SwiftyAds uses this new API it currently only supports loading 1 rewarded ad at a time.
 
-### Rewarded Interstitial Ads
+## Rewarded Interstitial Ads
 
-Rewarded interstitial ads can be presented naturally in your app flow, similar to interstitial ads, and do not require a dedicated button like regular rewarded ads.
+Rewarded interstitial ads can be presented naturally in your apps flow, similar to interstitial ads, and do not require a dedicated button like regular rewarded ads.
+Before displaying a rewarded interstitial ad, you must present the user with an [intro screen](https://support.google.com/admob/answer/9884467) that provides clear reward messaging and an option to skip the ad before it starts.
 
 ```swift
 SwiftyAds.shared.showRewardedInterstitialAd(
@@ -327,9 +344,7 @@ SwiftyAds.shared.showRewardedInterstitialAd(
 )
 ```
 
-NOTE: Before displaying a rewarded interstitial ad to users, you must present the user with an [intro screen](https://support.google.com/admob/answer/9884467) that provides clear reward messaging and an option to skip the ad before it starts.
-
-### Native Ads
+## Native Ads
 
 To present a native ad simply call the load method. Once a native ad has been received you can update your custom ad view with the native ad content.
 
@@ -357,7 +372,7 @@ SwiftyAds.shared.loadNativeAd(
 
 NOTE: While prefetching ads is a great technique, it's important that you don't keep old native ads around forever without displaying them. Any native ad objects that have been held without display for longer than an hour should be discarded and replaced with new ads from a new request.
 
-### Errors
+## Errors
 
 Use can use the `SwiftyAdsError` enum to handle SwiftyAds specific errors.
 
@@ -372,7 +387,7 @@ if let swiftyAdsError = error as? SwiftyAdsError {
 }
 ```
 
-### Consent Status/Type
+## Consent Status/Type
 
 ```swift
 // Check current consent status
@@ -383,7 +398,7 @@ SwiftyAds.shared.consentStatus
 SwiftyAds.shared.consentType
 ```
 
-### Booleans
+## Booleans
 
 ```swift
 // Check if interstitial ad is ready, for example to show an alternative ad
@@ -405,10 +420,10 @@ SwiftyAds.shared.isTaggedForUnderAgeOfConsent
 SwiftyAds.shared.isDisabled
 ```
 
-### Disable Ads (In App Purchases)
+## Disable Ads (In App Purchases)
 
 Call the `disable()` method and banner, interstitial and rewarded interstitial ads will no longer display. 
-This will not stop regular rewarded videos from displaying as they should have a dedicated button. This way you can remove banner, interstitial and rewarded interstitial ads but still have regular rewarded videos. 
+This will not stop regular rewarded ads from displaying as they should have a dedicated button. This way you can remove banner, interstitial and rewarded interstitial ads but still have rewarded ads. 
 
 ```swift
 SwiftyAds.shared.disable()
@@ -423,7 +438,7 @@ if UserDefaults.standard.bool(forKey: "RemovedAdsKey") == true {
 }
 ```
 
-### Ask for consent again
+## Ask for consent again
 
 It is required that the user has the option to change their GDPR consent settings, usually via a button in settings. 
 
@@ -446,6 +461,7 @@ The consent button can be hidden if consent is not required.
 consentButton.isHidden = SwiftyAds.shared.consentStatus == .notRequired
 ```
 
-### App Store release information
+# App Store release information
 
 Make sure to prepare for Apple's App Store data disclosure [requirements](https://developers.google.com/admob/ios/data-disclosure)
+

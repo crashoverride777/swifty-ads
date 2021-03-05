@@ -111,7 +111,7 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
 extension SwiftyAdsInterstitial: GADFullScreenContentDelegate {
 
     func adDidRecordImpression(_ ad: GADFullScreenPresentingAd) {
-        if case .debug = environment {
+        if case .development = environment {
             print("SwiftyAdsInterstitial did record impression for ad: \(ad)")
         }
     }
