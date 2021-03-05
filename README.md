@@ -129,7 +129,7 @@ private func configureSwiftyAds(from viewController: UIViewController) {
         from: viewController,
         for: environment,
         consentStatusDidChange: { status in
-            print("The consent status has changed: \(status)")
+            print("The consent status has changed")
             // Update mediation networks with under age of consent and other settings if required, 
             // for example when not using IAB TCF v2 framework in Google funding choices
             // See mediation network documentation
