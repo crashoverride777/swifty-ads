@@ -52,8 +52,7 @@ public final class SwiftyAds: NSObject {
     private var disabled = false
 
     private var hasConsent: Bool {
-        guard let consentManager = consentManager else { return true }
-        switch consentManager.consentStatus {
+        switch consentStatus {
         case .notRequired, .obtained:
             return true
         default:
@@ -132,6 +131,9 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter environment: The environment for ads to be displayed.
     /// - parameter consentStatusDidChange: A handler that will be called everytime the consent status has changed.
     /// - parameter completion: A completion handler that will return the current consent status after the initial consent flow has finished.
+    ///
+    /// - Warning:
+    /// Returns .notRequired in the completion handler if consent has been disabled via SwiftyAds.plist isUMPDisabled entry.
     public func configure(from viewController: UIViewController,
                           for environment: SwiftyAdsEnvironment,
                           consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
@@ -509,6 +511,7 @@ private extension SwiftyAds {
         rewardedAd?.load()
         guard !isDisabled else { return }
         interstitialAd?.load()
+        rewardedInterstitialAd?.load()
     }
 }
 
