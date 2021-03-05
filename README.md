@@ -116,9 +116,9 @@ private func configureSwiftyAds(from viewController: UIViewController) {
     #if DEBUG
     // testDeviceIdentifiers: The test device identifiers used for debugging purposes.
     // consentConfiguration: The debug consent configuration:
-        1) .default(geography: UMPDebugGeography), 
-        2) .resetOnLaunch(geography: UMPDebugGeography) 
-        3) .disabled
+    //    1) .default(geography: UMPDebugGeography), 
+    //    2) .resetOnLaunch(geography: UMPDebugGeography) 
+    //    3) .disabled
         
     let environment: SwiftyAdsEnvironment = .development(testDeviceIdentifiers: [], consentConfiguration: .resetOnLaunch(geography: .EEA))
     #else
