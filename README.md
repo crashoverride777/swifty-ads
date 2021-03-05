@@ -84,9 +84,9 @@ Optional entries:
 NOTE: Adding the `isUMPDisabled` entry and setting it to true means SwiftyAds will not carry out any consent requests using the User Messaging Platform (UMP) SDK. 
 In that case you will have to manually support GDPR (EEA) and ATT (Apple) alerts if required.
 
-## Link AppTrackingTransparency framework (optional)
+## Link AppTrackingTransparency framework
 
-[Link](https://developers.google.com/admob/ump/ios/quick-start#update_your_infoplist) the AppTrackingTransparency framework in `Framework, Libraries and Embedded Content` under the general tab, otherwise iOS ATT alerts will not display.
+[Link](https://developers.google.com/admob/ump/ios/quick-start#update_your_infoplist) the AppTrackingTransparency framework in `Framework, Libraries and Embedded Content` under the general tab, otherwise iOS 14 ATT alerts will not display.
 
 If you are supporting iOS 13 and below you will also have to make it optional in `BuildPhases->Link Binary With Libraries` to avoid a crash.
 
