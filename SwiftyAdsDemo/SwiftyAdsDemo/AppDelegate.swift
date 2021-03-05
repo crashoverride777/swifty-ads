@@ -2,7 +2,7 @@ import UIKit
 import SpriteKit
 
 extension Notification.Name {
-    static let adConsentStatusDidChange = Notification.Name("adConsentStatusDidChange")
+    static let adConsentStatusDidChange = Notification.Name("AdConsentStatusDidChange")
 }
 
 @UIApplicationMain
