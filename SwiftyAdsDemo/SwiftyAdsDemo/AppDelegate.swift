@@ -1,5 +1,6 @@
 import UIKit
 import SpriteKit
+import AppTrackingTransparency
 
 extension Notification.Name {
     static let adConsentStatusDidChange = Notification.Name("AdConsentStatusDidChange")
@@ -20,7 +21,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 .resetOnLaunch(geography: geography)
             let demoSelectionViewController = DemoSelectionViewController(swiftyAds: self.swiftyAds, consentConfiguration: consentConfiguration)
             navigationController.setViewControllers([demoSelectionViewController], animated: true)
-            self.configureSwiftyAds(from: navigationController, consentConfiguration: consentConfiguration)
+
+            if geography == .disabled {
+                self.requestTrackingAuthorization {
+                    self.configureSwiftyAds(from: navigationController, consentConfiguration: consentConfiguration)
+                }
+            } else {
+                self.configureSwiftyAds(from: navigationController, consentConfiguration: consentConfiguration)
+            }
         }
 
         navigationController.setViewControllers([consentSelectionViewController], animated: false)
@@ -83,5 +91,18 @@ private extension AppDelegate {
                 self.notificationCenter.post(name: .adConsentStatusDidChange, object: nil)
             })
         )
+    }
+
+
+    func requestTrackingAuthorization(completion: @escaping () -> Void) {
+        if #available(iOS 14, *) {
+            ATTrackingManager.requestTrackingAuthorization { _ in
+                DispatchQueue.main.async {
+                    completion()
+                }
+            }
+        } else {
+            completion()
+        }
     }
 }
