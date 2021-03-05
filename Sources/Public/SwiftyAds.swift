@@ -80,7 +80,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// The current consent status.
     ///
     /// - Warning:
-    /// Returns .notRequired if consent has been disabled via SwiftyAds.plist isUMPConsentDisabled entry.
+    /// Returns .notRequired if consent has been disabled via SwiftyAds.plist isUMPDisabled entry.
     public var consentStatus: SwiftyAdsConsentStatus {
         consentManager?.consentStatus ?? .notRequired
     }
@@ -88,7 +88,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// The type of consent provided when not using IAB TCF v2 framework.
     ///
     /// - Warning:
-    /// Always returns unknown if using IAB TCF v2 framework
+    /// Always returns .unknown if using IAB TCF v2 framework
     /// https://stackoverflow.com/questions/63415275/obtaining-consent-with-the-user-messaging-platform-android
     public var consentType: SwiftyAdsConsentType {
         consentManager?.consentType ?? .unknown
