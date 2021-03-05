@@ -25,11 +25,11 @@ final class ConsentSelectionViewController: UITableViewController {
 
     private let swiftyAds: SwiftyAdsType
     private let rows = Row.allCases
-    private var selectedRow: (SwiftyAdsEnvironment.ConsentConfiguration) -> Void
+    private var selectedRow: (SwiftyAdsEnvironment.ConsentConfiguration.Geography) -> Void
 
     // MARK: - Initialization
 
-    init(swiftyAds: SwiftyAdsType, selectedRow: @escaping (SwiftyAdsEnvironment.ConsentConfiguration) -> Void) {
+    init(swiftyAds: SwiftyAdsType, selectedRow: @escaping (SwiftyAdsEnvironment.ConsentConfiguration.Geography) -> Void) {
         self.swiftyAds = swiftyAds
         self.selectedRow = selectedRow
         if #available(iOS 13.0, *) {
@@ -74,9 +74,9 @@ final class ConsentSelectionViewController: UITableViewController {
         let row = rows[indexPath.row]
         switch row {
         case .EEA:
-            selectedRow(.resetOnLaunch(geography: .EEA))
+            selectedRow(.EEA)
         case .notEEA:
-            selectedRow(.resetOnLaunch(geography: .notEEA))
+            selectedRow(.notEEA)
         case .disabled:
             selectedRow(.disabled)
         }

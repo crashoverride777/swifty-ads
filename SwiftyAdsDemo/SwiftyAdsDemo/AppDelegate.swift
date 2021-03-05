@@ -14,11 +14,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let navigationController = UINavigationController()
-        let consentSelectionViewController = ConsentSelectionViewController(swiftyAds: swiftyAds) { consentConfiguration in
-            let demoSelectionViewController = DemoSelectionViewController(
-                swiftyAds: self.swiftyAds,
-                consentConfiguration: consentConfiguration
-            )
+        let consentSelectionViewController = ConsentSelectionViewController(swiftyAds: swiftyAds) { geography in
+            let consentConfiguration: SwiftyAdsEnvironment.ConsentConfiguration = geography == .disabled ?
+                .disabled :
+                .resetOnLaunch(geography: geography)
+            let demoSelectionViewController = DemoSelectionViewController(swiftyAds: self.swiftyAds, consentConfiguration: consentConfiguration)
             navigationController.setViewControllers([demoSelectionViewController], animated: true)
             self.configureSwiftyAds(from: navigationController, consentConfiguration: consentConfiguration)
         }
