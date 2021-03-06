@@ -6,6 +6,15 @@
 
 A Swift library to display banner, interstitial, rewarded and native ads from Google AdMob and supported mediation partners.
 
+- [Requirements](#requirements)
+- [Create Accounts](#create-accounts)
+- [Mediation](#mediation)
+- [Installation](#installation)
+- [Pre-Usage](#pre-usage)
+- [Usage](#usage)
+- [App Store release information](#app-store-release-information)
+- [License](#license)
+
 ## 2021 Roadmap
 
 - Multiple ad unit ids
@@ -465,3 +474,6 @@ consentButton.isHidden = SwiftyAds.shared.consentStatus == .notRequired
 
 Make sure to prepare for Apple's App Store data disclosure [requirements](https://developers.google.com/admob/ios/data-disclosure)
 
+## License
+
+SwiftyAds is released under the MIT license. [See LICENSE](https://github.com/crashoverride777/swifty-ads/blob/master/LICENSE) for details.
