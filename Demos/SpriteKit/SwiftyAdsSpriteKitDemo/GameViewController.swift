@@ -26,30 +26,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        bannerAd = swiftyAds.makeBannerAd(
-            in: self,
-            adUnitIdType: .plist,
-            position: .bottom(isUsingSafeArea: true),
-            animation: .slide(duration: 1.5),
-            onOpen: {
-                print("SwiftyAds banner ad did open")
-            },
-            onClose: {
-                print("SwiftyAds banner ad did close")
-            },
-            onError: { error in
-                print("SwiftyAds banner ad error \(error)")
-            },
-            onWillPresentScreen: {
-                print("SwiftyAds banner ad was tapped and is about to present screen")
-            },
-            onWillDismissScreen: {
-                print("SwiftyAds banner ad screen is about to be dismissed")
-            },
-            onDidDismissScreen: {
-                print("SwiftyAds banner did dismiss screen")
-            }
-        )
+        makeBanner()
 
         if let scene = GameScene(fileNamed: "GameScene") {
             // Configure the view.
@@ -82,6 +59,9 @@ class GameViewController: UIViewController {
     // MARK: - Public Methods
 
     func adsConfigureCompletion() {
+        if bannerAd == nil {
+            makeBanner()
+        }
         bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
     }
 
@@ -89,5 +69,32 @@ class GameViewController: UIViewController {
         swiftyAds.disable()
         bannerAd?.remove()
         bannerAd = nil
+    }
+
+    func makeBanner() {
+        bannerAd = swiftyAds.makeBannerAd(
+            in: self,
+            adUnitIdType: .plist,
+            position: .bottom(isUsingSafeArea: true),
+            animation: .slide(duration: 1.5),
+            onOpen: {
+                print("SwiftyAds banner ad did open")
+            },
+            onClose: {
+                print("SwiftyAds banner ad did close")
+            },
+            onError: { error in
+                print("SwiftyAds banner ad error \(error)")
+            },
+            onWillPresentScreen: {
+                print("SwiftyAds banner ad was tapped and is about to present screen")
+            },
+            onWillDismissScreen: {
+                print("SwiftyAds banner ad screen is about to be dismissed")
+            },
+            onDidDismissScreen: {
+                print("SwiftyAds banner did dismiss screen")
+            }
+        )
     }
 }
