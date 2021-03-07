@@ -1,14 +1,6 @@
 import UIKit
 import SpriteKit
 
-/*
- READ
-
- In most default SpriteKit games the GameViewController is the root view controller of the AppDelegate.
- This means viewDidAppear might be called before the configure flow in AppDelegate has finished.
- Ads will only display once the completion handler of the configure method was called.
- */
-
 class GameViewController: UIViewController {
 
     // MARK: - Properties
@@ -40,23 +32,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         notificationCenter.addObserver(self, selector: #selector(adsConfigureCompletion), name: .adsConfigureCompletion, object: nil)
-
-        if let scene = GameScene(fileNamed: "GameScene") {
-            scene.configure(swiftyAds: swiftyAds)
-            
-            // Configure the view.
-            let skView = self.view as! SKView
-            skView.showsFPS = true
-            skView.showsNodeCount = true
-            
-            /* Sprite Kit applies additional optimizations to improve rendering performance */
-            skView.ignoresSiblingOrder = true
-            
-            /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .aspectFill
-            
-            skView.presentScene(scene)
-        }
+        loadGameScene()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -83,6 +59,24 @@ class GameViewController: UIViewController {
 // MARK: - Private Methods
 
 private extension GameViewController {
+
+    func loadGameScene() {
+        guard let scene = GameScene(fileNamed: "GameScene") else { return }
+        scene.configure(swiftyAds: swiftyAds)
+
+        // Configure the view.
+        let skView = self.view as! SKView
+        skView.showsFPS = true
+        skView.showsNodeCount = true
+
+        /* Sprite Kit applies additional optimizations to improve rendering performance */
+        skView.ignoresSiblingOrder = true
+
+        /* Set the scale mode to scale to fit the window */
+        scene.scaleMode = .aspectFill
+
+        skView.presentScene(scene)
+    }
 
     @objc func adsConfigureCompletion() {
         bannerAd = swiftyAds.makeBannerAd(

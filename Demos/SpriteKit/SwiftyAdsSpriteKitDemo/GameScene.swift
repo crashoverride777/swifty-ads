@@ -12,7 +12,7 @@ class GameScene: SKScene {
     private lazy var consentLabel = childNode(withName: "consentLabel") as! SKLabelNode
     private lazy var disableLabel = childNode(withName: "disableLabel") as! SKLabelNode
 
-    // MARK: - Init
+    // MARK: - Initialization
     
     func configure(swiftyAds: SwiftyAdsType) {
         self.swiftyAds = swiftyAds
