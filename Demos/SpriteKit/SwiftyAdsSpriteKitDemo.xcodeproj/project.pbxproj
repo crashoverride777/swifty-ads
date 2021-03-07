@@ -17,7 +17,6 @@
 		6A4286252400612E0035487A /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 6A4286222400612D0035487A /* GameScene.sks */; };
 		6A4286262400612E0035487A /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4286232400612E0035487A /* GameViewController.swift */; };
 		6A4286272400612E0035487A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4286242400612E0035487A /* GameScene.swift */; };
-		6A47AA5425F53092009FF263 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 6A47AA5325F53092009FF263 /* README.md */; };
 		6A8A00A825EBDEBA00A846BE /* SwiftyAdsRewardedInterstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8A00A725EBDEB900A846BE /* SwiftyAdsRewardedInterstitial.swift */; };
 		6AC971D62401B06700A0BB91 /* SwiftyAdsInterstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971C82401B06600A0BB91 /* SwiftyAdsInterstitial.swift */; };
 		6AC971D72401B06700A0BB91 /* SwiftyAdsRewarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC971C92401B06600A0BB91 /* SwiftyAdsRewarded.swift */; };
@@ -61,7 +60,6 @@
 		6A4286222400612D0035487A /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		6A4286232400612E0035487A /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		6A4286242400612E0035487A /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		6A47AA5325F53092009FF263 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		6A8A00A725EBDEB900A846BE /* SwiftyAdsRewardedInterstitial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsRewardedInterstitial.swift; sourceTree = "<group>"; };
 		6AC971C82401B06600A0BB91 /* SwiftyAdsInterstitial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsInterstitial.swift; sourceTree = "<group>"; };
 		6AC971C92401B06600A0BB91 /* SwiftyAdsRewarded.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsRewarded.swift; sourceTree = "<group>"; };
@@ -102,7 +100,6 @@
 		6A4285F82400609E0035487A = {
 			isa = PBXGroup;
 			children = (
-				6A47AA5325F53092009FF263 /* README.md */,
 				6A4286032400609E0035487A /* SwiftyAdsSpriteKitDemo */,
 				6A4286022400609E0035487A /* Products */,
 				6A864BCC25901ADE005D0789 /* Frameworks */,
@@ -247,7 +244,6 @@
 			files = (
 				6A4286252400612E0035487A /* GameScene.sks in Resources */,
 				6A06E44C2593DDE9005EAD20 /* Main.storyboard in Resources */,
-				6A47AA5425F53092009FF263 /* README.md in Resources */,
 				6A428612240060A00035487A /* Assets.xcassets in Resources */,
 				6A428615240060A00035487A /* LaunchScreen.storyboard in Resources */,
 				6A3C587D25D8496400047F9A /* SwiftyAds.plist in Resources */,

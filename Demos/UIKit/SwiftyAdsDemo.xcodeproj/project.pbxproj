@@ -16,7 +16,6 @@
 		6A4286052400609E0035487A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4286042400609E0035487A /* AppDelegate.swift */; };
 		6A428612240060A00035487A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A428611240060A00035487A /* Assets.xcassets */; };
 		6A428615240060A00035487A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A428613240060A00035487A /* LaunchScreen.storyboard */; };
-		6A47AA5425F53092009FF263 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 6A47AA5325F53092009FF263 /* README.md */; };
 		6A520CDA253DA1130034F065 /* PlainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A520CD9253DA1130034F065 /* PlainViewController.swift */; };
 		6A520CDC253DA1350034F065 /* TabBarControllerAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A520CDB253DA1350034F065 /* TabBarControllerAd.swift */; };
 		6A864BC925901827005D0789 /* NativeAdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A864BC825901827005D0789 /* NativeAdViewController.swift */; };
@@ -64,7 +63,6 @@
 		6A428611240060A00035487A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6A428614240060A00035487A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6A428616240060A00035487A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6A47AA5325F53092009FF263 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		6A520CD9253DA1130034F065 /* PlainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainViewController.swift; sourceTree = "<group>"; };
 		6A520CDB253DA1350034F065 /* TabBarControllerAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarControllerAd.swift; sourceTree = "<group>"; };
 		6A864BC825901827005D0789 /* NativeAdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeAdViewController.swift; sourceTree = "<group>"; };
@@ -136,7 +134,6 @@
 		6A4285F82400609E0035487A = {
 			isa = PBXGroup;
 			children = (
-				6A47AA5325F53092009FF263 /* README.md */,
 				6A4286032400609E0035487A /* SwiftyAdsDemo */,
 				6A4286022400609E0035487A /* Products */,
 				6A864BCC25901ADE005D0789 /* Frameworks */,
@@ -330,7 +327,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A3C586025D7DC6000047F9A /* AdView.xib in Resources */,
-				6A47AA5425F53092009FF263 /* README.md in Resources */,
 				6A428612240060A00035487A /* Assets.xcassets in Resources */,
 				6A428615240060A00035487A /* LaunchScreen.storyboard in Resources */,
 				6A3C587D25D8496400047F9A /* SwiftyAds.plist in Resources */,
