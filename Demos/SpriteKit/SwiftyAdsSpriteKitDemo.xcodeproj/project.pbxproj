@@ -47,7 +47,6 @@
 
 /* Begin PBXFileReference section */
 		0B6C649BCE355582F3C8A72A /* Pods_SwiftyAdsSpriteKitDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAdsSpriteKitDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		32434A2C7986A1C03360186A /* Pods-SwiftyAdsDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdsDemo.debug.xcconfig"; path = "Target Support Files/Pods-SwiftyAdsDemo/Pods-SwiftyAdsDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		6A06E44B2593DDE9005EAD20 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		6A1A53DC25912A3E00981F00 /* SwiftyAdsNative.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsNative.swift; sourceTree = "<group>"; };
 		6A3C586125D81F4700047F9A /* SwiftyAdsBannerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsBannerType.swift; sourceTree = "<group>"; };
@@ -73,7 +72,6 @@
 		6AEB36F725E2C9E700AFA313 /* SwiftyAdsType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsType.swift; sourceTree = "<group>"; };
 		6AEB370025E2DA1D00AFA313 /* SwiftyAdsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsError.swift; sourceTree = "<group>"; };
 		6F4C24EB818FF8449982ECB6 /* Pods-SwiftyAdsSpriteKitDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdsSpriteKitDemo.debug.xcconfig"; path = "Target Support Files/Pods-SwiftyAdsSpriteKitDemo/Pods-SwiftyAdsSpriteKitDemo.debug.xcconfig"; sourceTree = "<group>"; };
-		976A9AB78CF3F7B4C96D7D05 /* Pods-SwiftyAdsDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdsDemo.release.xcconfig"; path = "Target Support Files/Pods-SwiftyAdsDemo/Pods-SwiftyAdsDemo.release.xcconfig"; sourceTree = "<group>"; };
 		F70C2904CB8DE7D32E3D24F8 /* Pods-SwiftyAdsSpriteKitDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdsSpriteKitDemo.release.xcconfig"; path = "Target Support Files/Pods-SwiftyAdsSpriteKitDemo/Pods-SwiftyAdsSpriteKitDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,8 +91,6 @@
 		6A1B42ED0A26F56738580346 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				32434A2C7986A1C03360186A /* Pods-SwiftyAdsDemo.debug.xcconfig */,
-				976A9AB78CF3F7B4C96D7D05 /* Pods-SwiftyAdsDemo.release.xcconfig */,
 				6F4C24EB818FF8449982ECB6 /* Pods-SwiftyAdsSpriteKitDemo.debug.xcconfig */,
 				F70C2904CB8DE7D32E3D24F8 /* Pods-SwiftyAdsSpriteKitDemo.release.xcconfig */,
 			);
