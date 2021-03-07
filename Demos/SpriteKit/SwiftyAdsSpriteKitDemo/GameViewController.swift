@@ -25,53 +25,7 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        notificationCenter.addObserver(self, selector: #selector(adsConfigureCompletion), name: .adsConfigureCompletion, object: nil)
-        loadGameScene()
-    }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        bannerAd?.show(isLandscape: view.frame.size.width > view.frame.size.height)
-    }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate(alongsideTransition: { [weak self] _ in
-            self?.bannerAd?.show(isLandscape: size.width > size.height)
-        })
-    }
-
-    // MARK: - Public Methods
-
-    func disableAds() {
-        swiftyAds.disable()
-        bannerAd?.remove()
-        bannerAd = nil
-    }
-}
-
-// MARK: - Private Methods
-
-private extension GameViewController {
-
-    func loadGameScene() {
-        guard let scene = GameScene(fileNamed: "GameScene") else { return }
-       
-        // Configure the view.
-        let skView = self.view as! SKView
-        skView.showsFPS = true
-        skView.showsNodeCount = true
-
-        /* Sprite Kit applies additional optimizations to improve rendering performance */
-        skView.ignoresSiblingOrder = true
-
-        /* Set the scale mode to scale to fit the window */
-        scene.scaleMode = .aspectFill
-
-        skView.presentScene(scene)
-    }
-
-    @objc func adsConfigureCompletion() {
         bannerAd = swiftyAds.makeBannerAd(
             in: self,
             adUnitIdType: .plist,
@@ -96,6 +50,44 @@ private extension GameViewController {
                 print("SwiftyAds banner did dismiss screen")
             }
         )
+
+        if let scene = GameScene(fileNamed: "GameScene") {
+            // Configure the view.
+            let skView = self.view as! SKView
+            skView.showsFPS = true
+            skView.showsNodeCount = true
+
+            /* Sprite Kit applies additional optimizations to improve rendering performance */
+            skView.ignoresSiblingOrder = true
+
+            /* Set the scale mode to scale to fit the window */
+            scene.scaleMode = .aspectFill
+
+            skView.presentScene(scene)
+        }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        bannerAd?.show(isLandscape: view.frame.size.width > view.frame.size.height)
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: { [weak self] _ in
+            self?.bannerAd?.show(isLandscape: size.width > size.height)
+        })
+    }
+
+    // MARK: - Public Methods
+
+    func adsConfigureCompletion() {
         bannerAd?.show(isLandscape: view.frame.width > view.frame.height)
+    }
+
+    func disableAds() {
+        swiftyAds.disable()
+        bannerAd?.remove()
+        bannerAd = nil
     }
 }
