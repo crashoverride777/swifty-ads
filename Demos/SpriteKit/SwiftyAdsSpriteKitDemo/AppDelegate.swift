@@ -1,42 +1,23 @@
 import UIKit
 import SpriteKit
-import AppTrackingTransparency
 
 extension Notification.Name {
-    static let adConsentStatusDidChange = Notification.Name("AdConsentStatusDidChange")
+    static let adsConfigureCompletion = Notification.Name("AdsConfigureCompletion")
 }
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
     private let swiftyAds: SwiftyAdsType = SwiftyAds.shared
     private let notificationCenter: NotificationCenter = .default
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let navigationController = UINavigationController()
-        let consentSelectionViewController = ConsentSelectionViewController(swiftyAds: swiftyAds) { geography in
-            let consentConfiguration: SwiftyAdsEnvironment.ConsentConfiguration = geography == .disabled ?
-                .disabled :
-                .resetOnLaunch(geography: geography)
-            let demoSelectionViewController = DemoSelectionViewController(swiftyAds: self.swiftyAds, consentConfiguration: consentConfiguration)
-            navigationController.setViewControllers([demoSelectionViewController], animated: true)
 
-            if geography == .disabled {
-                self.requestTrackingAuthorization {
-                    self.configureSwiftyAds(from: navigationController, consentConfiguration: consentConfiguration)
-                }
-            } else {
-                self.configureSwiftyAds(from: navigationController, consentConfiguration: consentConfiguration)
-            }
+        if let gameViewController = window?.rootViewController as? GameViewController {
+            configureSwiftyAds(from: gameViewController)
         }
-
-        navigationController.setViewControllers([consentSelectionViewController], animated: false)
-
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.backgroundColor = .white
-        window?.rootViewController = navigationController
-        window?.makeKeyAndVisible()
         return true
     }
 }
@@ -45,9 +26,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 private extension AppDelegate {
     
-    func configureSwiftyAds(from viewController: UIViewController, consentConfiguration: SwiftyAdsEnvironment.ConsentConfiguration) {
+    func configureSwiftyAds(from viewController: UIViewController) {
         #if DEBUG
-        let environment: SwiftyAdsEnvironment = .development(testDeviceIdentifiers: [], consentConfiguration: consentConfiguration)
+        let environment: SwiftyAdsEnvironment = .development(
+            testDeviceIdentifiers: [],
+            consentConfiguration: .resetOnLaunch(geography: .EEA)
+        )
         #else
         let environment: SwiftyAdsEnvironment = .production
         #endif
@@ -88,21 +72,9 @@ private extension AppDelegate {
                     print("SwiftyAds did finish setup with error: \(error)")
                 }
 
-                self.notificationCenter.post(name: .adConsentStatusDidChange, object: nil)
+                // Ads are now ready to be displayed
+                self.notificationCenter.post(name: .adsConfigureCompletion, object: nil)
             })
         )
-    }
-
-
-    func requestTrackingAuthorization(completion: @escaping () -> Void) {
-        if #available(iOS 14, *) {
-            ATTrackingManager.requestTrackingAuthorization { _ in
-                DispatchQueue.main.async {
-                    completion()
-                }
-            }
-        } else {
-            completion()
-        }
     }
 }

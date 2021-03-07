@@ -4,24 +4,15 @@ class GameScene: SKScene {
     
     // MARK: - Properties
     
-    private var swiftyAds: SwiftyAdsType!
+    private let swiftyAds: SwiftyAdsType = SwiftyAds.shared
     
     private lazy var interstitialLabel = childNode(withName: "interstitialLabel") as! SKLabelNode
     private lazy var rewardedLabel = childNode(withName: "rewardedLabel") as! SKLabelNode
     private lazy var rewardedInterstitialLabel = childNode(withName: "rewardedInterstitialLabel") as! SKLabelNode
-
-    // MARK: - Configure
-    
-    func configure(swiftyAds: SwiftyAdsType) {
-        self.swiftyAds = swiftyAds
-    }
+    private lazy var disableLabel = childNode(withName: "disableLabel") as! SKLabelNode
 
     // MARK: - Life Cycle
-    
-    override func didMove(to view: SKView) {
-        backgroundColor = .gray
-    }
-    
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
@@ -94,6 +85,10 @@ class GameScene: SKScene {
                     }
                 )
 
+            case disableLabel:
+                if let gameViewController = viewController as? GameViewController {
+                    gameViewController.disableAds()
+                }
             default:
                 break
             }

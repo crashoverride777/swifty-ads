@@ -13,6 +13,7 @@ A Swift library to display banner, interstitial, rewarded and native ads from Go
 - [Pre-Usage](#pre-usage)
 - [Usage](#usage)
 - [App Store release information](#app-store-release-information)
+- [Demos](#demos)
 - [License](#license)
 
 ## 2021 Roadmap
@@ -474,6 +475,10 @@ consentButton.isHidden = SwiftyAds.shared.consentStatus == .notRequired
 ## App Store release information
 
 Make sure to prepare for Apple's App Store data disclosure [requirements](https://developers.google.com/admob/ios/data-disclosure)
+
+## Demos
+
+Check out the `Demos` folder for a  `UIKit` and `SpriteKit` demo project. Make sure to launch the `.xcworkspace` when opening the either project.
 
 ## License
 

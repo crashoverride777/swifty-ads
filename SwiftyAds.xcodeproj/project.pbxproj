@@ -35,7 +35,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6A38EBA72401916500E645A0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		6A3C586B25D82B0F00047F9A /* SwiftyAdsBannerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsBannerType.swift; sourceTree = "<group>"; };
 		6A692C2C25C4823D0021FB2C /* SwiftyAdsConsentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsConsentManager.swift; sourceTree = "<group>"; };
 		6A864BC325900E75005D0789 /* SwiftyAdsNative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsNative.swift; sourceTree = "<group>"; };
@@ -132,7 +131,6 @@
 		B4C1B11E204C298500452094 = {
 			isa = PBXGroup;
 			children = (
-				6A38EBA72401916500E645A0 /* README.md */,
 				6A4285F724005F560035487A /* Sources */,
 				B4C1B12A204C298500452094 /* SwiftyAds */,
 				6AAD6A1E240C1CBE001F4A7D /* Tests */,
