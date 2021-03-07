@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		57980062DDF80E92D54810A1 /* Pods_SwiftyAdsSpriteKitDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B6C649BCE355582F3C8A72A /* Pods_SwiftyAdsSpriteKitDemo.framework */; };
 		6A06E44C2593DDE9005EAD20 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A06E44B2593DDE9005EAD20 /* Main.storyboard */; };
 		6A1A53DD25912A3E00981F00 /* SwiftyAdsNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1A53DC25912A3E00981F00 /* SwiftyAdsNative.swift */; };
 		6A3C586225D81F4700047F9A /* SwiftyAdsBannerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3C586125D81F4700047F9A /* SwiftyAdsBannerType.swift */; };
@@ -29,7 +30,6 @@
 		6AD3988A25CE970A0038C9B0 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AD3988925CE970A0038C9B0 /* AppTrackingTransparency.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		6AEB36F825E2C9E700AFA313 /* SwiftyAdsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEB36F725E2C9E700AFA313 /* SwiftyAdsType.swift */; };
 		6AEB370125E2DA1D00AFA313 /* SwiftyAdsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEB370025E2DA1D00AFA313 /* SwiftyAdsError.swift */; };
-		D64A98124421A48FA4C9D54A /* Pods_SwiftyAdsDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58AB3BECA27AE6BDA2F5A936 /* Pods_SwiftyAdsDemo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,8 +46,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0B6C649BCE355582F3C8A72A /* Pods_SwiftyAdsSpriteKitDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAdsSpriteKitDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32434A2C7986A1C03360186A /* Pods-SwiftyAdsDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdsDemo.debug.xcconfig"; path = "Target Support Files/Pods-SwiftyAdsDemo/Pods-SwiftyAdsDemo.debug.xcconfig"; sourceTree = "<group>"; };
-		58AB3BECA27AE6BDA2F5A936 /* Pods_SwiftyAdsDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyAdsDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A06E44B2593DDE9005EAD20 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		6A1A53DC25912A3E00981F00 /* SwiftyAdsNative.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsNative.swift; sourceTree = "<group>"; };
 		6A3C586125D81F4700047F9A /* SwiftyAdsBannerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsBannerType.swift; sourceTree = "<group>"; };
@@ -72,7 +72,9 @@
 		6AD3988925CE970A0038C9B0 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		6AEB36F725E2C9E700AFA313 /* SwiftyAdsType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsType.swift; sourceTree = "<group>"; };
 		6AEB370025E2DA1D00AFA313 /* SwiftyAdsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsError.swift; sourceTree = "<group>"; };
+		6F4C24EB818FF8449982ECB6 /* Pods-SwiftyAdsSpriteKitDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdsSpriteKitDemo.debug.xcconfig"; path = "Target Support Files/Pods-SwiftyAdsSpriteKitDemo/Pods-SwiftyAdsSpriteKitDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		976A9AB78CF3F7B4C96D7D05 /* Pods-SwiftyAdsDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdsDemo.release.xcconfig"; path = "Target Support Files/Pods-SwiftyAdsDemo/Pods-SwiftyAdsDemo.release.xcconfig"; sourceTree = "<group>"; };
+		F70C2904CB8DE7D32E3D24F8 /* Pods-SwiftyAdsSpriteKitDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdsSpriteKitDemo.release.xcconfig"; path = "Target Support Files/Pods-SwiftyAdsSpriteKitDemo/Pods-SwiftyAdsSpriteKitDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,8 +82,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D64A98124421A48FA4C9D54A /* Pods_SwiftyAdsDemo.framework in Frameworks */,
 				6AD3988A25CE970A0038C9B0 /* AppTrackingTransparency.framework in Frameworks */,
+				57980062DDF80E92D54810A1 /* Pods_SwiftyAdsSpriteKitDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +95,8 @@
 			children = (
 				32434A2C7986A1C03360186A /* Pods-SwiftyAdsDemo.debug.xcconfig */,
 				976A9AB78CF3F7B4C96D7D05 /* Pods-SwiftyAdsDemo.release.xcconfig */,
+				6F4C24EB818FF8449982ECB6 /* Pods-SwiftyAdsSpriteKitDemo.debug.xcconfig */,
+				F70C2904CB8DE7D32E3D24F8 /* Pods-SwiftyAdsSpriteKitDemo.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -136,7 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				6AD3988925CE970A0038C9B0 /* AppTrackingTransparency.framework */,
-				58AB3BECA27AE6BDA2F5A936 /* Pods_SwiftyAdsDemo.framework */,
+				0B6C649BCE355582F3C8A72A /* Pods_SwiftyAdsSpriteKitDemo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -259,15 +263,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SwiftyAdsDemo/Pods-SwiftyAdsDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SwiftyAdsSpriteKitDemo/Pods-SwiftyAdsSpriteKitDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SwiftyAdsDemo/Pods-SwiftyAdsDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SwiftyAdsSpriteKitDemo/Pods-SwiftyAdsSpriteKitDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SwiftyAdsDemo/Pods-SwiftyAdsDemo-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SwiftyAdsSpriteKitDemo/Pods-SwiftyAdsSpriteKitDemo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DCA61526D6C444388B99E8D8 /* [CP] Check Pods Manifest.lock */ = {
@@ -285,7 +289,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SwiftyAdsDemo-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SwiftyAdsSpriteKitDemo-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -454,7 +458,7 @@
 		};
 		6A42861A240060A00035487A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 32434A2C7986A1C03360186A /* Pods-SwiftyAdsDemo.debug.xcconfig */;
+			baseConfigurationReference = 6F4C24EB818FF8449982ECB6 /* Pods-SwiftyAdsSpriteKitDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -534,7 +538,7 @@
 		};
 		6A42861B240060A00035487A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 976A9AB78CF3F7B4C96D7D05 /* Pods-SwiftyAdsDemo.release.xcconfig */;
+			baseConfigurationReference = F70C2904CB8DE7D32E3D24F8 /* Pods-SwiftyAdsSpriteKitDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

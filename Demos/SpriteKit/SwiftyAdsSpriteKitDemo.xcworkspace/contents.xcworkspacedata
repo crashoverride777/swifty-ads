@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/dominikringler/Dom/swifty-ads/Demos/SpriteKit/SwiftyAdsSpriteKitDemo.xcodeproj">
+      location = "group:SwiftyAdsSpriteKitDemo.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
