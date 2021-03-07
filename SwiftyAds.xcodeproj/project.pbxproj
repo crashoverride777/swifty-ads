@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A3347E425F5592A00707D82 /* SwiftyAdsConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3347E325F5592A00707D82 /* SwiftyAdsConfigurationTests.swift */; };
 		6A3C586F25D82B0F00047F9A /* SwiftyAdsBannerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3C586B25D82B0F00047F9A /* SwiftyAdsBannerType.swift */; };
 		6A692C2D25C4823D0021FB2C /* SwiftyAdsConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A692C2C25C4823D0021FB2C /* SwiftyAdsConsentManager.swift */; };
 		6A864BC425900E75005D0789 /* SwiftyAdsNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A864BC325900E75005D0789 /* SwiftyAdsNative.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6A3347E325F5592A00707D82 /* SwiftyAdsConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsConfigurationTests.swift; sourceTree = "<group>"; };
 		6A3C586B25D82B0F00047F9A /* SwiftyAdsBannerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsBannerType.swift; sourceTree = "<group>"; };
 		6A692C2C25C4823D0021FB2C /* SwiftyAdsConsentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsConsentManager.swift; sourceTree = "<group>"; };
 		6A864BC325900E75005D0789 /* SwiftyAdsNative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsNative.swift; sourceTree = "<group>"; };
@@ -75,6 +77,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6A3347DE25F5585A00707D82 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
+		6A3347DF25F5586D00707D82 /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				6A3347E325F5592A00707D82 /* SwiftyAdsConfigurationTests.swift */,
+			);
+			path = Internal;
+			sourceTree = "<group>";
+		};
 		6A4285F724005F560035487A /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -114,6 +131,8 @@
 		6AAD6A1E240C1CBE001F4A7D /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				6A3347DF25F5586D00707D82 /* Internal */,
+				6A3347DE25F5585A00707D82 /* Public */,
 				6AAD6A2C240C1DF9001F4A7D /* Test Plans */,
 				6AAD6A21240C1CBE001F4A7D /* Info.plist */,
 			);
@@ -218,6 +237,7 @@
 				TargetAttributes = {
 					6AAD6A1C240C1CBE001F4A7D = {
 						CreatedOnToolsVersion = 11.3.1;
+						LastSwiftMigration = 1240;
 						ProvisioningStyle = Automatic;
 					};
 					B4C1B127204C298500452094 = {
@@ -271,6 +291,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A3347E425F5592A00707D82 /* SwiftyAdsConfigurationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +329,7 @@
 		6AAD6A25240C1CBE001F4A7D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DK88YZ475Z;
@@ -322,6 +344,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dominik.SwiftyAdsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -330,6 +353,7 @@
 		6AAD6A26240C1CBE001F4A7D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DK88YZ475Z;
