@@ -70,6 +70,14 @@ class GameViewController: UIViewController {
             self?.bannerAd?.show(isLandscape: size.width > size.height)
         })
     }
+
+    // MARK: - Public Methods
+
+    func disableAds() {
+        swiftyAds.disable()
+        bannerAd?.remove()
+        bannerAd = nil
+    }
 }
 
 // MARK: - Private Methods

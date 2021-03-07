@@ -9,6 +9,8 @@ class GameScene: SKScene {
     private lazy var interstitialLabel = childNode(withName: "interstitialLabel") as! SKLabelNode
     private lazy var rewardedLabel = childNode(withName: "rewardedLabel") as! SKLabelNode
     private lazy var rewardedInterstitialLabel = childNode(withName: "rewardedInterstitialLabel") as! SKLabelNode
+    private lazy var consentLabel = childNode(withName: "consentLabel") as! SKLabelNode
+    private lazy var disableLabel = childNode(withName: "disableLabel") as! SKLabelNode
 
     // MARK: - Init
     
@@ -94,6 +96,13 @@ class GameScene: SKScene {
                     }
                 )
 
+            case consentLabel:
+                swiftyAds.askForConsent(from: viewController) { _ in }
+
+            case disableLabel:
+                if let gameViewController = viewController as? GameViewController {
+                    gameViewController.disableAds()
+                }
             default:
                 break
             }
