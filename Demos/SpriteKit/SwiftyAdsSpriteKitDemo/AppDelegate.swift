@@ -1,10 +1,6 @@
 import UIKit
 import SpriteKit
 
-extension Notification.Name {
-    static let adsConfigureCompletion = Notification.Name("AdsConfigureCompletion")
-}
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -26,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 private extension AppDelegate {
     
-    func configureSwiftyAds(from viewController: UIViewController) {
+    func configureSwiftyAds(from gameViewController: GameViewController) {
         #if DEBUG
         let environment: SwiftyAdsEnvironment = .development(
             testDeviceIdentifiers: [],
@@ -36,7 +32,7 @@ private extension AppDelegate {
         let environment: SwiftyAdsEnvironment = .production
         #endif
         swiftyAds.configure(
-            from: viewController,
+            from: gameViewController,
             for: environment,
             consentStatusDidChange: { status in
                 switch status {
@@ -52,8 +48,7 @@ private extension AppDelegate {
                     print("SwiftyAds did change consent status: unknown default")
                 }
             },
-            completion: ({ [weak self] result in
-                guard let self = self else { return }
+            completion: ({ result in
                 switch result {
                 case .success(let consentStatus):
                     switch consentStatus {
@@ -68,12 +63,13 @@ private extension AppDelegate {
                     @unknown default:
                         print("SwiftyAds did finish setup with consent status: unknown default")
                     }
+
+                    // Ads are now ready to be displayed
+                    gameViewController.adsConfigureCompletion()
+                    
                 case .failure(let error):
                     print("SwiftyAds did finish setup with error: \(error)")
                 }
-
-                // Ads are now ready to be displayed
-                self.notificationCenter.post(name: .adsConfigureCompletion, object: nil)
             })
         )
     }
