@@ -5,9 +5,9 @@ class GameViewController: UIViewController {
 
     // MARK: - Properties
 
-    private var swiftyAds: SwiftyAdsType!
-    private var bannerAd: SwiftyAdsBannerType?
+    private let swiftyAds: SwiftyAdsType = SwiftyAds.shared
     private let notificationCenter: NotificationCenter = .default
+    private var bannerAd: SwiftyAdsBannerType?
 
     override var shouldAutorotate: Bool {
         true
@@ -19,12 +19,6 @@ class GameViewController: UIViewController {
 
     override var prefersStatusBarHidden: Bool {
         true
-    }
-
-    // MARK: - Initialization
-
-    func configure(swiftyAds: SwiftyAdsType) {
-        self.swiftyAds = swiftyAds
     }
 
     // MARK: - Life Cycle
@@ -62,8 +56,7 @@ private extension GameViewController {
 
     func loadGameScene() {
         guard let scene = GameScene(fileNamed: "GameScene") else { return }
-        scene.configure(swiftyAds: swiftyAds)
-
+       
         // Configure the view.
         let skView = self.view as! SKView
         skView.showsFPS = true
