@@ -18,7 +18,7 @@ class GameScene: SKScene {
             let location = touch.location(in: self)
             let node = atPoint(location)
             
-            guard let viewController = view?.window?.rootViewController else {
+            guard let gameViewController = view?.window?.rootViewController as? GameViewController else {
                 return
             }
             
@@ -26,7 +26,7 @@ class GameScene: SKScene {
 
             case interstitialLabel:
                 swiftyAds.showInterstitialAd(
-                    from: viewController,
+                    from: gameViewController,
                     afterInterval: 2,
                     onOpen: {
                         print("SwiftyAds interstitial ad did open")
@@ -41,7 +41,7 @@ class GameScene: SKScene {
 
             case rewardedLabel:
                 swiftyAds.showRewardedAd(
-                    from: viewController,
+                    from: gameViewController,
                     onOpen: {
                         print("SwiftyAds rewarded ad did open")
                     },
@@ -59,7 +59,7 @@ class GameScene: SKScene {
                         )
                         alertController.addAction(UIAlertAction(title: "Ok", style: .cancel))
                         DispatchQueue.main.async {
-                            viewController.present(alertController, animated: true)
+                            gameViewController.present(alertController, animated: true)
                         }
                     },
                     onReward: { rewardAmount in
@@ -69,7 +69,7 @@ class GameScene: SKScene {
 
             case rewardedInterstitialLabel:
                 swiftyAds.showRewardedInterstitialAd(
-                    from: viewController,
+                    from: gameViewController,
                     afterInterval: nil,
                     onOpen: {
                         print("SwiftyAds rewarded interstitial ad did open")
@@ -86,22 +86,15 @@ class GameScene: SKScene {
                 )
 
             case disableLabel:
-                if let gameViewController = viewController as? GameViewController {
-                    gameViewController.disableAds()
-                }
+                gameViewController.disableAds()
+
             default:
                 break
             }
         }
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-
-    }
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {}
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {}
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {}
 }
