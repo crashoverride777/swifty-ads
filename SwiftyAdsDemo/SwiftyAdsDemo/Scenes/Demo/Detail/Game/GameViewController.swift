@@ -1,6 +1,14 @@
 import UIKit
 import SpriteKit
 
+/*
+ READ
+
+ In most default SpriteKit games the GameViewController is the root view controller of the AppDelegate.
+ This means viewDidAppear might be called before the configure flow in AppDelegate has finished.
+ Ads will only display once the completion handler of the configure method was called.
+ */
+
 class GameViewController: UIViewController {
 
     // MARK: - Properties
