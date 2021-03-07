@@ -15,7 +15,6 @@ final class DemoSelectionViewController: UITableViewController {
                     .viewController,
                     .viewControllerInsideTabBar,
                     .tabBarController,
-                    .spriteKitScene,
                     .nativeAd
                 ]
             case .secondary:
@@ -31,7 +30,6 @@ final class DemoSelectionViewController: UITableViewController {
         case viewController
         case viewControllerInsideTabBar
         case tabBarController
-        case spriteKitScene
         case nativeAd
 
         case updateConsent
@@ -45,8 +43,6 @@ final class DemoSelectionViewController: UITableViewController {
                 return "ViewController inside TabBarController"
             case .tabBarController:
                 return "TabBarController"
-            case .spriteKitScene:
-                return "SpriteKit Scene"
             case .nativeAd:
                 return "Native Ad"
             case .updateConsent:
@@ -116,7 +112,7 @@ final class DemoSelectionViewController: UITableViewController {
         super.viewDidLoad()
         navigationItem.title = "Swifty Ads Demo"
         tableView.register(BasicCell.self, forCellReuseIdentifier: String(describing: BasicCell.self))
-        notificationCenter.addObserver(self, selector: #selector(consentDidChange), name: .swiftyAdsConfigureCompletion, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adsConfigureCompletion), name: .adsConfigureCompletion, object: nil)
         makeBanner()
     }
 
@@ -169,12 +165,6 @@ final class DemoSelectionViewController: UITableViewController {
         
         case .tabBarController:
             viewController = TabBarControllerAd(swiftyAds: swiftyAds)
-        
-        case .spriteKitScene:
-            let storyboard = UIStoryboard(name: "GameViewController", bundle: .main)
-            let gameViewController = storyboard.instantiateInitialViewController() as! GameViewController
-            gameViewController.configure(swiftyAds: swiftyAds)
-            viewController = gameViewController
 
         case .nativeAd:
             viewController = NativeAdViewController(swityAds: swiftyAds)
@@ -201,7 +191,7 @@ final class DemoSelectionViewController: UITableViewController {
 
 private extension DemoSelectionViewController {
 
-    @objc func consentDidChange() {
+    @objc func adsConfigureCompletion() {
         if bannerAd == nil {
             makeBanner()
         }

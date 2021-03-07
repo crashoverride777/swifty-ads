@@ -3,7 +3,7 @@ import SpriteKit
 import AppTrackingTransparency
 
 extension Notification.Name {
-    static let swiftyAdsConfigureCompletion = Notification.Name("SwiftyAdsConfigureCompletion")
+    static let adsConfigureCompletion = Notification.Name("AdsConfigureCompletion")
 }
 
 @UIApplicationMain
@@ -88,8 +88,8 @@ private extension AppDelegate {
                     print("SwiftyAds did finish setup with error: \(error)")
                 }
 
-                // Ads are no ready to be displayed
-                self.notificationCenter.post(name: .swiftyAdsConfigureCompletion, object: nil)
+                // Ads are now ready to be displayed
+                self.notificationCenter.post(name: .adsConfigureCompletion, object: nil)
             })
         )
     }

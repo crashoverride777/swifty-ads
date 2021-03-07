@@ -10,7 +10,7 @@ class GameScene: SKScene {
     private lazy var rewardedLabel = childNode(withName: "rewardedLabel") as! SKLabelNode
     private lazy var rewardedInterstitialLabel = childNode(withName: "rewardedInterstitialLabel") as! SKLabelNode
 
-    // MARK: - Configure
+    // MARK: - Init
     
     func configure(swiftyAds: SwiftyAdsType) {
         self.swiftyAds = swiftyAds
