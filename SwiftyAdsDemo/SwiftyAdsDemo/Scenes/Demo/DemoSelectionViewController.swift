@@ -116,7 +116,7 @@ final class DemoSelectionViewController: UITableViewController {
         super.viewDidLoad()
         navigationItem.title = "Swifty Ads Demo"
         tableView.register(BasicCell.self, forCellReuseIdentifier: String(describing: BasicCell.self))
-        notificationCenter.addObserver(self, selector: #selector(consentDidChange), name: .adConsentStatusDidChange, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(consentDidChange), name: .swiftyAdsConfigureCompletion, object: nil)
         makeBanner()
     }
 
