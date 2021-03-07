@@ -111,7 +111,7 @@ import SwiftyAds
 
 ### Configure 
 
-Create a configure method and call it as soon as your app launches e.g. AppDelegate `didFinishLaunchingWithOptions`. This will also trigger the initial consent flow if consent has not been disabled.
+Create a configure method and call it as soon as your app launches e.g. AppDelegate `didFinishLaunchingWithOptions`. This will also trigger the initial consent flow if consent has not been disabled. Ads can only be displayed after the `completion` handler was called.
 
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -147,6 +147,7 @@ private func configureSwiftyAds(from viewController: UIViewController) {
             switch result {
             case .success(let consentStatus):
                 print("Setup successful")
+                // Ads can now be loaded/displayed
             case .failure(let error):
                 print("Setup error: \(error)")
             }
