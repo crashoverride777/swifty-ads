@@ -24,7 +24,6 @@ import GoogleMobileAds
 import UserMessagingPlatform
 
 public typealias SwiftyAdsConsentStatus = UMPConsentStatus
-public typealias SwiftyAdsConsentType = UMPConsentType
 public typealias SwiftyAdsConsentResultHandler = (Result<SwiftyAdsConsentStatus, Error>) -> Void
 
 public enum SwiftyAdsEnvironment {
@@ -86,7 +85,6 @@ public enum SwiftyAdsNativeAdLoaderOptions {
 
 public protocol SwiftyAdsType: AnyObject {
     var consentStatus: SwiftyAdsConsentStatus { get }
-    var consentType: SwiftyAdsConsentType { get }
     var isTaggedForChildDirectedTreatment: Bool? { get }
     var isTaggedForUnderAgeOfConsent: Bool { get }
     var isInterstitialAdReady: Bool { get }

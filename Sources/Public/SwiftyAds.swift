@@ -84,15 +84,6 @@ extension SwiftyAds: SwiftyAdsType {
         consentManager?.consentStatus ?? .notRequired
     }
 
-    /// The type of consent provided when not using IAB TCF v2 framework.
-    ///
-    /// - Warning:
-    /// Always returns .unknown if using IAB TCF v2 framework
-    /// https://stackoverflow.com/questions/63415275/obtaining-consent-with-the-user-messaging-platform-android
-    public var consentType: SwiftyAdsConsentType {
-        consentManager?.consentType ?? .unknown
-    }
-
     /// Returns true if configured for child directed treatment or nil if ignored (COPPA).
     public var isTaggedForChildDirectedTreatment: Bool? {
         configuration?.isTaggedForChildDirectedTreatment

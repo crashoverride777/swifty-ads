@@ -35,7 +35,6 @@ Provide a way for users to change their consent.
 
 protocol SwiftyAdsConsentManagerType: class {
     var consentStatus: SwiftyAdsConsentStatus { get }
-    var consentType: SwiftyAdsConsentType { get }
     func requestUpdate(completion: @escaping SwiftyAdsConsentResultHandler)
     func showForm(from viewController: UIViewController, completion: @escaping SwiftyAdsConsentResultHandler)
 }
@@ -74,10 +73,6 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
 
     var consentStatus: SwiftyAdsConsentStatus {
         consentInformation.consentStatus
-    }
-
-    var consentType: SwiftyAdsConsentType {
-        consentInformation.consentType
     }
 
     func requestUpdate(completion: @escaping SwiftyAdsConsentResultHandler) {
