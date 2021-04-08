@@ -110,9 +110,9 @@ If you are supporting iOS 13 and below you will also have to make it optional in
 import SwiftyAds
 ```
 
-### Create request builder
+### Create GADRequest builder
 
-Create the GAD request builder that SwiftyAds will use to load ads.
+Create the GADRequest builder that SwiftyAds will use to load ads. Some mediation networks such as Vungle may required specific GADRequest extras, please check the AdMob mediation [documentation](https://developers.google.com/admob/ios/mediation).
 
 ```swift
 import GoogleMobileAds
