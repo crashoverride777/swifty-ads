@@ -524,7 +524,7 @@ public extension SwiftyAds {
         configure(
             from: viewController,
             for: environment,
-            requestBuilder: AdsRequestBuilder(),
+            requestBuilder: self,
             consentStatusDidChange: consentStatusDidChange,
             completion: completion
         )
@@ -569,8 +569,8 @@ public extension SwiftyAds {
     }
 }
 
-private final class AdsRequestBuilder: SwiftyAdsRequestBuilderType {
-    func build() -> GADRequest {
+extension SwiftyAds: SwiftyAdsRequestBuilderType {
+    public func build() -> GADRequest {
         GADRequest()
     }
 }
