@@ -1,5 +1,6 @@
 import UIKit
 import SpriteKit
+import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -33,6 +34,7 @@ private extension AppDelegate {
         swiftyAds.configure(
             from: gameViewController,
             for: environment,
+            requestBuilder: SwiftyAdsRequestBuilder(),
             consentStatusDidChange: { status in
                 switch status {
                 case .notRequired:
@@ -71,5 +73,13 @@ private extension AppDelegate {
                 }
             })
         )
+    }
+}
+
+// MARK: - SwiftyAdsRequestBuilder
+
+private final class SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
+    func build() -> GADRequest {
+        GADRequest()
     }
 }

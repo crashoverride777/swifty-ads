@@ -38,12 +38,13 @@ public final class SwiftyAds: NSObject {
     // MARK: - Properties
     
     private let mobileAds: GADMobileAds
-    private let requestBuilder: SwiftyAdsRequestBuilderType
     private let interstitialAdIntervalTracker: SwiftyAdsIntervalTrackerType
     private let rewardedInterstitialAdIntervalTracker: SwiftyAdsIntervalTrackerType
 
     private var configuration: SwiftyAdsConfiguration?
     private var environment: SwiftyAdsEnvironment = .production
+    private var requestBuilder: SwiftyAdsRequestBuilderType?
+    
     private var interstitialAd: SwiftyAdsInterstitialType?
     private var rewardedAd: SwiftyAdsRewardedType?
     private var rewardedInterstitialAd: SwiftyAdsRewardedInterstitialType?
@@ -64,7 +65,6 @@ public final class SwiftyAds: NSObject {
     
     private override init() {
         mobileAds = .sharedInstance()
-        requestBuilder = SwiftyAdsRequestBuilder()
         interstitialAdIntervalTracker = SwiftyAdsIntervalTracker()
         rewardedInterstitialAdIntervalTracker = SwiftyAdsIntervalTracker()
         super.init()
@@ -120,6 +120,7 @@ extension SwiftyAds: SwiftyAdsType {
     ///
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter environment: The environment for ads to be displayed.
+    /// - parameter requestBuilder: The GADRequest builder.
     /// - parameter consentStatusDidChange: A handler that will be called everytime the consent status has changed.
     /// - parameter completion: A completion handler that will return the current consent status after the initial consent flow has finished.
     ///
@@ -127,6 +128,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// Returns .notRequired in the completion handler if consent has been disabled via SwiftyAds.plist isUMPDisabled entry.
     public func configure(from viewController: UIViewController,
                           for environment: SwiftyAdsEnvironment,
+                          requestBuilder: SwiftyAdsRequestBuilderType,
                           consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                           completion: @escaping SwiftyAdsConsentResultHandler) {
         // Update configuration for selected environment
@@ -143,9 +145,11 @@ extension SwiftyAds: SwiftyAdsType {
             let simulatorId = kGADSimulatorID as? String
             mobileAds.requestConfiguration.testDeviceIdentifiers = [simulatorId].compactMap { $0 } + testDeviceIdentifiers
         }
+        
         self.configuration = configuration
         self.environment = environment
-
+        self.requestBuilder = requestBuilder
+        
         // Tag for child directed treatment if needed (COPPA)
         if let isTaggedForChildDirectedTreatment = configuration.isTaggedForChildDirectedTreatment {
             mobileAds.requestConfiguration.tag(forChildDirectedTreatment: isTaggedForChildDirectedTreatment)
@@ -288,7 +292,9 @@ extension SwiftyAds: SwiftyAdsType {
             hasConsent: { [weak self] in
                 self?.hasConsent ?? true
             },
-            request: requestBuilder.build
+            request: { [weak self] in
+                self?.requestBuilder?.build() ?? GADRequest()
+            }
         )
 
         bannerAd.prepare(
@@ -429,8 +435,8 @@ extension SwiftyAds: SwiftyAdsType {
             nativeAd = SwiftyAdsNative(
                 environment: environment,
                 adUnitId: adUnitId,
-                request: { [unowned self] in
-                    self.requestBuilder.build()
+                request: { [weak self] in
+                    self?.requestBuilder?.build() ?? GADRequest()
                 }
             )
         }
@@ -518,6 +524,7 @@ public extension SwiftyAds {
         configure(
             from: viewController,
             for: environment,
+            requestBuilder: AdsRequestBuilder(),
             consentStatusDidChange: consentStatusDidChange,
             completion: completion
         )
@@ -559,5 +566,11 @@ public extension SwiftyAds {
             onError: onError,
             onReceive: onReceive
         )
+    }
+}
+
+private final class AdsRequestBuilder: SwiftyAdsRequestBuilderType {
+    func build() -> GADRequest {
+        GADRequest()
     }
 }

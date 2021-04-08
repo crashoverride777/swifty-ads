@@ -93,6 +93,7 @@ public protocol SwiftyAdsType: AnyObject {
     var isDisabled: Bool { get }
     func configure(from viewController: UIViewController,
                    for environment: SwiftyAdsEnvironment,
+                   requestBuilder: SwiftyAdsRequestBuilderType,
                    consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                    completion: @escaping SwiftyAdsConsentResultHandler)
     func askForConsent(from viewController: UIViewController,

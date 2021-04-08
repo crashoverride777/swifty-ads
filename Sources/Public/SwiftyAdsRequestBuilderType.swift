@@ -23,15 +23,6 @@
 import Foundation
 import GoogleMobileAds
   
-protocol SwiftyAdsRequestBuilderType: AnyObject {
+public protocol SwiftyAdsRequestBuilderType: AnyObject {
     func build() -> GADRequest
-}
-
-final class SwiftyAdsRequestBuilder {}
-
-extension SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
-
-    func build() -> GADRequest {
-        GADRequest()
-    }
 }

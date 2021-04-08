@@ -1,6 +1,7 @@
 import UIKit
 import SpriteKit
 import AppTrackingTransparency
+import GoogleMobileAds
 
 extension Notification.Name {
     static let adsConfigureCompletion = Notification.Name("AdsConfigureCompletion")
@@ -54,6 +55,7 @@ private extension AppDelegate {
         swiftyAds.configure(
             from: viewController,
             for: environment,
+            requestBuilder: SwiftyAdsRequestBuilder(),
             consentStatusDidChange: { status in
                 switch status {
                 case .notRequired:
@@ -105,5 +107,13 @@ private extension AppDelegate {
         } else {
             completion()
         }
+    }
+}
+
+// MARK: - SwiftyAdsRequestBuilder
+
+private final class SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
+    func build() -> GADRequest {
+        GADRequest()
     }
 }
