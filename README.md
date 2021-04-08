@@ -165,7 +165,7 @@ private func configureSwiftyAds(from viewController: UIViewController) {
             switch result {
             case .success(let consentStatus):
                 print("Setup successful")
-                // Ads can now be loaded/displayed
+                // Ads can now be displayed
             case .failure(let error):
                 print("Setup error: \(error)")
             }
@@ -415,15 +415,11 @@ if let swiftyAdsError = error as? SwiftyAdsError {
 }
 ```
 
-### Consent Status/Type
+### Consent Status
 
 ```swift
 // Check current consent status
 SwiftyAds.shared.consentStatus
-
-// Check type of consent provided (returns unknown if using IAB TCF v2 framework)
-// https://stackoverflow.com/questions/63415275/obtaining-consent-with-the-user-messaging-platform-android
-SwiftyAds.shared.consentType
 ```
 
 ### Booleans
