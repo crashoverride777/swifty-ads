@@ -110,6 +110,22 @@ If you are supporting iOS 13 and below you will also have to make it optional in
 import SwiftyAds
 ```
 
+### Create request builder
+
+Create the GAD request builder that SwiftyAds will use to load ads.
+
+```swift
+import GoogleMobileAds
+
+final class SwiftyAdsRequestBuilder {}
+extension SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
+
+    func build() -> GADRequest {
+        GADRequest()
+    }
+}
+```
+
 ### Configure 
 
 Create a configure method and call it as soon as your app launches e.g. AppDelegate `didFinishLaunchingWithOptions`. This will also trigger the initial consent flow if consent has not been disabled. Ads can only be displayed after the `completion` handler was called.
@@ -138,6 +154,7 @@ private func configureSwiftyAds(from viewController: UIViewController) {
     SwiftyAds.shared.configure(
         from: viewController,
         for: environment,
+        requestBuilder: SwiftyAdsRequestBuilder(),
         consentStatusDidChange: { status in
             print("The consent status has changed")
             // Update mediation networks with under age of consent and other settings if required, 
