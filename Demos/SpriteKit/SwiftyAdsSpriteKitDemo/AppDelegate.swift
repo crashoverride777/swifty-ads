@@ -52,6 +52,8 @@ private extension AppDelegate {
             completion: ({ result in
                 switch result {
                 case .success(let consentStatus):
+                    self.swiftyAds.preloadAds()
+                    
                     switch consentStatus {
                     case .notRequired:
                         print("SwiftyAds did finish setup with consent status: notRequired")

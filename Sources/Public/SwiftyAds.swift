@@ -190,8 +190,7 @@ extension SwiftyAds: SwiftyAdsType {
 
         // If UMP SDK is disabled skip consent flow completely
         if let isUMPDisabled = configuration.isUMPDisabled, isUMPDisabled {
-            startMobileAdsSDK { [weak self] in
-                self?.loadAds()
+            startMobileAdsSDK {
                 completion(.success(.notRequired))
             }
             return
@@ -211,11 +210,8 @@ extension SwiftyAds: SwiftyAdsType {
         requestInitialConsent(from: viewController, consentManager: consentManager) { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success(let consentStatus):
-                self.startMobileAdsSDK { [weak self] in
-                    if consentStatus == .notRequired || consentStatus == .obtained {
-                        self?.loadAds()
-                    }
+            case .success:
+                self.startMobileAdsSDK {
                     completion(result)
                 }
             case .failure:
@@ -223,7 +219,20 @@ extension SwiftyAds: SwiftyAdsType {
             }
         }
     }
+    
+    // MARK: Preload Ads
+    
+    /// Preload ads
 
+    public func preloadAds() {
+        guard consentStatus == .notRequired || consentStatus == .obtained else { return }
+        
+        rewardedAd?.load()
+        guard !isDisabled else { return }
+        interstitialAd?.load()
+        rewardedInterstitialAd?.load()
+    }
+    
     // MARK: Consent
 
     /// Under GDPR users must be able to change their consent at any time.
@@ -518,13 +527,6 @@ private extension SwiftyAds {
             print("SwiftyAds initialization status", initializationStatus.adapterStatusesByClassName)
             completion()
         }
-    }
-
-    func loadAds() {
-        rewardedAd?.load()
-        guard !isDisabled else { return }
-        interstitialAd?.load()
-        rewardedInterstitialAd?.load()
     }
 }
 
