@@ -111,9 +111,9 @@
 			isa = PBXGroup;
 			children = (
 				6AE482F22294B7660063B22F /* SwiftyAds.swift */,
-				6AEB370225E2DA3600AFA313 /* SwiftyAdsError.swift */,
 				6AEB36F325E2C9D200AFA313 /* SwiftyAdsType.swift */,
 				6A3C586B25D82B0F00047F9A /* SwiftyAdsBannerType.swift */,
+				6AEB370225E2DA3600AFA313 /* SwiftyAdsError.swift */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -490,7 +490,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1528;
+				CURRENT_PROJECT_VERSION = 1546;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = DK88YZ475Z;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -505,7 +505,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 12.3.0;
+				MARKETING_VERSION = 12.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SwiftyAds;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -522,7 +522,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1528;
+				CURRENT_PROJECT_VERSION = 1546;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = DK88YZ475Z;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -537,7 +537,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 12.3.0;
+				MARKETING_VERSION = 12.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SwiftyAds;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
