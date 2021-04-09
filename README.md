@@ -157,15 +157,21 @@ private func configureSwiftyAds(from viewController: UIViewController) {
         requestBuilder: SwiftyAdsRequestBuilder(),
         consentStatusDidChange: { status in
             print("The consent status has changed")
-            // Update mediation networks with under age of consent and other settings if required, 
-            // for example when not using IAB TCF v2 framework in Google funding choices
+            // Update mediation networks for GDPR if required
             // See mediation network documentation
         },
         completion: { result in
             switch result {
             case .success(let consentStatus):
-                print("Setup successful")
-                // Ads can now be displayed
+                print("Configure successful with consent status")
+               
+                // Configure mediation networks for GDPR and COPPA if required 
+                // See mediation network documentation
+                
+                
+                // After mediation partners are configured ads can be displayed and we can try to preload them for the 1st time
+                SwiftyAds.shared.preloadAds()
+                
             case .failure(let error):
                 print("Setup error: \(error)")
             }
