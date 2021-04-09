@@ -44,6 +44,7 @@ public final class SwiftyAds: NSObject {
     private var configuration: SwiftyAdsConfiguration?
     private var environment: SwiftyAdsEnvironment = .production
     private var requestBuilder: SwiftyAdsRequestBuilderType?
+    private var mediationConfigurator: SwiftyAdsMediationConfiguratorType?
     
     private var interstitialAd: SwiftyAdsInterstitialType?
     private var rewardedAd: SwiftyAdsRewardedType?
@@ -121,6 +122,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter environment: The environment for ads to be displayed.
     /// - parameter requestBuilder: The GADRequest builder.
+    /// - parameter mediationConfigurator: Configurator to update mediation networks COPPA/GDPR settings for consent status.
     /// - parameter consentStatusDidChange: A handler that will be called everytime the consent status has changed.
     /// - parameter completion: A completion handler that will return the current consent status after the initial consent flow has finished.
     ///
@@ -129,6 +131,7 @@ extension SwiftyAds: SwiftyAdsType {
     public func configure(from viewController: UIViewController,
                           for environment: SwiftyAdsEnvironment,
                           requestBuilder: SwiftyAdsRequestBuilderType,
+                          mediationConfigurator: SwiftyAdsMediationConfiguratorType,
                           consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                           completion: @escaping SwiftyAdsConsentResultHandler) {
         // Update configuration for selected environment
@@ -149,6 +152,7 @@ extension SwiftyAds: SwiftyAdsType {
         self.configuration = configuration
         self.environment = environment
         self.requestBuilder = requestBuilder
+        self.mediationConfigurator = mediationConfigurator
         
         // Tag for child directed treatment if needed (COPPA)
         if let isTaggedForChildDirectedTreatment = configuration.isTaggedForChildDirectedTreatment {
@@ -190,7 +194,9 @@ extension SwiftyAds: SwiftyAdsType {
 
         // If UMP SDK is disabled skip consent flow completely
         if let isUMPDisabled = configuration.isUMPDisabled, isUMPDisabled {
-            startMobileAdsSDK {
+            startMobileAdsSDK { [weak self] in
+                guard let self = self else { return }
+                self.loadAds()
                 completion(.success(.notRequired))
             }
             return
@@ -210,7 +216,23 @@ extension SwiftyAds: SwiftyAdsType {
         requestInitialConsent(from: viewController, consentManager: consentManager) { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success:
+            case .success(let consentStatus):
+                // Once initial consent flow has finished we need to check for COPPA config
+                // and update mediation networks
+                if let isTaggedForChildDirectedTreatment = configuration.isTaggedForChildDirectedTreatment,
+                   isTaggedForChildDirectedTreatment {
+                    mediationConfigurator.enableCOPPA()
+                }
+                
+                // Once initial consent flow has finished and consentStatus is not `.notRequired`
+                // we need to update GDPR settings
+                if consentStatus != .notRequired {
+                    mediationConfigurator.updateGDPR(
+                        for: consentStatus,
+                        isTaggedForUnderAgeOfConsent: configuration.isTaggedForUnderAgeOfConsent
+                    )
+                }
+                
                 self.startMobileAdsSDK {
                     completion(result)
                 }
@@ -218,19 +240,6 @@ extension SwiftyAds: SwiftyAdsType {
                 completion(result)
             }
         }
-    }
-    
-    // MARK: Preload Ads
-    
-    /// Preload ads
-
-    public func preloadAds() {
-        guard consentStatus == .notRequired || consentStatus == .obtained else { return }
-        
-        rewardedAd?.load()
-        guard !isDisabled else { return }
-        interstitialAd?.load()
-        rewardedInterstitialAd?.load()
     }
     
     // MARK: Consent
@@ -249,9 +258,19 @@ extension SwiftyAds: SwiftyAdsType {
         DispatchQueue.main.async {
             consentManager.requestUpdate { result in
                 switch result {
-                case .success:
+                case .success(let consentStatus):
                     DispatchQueue.main.async {
-                        consentManager.showForm(from: viewController, completion: completion)
+                        consentManager.showForm(from: viewController) { [weak self] result in
+                            guard let self = self else { return }
+                            // If consent form was used to update consentStatus we need to update
+                            // mediation network GDPR settings
+                            let isTaggedForUnderAgeOfConsent = self.configuration?.isTaggedForUnderAgeOfConsent
+                            self.mediationConfigurator?.updateGDPR(
+                                for: consentStatus,
+                                isTaggedForUnderAgeOfConsent: isTaggedForUnderAgeOfConsent ?? false
+                            )
+                            completion(result)
+                        }
                     }
                 case .failure(let error):
                     completion(.failure(error))
@@ -528,6 +547,15 @@ private extension SwiftyAds {
             completion()
         }
     }
+    
+    func loadAds() {
+        guard consentStatus == .notRequired || consentStatus == .obtained else { return }
+        
+        rewardedAd?.load()
+        guard !isDisabled else { return }
+        interstitialAd?.load()
+        rewardedInterstitialAd?.load()
+    }
 }
 
 // MARK: - Deprecated
@@ -543,6 +571,7 @@ public extension SwiftyAds {
             from: viewController,
             for: environment,
             requestBuilder: self,
+            mediationConfigurator: self,
             consentStatusDidChange: consentStatusDidChange,
             completion: completion
         )
@@ -590,5 +619,16 @@ public extension SwiftyAds {
 extension SwiftyAds: SwiftyAdsRequestBuilderType {
     public func build() -> GADRequest {
         GADRequest()
+    }
+}
+
+extension SwiftyAds: SwiftyAdsMediationConfiguratorType {
+    
+    public func enableCOPPA() {
+        
+    }
+    
+    public func updateGDPR(for consentStatus: SwiftyAdsConsentStatus, isTaggedForUnderAgeOfConsent: Bool) {
+        
     }
 }

@@ -157,21 +157,12 @@ private func configureSwiftyAds(from viewController: UIViewController) {
         requestBuilder: SwiftyAdsRequestBuilder(),
         consentStatusDidChange: { status in
             print("The consent status has changed")
-            // Update mediation networks for GDPR if required
-            // See google mediation network documentation
         },
         completion: { result in
             switch result {
             case .success(let consentStatus):
                 print("Configure successful with consent status")
-               
-                // Configure mediation networks for GDPR and COPPA if required 
-                // See googlemediation network documentation
-                
-                
-                // After mediation partners are configured ads can be displayed and we can try to preload them for the 1st time
-                SwiftyAds.shared.preloadAds()
-                
+                // Ads will preload and will be ready for displaying
             case .failure(let error):
                 print("Setup error: \(error)")
             }

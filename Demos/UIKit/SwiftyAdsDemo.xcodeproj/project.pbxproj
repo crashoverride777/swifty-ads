@@ -32,6 +32,7 @@
 		6AEB36F825E2C9E700AFA313 /* SwiftyAdsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEB36F725E2C9E700AFA313 /* SwiftyAdsType.swift */; };
 		6AEB370125E2DA1D00AFA313 /* SwiftyAdsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEB370025E2DA1D00AFA313 /* SwiftyAdsError.swift */; };
 		6AEB371525E2F3A100AFA313 /* ConsentSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEB371425E2F3A100AFA313 /* ConsentSelectionViewController.swift */; };
+		6AECDFD12620EAB90064589C /* SwiftyAdsMediationConfiguratorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AECDFD02620EAB90064589C /* SwiftyAdsMediationConfiguratorType.swift */; };
 		6AEF6C2E2560CC1200780DFB /* TabBarControllerNoAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEF6C2D2560CC1200780DFB /* TabBarControllerNoAd.swift */; };
 		D64A98124421A48FA4C9D54A /* Pods_SwiftyAdsDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58AB3BECA27AE6BDA2F5A936 /* Pods_SwiftyAdsDemo.framework */; };
 /* End PBXBuildFile section */
@@ -79,6 +80,7 @@
 		6AEB36F725E2C9E700AFA313 /* SwiftyAdsType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsType.swift; sourceTree = "<group>"; };
 		6AEB370025E2DA1D00AFA313 /* SwiftyAdsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsError.swift; sourceTree = "<group>"; };
 		6AEB371425E2F3A100AFA313 /* ConsentSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentSelectionViewController.swift; sourceTree = "<group>"; };
+		6AECDFD02620EAB90064589C /* SwiftyAdsMediationConfiguratorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsMediationConfiguratorType.swift; sourceTree = "<group>"; };
 		6AEF6C2D2560CC1200780DFB /* TabBarControllerNoAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarControllerNoAd.swift; sourceTree = "<group>"; };
 		976A9AB78CF3F7B4C96D7D05 /* Pods-SwiftyAdsDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyAdsDemo.release.xcconfig"; path = "Target Support Files/Pods-SwiftyAdsDemo/Pods-SwiftyAdsDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -213,6 +215,7 @@
 				6AEB36F725E2C9E700AFA313 /* SwiftyAdsType.swift */,
 				6A3C586125D81F4700047F9A /* SwiftyAdsBannerType.swift */,
 				6AC971D12401B06600A0BB91 /* SwiftyAdsRequestBuilderType.swift */,
+				6AECDFD02620EAB90064589C /* SwiftyAdsMediationConfiguratorType.swift */,
 				6AEB370025E2DA1D00AFA313 /* SwiftyAdsError.swift */,
 			);
 			path = Public;
@@ -398,6 +401,7 @@
 				6AEF6C2E2560CC1200780DFB /* TabBarControllerNoAd.swift in Sources */,
 				6A864BC925901827005D0789 /* NativeAdViewController.swift in Sources */,
 				6AC971D82401B06700A0BB91 /* SwiftyAdsBanner.swift in Sources */,
+				6AECDFD12620EAB90064589C /* SwiftyAdsMediationConfiguratorType.swift in Sources */,
 				6AEB36F825E2C9E700AFA313 /* SwiftyAdsType.swift in Sources */,
 				6A4286052400609E0035487A /* AppDelegate.swift in Sources */,
 				6AEB371525E2F3A100AFA313 /* ConsentSelectionViewController.swift in Sources */,

@@ -56,6 +56,7 @@ private extension AppDelegate {
             from: viewController,
             for: environment,
             requestBuilder: SwiftyAdsRequestBuilder(),
+            mediationConfigurator: SwiftyAdsMediationConfigurator(),
             consentStatusDidChange: { status in
                 switch status {
                 case .notRequired:
@@ -74,8 +75,6 @@ private extension AppDelegate {
                 guard let self = self else { return }
                 switch result {
                 case .success(let consentStatus):
-                    self.swiftyAds.preloadAds()
-                    
                     switch consentStatus {
                     case .notRequired:
                         print("SwiftyAds did finish setup with consent status: notRequired")
@@ -117,5 +116,17 @@ private extension AppDelegate {
 private final class SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
     func build() -> GADRequest {
         GADRequest()
+    }
+}
+
+// MARK: - SwiftyAdsMediationConfiguratorType
+
+private final class SwiftyAdsMediationConfigurator: SwiftyAdsMediationConfiguratorType {
+    func enableCOPPA() {
+        
+    }
+    
+    func updateGDPR(for consentStatus: SwiftyAdsConsentStatus, isTaggedForUnderAgeOfConsent: Bool) {
+        
     }
 }

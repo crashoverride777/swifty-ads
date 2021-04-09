@@ -94,9 +94,9 @@ public protocol SwiftyAdsType: AnyObject {
     func configure(from viewController: UIViewController,
                    for environment: SwiftyAdsEnvironment,
                    requestBuilder: SwiftyAdsRequestBuilderType,
+                   mediationConfigurator: SwiftyAdsMediationConfiguratorType,
                    consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                    completion: @escaping SwiftyAdsConsentResultHandler)
-    func preloadAds()
     func askForConsent(from viewController: UIViewController,
                        completion: @escaping SwiftyAdsConsentResultHandler)
     func makeBannerAd(in viewController: UIViewController,
