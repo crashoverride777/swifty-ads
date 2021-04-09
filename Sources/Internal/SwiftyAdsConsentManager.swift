@@ -105,7 +105,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
 
         // Request an update to the consent information.
         // The first time we request consent information, even if outside of EEA, the status
-        // may return `.required` as the ATT alert has not yet been displayed when using
+        // may return `.required` as the ATT alert has not yet been displayed and we are using
         // Google Choices ATT message.
         consentInformation.requestConsentInfoUpdate(with: parameters) { [weak self] error in
             guard let self = self else { return }

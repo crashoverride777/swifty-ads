@@ -256,25 +256,27 @@ extension SwiftyAds: SwiftyAdsType {
         DispatchQueue.main.async {
             consentManager.requestUpdate { result in
                 switch result {
-                case .success(let consentStatus):
+                case .success:
                     DispatchQueue.main.async {
                         consentManager.showForm(from: viewController) { [weak self] result in
                             guard let self = self else { return }
                             // If consent form was used to update consentStatus
                             // we need to update GDPR settings
-                            if let configuration = self.configuration,
+                            if case .success(let newConsentStatus) = result,
+                               let configuration = self.configuration,
                                let mediationConfigurator = self.mediationConfigurator {
                                 self.updateGDPR(
                                     for: configuration,
                                     mediationConfigurator: mediationConfigurator,
-                                    consentStatus: consentStatus
+                                    consentStatus: newConsentStatus
                                 )
                             }
+                            
                             completion(result)
                         }
                     }
-                case .failure(let error):
-                    completion(.failure(error))
+                case .failure:
+                    completion(result)
                 }
             }
         }

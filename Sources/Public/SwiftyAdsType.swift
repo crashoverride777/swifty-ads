@@ -83,6 +83,15 @@ public enum SwiftyAdsNativeAdLoaderOptions {
     case multiple(Int)
 }
 
+public protocol SwiftyAdsRequestBuilderType: AnyObject {
+    func build() -> GADRequest
+}
+
+public protocol SwiftyAdsMediationConfiguratorType: AnyObject {
+    func updateCOPPA(isTaggedForChildDirectedTreatment: Bool)
+    func updateGDPR(for consentStatus: SwiftyAdsConsentStatus, isTaggedForUnderAgeOfConsent: Bool)
+}
+
 public protocol SwiftyAdsType: AnyObject {
     var consentStatus: SwiftyAdsConsentStatus { get }
     var isTaggedForChildDirectedTreatment: Bool? { get }
