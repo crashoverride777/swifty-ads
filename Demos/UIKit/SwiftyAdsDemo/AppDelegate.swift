@@ -123,10 +123,10 @@ private final class SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
 
 private final class SwiftyAdsMediationConfigurator: SwiftyAdsMediationConfiguratorType {
     func enableCOPPA() {
-        
+        print("SwiftyAdsMediationConfigurator enable COPPA")
     }
     
     func updateGDPR(for consentStatus: SwiftyAdsConsentStatus, isTaggedForUnderAgeOfConsent: Bool) {
-        
+        print("SwiftyAdsMediationConfigurator update GDPR")
     }
 }
