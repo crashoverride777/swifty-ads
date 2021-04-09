@@ -35,6 +35,7 @@ private extension AppDelegate {
             from: gameViewController,
             for: environment,
             requestBuilder: SwiftyAdsRequestBuilder(),
+            mediationConfigurator: SwiftyAdsMediationConfigurator(),
             consentStatusDidChange: { status in
                 switch status {
                 case .notRequired:
@@ -52,8 +53,6 @@ private extension AppDelegate {
             completion: ({ result in
                 switch result {
                 case .success(let consentStatus):
-                    self.swiftyAds.preloadAds()
-                    
                     switch consentStatus {
                     case .notRequired:
                         print("SwiftyAds did finish setup with consent status: notRequired")
@@ -83,5 +82,17 @@ private extension AppDelegate {
 private final class SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
     func build() -> GADRequest {
         GADRequest()
+    }
+}
+
+// MARK: - SwiftyAdsMediationConfiguratorType
+
+private final class SwiftyAdsMediationConfigurator: SwiftyAdsMediationConfiguratorType {
+    func updateCOPPA(isTaggedForChildDirectedTreatment: Bool) {
+        print("SwiftyAdsMediationConfigurator enable COPPA")
+    }
+    
+    func updateGDPR(for consentStatus: SwiftyAdsConsentStatus, isTaggedForUnderAgeOfConsent: Bool) {
+        print("SwiftyAdsMediationConfigurator update GDPR")
     }
 }

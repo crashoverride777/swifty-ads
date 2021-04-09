@@ -122,7 +122,7 @@ private final class SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
 // MARK: - SwiftyAdsMediationConfiguratorType
 
 private final class SwiftyAdsMediationConfigurator: SwiftyAdsMediationConfiguratorType {
-    func enableCOPPA() {
+    func updateCOPPA(isTaggedForChildDirectedTreatment: Bool) {
         print("SwiftyAdsMediationConfigurator enable COPPA")
     }
     

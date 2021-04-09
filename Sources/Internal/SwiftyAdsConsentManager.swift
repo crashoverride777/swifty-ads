@@ -46,7 +46,6 @@ final class SwiftyAdsConsentManager {
     private let consentInformation: UMPConsentInformation
     private let configuration: SwiftyAdsConfiguration
     private let environment: SwiftyAdsEnvironment
-    private let mobileAds: GADMobileAds
     private let consentStatusDidChange: (SwiftyAdsConsentStatus) -> Void
 
     private var form: UMPConsentForm?
@@ -56,13 +55,11 @@ final class SwiftyAdsConsentManager {
     init(consentInformation: UMPConsentInformation,
          configuration: SwiftyAdsConfiguration,
          environment: SwiftyAdsEnvironment,
-         mobileAds: GADMobileAds,
          consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void
     ) {
         self.consentInformation = consentInformation
         self.configuration = configuration
         self.environment = environment
-        self.mobileAds = mobileAds
         self.consentStatusDidChange = consentStatusDidChange
     }
 }
@@ -119,9 +116,6 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
                 return
             }
 
-            // Update for under age of consent.
-            self.updateUnderAgeOfConsent(for: self.consentStatus)
-
             // The consent information state was updated and we can now check if a form is available.
             switch self.consentInformation.formStatus {
             case .available:
@@ -165,40 +159,11 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
                 return
             }
 
-            /// Update under age of consent again, as status might now return `.notRequired`
-            /// if outside of EEA and ATT alert has been displayed
-            self.updateUnderAgeOfConsent(for: self.consentStatus)
-
             /// Fire status did change handler
             self.consentStatusDidChange(self.consentStatus)
 
             /// Fire completion handler
             completion(.success(self.consentStatus))
-        }
-    }
-}
-
-// MARK: - Private Methods
-
-private extension SwiftyAdsConsentManager {
-
-    func updateUnderAgeOfConsent(for consentStatus: SwiftyAdsConsentStatus) {
-        switch consentStatus {
-        case .notRequired:
-            mobileAds.requestConfiguration.tagForUnderAge(ofConsent: false)
-        default:
-            // The tags to enable the child-directed setting and tagForUnderAgeOfConsent
-            // should not both simultaneously be set to true.
-            // If they are, the child-directed setting takes precedence.
-            // https://developers.google.com/admob/ios/targeting#child-directed_setting
-            if
-                configuration.isTaggedForUnderAgeOfConsent,
-                let isTaggedForChildDirectedTreatment = configuration.isTaggedForChildDirectedTreatment,
-                isTaggedForChildDirectedTreatment {
-                return
-            }
-
-            mobileAds.requestConfiguration.tagForUnderAge(ofConsent: configuration.isTaggedForUnderAgeOfConsent)
         }
     }
 }

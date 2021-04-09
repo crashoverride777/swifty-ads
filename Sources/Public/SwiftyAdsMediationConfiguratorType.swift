@@ -23,6 +23,6 @@
 import Foundation
 
 public protocol SwiftyAdsMediationConfiguratorType: AnyObject {
-    func enableCOPPA()
+    func updateCOPPA(isTaggedForChildDirectedTreatment: Bool)
     func updateGDPR(for consentStatus: SwiftyAdsConsentStatus, isTaggedForUnderAgeOfConsent: Bool)
 }

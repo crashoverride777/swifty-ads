@@ -153,11 +153,6 @@ extension SwiftyAds: SwiftyAdsType {
         self.environment = environment
         self.requestBuilder = requestBuilder
         self.mediationConfigurator = mediationConfigurator
-        
-        // Set COPPA
-        if let isTaggedForChildDirectedTreatment = configuration.isTaggedForChildDirectedTreatment {
-            mobileAds.requestConfiguration.tag(forChildDirectedTreatment: isTaggedForChildDirectedTreatment)
-        }
 
         // Create ads
         if let interstitialAdUnitId = configuration.interstitialAdUnitId {
@@ -194,6 +189,10 @@ extension SwiftyAds: SwiftyAdsType {
 
         // If UMP SDK is disabled skip consent flow completely
         if let isUMPDisabled = configuration.isUMPDisabled, isUMPDisabled {
+            /// If consent flow was skipped we need to update COPPA settings
+            self.updateCOPPA(for: configuration, mediationConfigurator: mediationConfigurator)
+            
+            /// If consent flow was skipped we can start `GADMobileAds` and preload ads
             startMobileAdsSDK { [weak self] in
                 guard let self = self else { return }
                 self.loadAds()
@@ -207,7 +206,6 @@ extension SwiftyAds: SwiftyAdsType {
             consentInformation: .sharedInstance,
             configuration: configuration,
             environment: environment,
-            mobileAds: mobileAds,
             consentStatusDidChange: consentStatusDidChange
         )
         self.consentManager = consentManager
@@ -217,23 +215,20 @@ extension SwiftyAds: SwiftyAdsType {
             guard let self = self else { return }
             switch result {
             case .success(let consentStatus):
-                // Once initial consent flow has finished we need to check for COPPA config
-                // and update mediation networks if needed
-                if let isCOPPAEnabled = configuration.isTaggedForChildDirectedTreatment, isCOPPAEnabled {
-                    mediationConfigurator.enableCOPPA()
-                }
+                /// Once initial consent flow has finished we need to update mediation networks COPPA settings
+                self.updateCOPPA(for: configuration, mediationConfigurator: mediationConfigurator)
                 
-                // Once initial consent flow has finished and consentStatus is not `.notRequired`
-                // we need to update GDPR settings
+                /// Once initial consent flow has finished and consentStatus is not `.notRequired`
+                /// we need to update GDPR settings
                 if consentStatus != .notRequired {
-                    mediationConfigurator.updateGDPR(
-                        for: consentStatus,
-                        isTaggedForUnderAgeOfConsent: configuration.isTaggedForUnderAgeOfConsent
+                    self.updateGDPR(
+                        for: configuration,
+                        mediationConfigurator: mediationConfigurator,
+                        consentStatus: consentStatus
                     )
                 }
                 
-                // Once initial consent flow has finished we can start `GADMobileAds`
-                // and preload ads
+                /// Once initial consent flow has finished we can start `GADMobileAds` and preload ads
                 self.startMobileAdsSDK { [weak self] in
                     guard let self = self else { return }
                     self.loadAds()
@@ -265,14 +260,16 @@ extension SwiftyAds: SwiftyAdsType {
                     DispatchQueue.main.async {
                         consentManager.showForm(from: viewController) { [weak self] result in
                             guard let self = self else { return }
-                            // If consent form was used to update consentStatus we need to update
-                            // mediation network GDPR settings
-                            let isTaggedForUnderAgeOfConsent = self.configuration?.isTaggedForUnderAgeOfConsent
-                            self.mediationConfigurator?.updateGDPR(
-                                for: consentStatus,
-                                isTaggedForUnderAgeOfConsent: isTaggedForUnderAgeOfConsent ?? false
-                            )
-                            
+                            // If consent form was used to update consentStatus
+                            // we need to update GDPR settings
+                            if let configuration = self.configuration,
+                               let mediationConfigurator = self.mediationConfigurator {
+                                self.updateGDPR(
+                                    for: configuration,
+                                    mediationConfigurator: mediationConfigurator,
+                                    consentStatus: consentStatus
+                                )
+                            }
                             completion(result)
                         }
                     }
@@ -536,6 +533,39 @@ private extension SwiftyAds {
         }
     }
     
+    func updateCOPPA(for configuration: SwiftyAdsConfiguration,
+                     mediationConfigurator: SwiftyAdsMediationConfiguratorType) {
+        guard let isCOPPAEnabled = configuration.isTaggedForChildDirectedTreatment else { return }
+        
+        // Update mediation networks
+        mediationConfigurator.updateCOPPA(isTaggedForChildDirectedTreatment: isCOPPAEnabled)
+        
+        // Update GADMobileAds
+        mobileAds.requestConfiguration.tag(forChildDirectedTreatment: isCOPPAEnabled)
+    }
+    
+    func updateGDPR(for configuration: SwiftyAdsConfiguration,
+                    mediationConfigurator: SwiftyAdsMediationConfiguratorType,
+                    consentStatus: SwiftyAdsConsentStatus) {
+        // Update mediation networks
+        mediationConfigurator.updateGDPR(
+            for: consentStatus,
+            isTaggedForUnderAgeOfConsent: configuration.isTaggedForUnderAgeOfConsent
+        )
+        
+        // Update GADMobileAds
+        //
+        // The tags to enable the child-directed setting and tagForUnderAgeOfConsent
+        // should not both simultaneously be set to true.
+        // If they are, the child-directed setting takes precedence.
+        // https://developers.google.com/admob/ios/targeting#child-directed_setting
+        if let isCOPPAEnabled = configuration.isTaggedForChildDirectedTreatment, isCOPPAEnabled {
+            return
+        }
+
+        mobileAds.requestConfiguration.tagForUnderAge(ofConsent: configuration.isTaggedForUnderAgeOfConsent)
+    }
+    
     func startMobileAdsSDK(completion: @escaping () -> Void) {
         /*
          Warning:
@@ -626,7 +656,7 @@ extension SwiftyAds: SwiftyAdsRequestBuilderType {
 
 extension SwiftyAds: SwiftyAdsMediationConfiguratorType {
     
-    public func enableCOPPA() {
+    public func updateCOPPA(isTaggedForChildDirectedTreatment: Bool) {
         
     }
     
