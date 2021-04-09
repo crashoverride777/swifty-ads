@@ -112,16 +112,47 @@ import SwiftyAds
 
 ### Create GADRequest builder
 
-Create the GADRequest builder that SwiftyAds will use to load ads. Some mediation networks such as Vungle may required specific GADRequest extras, please check the AdMob mediation [documentation](https://developers.google.com/admob/ios/mediation).
+Create a `SwiftyAdsRequestBuilder` class, implementing the `SwiftyAdsRequestBuilderType` protocol, that SwiftyAds will use to load ads. Some mediation networks such as Vungle may required specific GADRequest extras.
+Please check the AdMob mediation [documentation](https://developers.google.com/admob/ios/mediation).
 
 ```swift
+import SwiftyAds
 import GoogleMobileAds
 
 final class SwiftyAdsRequestBuilder {}
+
 extension SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
 
     func build() -> GADRequest {
         GADRequest()
+    }
+}
+```
+
+### Create Mediation Configurator
+
+Create a `SwiftyAdsMediationConfigurator` class, implementing the `SwiftyAdsMediationConfiguratorType` protocol, to manage updating mediation networks for COPPA/GDPR consent status changes.
+Please check the AdMob mediation [documentation](https://developers.google.com/admob/ios/mediation).
+
+```swift
+import SwiftyAds
+import AppLovinAdapter
+
+final class SwiftyAdsMediationConfigurator {}
+
+extension SwiftyAdsMediationConfigurator: SwiftyAdsMediationConfiguratorType {
+
+    func enableCOPPA() {
+        // App Lovin mediation network example
+        ALPrivacySettings.setIsAgeRestrictedUser(true)
+    }
+
+    func updateGDPR(for consentStatus: SwiftyAdsConsentStatus, isTaggedForUnderAgeOfConsent: Bool) {
+        // App Lovin mediation network example
+        ALPrivacySettings.setHasUserConsent(consentStatus == .obtained)
+        if !ALPrivacySettings.isAgeRestrictedUser() { // skip if already age restricted e.g. enableCOPPA called
+            ALPrivacySettings.setIsAgeRestrictedUser(isTaggedForUnderAgeOfConsent)
+        }
     }
 }
 ```
@@ -155,14 +186,15 @@ private func configureSwiftyAds(from viewController: UIViewController) {
         from: viewController,
         for: environment,
         requestBuilder: SwiftyAdsRequestBuilder(),
+        mediationConfigurator: SwiftyAdsMediationConfigurator(),
         consentStatusDidChange: { status in
             print("The consent status has changed")
         },
         completion: { result in
             switch result {
             case .success(let consentStatus):
-                print("Configure successful with consent status")
-                // Ads will preload and will be ready for displaying
+                print("Configure successful")
+                // Ads will preload and sohuld be ready for displaying
             case .failure(let error):
                 print("Setup error: \(error)")
             }
