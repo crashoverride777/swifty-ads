@@ -189,10 +189,10 @@ extension SwiftyAds: SwiftyAdsType {
 
         // If UMP SDK is disabled skip consent flow completely
         if let isUMPDisabled = configuration.isUMPDisabled, isUMPDisabled {
-            /// If consent flow was skipped we need to update COPPA settings
+            /// If consent flow was skipped we need to update COPPA settings.
             self.updateCOPPA(for: configuration, mediationConfigurator: mediationConfigurator)
             
-            /// If consent flow was skipped we can start `GADMobileAds` and preload ads
+            /// If consent flow was skipped we can start `GADMobileAds` and preload ads.
             startMobileAdsSDK { [weak self] in
                 guard let self = self else { return }
                 self.loadAds()
@@ -215,11 +215,11 @@ extension SwiftyAds: SwiftyAdsType {
             guard let self = self else { return }
             switch result {
             case .success(let consentStatus):
-                /// Once initial consent flow has finished we need to update mediation networks COPPA settings
+                /// Once initial consent flow has finished we need to update COPPA settings.
                 self.updateCOPPA(for: configuration, mediationConfigurator: mediationConfigurator)
                 
                 /// Once initial consent flow has finished and consentStatus is not `.notRequired`
-                /// we need to update GDPR settings
+                /// we need to update GDPR settings.
                 if consentStatus != .notRequired {
                     self.updateGDPR(
                         for: configuration,
@@ -228,7 +228,7 @@ extension SwiftyAds: SwiftyAdsType {
                     )
                 }
                 
-                /// Once initial consent flow has finished we can start `GADMobileAds` and preload ads
+                /// Once initial consent flow has finished we can start `GADMobileAds` and preload ads.
                 self.startMobileAdsSDK { [weak self] in
                     guard let self = self else { return }
                     self.loadAds()
@@ -578,8 +578,11 @@ private extension SwiftyAds {
          take action before loading ads, ensure you do so before initializing the Mobile
          Ads SDK.
         */
-        mobileAds.start { initializationStatus in
-            print("SwiftyAds initialization status", initializationStatus.adapterStatusesByClassName)
+        mobileAds.start { [weak self] initializationStatus in
+            guard let self = self else { return }
+            if case .development = self.environment {
+                print("SwiftyAds initialization status", initializationStatus.adapterStatusesByClassName)
+            }
             completion()
         }
     }
