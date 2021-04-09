@@ -89,7 +89,7 @@ private final class SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
 
 private final class SwiftyAdsMediationConfigurator: SwiftyAdsMediationConfiguratorType {
     func updateCOPPA(isTaggedForChildDirectedTreatment: Bool) {
-        print("SwiftyAdsMediationConfigurator enable COPPA")
+        print("SwiftyAdsMediationConfigurator update COPPA", isTaggedForChildDirectedTreatment)
     }
     
     func updateGDPR(for consentStatus: SwiftyAdsConsentStatus, isTaggedForUnderAgeOfConsent: Bool) {
