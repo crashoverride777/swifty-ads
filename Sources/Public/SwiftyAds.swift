@@ -192,8 +192,8 @@ extension SwiftyAds: SwiftyAdsType {
         if let isUMPDisabled = configuration.isUMPDisabled, isUMPDisabled {
             startMobileAdsSDK { [weak self] in
                 self?.loadAds()
+                completion(.success(.notRequired))
             }
-            completion(.success(.notRequired))
             return
         }
 
@@ -515,7 +515,7 @@ private extension SwiftyAds {
          Ads SDK.
         */
         mobileAds.start { initializationStatus in
-            print(initializationStatus.adapterStatusesByClassName)
+            print("SwiftyAds initialization status", initializationStatus.adapterStatusesByClassName)
             completion()
         }
     }
