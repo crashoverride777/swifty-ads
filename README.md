@@ -142,9 +142,9 @@ final class SwiftyAdsMediationConfigurator {}
 
 extension SwiftyAdsMediationConfigurator: SwiftyAdsMediationConfiguratorType {
 
-    func enableCOPPA() {
+    func updateCOPPA(isTaggedForChildDirectedTreatment: Bool)
         // App Lovin mediation network example
-        ALPrivacySettings.setIsAgeRestrictedUser(true)
+        ALPrivacySettings.setIsAgeRestrictedUser(isTaggedForChildDirectedTreatment)
     }
 
     func updateGDPR(for consentStatus: SwiftyAdsConsentStatus, isTaggedForUnderAgeOfConsent: Bool) {
