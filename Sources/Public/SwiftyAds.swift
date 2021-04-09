@@ -190,7 +190,9 @@ extension SwiftyAds: SwiftyAdsType {
 
         // If UMP SDK is disabled skip consent flow completely
         if let isUMPDisabled = configuration.isUMPDisabled, isUMPDisabled {
-            loadAds()
+            startMobileAdsSDK { [weak self] in
+                self?.loadAds()
+            }
             completion(.success(.notRequired))
             return
         }
@@ -206,7 +208,20 @@ extension SwiftyAds: SwiftyAdsType {
         self.consentManager = consentManager
 
         // Request initial consent
-        requestInitialConsent(from: viewController, consentManager: consentManager, completion: completion)
+        requestInitialConsent(from: viewController, consentManager: consentManager) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let consentStatus):
+                self.startMobileAdsSDK { [weak self] in
+                    if consentStatus == .notRequired || consentStatus == .obtained {
+                        self?.loadAds()
+                    }
+                    completion(result)
+                }
+            case .failure:
+                completion(result)
+            }
+        }
     }
 
     // MARK: Consent
@@ -471,36 +486,37 @@ private extension SwiftyAds {
                                consentManager: SwiftyAdsConsentManagerType,
                                completion: @escaping SwiftyAdsConsentResultHandler) {
         DispatchQueue.main.async {
-            consentManager.requestUpdate { [weak self] result in
-                guard let self = self else { return }
+            consentManager.requestUpdate { result in
                 switch result {
                 case .success(let status):
                     switch status {
-                    case .obtained, .notRequired:
-                        self.loadAds()
-                        completion(.success(status))
                     case .required:
                         DispatchQueue.main.async {
-                            consentManager.showForm(from: viewController) { [weak self] result in
-                                guard let self = self else { return }
-                                switch result {
-                                case .success(let status):
-                                    if status == .obtained || status == .notRequired {
-                                        self.loadAds()
-                                    }
-                                    completion(.success(status))
-                                case .failure(let error):
-                                    completion(.failure(error))
-                                }
-                            }
+                            consentManager.showForm(from: viewController, completion: completion)
                         }
                     default:
-                        completion(.success(status))
+                        completion(result)
                     }
-                case .failure(let error):
-                    completion(.failure(error))
+                case .failure:
+                    completion(result)
                 }
             }
+        }
+    }
+    
+    func startMobileAdsSDK(completion: @escaping () -> Void) {
+        /*
+         Warning:
+         Ads may be preloaded by the Mobile Ads SDK or mediation partner SDKs upon
+         calling startWithCompletionHandler:. If you need to obtain consent from users
+         in the European Economic Area (EEA), set any request-specific flags (such as
+         tagForChildDirectedTreatment or tag_for_under_age_of_consent), or otherwise
+         take action before loading ads, ensure you do so before initializing the Mobile
+         Ads SDK.
+        */
+        mobileAds.start { initializationStatus in
+            print(initializationStatus.adapterStatusesByClassName)
+            completion()
         }
     }
 
