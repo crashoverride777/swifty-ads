@@ -550,6 +550,11 @@ private extension SwiftyAds {
                     mediationConfigurator: SwiftyAdsMediationConfiguratorType,
                     consentStatus: SwiftyAdsConsentStatus) {
         // Update mediation networks
+        //
+        // The GADMobileADs tagForUnderAgeOfConsent parameter is currently NOT forwarded to ad network
+        // mediation adapters.
+        // It is your responsibility to ensure that each third-party ad network in your application serves
+        // ads that are appropriate for users under the age of consent per GDPR.
         mediationConfigurator.updateGDPR(
             for: consentStatus,
             isTaggedForUnderAgeOfConsent: configuration.isTaggedForUnderAgeOfConsent
