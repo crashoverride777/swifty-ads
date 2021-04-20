@@ -508,10 +508,16 @@ func consentButtonPressed() {
 }
 ```
 
-The consent button can be hidden if consent is not required.
+The consent button can be hidden if consent is not required or user is tagged for under age of consent.
 
 ```swift
-consentButton.isHidden = SwiftyAds.shared.consentStatus == .notRequired
+// If consent is not required e.g. outside EEA than we do not need to show consent button.
+// If inside EEA we need to display the consentButton unless user is tagged for under age of consent
+if SwiftyAds.shared.consentStatus == .notRequired {
+    consentButton.isHidden = true
+} else {
+    consentButton.isHidden = SwiftyAds.shared.isTaggedForUnderAgeOfConsent
+}
 ```
 
 ## App Store release information
