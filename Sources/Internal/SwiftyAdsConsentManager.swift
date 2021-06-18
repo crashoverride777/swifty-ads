@@ -33,7 +33,7 @@ Present the form.
 Provide a way for users to change their consent.
 */
 
-protocol SwiftyAdsConsentManagerType: class {
+protocol SwiftyAdsConsentManagerType: AnyObject {
     var consentStatus: SwiftyAdsConsentStatus { get }
     func requestUpdate(completion: @escaping SwiftyAdsConsentResultHandler)
     func showForm(from viewController: UIViewController, completion: @escaping SwiftyAdsConsentResultHandler)
