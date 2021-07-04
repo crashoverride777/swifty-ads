@@ -496,14 +496,23 @@ extension SwiftyAds: SwiftyAdsType {
         )
     }
 
-    // MARK: Disable
+    // MARK: Enable/Disable
 
-    /// Disable ads
+    /// Enable/Disable ads
+    public func disable(_ isDisabled: Bool) {
+        disabled = isDisabled
+        if isDisabled {
+            interstitialAd?.stopLoading()
+            rewardedInterstitialAd?.stopLoading()
+            nativeAd?.stopLoading()
+        } else {
+            loadAds()
+        }
+    }
+    
+    @available(*, deprecated, message: "Please use `disable(_ isDisabled: Bool)`")
     public func disable() {
-        disabled = true
-        interstitialAd?.stopLoading()
-        rewardedInterstitialAd?.stopLoading()
-        nativeAd?.stopLoading()
+        disable(true)
     }
 }
 

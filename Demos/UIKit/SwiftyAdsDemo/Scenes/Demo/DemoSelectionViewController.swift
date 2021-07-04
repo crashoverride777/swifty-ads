@@ -175,7 +175,7 @@ final class DemoSelectionViewController: UITableViewController {
             }
 
         case .disable:
-            swiftyAds.disable()
+            swiftyAds.disable(true)
             bannerAd?.remove()
             bannerAd = nil
             showDisabledAlert()

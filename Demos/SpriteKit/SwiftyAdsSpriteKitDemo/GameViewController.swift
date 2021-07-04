@@ -66,7 +66,7 @@ class GameViewController: UIViewController {
     }
 
     func disableAds() {
-        swiftyAds.disable()
+        swiftyAds.disable(true)
         bannerAd?.remove()
         bannerAd = nil
     }
