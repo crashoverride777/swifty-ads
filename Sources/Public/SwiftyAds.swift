@@ -499,6 +499,8 @@ extension SwiftyAds: SwiftyAdsType {
     // MARK: Enable/Disable
 
     /// Enable/Disable ads
+    ///
+    /// - parameter isDisabled: Set to true to disable ads or false to enable ads.
     public func disable(_ isDisabled: Bool) {
         disabled = isDisabled
         if isDisabled {

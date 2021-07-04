@@ -142,8 +142,6 @@ public protocol SwiftyAdsType: AnyObject {
                       onError: ((Error) -> Void)?,
                       onReceive: @escaping (GADNativeAd) -> Void)
     func disable(_ isDisabled: Bool)
-    @available(*, deprecated, message: "Please use `disable(_ isDisabled: Bool)`")
-    func disable()
 
     // MARK: Deprecated
 
@@ -168,4 +166,7 @@ public protocol SwiftyAdsType: AnyObject {
                       count: Int?,
                       onReceive: @escaping (GADNativeAd) -> Void,
                       onError: @escaping (Error) -> Void)
+    
+    @available(*, deprecated, message: "Please use `disable(_ isDisabled: Bool)`")
+    func disable()
 }
