@@ -509,11 +509,6 @@ extension SwiftyAds: SwiftyAdsType {
             loadAds()
         }
     }
-    
-    @available(*, deprecated, message: "Please use `disable(_ isDisabled: Bool)`")
-    public func disable() {
-        disable(true)
-    }
 }
 
 // MARK: - Private Methods
@@ -662,6 +657,11 @@ public extension SwiftyAds {
             onError: onError,
             onReceive: onReceive
         )
+    }
+    
+    @available(*, deprecated, message: "Please use `disable(_ isDisabled: Bool)`")
+    func disable() {
+        disable(true)
     }
 }
 
