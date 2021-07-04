@@ -473,13 +473,13 @@ SwiftyAds.shared.isTaggedForUnderAgeOfConsent
 SwiftyAds.shared.isDisabled
 ```
 
-### Disable Ads (In App Purchases)
+### Disable/Enable Ads (In App Purchases)
 
-Call the `disable()` method and banner, interstitial and rewarded interstitial ads will no longer display. 
+Call the `disable(_ isDisabled: Bool)` method and banner, interstitial and rewarded interstitial ads will no longer display. 
 This will not stop regular rewarded ads from displaying as they should have a dedicated button. This way you can remove banner, interstitial and rewarded interstitial ads but still have rewarded ads. 
 
 ```swift
-SwiftyAds.shared.disable()
+SwiftyAds.shared.disable(true)
 ```
 
 For permanent storage you will need to create your own boolean logic and save it in something like `NSUserDefaults`, or preferably `Keychain`. 
@@ -487,7 +487,7 @@ Than at app launch, before you call `SwiftyAds.shared.configure(...)`, check you
 
 ```swift
 if UserDefaults.standard.bool(forKey: "RemovedAdsKey") == true {
-    SwiftyAds.shared.disable()
+    SwiftyAds.shared.disable(true)
 }
 ```
 
