@@ -23,7 +23,7 @@ A Swift library to display banner, interstitial, rewarded and native ads from Go
 
 ## Requirements
 
-- iOS 11.4+
+- iOS 12.4+
 - Swift 5.0+
 
 ## Create Accounts
