@@ -123,7 +123,7 @@ extension SwiftyAdsRewardedInterstitial: GADFullScreenContentDelegate {
         }
     }
 
-    func adDidPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+    func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
         onOpen?()
     }
 
