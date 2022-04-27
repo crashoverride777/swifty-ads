@@ -340,13 +340,3 @@ private extension SwiftyAdsBanner {
         animator?.finishAnimation(at: .current)
     }
 }
-
-// MARK: - Deprecated
-
-extension SwiftyAdsBanner {
-
-    @available(*, deprecated, message: "Please use new hide method without animated parameter")
-    func hide(animated: Bool) {
-        hide()
-    }
-}

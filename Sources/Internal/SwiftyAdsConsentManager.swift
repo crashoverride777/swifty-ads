@@ -89,15 +89,6 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
             if case .resetOnLaunch = consentConfiguration {
                 consentInformation.reset()
             }
-        case .debug(let testDeviceIdentifiers, let geography, let resetConsentInfo):
-            let debugSettings = UMPDebugSettings()
-            debugSettings.testDeviceIdentifiers = testDeviceIdentifiers
-            debugSettings.geography = geography
-            parameters.debugSettings = debugSettings
-
-            if resetConsentInfo {
-                consentInformation.reset()
-            }
         }
         
         // Update parameters for under age of consent.

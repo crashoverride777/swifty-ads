@@ -33,8 +33,4 @@ public protocol SwiftyAdsBannerType: AnyObject {
 
     /// Removes the banner from its superview.
     func remove()
-
-    // MARK: Deperecated
-    @available(*, deprecated, message: "Please use new hide method without animated parameter")
-    func hide(animated: Bool)
 }

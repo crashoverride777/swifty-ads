@@ -40,7 +40,7 @@ public enum SwiftyAdsEnvironment {
         // Disables UMP consent
         case disabled
 
-        var geography: Geography {
+        public var geography: Geography {
             switch self {
             case .default(let geography), .resetOnLaunch(let geography):
                 return geography
@@ -49,17 +49,11 @@ public enum SwiftyAdsEnvironment {
             }
         }
 
-        var isDisabled: Bool {
+        public var isDisabled: Bool {
             if case .disabled = self { return true }
             return false
         }
     }
-
-    // Deprecated
-    @available(*, deprecated, message: "Please use .development")
-    case debug(testDeviceIdentifiers: [String],
-               geography: SwiftyAdsEnvironment.ConsentConfiguration.Geography,
-               resetConsentInfo: Bool)
 }
 
 public enum SwiftyAdsAdUnitIdType {
@@ -142,31 +136,4 @@ public protocol SwiftyAdsType: AnyObject {
                       onError: ((Error) -> Void)?,
                       onReceive: @escaping (GADNativeAd) -> Void)
     func disable(_ isDisabled: Bool)
-
-    // MARK: Deprecated
-
-    @available(*, deprecated, message: "Please use configure method")
-    func setup(from viewController: UIViewController,
-               for environment: SwiftyAdsEnvironment,
-               consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
-               completion: @escaping SwiftyAdsConsentResultHandler)
-
-    @available(*, deprecated, message: "Please use new makeBanner method")
-    func makeBannerAd(in viewController: UIViewController,
-                      adUnitIdType: SwiftyAdsAdUnitIdType,
-                      position: SwiftyAdsBannerAdPosition,
-                      animationDuration: TimeInterval,
-                      onOpen: (() -> Void)?,
-                      onClose: (() -> Void)?,
-                      onError: ((Error) -> Void)?) -> SwiftyAdsBannerType?
-
-    @available(*, deprecated, message: "Please use new loadNativeAd method")
-    func loadNativeAd(from viewController: UIViewController,
-                      adUnitIdType: SwiftyAdsAdUnitIdType,
-                      count: Int?,
-                      onReceive: @escaping (GADNativeAd) -> Void,
-                      onError: @escaping (Error) -> Void)
-    
-    @available(*, deprecated, message: "Please use `disable(_ isDisabled: Bool)`")
-    func disable()
 }
