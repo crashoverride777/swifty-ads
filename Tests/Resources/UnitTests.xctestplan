@@ -12,13 +12,7 @@
     "codeCoverage" : false
   },
   "testTargets" : [
-    {
-      "target" : {
-        "containerPath" : "container:SwiftyAds.xcodeproj",
-        "identifier" : "6AAD6A1C240C1CBE001F4A7D",
-        "name" : "SwiftyAdsTests"
-      }
-    }
+
   ],
   "version" : 1
 }
