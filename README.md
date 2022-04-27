@@ -46,6 +46,20 @@ To support mediation networks please read the AdMob [documentation](https://deve
 
 ## Installation
 
+### Swift Package Manager
+
+The Swift Package Manager is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
+
+To add a swift package to your project simple open your project in xCode and click File > Swift Packages > Add Package Dependency.
+Than enter `https://github.com/crashoverride777/swifty-ads.git` as the repository URL and finish the installation wizard.
+
+Alternatively if you have another swift package that requires `SwiftyAds` as a dependency it is as easy as adding it to the dependencies value of your Package.swift.
+```swift
+dependencies: [
+.package(url: "https://github.com/crashoverride777/swifty-ads.git", from: "14.0.0")
+]
+```
+
 ### Cocoa Pods
 
 [CocoaPods](https://developers.google.com/admob/ios/quick-start#streamlined_using_cocoapods) is a dependency manager for Cocoa projects. 
