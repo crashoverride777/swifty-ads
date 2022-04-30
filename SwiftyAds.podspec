@@ -8,7 +8,7 @@ s.homepage = 'https://github.com/crashoverride777/swifty-ads'
 s.authors = { 'Dominik' => 'overrideinteractive@icloud.com' }
 
 s.swift_versions = ['5.1', '5.2', '5.3']
-s.ios.deployment_target = '13.6'
+s.ios.deployment_target = '12.4'
 
 s.requires_arc = true
 s.static_framework = true
