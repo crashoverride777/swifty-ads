@@ -16,7 +16,7 @@ A Swift library to display banner, interstitial, rewarded and native ads from Go
 - [Demos](#demos)
 - [License](#license)
 
-## 2021 Roadmap
+## 2022 Roadmap
 
 - Multiple ad unit ids
 - Swift package manager support
