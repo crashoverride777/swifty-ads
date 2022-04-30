@@ -540,7 +540,7 @@ Make sure to prepare for Apple's App Store data disclosure [requirements](https:
 
 ## Demos
 
-Check out the `Demos` folder for a  `UIKit` and `SpriteKit` demo project. Make sure to launch the `.xcworkspace` when opening the either project.
+https://github.com/crashoverride777/swifty-ads-demo
 
 ## License
 
