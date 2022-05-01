@@ -64,7 +64,7 @@ final class SwiftyAdsBanner: NSObject {
         super.init()
     }
 
-    // MARK: - Methods
+    // MARK: - Convenience
     
     func prepare(withAdUnitId adUnitId: String,
                  in viewController: UIViewController,

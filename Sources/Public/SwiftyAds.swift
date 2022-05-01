@@ -138,7 +138,7 @@ extension SwiftyAds: SwiftyAdsType {
         let configuration: SwiftyAdsConfiguration
         switch environment {
         case .production:
-            configuration = .production
+            configuration = .production()
         case .development(let testDeviceIdentifiers, let consentConfiguration):
             configuration = .debug(isUMPDisabled: consentConfiguration.isDisabled)
             mobileAds.requestConfiguration.testDeviceIdentifiers = [GADSimulatorID].compactMap { $0 } + testDeviceIdentifiers

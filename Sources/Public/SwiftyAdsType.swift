@@ -26,36 +26,6 @@ import UserMessagingPlatform
 public typealias SwiftyAdsConsentStatus = UMPConsentStatus
 public typealias SwiftyAdsConsentResultHandler = (Result<SwiftyAdsConsentStatus, Error>) -> Void
 
-public enum SwiftyAdsEnvironment {
-    case production
-    case development(testDeviceIdentifiers: [String], consentConfiguration: ConsentConfiguration)
-
-    public enum ConsentConfiguration {
-        public typealias Geography = UMPDebugGeography
-
-        // Default consent settings
-        case `default`(geography: Geography)
-        // Resets consent info every time app is launched
-        case resetOnLaunch(geography: Geography)
-        // Disables UMP consent
-        case disabled
-
-        public var geography: Geography {
-            switch self {
-            case .default(let geography), .resetOnLaunch(let geography):
-                return geography
-            case .disabled:
-                return .disabled
-            }
-        }
-
-        public var isDisabled: Bool {
-            if case .disabled = self { return true }
-            return false
-        }
-    }
-}
-
 public enum SwiftyAdsAdUnitIdType {
     case plist
     case custom(String)

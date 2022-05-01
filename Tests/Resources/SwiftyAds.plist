@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bannerAdUnitId</key>
+	<string>123</string>
+	<key>interstitialAdUnitId</key>
+	<string>456</string>
+	<key>rewardedAdUnitId</key>
+	<string>789</string>
+	<key>isTaggedForUnderAgeOfConsent</key>
+	<false/>
+</dict>
+</plist>
