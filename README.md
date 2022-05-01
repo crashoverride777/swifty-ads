@@ -16,10 +16,6 @@ A Swift library to display banner, interstitial, rewarded and native ads from Go
 - [Demos](#demos)
 - [License](#license)
 
-## 2022 Roadmap
-
-- Multiple ad unit ids
-
 ## Requirements
 
 - iOS 12.4+
@@ -90,7 +86,7 @@ or manually
 
 ### Add SwiftyAds.plist
 
-Download the [template ](Resources/SwiftyAdsPlistTemplate.zip) plist and add it to your projects main bundle. Than enter your required ad unit ids and set the isTaggedForUnderAgeOfConsent flag.
+Download the [template](Resources/SwiftyAdsPlistTemplate.zip) plist and add it to your projects main bundle. Than enter your required ad unit ids and set the isTaggedForUnderAgeOfConsent flag.
 
 Mandatory entries:
 - isTaggedForUnderAgeOfConsent (Boolean) ([GDPR](https://developers.google.com/admob/ios/targeting#users_under_the_age_of_consent))
