@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -159,7 +159,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
 				LastUpgradeCheck = 1230;
-				ORGANIZATIONNAME = Dominik;
+				ORGANIZATIONNAME = "Dominik Ringler";
 				TargetAttributes = {
 					B493CA3228200AF30094AA27 = {
 						CreatedOnToolsVersion = 13.3.1;
@@ -167,7 +167,7 @@
 				};
 			};
 			buildConfigurationList = B4C1B122204C298500452094 /* Build configuration list for PBXProject "SwiftyAds" */;
-			compatibilityVersion = "Xcode 11.4";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
