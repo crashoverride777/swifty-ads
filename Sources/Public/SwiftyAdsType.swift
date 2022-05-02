@@ -1,6 +1,6 @@
 //    The MIT License (MIT)
 //
-//    Copyright (c) 2015-2021 Dominik Ringler
+//    Copyright (c) 2015-2022 Dominik Ringler
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy
 //    of this software and associated documentation files (the "Software"), to deal
@@ -25,42 +25,6 @@ import UserMessagingPlatform
 
 public typealias SwiftyAdsConsentStatus = UMPConsentStatus
 public typealias SwiftyAdsConsentResultHandler = (Result<SwiftyAdsConsentStatus, Error>) -> Void
-
-public enum SwiftyAdsEnvironment {
-    case production
-    case development(testDeviceIdentifiers: [String], consentConfiguration: ConsentConfiguration)
-
-    public enum ConsentConfiguration {
-        public typealias Geography = UMPDebugGeography
-
-        // Default consent settings
-        case `default`(geography: Geography)
-        // Resets consent info every time app is launched
-        case resetOnLaunch(geography: Geography)
-        // Disables UMP consent
-        case disabled
-
-        var geography: Geography {
-            switch self {
-            case .default(let geography), .resetOnLaunch(let geography):
-                return geography
-            case .disabled:
-                return .disabled
-            }
-        }
-
-        var isDisabled: Bool {
-            if case .disabled = self { return true }
-            return false
-        }
-    }
-
-    // Deprecated
-    @available(*, deprecated, message: "Please use .development")
-    case debug(testDeviceIdentifiers: [String],
-               geography: SwiftyAdsEnvironment.ConsentConfiguration.Geography,
-               resetConsentInfo: Bool)
-}
 
 public enum SwiftyAdsAdUnitIdType {
     case plist
@@ -142,31 +106,4 @@ public protocol SwiftyAdsType: AnyObject {
                       onError: ((Error) -> Void)?,
                       onReceive: @escaping (GADNativeAd) -> Void)
     func disable(_ isDisabled: Bool)
-
-    // MARK: Deprecated
-
-    @available(*, deprecated, message: "Please use configure method")
-    func setup(from viewController: UIViewController,
-               for environment: SwiftyAdsEnvironment,
-               consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
-               completion: @escaping SwiftyAdsConsentResultHandler)
-
-    @available(*, deprecated, message: "Please use new makeBanner method")
-    func makeBannerAd(in viewController: UIViewController,
-                      adUnitIdType: SwiftyAdsAdUnitIdType,
-                      position: SwiftyAdsBannerAdPosition,
-                      animationDuration: TimeInterval,
-                      onOpen: (() -> Void)?,
-                      onClose: (() -> Void)?,
-                      onError: ((Error) -> Void)?) -> SwiftyAdsBannerType?
-
-    @available(*, deprecated, message: "Please use new loadNativeAd method")
-    func loadNativeAd(from viewController: UIViewController,
-                      adUnitIdType: SwiftyAdsAdUnitIdType,
-                      count: Int?,
-                      onReceive: @escaping (GADNativeAd) -> Void,
-                      onError: @escaping (Error) -> Void)
-    
-    @available(*, deprecated, message: "Please use `disable(_ isDisabled: Bool)`")
-    func disable()
 }

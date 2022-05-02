@@ -16,11 +16,6 @@ A Swift library to display banner, interstitial, rewarded and native ads from Go
 - [Demos](#demos)
 - [License](#license)
 
-## 2022 Roadmap
-
-- Multiple ad unit ids
-- Swift package manager support
-
 ## Requirements
 
 - iOS 12.4+
@@ -45,6 +40,20 @@ NOTE: Apple may be rejecting apps that use the UMP SDK to display the iOS 14 ATT
 To support mediation networks please read the AdMob [documentation](https://developers.google.com/admob/ios/mediation)
 
 ## Installation
+
+### Swift Package Manager
+
+The Swift Package Manager is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
+
+To add a swift package to your project simple open your project in xCode and click File > Swift Packages > Add Package Dependency.
+Than enter `https://github.com/crashoverride777/swifty-ads.git` as the repository URL and finish the installation wizard.
+
+Alternatively if you have another swift package that requires `SwiftyAds` as a dependency it is as easy as adding it to the dependencies value of your Package.swift.
+```swift
+dependencies: [
+.package(url: "https://github.com/crashoverride777/swifty-ads.git", from: "14.0.0")
+]
+```
 
 ### Cocoa Pods
 
@@ -77,7 +86,7 @@ or manually
 
 ### Add SwiftyAds.plist
 
-Download the [template ](Resources/SwiftyAdsPlistTemplate.zip) plist and add it to your projects main bundle. Than enter your required ad unit ids and set the isTaggedForUnderAgeOfConsent flag.
+Download the [template](Resources/SwiftyAdsPlistTemplate.zip) plist and add it to your projects main bundle. Than enter your required ad unit ids and set the isTaggedForUnderAgeOfConsent flag.
 
 Mandatory entries:
 - isTaggedForUnderAgeOfConsent (Boolean) ([GDPR](https://developers.google.com/admob/ios/targeting#users_under_the_age_of_consent))
@@ -526,7 +535,7 @@ Make sure to prepare for Apple's App Store data disclosure [requirements](https:
 
 ## Demos
 
-Check out the `Demos` folder for a  `UIKit` and `SpriteKit` demo project. Make sure to launch the `.xcworkspace` when opening the either project.
+https://github.com/crashoverride777/swifty-ads-demo
 
 ## License
 

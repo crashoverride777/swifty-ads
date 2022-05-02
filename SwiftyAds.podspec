@@ -1,17 +1,17 @@
 Pod::Spec.new do |s|
 
 s.name = 'SwiftyAds'
-s.version = '13.0.0'
+s.version = '14.0.0'
 s.license = 'MIT'
 s.summary = 'A Swift library to display Google AdMob ads. GDPR, COPPA and App Tracking Transparency compliant.'
 s.homepage = 'https://github.com/crashoverride777/swifty-ads'
-s.authors = { 'Dominik' => 'overrideinteractive@icloud.com' }
+s.authors = { 'Dominik Ringler' => 'overrideinteractive@icloud.com' }
 
-s.swift_versions = ['5.1', '5.2', '5.3']
 s.ios.deployment_target = '12.4'
 
 s.requires_arc = true
 s.static_framework = true
+s.swift_versions = ['5.3', '5.4', '5.5', '5.6']
 
 s.source = {
     :git => 'https://github.com/crashoverride777/swifty-ads.git',
@@ -20,6 +20,6 @@ s.source = {
 
 s.source_files = 'Sources/**/*.{h,m,swift}'
 
-s.dependency 'Google-Mobile-Ads-SDK', '~> 9.1.0'
+s.dependency 'Google-Mobile-Ads-SDK', '~> 9.4.0'
 
 end

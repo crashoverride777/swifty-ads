@@ -1,6 +1,6 @@
 //    The MIT License (MIT)
 //
-//    Copyright (c) 2015-2021 Dominik Ringler
+//    Copyright (c) 2015-2022 Dominik Ringler
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy
 //    of this software and associated documentation files (the "Software"), to deal
@@ -138,12 +138,9 @@ extension SwiftyAds: SwiftyAdsType {
         let configuration: SwiftyAdsConfiguration
         switch environment {
         case .production:
-            configuration = .production
+            configuration = .production()
         case .development(let testDeviceIdentifiers, let consentConfiguration):
             configuration = .debug(isUMPDisabled: consentConfiguration.isDisabled)
-            mobileAds.requestConfiguration.testDeviceIdentifiers = [GADSimulatorID].compactMap { $0 } + testDeviceIdentifiers
-        case .debug(let testDeviceIdentifiers, _, _):
-            configuration = .debug(isUMPDisabled: false)
             mobileAds.requestConfiguration.testDeviceIdentifiers = [GADSimulatorID].compactMap { $0 } + testDeviceIdentifiers
         }
         
@@ -314,9 +311,6 @@ extension SwiftyAds: SwiftyAdsType {
                 return configuration?.bannerAdUnitId
             case .custom(let id):
                 if case .development = environment {
-                    return configuration?.bannerAdUnitId
-                }
-                if case .debug = environment {
                     return configuration?.bannerAdUnitId
                 }
                 return id
@@ -601,69 +595,6 @@ private extension SwiftyAds {
         guard !isDisabled else { return }
         interstitialAd?.load()
         rewardedInterstitialAd?.load()
-    }
-}
-
-// MARK: - Deprecated
-
-public extension SwiftyAds {
-
-    @available(*, deprecated, message: "Please use configure method")
-    func setup(from viewController: UIViewController,
-               for environment: SwiftyAdsEnvironment,
-               consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
-               completion: @escaping SwiftyAdsConsentResultHandler) {
-        configure(
-            from: viewController,
-            for: environment,
-            requestBuilder: self,
-            mediationConfigurator: self,
-            consentStatusDidChange: consentStatusDidChange,
-            completion: completion
-        )
-    }
-
-    @available(*, deprecated, message: "Please use new makeBanner method")
-    func makeBannerAd(in viewController: UIViewController,
-                      adUnitIdType: SwiftyAdsAdUnitIdType,
-                      position: SwiftyAdsBannerAdPosition,
-                      animationDuration: TimeInterval,
-                      onOpen: (() -> Void)?,
-                      onClose: (() -> Void)?,
-                      onError: ((Error) -> Void)?) -> SwiftyAdsBannerType? {
-        makeBannerAd(
-            in: viewController,
-            adUnitIdType: adUnitIdType,
-            position: position,
-            animation: .slide(duration: animationDuration),
-            onOpen: onOpen,
-            onClose: onClose,
-            onError: onError,
-            onWillPresentScreen: nil,
-            onWillDismissScreen: nil,
-            onDidDismissScreen: nil
-        )
-    }
-
-    @available(*, deprecated, message: "Please use new loadNativeAd method")
-    func loadNativeAd(from viewController: UIViewController,
-                      adUnitIdType: SwiftyAdsAdUnitIdType,
-                      count: Int?,
-                      onReceive: @escaping (GADNativeAd) -> Void,
-                      onError: @escaping (Error) -> Void) {
-        loadNativeAd(
-            from: viewController,
-            adUnitIdType: adUnitIdType,
-            loaderOptions: count.flatMap { .multiple($0) } ?? .single,
-            onFinishLoading: nil,
-            onError: onError,
-            onReceive: onReceive
-        )
-    }
-    
-    @available(*, deprecated, message: "Please use `disable(_ isDisabled: Bool)`")
-    func disable() {
-        disable(true)
     }
 }
 

@@ -1,6 +1,6 @@
 //    The MIT License (MIT)
 //
-//    Copyright (c) 2015-2021 Dominik Ringler
+//    Copyright (c) 2015-2022 Dominik Ringler
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy
 //    of this software and associated documentation files (the "Software"), to deal
@@ -64,7 +64,7 @@ final class SwiftyAdsBanner: NSObject {
         super.init()
     }
 
-    // MARK: - Methods
+    // MARK: - Convenience
     
     func prepare(withAdUnitId adUnitId: String,
                  in viewController: UIViewController,
@@ -338,15 +338,5 @@ private extension SwiftyAdsBanner {
     func stopCurrentAnimatorAnimations() {
         animator?.stopAnimation(false)
         animator?.finishAnimation(at: .current)
-    }
-}
-
-// MARK: - Deprecated
-
-extension SwiftyAdsBanner {
-
-    @available(*, deprecated, message: "Please use new hide method without animated parameter")
-    func hide(animated: Bool) {
-        hide()
     }
 }

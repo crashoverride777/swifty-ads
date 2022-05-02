@@ -1,6 +1,6 @@
 //    The MIT License (MIT)
 //
-//    Copyright (c) 2015-2021 Dominik Ringler
+//    Copyright (c) 2015-2022 Dominik Ringler
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy
 //    of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
 
 import Foundation
 
-struct SwiftyAdsConfiguration: Decodable {
+struct SwiftyAdsConfiguration: Decodable, Equatable {
     let bannerAdUnitId: String?
     let interstitialAdUnitId: String?
     let rewardedAdUnitId: String?
@@ -34,9 +34,8 @@ struct SwiftyAdsConfiguration: Decodable {
 }
 
 extension SwiftyAdsConfiguration {
-    
-    static var production: SwiftyAdsConfiguration {
-        guard let url = Bundle.main.url(forResource: "SwiftyAds", withExtension: "plist") else {
+    static func production(bundle: Bundle = .main) -> SwiftyAdsConfiguration {
+        guard let url = bundle.url(forResource: "SwiftyAds", withExtension: "plist") else {
             fatalError("SwiftyAds could not find SwiftyAds.plist in the main bundle.")
         }
 

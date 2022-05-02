@@ -21,29 +21,34 @@
 //    SOFTWARE.
 
 import Foundation
+import UserMessagingPlatform
 
-public enum SwiftyAdsError: Error {
-    case consentManagerNotAvailable
-    case consentFormNotAvailable
-    case interstitialAdNotLoaded
-    case rewardedAdNotLoaded
-    case rewardedInterstitialAdNotLoaded
-    case bannerAdMissingAdUnitId
+public enum SwiftyAdsEnvironment {
+    case production
+    case development(testDeviceIdentifiers: [String], consentConfiguration: ConsentConfiguration)
 
-    public var errorDescription: String? {
-        switch self {
-        case .consentManagerNotAvailable:
-            return "Consent manager not available. Remove isUMPDisabled entry from SwiftyAds.plist"
-        case .consentFormNotAvailable:
-            return "Consent form not available"
-        case .interstitialAdNotLoaded:
-            return "Interstitial ad not loaded"
-        case .rewardedAdNotLoaded:
-            return "Rewarded ad not loaded"
-        case .rewardedInterstitialAdNotLoaded:
-            return "Rewarded interstitial ad not loaded"
-        case .bannerAdMissingAdUnitId:
-            return "Banner ad has no AdUnitId"
+    public enum ConsentConfiguration {
+        public typealias Geography = UMPDebugGeography
+
+        // Default consent settings
+        case `default`(geography: Geography)
+        // Resets consent info every time app is launched
+        case resetOnLaunch(geography: Geography)
+        // Disables UMP consent
+        case disabled
+
+        public var geography: Geography {
+            switch self {
+            case .default(let geography), .resetOnLaunch(let geography):
+                return geography
+            case .disabled:
+                return .disabled
+            }
+        }
+
+        public var isDisabled: Bool {
+            if case .disabled = self { return true }
+            return false
         }
     }
 }

@@ -1,6 +1,6 @@
 //    The MIT License (MIT)
 //
-//    Copyright (c) 2015-2021 Dominik Ringler
+//    Copyright (c) 2015-2022 Dominik Ringler
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy
 //    of this software and associated documentation files (the "Software"), to deal
@@ -89,9 +89,6 @@ extension SwiftyAdsNative: SwiftyAdsNativeType {
         // Set the ad unit id
         var adUnitId: String {
             if case .development = environment {
-                return self.adUnitId
-            }
-            if case .debug = environment {
                 return self.adUnitId
             }
             switch adUnitIdType {
