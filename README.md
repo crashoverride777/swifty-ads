@@ -112,9 +112,9 @@ If you are supporting iOS 13 and below you will also have to make it optional in
 
 ## Usage
 
-### Add import (CocoaPods)
+### Add import (CocoaPods or SwiftPackageManager)
 
-- Add the import statement to your swift file(s) if you installed via CocoaPods
+- Add the import statement to your swift file(s) if you installed via CocoaPods or SwiftPackageManager
 
 ```swift
 import SwiftyAds
