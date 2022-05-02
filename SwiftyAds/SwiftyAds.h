@@ -2,11 +2,11 @@
 //  SwiftyAds.h
 //  SwiftyAds
 //
-//  Created by Dominik on 04/03/2018.
-//  Copyright © 2018 Dominik. All rights reserved.
+//  Created by Dominik on 02/05/2022.
+//  Copyright © 2022 Dominik. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for SwiftyAds.
 FOUNDATION_EXPORT double SwiftyAdsVersionNumber;
