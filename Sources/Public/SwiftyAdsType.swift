@@ -67,7 +67,7 @@ public protocol SwiftyAdsType: AnyObject {
     func configure(from viewController: UIViewController,
                    for environment: SwiftyAdsEnvironment,
                    requestBuilder: SwiftyAdsRequestBuilderType,
-                   mediationConfigurator: SwiftyAdsMediationConfiguratorType,
+                   mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
                    consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                    completion: @escaping SwiftyAdsConsentResultHandler)
     func askForConsent(from viewController: UIViewController,
@@ -92,18 +92,22 @@ public protocol SwiftyAdsType: AnyObject {
                         onClose: (() -> Void)?,
                         onError: ((Error) -> Void)?,
                         onNotReady: (() -> Void)?,
-                        onReward: @escaping (Int) -> Void)
+                        onReward: @escaping (Decimal) -> Void)
     func showRewardedInterstitialAd(from viewController: UIViewController,
                                     afterInterval interval: Int?,
                                     onOpen: (() -> Void)?,
                                     onClose: (() -> Void)?,
                                     onError: ((Error) -> Void)?,
-                                    onReward: @escaping (Int) -> Void)
+                                    onReward: @escaping (Decimal) -> Void)
     func loadNativeAd(from viewController: UIViewController,
                       adUnitIdType: SwiftyAdsAdUnitIdType,
                       loaderOptions: SwiftyAdsNativeAdLoaderOptions,
                       onFinishLoading: (() -> Void)?,
                       onError: ((Error) -> Void)?,
                       onReceive: @escaping (GADNativeAd) -> Void)
+    func setDisabled(_ isDisabled: Bool)
+    
+    // MARK: - Deprecated
+    @available(*, deprecated, message: "Use `setDisabled` instead")
     func disable(_ isDisabled: Bool)
 }

@@ -30,7 +30,7 @@ protocol SwiftyAdsRewardedInterstitialType: AnyObject {
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?,
-              onReward: @escaping (Int) -> Void)
+              onReward: @escaping (Decimal) -> Void)
 }
 
 final class SwiftyAdsRewardedInterstitial: NSObject {
@@ -59,7 +59,6 @@ final class SwiftyAdsRewardedInterstitial: NSObject {
 // MARK: - SwiftyAdsRewardedInterstitialType
 
 extension SwiftyAdsRewardedInterstitial: SwiftyAdsRewardedInterstitialType {
-
     var isReady: Bool {
         rewardedInterstitialAd != nil
     }
@@ -88,7 +87,7 @@ extension SwiftyAdsRewardedInterstitial: SwiftyAdsRewardedInterstitialType {
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?,
-              onReward: @escaping (Int) -> Void) {
+              onReward: @escaping (Decimal) -> Void) {
         self.onOpen = onOpen
         self.onClose = onClose
         self.onError = onError
@@ -101,7 +100,7 @@ extension SwiftyAdsRewardedInterstitial: SwiftyAdsRewardedInterstitialType {
 
         do {
             try rewardedInterstitialAd.canPresent(fromRootViewController: viewController)
-            let rewardAmount = Int(truncating: rewardedInterstitialAd.adReward.amount)
+            let rewardAmount = rewardedInterstitialAd.adReward.amount.decimalValue
             rewardedInterstitialAd.present(fromRootViewController: viewController, userDidEarnRewardHandler: {
                 onReward(rewardAmount)
             })
@@ -116,7 +115,6 @@ extension SwiftyAdsRewardedInterstitial: SwiftyAdsRewardedInterstitialType {
 // MARK: - GADFullScreenContentDelegate
 
 extension SwiftyAdsRewardedInterstitial: GADFullScreenContentDelegate {
-
     func adDidRecordImpression(_ ad: GADFullScreenPresentingAd) {
         if case .development = environment {
             print("SwiftyAdsRewardedInterstitial did record impression for ad: \(ad)")

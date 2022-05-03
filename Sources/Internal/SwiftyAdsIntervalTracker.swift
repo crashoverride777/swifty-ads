@@ -31,7 +31,6 @@ final class SwiftyAdsIntervalTracker {
 }
 
 extension SwiftyAdsIntervalTracker: SwiftyAdsIntervalTrackerType {
-    
     func canShow(forInterval interval: Int) -> Bool {
         counter += 1
         

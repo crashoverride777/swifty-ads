@@ -59,7 +59,6 @@ final class SwiftyAdsNative: NSObject {
 // MARK: - SwiftyAdsNativeType
 
 extension SwiftyAdsNative: SwiftyAdsNativeType {
-
     func load(from viewController: UIViewController,
               adUnitIdType: SwiftyAdsAdUnitIdType,
               loaderOptions: SwiftyAdsNativeAdLoaderOptions,
@@ -123,7 +122,6 @@ extension SwiftyAdsNative: SwiftyAdsNativeType {
 // MARK: - GADNativeAdLoaderDelegate
 
 extension SwiftyAdsNative: GADNativeAdLoaderDelegate {
-
     func adLoader(_ adLoader: GADAdLoader, didReceive nativeAd: GADNativeAd) {
         onReceive?(nativeAd)
     }

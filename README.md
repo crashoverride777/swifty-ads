@@ -28,17 +28,13 @@ A Swift library to display banner, interstitial, rewarded and native ads from Go
 
 Sign up for an [AdMob account](https://admob.google.com/home/get-started/) and create your required AdUnitIDs for the types of ads you would like to display. 
 
-### Funding Choices (optional)
+### Funding Choices (Optional)
 
-SwiftyAds uses Google`s [User Messaging Platform](https://developers.google.com/admob/ump/ios/quick-start) (UMP) SDK to handle user consent if required. This SDK can handle both GDPR requests and also the iOS 14 [ATT](https://developers.google.com/admob/ios/ios14) alert. 
+SwiftyAds uses Google`s [User Messaging Platform](https://developers.google.com/admob/ump/ios/quick-start) (UMP) SDK to handle user consent if required. This SDK can handle both GDPR (EEA) requests and also the iOS 14 [ATT](https://developers.google.com/admob/ios/ios14) alert. 
 
 This step can be skipped if you would like to disable user consent requests, see `Add SwiftyAds.plist` part of [pre-usage section](#pre-usage) below. Otherwise please read the Funding Choices [documentation](https://support.google.com/fundingchoices/answer/9180084) to ensure they are setup up correctly for your requirements.
 
 NOTE: Apple may be rejecting apps that use the UMP SDK to display the iOS 14 ATT alert. As a workaround you may have to tweak the wording of the [explainer message](https://github.com/Gimu/admob_consent/issues/6#issuecomment-772349196) or you can [manually](https://github.com/crashoverride777/swifty-ads/issues/50) display the ATT alert before configuring SwiftyAds. 
-
-## Mediation
-
-To support mediation networks please read the AdMob [documentation](https://developers.google.com/admob/ios/mediation)
 
 ## Installation
 
@@ -67,13 +63,7 @@ pod 'SwiftyAds'
 
 ### Manually 
 
-Alternatively you can copy the `Sources` folder and its containing files into your project. Install the required dependencies either via Cocoa Pods.
-
-```swift
-pod 'Google-Mobile-Ads-SDK'
-```
-
-or manually
+Alternatively you can copy the `Sources` folder and its containing files into your project and install the required dependencies.
 
 - [AdMob](https://developers.google.com/admob/ios/quick-start#manual_download)
 - [UMP](https://developers.google.com/admob/ump/ios/quick-start#manual_download)
@@ -87,18 +77,15 @@ or manually
 
 ### Add SwiftyAds.plist
 
-Download the [template](Resources/SwiftyAdsPlistTemplate.zip) plist and add it to your projects main bundle. Than enter your required ad unit ids and set the isTaggedForUnderAgeOfConsent flag.
+Download the [template](Resources/SwiftyAdsPlistTemplate.zip) plist and add it to your projects main bundle. Than enter your required ad unit ids and set the isTaggedForUnderAgeOfConsent flag. All entries all optional.
 
-Mandatory entries:
-- isTaggedForUnderAgeOfConsent (Boolean) ([GDPR](https://developers.google.com/admob/ios/targeting#users_under_the_age_of_consent))
-
-Optional entries:
 - bannerAdUnitId (String)
 - interstitialAdUnitId (String)
 - rewardedAdUnitId (String)
 - rewardedInterstitialAdUnitId (String)
 - nativeAdUnitId (String)
 - isTaggedForChildDirectedTreatment (Boolean) ([COPPA](https://developers.google.com/admob/ios/targeting#child-directed_setting))
+- isTaggedForUnderAgeOfConsent (Boolean) ([GDPR](https://developers.google.com/admob/ios/targeting#users_under_the_age_of_consent))
 - isUMPDisabled (Boolean)
 
 NOTE: Adding the `isUMPDisabled` entry and setting it to true means SwiftyAds will not carry out any consent requests using the User Messaging Platform (UMP) SDK. 
@@ -139,11 +126,12 @@ extension SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
 }
 ```
 
-### Create Mediation Configurator
+### Create Mediation Configurator (Optional)
 
 Create a `SwiftyAdsMediationConfigurator` class, implementing the `SwiftyAdsMediationConfiguratorType` protocol, to manage updating mediation networks for COPPA/GDPR consent status changes.
 Please check the AdMob mediation [documentation](https://developers.google.com/admob/ios/mediation).
 
+#### App Lovin Example
 ```swift
 import SwiftyAds
 import AppLovinAdapter
@@ -196,7 +184,7 @@ private func configureSwiftyAds(from viewController: UIViewController) {
         from: viewController,
         for: environment,
         requestBuilder: SwiftyAdsRequestBuilder(),
-        mediationConfigurator: SwiftyAdsMediationConfigurator(),
+        mediationConfigurator: SwiftyAdsMediationConfigurator(), // set to nil if no mediation is required
         consentStatusDidChange: { status in
             print("The consent status has changed")
         },

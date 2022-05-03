@@ -20,7 +20,6 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-import GoogleMobileAds
 import UserMessagingPlatform
 
 /*
@@ -44,8 +43,8 @@ final class SwiftyAdsConsentManager {
     // MARK: - Properties
 
     private let consentInformation: UMPConsentInformation
-    private let configuration: SwiftyAdsConfiguration
     private let environment: SwiftyAdsEnvironment
+    private let isTaggedForUnderAgeOfConsent: Bool
     private let consentStatusDidChange: (SwiftyAdsConsentStatus) -> Void
 
     private var form: UMPConsentForm?
@@ -53,13 +52,12 @@ final class SwiftyAdsConsentManager {
     // MARK: - Initialization
 
     init(consentInformation: UMPConsentInformation,
-         configuration: SwiftyAdsConfiguration,
          environment: SwiftyAdsEnvironment,
-         consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void
-    ) {
+         isTaggedForUnderAgeOfConsent: Bool,
+         consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void) {
         self.consentInformation = consentInformation
-        self.configuration = configuration
         self.environment = environment
+        self.isTaggedForUnderAgeOfConsent = isTaggedForUnderAgeOfConsent
         self.consentStatusDidChange = consentStatusDidChange
     }
 }
@@ -67,7 +65,6 @@ final class SwiftyAdsConsentManager {
 // MARK: - SwiftyAdsConsentManagerType
 
 extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
-
     var consentStatus: SwiftyAdsConsentStatus {
         consentInformation.consentStatus
     }
@@ -92,7 +89,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
         }
         
         // Update parameters for under age of consent.
-        parameters.tagForUnderAgeOfConsent = configuration.isTaggedForUnderAgeOfConsent
+        parameters.tagForUnderAgeOfConsent = isTaggedForUnderAgeOfConsent
 
         // Request an update to the consent information.
         // The first time we request consent information, even if outside of EEA, the status
@@ -101,7 +98,6 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
         consentInformation.requestConsentInfoUpdate(with: parameters) { [weak self] error in
             guard let self = self else { return }
 
-            // Handle error
             if let error = error {
                 completion(.failure(error))
                 return
@@ -144,17 +140,14 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
         form.present(from: viewController) { [weak self] error in
             guard let self = self else { return }
 
-            /// Handle error
             if let error = error {
                 completion(.failure(error))
                 return
             }
 
-            /// Fire status did change handler
-            self.consentStatusDidChange(self.consentStatus)
-
-            /// Fire completion handler
-            completion(.success(self.consentStatus))
+            let consentStatus = self.consentStatus
+            self.consentStatusDidChange(consentStatus)
+            completion(.success(consentStatus))
         }
     }
 }

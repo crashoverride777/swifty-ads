@@ -58,7 +58,6 @@ final class SwiftyAdsInterstitial: NSObject {
 // MARK: - SwiftyAdsInterstitialType
 
 extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
-
     var isReady: Bool {
         interstitialAd != nil
     }
@@ -109,7 +108,6 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
 // MARK: - GADFullScreenContentDelegate
 
 extension SwiftyAdsInterstitial: GADFullScreenContentDelegate {
-
     func adDidRecordImpression(_ ad: GADFullScreenPresentingAd) {
         if case .development = environment {
             print("SwiftyAdsInterstitial did record impression for ad: \(ad)")

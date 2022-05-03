@@ -30,7 +30,7 @@ protocol SwiftyAdsRewardedType: AnyObject {
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?,
               onNotReady: (() -> Void)?,
-              onReward: @escaping (Int) -> Void)
+              onReward: @escaping (Decimal) -> Void)
 }
 
 final class SwiftyAdsRewarded: NSObject {
@@ -59,7 +59,6 @@ final class SwiftyAdsRewarded: NSObject {
 // MARK: - SwiftyAdsRewardedType
 
 extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
-    
     var isReady: Bool {
         rewardedAd != nil
     }
@@ -84,7 +83,7 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?,
               onNotReady: (() -> Void)?,
-              onReward: @escaping (Int) -> Void) {
+              onReward: @escaping (Decimal) -> Void) {
         self.onOpen = onOpen
         self.onClose = onClose
         self.onError = onError
@@ -98,7 +97,7 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
 
         do {
             try rewardedAd.canPresent(fromRootViewController: viewController)
-            let rewardAmount = Int(truncating: rewardedAd.adReward.amount)
+            let rewardAmount = rewardedAd.adReward.amount.decimalValue
             rewardedAd.present(fromRootViewController: viewController, userDidEarnRewardHandler: {
                 onReward(rewardAmount)
             })
@@ -114,7 +113,6 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
 // MARK: - GADFullScreenContentDelegate
 
 extension SwiftyAdsRewarded: GADFullScreenContentDelegate {
-
     func adDidRecordImpression(_ ad: GADFullScreenPresentingAd) {
         if case .development = environment {
             print("SwiftyAdsRewarded did record impression for ad: \(ad)")
