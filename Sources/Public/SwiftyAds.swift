@@ -395,7 +395,7 @@ extension SwiftyAds: SwiftyAdsType {
                                onClose: (() -> Void)?,
                                onError: ((Error) -> Void)?,
                                onNotReady: (() -> Void)?,
-                               onReward: @escaping (Int) -> Void) {
+                               onReward: @escaping (Decimal) -> Void) {
         guard hasConsent else { return }
 
         rewardedAd?.show(
@@ -426,7 +426,7 @@ extension SwiftyAds: SwiftyAdsType {
                                            onOpen: (() -> Void)?,
                                            onClose: (() -> Void)?,
                                            onError: ((Error) -> Void)?,
-                                           onReward: @escaping (Int) -> Void) {
+                                           onReward: @escaping (Decimal) -> Void) {
         guard !isDisabled else { return }
         guard hasConsent else { return }
 

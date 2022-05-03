@@ -30,7 +30,7 @@ protocol SwiftyAdsRewardedInterstitialType: AnyObject {
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?,
-              onReward: @escaping (Int) -> Void)
+              onReward: @escaping (Decimal) -> Void)
 }
 
 final class SwiftyAdsRewardedInterstitial: NSObject {
@@ -87,7 +87,7 @@ extension SwiftyAdsRewardedInterstitial: SwiftyAdsRewardedInterstitialType {
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?,
-              onReward: @escaping (Int) -> Void) {
+              onReward: @escaping (Decimal) -> Void) {
         self.onOpen = onOpen
         self.onClose = onClose
         self.onError = onError
@@ -100,7 +100,7 @@ extension SwiftyAdsRewardedInterstitial: SwiftyAdsRewardedInterstitialType {
 
         do {
             try rewardedInterstitialAd.canPresent(fromRootViewController: viewController)
-            let rewardAmount = Int(truncating: rewardedInterstitialAd.adReward.amount)
+            let rewardAmount = rewardedInterstitialAd.adReward.amount.decimalValue
             rewardedInterstitialAd.present(fromRootViewController: viewController, userDidEarnRewardHandler: {
                 onReward(rewardAmount)
             })
