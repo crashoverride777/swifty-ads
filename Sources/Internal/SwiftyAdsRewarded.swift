@@ -30,7 +30,7 @@ protocol SwiftyAdsRewardedType: AnyObject {
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?,
               onNotReady: (() -> Void)?,
-              onReward: @escaping (Decimal) -> Void)
+              onReward: @escaping (NSDecimalNumber) -> Void)
 }
 
 final class SwiftyAdsRewarded: NSObject {
@@ -83,7 +83,7 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?,
               onNotReady: (() -> Void)?,
-              onReward: @escaping (Decimal) -> Void) {
+              onReward: @escaping (NSDecimalNumber) -> Void) {
         self.onOpen = onOpen
         self.onClose = onClose
         self.onError = onError
@@ -97,7 +97,7 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
 
         do {
             try rewardedAd.canPresent(fromRootViewController: viewController)
-            let rewardAmount = rewardedAd.adReward.amount.decimalValue
+            let rewardAmount = rewardedAd.adReward.amount
             rewardedAd.present(fromRootViewController: viewController, userDidEarnRewardHandler: {
                 onReward(rewardAmount)
             })
