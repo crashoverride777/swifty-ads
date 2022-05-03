@@ -67,7 +67,6 @@ final class SwiftyAdsConsentManager {
 // MARK: - SwiftyAdsConsentManagerType
 
 extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
-
     var consentStatus: SwiftyAdsConsentStatus {
         consentInformation.consentStatus
     }

@@ -67,7 +67,7 @@ public protocol SwiftyAdsType: AnyObject {
     func configure(from viewController: UIViewController,
                    for environment: SwiftyAdsEnvironment,
                    requestBuilder: SwiftyAdsRequestBuilderType,
-                   mediationConfigurator: SwiftyAdsMediationConfiguratorType,
+                   mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
                    consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
                    completion: @escaping SwiftyAdsConsentResultHandler)
     func askForConsent(from viewController: UIViewController,
@@ -105,5 +105,9 @@ public protocol SwiftyAdsType: AnyObject {
                       onFinishLoading: (() -> Void)?,
                       onError: ((Error) -> Void)?,
                       onReceive: @escaping (GADNativeAd) -> Void)
+    func setDisabled(_ isDisabled: Bool)
+    
+    // MARK: - Deprecated
+    @available(*, deprecated, message: "Use `setDisabled` instead")
     func disable(_ isDisabled: Bool)
 }

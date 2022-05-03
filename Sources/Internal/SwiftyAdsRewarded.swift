@@ -59,7 +59,6 @@ final class SwiftyAdsRewarded: NSObject {
 // MARK: - SwiftyAdsRewardedType
 
 extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
-    
     var isReady: Bool {
         rewardedAd != nil
     }
@@ -114,7 +113,6 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
 // MARK: - GADFullScreenContentDelegate
 
 extension SwiftyAdsRewarded: GADFullScreenContentDelegate {
-
     func adDidRecordImpression(_ ad: GADFullScreenPresentingAd) {
         if case .development = environment {
             print("SwiftyAdsRewarded did record impression for ad: \(ad)")
