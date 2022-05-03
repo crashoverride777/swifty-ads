@@ -198,8 +198,8 @@ extension SwiftyAds: SwiftyAdsType {
         // Create consent manager
         let consentManager = SwiftyAdsConsentManager(
             consentInformation: .sharedInstance,
-            configuration: configuration,
             environment: environment,
+            isTaggedForUnderAgeOfConsent: configuration.isTaggedForUnderAgeOfConsent ?? false,
             consentStatusDidChange: consentStatusDidChange
         )
         self.consentManager = consentManager
@@ -551,7 +551,7 @@ private extension SwiftyAds {
         // ads that are appropriate for users under the age of consent per GDPR.
         mediationConfigurator?.updateGDPR(
             for: consentStatus,
-            isTaggedForUnderAgeOfConsent: configuration.isTaggedForUnderAgeOfConsent
+            isTaggedForUnderAgeOfConsent: configuration.isTaggedForUnderAgeOfConsent ?? false
         )
         
         // Update GADMobileAds
@@ -564,7 +564,9 @@ private extension SwiftyAds {
             return
         }
 
-        mobileAds.requestConfiguration.tagForUnderAge(ofConsent: configuration.isTaggedForUnderAgeOfConsent)
+        if let isTaggedForUnderAgeOfConsent = configuration.isTaggedForUnderAgeOfConsent {
+            mobileAds.requestConfiguration.tagForUnderAge(ofConsent: isTaggedForUnderAgeOfConsent)
+        }
     }
     
     func startMobileAdsSDK(completion: @escaping () -> Void) {

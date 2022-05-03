@@ -29,7 +29,7 @@ struct SwiftyAdsConfiguration: Decodable, Equatable {
     let rewardedInterstitialAdUnitId: String?
     let nativeAdUnitId: String?
     let isTaggedForChildDirectedTreatment: Bool? // COPPA
-    let isTaggedForUnderAgeOfConsent: Bool  // GDPR
+    let isTaggedForUnderAgeOfConsent: Bool?  // GDPR
     let isUMPDisabled: Bool? // Disables User Messaging Platform (UMP) SDK
 }
 
@@ -44,7 +44,7 @@ extension SwiftyAdsConfiguration {
             let decoder = PropertyListDecoder()
             return try decoder.decode(SwiftyAdsConfiguration.self, from: data)
         } catch {
-            fatalError("SwiftyAds decoding SwiftyAds.plist error \(error).")
+            fatalError("SwiftyAds decoding SwiftyAds.plist error: \(error).")
         }
     }
 
@@ -57,7 +57,7 @@ extension SwiftyAdsConfiguration {
             rewardedInterstitialAdUnitId: "ca-app-pub-3940256099942544/6978759866",
             nativeAdUnitId: "ca-app-pub-3940256099942544/3986624511",
             isTaggedForChildDirectedTreatment: nil,
-            isTaggedForUnderAgeOfConsent: false,
+            isTaggedForUnderAgeOfConsent: nil,
             isUMPDisabled: isUMPDisabled
         )
     }
