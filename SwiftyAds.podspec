@@ -7,7 +7,7 @@ s.summary = 'A Swift library to display Google AdMob ads. GDPR, COPPA and App Tr
 s.homepage = 'https://github.com/crashoverride777/swifty-ads'
 s.authors = { 'Dominik Ringler' => 'overrideinteractive@icloud.com' }
 
-s.ios.deployment_target = '12.4'
+s.ios.deployment_target = '12.0'
 
 s.requires_arc = true
 s.static_framework = true
