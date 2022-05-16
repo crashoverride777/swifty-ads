@@ -391,6 +391,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// - Warning:
     /// Rewarded ads may be non-skippable and should only be displayed after pressing a dedicated button.
     public func showRewardedAd(from viewController: UIViewController,
+                               userIdentifier: String? = nil,
                                onOpen: (() -> Void)?,
                                onClose: (() -> Void)?,
                                onError: ((Error) -> Void)?,
@@ -400,6 +401,7 @@ extension SwiftyAds: SwiftyAdsType {
 
         rewardedAd?.show(
             from: viewController,
+            userIdentifier: userIdentifier,
             onOpen: onOpen,
             onClose: onClose,
             onError: onError,
@@ -422,6 +424,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// and an option to skip the ad before it starts.
     /// https://support.google.com/admob/answer/9884467
     public func showRewardedInterstitialAd(from viewController: UIViewController,
+                                           userIdentifier: String? = nil,
                                            afterInterval interval: Int?,
                                            onOpen: (() -> Void)?,
                                            onClose: (() -> Void)?,
@@ -436,6 +439,7 @@ extension SwiftyAds: SwiftyAdsType {
 
         rewardedInterstitialAd?.show(
             from: viewController,
+            userIdentifier: userIdentifier,
             onOpen: onOpen,
             onClose: onClose,
             onError: onError,
