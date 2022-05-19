@@ -391,6 +391,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// - Warning:
     /// Rewarded ads may be non-skippable and should only be displayed after pressing a dedicated button.
     public func showRewardedAd(from viewController: UIViewController,
+                               serverSideVerification: SwiftyAdsSSV?,
                                onOpen: (() -> Void)?,
                                onClose: (() -> Void)?,
                                onError: ((Error) -> Void)?,
@@ -400,6 +401,7 @@ extension SwiftyAds: SwiftyAdsType {
 
         rewardedAd?.show(
             from: viewController,
+            serverSideVerification: serverSideVerification,
             onOpen: onOpen,
             onClose: onClose,
             onError: onError,
@@ -423,6 +425,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// https://support.google.com/admob/answer/9884467
     public func showRewardedInterstitialAd(from viewController: UIViewController,
                                            afterInterval interval: Int?,
+                                           serverSideVerification: SwiftyAdsSSV?,
                                            onOpen: (() -> Void)?,
                                            onClose: (() -> Void)?,
                                            onError: ((Error) -> Void)?,
@@ -436,6 +439,7 @@ extension SwiftyAds: SwiftyAdsType {
 
         rewardedInterstitialAd?.show(
             from: viewController,
+            serverSideVerification: serverSideVerification,
             onOpen: onOpen,
             onClose: onClose,
             onError: onError,

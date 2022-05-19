@@ -13,6 +13,7 @@ A Swift library to display banner, interstitial, rewarded and native ads from Go
 - [Installation](#installation)
 - [Pre-Usage](#pre-usage)
 - [Usage](#usage)
+- [Server Side Verification](#server-side-verification)
 - [App Store release information](#app-store-release-information)
 - [Demos](#demos)
 - [License](#license)
@@ -77,7 +78,7 @@ Alternatively you can copy the `Sources` folder and its containing files into yo
 
 ### Add SwiftyAds.plist
 
-Download the [template](Resources/SwiftyAdsPlistTemplate.zip) plist and add it to your projects main bundle. Than enter your required ad unit ids and set the isTaggedForUnderAgeOfConsent flag. All entries all optional.
+Download the [template](Sources/Resources//Templates/SwiftyAds.plist) plist and add it to your projects main bundle and fill in the required values. All entries all optional and can be removed if not required.
 
 - bannerAdUnitId (String)
 - interstitialAdUnitId (String)
@@ -517,6 +518,13 @@ if SwiftyAds.shared.consentStatus == .notRequired {
     consentButton.isHidden = SwiftyAds.shared.isTaggedForUnderAgeOfConsent
 }
 ```
+
+## Server Side Verification
+
+([Configure your ad acount](https://support.google.com/admob/answer/9603226?hl=en))
+([More documentation](https://developers.google.com/admob/ios/ssv))
+
+Pass in the `SwiftyAdsSSV` struct when showing rewarded ads to update the google server side verification options.
 
 ## App Store release information
 

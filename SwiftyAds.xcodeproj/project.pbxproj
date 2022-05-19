@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B434018A2836F6A400E18B6E /* SwiftyAds.plist in Resources */ = {isa = PBXBuildFile; fileRef = B43401882836F6A400E18B6E /* SwiftyAds.plist */; };
+		B434018B2836F6A400E18B6E /* SwiftyAdsSSV.plist in Resources */ = {isa = PBXBuildFile; fileRef = B43401892836F6A400E18B6E /* SwiftyAdsSSV.plist */; };
 		B493CA3628200AF30094AA27 /* SwiftyAds.h in Headers */ = {isa = PBXBuildFile; fileRef = B493CA3528200AF30094AA27 /* SwiftyAds.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B493CA3A28200B900094AA27 /* SwiftyAdsConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A692C2C25C4823D0021FB2C /* SwiftyAdsConsentManager.swift */; };
 		B493CA3B28200B900094AA27 /* SwiftyAdsIntervalTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD6A0E240BEC98001F4A7D /* SwiftyAdsIntervalTracker.swift */; };
@@ -36,6 +38,8 @@
 		6AE482F22294B7660063B22F /* SwiftyAds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAds.swift; sourceTree = "<group>"; };
 		6AEB36F325E2C9D200AFA313 /* SwiftyAdsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsType.swift; sourceTree = "<group>"; };
 		6AEB370225E2DA3600AFA313 /* SwiftyAdsError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsError.swift; sourceTree = "<group>"; };
+		B43401882836F6A400E18B6E /* SwiftyAds.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SwiftyAds.plist; sourceTree = "<group>"; };
+		B43401892836F6A400E18B6E /* SwiftyAdsSSV.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SwiftyAdsSSV.plist; sourceTree = "<group>"; };
 		B4557E862819DDD10000F5F6 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		B4557E872819DDE20000F5F6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B493CA3328200AF30094AA27 /* SwiftyAds.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyAds.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,6 +64,7 @@
 			children = (
 				6A68A75C23FF69840030374F /* Internal */,
 				6A68DA6523FF69B50006F655 /* Public */,
+				B43401812836F63900E18B6E /* Resources */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -89,6 +94,23 @@
 				6AEB36F325E2C9D200AFA313 /* SwiftyAdsType.swift */,
 			);
 			path = Public;
+			sourceTree = "<group>";
+		};
+		B43401812836F63900E18B6E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B43401832836F66400E18B6E /* Templates */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		B43401832836F66400E18B6E /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				B43401882836F6A400E18B6E /* SwiftyAds.plist */,
+				B43401892836F6A400E18B6E /* SwiftyAdsSSV.plist */,
+			);
+			path = Templates;
 			sourceTree = "<group>";
 		};
 		B493CA3428200AF30094AA27 /* SwiftyAds */ = {
@@ -172,6 +194,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = B4C1B11E204C298500452094;
 			productRefGroup = B4C1B129204C298500452094 /* Products */;
@@ -188,6 +211,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B434018B2836F6A400E18B6E /* SwiftyAdsSSV.plist in Resources */,
+				B434018A2836F6A400E18B6E /* SwiftyAds.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

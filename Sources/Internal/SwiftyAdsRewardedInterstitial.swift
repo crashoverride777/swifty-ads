@@ -27,6 +27,7 @@ protocol SwiftyAdsRewardedInterstitialType: AnyObject {
     func load()
     func stopLoading()
     func show(from viewController: UIViewController,
+              serverSideVerification: SwiftyAdsSSV?,
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?,
@@ -74,7 +75,6 @@ extension SwiftyAdsRewardedInterstitial: SwiftyAdsRewardedInterstitialType {
 
             self.rewardedInterstitialAd = ad
             self.rewardedInterstitialAd?.fullScreenContentDelegate = self
-
         }
     }
 
@@ -84,6 +84,7 @@ extension SwiftyAdsRewardedInterstitial: SwiftyAdsRewardedInterstitialType {
     }
 
     func show(from viewController: UIViewController,
+              serverSideVerification: SwiftyAdsSSV?,
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?,
@@ -101,6 +102,14 @@ extension SwiftyAdsRewardedInterstitial: SwiftyAdsRewardedInterstitialType {
         do {
             try rewardedInterstitialAd.canPresent(fromRootViewController: viewController)
             let rewardAmount = rewardedInterstitialAd.adReward.amount
+            
+            if let serverSideVerification = serverSideVerification {
+                let options = GADServerSideVerificationOptions()
+                options.userIdentifier = serverSideVerification.userIdentifier
+                options.customRewardString = serverSideVerification.customRewardString
+                rewardedInterstitialAd.serverSideVerificationOptions = options
+            }
+            
             rewardedInterstitialAd.present(fromRootViewController: viewController, userDidEarnRewardHandler: {
                 onReward(rewardAmount)
             })
