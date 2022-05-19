@@ -341,6 +341,7 @@ Rewarded ads may be non-skippable and should only be presented when pressing a d
 ```swift
 SwiftyAds.shared.showRewardedAd(
     from: self,
+    serverSideVerification: nil,
     onOpen: {
         print("SwiftyAds rewarded ad did open")
     },
@@ -384,6 +385,7 @@ Before displaying a rewarded interstitial ad, you must present the user with an 
 SwiftyAds.shared.showRewardedInterstitialAd(
     from: self,
     afterInterval: 2, // every 2nd time method is called ad will be displayed. Set to nil to always display.
+    serverSideVerification: nil,
     onOpen: {
         print("SwiftyAds rewarded interstitial ad did open")
     },
@@ -525,6 +527,30 @@ if SwiftyAds.shared.consentStatus == .notRequired {
 ([More documentation](https://developers.google.com/admob/ios/ssv))
 
 Pass in the `SwiftyAdsSSV` struct when showing rewarded ads to update the google server side verification options.
+
+```swift
+SwiftyAds.shared.showRewardedInterstitialAd(
+    from: self,
+    afterInterval: 2,
+    serverSideVerification: SwiftyAdsSSV(
+        userIdentifier: "some id", // optional
+        customRewardString: "Some reward text" // optional
+    ),
+    onOpen: {
+        print("SwiftyAds rewarded interstitial ad did open")
+    },
+    onClose: {
+        print("SwiftyAds rewarded interstitial ad did close")
+    }, 
+    onError: { error in
+        print("SwiftyAds rewarded interstitial ad error \(error)")
+    },
+    onReward: { [weak self] rewardAmount in
+        print("SwiftyAds rewarded interstitial ad did reward user with \(rewardAmount)")
+        // Provide the user with the reward e.g coins, diamonds etc
+    }
+)
+```
 
 ## App Store release information
 
