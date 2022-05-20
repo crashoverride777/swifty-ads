@@ -77,7 +77,7 @@ Alternatively you can copy the `Sources` folder and its containing files into yo
 
 ### Add SwiftyAds.plist
 
-Download the [template](Resources/SwiftyAdsPlistTemplate.zip) plist and add it to your projects main bundle. Than enter your required ad unit ids and set the isTaggedForUnderAgeOfConsent flag. All entries all optional.
+Download the [template](Sources/Resources/Templates/SwiftyAds.plist) plist and add it to your projects main bundle. Than enter your required ad unit ids and set the isTaggedForUnderAgeOfConsent flag. All entries all optional and can be removed if not needed.
 
 - bannerAdUnitId (String)
 - interstitialAdUnitId (String)
