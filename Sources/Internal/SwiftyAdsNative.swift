@@ -101,11 +101,13 @@ extension SwiftyAdsNative: SwiftyAdsNativeType {
         }
 
         // Create GADAdLoader
+        let otherOptions = otherOptions?.compactMap { $0 } ?? []
+        
         adLoader = GADAdLoader(
             adUnitID: adUnitId,
             rootViewController: viewController,
             adTypes: adTypes,
-            options: multipleAdsAdLoaderOptions + otherOptions?.compactMap { $0 }
+            options: multipleAdsAdLoaderOptions + otherOptions
         )
 
         // Set the GADAdLoader delegate
