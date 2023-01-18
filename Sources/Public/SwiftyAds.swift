@@ -397,7 +397,10 @@ extension SwiftyAds: SwiftyAdsType {
                                onError: ((Error) -> Void)?,
                                onNotReady: (() -> Void)?,
                                onReward: @escaping (NSDecimalNumber) -> Void) {
-        guard hasConsent else { return }
+        guard hasConsent else {
+            onNotReady?()
+            return
+        }
 
         rewardedAd?.show(
             from: viewController,
@@ -431,7 +434,10 @@ extension SwiftyAds: SwiftyAdsType {
                                            onError: ((Error) -> Void)?,
                                            onReward: @escaping (NSDecimalNumber) -> Void) {
         guard !isDisabled else { return }
-        guard hasConsent else { return }
+        guard hasConsent else {
+            onNotReady?()
+            return
+        }
 
         if let interval = interval {
             guard rewardedInterstitialAdIntervalTracker.canShow(forInterval: interval) else { return }
