@@ -100,6 +100,7 @@ public protocol SwiftyAdsType: AnyObject {
                                     onOpen: (() -> Void)?,
                                     onClose: (() -> Void)?,
                                     onError: ((Error) -> Void)?,
+                                    onNotReady: (() -> Void)?,
                                     onReward: @escaping (NSDecimalNumber) -> Void)
     func loadNativeAd(from viewController: UIViewController,
                       adUnitIdType: SwiftyAdsAdUnitIdType,

@@ -22,6 +22,7 @@
 
 import GoogleMobileAds
 import UserMessagingPlatform
+import AppTrackingTransparency
 
 /**
  SwiftyAds
@@ -182,7 +183,8 @@ extension SwiftyAds: SwiftyAdsType {
         }
 
         // If UMP SDK is disabled skip consent flow completely
-        if let isUMPDisabled = configuration.isUMPDisabled, isUMPDisabled {
+        if ATTrackingManager.trackingAuthorizationStatus == .denied
+            || configuration.isUMPDisabled == true {
             /// If consent flow was skipped we need to update COPPA settings.
             updateCOPPA(for: configuration, mediationConfigurator: mediationConfigurator)
             
@@ -432,6 +434,7 @@ extension SwiftyAds: SwiftyAdsType {
                                            onOpen: (() -> Void)?,
                                            onClose: (() -> Void)?,
                                            onError: ((Error) -> Void)?,
+                                           onNotReady: (() -> Void)?,
                                            onReward: @escaping (NSDecimalNumber) -> Void) {
         guard !isDisabled else { return }
         guard hasConsent else {
