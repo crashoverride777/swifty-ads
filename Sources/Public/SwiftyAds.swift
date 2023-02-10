@@ -54,6 +54,9 @@ public final class SwiftyAds: NSObject {
     private var disabled = false
 
     private var hasConsent: Bool {
+        if configuration?.isUMPDisabled == true {
+            return true
+        }
         switch consentStatus {
         case .notRequired, .obtained:
             return true
