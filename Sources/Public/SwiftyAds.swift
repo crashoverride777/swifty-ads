@@ -181,6 +181,15 @@ extension SwiftyAds: SwiftyAdsType {
             )
         }
 
+        // Create consent manager
+        let consentManager = SwiftyAdsConsentManager(
+            consentInformation: .sharedInstance,
+            environment: environment,
+            isTaggedForUnderAgeOfConsent: configuration.isTaggedForUnderAgeOfConsent ?? false,
+            consentStatusDidChange: consentStatusDidChange
+        )
+        self.consentManager = consentManager
+        
         // If UMP SDK is disabled skip consent flow completely
         if configuration.isUMPDisabled == true {
             /// If consent flow was skipped we need to update COPPA settings.
@@ -194,15 +203,6 @@ extension SwiftyAds: SwiftyAdsType {
             }
             return
         }
-
-        // Create consent manager
-        let consentManager = SwiftyAdsConsentManager(
-            consentInformation: .sharedInstance,
-            environment: environment,
-            isTaggedForUnderAgeOfConsent: configuration.isTaggedForUnderAgeOfConsent ?? false,
-            consentStatusDidChange: consentStatusDidChange
-        )
-        self.consentManager = consentManager
 
         // Request initial consent
         requestInitialConsent(from: viewController, consentManager: consentManager) { [weak self] result in
