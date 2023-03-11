@@ -595,12 +595,3 @@ private extension SwiftyAds {
         rewardedInterstitialAd?.load()
     }
 }
-
-// MARK: - Deprecated
-
-public extension SwiftyAds {
-    @available(*, deprecated, message: "Use `setDisabled` instead")
-    func disable(_ isDisabled: Bool) {
-        setDisabled(isDisabled)
-    }
-}

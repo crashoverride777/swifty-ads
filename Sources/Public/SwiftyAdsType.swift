@@ -106,8 +106,4 @@ public protocol SwiftyAdsType: AnyObject {
                       onError: ((Error) -> Void)?,
                       onReceive: @escaping (GADNativeAd) -> Void)
     func setDisabled(_ isDisabled: Bool)
-    
-    // MARK: - Deprecated
-    @available(*, deprecated, message: "Use `setDisabled` instead")
-    func disable(_ isDisabled: Bool)
 }
