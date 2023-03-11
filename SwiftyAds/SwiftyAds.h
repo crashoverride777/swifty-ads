@@ -3,7 +3,7 @@
 //  SwiftyAds
 //
 //  Created by Dominik on 02/05/2022.
-//  Copyright © 2022 Dominik. All rights reserved.
+//  Copyright © 2023 Dominik. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

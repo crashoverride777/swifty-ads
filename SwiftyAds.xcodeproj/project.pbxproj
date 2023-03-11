@@ -42,7 +42,6 @@
 		B493CA3328200AF30094AA27 /* SwiftyAds.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyAds.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B493CA3528200AF30094AA27 /* SwiftyAds.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyAds.h; sourceTree = "<group>"; };
 		B4B6EB3928200A2A0041E9E4 /* SwiftyAdsEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsEnvironment.swift; sourceTree = "<group>"; };
-		B4BA709F2819E94E00DE48A0 /* SwiftyAds.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = SwiftyAds.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,7 +121,6 @@
 			children = (
 				B4557E872819DDE20000F5F6 /* README.md */,
 				B4557E862819DDD10000F5F6 /* Package.swift */,
-				B4BA709F2819E94E00DE48A0 /* SwiftyAds.podspec */,
 				6A4285F724005F560035487A /* Sources */,
 				B493CA3428200AF30094AA27 /* SwiftyAds */,
 				B4C1B129204C298500452094 /* Products */,
@@ -251,7 +249,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Dominik. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -285,7 +283,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Dominik. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -356,6 +354,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -414,6 +413,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;

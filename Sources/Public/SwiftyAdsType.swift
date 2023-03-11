@@ -1,6 +1,6 @@
 //    The MIT License (MIT)
 //
-//    Copyright (c) 2015-2022 Dominik Ringler
+//    Copyright (c) 2015-2023 Dominik Ringler
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy
 //    of this software and associated documentation files (the "Software"), to deal
@@ -106,8 +106,4 @@ public protocol SwiftyAdsType: AnyObject {
                       onError: ((Error) -> Void)?,
                       onReceive: @escaping (GADNativeAd) -> Void)
     func setDisabled(_ isDisabled: Bool)
-    
-    // MARK: - Deprecated
-    @available(*, deprecated, message: "Use `setDisabled` instead")
-    func disable(_ isDisabled: Bool)
 }
