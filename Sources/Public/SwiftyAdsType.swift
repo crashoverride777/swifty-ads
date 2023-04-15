@@ -102,6 +102,7 @@ public protocol SwiftyAdsType: AnyObject {
     func loadNativeAd(from viewController: UIViewController,
                       adUnitIdType: SwiftyAdsAdUnitIdType,
                       loaderOptions: SwiftyAdsNativeAdLoaderOptions,
+                      otherOptions: [GADAdLoaderOptions]?,
                       onFinishLoading: (() -> Void)?,
                       onError: ((Error) -> Void)?,
                       onReceive: @escaping (GADNativeAd) -> Void)

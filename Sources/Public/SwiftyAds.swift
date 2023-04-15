@@ -460,6 +460,7 @@ extension SwiftyAds: SwiftyAdsType {
     public func loadNativeAd(from viewController: UIViewController,
                              adUnitIdType: SwiftyAdsAdUnitIdType,
                              loaderOptions: SwiftyAdsNativeAdLoaderOptions,
+                             otherOptions: [GADAdLoaderOptions]?,
                              onFinishLoading: (() -> Void)?,
                              onError: ((Error) -> Void)?,
                              onReceive: @escaping (GADNativeAd) -> Void) {
@@ -480,6 +481,7 @@ extension SwiftyAds: SwiftyAdsType {
             from: viewController,
             adUnitIdType: adUnitIdType,
             loaderOptions: loaderOptions,
+            otherOptions: otherOptions,
             adTypes: [.native],
             onFinishLoading: onFinishLoading,
             onError: onError,
