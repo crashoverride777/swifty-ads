@@ -19,8 +19,8 @@ A Swift library to display banner, interstitial, rewarded and native ads from Go
 
 ## Requirements
 
-- iOS 12.4+
-- Swift 5.0+
+- iOS 13.0+
+- Swift 5.6+
 
 ## Create Accounts
 
@@ -77,7 +77,7 @@ Alternatively you can copy the `Sources` folder and its containing files into yo
 
 ### Add SwiftyAds.plist
 
-Download the [template](Resources/SwiftyAdsPlistTemplate.zip) plist and add it to your projects main bundle. Than enter your required ad unit ids and set the isTaggedForUnderAgeOfConsent flag. All entries all optional.
+Download the [template](Sources/Resources/Templates/SwiftyAds.plist) plist and add it to your projects main bundle. Than enter your required ad unit ids and other required fields. All entries all optional and can be removed if not needed.
 
 - bannerAdUnitId (String)
 - interstitialAdUnitId (String)
@@ -477,7 +477,7 @@ Call the `disable(_ isDisabled: Bool)` method and banner, interstitial and rewar
 This will not stop regular rewarded ads from displaying as they should have a dedicated button. This way you can remove banner, interstitial and rewarded interstitial ads but still have rewarded ads. 
 
 ```swift
-SwiftyAds.shared.disable(true)
+SwiftyAds.shared.setDisabled(true)
 ```
 
 For permanent storage you will need to create your own boolean logic and save it in something like `NSUserDefaults`, or preferably `Keychain`. 
@@ -485,7 +485,7 @@ Than at app launch, before you call `SwiftyAds.shared.configure(...)`, check you
 
 ```swift
 if UserDefaults.standard.bool(forKey: "RemovedAdsKey") == true {
-    SwiftyAds.shared.disable(true)
+    SwiftyAds.shared.setDisabled(true)
 }
 ```
 
