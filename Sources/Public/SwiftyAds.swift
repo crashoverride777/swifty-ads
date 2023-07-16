@@ -537,7 +537,11 @@ private extension SwiftyAds {
         mediationConfigurator?.updateCOPPA(isTaggedForChildDirectedTreatment: isCOPPAEnabled)
         
         // Update GADMobileAds
-        mobileAds.requestConfiguration.tag(forChildDirectedTreatment: isCOPPAEnabled)
+        if isCOPPAEnabled {
+            mobileAds.requestConfiguration.tagForChildDirectedTreatment = true
+        } else {
+            mobileAds.requestConfiguration.tagForChildDirectedTreatment = false
+        }
     }
     
     func updateGDPR(for configuration: SwiftyAdsConfiguration,
@@ -565,7 +569,11 @@ private extension SwiftyAds {
         }
 
         if let isTaggedForUnderAgeOfConsent = configuration.isTaggedForUnderAgeOfConsent {
-            mobileAds.requestConfiguration.tagForUnderAge(ofConsent: isTaggedForUnderAgeOfConsent)
+            if isTaggedForUnderAgeOfConsent {
+                mobileAds.requestConfiguration.tagForUnderAgeOfConsent = true
+            } else {
+                mobileAds.requestConfiguration.tagForUnderAgeOfConsent = false
+            }
         }
     }
     
