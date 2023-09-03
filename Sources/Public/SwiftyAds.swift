@@ -54,6 +54,9 @@ public final class SwiftyAds: NSObject {
     private var disabled = false
 
     private var hasConsent: Bool {
+        if configuration?.isUMPDisabled == true {
+            return true
+        }
         switch consentStatus {
         case .notRequired, .obtained:
             return true
@@ -182,7 +185,7 @@ extension SwiftyAds: SwiftyAdsType {
         }
 
         // If UMP SDK is disabled skip consent flow completely
-        if let isUMPDisabled = configuration.isUMPDisabled, isUMPDisabled {
+        if configuration.isUMPDisabled == true {
             /// If consent flow was skipped we need to update COPPA settings.
             updateCOPPA(for: configuration, mediationConfigurator: mediationConfigurator)
             
@@ -391,15 +394,20 @@ extension SwiftyAds: SwiftyAdsType {
     /// - Warning:
     /// Rewarded ads may be non-skippable and should only be displayed after pressing a dedicated button.
     public func showRewardedAd(from viewController: UIViewController,
+                               userIdentifier: String? = nil,
                                onOpen: (() -> Void)?,
                                onClose: (() -> Void)?,
                                onError: ((Error) -> Void)?,
                                onNotReady: (() -> Void)?,
                                onReward: @escaping (NSDecimalNumber) -> Void) {
-        guard hasConsent else { return }
+        guard hasConsent else {
+            onNotReady?()
+            return
+        }
 
         rewardedAd?.show(
             from: viewController,
+            userIdentifier: userIdentifier,
             onOpen: onOpen,
             onClose: onClose,
             onError: onError,
@@ -422,13 +430,18 @@ extension SwiftyAds: SwiftyAdsType {
     /// and an option to skip the ad before it starts.
     /// https://support.google.com/admob/answer/9884467
     public func showRewardedInterstitialAd(from viewController: UIViewController,
+                                           userIdentifier: String? = nil,
                                            afterInterval interval: Int?,
                                            onOpen: (() -> Void)?,
                                            onClose: (() -> Void)?,
                                            onError: ((Error) -> Void)?,
+                                           onNotReady: (() -> Void)?,
                                            onReward: @escaping (NSDecimalNumber) -> Void) {
         guard !isDisabled else { return }
-        guard hasConsent else { return }
+        guard hasConsent else {
+            onNotReady?()
+            return
+        }
 
         if let interval = interval {
             guard rewardedInterstitialAdIntervalTracker.canShow(forInterval: interval) else { return }
@@ -436,6 +449,7 @@ extension SwiftyAds: SwiftyAdsType {
 
         rewardedInterstitialAd?.show(
             from: viewController,
+            userIdentifier: userIdentifier,
             onOpen: onOpen,
             onClose: onClose,
             onError: onError,

@@ -27,6 +27,7 @@ protocol SwiftyAdsRewardedInterstitialType: AnyObject {
     func load()
     func stopLoading()
     func show(from viewController: UIViewController,
+              userIdentifier: String?,
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?,
@@ -84,6 +85,7 @@ extension SwiftyAdsRewardedInterstitial: SwiftyAdsRewardedInterstitialType {
     }
 
     func show(from viewController: UIViewController,
+              userIdentifier: String?,
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?,
@@ -96,6 +98,12 @@ extension SwiftyAdsRewardedInterstitial: SwiftyAdsRewardedInterstitialType {
             load()
             onError?(SwiftyAdsError.rewardedInterstitialAdNotLoaded)
             return
+        }
+        
+        if let userIdentifier = userIdentifier {
+            let options = GADServerSideVerificationOptions()
+            options.userIdentifier = userIdentifier
+            rewardedInterstitialAd.serverSideVerificationOptions = options
         }
 
         do {

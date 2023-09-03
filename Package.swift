@@ -18,7 +18,8 @@ let package = Package(
             dependencies: [
                 .product(name: "GoogleMobileAds", package: "swift-package-manager-google-mobile-ads")
             ],
-            path: "Sources"
+            path: "Sources",
+            resources: [.process("Resources")]
         ),
         .testTarget(
             name: packageName + "Tests",
