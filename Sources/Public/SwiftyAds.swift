@@ -179,9 +179,12 @@ extension SwiftyAds: SwiftyAdsType {
             )
             consentManager.start(from: viewController) { [weak self] result in
                 guard let self = self else { return }
-                if case .success = result {
+                switch result {
+                case .success:
                     /// Once initial consent flow has finished we can start `GADMobileAds` and preload ads.
                     self.startMobileAdsSDK(completion: completion)
+                case .failure:
+                    completion()
                 }
             }
         } else {
@@ -214,19 +217,25 @@ extension SwiftyAds: SwiftyAdsType {
                              onWillPresentScreen: (() -> Void)?,
                              onWillDismissScreen: (() -> Void)?,
                              onDidDismissScreen: (() -> Void)?) -> SwiftyAdsBannerType? {
-        guard let environment = environment else {
-            fatalError("SwiftyAds must be configured by calling `func configure` before displaying ads.")
+        guard !isDisabled else { return nil }
+        
+        guard let configuration = configuration, let environment = environment else {
+            onError?(SwiftyAdsError.notConfigured)
+            return nil
         }
         
-        guard !isDisabled, hasConsent else { return nil }
+        guard hasConsent else {
+            onError?(SwiftyAdsError.consentNotObtained)
+            return nil
+        }
         
         var adUnitId: String? {
             switch adUnitIdType {
             case .plist:
-                return configuration?.bannerAdUnitId
+                return configuration.bannerAdUnitId
             case .custom(let id):
                 if case .development = environment {
-                    return configuration?.bannerAdUnitId
+                    return configuration.bannerAdUnitId
                 }
                 return id
             }
@@ -280,12 +289,18 @@ extension SwiftyAds: SwiftyAdsType {
                                    onOpen: (() -> Void)?,
                                    onClose: (() -> Void)?,
                                    onError: ((Error) -> Void)?) {
+        guard !isDisabled else { return }
+        
         guard environment != nil else {
-            fatalError("SwiftyAds must be configured by calling `func configure` before displaying ads.")
+            onError?(SwiftyAdsError.notConfigured)
+            return
         }
         
-        guard !isDisabled, hasConsent else { return }
-
+        guard hasConsent else {
+            onError?(SwiftyAdsError.consentNotObtained)
+            return
+        }
+        
         if let interval = interval {
             guard interstitialAdIntervalTracker.canShow(forInterval: interval) else { return }
         }
@@ -318,10 +333,14 @@ extension SwiftyAds: SwiftyAdsType {
                                onNotReady: (() -> Void)?,
                                onReward: @escaping (NSDecimalNumber) -> Void) {
         guard environment != nil else {
-            fatalError("SwiftyAds must be configured by calling `func configure` before displaying ads.")
+            onError?(SwiftyAdsError.notConfigured)
+            return
         }
         
-        guard hasConsent else { return }
+        guard hasConsent else {
+            onError?(SwiftyAdsError.consentNotObtained)
+            return
+        }
 
         rewardedAd?.show(
             from: viewController,
@@ -352,12 +371,18 @@ extension SwiftyAds: SwiftyAdsType {
                                            onClose: (() -> Void)?,
                                            onError: ((Error) -> Void)?,
                                            onReward: @escaping (NSDecimalNumber) -> Void) {
+        guard !isDisabled else { return }
+        
         guard environment != nil else {
-            fatalError("SwiftyAds must be configured by calling `func configure` before displaying ads.")
+            onError?(SwiftyAdsError.notConfigured)
+            return
+        }
+
+        guard hasConsent else {
+            onError?(SwiftyAdsError.consentNotObtained)
+            return
         }
         
-        guard !isDisabled, hasConsent else { return }
-
         if let interval = interval {
             guard rewardedInterstitialAdIntervalTracker.canShow(forInterval: interval) else { return }
         }
@@ -391,11 +416,17 @@ extension SwiftyAds: SwiftyAdsType {
                              onFinishLoading: (() -> Void)?,
                              onError: ((Error) -> Void)?,
                              onReceive: @escaping (GADNativeAd) -> Void) {
-        guard let environment = environment else {
-            fatalError("SwiftyAds must be configured by calling `func configure` before displaying ads.")
-        }
+        guard !isDisabled else { return }
         
-        guard !isDisabled, hasConsent else { return }
+        guard let environment = environment else {
+            onError?(SwiftyAdsError.notConfigured)
+            return
+        }
+
+        guard hasConsent else {
+            onError?(SwiftyAdsError.consentNotObtained)
+            return
+        }
 
         if nativeAd == nil, case .custom(let adUnitId) = adUnitIdType {
             nativeAd = SwiftyAdsNative(

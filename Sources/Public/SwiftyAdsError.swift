@@ -23,8 +23,10 @@
 import Foundation
 
 public enum SwiftyAdsError: Error {
+    case notConfigured
     case consentManagerNotAvailable
     case consentFormNotAvailable
+    case consentNotObtained
     case interstitialAdNotLoaded
     case rewardedAdNotLoaded
     case rewardedInterstitialAdNotLoaded
@@ -32,10 +34,14 @@ public enum SwiftyAdsError: Error {
 
     public var errorDescription: String? {
         switch self {
+        case .notConfigured:
+            return "SwiftAds is not configured, please call `func configure(...)` first"
         case .consentManagerNotAvailable:
             return "Consent manager not available. Remove isUMPDisabled entry from SwiftyAds.plist"
         case .consentFormNotAvailable:
             return "Consent form not available"
+        case .consentNotObtained:
+            return "Consent not obstained"
         case .interstitialAdNotLoaded:
             return "Interstitial ad not loaded"
         case .rewardedAdNotLoaded:
