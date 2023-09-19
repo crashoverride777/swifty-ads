@@ -29,20 +29,20 @@ import UserMessagingPlatform
  A concret class implementation of SwiftAdsType to display ads from Google AdMob.
  */
 public final class SwiftyAds: NSObject {
-
+    
     // MARK: - Static Properties
-
+    
     /// The shared SwiftyAds instance.
     public static let shared = SwiftyAds()
-
+    
     // MARK: - Properties
     
     private let mobileAds: GADMobileAds
     private let interstitialAdIntervalTracker: SwiftyAdsIntervalTrackerType
     private let rewardedInterstitialAdIntervalTracker: SwiftyAdsIntervalTrackerType
-
+    
     private var configuration: SwiftyAdsConfiguration?
-    private var environment: SwiftyAdsEnvironment = .production
+    private var environment: SwiftyAdsEnvironment?
     private var requestBuilder: SwiftyAdsRequestBuilderType?
     private var mediationConfigurator: SwiftyAdsMediationConfiguratorType?
     
@@ -52,7 +52,9 @@ public final class SwiftyAds: NSObject {
     private var nativeAd: SwiftyAdsNativeType?
     private var consentManager: SwiftyAdsConsentManagerType?
     private var disabled = false
-
+    
+    private var consentStatusDidChange: ((SwiftyAdsConsentStatus) -> Void)?
+    
     private var hasConsent: Bool {
         switch consentStatus {
         case .notRequired, .obtained:
@@ -69,7 +71,6 @@ public final class SwiftyAds: NSObject {
         interstitialAdIntervalTracker = SwiftyAdsIntervalTracker()
         rewardedInterstitialAdIntervalTracker = SwiftyAdsIntervalTracker()
         super.init()
-        
     }
 }
 
@@ -85,13 +86,13 @@ extension SwiftyAds: SwiftyAdsType {
     }
 
     /// Returns true if configured for child directed treatment or nil if ignored (COPPA).
-    public var isTaggedForChildDirectedTreatment: Bool? {
-        configuration?.isTaggedForChildDirectedTreatment
+    public var isTaggedForChildDirectedTreatment: Bool {
+        consentManager?.isTaggedForChildDirectedTreatment ?? false
     }
 
     /// Returns true if configured for under age of consent (GDPR).
     public var isTaggedForUnderAgeOfConsent: Bool {
-        configuration?.isTaggedForUnderAgeOfConsent ?? false
+        consentManager?.isTaggedForUnderAgeOfConsent ?? false
     }
      
     /// Check if interstitial ad is ready to be displayed.
@@ -121,25 +122,25 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter environment: The environment for ads to be displayed.
     /// - parameter requestBuilder: The GADRequest builder.
+    /// - parameter consentConfiguration: Optional consent configuration to handle COPPA/GDPR consent.
     /// - parameter mediationConfigurator: Optional configurator to update mediation networks COPPA/GDPR consent status.
-    /// - parameter consentStatusDidChange: A handler that will be called everytime the consent status has changed.
-    /// - parameter completion: A completion handler that will return the current consent status after the initial consent flow has finished.
+    /// - parameter completion: Called when configuration has finished.
     ///
     /// - Warning:
     /// Returns .notRequired in the completion handler if consent has been disabled via SwiftyAds.plist isUMPDisabled entry.
     public func configure(from viewController: UIViewController,
                           for environment: SwiftyAdsEnvironment,
                           requestBuilder: SwiftyAdsRequestBuilderType,
+                          consentConfiguration: SwiftyAdsConsentConfiguration?,
                           mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
-                          consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
-                          completion: @escaping SwiftyAdsConsentResultHandler) {
+                          completion: @escaping () -> Void) {
         // Update configuration for selected environment
         let configuration: SwiftyAdsConfiguration
         switch environment {
         case .production:
             configuration = .production()
-        case .development(let testDeviceIdentifiers, let consentConfiguration):
-            configuration = .debug(isUMPDisabled: consentConfiguration.isDisabled)
+        case .development(let testDeviceIdentifiers, _):
+            configuration = .debug
             mobileAds.requestConfiguration.testDeviceIdentifiers = [GADSimulatorID].compactMap { $0 } + testDeviceIdentifiers
         }
         
@@ -147,133 +148,47 @@ extension SwiftyAds: SwiftyAdsType {
         self.environment = environment
         self.requestBuilder = requestBuilder
         self.mediationConfigurator = mediationConfigurator
-
+        
         // Create ads
         if let interstitialAdUnitId = configuration.interstitialAdUnitId {
-            interstitialAd = SwiftyAdsInterstitial(
-                environment: environment,
-                adUnitId: interstitialAdUnitId,
-                request: requestBuilder.build
-            )
+            interstitialAd = SwiftyAdsInterstitial(environment: environment, adUnitId: interstitialAdUnitId, request: requestBuilder.build)
         }
 
         if let rewardedAdUnitId = configuration.rewardedAdUnitId {
-            rewardedAd = SwiftyAdsRewarded(
-                environment: environment,
-                adUnitId: rewardedAdUnitId,
-                request: requestBuilder.build
-            )
+            rewardedAd = SwiftyAdsRewarded(environment: environment, adUnitId: rewardedAdUnitId, request: requestBuilder.build)
         }
 
         if let rewardedInterstitialAdUnitId = configuration.rewardedInterstitialAdUnitId {
-            rewardedInterstitialAd = SwiftyAdsRewardedInterstitial(
-                environment: environment,
-                adUnitId: rewardedInterstitialAdUnitId,
-                request: requestBuilder.build
-            )
+            rewardedInterstitialAd = SwiftyAdsRewardedInterstitial(environment: environment, adUnitId: rewardedInterstitialAdUnitId, request: requestBuilder.build)
         }
 
         if let nativeAdUnitId = configuration.nativeAdUnitId {
-            nativeAd = SwiftyAdsNative(
+            nativeAd = SwiftyAdsNative(environment: environment, adUnitId: nativeAdUnitId, request: requestBuilder.build)
+        }
+        
+        // Start ads sdk.
+        if let consentConfiguration = consentConfiguration {
+            let consentManager = SwiftyAdsConsentManager(
+                configuration: consentConfiguration,
                 environment: environment,
-                adUnitId: nativeAdUnitId,
-                request: requestBuilder.build
+                mediationConfigurator: mediationConfigurator,
+                mobileAds: mobileAds,
+                consentStatusDidChange: { [weak self] status in
+                    self?.consentStatusDidChange?(status)
+                }
             )
-        }
-
-        // If UMP SDK is disabled skip consent flow completely
-        if let isUMPDisabled = configuration.isUMPDisabled, isUMPDisabled {
-            /// If consent flow was skipped we need to update COPPA settings.
-            updateCOPPA(for: configuration, mediationConfigurator: mediationConfigurator)
-            
-            /// If consent flow was skipped we can start `GADMobileAds` and preload ads.
-            startMobileAdsSDK { [weak self] in
+            consentManager.start(from: viewController) { [weak self] result in
                 guard let self = self else { return }
-                self.loadAds()
-                completion(.success(.notRequired))
-            }
-            return
-        }
-
-        // Create consent manager
-        let consentManager = SwiftyAdsConsentManager(
-            consentInformation: .sharedInstance,
-            environment: environment,
-            isTaggedForUnderAgeOfConsent: configuration.isTaggedForUnderAgeOfConsent ?? false,
-            consentStatusDidChange: consentStatusDidChange
-        )
-        self.consentManager = consentManager
-
-        // Request initial consent
-        requestInitialConsent(from: viewController, consentManager: consentManager) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let consentStatus):
-                /// Once initial consent flow has finished we need to update COPPA settings.
-                self.updateCOPPA(for: configuration, mediationConfigurator: mediationConfigurator)
-                
-                /// Once initial consent flow has finished and consentStatus is not `.notRequired`
-                /// we need to update GDPR settings.
-                if consentStatus != .notRequired {
-                    self.updateGDPR(
-                        for: configuration,
-                        mediationConfigurator: mediationConfigurator,
-                        consentStatus: consentStatus
-                    )
+                if case .success = result {
+                    /// Once initial consent flow has finished we can start `GADMobileAds` and preload ads.
+                    self.startMobileAdsSDK(completion: completion)
                 }
-                
-                /// Once initial consent flow has finished we can start `GADMobileAds` and preload ads.
-                self.startMobileAdsSDK { [weak self] in
-                    guard let self = self else { return }
-                    self.loadAds()
-                    completion(result)
-                }
-            case .failure:
-                completion(result)
             }
+        } else {
+            startMobileAdsSDK(completion: completion)
         }
     }
     
-    // MARK: Consent
-
-    /// Under GDPR users must be able to change their consent at any time.
-    ///
-    /// - parameter viewController: The view controller that will present the consent form.
-    /// - parameter completion: A completion handler that will return the updated consent status.
-    public func askForConsent(from viewController: UIViewController,
-                              completion: @escaping SwiftyAdsConsentResultHandler) {
-        guard let consentManager = consentManager else {
-            completion(.failure(SwiftyAdsError.consentManagerNotAvailable))
-            return
-        }
-        
-        DispatchQueue.main.async {
-            consentManager.requestUpdate { result in
-                switch result {
-                case .success:
-                    DispatchQueue.main.async {
-                        consentManager.showForm(from: viewController) { [weak self] result in
-                            guard let self = self else { return }
-                            // If consent form was used to update consentStatus
-                            // we need to update GDPR settings
-                            if case .success(let newConsentStatus) = result, let configuration = self.configuration {
-                                self.updateGDPR(
-                                    for: configuration,
-                                    mediationConfigurator: self.mediationConfigurator,
-                                    consentStatus: newConsentStatus
-                                )
-                            }
-                            
-                            completion(result)
-                        }
-                    }
-                case .failure:
-                    completion(result)
-                }
-            }
-        }
-    }
-
     // MARK: Banner Ads
     
     /// Make banner ad
@@ -299,9 +214,12 @@ extension SwiftyAds: SwiftyAdsType {
                              onWillPresentScreen: (() -> Void)?,
                              onWillDismissScreen: (() -> Void)?,
                              onDidDismissScreen: (() -> Void)?) -> SwiftyAdsBannerType? {
-        guard !isDisabled else { return nil }
-        guard hasConsent else { return nil }
-
+        guard let environment = environment else {
+            fatalError("SwiftyAds must be configured by calling `func configure` before displaying ads.")
+        }
+        
+        guard !isDisabled, hasConsent else { return nil }
+        
         var adUnitId: String? {
             switch adUnitIdType {
             case .plist:
@@ -362,8 +280,11 @@ extension SwiftyAds: SwiftyAdsType {
                                    onOpen: (() -> Void)?,
                                    onClose: (() -> Void)?,
                                    onError: ((Error) -> Void)?) {
-        guard !isDisabled else { return }
-        guard hasConsent else { return }
+        guard environment != nil else {
+            fatalError("SwiftyAds must be configured by calling `func configure` before displaying ads.")
+        }
+        
+        guard !isDisabled, hasConsent else { return }
 
         if let interval = interval {
             guard interstitialAdIntervalTracker.canShow(forInterval: interval) else { return }
@@ -396,6 +317,10 @@ extension SwiftyAds: SwiftyAdsType {
                                onError: ((Error) -> Void)?,
                                onNotReady: (() -> Void)?,
                                onReward: @escaping (NSDecimalNumber) -> Void) {
+        guard environment != nil else {
+            fatalError("SwiftyAds must be configured by calling `func configure` before displaying ads.")
+        }
+        
         guard hasConsent else { return }
 
         rewardedAd?.show(
@@ -427,8 +352,11 @@ extension SwiftyAds: SwiftyAdsType {
                                            onClose: (() -> Void)?,
                                            onError: ((Error) -> Void)?,
                                            onReward: @escaping (NSDecimalNumber) -> Void) {
-        guard !isDisabled else { return }
-        guard hasConsent else { return }
+        guard environment != nil else {
+            fatalError("SwiftyAds must be configured by calling `func configure` before displaying ads.")
+        }
+        
+        guard !isDisabled, hasConsent else { return }
 
         if let interval = interval {
             guard rewardedInterstitialAdIntervalTracker.canShow(forInterval: interval) else { return }
@@ -463,8 +391,11 @@ extension SwiftyAds: SwiftyAdsType {
                              onFinishLoading: (() -> Void)?,
                              onError: ((Error) -> Void)?,
                              onReceive: @escaping (GADNativeAd) -> Void) {
-        guard !isDisabled else { return }
-        guard hasConsent else { return }
+        guard let environment = environment else {
+            fatalError("SwiftyAds must be configured by calling `func configure` before displaying ads.")
+        }
+        
+        guard !isDisabled, hasConsent else { return }
 
         if nativeAd == nil, case .custom(let adUnitId) = adUnitIdType {
             nativeAd = SwiftyAdsNative(
@@ -502,81 +433,33 @@ extension SwiftyAds: SwiftyAdsType {
             loadAds()
         }
     }
+    
+    // MARK: Consent
+    
+    /// Observe consent status changes
+    ///
+    /// - parameter onStatusChange: A completion hander that is called every time consent status changes.
+    public func observeConsentStatus(onStatusChange: @escaping (SwiftyAdsConsentStatus) -> Void) {
+        self.consentStatusDidChange = onStatusChange
+    }
+
+    /// Under GDPR users must be able to change their consent at any time.
+    ///
+    /// - parameter viewController: The view controller that will present the consent form.
+    /// - parameter completion: A completion handler that will return the updated consent status.
+    public func askForConsent(from viewController: UIViewController, completion: @escaping SwiftyAdsConsentResultHandler) {
+        guard let consentManager = consentManager else {
+            completion(.failure(SwiftyAdsError.consentManagerNotAvailable))
+            return
+        }
+        
+        consentManager.request(from: viewController, completion: completion)
+    }
 }
 
 // MARK: - Private Methods
 
 private extension SwiftyAds {
-    func requestInitialConsent(from viewController: UIViewController,
-                               consentManager: SwiftyAdsConsentManagerType,
-                               completion: @escaping SwiftyAdsConsentResultHandler) {
-        DispatchQueue.main.async {
-            consentManager.requestUpdate { result in
-                switch result {
-                case .success(let status):
-                    switch status {
-                    case .required:
-                        DispatchQueue.main.async {
-                            consentManager.showForm(from: viewController, completion: completion)
-                        }
-                    default:
-                        completion(result)
-                    }
-                case .failure:
-                    completion(result)
-                }
-            }
-        }
-    }
-    
-    func updateCOPPA(for configuration: SwiftyAdsConfiguration,
-                     mediationConfigurator: SwiftyAdsMediationConfiguratorType?) {
-        guard let isCOPPAEnabled = configuration.isTaggedForChildDirectedTreatment else { return }
-        
-        // Update mediation networks
-        mediationConfigurator?.updateCOPPA(isTaggedForChildDirectedTreatment: isCOPPAEnabled)
-        
-        // Update GADMobileAds
-        if isCOPPAEnabled {
-            mobileAds.requestConfiguration.tagForChildDirectedTreatment = true
-        } else {
-            mobileAds.requestConfiguration.tagForChildDirectedTreatment = false
-        }
-    }
-    
-    func updateGDPR(for configuration: SwiftyAdsConfiguration,
-                    mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
-                    consentStatus: SwiftyAdsConsentStatus) {
-        // Update mediation networks
-        //
-        // The GADMobileADs tagForUnderAgeOfConsent parameter is currently NOT forwarded to ad network
-        // mediation adapters.
-        // It is your responsibility to ensure that each third-party ad network in your application serves
-        // ads that are appropriate for users under the age of consent per GDPR.
-        mediationConfigurator?.updateGDPR(
-            for: consentStatus,
-            isTaggedForUnderAgeOfConsent: configuration.isTaggedForUnderAgeOfConsent ?? false
-        )
-        
-        // Update GADMobileAds
-        //
-        // The tags to enable the child-directed setting and tagForUnderAgeOfConsent
-        // should not both simultaneously be set to true.
-        // If they are, the child-directed setting takes precedence.
-        // https://developers.google.com/admob/ios/targeting#child-directed_setting
-        if let isCOPPAEnabled = configuration.isTaggedForChildDirectedTreatment, isCOPPAEnabled {
-            return
-        }
-
-        if let isTaggedForUnderAgeOfConsent = configuration.isTaggedForUnderAgeOfConsent {
-            if isTaggedForUnderAgeOfConsent {
-                mobileAds.requestConfiguration.tagForUnderAgeOfConsent = true
-            } else {
-                mobileAds.requestConfiguration.tagForUnderAgeOfConsent = false
-            }
-        }
-    }
-    
     func startMobileAdsSDK(completion: @escaping () -> Void) {
         /*
          Warning:
@@ -592,6 +475,7 @@ private extension SwiftyAds {
             if case .development = self.environment {
                 print("SwiftyAds initialization status", initializationStatus.adapterStatusesByClassName)
             }
+            self.loadAds()
             completion()
         }
     }

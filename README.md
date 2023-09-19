@@ -441,11 +441,44 @@ if let swiftyAdsError = error as? SwiftyAdsError {
 }
 ```
 
-### Consent Status
+### Consent
 
 ```swift
-// Check current consent status
+Check current consent status
 SwiftyAds.shared.consentStatus
+```
+
+Observe consent status changes
+```swift
+SwiftyAds.shared.observeConsentStatus { status in 
+    print("New consent status set \(status")
+}
+```
+
+Ask for consent again. 
+It is required that the user has the option to change their GDPR consent settings, usually via a button in settings. 
+```swift
+func consentButtonPressed() {
+    SwiftyAds.shared.askForConsent(from: self) { result in
+        switch result {
+        case .success(let status):
+            print("Did change consent status")
+        case .failure(let error):
+            print("Consent status change error \(error)")
+        }
+    }
+}
+```
+
+The consent button can be hidden if consent is not required or user is tagged for under age of consent.
+```swift
+// If consent is not required e.g. outside EEA than we do not need to show consent button.
+// If inside EEA we need to display the consentButton unless user is tagged for under age of consent
+if SwiftyAds.shared.consentStatus == .notRequired {
+    consentButton.isHidden = true
+} else {
+    consentButton.isHidden = SwiftyAds.shared.isTaggedForUnderAgeOfConsent
+}
 ```
 
 ### Booleans
@@ -485,35 +518,6 @@ Than at app launch, before you call `SwiftyAds.shared.configure(...)`, check you
 ```swift
 if UserDefaults.standard.bool(forKey: "RemovedAdsKey") == true {
     SwiftyAds.shared.setDisabled(true)
-}
-```
-
-### Ask for consent again
-
-It is required that the user has the option to change their GDPR consent settings, usually via a button in settings. 
-
-```swift
-func consentButtonPressed() {
-    SwiftyAds.shared.askForConsent(from: self) { result in
-        switch result {
-        case .success(let status):
-            print("Did change consent status")
-        case .failure(let error):
-            print("Consent status change error \(error)")
-        }
-    }
-}
-```
-
-The consent button can be hidden if consent is not required or user is tagged for under age of consent.
-
-```swift
-// If consent is not required e.g. outside EEA than we do not need to show consent button.
-// If inside EEA we need to display the consentButton unless user is tagged for under age of consent
-if SwiftyAds.shared.consentStatus == .notRequired {
-    consentButton.isHidden = true
-} else {
-    consentButton.isHidden = SwiftyAds.shared.isTaggedForUnderAgeOfConsent
 }
 ```
 

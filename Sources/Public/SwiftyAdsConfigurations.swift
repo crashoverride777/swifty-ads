@@ -22,15 +22,12 @@
 
 import Foundation
 
-struct SwiftyAdsConfiguration: Decodable, Equatable {
+public struct SwiftyAdsConfiguration: Decodable, Equatable {
     let bannerAdUnitId: String?
     let interstitialAdUnitId: String?
     let rewardedAdUnitId: String?
     let rewardedInterstitialAdUnitId: String?
     let nativeAdUnitId: String?
-    let isTaggedForChildDirectedTreatment: Bool? // COPPA
-    let isTaggedForUnderAgeOfConsent: Bool?  // GDPR
-    let isUMPDisabled: Bool? // Disables User Messaging Platform (UMP) SDK
 }
 
 extension SwiftyAdsConfiguration {
@@ -38,7 +35,7 @@ extension SwiftyAdsConfiguration {
         guard let url = bundle.url(forResource: "SwiftyAds", withExtension: "plist") else {
             fatalError("SwiftyAds could not find SwiftyAds.plist in the main bundle.")
         }
-
+        
         do {
             let data = try Data(contentsOf: url)
             let decoder = PropertyListDecoder()
@@ -47,18 +44,13 @@ extension SwiftyAdsConfiguration {
             fatalError("SwiftyAds decoding SwiftyAds.plist error: \(error).")
         }
     }
-
+    
     // https://developers.google.com/admob/ios/test-ads
-    static func debug(isUMPDisabled: Bool) -> SwiftyAdsConfiguration {
-        SwiftyAdsConfiguration(
-            bannerAdUnitId: "ca-app-pub-3940256099942544/2934735716",
-            interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
-            rewardedAdUnitId: "ca-app-pub-3940256099942544/1712485313",
-            rewardedInterstitialAdUnitId: "ca-app-pub-3940256099942544/6978759866",
-            nativeAdUnitId: "ca-app-pub-3940256099942544/3986624511",
-            isTaggedForChildDirectedTreatment: nil,
-            isTaggedForUnderAgeOfConsent: nil,
-            isUMPDisabled: isUMPDisabled
-        )
-    }
+    static let debug = SwiftyAdsConfiguration(
+        bannerAdUnitId: "ca-app-pub-3940256099942544/2934735716",
+        interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
+        rewardedAdUnitId: "ca-app-pub-3940256099942544/1712485313",
+        rewardedInterstitialAdUnitId: "ca-app-pub-3940256099942544/6978759866",
+        nativeAdUnitId: "ca-app-pub-3940256099942544/3986624511"
+    )
 }

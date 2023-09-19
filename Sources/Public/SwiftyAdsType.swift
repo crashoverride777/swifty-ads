@@ -58,7 +58,7 @@ public protocol SwiftyAdsMediationConfiguratorType: AnyObject {
 
 public protocol SwiftyAdsType: AnyObject {
     var consentStatus: SwiftyAdsConsentStatus { get }
-    var isTaggedForChildDirectedTreatment: Bool? { get }
+    var isTaggedForChildDirectedTreatment: Bool { get }
     var isTaggedForUnderAgeOfConsent: Bool { get }
     var isInterstitialAdReady: Bool { get }
     var isRewardedAdReady: Bool { get }
@@ -67,11 +67,9 @@ public protocol SwiftyAdsType: AnyObject {
     func configure(from viewController: UIViewController,
                    for environment: SwiftyAdsEnvironment,
                    requestBuilder: SwiftyAdsRequestBuilderType,
+                   consentConfiguration: SwiftyAdsConsentConfiguration?,
                    mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
-                   consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void,
-                   completion: @escaping SwiftyAdsConsentResultHandler)
-    func askForConsent(from viewController: UIViewController,
-                       completion: @escaping SwiftyAdsConsentResultHandler)
+                   completion: @escaping () -> Void)
     func makeBannerAd(in viewController: UIViewController,
                       adUnitIdType: SwiftyAdsAdUnitIdType,
                       position: SwiftyAdsBannerAdPosition,
@@ -106,4 +104,6 @@ public protocol SwiftyAdsType: AnyObject {
                       onError: ((Error) -> Void)?,
                       onReceive: @escaping (GADNativeAd) -> Void)
     func setDisabled(_ isDisabled: Bool)
+    func observeConsentStatus(onStatusChange: @escaping (SwiftyAdsConsentStatus) -> Void)
+    func askForConsent(from viewController: UIViewController, completion: @escaping SwiftyAdsConsentResultHandler)
 }

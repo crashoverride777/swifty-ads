@@ -21,6 +21,7 @@
 //    SOFTWARE.
 
 import UserMessagingPlatform
+import GoogleMobileAds
 
 /*
 The SDK is designed to be used in a linear fashion. The steps for using the SDK are:
@@ -32,32 +33,39 @@ Present the form.
 Provide a way for users to change their consent.
 */
 
-protocol SwiftyAdsConsentManagerType: AnyObject {
+public protocol SwiftyAdsConsentManagerType: AnyObject {
     var consentStatus: SwiftyAdsConsentStatus { get }
-    func requestUpdate(completion: @escaping SwiftyAdsConsentResultHandler)
-    func showForm(from viewController: UIViewController, completion: @escaping SwiftyAdsConsentResultHandler)
+    var isTaggedForChildDirectedTreatment: Bool { get }
+    var isTaggedForUnderAgeOfConsent: Bool { get }
+    func start(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
+    func request(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
 }
 
-final class SwiftyAdsConsentManager {
+public final class SwiftyAdsConsentManager {
 
     // MARK: - Properties
 
     private let consentInformation: UMPConsentInformation
+    private let configuration: SwiftyAdsConsentConfiguration
     private let environment: SwiftyAdsEnvironment
-    private let isTaggedForUnderAgeOfConsent: Bool
+    private let mediationConfigurator: SwiftyAdsMediationConfiguratorType?
+    private let mobileAds: GADMobileAds
     private let consentStatusDidChange: (SwiftyAdsConsentStatus) -> Void
 
     private var form: UMPConsentForm?
 
     // MARK: - Initialization
 
-    init(consentInformation: UMPConsentInformation,
-         environment: SwiftyAdsEnvironment,
-         isTaggedForUnderAgeOfConsent: Bool,
-         consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void) {
-        self.consentInformation = consentInformation
+    public init(configuration: SwiftyAdsConsentConfiguration,
+                environment: SwiftyAdsEnvironment,
+                mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
+                mobileAds: GADMobileAds,
+                consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void) {
+        self.consentInformation = .sharedInstance
+        self.configuration = configuration
         self.environment = environment
-        self.isTaggedForUnderAgeOfConsent = isTaggedForUnderAgeOfConsent
+        self.mediationConfigurator = mediationConfigurator
+        self.mobileAds = mobileAds
         self.consentStatusDidChange = consentStatusDidChange
     }
 }
@@ -65,10 +73,89 @@ final class SwiftyAdsConsentManager {
 // MARK: - SwiftyAdsConsentManagerType
 
 extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
-    var consentStatus: SwiftyAdsConsentStatus {
+    public var consentStatus: SwiftyAdsConsentStatus {
         consentInformation.consentStatus
     }
+    
+    public var isTaggedForChildDirectedTreatment: Bool {
+        configuration.isTaggedForChildDirectedTreatment
+    }
 
+    public var isTaggedForUnderAgeOfConsent: Bool {
+        configuration.isTaggedForUnderAgeOfConsent
+    }
+
+    public func start(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
+        startInitialConsentRequest(from: viewController) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let consentStatus):
+                /// Once initial consent flow has finished we need to update COPPA settings.
+                self.updateCOPPA()
+                
+                /// Once initial consent flow has finished and consentStatus is not `.notRequired`
+                /// we need to update GDPR settings.
+                if consentStatus != .notRequired {
+                    self.updateGDPR(consentStatus: consentStatus)
+                }
+                
+                completion(result)
+            case .failure:
+                completion(result)
+            }
+        }
+    }
+    
+    public func request(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
+        DispatchQueue.main.async {
+            self.requestUpdate { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success:
+                    DispatchQueue.main.async {
+                        self.showForm(from: viewController) { [weak self] result in
+                            guard let self = self else { return }
+                            // If consent form was used to update consentStatus
+                            // we need to update GDPR settings
+                            if case .success(let newConsentStatus) = result {
+                                self.updateGDPR(consentStatus: newConsentStatus)
+                            }
+                            
+                            completion(result)
+                        }
+                    }
+                case .failure:
+                    completion(result)
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Private Methods
+
+private extension SwiftyAdsConsentManager {
+    func startInitialConsentRequest(from viewController: UIViewController, completion: @escaping SwiftyAdsConsentResultHandler) {
+        DispatchQueue.main.async {
+            self.requestUpdate { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let status):
+                    switch status {
+                    case .required:
+                        DispatchQueue.main.async {
+                            self.showForm(from: viewController, completion: completion)
+                        }
+                    default:
+                        completion(result)
+                    }
+                case .failure:
+                    completion(result)
+                }
+            }
+        }
+    }
+    
     func requestUpdate(completion: @escaping SwiftyAdsConsentResultHandler) {
         // Create a UMPRequestParameters object.
         let parameters = UMPRequestParameters()
@@ -128,7 +215,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
             }
         }
     }
-
+    
     func showForm(from viewController: UIViewController, completion: @escaping SwiftyAdsConsentResultHandler) {
         // Ensure form is loaded
         guard let form = form else {
@@ -149,5 +236,35 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
             self.consentStatusDidChange(consentStatus)
             completion(.success(consentStatus))
         }
+    }
+    
+    func updateCOPPA() {
+        // Update mediation networks
+        mediationConfigurator?.updateCOPPA(isTaggedForChildDirectedTreatment: isTaggedForChildDirectedTreatment)
+        
+        // Update GADMobileAds
+        mobileAds.requestConfiguration.tagForChildDirectedTreatment = NSNumber(value: isTaggedForChildDirectedTreatment)
+    }
+    
+    func updateGDPR(consentStatus: SwiftyAdsConsentStatus) {
+        // Update mediation networks
+        //
+        // The GADMobileADs tagForUnderAgeOfConsent parameter is currently NOT forwarded to ad network
+        // mediation adapters.
+        // It is your responsibility to ensure that each third-party ad network in your application serves
+        // ads that are appropriate for users under the age of consent per GDPR.
+        mediationConfigurator?.updateGDPR(for: consentStatus, isTaggedForUnderAgeOfConsent: isTaggedForUnderAgeOfConsent)
+        
+        // Update GADMobileAds
+        //
+        // The tags to enable the child-directed setting and tagForUnderAgeOfConsent
+        // should not both simultaneously be set to true.
+        // If they are, the child-directed setting takes precedence.
+        // https://developers.google.com/admob/ios/targeting#child-directed_setting
+        guard !isTaggedForChildDirectedTreatment else {
+            return
+        }
+
+        mobileAds.requestConfiguration.tagForUnderAgeOfConsent = NSNumber(value: isTaggedForUnderAgeOfConsent)
     }
 }
