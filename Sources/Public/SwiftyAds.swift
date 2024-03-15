@@ -537,7 +537,9 @@ private extension SwiftyAds {
         mediationConfigurator?.updateCOPPA(isTaggedForChildDirectedTreatment: isCOPPAEnabled)
         
         // Update GADMobileAds
-        mobileAds.requestConfiguration.tag(forChildDirectedTreatment: isCOPPAEnabled)
+        //mobileAds.requestConfiguration.tag(forChildDirectedTreatment: isCOPPAEnabled)
+        mobileAds.requestConfiguration.tagForChildDirectedTreatment = NSNumber(value: isCOPPAEnabled)
+
     }
     
     func updateGDPR(for configuration: SwiftyAdsConfiguration,
@@ -565,7 +567,8 @@ private extension SwiftyAds {
         }
 
         if let isTaggedForUnderAgeOfConsent = configuration.isTaggedForUnderAgeOfConsent {
-            mobileAds.requestConfiguration.tagForUnderAge(ofConsent: isTaggedForUnderAgeOfConsent)
+            //mobileAds.requestConfiguration.tagForUnderAge(ofConsent: isTaggedForUnderAgeOfConsent)
+            mobileAds.requestConfiguration.tagForUnderAgeOfConsent = NSNumber(value: isTaggedForUnderAgeOfConsent)
         }
     }
     
