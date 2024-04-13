@@ -69,7 +69,7 @@ public protocol SwiftyAdsType: AnyObject {
                    requestBuilder: SwiftyAdsRequestBuilderType,
                    mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
                    bundlePlist: Bundle,
-                   completion: @escaping () -> Void)
+                   completion: @escaping (Result<Void, Error>) -> Void)
     func makeBannerAd(in viewController: UIViewController,
                       adUnitIdType: SwiftyAdsAdUnitIdType,
                       position: SwiftyAdsBannerAdPosition,

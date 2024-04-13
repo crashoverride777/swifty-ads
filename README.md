@@ -76,7 +76,7 @@ Alternatively you can copy the `Sources` folder and its containing files into yo
 
 ### Add SwiftyAds.plist
 
-Download the [template](Resources/Templates/SwiftyAds.plist) plist and add it to your projects main bundle. Enter your required ad unit ids.
+Download the [template](Sources/Resources/Templates/SwiftyAds.plist) plist and add it to your projects main bundle. Enter your required ad unit ids.
 
 - bannerAdUnitId (String)
 - interstitialAdUnitId (String)
@@ -87,7 +87,7 @@ Download the [template](Resources/Templates/SwiftyAds.plist) plist and add it to
 ### Add SwiftyAdsConsent.plist (Optional)
 
 By default SwiftyAds does not carry out any consent validation (COPPA or GDPR). 
-To enable consent using the User Messaging Platform (UMP) SDK, download the [template](Resources/Templates/SwiftyAdsConsent.plist) plist and add it to your projects main bundle. Than enter your required values.
+To enable consent validation using the User Messaging Platform (UMP) SDK, download the [template](Sources/Resources/Templates/SwiftyAdsConsent.plist) plist and add it to your projects bundle. Enter your required values.
 
 - isTaggedForChildDirectedTreatment (Boolean) ([COPPA](https://developers.google.com/admob/ios/targeting#child-directed_setting))
 - isTaggedForUnderAgeOfConsent (Boolean) ([GDPR](https://developers.google.com/admob/ios/targeting#users_under_the_age_of_consent))
@@ -95,8 +95,6 @@ To enable consent using the User Messaging Platform (UMP) SDK, download the [tem
 ### Link AppTrackingTransparency framework
 
 [Link](https://developers.google.com/admob/ump/ios/quick-start#update_your_infoplist) the AppTrackingTransparency framework in `Framework, Libraries and Embedded Content` under the general tab, otherwise iOS 14 ATT alerts will not display.
-
-If you are supporting iOS 13 and below you will also have to make it optional in `BuildPhases->Link Binary With Libraries` to avoid a crash.
 
 ## Usage
 
@@ -117,10 +115,7 @@ Please check the AdMob mediation [documentation](https://developers.google.com/a
 import SwiftyAds
 import GoogleMobileAds
 
-final class SwiftyAdsRequestBuilder {}
-
-extension SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
-
+final class SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
     func build() -> GADRequest {
         GADRequest()
     }
@@ -170,25 +165,18 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 private func configureSwiftyAds(from viewController: UIViewController) {
     #if DEBUG
-    // testDeviceIdentifiers: The test device identifiers used for debugging purposes.
-    // consentConfiguration: The debug consent configuration:
-    //    1) .default(geography: UMPDebugGeography), 
-    //    2) .resetOnLaunch(geography: UMPDebugGeography) 
-    //    3) .disabled
-        
     let environment: SwiftyAdsEnvironment = .development(testDeviceIdentifiers: [], consentConfiguration: .resetOnLaunch(geography: .EEA))
     #else
     let environment: SwiftyAdsEnvironment = .production
     #endif
-    
     SwiftyAds.shared.configure(
         from: viewController,
         for: environment,
         requestBuilder: SwiftyAdsRequestBuilder(),
         mediationConfigurator: SwiftyAdsMediationConfigurator(), // set to nil if no mediation is required
-        bundlePlist: .main,
+        bundlePlist: .main, // looks for SwiftyAds.plist/SwiftyAdsConsent.plist
         completion: {
-            print("Configure successful")
+            print("Configured successful")
             // Ads should be ready for displaying
         }
     )

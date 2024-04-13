@@ -129,7 +129,7 @@ extension SwiftyAds: SwiftyAdsType {
                           requestBuilder: SwiftyAdsRequestBuilderType,
                           mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
                           bundlePlist: Bundle = .main,
-                          completion: @escaping () -> Void) {
+                          completion: @escaping (Result<Void, Error>) -> Void) {
         // Update configuration for selected environment
         let configuration: SwiftyAdsConfiguration
         let consentConfiguration: SwiftyAdsConsentConfiguration?
@@ -187,8 +187,8 @@ extension SwiftyAds: SwiftyAdsType {
             case .success:
                 /// Once initial consent flow has finished we can start `GADMobileAds` and preload ads.
                 self.startMobileAdsSDK(completion: completion)
-            case .failure:
-                completion()
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
@@ -480,7 +480,7 @@ extension SwiftyAds: SwiftyAdsType {
 // MARK: - Private Methods
 
 private extension SwiftyAds {
-    func startMobileAdsSDK(completion: @escaping () -> Void) {
+    func startMobileAdsSDK(completion: @escaping (Result<Void, Error>) -> Void) {
         /*
          Warning:
          Ads may be preloaded by the Mobile Ads SDK or mediation partner SDKs upon
@@ -496,7 +496,7 @@ private extension SwiftyAds {
                 print("SwiftyAds initialization status", initializationStatus.adapterStatusesByClassName)
             }
             self.loadAds()
-            completion()
+            completion(.success(()))
         }
     }
     
