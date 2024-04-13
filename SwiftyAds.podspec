@@ -11,7 +11,7 @@ s.ios.deployment_target = '14.0'
 
 s.requires_arc = true
 s.static_framework = true
-s.swift_versions = ['5.8', '5.9']
+s.swift_versions = ['5.8', '5.9', '5.10']
 
 s.source = {
     :git => 'https://github.com/crashoverride777/swifty-ads.git',
@@ -20,6 +20,6 @@ s.source = {
 
 s.source_files = 'Sources/**/*.{h,m,swift}'
 
-s.dependency 'Google-Mobile-Ads-SDK', '~> 10.10.0'
+s.dependency 'Google-Mobile-Ads-SDK', '~> 11.3.0'
 
 end

@@ -122,8 +122,8 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter environment: The environment for ads to be displayed.
     /// - parameter requestBuilder: The GADRequest builder.
-    /// - parameter consentConfiguration: Optional consent configuration to handle COPPA/GDPR consent.
-    /// - parameter mediationConfigurator: Optional configurator to update mediation networks COPPA/GDPR consent status.
+    /// - parameter mediationConfigurator: Optional configurator to update mediation networks..
+    /// - parameter bundlePlist: The bundle to search for the SwiftyAds plist's files. Defaults to main bundle.
     /// - parameter completion: Called when configuration has finished.
     ///
     /// - Warning:
@@ -131,17 +131,20 @@ extension SwiftyAds: SwiftyAdsType {
     public func configure(from viewController: UIViewController,
                           for environment: SwiftyAdsEnvironment,
                           requestBuilder: SwiftyAdsRequestBuilderType,
-                          consentConfiguration: SwiftyAdsConsentConfiguration?,
                           mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
+                          bundlePlist: Bundle = .main,
                           completion: @escaping () -> Void) {
         // Update configuration for selected environment
         let configuration: SwiftyAdsConfiguration
+        let consentConfiguration: SwiftyAdsConsentConfiguration?
         switch environment {
         case .production:
-            configuration = .production()
+            configuration = .production(bundle: bundlePlist)
+            consentConfiguration = .production(bundle: bundlePlist)
         case .development(let testDeviceIdentifiers, _):
             configuration = .debug
-            mobileAds.requestConfiguration.testDeviceIdentifiers = [GADSimulatorID].compactMap { $0 } + testDeviceIdentifiers
+            consentConfiguration = .debug
+            mobileAds.requestConfiguration.testDeviceIdentifiers = testDeviceIdentifiers
         }
         
         self.configuration = configuration
@@ -167,28 +170,29 @@ extension SwiftyAds: SwiftyAdsType {
         }
         
         // Start ads sdk.
-        if let consentConfiguration = consentConfiguration {
-            let consentManager = SwiftyAdsConsentManager(
-                configuration: consentConfiguration,
-                environment: environment,
-                mediationConfigurator: mediationConfigurator,
-                mobileAds: mobileAds,
-                consentStatusDidChange: { [weak self] status in
-                    self?.consentStatusDidChange?(status)
-                }
-            )
-            consentManager.start(from: viewController) { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .success:
-                    /// Once initial consent flow has finished we can start `GADMobileAds` and preload ads.
-                    self.startMobileAdsSDK(completion: completion)
-                case .failure:
-                    completion()
-                }
-            }
-        } else {
+        guard let consentConfiguration = consentConfiguration else {
             startMobileAdsSDK(completion: completion)
+            return
+        }
+        
+        let consentManager = SwiftyAdsConsentManager(
+            configuration: consentConfiguration,
+            environment: environment,
+            mediationConfigurator: mediationConfigurator,
+            mobileAds: mobileAds,
+            consentStatusDidChange: { [weak self] status in
+                self?.consentStatusDidChange?(status)
+            }
+        )
+        consentManager.start(from: viewController) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                /// Once initial consent flow has finished we can start `GADMobileAds` and preload ads.
+                self.startMobileAdsSDK(completion: completion)
+            case .failure:
+                completion()
+            }
         }
     }
     

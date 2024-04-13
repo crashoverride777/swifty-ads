@@ -67,8 +67,8 @@ public protocol SwiftyAdsType: AnyObject {
     func configure(from viewController: UIViewController,
                    for environment: SwiftyAdsEnvironment,
                    requestBuilder: SwiftyAdsRequestBuilderType,
-                   consentConfiguration: SwiftyAdsConsentConfiguration?,
                    mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
+                   bundlePlist: Bundle,
                    completion: @escaping () -> Void)
     func makeBannerAd(in viewController: UIViewController,
                       adUnitIdType: SwiftyAdsAdUnitIdType,

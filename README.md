@@ -76,19 +76,21 @@ Alternatively you can copy the `Sources` folder and its containing files into yo
 
 ### Add SwiftyAds.plist
 
-Download the [template](Resources/SwiftyAdsPlistTemplate.zip) plist and add it to your projects main bundle. Than enter your required ad unit ids and set the isTaggedForUnderAgeOfConsent flag. All entries all optional.
+Download the [template](Resources/Templates/SwiftyAds.plist) plist and add it to your projects main bundle. Enter your required ad unit ids.
 
 - bannerAdUnitId (String)
 - interstitialAdUnitId (String)
 - rewardedAdUnitId (String)
 - rewardedInterstitialAdUnitId (String)
 - nativeAdUnitId (String)
+
+### Add SwiftyAdsConsent.plist (Optional)
+
+By default SwiftyAds does not carry out any consent validation (COPPA or GDPR). 
+To enable consent using the User Messaging Platform (UMP) SDK, download the [template](Resources/Templates/SwiftyAdsConsent.plist) plist and add it to your projects main bundle. Than enter your required values.
+
 - isTaggedForChildDirectedTreatment (Boolean) ([COPPA](https://developers.google.com/admob/ios/targeting#child-directed_setting))
 - isTaggedForUnderAgeOfConsent (Boolean) ([GDPR](https://developers.google.com/admob/ios/targeting#users_under_the_age_of_consent))
-- isUMPDisabled (Boolean)
-
-NOTE: Adding the `isUMPDisabled` entry and setting it to true means SwiftyAds will not carry out any consent requests using the User Messaging Platform (UMP) SDK. 
-In that case you will have to manually support GDPR (EEA) and ATT (Apple) alerts if required.
 
 ### Link AppTrackingTransparency framework
 

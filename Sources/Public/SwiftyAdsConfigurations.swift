@@ -31,26 +31,52 @@ public struct SwiftyAdsConfiguration: Decodable, Equatable {
 }
 
 extension SwiftyAdsConfiguration {
-    static func production(bundle: Bundle = .main) -> SwiftyAdsConfiguration {
-        guard let url = bundle.url(forResource: "SwiftyAds", withExtension: "plist") else {
-            fatalError("SwiftyAds could not find SwiftyAds.plist in the main bundle.")
+    static func production(bundle: Bundle) -> Self {
+        guard let configuration = decodePlist(type: Self.self, fileName: "SwiftyAds", bundle: bundle) else {
+            fatalError("SwiftyAds could not find SwiftyAds.plist in the selected bundle \(bundle).")
         }
-        
-        do {
-            let data = try Data(contentsOf: url)
-            let decoder = PropertyListDecoder()
-            return try decoder.decode(SwiftyAdsConfiguration.self, from: data)
-        } catch {
-            fatalError("SwiftyAds decoding SwiftyAds.plist error: \(error).")
-        }
+        return configuration
     }
     
     // https://developers.google.com/admob/ios/test-ads
-    static let debug = SwiftyAdsConfiguration(
+    static let debug = Self(
         bannerAdUnitId: "ca-app-pub-3940256099942544/2934735716",
         interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
         rewardedAdUnitId: "ca-app-pub-3940256099942544/1712485313",
         rewardedInterstitialAdUnitId: "ca-app-pub-3940256099942544/6978759866",
         nativeAdUnitId: "ca-app-pub-3940256099942544/3986624511"
     )
+}
+
+// MARK: - Consent
+
+public struct SwiftyAdsConsentConfiguration: Decodable, Equatable {
+    /// COPPA
+    let isTaggedForChildDirectedTreatment: Bool
+    /// GDPR
+    let isTaggedForUnderAgeOfConsent: Bool
+}
+
+extension SwiftyAdsConsentConfiguration {
+    static func production(bundle: Bundle) -> Self? {
+        decodePlist(type: Self.self, fileName: "SwiftyAdsConsent", bundle: bundle)
+    }
+    
+    static let debug = Self(
+        isTaggedForChildDirectedTreatment: false,
+        isTaggedForUnderAgeOfConsent: false
+    )
+}
+
+// MARK: - Decoding
+
+private func decodePlist<T: Decodable>( type: T.Type, fileName: String, bundle: Bundle) -> T? {
+    guard let url = bundle.url(forResource: fileName, withExtension: "plist") else { return nil }
+    do {
+        let data = try Data(contentsOf: url)
+        let decoder = PropertyListDecoder()
+        return try decoder.decode(T.self, from: data)
+    } catch {
+        fatalError("SwiftyAds decoding \(fileName).plist error: \(error).")
+    }
 }

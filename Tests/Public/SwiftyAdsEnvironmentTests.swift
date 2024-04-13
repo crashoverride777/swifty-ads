@@ -2,10 +2,6 @@ import XCTest
 @testable import SwiftyAds
 
 final class SwiftyAdsEnvironmentTests: XCTestCase {
-
-    // MARK: - Consent Configuration
-    
-    // MARK: Geography
     
     func testConsentConfigurationGeography_whenDefault_returnsGeography() {
         let sut: SwiftyAdsEnvironment.ConsentConfiguration = .default(geography: .EEA)

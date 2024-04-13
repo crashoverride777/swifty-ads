@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bannerAdUnitId</key>
+	<string>Enter your ad unit ID or remove entry if not used</string>
+	<key>interstitialAdUnitId</key>
+	<string>Enter your ad unit ID or remove entry if not used</string>
+	<key>rewardedAdUnitId</key>
+	<string>Enter your ad unit ID or remove entry if not used</string>
+	<key>rewardedInterstitialAdUnitId</key>
+	<string>Enter your ad unit ID or remove entry if not used</string>
+	<key>nativeAdUnitId</key>
+	<string>Enter your ad unit ID or remove entry if not used</string>
+</dict>
+</plist>
