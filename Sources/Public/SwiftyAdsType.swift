@@ -81,7 +81,6 @@ public protocol SwiftyAdsType: AnyObject {
                       onWillDismissScreen: (() -> Void)?,
                       onDidDismissScreen: (() -> Void)?) -> SwiftyAdsBannerType?
     func showInterstitialAd(from viewController: UIViewController,
-                            afterInterval interval: Int?,
                             onOpen: (() -> Void)?,
                             onClose: (() -> Void)?,
                             onError: ((Error) -> Void)?)
@@ -92,7 +91,6 @@ public protocol SwiftyAdsType: AnyObject {
                         onNotReady: (() -> Void)?,
                         onReward: @escaping (NSDecimalNumber) -> Void)
     func showRewardedInterstitialAd(from viewController: UIViewController,
-                                    afterInterval interval: Int?,
                                     onOpen: (() -> Void)?,
                                     onClose: (() -> Void)?,
                                     onError: ((Error) -> Void)?,

@@ -38,8 +38,6 @@ public final class SwiftyAds: NSObject {
     // MARK: - Properties
     
     private let mobileAds: GADMobileAds
-    private let interstitialAdIntervalTracker: SwiftyAdsIntervalTrackerType
-    private let rewardedInterstitialAdIntervalTracker: SwiftyAdsIntervalTrackerType
     
     private var configuration: SwiftyAdsConfiguration?
     private var environment: SwiftyAdsEnvironment?
@@ -68,8 +66,6 @@ public final class SwiftyAds: NSObject {
     
     private override init() {
         mobileAds = .sharedInstance()
-        interstitialAdIntervalTracker = SwiftyAdsIntervalTracker()
-        rewardedInterstitialAdIntervalTracker = SwiftyAdsIntervalTracker()
         super.init()
     }
 }
@@ -284,12 +280,10 @@ extension SwiftyAds: SwiftyAdsType {
     /// Show interstitial ad
     ///
     /// - parameter viewController: The view controller that will present the ad.
-    /// - parameter interval: The interval of when to show the ad, e.g every 4th time the method is called. Set to nil to always show.
     /// - parameter onOpen: An optional callback when the ad was presented.
     /// - parameter onClose: An optional callback when the ad was dismissed.
     /// - parameter onError: An optional callback when an error has occurred.
     public func showInterstitialAd(from viewController: UIViewController,
-                                   afterInterval interval: Int?,
                                    onOpen: (() -> Void)?,
                                    onClose: (() -> Void)?,
                                    onError: ((Error) -> Void)?) {
@@ -303,10 +297,6 @@ extension SwiftyAds: SwiftyAdsType {
         guard hasConsent else {
             onError?(SwiftyAdsError.consentNotObtained)
             return
-        }
-        
-        if let interval = interval {
-            guard interstitialAdIntervalTracker.canShow(forInterval: interval) else { return }
         }
         
         interstitialAd?.show(
@@ -359,7 +349,6 @@ extension SwiftyAds: SwiftyAdsType {
     /// Show rewarded interstitial ad
     ///
     /// - parameter viewController: The view controller that will present the ad.
-    /// - parameter interval: The interval of when to show the ad, e.g every 4th time the method is called. Set to nil to always show.
     /// - parameter onOpen: An optional callback when the ad was presented.
     /// - parameter onClose: An optional callback when the ad was dismissed.
     /// - parameter onError: An optional callback when an error has occurred.
@@ -370,7 +359,6 @@ extension SwiftyAds: SwiftyAdsType {
     /// and an option to skip the ad before it starts.
     /// https://support.google.com/admob/answer/9884467
     public func showRewardedInterstitialAd(from viewController: UIViewController,
-                                           afterInterval interval: Int?,
                                            onOpen: (() -> Void)?,
                                            onClose: (() -> Void)?,
                                            onError: ((Error) -> Void)?,
@@ -385,10 +373,6 @@ extension SwiftyAds: SwiftyAdsType {
         guard hasConsent else {
             onError?(SwiftyAdsError.consentNotObtained)
             return
-        }
-        
-        if let interval = interval {
-            guard rewardedInterstitialAdIntervalTracker.canShow(forInterval: interval) else { return }
         }
 
         rewardedInterstitialAd?.show(
