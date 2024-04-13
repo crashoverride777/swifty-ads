@@ -76,7 +76,7 @@ Alternatively you can copy the `Sources` folder and its containing files into yo
 
 ### Add SwiftyAds.plist
 
-Download the [template](../SwiftyAds.plist) plist and add it to your projects main bundle. Enter your required ad unit ids.
+Download the [template](Sources/Resources/Templates/SwiftyAds.plist) plist and add it to your projects main bundle. Enter your required ad unit ids.
 
 - bannerAdUnitId (String)
 - interstitialAdUnitId (String)
@@ -87,7 +87,7 @@ Download the [template](../SwiftyAds.plist) plist and add it to your projects ma
 ### Add SwiftyAdsConsent.plist (Optional)
 
 By default SwiftyAds does not carry out any consent validation (COPPA or GDPR). 
-To enable consent validation using the User Messaging Platform (UMP) SDK, download the [template](../SwiftyAdsConsent.plist) plist and add it to your projects bundle. Enter your required values.
+To enable consent validation using the User Messaging Platform (UMP) SDK, download the [template](Sources/Resources/Templates/SwiftyAdsConsent.plist) plist and add it to your projects bundle. Enter your required values.
 
 - isTaggedForChildDirectedTreatment (Boolean) ([COPPA](https://developers.google.com/admob/ios/targeting#child-directed_setting))
 - isTaggedForUnderAgeOfConsent (Boolean) ([GDPR](https://developers.google.com/admob/ios/targeting#users_under_the_age_of_consent))

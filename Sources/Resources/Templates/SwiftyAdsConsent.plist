@@ -3,8 +3,8 @@
 <plist version="1.0">
 <dict>
 	<key>isTaggedForChildDirectedTreatment</key>
-	<true/>
+	<false/>
 	<key>isTaggedForUnderAgeOfConsent</key>
-	<true/>
+	<false/>
 </dict>
 </plist>
