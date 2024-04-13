@@ -22,7 +22,7 @@
 
 import Foundation
 
-public struct SwiftyAdsConfiguration: Decodable, Equatable {
+struct SwiftyAdsConfiguration: Decodable, Equatable {
     let bannerAdUnitId: String?
     let interstitialAdUnitId: String?
     let rewardedAdUnitId: String?
@@ -50,7 +50,7 @@ extension SwiftyAdsConfiguration {
 
 // MARK: - Consent
 
-public struct SwiftyAdsConsentConfiguration: Decodable, Equatable {
+struct SwiftyAdsConsentConfiguration: Decodable, Equatable {
     /// COPPA
     let isTaggedForChildDirectedTreatment: Bool
     /// GDPR

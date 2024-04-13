@@ -33,7 +33,7 @@ Present the form.
 Provide a way for users to change their consent.
 */
 
-public protocol SwiftyAdsConsentManagerType: AnyObject {
+protocol SwiftyAdsConsentManagerType: AnyObject {
     var consentStatus: SwiftyAdsConsentStatus { get }
     var isTaggedForChildDirectedTreatment: Bool { get }
     var isTaggedForUnderAgeOfConsent: Bool { get }
@@ -41,7 +41,7 @@ public protocol SwiftyAdsConsentManagerType: AnyObject {
     func request(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
 }
 
-public final class SwiftyAdsConsentManager {
+final class SwiftyAdsConsentManager {
 
     // MARK: - Properties
 
@@ -56,11 +56,11 @@ public final class SwiftyAdsConsentManager {
 
     // MARK: - Initialization
 
-    public init(configuration: SwiftyAdsConsentConfiguration,
-                environment: SwiftyAdsEnvironment,
-                mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
-                mobileAds: GADMobileAds,
-                consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void) {
+    init(configuration: SwiftyAdsConsentConfiguration,
+         environment: SwiftyAdsEnvironment,
+         mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
+         mobileAds: GADMobileAds,
+         consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void) {
         self.consentInformation = .sharedInstance
         self.configuration = configuration
         self.environment = environment
@@ -73,19 +73,19 @@ public final class SwiftyAdsConsentManager {
 // MARK: - SwiftyAdsConsentManagerType
 
 extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
-    public var consentStatus: SwiftyAdsConsentStatus {
+    var consentStatus: SwiftyAdsConsentStatus {
         consentInformation.consentStatus
     }
     
-    public var isTaggedForChildDirectedTreatment: Bool {
+    var isTaggedForChildDirectedTreatment: Bool {
         configuration.isTaggedForChildDirectedTreatment
     }
 
-    public var isTaggedForUnderAgeOfConsent: Bool {
+    var isTaggedForUnderAgeOfConsent: Bool {
         configuration.isTaggedForUnderAgeOfConsent
     }
 
-    public func start(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
+    func start(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
         startInitialConsentRequest(from: viewController) { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -106,7 +106,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
         }
     }
     
-    public func request(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
+    func request(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
         DispatchQueue.main.async {
             self.requestUpdate { [weak self] result in
                 guard let self = self else { return }

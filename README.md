@@ -1,4 +1,4 @@
-[![Swift 5.6](https://img.shields.io/badge/swift-5.6-ED523F.svg?style=flat)](https://swift.org/download/)
+[![Swift 5.8](https://img.shields.io/badge/swift-5.8-ED523F.svg?style=flat)](https://swift.org/download/)
 [![Platform](https://img.shields.io/cocoapods/p/SwiftyAds.svg?style=flat)]()
 [![SPM supported](https://img.shields.io/badge/SPM-supported-DE5C43.svg?style=flat)](https://swift.org/package-manager)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/SwiftyAds.svg)](https://img.shields.io/cocoapods/v/SwiftyAds.svg)
