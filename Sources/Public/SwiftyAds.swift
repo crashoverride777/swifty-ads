@@ -180,6 +180,7 @@ extension SwiftyAds: SwiftyAdsType {
                 self?.consentStatusDidChange?(status)
             }
         )
+        self.consentManager = consentManager
         consentManager.start(from: viewController) { [weak self] result in
             guard let self = self else { return }
             switch result {
