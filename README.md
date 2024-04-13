@@ -47,7 +47,7 @@ Than enter `https://github.com/crashoverride777/swifty-ads.git` as the repositor
 Alternatively if you have another swift package that requires `SwiftyAds` as a dependency it is as easy as adding it to the dependencies value of your Package.swift.
 ```swift
 dependencies: [
-.package(url: "https://github.com/crashoverride777/swifty-ads.git", from: "14.0.0")
+.package(url: "https://github.com/crashoverride777/swifty-ads.git", from: "16.0.0")
 ]
 ```
 
@@ -186,36 +186,12 @@ private func configureSwiftyAds(from viewController: UIViewController) {
         for: environment,
         requestBuilder: SwiftyAdsRequestBuilder(),
         mediationConfigurator: SwiftyAdsMediationConfigurator(), // set to nil if no mediation is required
-        consentStatusDidChange: { status in
-            print("The consent status has changed")
-        },
-        completion: { result in
-            switch result {
-            case .success(let consentStatus):
-                print("Configure successful")
-                // Ads will preload and sohuld be ready for displaying
-            case .failure(let error):
-                print("Setup error: \(error)")
-            }
+        bundlePlist: .main,
+        completion: {
+            print("Configure successful")
+            // Ads should be ready for displaying
         }
     )
-}
-```
-
-NOTE: If you do not use the Google UMP SDK to display the iOS 14 App Tracking Transparency (ATT) alert, it is recommended to ask for permission before configuring SwiftyAds. 
-
-```swift
-func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    if let rootViewController = window?.rootViewController {
-        if  #available(iOS 14, *)  {
-            ATTrackingManager.requestTrackingAuthorization { status in
-                self.configureSwiftyAds(from: rootViewController)
-            }
-        } else {
-            configureSwiftyAds(from: rootViewController)
-        }
-    }
-    return true
 }
 ```
 

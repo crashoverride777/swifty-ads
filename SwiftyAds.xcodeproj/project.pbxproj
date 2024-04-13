@@ -66,14 +66,14 @@
 		6A68A75C23FF69840030374F /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				6AAD6A10240BEC98001F4A7D /* SwiftyAdsBanner.swift */,
 				6AAD6A11240BEC98001F4A7D /* SwiftyAdsConfigurations.swift */,
 				6A692C2C25C4823D0021FB2C /* SwiftyAdsConsentManager.swift */,
-				6AAD6A0E240BEC98001F4A7D /* SwiftyAdsIntervalTracker.swift */,
-				6AAD6A10240BEC98001F4A7D /* SwiftyAdsBanner.swift */,
 				6AAD6A0F240BEC98001F4A7D /* SwiftyAdsInterstitial.swift */,
+				6AAD6A0E240BEC98001F4A7D /* SwiftyAdsIntervalTracker.swift */,
+				6A864BC325900E75005D0789 /* SwiftyAdsNative.swift */,
 				6AAD6A0B240BEC98001F4A7D /* SwiftyAdsRewarded.swift */,
 				6A8A00A325EBDE6E00A846BE /* SwiftyAdsRewardedInterstitial.swift */,
-				6A864BC325900E75005D0789 /* SwiftyAdsNative.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
