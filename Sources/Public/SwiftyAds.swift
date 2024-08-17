@@ -144,28 +144,54 @@ extension SwiftyAds: SwiftyAdsType {
         
         // Create ads
         if let interstitialAdUnitId = configuration.interstitialAdUnitId {
-            interstitialAd = SwiftyAdsInterstitial(environment: environment, adUnitId: interstitialAdUnitId, request: requestBuilder.build)
+            interstitialAd = SwiftyAdsInterstitial(
+                adUnitId: interstitialAdUnitId,
+                request: requestBuilder.build,
+                environment: { [weak self] in
+                    self?.environment ?? .production
+                }
+            )
         }
 
         if let rewardedAdUnitId = configuration.rewardedAdUnitId {
-            rewardedAd = SwiftyAdsRewarded(environment: environment, adUnitId: rewardedAdUnitId, request: requestBuilder.build)
+            rewardedAd = SwiftyAdsRewarded(
+                adUnitId: rewardedAdUnitId,
+                request: requestBuilder.build,
+                environment: { [weak self] in
+                    self?.environment ?? .production
+                }
+            )
         }
 
         if let rewardedInterstitialAdUnitId = configuration.rewardedInterstitialAdUnitId {
-            rewardedInterstitialAd = SwiftyAdsRewardedInterstitial(environment: environment, adUnitId: rewardedInterstitialAdUnitId, request: requestBuilder.build)
+            rewardedInterstitialAd = SwiftyAdsRewardedInterstitial(
+                adUnitId: rewardedInterstitialAdUnitId,
+                request: requestBuilder.build,
+                environment: { [weak self] in
+                    self?.environment ?? .production
+                }
+            )
         }
 
         if let nativeAdUnitId = configuration.nativeAdUnitId {
-            nativeAd = SwiftyAdsNative(environment: environment, adUnitId: nativeAdUnitId, request: requestBuilder.build)
+            nativeAd = SwiftyAdsNative(
+                adUnitId: nativeAdUnitId,
+                request: requestBuilder.build,
+                environment: { [weak self] in
+                    self?.environment ?? .production
+                }
+            )
         }
         
         // Create consent manager.
         if let consentConfiguration {
             consentManager = SwiftyAdsConsentManager(
                 configuration: consentConfiguration,
-                environment: environment,
                 mediationConfigurator: mediationConfigurator,
                 mobileAds: mobileAds,
+                environment: { [weak self] in
+                    self?.environment ?? .production
+                },
                 consentStatusDidChange: { [weak self] status in
                     self?.consentStatusDidChange?(status)
                 }
@@ -253,7 +279,6 @@ extension SwiftyAds: SwiftyAdsType {
         }
 
         let bannerAd = SwiftyAdsBanner(
-            environment: environment,
             isDisabled: { [weak self] in
                 self?.isDisabled ?? false
             },
@@ -262,6 +287,9 @@ extension SwiftyAds: SwiftyAdsType {
             },
             request: { [weak self] in
                 self?.requestBuilder?.build() ?? GADRequest()
+            },
+            environment: { [weak self] in
+                self?.environment ?? .production
             }
         )
 
@@ -419,10 +447,12 @@ extension SwiftyAds: SwiftyAdsType {
 
         if nativeAd == nil, case .custom(let adUnitId) = adUnitIdType {
             nativeAd = SwiftyAdsNative(
-                environment: environment,
                 adUnitId: adUnitId,
                 request: { [weak self] in
                     self?.requestBuilder?.build() ?? GADRequest()
+                },
+                environment: { [weak self] in
+                    self?.environment ?? .production
                 }
             )
         }

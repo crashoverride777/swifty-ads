@@ -33,11 +33,11 @@ final class SwiftyAdsBanner: NSObject {
     
     // MARK: - Properties
 
-    private let environment: SwiftyAdsEnvironment
     private let isDisabled: () -> Bool
     private let hasConsent: () -> Bool
     private let request: () -> GADRequest
-
+    private let environment: () -> SwiftyAdsEnvironment
+    
     private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
     private var onError: ((Error) -> Void)?
@@ -53,14 +53,14 @@ final class SwiftyAdsBanner: NSObject {
     
     // MARK: - Initialization
     
-    init(environment: SwiftyAdsEnvironment,
-         isDisabled: @escaping () -> Bool,
+    init(isDisabled: @escaping () -> Bool,
          hasConsent: @escaping () -> Bool,
-         request: @escaping () -> GADRequest) {
-        self.environment = environment
+         request: @escaping () -> GADRequest,
+         environment: @escaping () -> SwiftyAdsEnvironment) {
         self.isDisabled = isDisabled
         self.hasConsent = hasConsent
         self.request = request
+        self.environment = environment
         super.init()
     }
 
@@ -162,14 +162,14 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
 extension SwiftyAdsBanner: GADBannerViewDelegate {
     // Request lifecycle events
     func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
-        if case .development = environment {
+        if case .development = environment() {
             print("SwiftyAdsBanner did record impression for banner ad")
         }
     }
     
     func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
         show(bannerView, from: bannerView.rootViewController)
-        if case .development = environment {
+        if case .development = environment() {
             print("SwiftyAdsBanner did receive ad from: \(bannerView.responseInfo?.loadedAdNetworkResponseInfo?.adNetworkClassName ?? "not found")")
         }
     }

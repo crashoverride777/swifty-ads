@@ -37,10 +37,10 @@ final class SwiftyAdsNative: NSObject {
 
     // MARK: - Properties
 
-    private let environment: SwiftyAdsEnvironment
     private let adUnitId: String
     private let request: () -> GADRequest
-
+    private let environment: () -> SwiftyAdsEnvironment
+    
     private var onFinishLoading: (() -> Void)?
     private var onError: ((Error) -> Void)?
     private var onReceive: ((GADNativeAd) -> Void)?
@@ -49,10 +49,10 @@ final class SwiftyAdsNative: NSObject {
     
     // MARK: - Initialization
 
-    init(environment: SwiftyAdsEnvironment, adUnitId: String, request: @escaping () -> GADRequest) {
-        self.environment = environment
+    init(adUnitId: String, request: @escaping () -> GADRequest, environment: @escaping () -> SwiftyAdsEnvironment) {
         self.adUnitId = adUnitId
         self.request = request
+        self.environment = environment
     }
 }
 
@@ -69,7 +69,7 @@ extension SwiftyAdsNative: SwiftyAdsNativeType {
         self.onFinishLoading = onFinishLoading
         self.onError = onError
         self.onReceive = onReceive
-
+        
         // If AdLoader is already loading we should not make another request
         if let adLoader = adLoader, adLoader.isLoading { return }
 
@@ -87,7 +87,7 @@ extension SwiftyAdsNative: SwiftyAdsNativeType {
 
         // Set the ad unit id
         var adUnitId: String {
-            if case .development = environment {
+            if case .development = environment() {
                 return self.adUnitId
             }
             switch adUnitIdType {

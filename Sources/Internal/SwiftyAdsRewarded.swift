@@ -37,9 +37,9 @@ final class SwiftyAdsRewarded: NSObject {
 
     // MARK: - Properties
 
-    private let environment: SwiftyAdsEnvironment
     private let adUnitId: String
     private let request: () -> GADRequest
+    private let environment: () -> SwiftyAdsEnvironment
     
     private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
@@ -49,10 +49,10 @@ final class SwiftyAdsRewarded: NSObject {
     
     // MARK: - Initialization
     
-    init(environment: SwiftyAdsEnvironment, adUnitId: String, request: @escaping () -> GADRequest) {
-        self.environment = environment
+    init(adUnitId: String, request: @escaping () -> GADRequest, environment: @escaping () -> SwiftyAdsEnvironment) {
         self.adUnitId = adUnitId
         self.request = request
+        self.environment = environment
     }
 }
 
@@ -114,7 +114,7 @@ extension SwiftyAdsRewarded: SwiftyAdsRewardedType {
 
 extension SwiftyAdsRewarded: GADFullScreenContentDelegate {
     func adDidRecordImpression(_ ad: GADFullScreenPresentingAd) {
-        if case .development = environment {
+        if case .development = environment() {
             print("SwiftyAdsRewarded did record impression for ad: \(ad)")
         }
     }

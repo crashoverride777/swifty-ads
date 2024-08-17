@@ -158,7 +158,7 @@ Create a configure method and call it as soon as your app launches e.g. AppDeleg
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     if let rootViewController = window?.rootViewController {
-        Task { await self.configureAndInitializeSwiftyAds(from: rootViewController) }
+        configureAndInitializeSwiftyAds(from: rootViewController)
     }
     return true
 }
@@ -167,21 +167,22 @@ private func configureAndInitializeSwiftyAds(from viewController: UIViewControll
     let swiftyAds: SwiftyAds = .shared
     
     #if DEBUG
-    swiftyAds.enableDebug(testDeviceIdentifiers: [], geography: .EEA, resetsConsentOnLaunch: true)
+    swiftyAds.enableDebug(testDeviceIdentifiers: [], geography: .EEA, resetsConsentOnLaunch: false)
     #endif
     
-    // Configure
     swiftyAds.configure(
         requestBuilder: SwiftyAdsRequestBuilder(),
         mediationConfigurator: SwiftyAdsMediationConfigurator(), // set to nil if no mediation is required
         bundle: .main, // looks for SwiftyAds.plist/SwiftyAdsConsent.plist
     )
     
-    // Initialize.
-    do {
-        try await swiftyAds.initializeIfNeeded(from: viewController)
-    } catch {
-        // Some error occured e.g. offline
+    Task {
+        do {
+            try await swiftyAds.initializeIfNeeded(from: viewController)
+        } catch {
+            // Some error occured e.g. offline
+        }
+    }
 }
 ```
 
