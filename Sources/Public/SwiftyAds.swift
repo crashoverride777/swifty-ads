@@ -450,7 +450,28 @@ extension SwiftyAds: SwiftyAdsType {
             rewardedInterstitialAd?.stopLoading()
             nativeAd?.stopLoading()
         } else {
-            loadAds()
+            loadAdsIfNeeded()
+        }
+    }
+    
+    // MARK: Load Ads If Needed
+    
+    /// Preloads ads if needed e.g. offline/online changes.
+    public func loadAdsIfNeeded() {
+        if let rewardedAd, !rewardedAd.isReady {
+            rewardedAd.load()
+        }
+        
+        guard !isDisabled else {
+            return
+        }
+        
+        if let interstitialAd, !interstitialAd.isReady {
+            interstitialAd.load()
+        }
+        
+        if let rewardedInterstitialAd, !rewardedInterstitialAd.isReady {
+            rewardedInterstitialAd.load()
         }
     }
     
@@ -495,15 +516,8 @@ private extension SwiftyAds {
             if case .development = self.environment {
                 print("SwiftyAds initialization status", initializationStatus.adapterStatusesByClassName)
             }
-            self.loadAds()
+            self.loadAdsIfNeeded()
             completion(.success(()))
         }
-    }
-    
-    func loadAds() {
-        rewardedAd?.load()
-        guard !isDisabled else { return }
-        interstitialAd?.load()
-        rewardedInterstitialAd?.load()
     }
 }

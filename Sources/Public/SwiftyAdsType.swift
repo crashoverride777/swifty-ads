@@ -102,6 +102,7 @@ public protocol SwiftyAdsType: AnyObject {
                       onError: ((Error) -> Void)?,
                       onReceive: @escaping (GADNativeAd) -> Void)
     func setDisabled(_ isDisabled: Bool)
+    func loadAdsIfNeeded()
     func observeConsentStatus(onStatusChange: @escaping (SwiftyAdsConsentStatus) -> Void)
     func askForConsent(from viewController: UIViewController, completion: @escaping SwiftyAdsConsentResultHandler)
 }
