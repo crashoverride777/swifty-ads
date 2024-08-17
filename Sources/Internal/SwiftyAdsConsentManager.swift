@@ -110,13 +110,12 @@ private extension SwiftyAdsConsentManager {
         switch environment {
         case .production:
             break
-        case .development(let testDeviceIdentifiers, let consentConfiguration):
+        case .development(let testDeviceIdentifiers, let geography, let resetsConsentOnLaunch):
             let debugSettings = UMPDebugSettings()
             debugSettings.testDeviceIdentifiers = testDeviceIdentifiers
-            debugSettings.geography = consentConfiguration.geography
+            debugSettings.geography = geography
             parameters.debugSettings = debugSettings
-            
-            if case .resetOnLaunch = consentConfiguration {
+            if resetsConsentOnLaunch {
                 consentInformation.reset()
             }
         }

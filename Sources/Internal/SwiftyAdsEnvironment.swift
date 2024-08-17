@@ -23,23 +23,7 @@
 import Foundation
 import UserMessagingPlatform
 
-public enum SwiftyAdsEnvironment {
+enum SwiftyAdsEnvironment {
     case production
-    case development(testDeviceIdentifiers: [String], consentConfiguration: ConsentConfiguration)
-
-    public enum ConsentConfiguration {
-        public typealias Geography = UMPDebugGeography
-
-        // Default consent settings
-        case `default`(geography: Geography)
-        // Resets consent info every time app is launched
-        case resetOnLaunch(geography: Geography)
-
-        public var geography: Geography {
-            switch self {
-            case .default(let geography), .resetOnLaunch(let geography):
-                return geography
-            }
-        }
-    }
+    case development(testDeviceIdentifiers: [String], geography: UMPDebugGeography, resetsConsentOnLaunch: Bool)
 }

@@ -63,8 +63,7 @@ public protocol SwiftyAdsType: AnyObject {
     var isRewardedAdReady: Bool { get }
     var isRewardedInterstitialAdReady: Bool { get }
     var isDisabled: Bool { get }
-    func configure(for environment: SwiftyAdsEnvironment,
-                   requestBuilder: SwiftyAdsRequestBuilderType,
+    func configure(requestBuilder: SwiftyAdsRequestBuilderType,
                    mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
                    bundle: Bundle)
     func initializeIfNeeded(from viewController: UIViewController) async throws
@@ -103,4 +102,7 @@ public protocol SwiftyAdsType: AnyObject {
     func loadAdsIfNeeded()
     func observeConsentStatus(onStatusChange: @escaping (SwiftyAdsConsentStatus) -> Void)
     func askForConsent(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus
+    #if DEBUG
+    func enableDebug(testDeviceIdentifiers: [String], geography: UMPDebugGeography, resetsConsentOnLaunch: Bool)
+    #endif
 }

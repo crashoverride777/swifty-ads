@@ -164,16 +164,14 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 }
 
 private func configureAndInitializeSwiftyAds(from viewController: UIViewController) async {
+    let swiftyAds: SwiftyAds = .shared
+    
     #if DEBUG
-    let environment: SwiftyAdsEnvironment = .development(testDeviceIdentifiers: [], consentConfiguration: .resetOnLaunch(geography: .EEA))
-    #else
-    let environment: SwiftyAdsEnvironment = .production
+    swiftyAds.enableDebug(testDeviceIdentifiers: [], geography: .EEA, resetsConsentOnLaunch: true)
     #endif
     
     // Configure
-    let swiftyAds: SwiftyAds = .shared
     swiftyAds.configure(
-        for: environment,
         requestBuilder: SwiftyAdsRequestBuilder(),
         mediationConfigurator: SwiftyAdsMediationConfigurator(), // set to nil if no mediation is required
         bundle: .main, // looks for SwiftyAds.plist/SwiftyAdsConsent.plist

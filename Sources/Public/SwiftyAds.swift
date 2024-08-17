@@ -40,9 +40,9 @@ public final class SwiftyAds: NSObject {
     private let mobileAds: GADMobileAds
     
     private var configuration: SwiftyAdsConfiguration?
-    private var environment: SwiftyAdsEnvironment?
     private var requestBuilder: SwiftyAdsRequestBuilderType?
     private var mediationConfigurator: SwiftyAdsMediationConfiguratorType?
+    private var environment: SwiftyAdsEnvironment = .production
     
     private var interstitialAd: SwiftyAdsInterstitialType?
     private var rewardedAd: SwiftyAdsRewardedType?
@@ -116,15 +116,13 @@ extension SwiftyAds: SwiftyAdsType {
     
     /// Configure SwiftyAds
     ///
-    /// - parameter environment: The environment for ads to be displayed.
     /// - parameter requestBuilder: The GADRequest builder.
     /// - parameter mediationConfigurator: Optional configurator to update mediation networks..
     /// - parameter bundle: The bundle to search for the SwiftyAds plist's files. Defaults to main bundle.
     ///
     /// - Warning:
     /// Returns .notRequired in the completion handler if consent has been disabled via SwiftyAds.plist isUMPDisabled entry.
-    public func configure(for environment: SwiftyAdsEnvironment,
-                          requestBuilder: SwiftyAdsRequestBuilderType,
+    public func configure(requestBuilder: SwiftyAdsRequestBuilderType,
                           mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
                           bundle: Bundle = .main) {
         // Update configuration for selected environment
@@ -134,14 +132,13 @@ extension SwiftyAds: SwiftyAdsType {
         case .production:
             configuration = .production(bundle: bundle)
             consentConfiguration = .production(bundle: bundle)
-        case .development(let testDeviceIdentifiers, _):
+        case .development(let testDeviceIdentifiers, _, _):
             configuration = .debug
             consentConfiguration = .debug
             mobileAds.requestConfiguration.testDeviceIdentifiers = testDeviceIdentifiers
         }
         
         self.configuration = configuration
-        self.environment = environment
         self.requestBuilder = requestBuilder
         self.mediationConfigurator = mediationConfigurator
         
@@ -228,7 +225,7 @@ extension SwiftyAds: SwiftyAdsType {
                              onDidDismissScreen: (() -> Void)?) -> SwiftyAdsBannerType? {
         guard !isDisabled else { return nil }
         
-        guard let configuration = configuration, let environment = environment else {
+        guard let configuration = configuration else {
             onError?(SwiftyAdsError.notConfigured)
             return nil
         }
@@ -298,7 +295,7 @@ extension SwiftyAds: SwiftyAdsType {
                                    onError: ((Error) -> Void)?) {
         guard !isDisabled else { return }
         
-        guard environment != nil else {
+        guard let interstitialAd else {
             onError?(SwiftyAdsError.notConfigured)
             return
         }
@@ -308,7 +305,7 @@ extension SwiftyAds: SwiftyAdsType {
             return
         }
         
-        interstitialAd?.show(
+        interstitialAd.show(
             from: viewController,
             onOpen: onOpen,
             onClose: onClose,
@@ -335,7 +332,7 @@ extension SwiftyAds: SwiftyAdsType {
                                onError: ((Error) -> Void)?,
                                onNotReady: (() -> Void)?,
                                onReward: @escaping (NSDecimalNumber) -> Void) {
-        guard environment != nil else {
+        guard let rewardedAd else {
             onError?(SwiftyAdsError.notConfigured)
             return
         }
@@ -345,7 +342,7 @@ extension SwiftyAds: SwiftyAdsType {
             return
         }
 
-        rewardedAd?.show(
+        rewardedAd.show(
             from: viewController,
             onOpen: onOpen,
             onClose: onClose,
@@ -374,7 +371,7 @@ extension SwiftyAds: SwiftyAdsType {
                                            onReward: @escaping (NSDecimalNumber) -> Void) {
         guard !isDisabled else { return }
         
-        guard environment != nil else {
+        guard let rewardedInterstitialAd else {
             onError?(SwiftyAdsError.notConfigured)
             return
         }
@@ -384,7 +381,7 @@ extension SwiftyAds: SwiftyAdsType {
             return
         }
 
-        rewardedInterstitialAd?.show(
+        rewardedInterstitialAd.show(
             from: viewController,
             onOpen: onOpen,
             onClose: onClose,
@@ -415,11 +412,6 @@ extension SwiftyAds: SwiftyAdsType {
                              onReceive: @escaping (GADNativeAd) -> Void) {
         guard !isDisabled else { return }
         
-        guard let environment = environment else {
-            onError?(SwiftyAdsError.notConfigured)
-            return
-        }
-
         guard hasConsent else {
             onError?(SwiftyAdsError.consentNotObtained)
             return
@@ -503,4 +495,17 @@ extension SwiftyAds: SwiftyAdsType {
         
         return try await consentManager.request(from: viewController)
     }
+    
+    // MARK: - DEBUG
+    
+    #if DEBUG
+    /// Enable debugging. Should be called before `configure`.
+    public func enableDebug(testDeviceIdentifiers: [String], geography: UMPDebugGeography, resetsConsentOnLaunch: Bool) {
+        environment = .development(
+            testDeviceIdentifiers: testDeviceIdentifiers,
+            geography: geography,
+            resetsConsentOnLaunch: resetsConsentOnLaunch
+        )
+    }
+    #endif
 }
