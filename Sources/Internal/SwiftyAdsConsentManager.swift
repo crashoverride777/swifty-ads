@@ -132,13 +132,22 @@ private extension SwiftyAdsConsentManager {
         
         // The consent information state was updated and we can now check if a form is available.
         if consentInformation.formStatus == .available {
-            try await loadConsentForm()
+            form = try await loadConsentForm()
         }
     }
     
-    @MainActor
-    func loadConsentForm() async throws {
-        form = try await UMPConsentForm.load()
+    func loadConsentForm() async throws -> UMPConsentForm? {
+        try await withCheckedThrowingContinuation { continuation in
+            DispatchQueue.main.async {
+                UMPConsentForm.load() { form, error in
+                    if let error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    continuation.resume(returning: form)
+                }
+            }
+        }
     }
     
     func showForm(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus {
