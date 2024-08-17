@@ -102,11 +102,10 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
 // MARK: - Private Methods
 
 private extension SwiftyAdsConsentManager {
-    @MainActor
     func requestUpdate() async throws {
         // Create a UMPRequestParameters object.
         let parameters = UMPRequestParameters()
-
+        
         // Set UMPDebugSettings if in development environment.
         switch environment {
         case .production:
@@ -116,7 +115,7 @@ private extension SwiftyAdsConsentManager {
             debugSettings.testDeviceIdentifiers = testDeviceIdentifiers
             debugSettings.geography = consentConfiguration.geography
             parameters.debugSettings = debugSettings
-
+            
             if case .resetOnLaunch = consentConfiguration {
                 consentInformation.reset()
             }
@@ -124,7 +123,7 @@ private extension SwiftyAdsConsentManager {
         
         // Update parameters for under age of consent.
         parameters.tagForUnderAgeOfConsent = isTaggedForUnderAgeOfConsent
-
+        
         // Request an update to the consent information.
         // The first time we request consent information, even if outside of EEA, the status
         // may return `.required` as the ATT alert has not yet been displayed and we are using
@@ -133,8 +132,13 @@ private extension SwiftyAdsConsentManager {
         
         // The consent information state was updated and we can now check if a form is available.
         if consentInformation.formStatus == .available {
-            form = try await UMPConsentForm.load()
+            try await loadConsentForm()
         }
+    }
+    
+    @MainActor
+    func loadConsentForm() async throws {
+        form = try await UMPConsentForm.load()
     }
     
     func showForm(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus {
