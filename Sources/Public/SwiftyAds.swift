@@ -182,7 +182,7 @@ extension SwiftyAds: SwiftyAdsType {
     }
     
     /// Finish configuring if needed
-    func finishConfigurationIfNeeded(from viewController: UIViewController) async throws {
+    public func finishConfigurationIfNeeded(from viewController: UIViewController) async throws {
         guard !hasInitializedMobileAds else { return }
         
         if let consentManager {

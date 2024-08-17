@@ -68,6 +68,7 @@ public protocol SwiftyAdsType: AnyObject {
                    requestBuilder: SwiftyAdsRequestBuilderType,
                    mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
                    bundle: Bundle) async throws
+    func finishConfigurationIfNeeded(from viewController: UIViewController) async throws
     func makeBannerAd(in viewController: UIViewController,
                       adUnitIdType: SwiftyAdsAdUnitIdType,
                       position: SwiftyAdsBannerAdPosition,
