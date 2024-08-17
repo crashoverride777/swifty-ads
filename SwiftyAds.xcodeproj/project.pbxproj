@@ -68,6 +68,7 @@
 				6AAD6A11240BEC98001F4A7D /* SwiftyAdsConfigurations.swift */,
 				6A692C2C25C4823D0021FB2C /* SwiftyAdsConsentManager.swift */,
 				6AAD6A0F240BEC98001F4A7D /* SwiftyAdsInterstitial.swift */,
+				B4B6EB3928200A2A0041E9E4 /* SwiftyAdsEnvironment.swift */,
 				6A864BC325900E75005D0789 /* SwiftyAdsNative.swift */,
 				6AAD6A0B240BEC98001F4A7D /* SwiftyAdsRewarded.swift */,
 				6A8A00A325EBDE6E00A846BE /* SwiftyAdsRewardedInterstitial.swift */,
@@ -80,7 +81,6 @@
 			children = (
 				6AE482F22294B7660063B22F /* SwiftyAds.swift */,
 				6A3C586B25D82B0F00047F9A /* SwiftyAdsBannerType.swift */,
-				B4B6EB3928200A2A0041E9E4 /* SwiftyAdsEnvironment.swift */,
 				6AEB370225E2DA3600AFA313 /* SwiftyAdsError.swift */,
 				6AEB36F325E2C9D200AFA313 /* SwiftyAdsType.swift */,
 			);
