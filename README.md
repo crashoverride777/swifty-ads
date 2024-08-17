@@ -437,13 +437,9 @@ Ask for consent again.
 It is required that the user has the option to change their GDPR consent settings, usually via a button in settings. 
 ```swift
 func consentButtonPressed() {
-    SwiftyAds.shared.askForConsent(from: self) { result in
-        switch result {
-        case .success(let status):
-            print("Did change consent status")
-        case .failure(let error):
-            print("Consent status change error \(error)")
-        }
+    Task {
+        let consentStatus = try await SwiftyAds.shared.askForConsent(from: self)
+        print(consentStatus)
     }
 }
 ```
