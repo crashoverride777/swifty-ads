@@ -102,6 +102,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
 // MARK: - Private Methods
 
 private extension SwiftyAdsConsentManager {
+    @MainActor
     func requestUpdate() async throws {
         // Create a UMPRequestParameters object.
         let parameters = UMPRequestParameters()
