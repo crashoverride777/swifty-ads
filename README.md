@@ -398,7 +398,7 @@ NOTE: While prefetching ads is a great technique, it's important that you don't 
 
 ### Load Ads manually
 
-SwiftyAds will automatically load Ads when needed. Ads can also be loaded manually if needed.
+SwiftyAds will automatically load Ads if needed. Ads can also be loaded manually.
 
 ```swift
 SwiftyAds.shared.loadAdsIfNeeded()
