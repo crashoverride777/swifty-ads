@@ -146,40 +146,32 @@ extension SwiftyAds: SwiftyAdsType {
         if let interstitialAdUnitId = configuration.interstitialAdUnitId {
             interstitialAd = SwiftyAdsInterstitial(
                 adUnitId: interstitialAdUnitId,
-                request: requestBuilder.build,
-                environment: { [weak self] in
-                    self?.environment ?? .production
-                }
+                environment: environment,
+                request: requestBuilder.build
             )
         }
 
         if let rewardedAdUnitId = configuration.rewardedAdUnitId {
             rewardedAd = SwiftyAdsRewarded(
                 adUnitId: rewardedAdUnitId,
-                request: requestBuilder.build,
-                environment: { [weak self] in
-                    self?.environment ?? .production
-                }
+                environment: environment,
+                request: requestBuilder.build
             )
         }
 
         if let rewardedInterstitialAdUnitId = configuration.rewardedInterstitialAdUnitId {
             rewardedInterstitialAd = SwiftyAdsRewardedInterstitial(
                 adUnitId: rewardedInterstitialAdUnitId,
-                request: requestBuilder.build,
-                environment: { [weak self] in
-                    self?.environment ?? .production
-                }
+                environment: environment,
+                request: requestBuilder.build
             )
         }
 
         if let nativeAdUnitId = configuration.nativeAdUnitId {
             nativeAd = SwiftyAdsNative(
                 adUnitId: nativeAdUnitId,
-                request: requestBuilder.build,
-                environment: { [weak self] in
-                    self?.environment ?? .production
-                }
+                environment: environment,
+                request: requestBuilder.build
             )
         }
         
@@ -188,10 +180,8 @@ extension SwiftyAds: SwiftyAdsType {
             consentManager = SwiftyAdsConsentManager(
                 configuration: consentConfiguration,
                 mediationConfigurator: mediationConfigurator,
+                environment: environment,
                 mobileAds: mobileAds,
-                environment: { [weak self] in
-                    self?.environment ?? .production
-                },
                 consentStatusDidChange: { [weak self] status in
                     self?.consentStatusDidChange?(status)
                 }
@@ -279,6 +269,7 @@ extension SwiftyAds: SwiftyAdsType {
         }
 
         let bannerAd = SwiftyAdsBanner(
+            environment: environment,
             isDisabled: { [weak self] in
                 self?.isDisabled ?? false
             },
@@ -287,9 +278,6 @@ extension SwiftyAds: SwiftyAdsType {
             },
             request: { [weak self] in
                 self?.requestBuilder?.build() ?? GADRequest()
-            },
-            environment: { [weak self] in
-                self?.environment ?? .production
             }
         )
 
@@ -448,11 +436,9 @@ extension SwiftyAds: SwiftyAdsType {
         if nativeAd == nil, case .custom(let adUnitId) = adUnitIdType {
             nativeAd = SwiftyAdsNative(
                 adUnitId: adUnitId,
+                environment: environment,
                 request: { [weak self] in
                     self?.requestBuilder?.build() ?? GADRequest()
-                },
-                environment: { [weak self] in
-                    self?.environment ?? .production
                 }
             )
         }

@@ -37,8 +37,8 @@ final class SwiftyAdsInterstitial: NSObject {
     // MARK: - Properties
 
     private let adUnitId: String
+    private let environment: SwiftyAdsEnvironment
     private let request: () -> GADRequest
-    private let environment: () -> SwiftyAdsEnvironment
     
     private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
@@ -48,10 +48,10 @@ final class SwiftyAdsInterstitial: NSObject {
     
     // MARK: - Initialization
     
-    init(adUnitId: String, request: @escaping () -> GADRequest, environment: @escaping () -> SwiftyAdsEnvironment) {
+    init(adUnitId: String, environment: SwiftyAdsEnvironment, request: @escaping () -> GADRequest) {
         self.adUnitId = adUnitId
-        self.request = request
         self.environment = environment
+        self.request = request
     }
 }
 
@@ -109,7 +109,7 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
 
 extension SwiftyAdsInterstitial: GADFullScreenContentDelegate {
     func adDidRecordImpression(_ ad: GADFullScreenPresentingAd) {
-        if case .development = environment() {
+        if case .development = environment {
             print("SwiftyAdsInterstitial did record impression for ad: \(ad)")
         }
     }

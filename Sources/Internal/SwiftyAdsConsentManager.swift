@@ -48,8 +48,8 @@ final class SwiftyAdsConsentManager {
     private let consentInformation: UMPConsentInformation
     private let configuration: SwiftyAdsConsentConfiguration
     private let mediationConfigurator: SwiftyAdsMediationConfiguratorType?
+    private let environment: SwiftyAdsEnvironment
     private let mobileAds: GADMobileAds
-    private let environment: () -> SwiftyAdsEnvironment
     private let consentStatusDidChange: (SwiftyAdsConsentStatus) -> Void
 
     private var form: UMPConsentForm?
@@ -58,13 +58,13 @@ final class SwiftyAdsConsentManager {
 
     init(configuration: SwiftyAdsConsentConfiguration,
          mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
+         environment: SwiftyAdsEnvironment,
          mobileAds: GADMobileAds,
-         environment: @escaping () -> SwiftyAdsEnvironment,
          consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void) {
         self.consentInformation = .sharedInstance
         self.configuration = configuration
-        self.environment = environment
         self.mediationConfigurator = mediationConfigurator
+        self.environment = environment
         self.mobileAds = mobileAds
         self.consentStatusDidChange = consentStatusDidChange
         #warning("should maybe be refactored and split with GDPR?. If no consent this never gets called")
@@ -107,7 +107,7 @@ private extension SwiftyAdsConsentManager {
         let parameters = UMPRequestParameters()
         
         // Set UMPDebugSettings if in development environment.
-        switch environment() {
+        switch environment {
         case .production:
             break
         case .development(let testDeviceIdentifiers, let geography, let resetsConsentOnLaunch):
