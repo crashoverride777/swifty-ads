@@ -37,8 +37,8 @@ protocol SwiftyAdsConsentManagerType: AnyObject {
     var consentStatus: SwiftyAdsConsentStatus { get }
     var isTaggedForChildDirectedTreatment: Bool { get }
     var isTaggedForUnderAgeOfConsent: Bool { get }
-    func start(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
-    func request(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void)
+    @discardableResult
+    func request(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus
 }
 
 final class SwiftyAdsConsentManager {
@@ -67,6 +67,8 @@ final class SwiftyAdsConsentManager {
         self.mediationConfigurator = mediationConfigurator
         self.mobileAds = mobileAds
         self.consentStatusDidChange = consentStatusDidChange
+        
+        updateCOPPA()
     }
 }
 
@@ -84,79 +86,23 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
     var isTaggedForUnderAgeOfConsent: Bool {
         configuration.isTaggedForUnderAgeOfConsent
     }
-
-    func start(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
-        startInitialConsentRequest(from: viewController) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let consentStatus):
-                /// Once initial consent flow has finished we need to update COPPA settings.
-                self.updateCOPPA()
-                
-                /// Once initial consent flow has finished and consentStatus is not `.notRequired`
-                /// we need to update GDPR settings.
-                if consentStatus != .notRequired {
-                    self.updateGDPR(consentStatus: consentStatus)
-                }
-                
-                completion(result)
-            case .failure:
-                completion(result)
-            }
-        }
-    }
     
-    func request(from viewController: UIViewController, completion: @escaping (Result<SwiftyAdsConsentStatus, Error>) -> Void) {
-        DispatchQueue.main.async {
-            self.requestUpdate { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .success:
-                    DispatchQueue.main.async {
-                        self.showForm(from: viewController) { [weak self] result in
-                            guard let self = self else { return }
-                            // If consent form was used to update consentStatus
-                            // we need to update GDPR settings
-                            if case .success(let newConsentStatus) = result {
-                                self.updateGDPR(consentStatus: newConsentStatus)
-                            }
-                            
-                            completion(result)
-                        }
-                    }
-                case .failure:
-                    completion(result)
-                }
-            }
+    @discardableResult
+    func request(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus {
+        try await requestUpdate()
+        let consentStatus = try await showForm(from: viewController)
+        // If consent form was used to update consentStatus we need to update GDPR settings.
+        if consentStatus != .notRequired {
+            updateGDPR(consentStatus: consentStatus)
         }
+        return consentStatus
     }
 }
 
 // MARK: - Private Methods
 
 private extension SwiftyAdsConsentManager {
-    func startInitialConsentRequest(from viewController: UIViewController, completion: @escaping SwiftyAdsConsentResultHandler) {
-        DispatchQueue.main.async {
-            self.requestUpdate { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .success(let status):
-                    switch status {
-                    case .required:
-                        DispatchQueue.main.async {
-                            self.showForm(from: viewController, completion: completion)
-                        }
-                    default:
-                        completion(result)
-                    }
-                case .failure:
-                    completion(result)
-                }
-            }
-        }
-    }
-    
-    func requestUpdate(completion: @escaping SwiftyAdsConsentResultHandler) {
+    func requestUpdate() async throws {
         // Create a UMPRequestParameters object.
         let parameters = UMPRequestParameters()
 
@@ -182,60 +128,25 @@ private extension SwiftyAdsConsentManager {
         // The first time we request consent information, even if outside of EEA, the status
         // may return `.required` as the ATT alert has not yet been displayed and we are using
         // Google Choices ATT message.
-        consentInformation.requestConsentInfoUpdate(with: parameters) { [weak self] error in
-            guard let self = self else { return }
-
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-
-            // The consent information state was updated and we can now check if a form is available.
-            switch self.consentInformation.formStatus {
-            case .available:
-                DispatchQueue.main.async {
-                    UMPConsentForm.load { [weak self ] (form, error) in
-                        guard let self = self else { return }
-                        
-                        if let error = error {
-                            completion(.failure(error))
-                            return
-                        }
-
-                        self.form = form
-                        completion(.success(self.consentStatus))
-                    }
-                }
-            case .unavailable:
-                completion(.success(self.consentStatus))
-            case .unknown:
-                completion(.success(self.consentStatus))
-            @unknown default:
-                completion(.success(self.consentStatus))
-            }
+        try await consentInformation.requestConsentInfoUpdate(with: parameters)
+        
+        // The consent information state was updated and we can now check if a form is available.
+        if consentInformation.formStatus == .available {
+            form = try await UMPConsentForm.load()
         }
     }
     
-    func showForm(from viewController: UIViewController, completion: @escaping SwiftyAdsConsentResultHandler) {
+    func showForm(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus {
         // Ensure form is loaded
         guard let form = form else {
-            completion(.failure(SwiftyAdsError.consentFormNotAvailable))
-            return
+            throw SwiftyAdsError.consentFormNotAvailable
         }
 
         // Present the form
-        form.present(from: viewController) { [weak self] error in
-            guard let self = self else { return }
-
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-
-            let consentStatus = self.consentStatus
-            self.consentStatusDidChange(consentStatus)
-            completion(.success(consentStatus))
-        }
+        try await form.present(from: viewController)
+        let consentStatus = self.consentStatus
+        consentStatusDidChange(consentStatus)
+        return consentStatus
     }
     
     func updateCOPPA() {
@@ -261,10 +172,8 @@ private extension SwiftyAdsConsentManager {
         // should not both simultaneously be set to true.
         // If they are, the child-directed setting takes precedence.
         // https://developers.google.com/admob/ios/targeting#child-directed_setting
-        guard !isTaggedForChildDirectedTreatment else {
-            return
-        }
-
+        guard !isTaggedForChildDirectedTreatment else { return }
+        
         mobileAds.requestConfiguration.tagForUnderAgeOfConsent = NSNumber(value: isTaggedForUnderAgeOfConsent)
     }
 }

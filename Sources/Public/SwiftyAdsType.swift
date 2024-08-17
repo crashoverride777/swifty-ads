@@ -24,7 +24,6 @@ import GoogleMobileAds
 import UserMessagingPlatform
 
 public typealias SwiftyAdsConsentStatus = UMPConsentStatus
-public typealias SwiftyAdsConsentResultHandler = (Result<SwiftyAdsConsentStatus, Error>) -> Void
 
 public enum SwiftyAdsAdUnitIdType {
     case plist
@@ -68,8 +67,7 @@ public protocol SwiftyAdsType: AnyObject {
                    for environment: SwiftyAdsEnvironment,
                    requestBuilder: SwiftyAdsRequestBuilderType,
                    mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
-                   bundlePlist: Bundle,
-                   completion: @escaping (Result<Void, Error>) -> Void)
+                   bundle: Bundle) async throws
     func makeBannerAd(in viewController: UIViewController,
                       adUnitIdType: SwiftyAdsAdUnitIdType,
                       position: SwiftyAdsBannerAdPosition,
@@ -104,5 +102,5 @@ public protocol SwiftyAdsType: AnyObject {
     func setDisabled(_ isDisabled: Bool)
     func loadAdsIfNeeded()
     func observeConsentStatus(onStatusChange: @escaping (SwiftyAdsConsentStatus) -> Void)
-    func askForConsent(from viewController: UIViewController, completion: @escaping SwiftyAdsConsentResultHandler)
+    func askForConsent(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus
 }

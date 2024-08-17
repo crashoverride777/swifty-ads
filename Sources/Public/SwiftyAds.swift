@@ -50,6 +50,7 @@ public final class SwiftyAds: NSObject {
     private var nativeAd: SwiftyAdsNativeType?
     private var consentManager: SwiftyAdsConsentManagerType?
     private var disabled = false
+    private var hasInitializedMobileAds = false
     
     private var consentStatusDidChange: ((SwiftyAdsConsentStatus) -> Void)?
     
@@ -119,8 +120,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter environment: The environment for ads to be displayed.
     /// - parameter requestBuilder: The GADRequest builder.
     /// - parameter mediationConfigurator: Optional configurator to update mediation networks..
-    /// - parameter bundlePlist: The bundle to search for the SwiftyAds plist's files. Defaults to main bundle.
-    /// - parameter completion: Called when configuration has finished.
+    /// - parameter bundle: The bundle to search for the SwiftyAds plist's files. Defaults to main bundle.
     ///
     /// - Warning:
     /// Returns .notRequired in the completion handler if consent has been disabled via SwiftyAds.plist isUMPDisabled entry.
@@ -128,15 +128,14 @@ extension SwiftyAds: SwiftyAdsType {
                           for environment: SwiftyAdsEnvironment,
                           requestBuilder: SwiftyAdsRequestBuilderType,
                           mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
-                          bundlePlist: Bundle = .main,
-                          completion: @escaping (Result<Void, Error>) -> Void) {
+                          bundle: Bundle = .main) async throws {
         // Update configuration for selected environment
         let configuration: SwiftyAdsConfiguration
         let consentConfiguration: SwiftyAdsConsentConfiguration?
         switch environment {
         case .production:
-            configuration = .production(bundle: bundlePlist)
-            consentConfiguration = .production(bundle: bundlePlist)
+            configuration = .production(bundle: bundle)
+            consentConfiguration = .production(bundle: bundle)
         case .development(let testDeviceIdentifiers, _):
             configuration = .debug
             consentConfiguration = .debug
@@ -165,32 +164,44 @@ extension SwiftyAds: SwiftyAdsType {
             nativeAd = SwiftyAdsNative(environment: environment, adUnitId: nativeAdUnitId, request: requestBuilder.build)
         }
         
-        // Start ads sdk.
-        guard let consentConfiguration = consentConfiguration else {
-            startMobileAdsSDK(completion: completion)
-            return
+        // Create consent manager if required.
+        if let consentConfiguration {
+            consentManager = SwiftyAdsConsentManager(
+                configuration: consentConfiguration,
+                environment: environment,
+                mediationConfigurator: mediationConfigurator,
+                mobileAds: mobileAds,
+                consentStatusDidChange: { [weak self] status in
+                    self?.consentStatusDidChange?(status)
+                }
+            )
         }
         
-        let consentManager = SwiftyAdsConsentManager(
-            configuration: consentConfiguration,
-            environment: environment,
-            mediationConfigurator: mediationConfigurator,
-            mobileAds: mobileAds,
-            consentStatusDidChange: { [weak self] status in
-                self?.consentStatusDidChange?(status)
-            }
-        )
-        self.consentManager = consentManager
-        consentManager.start(from: viewController) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success:
-                /// Once initial consent flow has finished we can start `GADMobileAds` and preload ads.
-                self.startMobileAdsSDK(completion: completion)
-            case .failure(let error):
-                completion(.failure(error))
-            }
+        // Finish the configuration.
+        try await finishConfigurationIfNeeded(from: viewController)
+    }
+    
+    /// Finish configuring if needed
+    func finishConfigurationIfNeeded(from viewController: UIViewController) async throws {
+        guard !hasInitializedMobileAds else { return }
+        
+        if let consentManager {
+            try await consentManager.request(from: viewController)
         }
+        /*
+         Ads may be preloaded by the Mobile Ads SDK or mediation partner SDKs upon
+         calling startWithCompletionHandler:. If you need to obtain consent from users
+         in the European Economic Area (EEA), set any request-specific flags (such as
+         tagForChildDirectedTreatment or tag_for_under_age_of_consent), or otherwise
+         take action before loading ads, ensure you do so before initializing the Mobile
+         Ads SDK.
+        */
+        let initializationStatus = await mobileAds.start()
+        hasInitializedMobileAds = true
+        if case .development = environment {
+            print("SwiftyAds initialization status", initializationStatus.adapterStatusesByClassName)
+        }
+        loadAdsIfNeeded()
     }
     
     // MARK: Banner Ads
@@ -487,37 +498,12 @@ extension SwiftyAds: SwiftyAdsType {
     /// Under GDPR users must be able to change their consent at any time.
     ///
     /// - parameter viewController: The view controller that will present the consent form.
-    /// - parameter completion: A completion handler that will return the updated consent status.
-    public func askForConsent(from viewController: UIViewController, completion: @escaping SwiftyAdsConsentResultHandler) {
+    /// - returns SwiftyAdsConsentStatus
+    public func askForConsent(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus {
         guard let consentManager = consentManager else {
-            completion(.failure(SwiftyAdsError.consentManagerNotAvailable))
-            return
+            throw SwiftyAdsError.consentManagerNotAvailable
         }
         
-        consentManager.request(from: viewController, completion: completion)
-    }
-}
-
-// MARK: - Private Methods
-
-private extension SwiftyAds {
-    func startMobileAdsSDK(completion: @escaping (Result<Void, Error>) -> Void) {
-        /*
-         Warning:
-         Ads may be preloaded by the Mobile Ads SDK or mediation partner SDKs upon
-         calling startWithCompletionHandler:. If you need to obtain consent from users
-         in the European Economic Area (EEA), set any request-specific flags (such as
-         tagForChildDirectedTreatment or tag_for_under_age_of_consent), or otherwise
-         take action before loading ads, ensure you do so before initializing the Mobile
-         Ads SDK.
-        */
-        mobileAds.start { [weak self] initializationStatus in
-            guard let self = self else { return }
-            if case .development = self.environment {
-                print("SwiftyAds initialization status", initializationStatus.adapterStatusesByClassName)
-            }
-            self.loadAdsIfNeeded()
-            completion(.success(()))
-        }
+        return try await consentManager.request(from: viewController)
     }
 }
