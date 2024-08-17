@@ -158,32 +158,32 @@ Create a configure method and call it as soon as your app launches e.g. AppDeleg
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     if let rootViewController = window?.rootViewController {
-        configureSwiftyAds(from: rootViewController)
+        Task { await self.configureAndInitializeSwiftyAds(from: rootViewController) }
     }
     return true
 }
 
-private func configureSwiftyAds(from viewController: UIViewController) {
+private func configureAndInitializeSwiftyAds(from viewController: UIViewController) async {
     #if DEBUG
     let environment: SwiftyAdsEnvironment = .development(testDeviceIdentifiers: [], consentConfiguration: .resetOnLaunch(geography: .EEA))
     #else
     let environment: SwiftyAdsEnvironment = .production
     #endif
-    SwiftyAds.shared.configure(
-        from: viewController,
+    
+    // Configure
+    let swiftyAds: SwiftyAds = .shared
+    swiftyAds.configure(
         for: environment,
         requestBuilder: SwiftyAdsRequestBuilder(),
         mediationConfigurator: SwiftyAdsMediationConfigurator(), // set to nil if no mediation is required
-        bundlePlist: .main, // looks for SwiftyAds.plist/SwiftyAdsConsent.plist
-        completion: { result in 
-            switch result {
-            case .success:
-                // Ads should be ready for displaying
-            case .failure(let error):
-                print(error)
-            }
-        }
+        bundle: .main, // looks for SwiftyAds.plist/SwiftyAdsConsent.plist
     )
+    
+    // Initialize.
+    do {
+        try await swiftyAds.initializeIfNeeded(from: viewController)
+    } catch {
+        // Some error occured e.g. offline
 }
 ```
 
@@ -395,6 +395,15 @@ SwiftyAds.shared.loadNativeAd(
 ```
 
 NOTE: While prefetching ads is a great technique, it's important that you don't keep old native ads around forever without displaying them. Any native ad objects that have been held without display for longer than an hour should be discarded and replaced with new ads from a new request.
+
+
+### Load Ads manually
+
+SwiftyAds will automatically load Ads when needed. Ads can also be loaded manually if needed.
+
+```swift
+SwiftyAds.shared.loadAdsIfNeeded()
+```
 
 ### Errors
 

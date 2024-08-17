@@ -67,7 +67,7 @@ final class SwiftyAdsConsentManager {
         self.mediationConfigurator = mediationConfigurator
         self.mobileAds = mobileAds
         self.consentStatusDidChange = consentStatusDidChange
-        
+        #warning("should maybe be refactored and split with GDPR?. If no consent this never gets called")
         updateCOPPA()
     }
 }
