@@ -116,7 +116,6 @@ extension SwiftyAds: SwiftyAdsType {
     
     /// Configure SwiftyAds
     ///
-    /// - parameter viewController: The view controller that will present the consent alert if needed.
     /// - parameter environment: The environment for ads to be displayed.
     /// - parameter requestBuilder: The GADRequest builder.
     /// - parameter mediationConfigurator: Optional configurator to update mediation networks..
@@ -124,11 +123,10 @@ extension SwiftyAds: SwiftyAdsType {
     ///
     /// - Warning:
     /// Returns .notRequired in the completion handler if consent has been disabled via SwiftyAds.plist isUMPDisabled entry.
-    public func configure(from viewController: UIViewController,
-                          for environment: SwiftyAdsEnvironment,
+    public func configure(for environment: SwiftyAdsEnvironment,
                           requestBuilder: SwiftyAdsRequestBuilderType,
                           mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
-                          bundle: Bundle = .main) async throws {
+                          bundle: Bundle = .main) {
         // Update configuration for selected environment
         let configuration: SwiftyAdsConfiguration
         let consentConfiguration: SwiftyAdsConsentConfiguration?
@@ -164,7 +162,7 @@ extension SwiftyAds: SwiftyAdsType {
             nativeAd = SwiftyAdsNative(environment: environment, adUnitId: nativeAdUnitId, request: requestBuilder.build)
         }
         
-        // Create consent manager if required.
+        // Create consent manager.
         if let consentConfiguration {
             consentManager = SwiftyAdsConsentManager(
                 configuration: consentConfiguration,
@@ -176,13 +174,12 @@ extension SwiftyAds: SwiftyAdsType {
                 }
             )
         }
-        
-        // Finish the configuration.
-        try await finishConfigurationIfNeeded(from: viewController)
     }
     
-    /// Finish configuring if needed
-    public func finishConfigurationIfNeeded(from viewController: UIViewController) async throws {
+    // MARK: Initialize
+    
+    /// Initializes SwiftyAds with its configuration.
+    public func initializeIfNeeded(from viewController: UIViewController) async throws {
         guard !hasInitializedMobileAds else { return }
         
         if let consentManager {

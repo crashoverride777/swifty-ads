@@ -63,12 +63,11 @@ public protocol SwiftyAdsType: AnyObject {
     var isRewardedAdReady: Bool { get }
     var isRewardedInterstitialAdReady: Bool { get }
     var isDisabled: Bool { get }
-    func configure(from viewController: UIViewController,
-                   for environment: SwiftyAdsEnvironment,
+    func configure(for environment: SwiftyAdsEnvironment,
                    requestBuilder: SwiftyAdsRequestBuilderType,
                    mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
-                   bundle: Bundle) async throws
-    func finishConfigurationIfNeeded(from viewController: UIViewController) async throws
+                   bundle: Bundle)
+    func initializeIfNeeded(from viewController: UIViewController) async throws
     func makeBannerAd(in viewController: UIViewController,
                       adUnitIdType: SwiftyAdsAdUnitIdType,
                       position: SwiftyAdsBannerAdPosition,
