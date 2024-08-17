@@ -155,10 +155,20 @@ private extension SwiftyAdsConsentManager {
         guard let form = form else {
             throw SwiftyAdsError.consentFormNotAvailable
         }
-
-        // Present the form
-        try await form.present(from: viewController)
-        let consentStatus = self.consentStatus
+        
+        let consentStatus: SwiftyAdsConsentStatus = try await withCheckedThrowingContinuation { [weak self] continuation in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                form.present(from: viewController) { error in
+                    if let error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+                    continuation.resume(returning: self.consentStatus)
+                }
+            }
+        }
+        
         consentStatusDidChange(consentStatus)
         return consentStatus
     }
