@@ -6,11 +6,11 @@ final class SwiftyAdsConfigurationTests: XCTestCase {
     func testProduction_decodesCorrectly() {
         let sut: SwiftyAdsConfiguration = .production(bundle: .module)
         let expectedConfig = SwiftyAdsConfiguration(
-            bannerAdUnitId: "123",
-            interstitialAdUnitId: "456",
-            rewardedAdUnitId: "789",
-            rewardedInterstitialAdUnitId: nil,
-            nativeAdUnitId: nil,
+            bannerAdUnitId: "111",
+            interstitialAdUnitId: "222",
+            rewardedAdUnitId: "333",
+            rewardedInterstitialAdUnitId: "444",
+            nativeAdUnitId: "555",
             isTaggedForChildDirectedTreatment: false,
             isTaggedForUnderAgeOfConsent: true
         )

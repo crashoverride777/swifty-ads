@@ -67,7 +67,7 @@ pod 'SwiftyAds'
 
 ### Add SwiftyAds.plist
 
-Download the [template](Sources/Resources/Templates/SwiftyAds.plist) plist and add it to your projects main bundle. Enter your required ad unit ids.
+Download the [template](Sources/Resources/Templates/SwiftyAds.plist) plist and add it to your projects main bundle. Enter your required ad unit ids and/or remove the values not required.
 
 - bannerAdUnitId (String)
 - interstitialAdUnitId (String)
@@ -183,48 +183,44 @@ if let viewController = view?.window?.rootViewController {
 
 ### Banner Ads
 
-Create a property in your `UIViewController` for the banner to be displayed
+Create a property in your `UIViewController` for the banner to be displayed and load it in `viewDidLoad`
 
 ```swift
 class SomeViewController: UIViewController {
     private var bannerAd: SwiftyAdsBannerAd?
-}
-```
-
-Prepare the banner in `viewDidLoad`
-
-```swift
-override func viewDidLoad() {
-    super.viewDidLoad()
     
-    bannerAd = SwiftyAds.shared.makeBannerAd(
-        in: self,
-        adUnitIdType: .plist, // set to `.custom("AdUnitId")` to add a different AdUnitId for this particular banner ad
-        position: .bottom(isUsingSafeArea: true) // banner is pinned to bottom and follows the safe area layout guide
-        animation: .slide(duration: 1.5),
-        onOpen: {
-            print("SwiftyAds banner ad did receive ad and was opened")
-        },
-        onClose: {
-            print("SwiftyAds banner ad did close")
-        },
-        onError: { error in
-            print("SwiftyAds banner ad error \(error)")
-        },
-        onWillPresentScreen: {
-            print("SwiftyAds banner ad was tapped and is about to present screen")
-        },
-        onWillDismissScreen: {
-            print("SwiftyAds banner ad presented screen is about to be dismissed")
-        },
-        onDidDismissScreen: {
-            print("SwiftyAds banner did dismiss presented screen")
-        }
-    )
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        bannerAd = SwiftyAds.shared.makeBannerAd(
+            in: self,
+            adUnitIdType: .plist, // set to `.custom("AdUnitId")` to add a different AdUnitId for this particular banner ad
+            position: .bottom(isUsingSafeArea: true) // banner is pinned to bottom and follows the safe area layout guide
+            animation: .slide(duration: 1.5),
+            onOpen: {
+                print("SwiftyAds banner ad did receive ad and was opened")
+            },
+            onClose: {
+                print("SwiftyAds banner ad did close")
+            },
+            onError: { error in
+                print("SwiftyAds banner ad error \(error)")
+            },
+            onWillPresentScreen: {
+                print("SwiftyAds banner ad was tapped and is about to present screen")
+            },
+            onWillDismissScreen: {
+                print("SwiftyAds banner ad presented screen is about to be dismissed")
+            },
+            onDidDismissScreen: {
+                print("SwiftyAds banner did dismiss presented screen")
+            }
+        )
+    }
 }
 ```
 
-and show it in `viewDidAppear`. This is to ensure that the view has been layed out correctly and has a valid safe area.
+To ensure that the view has been layed out correctly and has a valid safe area show the banner in `viewDidAppear`.
 
 ```swift
 override func viewDidAppear(_ animated: Bool) {

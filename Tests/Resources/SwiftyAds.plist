@@ -3,11 +3,15 @@
 <plist version="1.0">
 <dict>
 	<key>bannerAdUnitId</key>
-	<string>123</string>
+	<string>111</string>
 	<key>interstitialAdUnitId</key>
-	<string>456</string>
+	<string>222</string>
 	<key>rewardedAdUnitId</key>
-	<string>789</string>
+	<string>333</string>
+	<key>rewardedInterstitialAdUnitId</key>
+	<string>444</string>
+	<key>nativeAdUnitId</key>
+	<string>555</string>
 	<key>isTaggedForChildDirectedTreatment</key>
 	<false/>
 	<key>isTaggedForUnderAgeOfConsent</key>

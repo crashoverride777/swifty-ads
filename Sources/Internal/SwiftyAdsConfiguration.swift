@@ -28,8 +28,8 @@ struct SwiftyAdsConfiguration: Decodable, Equatable {
     let rewardedAdUnitId: String?
     let rewardedInterstitialAdUnitId: String?
     let nativeAdUnitId: String?
-    let isTaggedForChildDirectedTreatment: Bool? /// COPPA
-    let isTaggedForUnderAgeOfConsent: Bool? /// GDPR
+    let isTaggedForChildDirectedTreatment: Bool? // COPPA
+    let isTaggedForUnderAgeOfConsent: Bool? // GDPR
 }
 
 extension SwiftyAdsConfiguration {
