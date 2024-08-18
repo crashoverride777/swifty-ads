@@ -452,7 +452,8 @@ extension SwiftyAds: SwiftyAdsType {
             throw SwiftyAdsError.consentManagerNotAvailable
         }
         
-        return try await consentManager.request(from: viewController)
+        try await consentManager.request(from: viewController)
+        return consentManager.consentStatus
     }
     
     // MARK: - DEBUG

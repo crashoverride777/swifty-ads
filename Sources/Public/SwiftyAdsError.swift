@@ -25,7 +25,7 @@ import Foundation
 public enum SwiftyAdsError: LocalizedError {
     case notConfigured
     case consentManagerNotAvailable
-    case consentFormNotAvailable
+    case loadConsentForm
     case consentNotObtained
     case interstitialAdNotLoaded
     case rewardedAdNotLoaded
@@ -38,8 +38,8 @@ public enum SwiftyAdsError: LocalizedError {
             return "SwiftAds is not configured, please call `func configure(...)` first"
         case .consentManagerNotAvailable:
             return "Consent manager not available. Remove isUMPDisabled entry from SwiftyAds.plist"
-        case .consentFormNotAvailable:
-            return "Consent form not available"
+        case .loadConsentForm:
+            return "Consent form could not be loaded."
         case .consentNotObtained:
             return "Consent not obstained"
         case .interstitialAdNotLoaded:

@@ -35,8 +35,7 @@ Provide a way for users to change their consent.
 
 protocol SwiftyAdsConsentManagerType: AnyObject {
     var consentStatus: SwiftyAdsConsentStatus { get }
-    @discardableResult
-    func request(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus
+    func request(from viewController: UIViewController) async throws
 }
 
 final class SwiftyAdsConsentManager {
@@ -49,8 +48,6 @@ final class SwiftyAdsConsentManager {
     private let mediationConfigurator: SwiftyAdsMediationConfigurator?
     private let environment: SwiftyAdsEnvironment
     private let mobileAds: GADMobileAds
-
-    private var form: UMPConsentForm?
 
     // MARK: - Initialization
 
@@ -75,15 +72,31 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
         consentInformation.consentStatus
     }
     
-    @discardableResult
-    func request(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus {
-        try await requestUpdate()
-        let consentStatus = try await showForm(from: viewController)
-        // If consent form was used to update consentStatus we need to update GDPR settings.
-        if consentStatus != .notRequired {
-            configure(for: consentStatus)
+    func request(from viewController: UIViewController) async throws {
+        // Update consent status configuration when finished.
+        defer {
+            if consentStatus != .notRequired {
+                configure(for: consentStatus)
+            }
         }
-        return consentStatus
+        
+        // Request consent information update.
+        try await requestUpdate()
+        
+        // The consent information state was updated and we can now check if a form is available.
+        switch consentInformation.formStatus {
+        case .available:
+            let form = try await loadForm()
+            try await showForm(form, from: viewController)
+        case .unavailable:
+            // Showing a consent form is not required
+            break
+        case .unknown:
+            // Should first request consent information update.
+            break
+        @unknown default:
+            break
+        }
     }
 }
 
@@ -93,12 +106,9 @@ private extension SwiftyAdsConsentManager {
     func requestUpdate() async throws {
         // Create a UMPRequestParameters object.
         let parameters = UMPRequestParameters()
+        parameters.tagForUnderAgeOfConsent = isTaggedForUnderAgeOfConsent
         
-        // Set UMPDebugSettings if in development environment.
-        switch environment {
-        case .production:
-            break
-        case .development(let developmentConfig):
+        if case .development(let developmentConfig) = environment {
             let debugSettings = UMPDebugSettings()
             debugSettings.testDeviceIdentifiers = developmentConfig.testDeviceIdentifiers
             debugSettings.geography = developmentConfig.geography
@@ -108,49 +118,38 @@ private extension SwiftyAdsConsentManager {
             }
         }
         
-        // Update parameters for under age of consent.
-        parameters.tagForUnderAgeOfConsent = isTaggedForUnderAgeOfConsent
-        
         // Request an update to the consent information.
         // The first time we request consent information, even if outside of EEA, the status
         // may return `.required` as the ATT alert has not yet been displayed and we are using
         // Google Choices ATT message.
         try await consentInformation.requestConsentInfoUpdate(with: parameters)
-        
-        // The consent information state was updated and we can now check if a form is available.
-        if consentInformation.formStatus == .available {
-            form = try await loadConsentForm()
-        }
     }
     
-    func loadConsentForm() async throws -> UMPConsentForm? {
+    func loadForm() async throws -> UMPConsentForm {
         try await withCheckedThrowingContinuation { continuation in
             DispatchQueue.main.async {
                 UMPConsentForm.load() { form, error in
                     if let error {
                         continuation.resume(throwing: error)
-                    } else {
+                    } else if let form {
                         continuation.resume(returning: form)
+                    } else {
+                        // Fallback but both values should never be nil.
+                        continuation.resume(throwing: SwiftyAdsError.loadConsentForm)
                     }
                 }
             }
         }
     }
     
-    func showForm(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus {
-        // Ensure form is loaded
-        guard let form = form else {
-            throw SwiftyAdsError.consentFormNotAvailable
-        }
-        
-        return try await withCheckedThrowingContinuation { [weak self] continuation in
-            guard let self = self else { return }
+    func showForm(_ form: UMPConsentForm, from viewController: UIViewController) async throws {
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             DispatchQueue.main.async {
                 form.present(from: viewController) { error in
                     if let error {
                         continuation.resume(throwing: error)
                     } else {
-                        continuation.resume(returning: self.consentStatus)
+                        continuation.resume()
                     }
                 }
             }
