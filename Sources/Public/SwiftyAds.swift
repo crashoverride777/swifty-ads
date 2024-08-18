@@ -52,8 +52,6 @@ public final class SwiftyAds: NSObject {
     private var disabled = false
     private var hasInitializedMobileAds = false
     
-    private var consentStatusDidChange: ((SwiftyAdsConsentStatus) -> Void)?
-    
     private var hasConsent: Bool {
         switch consentStatus {
         case .notRequired, .obtained:
@@ -111,9 +109,9 @@ extension SwiftyAds: SwiftyAdsType {
         switch environment {
         case .production:
             configuration = .production(bundle: .main)
-        case .development(let testDeviceIdentifiers, _, _):
-            configuration = .debug
-            mobileAds.requestConfiguration.testDeviceIdentifiers = testDeviceIdentifiers
+        case .development(let developmentSettings):
+            configuration = .debug(for: developmentSettings)
+            mobileAds.requestConfiguration.testDeviceIdentifiers = developmentSettings.testDeviceIdentifiers
         }
         
         self.configuration = configuration
@@ -121,37 +119,7 @@ extension SwiftyAds: SwiftyAdsType {
         self.mediationConfigurator = mediationConfigurator
         
         // Create ads
-        if let interstitialAdUnitId = configuration.interstitialAdUnitId {
-            interstitialAd = GADSwiftyAdsInterstitialAd(
-                adUnitId: interstitialAdUnitId,
-                environment: environment,
-                request: requestBuilder.build
-            )
-        }
-
-        if let rewardedAdUnitId = configuration.rewardedAdUnitId {
-            rewardedAd = GADSwiftyAdsRewardedAd(
-                adUnitId: rewardedAdUnitId,
-                environment: environment,
-                request: requestBuilder.build
-            )
-        }
-
-        if let rewardedInterstitialAdUnitId = configuration.rewardedInterstitialAdUnitId {
-            rewardedInterstitialAd = GADSwiftyAdsRewardedInterstitialAd(
-                adUnitId: rewardedInterstitialAdUnitId,
-                environment: environment,
-                request: requestBuilder.build
-            )
-        }
-
-        if let nativeAdUnitId = configuration.nativeAdUnitId {
-            nativeAd = GADSwiftyAdsNativeAd(
-                adUnitId: nativeAdUnitId,
-                environment: environment,
-                request: requestBuilder.build
-            )
-        }
+        createAds(with: configuration, requestBuilder: requestBuilder)
         
         // Update for COPPA if needed
         if let isTaggedForChildDirectedTreatment = configuration.isTaggedForChildDirectedTreatment {
@@ -166,10 +134,7 @@ extension SwiftyAds: SwiftyAdsType {
                 isTaggedForUnderAgeOfConsent: isTaggedForUnderAgeOfConsent,
                 mediationConfigurator: mediationConfigurator,
                 environment: environment,
-                mobileAds: mobileAds,
-                consentStatusDidChange: { [weak self] status in
-                    self?.consentStatusDidChange?(status)
-                }
+                mobileAds: mobileAds
             )
         }
     }
@@ -478,18 +443,11 @@ extension SwiftyAds: SwiftyAdsType {
     
     // MARK: Consent
     
-    /// Observe consent status changes
-    ///
-    /// - parameter onStatusChange: A completion hander that is called every time consent status changes.
-    public func observeConsentStatus(onStatusChange: @escaping (SwiftyAdsConsentStatus) -> Void) {
-        self.consentStatusDidChange = onStatusChange
-    }
-
     /// Under GDPR users must be able to change their consent at any time.
     ///
     /// - parameter viewController: The view controller that will present the consent form.
     /// - returns SwiftyAdsConsentStatus
-    public func askForConsent(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus {
+    public func updateConsent(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus {
         guard let consentManager = consentManager else {
             throw SwiftyAdsError.consentManagerNotAvailable
         }
@@ -501,12 +459,57 @@ extension SwiftyAds: SwiftyAdsType {
     
     #if DEBUG
     /// Enable debugging. Should be called before `configure`.
-    public func enableDebug(testDeviceIdentifiers: [String], geography: UMPDebugGeography, resetsConsentOnLaunch: Bool) {
-        environment = .development(
+    public func enableDebug(testDeviceIdentifiers: [String], 
+                            geography: UMPDebugGeography,
+                            resetsConsentOnLaunch: Bool,
+                            isTaggedForChildDirectedTreatment: Bool?,
+                            isTaggedForUnderAgeOfConsent: Bool?) {
+        let developmentSettings = SwiftyAdsEnvironment.DevelopmentSettings(
             testDeviceIdentifiers: testDeviceIdentifiers,
             geography: geography,
-            resetsConsentOnLaunch: resetsConsentOnLaunch
+            resetsConsentOnLaunch: resetsConsentOnLaunch,
+            isTaggedForChildDirectedTreatment: isTaggedForChildDirectedTreatment,
+            isTaggedForUnderAgeOfConsent: isTaggedForUnderAgeOfConsent
         )
+        environment = .development(developmentSettings)
     }
     #endif
+}
+
+// MARK: - Private Methods
+
+private extension SwiftyAds {
+    func createAds(with configuration: SwiftyAdsConfiguration, requestBuilder: SwiftyAdsRequestBuilder) {
+        if let interstitialAdUnitId = configuration.interstitialAdUnitId {
+            interstitialAd = GADSwiftyAdsInterstitialAd(
+                adUnitId: interstitialAdUnitId,
+                environment: environment,
+                request: requestBuilder.build
+            )
+        }
+
+        if let rewardedAdUnitId = configuration.rewardedAdUnitId {
+            rewardedAd = GADSwiftyAdsRewardedAd(
+                adUnitId: rewardedAdUnitId,
+                environment: environment,
+                request: requestBuilder.build
+            )
+        }
+
+        if let rewardedInterstitialAdUnitId = configuration.rewardedInterstitialAdUnitId {
+            rewardedInterstitialAd = GADSwiftyAdsRewardedInterstitialAd(
+                adUnitId: rewardedInterstitialAdUnitId,
+                environment: environment,
+                request: requestBuilder.build
+            )
+        }
+
+        if let nativeAdUnitId = configuration.nativeAdUnitId {
+            nativeAd = GADSwiftyAdsNativeAd(
+                adUnitId: nativeAdUnitId,
+                environment: environment,
+                request: requestBuilder.build
+            )
+        }
+    }
 }

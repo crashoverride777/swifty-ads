@@ -37,7 +37,7 @@ NOTE: Apple may be rejecting apps that use the UMP SDK to display the iOS 14 ATT
 
 ## Installation
 
-### Swift Package Manager
+### Swift Package Manager (Recommended)
 
 The Swift Package Manager is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
 
@@ -46,9 +46,7 @@ Than enter `https://github.com/crashoverride777/swifty-ads.git` as the repositor
 
 Alternatively if you have another swift package that requires `SwiftyAds` as a dependency it is as easy as adding it to the dependencies value of your Package.swift.
 ```swift
-dependencies: [
-.package(url: "https://github.com/crashoverride777/swifty-ads.git", from: "16.0.0")
-]
+dependencies: [.package(url: "https://github.com/crashoverride777/swifty-ads.git", from: "17.0.0")]
 ```
 
 ### Cocoa Pods
@@ -59,13 +57,6 @@ Simply install the pod by adding the following line to your pod file
 ```swift
 pod 'SwiftyAds'
 ```
-
-### Manually 
-
-Alternatively you can copy the `Sources` folder and its containing files into your project and install the required dependencies.
-
-- [AdMob](https://developers.google.com/admob/ios/quick-start#manual_download)
-- [UMP](https://developers.google.com/admob/ump/ios/quick-start#manual_download)
 
 ## Pre-Usage
 
@@ -102,8 +93,8 @@ To enable [GDPR](https://developers.google.com/admob/ios/targeting#users_under_t
 
 ### Create GADRequest builder
 
-Create a `SwiftyAdsRequestBuilder` class, implementing the `SwiftyAdsRequestBuilderType` protocol, that SwiftyAds will use to load ads. Some mediation networks such as Vungle may required specific GADRequest extras.
-Please check the AdMob mediation [documentation](https://developers.google.com/admob/ios/mediation).
+Create a `SwiftyAdsRequestBuilder` class, implementing the `SwiftyAdsRequestBuilder` protocol, that SwiftyAds will use to load ads. 
+Some [mediation](https://developers.google.com/admob/ios/mediation) providers such as Vungle may required specific GADRequest extras.
 
 ```swift
 import SwiftyAds
@@ -118,15 +109,14 @@ final class AdsRequestBuilder: SwiftyAdsRequestBuilder {
 
 ### Create Mediation Configurator (Optional)
 
-Create a `SwiftyAdsMediationConfigurator` class, implementing the `SwiftyAdsMediationConfiguratorType` protocol, to manage updating mediation networks for COPPA/GDPR consent status changes.
-Please check the AdMob mediation [documentation](https://developers.google.com/admob/ios/mediation).
+Create a `AdsMediationConfigurator` class, implementing the `SwiftyAdsMediationConfigurator` protocol, to manage updating [mediation](https://developers.google.com/admob/ios/mediation) networks for COPPA/GDPR consent status changes.
 
 #### App Lovin Example
 ```swift
 import SwiftyAds
 import AppLovinAdapter
 
-final class MediationConfigurator: SwiftyAdsMediationConfigurator {
+final class AdsMediationConfigurator: SwiftyAdsMediationConfigurator {
     func updateCOPPA(isTaggedForChildDirectedTreatment: Bool)
         // App Lovin mediation network example
         ALPrivacySettings.setIsAgeRestrictedUser(isTaggedForChildDirectedTreatment)
@@ -144,27 +134,24 @@ final class MediationConfigurator: SwiftyAdsMediationConfigurator {
 
 ### Configure 
 
-Create a configure method and call it as soon as your app launches e.g. AppDelegate `didFinishLaunchingWithOptions`. This will also trigger the initial consent flow if consent has not been disabled. Ads can only be displayed after the `completion` handler was called.
+Create a configure method and call it as soon as your app launches e.g. AppDelegate `didFinishLaunchingWithOptions`. This will also trigger the initial GDPR consent flow if enabled.
 
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     if let rootViewController = window?.rootViewController {
-        configureAndInitializeSwiftyAds(from: rootViewController)
+        configureSwiftyAds(from: rootViewController)
     }
     return true
 }
 
-private func configureAndInitializeSwiftyAds(from viewController: UIViewController) async {
+private func configureAndInitializeSwiftyAds(from viewController: UIViewController) {
     let swiftyAds: SwiftyAds = .shared
     
     #if DEBUG
     swiftyAds.enableDebug(testDeviceIdentifiers: [], geography: .EEA, resetsConsentOnLaunch: false)
     #endif
     
-    swiftyAds.configure(
-        requestBuilder: AdsRequestBuilder(),
-        mediationConfigurator: MediationConfigurator(), // set to nil if no mediation is required
-    )
+    swiftyAds.configure(requestBuilder: AdsRequestBuilder(), mediationConfigurator: AdsMediationConfigurator()
     
     Task {
         do {
@@ -183,14 +170,14 @@ SwiftyAds requires reference to a `UIViewController` to present ads. If you are 
 AppDelegate
 ```swift
 if let viewController = window?.rootViewController {
-    SwiftyAds.shared.show(...)
+    SwiftyAds.shared.showInterstitialAd(from: viewController, ...)
 }
 ```
 
 SKScene
 ```swift
 if let viewController = view?.window?.rootViewController {
-    SwiftyAds.shared.show(...)
+    SwiftyAds.shared.showInterstitialAd(from: viewController, ...)
 }
 ```
 
@@ -276,8 +263,7 @@ bannerAd = nil
 
 ```swift
 SwiftyAds.shared.showInterstitialAd(
-    from: self,
-    afterInterval: 2, // every 2nd time method is called ad will be displayed. Set to nil to always display.
+    from: someViewController,
     onOpen: {
         print("SwiftyAds interstitial ad did open")
     },
@@ -296,7 +282,7 @@ Rewarded ads may be non-skippable and should only be presented when pressing a d
 
 ```swift
 SwiftyAds.shared.showRewardedAd(
-    from: self,
+    from: someViewController,
     onOpen: {
         print("SwiftyAds rewarded ad did open")
     },
@@ -309,18 +295,9 @@ SwiftyAds.shared.showRewardedAd(
     onNotReady: { [weak self] in
         guard let self = self else { return }
         print("SwiftyAds rewarded ad was not ready")
-        
-        // If the user presses the rewarded video button and watches a video it might take a few seconds for the next video to reload.
-        // Use this callback to display an alert incase the video was not ready. 
-        let alertController = UIAlertController(
-            title: "Sorry",
-            message: "No video available to watch at the moment.",
-            preferredStyle: .alert
-        )
+        let alertController = UIAlertController(title: nil, message: "No video available to watch at the moment.", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Ok", style: .cancel))
-        DispatchQueue.main.async {
-            self.present(alertController, animated: true)
-        }
+        DispatchQueue.main.async { self.present(alertController, animated: true) }
     },
     onReward: { [weak self] rewardAmount in
         print("SwiftyAds rewarded ad did reward user with \(rewardAmount)")
@@ -338,8 +315,7 @@ Before displaying a rewarded interstitial ad, you must present the user with an 
 
 ```swift
 SwiftyAds.shared.showRewardedInterstitialAd(
-    from: self,
-    afterInterval: 2, // every 2nd time method is called ad will be displayed. Set to nil to always display.
+    from: someViewController,
     onOpen: {
         print("SwiftyAds rewarded interstitial ad did open")
     },
@@ -364,10 +340,9 @@ You can set the amount of ads to load (`GADMultipleAdsAdLoaderOptions`) via the 
 
 As per Googles documentation, requests for multiple native ads don't currently work for AdMob ad unit IDs that have been configured for mediation. Publishers using mediation should avoid using the GADMultipleAdsAdLoaderOptions class when making requests. In that case you can also set the `loaderOptions` parameter to `.single`.
 
-
 ```swift
 SwiftyAds.shared.loadNativeAd(
-    from: self,
+    from: someViewController,
     adUnitIdType: .plist, // set to `.custom("AdUnitId")` to add a different AdUnitId for this particular native ad
     loaderOptions: .single, // set to `.multiple(2)` to load multiple ads for example 2
     onFinishLoading: {
@@ -387,7 +362,7 @@ NOTE: While prefetching ads is a great technique, it's important that you don't 
 
 ### Load Ads manually
 
-SwiftyAds will automatically load Ads if needed. Ads can also be loaded manually.
+SwiftyAds will automatically load Ads when appropriate. Ads can also be loaded manually if required.
 
 ```swift
 SwiftyAds.shared.loadAdsIfNeeded()
@@ -408,45 +383,30 @@ if let swiftyAdsError = error as? SwiftyAdsError {
 }
 ```
 
-### Consent
+### Update Consent (GDPR)
 
+It is required that a user has the option to change their GDPR consent status at any time, usually via a button in settings. 
+If `isTaggedForUnderAgeOfConsent` is true than no consent button is required because children cannot legally consent.
 ```swift
-Check current consent status
-SwiftyAds.shared.consentStatus
-```
-
-Observe consent status changes
-```swift
-SwiftyAds.shared.observeConsentStatus { status in 
-    print("New consent status set \(status")
-}
-```
-
-Ask for consent again. 
-It is required that the user has the option to change their GDPR consent settings, usually via a button in settings. 
-```swift
-func consentButtonPressed() {
+func updateConsentButtonPressed() {
     Task {
-        let consentStatus = try await SwiftyAds.shared.askForConsent(from: self)
+        let consentStatus = try await SwiftyAds.shared.updateConsent(from: someViewController)
         print(consentStatus)
     }
 }
 ```
 
-The consent button can be hidden if consent is not required or user is tagged for under age of consent.
+The consent button can be hidden if consent is not required e.g. outside EEA.
 ```swift
-// If consent is not required e.g. outside EEA than we do not need to show consent button.
-// If inside EEA we need to display the consentButton unless user is tagged for under age of consent
-if SwiftyAds.shared.consentStatus == .notRequired {
-    consentButton.isHidden = true
-} else {
-    consentButton.isHidden = SwiftyAds.shared.isTaggedForUnderAgeOfConsent
-}
+consentButton.isHidden = SwiftyAds.shared.consentStatus == .notRequired
 ```
 
 ### Booleans
 
 ```swift
+// Check current GDPR consent status
+SwiftyAds.shared.consentStatus
+
 // Check if interstitial ad is ready, for example to show an alternative ad
 SwiftyAds.shared.isInterstitialAdReady
 
@@ -455,12 +415,6 @@ SwiftyAds.shared.isRewardedAdReady
 
 // Check if rewarded interstitial ad is ready, for example to show an alternative ad
 SwiftyAds.shared.isRewardedInterstitialAdReady
-
-// Check if child directed treatment is tagged on/off. Nil if not indicated how to be treated. (COPPA)
-SwiftyAds.shared.isTaggedForChildDirectedTreatment
-
-// Check if under age of consent is tagged on/off (GDPR)
-SwiftyAds.shared.isTaggedForUnderAgeOfConsent
 
 // Check if ads have been disabled
 SwiftyAds.shared.isDisabled
@@ -475,13 +429,12 @@ This will not stop regular rewarded ads from displaying as they should have a de
 SwiftyAds.shared.setDisabled(true)
 ```
 
-For permanent storage you will need to create your own boolean logic and save it in something like `NSUserDefaults`, or preferably `Keychain`. 
+For permanent storage you will need to create your own boolean logic and save it in something like `UserDefaults` or `Keychain`.
 Than at app launch, before you call `SwiftyAds.shared.configure(...)`, check your saved boolean and disable the ads if required.
 
 ```swift
-if UserDefaults.standard.bool(forKey: "RemovedAdsKey") == true {
-    SwiftyAds.shared.setDisabled(true)
-}
+let isAdsDisabled = UserDefaults.standard.bool(forKey: "IsAdsDisabled")
+SwiftyAds.shared.setDisabled(isAdsDisabled)
 ```
 
 ## App Store release information

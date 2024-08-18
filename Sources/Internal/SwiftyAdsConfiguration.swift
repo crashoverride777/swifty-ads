@@ -41,15 +41,17 @@ extension SwiftyAdsConfiguration {
     }
     
     // https://developers.google.com/admob/ios/test-ads
-    static let debug = Self(
-        bannerAdUnitId: "ca-app-pub-3940256099942544/2934735716",
-        interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
-        rewardedAdUnitId: "ca-app-pub-3940256099942544/1712485313",
-        rewardedInterstitialAdUnitId: "ca-app-pub-3940256099942544/6978759866",
-        nativeAdUnitId: "ca-app-pub-3940256099942544/3986624511",
-        isTaggedForChildDirectedTreatment: false,
-        isTaggedForUnderAgeOfConsent: false
-    )
+    static func debug(for developmentSettings: SwiftyAdsEnvironment.DevelopmentSettings) -> Self {
+        Self(
+            bannerAdUnitId: "ca-app-pub-3940256099942544/2934735716",
+            interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
+            rewardedAdUnitId: "ca-app-pub-3940256099942544/1712485313",
+            rewardedInterstitialAdUnitId: "ca-app-pub-3940256099942544/6978759866",
+            nativeAdUnitId: "ca-app-pub-3940256099942544/3986624511",
+            isTaggedForChildDirectedTreatment: developmentSettings.isTaggedForChildDirectedTreatment,
+            isTaggedForUnderAgeOfConsent: developmentSettings.isTaggedForUnderAgeOfConsent
+        )
+    }
 }
 
 // MARK: - Decoding

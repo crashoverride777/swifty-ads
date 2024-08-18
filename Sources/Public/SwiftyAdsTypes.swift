@@ -107,9 +107,12 @@ public protocol SwiftyAdsType: AnyObject {
                       onReceive: @escaping (GADNativeAd) -> Void)
     func setDisabled(_ isDisabled: Bool)
     func loadAdsIfNeeded()
-    func observeConsentStatus(onStatusChange: @escaping (SwiftyAdsConsentStatus) -> Void)
-    func askForConsent(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus
+    func updateConsent(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus
     #if DEBUG
-    func enableDebug(testDeviceIdentifiers: [String], geography: UMPDebugGeography, resetsConsentOnLaunch: Bool)
+    func enableDebug(testDeviceIdentifiers: [String], 
+                     geography: UMPDebugGeography,
+                     resetsConsentOnLaunch: Bool,
+                     isTaggedForChildDirectedTreatment: Bool?,
+                     isTaggedForUnderAgeOfConsent: Bool?)
     #endif
 }

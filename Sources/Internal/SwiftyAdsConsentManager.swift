@@ -49,7 +49,6 @@ final class SwiftyAdsConsentManager {
     private let mediationConfigurator: SwiftyAdsMediationConfigurator?
     private let environment: SwiftyAdsEnvironment
     private let mobileAds: GADMobileAds
-    private let consentStatusDidChange: (SwiftyAdsConsentStatus) -> Void
 
     private var form: UMPConsentForm?
 
@@ -59,15 +58,13 @@ final class SwiftyAdsConsentManager {
          isTaggedForUnderAgeOfConsent: Bool,
          mediationConfigurator: SwiftyAdsMediationConfigurator?,
          environment: SwiftyAdsEnvironment,
-         mobileAds: GADMobileAds,
-         consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void) {
+         mobileAds: GADMobileAds) {
         self.isTaggedForChildDirectedTreatment = isTaggedForChildDirectedTreatment
         self.isTaggedForUnderAgeOfConsent = isTaggedForUnderAgeOfConsent
         self.consentInformation = .sharedInstance
         self.mediationConfigurator = mediationConfigurator
         self.environment = environment
         self.mobileAds = mobileAds
-        self.consentStatusDidChange = consentStatusDidChange
     }
 }
 
@@ -101,12 +98,12 @@ private extension SwiftyAdsConsentManager {
         switch environment {
         case .production:
             break
-        case .development(let testDeviceIdentifiers, let geography, let resetsConsentOnLaunch):
+        case .development(let developmentConfig):
             let debugSettings = UMPDebugSettings()
-            debugSettings.testDeviceIdentifiers = testDeviceIdentifiers
-            debugSettings.geography = geography
+            debugSettings.testDeviceIdentifiers = developmentConfig.testDeviceIdentifiers
+            debugSettings.geography = developmentConfig.geography
             parameters.debugSettings = debugSettings
-            if resetsConsentOnLaunch {
+            if developmentConfig.resetsConsentOnLaunch {
                 consentInformation.reset()
             }
         }
@@ -146,7 +143,7 @@ private extension SwiftyAdsConsentManager {
             throw SwiftyAdsError.consentFormNotAvailable
         }
         
-        let consentStatus: SwiftyAdsConsentStatus = try await withCheckedThrowingContinuation { [weak self] continuation in
+        return try await withCheckedThrowingContinuation { [weak self] continuation in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 form.present(from: viewController) { error in
@@ -158,9 +155,6 @@ private extension SwiftyAdsConsentManager {
                 }
             }
         }
-        
-        consentStatusDidChange(consentStatus)
-        return consentStatus
     }
     
     func configure(for consentStatus: SwiftyAdsConsentStatus) {

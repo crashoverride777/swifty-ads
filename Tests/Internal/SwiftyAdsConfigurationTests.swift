@@ -18,15 +18,22 @@ final class SwiftyAdsConfigurationTests: XCTestCase {
     }
     
     func testDebug() {
-        let sut: SwiftyAdsConfiguration = .debug
+        let developmentSettings = SwiftyAdsEnvironment.DevelopmentSettings(
+            testDeviceIdentifiers: [],
+            geography: .disabled,
+            resetsConsentOnLaunch: false,
+            isTaggedForChildDirectedTreatment: nil,
+            isTaggedForUnderAgeOfConsent: true
+        )
+        let sut: SwiftyAdsConfiguration = .debug(for: developmentSettings)
         let expectedConfig = SwiftyAdsConfiguration(
             bannerAdUnitId: "ca-app-pub-3940256099942544/2934735716",
             interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
             rewardedAdUnitId: "ca-app-pub-3940256099942544/1712485313",
             rewardedInterstitialAdUnitId: "ca-app-pub-3940256099942544/6978759866",
             nativeAdUnitId: "ca-app-pub-3940256099942544/3986624511",
-            isTaggedForChildDirectedTreatment: false,
-            isTaggedForUnderAgeOfConsent: false
+            isTaggedForChildDirectedTreatment: nil,
+            isTaggedForUnderAgeOfConsent: true
         )
         XCTAssertEqual(sut, expectedConfig)
     }

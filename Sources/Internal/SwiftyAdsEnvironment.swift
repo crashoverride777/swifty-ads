@@ -24,6 +24,14 @@ import Foundation
 import UserMessagingPlatform
 
 enum SwiftyAdsEnvironment {
+    struct DevelopmentSettings {
+        let testDeviceIdentifiers: [String]
+        let geography: UMPDebugGeography
+        let resetsConsentOnLaunch: Bool
+        let isTaggedForChildDirectedTreatment: Bool?
+        let isTaggedForUnderAgeOfConsent: Bool?
+    }
+    
     case production
-    case development(testDeviceIdentifiers: [String], geography: UMPDebugGeography, resetsConsentOnLaunch: Bool)
+    case development(DevelopmentSettings)
 }
