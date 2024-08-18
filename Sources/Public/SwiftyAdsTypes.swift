@@ -46,26 +46,33 @@ public enum SwiftyAdsNativeAdLoaderOptions {
     case multiple(Int)
 }
 
-public protocol SwiftyAdsRequestBuilderType: AnyObject {
+public protocol SwiftyAdsRequestBuilder: AnyObject {
     func build() -> GADRequest
 }
 
-public protocol SwiftyAdsMediationConfiguratorType: AnyObject {
+public protocol SwiftyAdsMediationConfigurator: AnyObject {
     func updateCOPPA(isTaggedForChildDirectedTreatment: Bool)
     func updateGDPR(for consentStatus: SwiftyAdsConsentStatus, isTaggedForUnderAgeOfConsent: Bool)
 }
 
+public protocol SwiftyAdsBannerAd: AnyObject {
+    /// Show the banner ad.
+    ///
+    /// - parameter isLandscape: If true banner is sized for landscape, otherwise portrait.
+    func show(isLandscape: Bool)
+    /// Hide the banner ad.
+    func hide()
+    /// Removes the banner from its superview.
+    func remove()
+}
+
 public protocol SwiftyAdsType: AnyObject {
     var consentStatus: SwiftyAdsConsentStatus { get }
-    var isTaggedForChildDirectedTreatment: Bool { get }
-    var isTaggedForUnderAgeOfConsent: Bool { get }
     var isInterstitialAdReady: Bool { get }
     var isRewardedAdReady: Bool { get }
     var isRewardedInterstitialAdReady: Bool { get }
     var isDisabled: Bool { get }
-    func configure(requestBuilder: SwiftyAdsRequestBuilderType,
-                   mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
-                   bundle: Bundle)
+    func configure(requestBuilder: SwiftyAdsRequestBuilder, mediationConfigurator: SwiftyAdsMediationConfigurator?)
     func initializeIfNeeded(from viewController: UIViewController) async throws
     func makeBannerAd(in viewController: UIViewController,
                       adUnitIdType: SwiftyAdsAdUnitIdType,
@@ -76,7 +83,7 @@ public protocol SwiftyAdsType: AnyObject {
                       onError: ((Error) -> Void)?,
                       onWillPresentScreen: (() -> Void)?,
                       onWillDismissScreen: (() -> Void)?,
-                      onDidDismissScreen: (() -> Void)?) -> SwiftyAdsBannerType?
+                      onDidDismissScreen: (() -> Void)?) -> SwiftyAdsBannerAd?
     func showInterstitialAd(from viewController: UIViewController,
                             onOpen: (() -> Void)?,
                             onClose: (() -> Void)?,

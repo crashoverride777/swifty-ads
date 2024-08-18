@@ -9,30 +9,28 @@
 /* Begin PBXBuildFile section */
 		B493CA3628200AF30094AA27 /* SwiftyAds.h in Headers */ = {isa = PBXBuildFile; fileRef = B493CA3528200AF30094AA27 /* SwiftyAds.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B493CA3A28200B900094AA27 /* SwiftyAdsConsentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A692C2C25C4823D0021FB2C /* SwiftyAdsConsentManager.swift */; };
-		B493CA3C28200B900094AA27 /* SwiftyAdsBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD6A10240BEC98001F4A7D /* SwiftyAdsBanner.swift */; };
-		B493CA3D28200B900094AA27 /* SwiftyAdsInterstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD6A0F240BEC98001F4A7D /* SwiftyAdsInterstitial.swift */; };
-		B493CA3E28200B900094AA27 /* SwiftyAdsConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD6A11240BEC98001F4A7D /* SwiftyAdsConfigurations.swift */; };
-		B493CA3F28200B900094AA27 /* SwiftyAdsRewardedInterstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8A00A325EBDE6E00A846BE /* SwiftyAdsRewardedInterstitial.swift */; };
-		B493CA4028200B900094AA27 /* SwiftyAdsNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A864BC325900E75005D0789 /* SwiftyAdsNative.swift */; };
-		B493CA4128200B900094AA27 /* SwiftyAdsRewarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD6A0B240BEC98001F4A7D /* SwiftyAdsRewarded.swift */; };
-		B493CA4228200B930094AA27 /* SwiftyAdsBannerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3C586B25D82B0F00047F9A /* SwiftyAdsBannerType.swift */; };
+		B493CA3C28200B900094AA27 /* SwiftyAdsBannerAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD6A10240BEC98001F4A7D /* SwiftyAdsBannerAd.swift */; };
+		B493CA3D28200B900094AA27 /* SwiftyAdsInterstitialAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD6A0F240BEC98001F4A7D /* SwiftyAdsInterstitialAd.swift */; };
+		B493CA3E28200B900094AA27 /* SwiftyAdsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD6A11240BEC98001F4A7D /* SwiftyAdsConfiguration.swift */; };
+		B493CA3F28200B900094AA27 /* SwiftyAdsRewardedInterstitialAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8A00A325EBDE6E00A846BE /* SwiftyAdsRewardedInterstitialAd.swift */; };
+		B493CA4028200B900094AA27 /* SwiftyAdsNativeAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A864BC325900E75005D0789 /* SwiftyAdsNativeAd.swift */; };
+		B493CA4128200B900094AA27 /* SwiftyAdsRewardedAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAD6A0B240BEC98001F4A7D /* SwiftyAdsRewardedAd.swift */; };
 		B493CA4328200B930094AA27 /* SwiftyAdsEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6EB3928200A2A0041E9E4 /* SwiftyAdsEnvironment.swift */; };
-		B493CA4428200B930094AA27 /* SwiftyAdsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEB36F325E2C9D200AFA313 /* SwiftyAdsType.swift */; };
+		B493CA4428200B930094AA27 /* SwiftyAdsTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEB36F325E2C9D200AFA313 /* SwiftyAdsTypes.swift */; };
 		B493CA4528200B930094AA27 /* SwiftyAds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE482F22294B7660063B22F /* SwiftyAds.swift */; };
 		B493CA4628200B930094AA27 /* SwiftyAdsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEB370225E2DA3600AFA313 /* SwiftyAdsError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6A3C586B25D82B0F00047F9A /* SwiftyAdsBannerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsBannerType.swift; sourceTree = "<group>"; };
 		6A692C2C25C4823D0021FB2C /* SwiftyAdsConsentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsConsentManager.swift; sourceTree = "<group>"; };
-		6A864BC325900E75005D0789 /* SwiftyAdsNative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsNative.swift; sourceTree = "<group>"; };
-		6A8A00A325EBDE6E00A846BE /* SwiftyAdsRewardedInterstitial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsRewardedInterstitial.swift; sourceTree = "<group>"; };
-		6AAD6A0B240BEC98001F4A7D /* SwiftyAdsRewarded.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsRewarded.swift; sourceTree = "<group>"; };
-		6AAD6A0F240BEC98001F4A7D /* SwiftyAdsInterstitial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsInterstitial.swift; sourceTree = "<group>"; };
-		6AAD6A10240BEC98001F4A7D /* SwiftyAdsBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsBanner.swift; sourceTree = "<group>"; };
-		6AAD6A11240BEC98001F4A7D /* SwiftyAdsConfigurations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsConfigurations.swift; sourceTree = "<group>"; };
+		6A864BC325900E75005D0789 /* SwiftyAdsNativeAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsNativeAd.swift; sourceTree = "<group>"; };
+		6A8A00A325EBDE6E00A846BE /* SwiftyAdsRewardedInterstitialAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsRewardedInterstitialAd.swift; sourceTree = "<group>"; };
+		6AAD6A0B240BEC98001F4A7D /* SwiftyAdsRewardedAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsRewardedAd.swift; sourceTree = "<group>"; };
+		6AAD6A0F240BEC98001F4A7D /* SwiftyAdsInterstitialAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsInterstitialAd.swift; sourceTree = "<group>"; };
+		6AAD6A10240BEC98001F4A7D /* SwiftyAdsBannerAd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsBannerAd.swift; sourceTree = "<group>"; };
+		6AAD6A11240BEC98001F4A7D /* SwiftyAdsConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsConfiguration.swift; sourceTree = "<group>"; };
 		6AE482F22294B7660063B22F /* SwiftyAds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAds.swift; sourceTree = "<group>"; };
-		6AEB36F325E2C9D200AFA313 /* SwiftyAdsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsType.swift; sourceTree = "<group>"; };
+		6AEB36F325E2C9D200AFA313 /* SwiftyAdsTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyAdsTypes.swift; sourceTree = "<group>"; };
 		6AEB370225E2DA3600AFA313 /* SwiftyAdsError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyAdsError.swift; sourceTree = "<group>"; };
 		B4557E862819DDD10000F5F6 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		B4557E872819DDE20000F5F6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -64,14 +62,14 @@
 		6A68A75C23FF69840030374F /* Internal */ = {
 			isa = PBXGroup;
 			children = (
-				6AAD6A10240BEC98001F4A7D /* SwiftyAdsBanner.swift */,
-				6AAD6A11240BEC98001F4A7D /* SwiftyAdsConfigurations.swift */,
+				6AAD6A10240BEC98001F4A7D /* SwiftyAdsBannerAd.swift */,
+				6AAD6A11240BEC98001F4A7D /* SwiftyAdsConfiguration.swift */,
 				6A692C2C25C4823D0021FB2C /* SwiftyAdsConsentManager.swift */,
-				6AAD6A0F240BEC98001F4A7D /* SwiftyAdsInterstitial.swift */,
+				6AAD6A0F240BEC98001F4A7D /* SwiftyAdsInterstitialAd.swift */,
 				B4B6EB3928200A2A0041E9E4 /* SwiftyAdsEnvironment.swift */,
-				6A864BC325900E75005D0789 /* SwiftyAdsNative.swift */,
-				6AAD6A0B240BEC98001F4A7D /* SwiftyAdsRewarded.swift */,
-				6A8A00A325EBDE6E00A846BE /* SwiftyAdsRewardedInterstitial.swift */,
+				6A864BC325900E75005D0789 /* SwiftyAdsNativeAd.swift */,
+				6AAD6A0B240BEC98001F4A7D /* SwiftyAdsRewardedAd.swift */,
+				6A8A00A325EBDE6E00A846BE /* SwiftyAdsRewardedInterstitialAd.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -80,9 +78,8 @@
 			isa = PBXGroup;
 			children = (
 				6AE482F22294B7660063B22F /* SwiftyAds.swift */,
-				6A3C586B25D82B0F00047F9A /* SwiftyAdsBannerType.swift */,
 				6AEB370225E2DA3600AFA313 /* SwiftyAdsError.swift */,
-				6AEB36F325E2C9D200AFA313 /* SwiftyAdsType.swift */,
+				6AEB36F325E2C9D200AFA313 /* SwiftyAdsTypes.swift */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -195,17 +192,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B493CA3D28200B900094AA27 /* SwiftyAdsInterstitial.swift in Sources */,
-				B493CA3F28200B900094AA27 /* SwiftyAdsRewardedInterstitial.swift in Sources */,
-				B493CA3E28200B900094AA27 /* SwiftyAdsConfigurations.swift in Sources */,
-				B493CA3C28200B900094AA27 /* SwiftyAdsBanner.swift in Sources */,
-				B493CA4228200B930094AA27 /* SwiftyAdsBannerType.swift in Sources */,
-				B493CA4428200B930094AA27 /* SwiftyAdsType.swift in Sources */,
+				B493CA3D28200B900094AA27 /* SwiftyAdsInterstitialAd.swift in Sources */,
+				B493CA3F28200B900094AA27 /* SwiftyAdsRewardedInterstitialAd.swift in Sources */,
+				B493CA3E28200B900094AA27 /* SwiftyAdsConfiguration.swift in Sources */,
+				B493CA3C28200B900094AA27 /* SwiftyAdsBannerAd.swift in Sources */,
+				B493CA4428200B930094AA27 /* SwiftyAdsTypes.swift in Sources */,
 				B493CA4328200B930094AA27 /* SwiftyAdsEnvironment.swift in Sources */,
 				B493CA4528200B930094AA27 /* SwiftyAds.swift in Sources */,
 				B493CA4628200B930094AA27 /* SwiftyAdsError.swift in Sources */,
-				B493CA4028200B900094AA27 /* SwiftyAdsNative.swift in Sources */,
-				B493CA4128200B900094AA27 /* SwiftyAdsRewarded.swift in Sources */,
+				B493CA4028200B900094AA27 /* SwiftyAdsNativeAd.swift in Sources */,
+				B493CA4128200B900094AA27 /* SwiftyAdsRewardedAd.swift in Sources */,
 				B493CA3A28200B900094AA27 /* SwiftyAdsConsentManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

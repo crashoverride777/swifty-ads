@@ -28,12 +28,14 @@ struct SwiftyAdsConfiguration: Decodable, Equatable {
     let rewardedAdUnitId: String?
     let rewardedInterstitialAdUnitId: String?
     let nativeAdUnitId: String?
+    let isTaggedForChildDirectedTreatment: Bool? /// COPPA
+    let isTaggedForUnderAgeOfConsent: Bool? /// GDPR
 }
 
 extension SwiftyAdsConfiguration {
     static func production(bundle: Bundle) -> Self {
         guard let configuration = decodePlist(type: Self.self, fileName: "SwiftyAds", bundle: bundle) else {
-            fatalError("SwiftyAds could not find SwiftyAds.plist in the selected bundle \(bundle).")
+            fatalError("SwiftyAds could not find SwiftyAds.plist in the the main bundle.")
         }
         return configuration
     }
@@ -44,25 +46,7 @@ extension SwiftyAdsConfiguration {
         interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
         rewardedAdUnitId: "ca-app-pub-3940256099942544/1712485313",
         rewardedInterstitialAdUnitId: "ca-app-pub-3940256099942544/6978759866",
-        nativeAdUnitId: "ca-app-pub-3940256099942544/3986624511"
-    )
-}
-
-// MARK: - Consent
-
-struct SwiftyAdsConsentConfiguration: Decodable, Equatable {
-    /// COPPA
-    let isTaggedForChildDirectedTreatment: Bool
-    /// GDPR
-    let isTaggedForUnderAgeOfConsent: Bool
-}
-
-extension SwiftyAdsConsentConfiguration {
-    static func production(bundle: Bundle) -> Self? {
-        decodePlist(type: Self.self, fileName: "SwiftyAdsConsent", bundle: bundle)
-    }
-    
-    static let debug = Self(
+        nativeAdUnitId: "ca-app-pub-3940256099942544/3986624511",
         isTaggedForChildDirectedTreatment: false,
         isTaggedForUnderAgeOfConsent: false
     )

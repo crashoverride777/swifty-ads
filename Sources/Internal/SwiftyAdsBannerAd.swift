@@ -22,7 +22,7 @@
 
 import GoogleMobileAds
 
-final class SwiftyAdsBanner: NSObject {
+final class GADSwiftyAdsBannerAd: NSObject {
 
     // MARK: - Types
 
@@ -108,9 +108,9 @@ final class SwiftyAdsBanner: NSObject {
     }
 }
 
-// MARK: - SwiftyAdsBannerType
+// MARK: - SwiftyAdsBannerAd
 
-extension SwiftyAdsBanner: SwiftyAdsBannerType {
+extension GADSwiftyAdsBannerAd: SwiftyAdsBannerAd {
     func show(isLandscape: Bool) {
         guard !isDisabled() else { return }
         guard hasConsent() else { return }
@@ -159,7 +159,7 @@ extension SwiftyAdsBanner: SwiftyAdsBannerType {
 
 // MARK: - GADBannerViewDelegate
 
-extension SwiftyAdsBanner: GADBannerViewDelegate {
+extension GADSwiftyAdsBannerAd: GADBannerViewDelegate {
     // Request lifecycle events
     func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
         if case .development = environment {
@@ -195,7 +195,7 @@ extension SwiftyAdsBanner: GADBannerViewDelegate {
 
 // MARK: - Private Methods
 
-private extension SwiftyAdsBanner {
+private extension GADSwiftyAdsBannerAd {
     func add(_ bannerView: GADBannerView, to viewController: UIViewController) {
         // Add banner view to view controller
         bannerView.translatesAutoresizingMaskIntoConstraints = false

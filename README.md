@@ -84,27 +84,21 @@ Download the [template](Sources/Resources/Templates/SwiftyAds.plist) plist and a
 - rewardedInterstitialAdUnitId (String)
 - nativeAdUnitId (String)
 
-### Add SwiftyAdsConsent.plist (Optional)
-
 By default SwiftyAds does not carry out any consent validation (COPPA or GDPR). 
-To enable consent validation using the User Messaging Platform (UMP) SDK, download the [template](Sources/Resources/Templates/SwiftyAdsConsent.plist) plist and add it to your projects bundle. Enter your required values.
 
-- isTaggedForChildDirectedTreatment (Boolean) ([COPPA](https://developers.google.com/admob/ios/targeting#child-directed_setting))
-- isTaggedForUnderAgeOfConsent (Boolean) ([GDPR](https://developers.google.com/admob/ios/targeting#users_under_the_age_of_consent))
+To enable [COPPA](https://developers.google.com/admob/ios/targeting#child-directed_setting) support add the following boolean key with a value of true
+
+- isTaggedForChildDirectedTreatment
+
+To enable [GDPR](https://developers.google.com/admob/ios/targeting#users_under_the_age_of_consent) support, using the User Messaging Platform (UMP) SDK, add the following boolean key with a value of true
+
+- isTaggedForUnderAgeOfConsent
 
 ### Link AppTrackingTransparency framework
 
 [Link](https://developers.google.com/admob/ump/ios/quick-start#update_your_infoplist) the AppTrackingTransparency framework in `Framework, Libraries and Embedded Content` under the general tab, otherwise iOS 14 ATT alerts will not display.
 
 ## Usage
-
-### Add import (CocoaPods or SwiftPackageManager)
-
-- Add the import statement to your swift file(s) if you installed via CocoaPods or SwiftPackageManager
-
-```swift
-import SwiftyAds
-```
 
 ### Create GADRequest builder
 
@@ -115,7 +109,7 @@ Please check the AdMob mediation [documentation](https://developers.google.com/a
 import SwiftyAds
 import GoogleMobileAds
 
-final class SwiftyAdsRequestBuilder: SwiftyAdsRequestBuilderType {
+final class AdsRequestBuilder: SwiftyAdsRequestBuilder {
     func build() -> GADRequest {
         GADRequest()
     }
@@ -132,10 +126,7 @@ Please check the AdMob mediation [documentation](https://developers.google.com/a
 import SwiftyAds
 import AppLovinAdapter
 
-final class SwiftyAdsMediationConfigurator {}
-
-extension SwiftyAdsMediationConfigurator: SwiftyAdsMediationConfiguratorType {
-
+final class MediationConfigurator: SwiftyAdsMediationConfigurator {
     func updateCOPPA(isTaggedForChildDirectedTreatment: Bool)
         // App Lovin mediation network example
         ALPrivacySettings.setIsAgeRestrictedUser(isTaggedForChildDirectedTreatment)
@@ -171,9 +162,8 @@ private func configureAndInitializeSwiftyAds(from viewController: UIViewControll
     #endif
     
     swiftyAds.configure(
-        requestBuilder: SwiftyAdsRequestBuilder(),
-        mediationConfigurator: SwiftyAdsMediationConfigurator(), // set to nil if no mediation is required
-        bundle: .main, // looks for SwiftyAds.plist/SwiftyAdsConsent.plist
+        requestBuilder: AdsRequestBuilder(),
+        mediationConfigurator: MediationConfigurator(), // set to nil if no mediation is required
     )
     
     Task {
@@ -210,8 +200,7 @@ Create a property in your `UIViewController` for the banner to be displayed
 
 ```swift
 class SomeViewController: UIViewController {
-
-    private var bannerAd: SwiftyAdsBannerType?
+    private var bannerAd: SwiftyAdsBannerAd?
 }
 ```
 

@@ -22,7 +22,7 @@
 
 import GoogleMobileAds
 
-protocol SwiftyAdsInterstitialType: AnyObject {
+protocol SwiftyAdsInterstitialAd: AnyObject {
     var isReady: Bool { get }
     func load()
     func stopLoading()
@@ -32,7 +32,7 @@ protocol SwiftyAdsInterstitialType: AnyObject {
               onError: ((Error) -> Void)?)
 }
 
-final class SwiftyAdsInterstitial: NSObject {
+final class GADSwiftyAdsInterstitialAd: NSObject {
 
     // MARK: - Properties
 
@@ -55,24 +55,22 @@ final class SwiftyAdsInterstitial: NSObject {
     }
 }
 
-// MARK: - SwiftyAdsInterstitialType
+// MARK: - SwiftyAdsInterstitialAd
 
-extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
+extension GADSwiftyAdsInterstitialAd: SwiftyAdsInterstitialAd {
     var isReady: Bool {
         interstitialAd != nil
     }
     
     func load() {
-        GADInterstitialAd.load(withAdUnitID: adUnitId, request: request()) { [weak self] (ad, error) in
+        Task { [weak self] in
             guard let self = self else { return }
-
-            if let error = error {
+            do {
+                self.interstitialAd = try await GADInterstitialAd.load(withAdUnitID: self.adUnitId, request: request())
+                self.interstitialAd?.fullScreenContentDelegate = self
+            } catch {
                 self.onError?(error)
-                return
             }
-
-            self.interstitialAd = ad
-            self.interstitialAd?.fullScreenContentDelegate = self
         }
     }
 
@@ -107,7 +105,7 @@ extension SwiftyAdsInterstitial: SwiftyAdsInterstitialType {
 
 // MARK: - GADFullScreenContentDelegate
 
-extension SwiftyAdsInterstitial: GADFullScreenContentDelegate {
+extension GADSwiftyAdsInterstitialAd: GADFullScreenContentDelegate {
     func adDidRecordImpression(_ ad: GADFullScreenPresentingAd) {
         if case .development = environment {
             print("SwiftyAdsInterstitial did record impression for ad: \(ad)")

@@ -12,5 +12,9 @@
 	<string>Enter your ad unit ID or remove entry if not used</string>
 	<key>nativeAdUnitId</key>
 	<string>Enter your ad unit ID or remove entry if not used</string>
+	<key>isTaggedForChildDirectedTreatment</key>
+	<false/>
+	<key>isTaggedForUnderAgeOfConsent</key>
+	<false/>
 </dict>
 </plist>

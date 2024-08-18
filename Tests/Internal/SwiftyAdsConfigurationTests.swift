@@ -10,7 +10,9 @@ final class SwiftyAdsConfigurationTests: XCTestCase {
             interstitialAdUnitId: "456",
             rewardedAdUnitId: "789",
             rewardedInterstitialAdUnitId: nil,
-            nativeAdUnitId: nil
+            nativeAdUnitId: nil,
+            isTaggedForChildDirectedTreatment: false,
+            isTaggedForUnderAgeOfConsent: true
         )
         XCTAssertEqual(sut, expectedConfig)
     }
@@ -22,7 +24,9 @@ final class SwiftyAdsConfigurationTests: XCTestCase {
             interstitialAdUnitId: "ca-app-pub-3940256099942544/4411468910",
             rewardedAdUnitId: "ca-app-pub-3940256099942544/1712485313",
             rewardedInterstitialAdUnitId: "ca-app-pub-3940256099942544/6978759866",
-            nativeAdUnitId: "ca-app-pub-3940256099942544/3986624511"
+            nativeAdUnitId: "ca-app-pub-3940256099942544/3986624511",
+            isTaggedForChildDirectedTreatment: false,
+            isTaggedForUnderAgeOfConsent: false
         )
         XCTAssertEqual(sut, expectedConfig)
     }

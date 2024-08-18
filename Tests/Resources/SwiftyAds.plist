@@ -8,5 +8,9 @@
 	<string>456</string>
 	<key>rewardedAdUnitId</key>
 	<string>789</string>
+	<key>isTaggedForChildDirectedTreatment</key>
+	<false/>
+	<key>isTaggedForUnderAgeOfConsent</key>
+	<true/>
 </dict>
 </plist>

@@ -35,8 +35,6 @@ Provide a way for users to change their consent.
 
 protocol SwiftyAdsConsentManagerType: AnyObject {
     var consentStatus: SwiftyAdsConsentStatus { get }
-    var isTaggedForChildDirectedTreatment: Bool { get }
-    var isTaggedForUnderAgeOfConsent: Bool { get }
     @discardableResult
     func request(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus
 }
@@ -46,8 +44,9 @@ final class SwiftyAdsConsentManager {
     // MARK: - Properties
 
     private let consentInformation: UMPConsentInformation
-    private let configuration: SwiftyAdsConsentConfiguration
-    private let mediationConfigurator: SwiftyAdsMediationConfiguratorType?
+    private let isTaggedForChildDirectedTreatment: Bool
+    private let isTaggedForUnderAgeOfConsent: Bool
+    private let mediationConfigurator: SwiftyAdsMediationConfigurator?
     private let environment: SwiftyAdsEnvironment
     private let mobileAds: GADMobileAds
     private let consentStatusDidChange: (SwiftyAdsConsentStatus) -> Void
@@ -56,19 +55,19 @@ final class SwiftyAdsConsentManager {
 
     // MARK: - Initialization
 
-    init(configuration: SwiftyAdsConsentConfiguration,
-         mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
+    init(isTaggedForChildDirectedTreatment: Bool,
+         isTaggedForUnderAgeOfConsent: Bool,
+         mediationConfigurator: SwiftyAdsMediationConfigurator?,
          environment: SwiftyAdsEnvironment,
          mobileAds: GADMobileAds,
          consentStatusDidChange: @escaping (SwiftyAdsConsentStatus) -> Void) {
+        self.isTaggedForChildDirectedTreatment = isTaggedForChildDirectedTreatment
+        self.isTaggedForUnderAgeOfConsent = isTaggedForUnderAgeOfConsent
         self.consentInformation = .sharedInstance
-        self.configuration = configuration
         self.mediationConfigurator = mediationConfigurator
         self.environment = environment
         self.mobileAds = mobileAds
         self.consentStatusDidChange = consentStatusDidChange
-        #warning("should maybe be refactored and split with GDPR?. If no consent this never gets called")
-        updateCOPPA()
     }
 }
 
@@ -79,21 +78,13 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
         consentInformation.consentStatus
     }
     
-    var isTaggedForChildDirectedTreatment: Bool {
-        configuration.isTaggedForChildDirectedTreatment
-    }
-
-    var isTaggedForUnderAgeOfConsent: Bool {
-        configuration.isTaggedForUnderAgeOfConsent
-    }
-    
     @discardableResult
     func request(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus {
         try await requestUpdate()
         let consentStatus = try await showForm(from: viewController)
         // If consent form was used to update consentStatus we need to update GDPR settings.
         if consentStatus != .notRequired {
-            updateGDPR(consentStatus: consentStatus)
+            configure(for: consentStatus)
         }
         return consentStatus
     }
@@ -141,9 +132,9 @@ private extension SwiftyAdsConsentManager {
                 UMPConsentForm.load() { form, error in
                     if let error {
                         continuation.resume(throwing: error)
-                        return
+                    } else {
+                        continuation.resume(returning: form)
                     }
-                    continuation.resume(returning: form)
                 }
             }
         }
@@ -161,9 +152,9 @@ private extension SwiftyAdsConsentManager {
                 form.present(from: viewController) { error in
                     if let error {
                         continuation.resume(throwing: error)
-                        return
+                    } else {
+                        continuation.resume(returning: self.consentStatus)
                     }
-                    continuation.resume(returning: self.consentStatus)
                 }
             }
         }
@@ -172,15 +163,7 @@ private extension SwiftyAdsConsentManager {
         return consentStatus
     }
     
-    func updateCOPPA() {
-        // Update mediation networks
-        mediationConfigurator?.updateCOPPA(isTaggedForChildDirectedTreatment: isTaggedForChildDirectedTreatment)
-        
-        // Update GADMobileAds
-        mobileAds.requestConfiguration.tagForChildDirectedTreatment = NSNumber(value: isTaggedForChildDirectedTreatment)
-    }
-    
-    func updateGDPR(consentStatus: SwiftyAdsConsentStatus) {
+    func configure(for consentStatus: SwiftyAdsConsentStatus) {
         // Update mediation networks
         //
         // The GADMobileADs tagForUnderAgeOfConsent parameter is currently NOT forwarded to ad network

@@ -22,7 +22,7 @@
 
 import GoogleMobileAds
 
-protocol SwiftyAdsNativeType: AnyObject {
+protocol SwiftyAdsNativeAd: AnyObject {
     func load(from viewController: UIViewController,
               adUnitIdType: SwiftyAdsAdUnitIdType,
               loaderOptions: SwiftyAdsNativeAdLoaderOptions,
@@ -33,7 +33,7 @@ protocol SwiftyAdsNativeType: AnyObject {
     func stopLoading()
 }
 
-final class SwiftyAdsNative: NSObject {
+final class GADSwiftyAdsNativeAd: NSObject {
 
     // MARK: - Properties
 
@@ -56,9 +56,9 @@ final class SwiftyAdsNative: NSObject {
     }
 }
 
-// MARK: - SwiftyAdsNativeType
+// MARK: - SwiftyAdsNativeAd
 
-extension SwiftyAdsNative: SwiftyAdsNativeType {
+extension GADSwiftyAdsNativeAd: SwiftyAdsNativeAd {
     func load(from viewController: UIViewController,
               adUnitIdType: SwiftyAdsAdUnitIdType,
               loaderOptions: SwiftyAdsNativeAdLoaderOptions,
@@ -121,7 +121,7 @@ extension SwiftyAdsNative: SwiftyAdsNativeType {
 
 // MARK: - GADNativeAdLoaderDelegate
 
-extension SwiftyAdsNative: GADNativeAdLoaderDelegate {
+extension GADSwiftyAdsNativeAd: GADNativeAdLoaderDelegate {
     func adLoader(_ adLoader: GADAdLoader, didReceive nativeAd: GADNativeAd) {
         onReceive?(nativeAd)
     }

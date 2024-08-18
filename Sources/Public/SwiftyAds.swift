@@ -40,14 +40,14 @@ public final class SwiftyAds: NSObject {
     private let mobileAds: GADMobileAds
     
     private var configuration: SwiftyAdsConfiguration?
-    private var requestBuilder: SwiftyAdsRequestBuilderType?
-    private var mediationConfigurator: SwiftyAdsMediationConfiguratorType?
+    private var requestBuilder: SwiftyAdsRequestBuilder?
+    private var mediationConfigurator: SwiftyAdsMediationConfigurator?
     private var environment: SwiftyAdsEnvironment = .production
     
-    private var interstitialAd: SwiftyAdsInterstitialType?
-    private var rewardedAd: SwiftyAdsRewardedType?
-    private var rewardedInterstitialAd: SwiftyAdsRewardedInterstitialType?
-    private var nativeAd: SwiftyAdsNativeType?
+    private var interstitialAd: SwiftyAdsInterstitialAd?
+    private var rewardedAd: SwiftyAdsRewardedAd?
+    private var rewardedInterstitialAd: SwiftyAdsRewardedInterstitialAd?
+    private var nativeAd: SwiftyAdsNativeAd?
     private var consentManager: SwiftyAdsConsentManagerType?
     private var disabled = false
     private var hasInitializedMobileAds = false
@@ -75,23 +75,10 @@ public final class SwiftyAds: NSObject {
 
 extension SwiftyAds: SwiftyAdsType {
     /// The current consent status.
-    ///
-    /// - Warning:
-    /// Returns .notRequired if consent has been disabled via SwiftyAds.plist isUMPDisabled entry.
     public var consentStatus: SwiftyAdsConsentStatus {
         consentManager?.consentStatus ?? .notRequired
     }
-
-    /// Returns true if configured for child directed treatment or nil if ignored (COPPA).
-    public var isTaggedForChildDirectedTreatment: Bool {
-        consentManager?.isTaggedForChildDirectedTreatment ?? false
-    }
-
-    /// Returns true if configured for under age of consent (GDPR).
-    public var isTaggedForUnderAgeOfConsent: Bool {
-        consentManager?.isTaggedForUnderAgeOfConsent ?? false
-    }
-     
+    
     /// Check if interstitial ad is ready to be displayed.
     public var isInterstitialAdReady: Bool {
         interstitialAd?.isReady ?? false
@@ -118,23 +105,14 @@ extension SwiftyAds: SwiftyAdsType {
     ///
     /// - parameter requestBuilder: The GADRequest builder.
     /// - parameter mediationConfigurator: Optional configurator to update mediation networks..
-    /// - parameter bundle: The bundle to search for the SwiftyAds plist's files. Defaults to main bundle.
-    ///
-    /// - Warning:
-    /// Returns .notRequired in the completion handler if consent has been disabled via SwiftyAds.plist isUMPDisabled entry.
-    public func configure(requestBuilder: SwiftyAdsRequestBuilderType,
-                          mediationConfigurator: SwiftyAdsMediationConfiguratorType?,
-                          bundle: Bundle = .main) {
+    public func configure(requestBuilder: SwiftyAdsRequestBuilder, mediationConfigurator: SwiftyAdsMediationConfigurator?) {
         // Update configuration for selected environment
         let configuration: SwiftyAdsConfiguration
-        let consentConfiguration: SwiftyAdsConsentConfiguration?
         switch environment {
         case .production:
-            configuration = .production(bundle: bundle)
-            consentConfiguration = .production(bundle: bundle)
+            configuration = .production(bundle: .main)
         case .development(let testDeviceIdentifiers, _, _):
             configuration = .debug
-            consentConfiguration = .debug
             mobileAds.requestConfiguration.testDeviceIdentifiers = testDeviceIdentifiers
         }
         
@@ -144,7 +122,7 @@ extension SwiftyAds: SwiftyAdsType {
         
         // Create ads
         if let interstitialAdUnitId = configuration.interstitialAdUnitId {
-            interstitialAd = SwiftyAdsInterstitial(
+            interstitialAd = GADSwiftyAdsInterstitialAd(
                 adUnitId: interstitialAdUnitId,
                 environment: environment,
                 request: requestBuilder.build
@@ -152,7 +130,7 @@ extension SwiftyAds: SwiftyAdsType {
         }
 
         if let rewardedAdUnitId = configuration.rewardedAdUnitId {
-            rewardedAd = SwiftyAdsRewarded(
+            rewardedAd = GADSwiftyAdsRewardedAd(
                 adUnitId: rewardedAdUnitId,
                 environment: environment,
                 request: requestBuilder.build
@@ -160,7 +138,7 @@ extension SwiftyAds: SwiftyAdsType {
         }
 
         if let rewardedInterstitialAdUnitId = configuration.rewardedInterstitialAdUnitId {
-            rewardedInterstitialAd = SwiftyAdsRewardedInterstitial(
+            rewardedInterstitialAd = GADSwiftyAdsRewardedInterstitialAd(
                 adUnitId: rewardedInterstitialAdUnitId,
                 environment: environment,
                 request: requestBuilder.build
@@ -168,17 +146,24 @@ extension SwiftyAds: SwiftyAdsType {
         }
 
         if let nativeAdUnitId = configuration.nativeAdUnitId {
-            nativeAd = SwiftyAdsNative(
+            nativeAd = GADSwiftyAdsNativeAd(
                 adUnitId: nativeAdUnitId,
                 environment: environment,
                 request: requestBuilder.build
             )
         }
         
+        // Update for COPPA if needed
+        if let isTaggedForChildDirectedTreatment = configuration.isTaggedForChildDirectedTreatment {
+            mediationConfigurator?.updateCOPPA(isTaggedForChildDirectedTreatment: isTaggedForChildDirectedTreatment)
+            mobileAds.requestConfiguration.tagForChildDirectedTreatment = NSNumber(value: isTaggedForChildDirectedTreatment)
+        }
+        
         // Create consent manager.
-        if let consentConfiguration {
+        if let isTaggedForUnderAgeOfConsent = configuration.isTaggedForUnderAgeOfConsent {
             consentManager = SwiftyAdsConsentManager(
-                configuration: consentConfiguration,
+                isTaggedForChildDirectedTreatment: configuration.isTaggedForChildDirectedTreatment ?? false,
+                isTaggedForUnderAgeOfConsent: isTaggedForUnderAgeOfConsent,
                 mediationConfigurator: mediationConfigurator,
                 environment: environment,
                 mobileAds: mobileAds,
@@ -228,7 +213,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter onWillPresentScreen: An optional callback when the banner was tapped and is about to present a screen.
     /// - parameter onWillDismissScreen: An optional callback when the banner is about dismiss a presented screen.
     /// - parameter onDidDismissScreen: An optional callback when the banner did dismiss a presented screen.
-    /// - returns SwiftyAdsBannerType to show, hide or remove the prepared banner ad.
+    /// - returns SwiftyAdsBannerAd to show, hide or remove the prepared banner ad.
     public func makeBannerAd(in viewController: UIViewController,
                              adUnitIdType: SwiftyAdsAdUnitIdType,
                              position: SwiftyAdsBannerAdPosition,
@@ -238,7 +223,7 @@ extension SwiftyAds: SwiftyAdsType {
                              onError: ((Error) -> Void)?,
                              onWillPresentScreen: (() -> Void)?,
                              onWillDismissScreen: (() -> Void)?,
-                             onDidDismissScreen: (() -> Void)?) -> SwiftyAdsBannerType? {
+                             onDidDismissScreen: (() -> Void)?) -> SwiftyAdsBannerAd? {
         guard !isDisabled else { return nil }
         
         guard let configuration = configuration else {
@@ -268,7 +253,7 @@ extension SwiftyAds: SwiftyAdsType {
             return nil
         }
 
-        let bannerAd = SwiftyAdsBanner(
+        let bannerAd = GADSwiftyAdsBannerAd(
             environment: environment,
             isDisabled: { [weak self] in
                 self?.isDisabled ?? false
@@ -434,7 +419,7 @@ extension SwiftyAds: SwiftyAdsType {
         }
 
         if nativeAd == nil, case .custom(let adUnitId) = adUnitIdType {
-            nativeAd = SwiftyAdsNative(
+            nativeAd = GADSwiftyAdsNativeAd(
                 adUnitId: adUnitId,
                 environment: environment,
                 request: { [weak self] in
