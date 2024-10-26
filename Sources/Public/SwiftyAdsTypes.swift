@@ -25,36 +25,37 @@ import UserMessagingPlatform
 
 public typealias SwiftyAdsConsentStatus = UMPConsentStatus
 
-public enum SwiftyAdsAdUnitIdType {
+public enum SwiftyAdsAdUnitIdType: Sendable {
     case plist
     case custom(String)
 }
 
-public enum SwiftyAdsBannerAdAnimation {
+public enum SwiftyAdsBannerAdAnimation: Sendable {
     case none
     case fade(duration: TimeInterval)
     case slide(duration: TimeInterval)
 }
 
-public enum SwiftyAdsBannerAdPosition {
+public enum SwiftyAdsBannerAdPosition: Sendable {
     case top(isUsingSafeArea: Bool)
     case bottom(isUsingSafeArea: Bool)
 }
 
-public enum SwiftyAdsNativeAdLoaderOptions {
+public enum SwiftyAdsNativeAdLoaderOptions: Sendable {
     case single
     case multiple(Int)
 }
 
-public protocol SwiftyAdsRequestBuilder: AnyObject {
+public protocol SwiftyAdsRequestBuilder {
     func build() -> GADRequest
 }
 
-public protocol SwiftyAdsMediationConfigurator: AnyObject {
+public protocol SwiftyAdsMediationConfigurator: Sendable {
     func updateCOPPA(isTaggedForChildDirectedTreatment: Bool)
     func updateGDPR(for consentStatus: SwiftyAdsConsentStatus, isTaggedForUnderAgeOfConsent: Bool)
 }
 
+@MainActor
 public protocol SwiftyAdsBannerAd: AnyObject {
     /// Show the banner ad.
     ///
@@ -66,14 +67,17 @@ public protocol SwiftyAdsBannerAd: AnyObject {
     func remove()
 }
 
-public protocol SwiftyAdsType: AnyObject {
+public protocol SwiftyAdsType: Sendable {
     var consentStatus: SwiftyAdsConsentStatus { get }
     var isInterstitialAdReady: Bool { get }
     var isRewardedAdReady: Bool { get }
     var isRewardedInterstitialAdReady: Bool { get }
     var isDisabled: Bool { get }
+    @MainActor
     func configure(requestBuilder: SwiftyAdsRequestBuilder, mediationConfigurator: SwiftyAdsMediationConfigurator?)
+    @MainActor
     func initializeIfNeeded(from viewController: UIViewController) async throws
+    @MainActor
     func makeBannerAd(in viewController: UIViewController,
                       adUnitIdType: SwiftyAdsAdUnitIdType,
                       position: SwiftyAdsBannerAdPosition,
@@ -84,32 +88,36 @@ public protocol SwiftyAdsType: AnyObject {
                       onWillPresentScreen: (() -> Void)?,
                       onWillDismissScreen: (() -> Void)?,
                       onDidDismissScreen: (() -> Void)?) -> SwiftyAdsBannerAd?
+    @MainActor
     func showInterstitialAd(from viewController: UIViewController,
                             onOpen: (() -> Void)?,
                             onClose: (() -> Void)?,
-                            onError: ((Error) -> Void)?)
+                            onError: ((Error) -> Void)?) async throws
+    @MainActor
     func showRewardedAd(from viewController: UIViewController,
                         onOpen: (() -> Void)?,
                         onClose: (() -> Void)?,
                         onError: ((Error) -> Void)?,
-                        onNotReady: (() -> Void)?,
-                        onReward: @escaping (NSDecimalNumber) -> Void)
+                        onReward: @escaping (NSDecimalNumber) -> Void) async throws
+    @MainActor
     func showRewardedInterstitialAd(from viewController: UIViewController,
                                     onOpen: (() -> Void)?,
                                     onClose: (() -> Void)?,
                                     onError: ((Error) -> Void)?,
-                                    onReward: @escaping (NSDecimalNumber) -> Void)
+                                    onReward: @escaping (NSDecimalNumber) -> Void) async throws
+    @MainActor
     func loadNativeAd(from viewController: UIViewController,
                       adUnitIdType: SwiftyAdsAdUnitIdType,
                       loaderOptions: SwiftyAdsNativeAdLoaderOptions,
                       onFinishLoading: (() -> Void)?,
                       onError: ((Error) -> Void)?,
                       onReceive: @escaping (GADNativeAd) -> Void)
-    func setDisabled(_ isDisabled: Bool)
-    func loadAdsIfNeeded()
+    @MainActor
     func updateConsent(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus
     #if DEBUG
-    func enableDebug(testDeviceIdentifiers: [String], 
+    func setDisabled(_ isDisabled: Bool)
+    func loadAdsIfNeeded() async throws
+    func enableDebug(testDeviceIdentifiers: [String],
                      geography: UMPDebugGeography,
                      resetsConsentOnLaunch: Bool,
                      isTaggedForChildDirectedTreatment: Bool?,

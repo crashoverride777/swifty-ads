@@ -148,7 +148,13 @@ private func configureAndInitializeSwiftyAds(from viewController: UIViewControll
     let swiftyAds: SwiftyAds = .shared
     
     #if DEBUG
-    swiftyAds.enableDebug(testDeviceIdentifiers: [], geography: .EEA, resetsConsentOnLaunch: false)
+    swiftyAds.enableDebug(
+        testDeviceIdentifiers: [],
+        geography: .EEA,
+        resetsConsentOnLaunch: true,
+        isTaggedForChildDirectedTreatment: nil,
+        isTaggedForUnderAgeOfConsent: false
+    )
     #endif
     
     swiftyAds.configure(requestBuilder: AdsRequestBuilder(), mediationConfigurator: AdsMediationConfigurator()
@@ -169,16 +175,12 @@ SwiftyAds requires reference to a `UIViewController` to present ads. If you are 
 
 AppDelegate
 ```swift
-if let viewController = window?.rootViewController {
-    SwiftyAds.shared.showInterstitialAd(from: viewController, ...)
-}
+if let viewController = window?.rootViewController { ... }
 ```
 
 SKScene
 ```swift
-if let viewController = view?.window?.rootViewController {
-    SwiftyAds.shared.showInterstitialAd(from: viewController, ...)
-}
+if let viewController = view?.window?.rootViewController { ... }
 ```
 
 ### Banner Ads
@@ -258,18 +260,19 @@ bannerAd = nil
 ### Interstitial Ads
 
 ```swift
-SwiftyAds.shared.showInterstitialAd(
-    from: someViewController,
-    onOpen: {
-        print("SwiftyAds interstitial ad did open")
-    },
-    onClose: {
-        print("SwiftyAds interstitial ad did close")
-    },
-    onError: { error in
-        print("SwiftyAds interstitial ad error \(error)")
-    }
-)
+Task {
+    try await SwiftyAds.shared.showInterstitialAd(
+        from: someViewController,
+        onOpen: {
+            print("SwiftyAds interstitial ad did open")
+        },
+        onClose: {
+            print("SwiftyAds interstitial ad did close")
+        },
+        onError: { error in
+            print("SwiftyAds interstitial ad error \(error)")
+        }
+    )
 ```
 
 ### Rewarded Ads
@@ -277,29 +280,32 @@ SwiftyAds.shared.showInterstitialAd(
 Rewarded ads may be non-skippable and should only be presented when pressing a dedicated button.
 
 ```swift
-SwiftyAds.shared.showRewardedAd(
-    from: someViewController,
-    onOpen: {
-        print("SwiftyAds rewarded ad did open")
-    },
-    onClose: {
-        print("SwiftyAds rewarded ad did close")
-    }, 
-    onError: { error in
-        print("SwiftyAds rewarded ad error \(error)")
-    },
-    onNotReady: { [weak self] in
+Task {
+    do {
+        try await SwiftyAds.shared.showRewardedAd(
+            from: someViewController,
+            onOpen: {
+                print("SwiftyAds rewarded ad did open")
+            },
+            onClose: {
+                print("SwiftyAds rewarded ad did close")
+            }, 
+            onError: { error in
+                print("SwiftyAds rewarded ad error \(error)")
+            }
+            onReward: { [weak self] rewardAmount in
+                print("SwiftyAds rewarded ad did reward user with \(rewardAmount)")
+                // Provide the user with the reward e.g coins, diamonds etc
+            }
+        )
+    } catch SwiftyAdsError.rewardedAdNotLoaded {
         guard let self = self else { return }
         print("SwiftyAds rewarded ad was not ready")
         let alertController = UIAlertController(title: nil, message: "No video available to watch at the moment.", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Ok", style: .cancel))
         DispatchQueue.main.async { self.present(alertController, animated: true) }
-    },
-    onReward: { [weak self] rewardAmount in
-        print("SwiftyAds rewarded ad did reward user with \(rewardAmount)")
-        // Provide the user with the reward e.g coins, diamonds etc
     }
-)
+}
 ```
 
 NOTE: AdMob provided a new rewarded video API which lets you preload multiple rewarded videos with different AdUnitIds. While SwiftyAds uses this new API it currently only supports loading 1 rewarded ad at a time.
@@ -310,22 +316,24 @@ Rewarded interstitial ads can be presented naturally in your apps flow, similar 
 Before displaying a rewarded interstitial ad, you must present the user with an [intro screen](https://support.google.com/admob/answer/9884467) that provides clear reward messaging and an option to skip the ad before it starts.
 
 ```swift
-SwiftyAds.shared.showRewardedInterstitialAd(
-    from: someViewController,
-    onOpen: {
-        print("SwiftyAds rewarded interstitial ad did open")
-    },
-    onClose: {
-        print("SwiftyAds rewarded interstitial ad did close")
-    }, 
-    onError: { error in
-        print("SwiftyAds rewarded interstitial ad error \(error)")
-    },
-    onReward: { [weak self] rewardAmount in
-        print("SwiftyAds rewarded interstitial ad did reward user with \(rewardAmount)")
-        // Provide the user with the reward e.g coins, diamonds etc
-    }
-)
+Task {
+    try await SwiftyAds.shared.showRewardedInterstitialAd(
+        from: someViewController,
+        onOpen: {
+            print("SwiftyAds rewarded interstitial ad did open")
+        },
+        onClose: {
+            print("SwiftyAds rewarded interstitial ad did close")
+        }, 
+        onError: { error in
+            print("SwiftyAds rewarded interstitial ad error \(error)")
+        },
+        onReward: { [weak self] rewardAmount in
+            print("SwiftyAds rewarded interstitial ad did reward user with \(rewardAmount)")
+            // Provide the user with the reward e.g coins, diamonds etc
+        }
+    )
+}
 ```
 
 ### Native Ads
@@ -361,7 +369,9 @@ NOTE: While prefetching ads is a great technique, it's important that you don't 
 SwiftyAds will automatically load Ads when appropriate. Ads can also be loaded manually if required.
 
 ```swift
-SwiftyAds.shared.loadAdsIfNeeded()
+Task {
+    try await SwiftyAds.shared.loadAdsIfNeeded()
+}
 ```
 
 ### Errors

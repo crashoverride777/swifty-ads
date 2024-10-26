@@ -22,7 +22,7 @@
 
 import Foundation
 
-public enum SwiftyAdsError: LocalizedError {
+public enum SwiftyAdsError: LocalizedError, Sendable {
     case notConfigured
     case consentManagerNotAvailable
     case loadConsentForm

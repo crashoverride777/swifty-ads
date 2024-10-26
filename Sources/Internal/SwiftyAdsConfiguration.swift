@@ -22,7 +22,7 @@
 
 import Foundation
 
-struct SwiftyAdsConfiguration: Decodable, Equatable {
+struct SwiftyAdsConfiguration: Decodable, Equatable, Sendable {
     let bannerAdUnitId: String?
     let interstitialAdUnitId: String?
     let rewardedAdUnitId: String?

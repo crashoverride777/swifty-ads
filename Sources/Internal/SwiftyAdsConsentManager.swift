@@ -20,8 +20,8 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-import UserMessagingPlatform
-import GoogleMobileAds
+@preconcurrency import UserMessagingPlatform
+@preconcurrency import GoogleMobileAds
 
 /*
 The SDK is designed to be used in a linear fashion. The steps for using the SDK are:
@@ -33,12 +33,13 @@ Present the form.
 Provide a way for users to change their consent.
 */
 
-protocol SwiftyAdsConsentManagerType: AnyObject {
+protocol SwiftyAdsConsentManager: Sendable {
     var consentStatus: SwiftyAdsConsentStatus { get }
+    @MainActor
     func request(from viewController: UIViewController) async throws
 }
 
-final class SwiftyAdsConsentManager {
+final class DefaultSwiftyAdsConsentManager {
 
     // MARK: - Properties
 
@@ -65,13 +66,14 @@ final class SwiftyAdsConsentManager {
     }
 }
 
-// MARK: - SwiftyAdsConsentManagerType
+// MARK: - SwiftyAdsConsentManager
 
-extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
+extension DefaultSwiftyAdsConsentManager: SwiftyAdsConsentManager {
     var consentStatus: SwiftyAdsConsentStatus {
         consentInformation.consentStatus
     }
     
+    @MainActor
     func request(from viewController: UIViewController) async throws {
         // Update consent status configuration when finished.
         defer {
@@ -86,8 +88,8 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
         // The consent information state was updated and we can now check if a form is available.
         switch consentInformation.formStatus {
         case .available:
-            let form = try await loadForm()
-            try await showForm(form, from: viewController)
+            let form = try await UMPConsentForm.load()
+            try await form.present(from: viewController)
         case .unavailable:
             // Showing a consent form is not required
             break
@@ -102,7 +104,7 @@ extension SwiftyAdsConsentManager: SwiftyAdsConsentManagerType {
 
 // MARK: - Private Methods
 
-private extension SwiftyAdsConsentManager {
+private extension DefaultSwiftyAdsConsentManager {
     func requestUpdate() async throws {
         // Create a UMPRequestParameters object.
         let parameters = UMPRequestParameters()
@@ -123,37 +125,6 @@ private extension SwiftyAdsConsentManager {
         // may return `.required` as the ATT alert has not yet been displayed and we are using
         // Google Choices ATT message.
         try await consentInformation.requestConsentInfoUpdate(with: parameters)
-    }
-    
-    func loadForm() async throws -> UMPConsentForm {
-        try await withCheckedThrowingContinuation { continuation in
-            DispatchQueue.main.async {
-                UMPConsentForm.load() { form, error in
-                    if let error {
-                        continuation.resume(throwing: error)
-                    } else if let form {
-                        continuation.resume(returning: form)
-                    } else {
-                        // Fallback but both values should never be nil.
-                        continuation.resume(throwing: SwiftyAdsError.loadConsentForm)
-                    }
-                }
-            }
-        }
-    }
-    
-    func showForm(_ form: UMPConsentForm, from viewController: UIViewController) async throws {
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-            DispatchQueue.main.async {
-                form.present(from: viewController) { error in
-                    if let error {
-                        continuation.resume(throwing: error)
-                    } else {
-                        continuation.resume()
-                    }
-                }
-            }
-        }
     }
     
     func configure(for consentStatus: SwiftyAdsConsentStatus) {

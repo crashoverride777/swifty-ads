@@ -22,7 +22,8 @@
 
 import GoogleMobileAds
 
-protocol SwiftyAdsNativeAd: AnyObject {
+protocol SwiftyAdsNativeAd {
+    @MainActor
     func load(from viewController: UIViewController,
               adUnitIdType: SwiftyAdsAdUnitIdType,
               loaderOptions: SwiftyAdsNativeAdLoaderOptions,
@@ -59,6 +60,7 @@ final class GADSwiftyAdsNativeAd: NSObject {
 // MARK: - SwiftyAdsNativeAd
 
 extension GADSwiftyAdsNativeAd: SwiftyAdsNativeAd {
+    @MainActor
     func load(from viewController: UIViewController,
               adUnitIdType: SwiftyAdsAdUnitIdType,
               loaderOptions: SwiftyAdsNativeAdLoaderOptions,

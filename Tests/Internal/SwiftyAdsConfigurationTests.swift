@@ -1,9 +1,10 @@
-import XCTest
+import Foundation
+import Testing
 @testable import SwiftyAds
 
-final class SwiftyAdsConfigurationTests: XCTestCase {
+struct SwiftyAdsConfigurationTests {
 
-    func testProduction_decodesCorrectly() {
+    @Test func production() {
         let sut: SwiftyAdsConfiguration = .production(bundle: .module)
         let expectedConfig = SwiftyAdsConfiguration(
             bannerAdUnitId: "111",
@@ -14,10 +15,10 @@ final class SwiftyAdsConfigurationTests: XCTestCase {
             isTaggedForChildDirectedTreatment: false,
             isTaggedForUnderAgeOfConsent: true
         )
-        XCTAssertEqual(sut, expectedConfig)
+        #expect(sut == expectedConfig)
     }
     
-    func testDebug() {
+    @Test func debug() {
         let developmentSettings = SwiftyAdsEnvironment.DevelopmentSettings(
             testDeviceIdentifiers: [],
             geography: .disabled,
@@ -35,6 +36,6 @@ final class SwiftyAdsConfigurationTests: XCTestCase {
             isTaggedForChildDirectedTreatment: nil,
             isTaggedForUnderAgeOfConsent: true
         )
-        XCTAssertEqual(sut, expectedConfig)
+        #expect(sut == expectedConfig)
     }
 }

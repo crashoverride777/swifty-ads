@@ -1,4 +1,4 @@
-// swift-tools-version: 5.8
+// swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -10,7 +10,7 @@ let package = Package(
     platforms: [.iOS(.v14)],
     products: [.library(name: packageName, targets: [packageName])],
     dependencies: [
-        .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", from: "11.3.0")
+        .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", from: "11.10.0")
     ],
     targets: [
         .target(
@@ -27,5 +27,5 @@ let package = Package(
             resources: [.process("Resources")]
         )
     ],
-    swiftLanguageVersions: [.v5]
+    swiftLanguageModes: [.v5, .v6]
 )

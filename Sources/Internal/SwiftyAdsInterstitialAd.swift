@@ -22,17 +22,18 @@
 
 import GoogleMobileAds
 
-protocol SwiftyAdsInterstitialAd: AnyObject {
+protocol SwiftyAdsInterstitialAd: Sendable {
     var isReady: Bool { get }
-    func load()
+    func load() async throws
     func stopLoading()
+    @MainActor
     func show(from viewController: UIViewController,
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
-              onError: ((Error) -> Void)?)
+              onError: ((Error) -> Void)?) async throws
 }
 
-final class GADSwiftyAdsInterstitialAd: NSObject {
+final class GADSwiftyAdsInterstitialAd: NSObject, @unchecked Sendable {
 
     // MARK: - Properties
 
@@ -62,16 +63,9 @@ extension GADSwiftyAdsInterstitialAd: SwiftyAdsInterstitialAd {
         interstitialAd != nil
     }
     
-    func load() {
-        Task { [weak self] in
-            guard let self = self else { return }
-            do {
-                self.interstitialAd = try await GADInterstitialAd.load(withAdUnitID: self.adUnitId, request: request())
-                self.interstitialAd?.fullScreenContentDelegate = self
-            } catch {
-                self.onError?(error)
-            }
-        }
+    func load() async throws {
+        interstitialAd = try await GADInterstitialAd.load(withAdUnitID: adUnitId, request: request())
+        interstitialAd?.fullScreenContentDelegate = self
     }
 
     func stopLoading() {
@@ -79,26 +73,26 @@ extension GADSwiftyAdsInterstitialAd: SwiftyAdsInterstitialAd {
         interstitialAd = nil
     }
     
+    @MainActor
     func show(from viewController: UIViewController,
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
-              onError: ((Error) -> Void)?) {
+              onError: ((Error) -> Void)?) async throws {
         self.onOpen = onOpen
         self.onClose = onClose
         self.onError = onError
         
         guard let interstitialAd = interstitialAd else {
-            load()
-            onError?(SwiftyAdsError.interstitialAdNotLoaded)
-            return
+            reload()
+            throw SwiftyAdsError.interstitialAdNotLoaded
         }
 
         do {
             try interstitialAd.canPresent(fromRootViewController: viewController)
             interstitialAd.present(fromRootViewController: viewController)
         } catch {
-            load()
-            onError?(error)
+            reload()
+            throw error
         }
     }
 }
@@ -115,17 +109,27 @@ extension GADSwiftyAdsInterstitialAd: GADFullScreenContentDelegate {
     func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
         onOpen?()
     }
-
+    
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
         // Nil out reference
         interstitialAd = nil
         // Send callback
         onClose?()
         // Load the next ad so its ready for displaying
-        load()
+        reload()
     }
 
     func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
         onError?(error)
+    }
+}
+
+// MARK: - Private Methods
+
+private extension GADSwiftyAdsInterstitialAd {
+    func reload() {
+        Task { [weak self] in
+            try await self?.load()
+        }
     }
 }

@@ -22,18 +22,18 @@
 
 import GoogleMobileAds
 
-protocol SwiftyAdsRewardedAd: AnyObject {
+protocol SwiftyAdsRewardedAd: Sendable {
     var isReady: Bool { get }
-    func load()
+    func load() async throws
+    @MainActor
     func show(from viewController: UIViewController,
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?,
-              onNotReady: (() -> Void)?,
-              onReward: @escaping (NSDecimalNumber) -> Void)
+              onReward: @escaping (NSDecimalNumber) -> Void) async throws
 }
 
-final class GADSwiftyAdsRewardedAd: NSObject {
+final class GADSwiftyAdsRewardedAd: NSObject, @unchecked Sendable {
 
     // MARK: - Properties
 
@@ -63,33 +63,24 @@ extension GADSwiftyAdsRewardedAd: SwiftyAdsRewardedAd {
         rewardedAd != nil
     }
     
-    func load() {
-        Task { [weak self] in
-            guard let self = self else { return }
-            do {
-                self.rewardedAd = try await GADRewardedAd.load(withAdUnitID: self.adUnitId, request: request())
-                self.rewardedAd?.fullScreenContentDelegate = self
-            } catch {
-                self.onError?(error)
-            }
-        }
+    func load() async throws {
+        rewardedAd = try await GADRewardedAd.load(withAdUnitID: adUnitId, request: request())
+        rewardedAd?.fullScreenContentDelegate = self
     }
  
+    @MainActor
     func show(from viewController: UIViewController,
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?,
-              onNotReady: (() -> Void)?,
-              onReward: @escaping (NSDecimalNumber) -> Void) {
+              onReward: @escaping (NSDecimalNumber) -> Void) async throws {
         self.onOpen = onOpen
         self.onClose = onClose
         self.onError = onError
         
         guard let rewardedAd = rewardedAd else {
-            load()
-            onError?(SwiftyAdsError.rewardedAdNotLoaded)
-            onNotReady?()
-            return
+            reload()
+            throw SwiftyAdsError.rewardedAdNotLoaded
         }
 
         do {
@@ -99,10 +90,8 @@ extension GADSwiftyAdsRewardedAd: SwiftyAdsRewardedAd {
                 onReward(rewardAmount)
             })
         } catch {
-            load()
-            onError?(error)
-            onNotReady?()
-            return
+            reload()
+            throw error
         }
     }
 }
@@ -126,10 +115,20 @@ extension GADSwiftyAdsRewardedAd: GADFullScreenContentDelegate {
         // Send callback
         onClose?()
         // Load the next ad so its ready for displaying
-        load()
+        reload()
     }
 
     func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
         onError?(error)
+    }
+}
+
+// MARK: - Private Methods
+
+private extension GADSwiftyAdsRewardedAd {
+    func reload() {
+        Task { [weak self] in
+            try await self?.load()
+        }
     }
 }

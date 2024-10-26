@@ -22,18 +22,19 @@
 
 import GoogleMobileAds
 
-protocol SwiftyAdsRewardedInterstitialAd: AnyObject {
+protocol SwiftyAdsRewardedInterstitialAd: Sendable {
     var isReady: Bool { get }
-    func load()
+    func load() async throws
     func stopLoading()
+    @MainActor
     func show(from viewController: UIViewController,
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?,
-              onReward: @escaping (NSDecimalNumber) -> Void)
+              onReward: @escaping (NSDecimalNumber) -> Void) async throws
 }
 
-final class GADSwiftyAdsRewardedInterstitialAd: NSObject {
+final class GADSwiftyAdsRewardedInterstitialAd: NSObject, @unchecked Sendable {
 
     // MARK: - Properties
 
@@ -63,16 +64,9 @@ extension GADSwiftyAdsRewardedInterstitialAd: SwiftyAdsRewardedInterstitialAd {
         rewardedInterstitialAd != nil
     }
 
-    func load() {
-        Task { [weak self] in
-            guard let self = self else { return }
-            do {
-                self.rewardedInterstitialAd = try await GADRewardedInterstitialAd.load(withAdUnitID: self.adUnitId, request: request())
-                self.rewardedInterstitialAd?.fullScreenContentDelegate = self
-            } catch {
-                self.onError?(error)
-            }
-        }
+    func load() async throws {
+        rewardedInterstitialAd = try await GADRewardedInterstitialAd.load(withAdUnitID: adUnitId, request: request())
+        rewardedInterstitialAd?.fullScreenContentDelegate = self
     }
 
     func stopLoading() {
@@ -80,19 +74,19 @@ extension GADSwiftyAdsRewardedInterstitialAd: SwiftyAdsRewardedInterstitialAd {
         rewardedInterstitialAd = nil
     }
 
+    @MainActor
     func show(from viewController: UIViewController,
               onOpen: (() -> Void)?,
               onClose: (() -> Void)?,
               onError: ((Error) -> Void)?,
-              onReward: @escaping (NSDecimalNumber) -> Void) {
+              onReward: @escaping (NSDecimalNumber) -> Void) async throws {
         self.onOpen = onOpen
         self.onClose = onClose
         self.onError = onError
 
         guard let rewardedInterstitialAd = rewardedInterstitialAd else {
-            load()
-            onError?(SwiftyAdsError.rewardedInterstitialAdNotLoaded)
-            return
+            reload()
+            throw SwiftyAdsError.rewardedInterstitialAdNotLoaded
         }
 
         do {
@@ -102,9 +96,8 @@ extension GADSwiftyAdsRewardedInterstitialAd: SwiftyAdsRewardedInterstitialAd {
                 onReward(rewardAmount)
             })
         } catch {
-            load()
-            onError?(error)
-            return
+            reload()
+            throw error
         }
     }
 }
@@ -128,10 +121,20 @@ extension GADSwiftyAdsRewardedInterstitialAd: GADFullScreenContentDelegate {
         // Send callback
         onClose?()
         // Load the next ad so its ready for displaying
-        load()
+        reload()
     }
 
     func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
         onError?(error)
+    }
+}
+
+// MARK: - Private Methods
+
+private extension GADSwiftyAdsRewardedInterstitialAd {
+    func reload() {
+        Task { [weak self] in
+            try await self?.load()
+        }
     }
 }

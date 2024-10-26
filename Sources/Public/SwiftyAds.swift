@@ -20,7 +20,7 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-import GoogleMobileAds
+@preconcurrency import GoogleMobileAds
 import UserMessagingPlatform
 
 /**
@@ -28,12 +28,12 @@ import UserMessagingPlatform
  
  A concret class implementation of SwiftAdsType to display ads from Google AdMob.
  */
-public final class SwiftyAds: NSObject {
+public final class SwiftyAds: NSObject, @unchecked Sendable {
     
     // MARK: - Static Properties
     
     /// The shared SwiftyAds instance.
-    public static let shared = SwiftyAds()
+    @MainActor public static let shared = SwiftyAds()
     
     // MARK: - Properties
     
@@ -48,7 +48,7 @@ public final class SwiftyAds: NSObject {
     private var rewardedAd: SwiftyAdsRewardedAd?
     private var rewardedInterstitialAd: SwiftyAdsRewardedInterstitialAd?
     private var nativeAd: SwiftyAdsNativeAd?
-    private var consentManager: SwiftyAdsConsentManagerType?
+    private var consentManager: SwiftyAdsConsentManager?
     private var disabled = false
     private var hasInitializedMobileAds = false
     
@@ -103,6 +103,7 @@ extension SwiftyAds: SwiftyAdsType {
     ///
     /// - parameter requestBuilder: The GADRequest builder.
     /// - parameter mediationConfigurator: Optional configurator to update mediation networks..
+    @MainActor
     public func configure(requestBuilder: SwiftyAdsRequestBuilder, mediationConfigurator: SwiftyAdsMediationConfigurator?) {
         // Update configuration for selected environment
         let configuration: SwiftyAdsConfiguration
@@ -129,7 +130,7 @@ extension SwiftyAds: SwiftyAdsType {
         
         // Create consent manager.
         if let isTaggedForUnderAgeOfConsent = configuration.isTaggedForUnderAgeOfConsent {
-            consentManager = SwiftyAdsConsentManager(
+            consentManager = DefaultSwiftyAdsConsentManager(
                 isTaggedForChildDirectedTreatment: configuration.isTaggedForChildDirectedTreatment ?? false,
                 isTaggedForUnderAgeOfConsent: isTaggedForUnderAgeOfConsent,
                 mediationConfigurator: mediationConfigurator,
@@ -142,6 +143,7 @@ extension SwiftyAds: SwiftyAdsType {
     // MARK: Initialize
     
     /// Initializes SwiftyAds with its configuration.
+    @MainActor
     public func initializeIfNeeded(from viewController: UIViewController) async throws {
         guard !hasInitializedMobileAds else { return }
         
@@ -161,7 +163,7 @@ extension SwiftyAds: SwiftyAdsType {
         if case .development = environment {
             print("SwiftyAds initialization status", initializationStatus.adapterStatusesByClassName)
         }
-        loadAdsIfNeeded()
+        try await loadAdsIfNeeded()
     }
     
     // MARK: Banner Ads
@@ -179,6 +181,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter onWillDismissScreen: An optional callback when the banner is about dismiss a presented screen.
     /// - parameter onDidDismissScreen: An optional callback when the banner did dismiss a presented screen.
     /// - returns SwiftyAdsBannerAd to show, hide or remove the prepared banner ad.
+    @MainActor
     public func makeBannerAd(in viewController: UIViewController,
                              adUnitIdType: SwiftyAdsAdUnitIdType,
                              position: SwiftyAdsBannerAdPosition,
@@ -255,23 +258,22 @@ extension SwiftyAds: SwiftyAdsType {
     /// - parameter onOpen: An optional callback when the ad was presented.
     /// - parameter onClose: An optional callback when the ad was dismissed.
     /// - parameter onError: An optional callback when an error has occurred.
+    @MainActor
     public func showInterstitialAd(from viewController: UIViewController,
                                    onOpen: (() -> Void)?,
                                    onClose: (() -> Void)?,
-                                   onError: ((Error) -> Void)?) {
+                                   onError: ((Error) -> Void)?) async throws {
         guard !isDisabled else { return }
         
         guard let interstitialAd else {
-            onError?(SwiftyAdsError.notConfigured)
-            return
+            throw SwiftyAdsError.notConfigured
         }
         
         guard hasConsent else {
-            onError?(SwiftyAdsError.consentNotObtained)
-            return
+            throw SwiftyAdsError.consentNotObtained
         }
         
-        interstitialAd.show(
+        try await interstitialAd.show(
             from: viewController,
             onOpen: onOpen,
             onClose: onClose,
@@ -292,28 +294,25 @@ extension SwiftyAds: SwiftyAdsType {
     ///
     /// - Warning:
     /// Rewarded ads may be non-skippable and should only be displayed after pressing a dedicated button.
+    @MainActor
     public func showRewardedAd(from viewController: UIViewController,
                                onOpen: (() -> Void)?,
                                onClose: (() -> Void)?,
                                onError: ((Error) -> Void)?,
-                               onNotReady: (() -> Void)?,
-                               onReward: @escaping (NSDecimalNumber) -> Void) {
+                               onReward: @escaping (NSDecimalNumber) -> Void) async throws {
         guard let rewardedAd else {
-            onError?(SwiftyAdsError.notConfigured)
-            return
+            throw SwiftyAdsError.notConfigured
         }
         
         guard hasConsent else {
-            onError?(SwiftyAdsError.consentNotObtained)
-            return
+            throw SwiftyAdsError.consentNotObtained
         }
 
-        rewardedAd.show(
+        try await rewardedAd.show(
             from: viewController,
             onOpen: onOpen,
             onClose: onClose,
             onError: onError,
-            onNotReady: onNotReady,
             onReward: onReward
         )
     }
@@ -330,24 +329,23 @@ extension SwiftyAds: SwiftyAdsType {
     /// Before displaying a rewarded interstitial ad to users, you must present the user with an intro screen that provides clear reward messaging
     /// and an option to skip the ad before it starts.
     /// https://support.google.com/admob/answer/9884467
+    @MainActor
     public func showRewardedInterstitialAd(from viewController: UIViewController,
                                            onOpen: (() -> Void)?,
                                            onClose: (() -> Void)?,
                                            onError: ((Error) -> Void)?,
-                                           onReward: @escaping (NSDecimalNumber) -> Void) {
+                                           onReward: @escaping (NSDecimalNumber) -> Void) async throws {
         guard !isDisabled else { return }
         
         guard let rewardedInterstitialAd else {
-            onError?(SwiftyAdsError.notConfigured)
-            return
+            throw SwiftyAdsError.notConfigured
         }
 
         guard hasConsent else {
-            onError?(SwiftyAdsError.consentNotObtained)
-            return
+            throw SwiftyAdsError.consentNotObtained
         }
 
-        rewardedInterstitialAd.show(
+        try await rewardedInterstitialAd.show(
             from: viewController,
             onOpen: onOpen,
             onClose: onClose,
@@ -370,6 +368,7 @@ extension SwiftyAds: SwiftyAdsType {
     /// - Warning:
     /// Requests for multiple native ads don't currently work for AdMob ad unit IDs that have been configured for mediation.
     /// Publishers using mediation should avoid using the GADMultipleAdsAdLoaderOptions class when making requests i.e. set loaderOptions parameter to .single.
+    @MainActor
     public func loadNativeAd(from viewController: UIViewController,
                              adUnitIdType: SwiftyAdsAdUnitIdType,
                              loaderOptions: SwiftyAdsNativeAdLoaderOptions,
@@ -403,6 +402,22 @@ extension SwiftyAds: SwiftyAdsType {
             onReceive: onReceive
         )
     }
+    
+    // MARK: Consent
+    
+    /// Under GDPR users must be able to change their consent at any time.
+    ///
+    /// - parameter viewController: The view controller that will present the consent form.
+    /// - returns SwiftyAdsConsentStatus
+    @MainActor
+    public func updateConsent(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus {
+        guard let consentManager = consentManager else {
+            throw SwiftyAdsError.consentManagerNotAvailable
+        }
+        
+        try await consentManager.request(from: viewController)
+        return consentManager.consentStatus
+    }
 
     // MARK: Enable/Disable
 
@@ -416,16 +431,18 @@ extension SwiftyAds: SwiftyAdsType {
             rewardedInterstitialAd?.stopLoading()
             nativeAd?.stopLoading()
         } else {
-            loadAdsIfNeeded()
+            Task { [weak self] in
+                try await self?.loadAdsIfNeeded()
+            }
         }
     }
     
     // MARK: Load Ads If Needed
     
     /// Preloads ads if needed e.g. offline/online changes.
-    public func loadAdsIfNeeded() {
+    public func loadAdsIfNeeded() async throws {
         if let rewardedAd, !rewardedAd.isReady {
-            rewardedAd.load()
+            try await rewardedAd.load()
         }
         
         guard !isDisabled else {
@@ -433,27 +450,12 @@ extension SwiftyAds: SwiftyAdsType {
         }
         
         if let interstitialAd, !interstitialAd.isReady {
-            interstitialAd.load()
+            try await interstitialAd.load()
         }
         
         if let rewardedInterstitialAd, !rewardedInterstitialAd.isReady {
-            rewardedInterstitialAd.load()
+            try await rewardedInterstitialAd.load()
         }
-    }
-    
-    // MARK: Consent
-    
-    /// Under GDPR users must be able to change their consent at any time.
-    ///
-    /// - parameter viewController: The view controller that will present the consent form.
-    /// - returns SwiftyAdsConsentStatus
-    public func updateConsent(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus {
-        guard let consentManager = consentManager else {
-            throw SwiftyAdsError.consentManagerNotAvailable
-        }
-        
-        try await consentManager.request(from: viewController)
-        return consentManager.consentStatus
     }
     
     // MARK: - DEBUG

@@ -22,6 +22,7 @@
 
 import GoogleMobileAds
 
+@MainActor
 final class GADSwiftyAdsBannerAd: NSObject {
 
     // MARK: - Types
@@ -159,7 +160,7 @@ extension GADSwiftyAdsBannerAd: SwiftyAdsBannerAd {
 
 // MARK: - GADBannerViewDelegate
 
-extension GADSwiftyAdsBannerAd: GADBannerViewDelegate {
+extension GADSwiftyAdsBannerAd: @preconcurrency GADBannerViewDelegate {
     // Request lifecycle events
     func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
         if case .development = environment {
