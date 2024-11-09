@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 s.name = 'SwiftyAds'
-s.version = '18.0.1'
+s.version = '18.0.2'
 s.license = 'MIT'
 s.summary = 'A Swift library to display Google AdMob ads. GDPR, COPPA and App Tracking Transparency compliant.'
 s.homepage = 'https://github.com/crashoverride777/swifty-ads'
