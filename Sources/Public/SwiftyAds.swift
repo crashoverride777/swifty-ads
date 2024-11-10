@@ -33,7 +33,7 @@ public final class SwiftyAds: NSObject, @unchecked Sendable {
     // MARK: - Static Properties
     
     /// The shared SwiftyAds instance.
-    @MainActor public static let shared = SwiftyAds()
+    public static let shared = SwiftyAds()
     
     // MARK: - Properties
     
