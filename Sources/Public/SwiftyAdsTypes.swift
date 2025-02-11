@@ -114,9 +114,9 @@ public protocol SwiftyAdsType: Sendable {
                       onReceive: @escaping (GADNativeAd) -> Void)
     @MainActor
     func updateConsent(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus
-    #if DEBUG
     func setDisabled(_ isDisabled: Bool)
     func loadAdsIfNeeded() async throws
+    #if DEBUG
     func enableDebug(testDeviceIdentifiers: [String],
                      geography: UMPDebugGeography,
                      resetsConsentOnLaunch: Bool,
