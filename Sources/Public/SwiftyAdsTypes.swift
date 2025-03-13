@@ -47,7 +47,7 @@ public enum SwiftyAdsNativeAdLoaderOptions: Sendable {
 }
 
 public protocol SwiftyAdsRequestBuilder {
-    func build() -> GADRequest
+    func build() -> Request
 }
 
 public protocol SwiftyAdsMediationConfigurator: Sendable {
@@ -111,7 +111,7 @@ public protocol SwiftyAdsType: Sendable {
                       loaderOptions: SwiftyAdsNativeAdLoaderOptions,
                       onFinishLoading: (() -> Void)?,
                       onError: ((Error) -> Void)?,
-                      onReceive: @escaping (GADNativeAd) -> Void)
+                      onReceive: @escaping (NativeAd) -> Void)
     @MainActor
     func updateConsent(from viewController: UIViewController) async throws -> SwiftyAdsConsentStatus
     func setDisabled(_ isDisabled: Bool)

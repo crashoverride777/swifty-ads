@@ -27,10 +27,10 @@ protocol SwiftyAdsNativeAd {
     func load(from viewController: UIViewController,
               adUnitIdType: SwiftyAdsAdUnitIdType,
               loaderOptions: SwiftyAdsNativeAdLoaderOptions,
-              adTypes: [GADAdLoaderAdType],
+              adTypes: [AdLoaderAdType],
               onFinishLoading: (() -> Void)?,
               onError: ((Error) -> Void)?,
-              onReceive: @escaping (GADNativeAd) -> Void)
+              onReceive: @escaping (NativeAd) -> Void)
     func stopLoading()
 }
 
@@ -40,17 +40,17 @@ final class GADSwiftyAdsNativeAd: NSObject {
 
     private let adUnitId: String
     private let environment: SwiftyAdsEnvironment
-    private let request: () -> GADRequest
+    private let request: () -> Request
     
     private var onFinishLoading: (() -> Void)?
     private var onError: ((Error) -> Void)?
-    private var onReceive: ((GADNativeAd) -> Void)?
+    private var onReceive: ((NativeAd) -> Void)?
     
-    private var adLoader: GADAdLoader?
+    private var adLoader: AdLoader?
     
     // MARK: - Initialization
 
-    init(adUnitId: String, environment: SwiftyAdsEnvironment, request: @escaping () -> GADRequest) {
+    init(adUnitId: String, environment: SwiftyAdsEnvironment, request: @escaping () -> Request) {
         self.adUnitId = adUnitId
         self.environment = environment
         self.request = request
@@ -64,10 +64,10 @@ extension GADSwiftyAdsNativeAd: SwiftyAdsNativeAd {
     func load(from viewController: UIViewController,
               adUnitIdType: SwiftyAdsAdUnitIdType,
               loaderOptions: SwiftyAdsNativeAdLoaderOptions,
-              adTypes: [GADAdLoaderAdType],
+              adTypes: [AdLoaderAdType],
               onFinishLoading: (() -> Void)?,
               onError: ((Error) -> Void)?,
-              onReceive: @escaping (GADNativeAd) -> Void) {
+              onReceive: @escaping (NativeAd) -> Void) {
         self.onFinishLoading = onFinishLoading
         self.onError = onError
         self.onReceive = onReceive
@@ -76,12 +76,12 @@ extension GADSwiftyAdsNativeAd: SwiftyAdsNativeAd {
         if let adLoader = adLoader, adLoader.isLoading { return }
 
         // Create multiple ads ad loader options
-        var multipleAdsAdLoaderOptions: [GADMultipleAdsAdLoaderOptions]? {
+        var multipleAdsAdLoaderOptions: [MultipleAdsAdLoaderOptions]? {
             switch loaderOptions {
             case .single:
                 return nil
             case .multiple(let numberOfAds):
-                let options = GADMultipleAdsAdLoaderOptions()
+                let options = MultipleAdsAdLoaderOptions()
                 options.numberOfAds = numberOfAds
                 return [options]
             }
@@ -101,7 +101,7 @@ extension GADSwiftyAdsNativeAd: SwiftyAdsNativeAd {
         }
 
         // Create GADAdLoader
-        adLoader = GADAdLoader(
+        adLoader = AdLoader(
             adUnitID: adUnitId,
             rootViewController: viewController,
             adTypes: adTypes,
@@ -123,16 +123,16 @@ extension GADSwiftyAdsNativeAd: SwiftyAdsNativeAd {
 
 // MARK: - GADNativeAdLoaderDelegate
 
-extension GADSwiftyAdsNativeAd: GADNativeAdLoaderDelegate {
-    func adLoader(_ adLoader: GADAdLoader, didReceive nativeAd: GADNativeAd) {
+extension GADSwiftyAdsNativeAd: NativeAdLoaderDelegate {
+    func adLoader(_ adLoader: AdLoader, didReceive nativeAd: NativeAd) {
         onReceive?(nativeAd)
     }
 
-    func adLoaderDidFinishLoading(_ adLoader: GADAdLoader) {
+    func adLoaderDidFinishLoading(_ adLoader: AdLoader) {
         onFinishLoading?()
     }
 
-    func adLoader(_ adLoader: GADAdLoader, didFailToReceiveAdWithError error: Error) {
+    func adLoader(_ adLoader: AdLoader, didFailToReceiveAdWithError error: Error) {
         onError?(error)
     }
 }

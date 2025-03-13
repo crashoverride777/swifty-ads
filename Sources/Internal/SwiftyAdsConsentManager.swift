@@ -48,7 +48,7 @@ final class DefaultSwiftyAdsConsentManager {
     private let isTaggedForUnderAgeOfConsent: Bool
     private let mediationConfigurator: SwiftyAdsMediationConfigurator?
     private let environment: SwiftyAdsEnvironment
-    private let mobileAds: GADMobileAds
+    private let mobileAds: MobileAds
 
     // MARK: - Initialization
 
@@ -56,7 +56,7 @@ final class DefaultSwiftyAdsConsentManager {
          isTaggedForUnderAgeOfConsent: Bool,
          mediationConfigurator: SwiftyAdsMediationConfigurator?,
          environment: SwiftyAdsEnvironment,
-         mobileAds: GADMobileAds) {
+         mobileAds: MobileAds) {
         self.isTaggedForChildDirectedTreatment = isTaggedForChildDirectedTreatment
         self.isTaggedForUnderAgeOfConsent = isTaggedForUnderAgeOfConsent
         self.consentInformation = .sharedInstance

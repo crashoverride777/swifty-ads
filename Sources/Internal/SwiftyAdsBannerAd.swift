@@ -37,7 +37,7 @@ final class GADSwiftyAdsBannerAd: NSObject {
     private let environment: SwiftyAdsEnvironment
     private let isDisabled: () -> Bool
     private let hasConsent: () -> Bool
-    private let request: () -> GADRequest
+    private let request: () -> Request
     
     private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
@@ -46,7 +46,7 @@ final class GADSwiftyAdsBannerAd: NSObject {
     private var onWillDismissScreen: (() -> Void)?
     private var onDidDismissScreen: (() -> Void)?
 
-    private var bannerView: GADBannerView?
+    private var bannerView: BannerView?
     private var position: SwiftyAdsBannerAdPosition = .bottom(isUsingSafeArea: true)
     private var animation: SwiftyAdsBannerAdAnimation = .none
     private var bannerViewConstraint: NSLayoutConstraint?
@@ -57,7 +57,7 @@ final class GADSwiftyAdsBannerAd: NSObject {
     init(environment: SwiftyAdsEnvironment,
          isDisabled: @escaping () -> Bool,
          hasConsent: @escaping () -> Bool,
-         request: @escaping () -> GADRequest) {
+         request: @escaping () -> Request) {
         self.environment = environment
         self.isDisabled = isDisabled
         self.hasConsent = hasConsent
@@ -87,7 +87,7 @@ final class GADSwiftyAdsBannerAd: NSObject {
         self.onDidDismissScreen = onDidDismissScreen
         
         // Create banner view
-        let bannerView = GADBannerView()
+        let bannerView = BannerView()
         
         // Keep reference to created banner view
         self.bannerView = bannerView
@@ -132,9 +132,9 @@ extension GADSwiftyAdsBannerAd: SwiftyAdsBannerAd {
 
         // Get Adaptive GADAdSize and set the ad view.
         if isLandscape {
-            bannerView.adSize = GADLandscapeAnchoredAdaptiveBannerAdSizeWithWidth(frame.size.width)
+            bannerView.adSize = landscapeAnchoredAdaptiveBanner(width: frame.size.width)
         } else {
-            bannerView.adSize = GADPortraitAnchoredAdaptiveBannerAdSizeWithWidth(frame.size.width)
+            bannerView.adSize = portraitAnchoredAdaptiveBanner(width: frame.size.width)
         }
 
         // Create an ad request and load the adaptive banner ad.
@@ -160,36 +160,36 @@ extension GADSwiftyAdsBannerAd: SwiftyAdsBannerAd {
 
 // MARK: - GADBannerViewDelegate
 
-extension GADSwiftyAdsBannerAd: @preconcurrency GADBannerViewDelegate {
+extension GADSwiftyAdsBannerAd: BannerViewDelegate {
     // Request lifecycle events
-    func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
+    func bannerViewDidRecordImpression(_ bannerView: BannerView) {
         if case .development = environment {
             print("SwiftyAdsBanner did record impression for banner ad")
         }
     }
     
-    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+    func bannerViewDidReceiveAd(_ bannerView: BannerView) {
         show(bannerView, from: bannerView.rootViewController)
         if case .development = environment {
             print("SwiftyAdsBanner did receive ad from: \(bannerView.responseInfo?.loadedAdNetworkResponseInfo?.adNetworkClassName ?? "not found")")
         }
     }
 
-    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+    func bannerView(_ bannerView: BannerView, didFailToReceiveAdWithError error: Error) {
         hide(bannerView, from: bannerView.rootViewController)
         onError?(error)
     }
 
     // Click-Time lifecycle events
-    func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+    func bannerViewWillPresentScreen(_ bannerView: BannerView) {
         onWillPresentScreen?()
     }
 
-    func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
+    func bannerViewWillDismissScreen(_ bannerView: BannerView) {
         onWillDismissScreen?()
     }
 
-    func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
+    func bannerViewDidDismissScreen(_ bannerView: BannerView) {
         onDidDismissScreen?()
     }
 }
@@ -197,7 +197,7 @@ extension GADSwiftyAdsBannerAd: @preconcurrency GADBannerViewDelegate {
 // MARK: - Private Methods
 
 private extension GADSwiftyAdsBannerAd {
-    func add(_ bannerView: GADBannerView, to viewController: UIViewController) {
+    func add(_ bannerView: BannerView, to viewController: UIViewController) {
         // Add banner view to view controller
         bannerView.translatesAutoresizingMaskIntoConstraints = false
         viewController.view.addSubview(bannerView)
@@ -232,7 +232,7 @@ private extension GADSwiftyAdsBannerAd {
         ].compactMap { $0 })
     }
 
-    func show(_ bannerAd: GADBannerView, from viewController: UIViewController?) {
+    func show(_ bannerAd: BannerView, from viewController: UIViewController?) {
         // Stop current animations
         stopCurrentAnimatorAnimations()
 
@@ -275,7 +275,7 @@ private extension GADSwiftyAdsBannerAd {
         animator?.startAnimation()
     }
     
-    func hide(_ bannerAd: GADBannerView, from viewController: UIViewController?, skipAnimation: Bool = false) {
+    func hide(_ bannerAd: BannerView, from viewController: UIViewController?, skipAnimation: Bool = false) {
         // Stop current animations
         stopCurrentAnimatorAnimations()
 

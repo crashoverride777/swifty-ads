@@ -40,17 +40,17 @@ final class GADSwiftyAdsRewardedInterstitialAd: NSObject, @unchecked Sendable {
 
     private let adUnitId: String
     private let environment: SwiftyAdsEnvironment
-    private let request: () -> GADRequest
+    private let request: () -> Request
     
     private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
     private var onError: ((Error) -> Void)?
 
-    private var rewardedInterstitialAd: GADRewardedInterstitialAd?
+    private var rewardedInterstitialAd: RewardedInterstitialAd?
 
     // MARK: - Initialization
 
-    init(adUnitId: String, environment: SwiftyAdsEnvironment, request: @escaping () -> GADRequest) {
+    init(adUnitId: String, environment: SwiftyAdsEnvironment, request: @escaping () -> Request) {
         self.adUnitId = adUnitId
         self.environment = environment
         self.request = request
@@ -65,7 +65,7 @@ extension GADSwiftyAdsRewardedInterstitialAd: SwiftyAdsRewardedInterstitialAd {
     }
 
     func load() async throws {
-        rewardedInterstitialAd = try await GADRewardedInterstitialAd.load(withAdUnitID: adUnitId, request: request())
+        rewardedInterstitialAd = try await RewardedInterstitialAd.load(with: adUnitId, request: request())
         rewardedInterstitialAd?.fullScreenContentDelegate = self
     }
 
@@ -90,9 +90,9 @@ extension GADSwiftyAdsRewardedInterstitialAd: SwiftyAdsRewardedInterstitialAd {
         }
 
         do {
-            try rewardedInterstitialAd.canPresent(fromRootViewController: viewController)
+            try rewardedInterstitialAd.canPresent(from: viewController)
             let rewardAmount = rewardedInterstitialAd.adReward.amount
-            rewardedInterstitialAd.present(fromRootViewController: viewController, userDidEarnRewardHandler: {
+            rewardedInterstitialAd.present(from: viewController, userDidEarnRewardHandler: {
                 onReward(rewardAmount)
             })
         } catch {
@@ -104,18 +104,18 @@ extension GADSwiftyAdsRewardedInterstitialAd: SwiftyAdsRewardedInterstitialAd {
 
 // MARK: - GADFullScreenContentDelegate
 
-extension GADSwiftyAdsRewardedInterstitialAd: GADFullScreenContentDelegate {
-    func adDidRecordImpression(_ ad: GADFullScreenPresentingAd) {
+extension GADSwiftyAdsRewardedInterstitialAd: FullScreenContentDelegate {
+    func adDidRecordImpression(_ ad: FullScreenPresentingAd) {
         if case .development = environment {
             print("SwiftyAdsRewardedInterstitial did record impression for ad: \(ad)")
         }
     }
 
-    func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+    func adWillPresentFullScreenContent(_ ad: FullScreenPresentingAd) {
         onOpen?()
     }
 
-    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+    func adDidDismissFullScreenContent(_ ad: FullScreenPresentingAd) {
         // Nil out reference
         rewardedInterstitialAd = nil
         // Send callback
@@ -124,7 +124,7 @@ extension GADSwiftyAdsRewardedInterstitialAd: GADFullScreenContentDelegate {
         reload()
     }
 
-    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+    func ad(_ ad: FullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
         onError?(error)
     }
 }

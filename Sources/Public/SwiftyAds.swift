@@ -37,7 +37,7 @@ public final class SwiftyAds: NSObject, @unchecked Sendable {
     
     // MARK: - Properties
     
-    private let mobileAds: GADMobileAds
+    private let mobileAds: MobileAds
     
     private var configuration: SwiftyAdsConfiguration?
     private var requestBuilder: SwiftyAdsRequestBuilder?
@@ -64,7 +64,7 @@ public final class SwiftyAds: NSObject, @unchecked Sendable {
     // MARK: - Initialization
     
     private override init() {
-        mobileAds = .sharedInstance()
+        mobileAds = .shared
         super.init()
     }
 }
@@ -230,7 +230,7 @@ extension SwiftyAds: SwiftyAdsType {
                 self?.hasConsent ?? true
             },
             request: { [weak self] in
-                self?.requestBuilder?.build() ?? GADRequest()
+                self?.requestBuilder?.build() ?? Request()
             }
         )
 
@@ -374,7 +374,7 @@ extension SwiftyAds: SwiftyAdsType {
                              loaderOptions: SwiftyAdsNativeAdLoaderOptions,
                              onFinishLoading: (() -> Void)?,
                              onError: ((Error) -> Void)?,
-                             onReceive: @escaping (GADNativeAd) -> Void) {
+                             onReceive: @escaping (NativeAd) -> Void) {
         guard !isDisabled else { return }
         
         guard hasConsent else {
@@ -387,7 +387,7 @@ extension SwiftyAds: SwiftyAdsType {
                 adUnitId: adUnitId,
                 environment: environment,
                 request: { [weak self] in
-                    self?.requestBuilder?.build() ?? GADRequest()
+                    self?.requestBuilder?.build() ?? Request()
                 }
             )
         }

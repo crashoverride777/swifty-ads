@@ -39,17 +39,17 @@ final class GADSwiftyAdsInterstitialAd: NSObject, @unchecked Sendable {
 
     private let adUnitId: String
     private let environment: SwiftyAdsEnvironment
-    private let request: () -> GADRequest
+    private let request: () -> Request
     
     private var onOpen: (() -> Void)?
     private var onClose: (() -> Void)?
     private var onError: ((Error) -> Void)?
     
-    private var interstitialAd: GADInterstitialAd?
+    private var interstitialAd: InterstitialAd?
     
     // MARK: - Initialization
     
-    init(adUnitId: String, environment: SwiftyAdsEnvironment, request: @escaping () -> GADRequest) {
+    init(adUnitId: String, environment: SwiftyAdsEnvironment, request: @escaping () -> Request) {
         self.adUnitId = adUnitId
         self.environment = environment
         self.request = request
@@ -64,7 +64,7 @@ extension GADSwiftyAdsInterstitialAd: SwiftyAdsInterstitialAd {
     }
     
     func load() async throws {
-        interstitialAd = try await GADInterstitialAd.load(withAdUnitID: adUnitId, request: request())
+        interstitialAd = try await InterstitialAd.load(with: adUnitId, request: request())
         interstitialAd?.fullScreenContentDelegate = self
     }
 
@@ -88,8 +88,8 @@ extension GADSwiftyAdsInterstitialAd: SwiftyAdsInterstitialAd {
         }
 
         do {
-            try interstitialAd.canPresent(fromRootViewController: viewController)
-            interstitialAd.present(fromRootViewController: viewController)
+            try interstitialAd.canPresent(from: viewController)
+            interstitialAd.present(from: viewController)
         } catch {
             reload()
             throw error
@@ -99,18 +99,18 @@ extension GADSwiftyAdsInterstitialAd: SwiftyAdsInterstitialAd {
 
 // MARK: - GADFullScreenContentDelegate
 
-extension GADSwiftyAdsInterstitialAd: GADFullScreenContentDelegate {
-    func adDidRecordImpression(_ ad: GADFullScreenPresentingAd) {
+extension GADSwiftyAdsInterstitialAd: FullScreenContentDelegate {
+    func adDidRecordImpression(_ ad: FullScreenPresentingAd) {
         if case .development = environment {
             print("SwiftyAdsInterstitial did record impression for ad: \(ad)")
         }
     }
 
-    func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+    func adWillPresentFullScreenContent(_ ad: FullScreenPresentingAd) {
         onOpen?()
     }
     
-    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+    func adDidDismissFullScreenContent(_ ad: FullScreenPresentingAd) {
         // Nil out reference
         interstitialAd = nil
         // Send callback
@@ -119,7 +119,7 @@ extension GADSwiftyAdsInterstitialAd: GADFullScreenContentDelegate {
         reload()
     }
 
-    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+    func ad(_ ad: FullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
         onError?(error)
     }
 }
