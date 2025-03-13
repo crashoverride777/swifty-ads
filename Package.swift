@@ -7,7 +7,7 @@ private let packageName = "SwiftyAds"
 
 let package = Package(
     name: packageName,
-    platforms: [.iOS(.v14)],
+    platforms: [.iOS(.v15)],
     products: [.library(name: packageName, targets: [packageName])],
     dependencies: [
         .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", from: "12.2.0")
