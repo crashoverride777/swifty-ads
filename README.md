@@ -449,7 +449,7 @@ Make sure to prepare for Apple's App Store data disclosure [requirements](https:
 
 ## Demos
 
-https://github.com/crashoverride777/swifty-ads-demo
+Check out the demos in the SwiftyAdsDemos folder.
 
 ## License
 

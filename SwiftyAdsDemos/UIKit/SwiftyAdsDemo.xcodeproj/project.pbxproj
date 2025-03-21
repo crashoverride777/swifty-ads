@@ -1,0 +1,484 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6A185ACE253D9D77001542BC /* DemoSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A185ACD253D9D77001542BC /* DemoSelectionViewController.swift */; };
+		6A185AD6253D9EE5001542BC /* BasicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A185AD5253D9EE5001542BC /* BasicCell.swift */; };
+		6A4286052400609E0035487A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4286042400609E0035487A /* AppDelegate.swift */; };
+		6A428612240060A00035487A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A428611240060A00035487A /* Assets.xcassets */; };
+		6A428615240060A00035487A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A428613240060A00035487A /* LaunchScreen.storyboard */; };
+		6A520CDA253DA1130034F065 /* PlainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A520CD9253DA1130034F065 /* PlainViewController.swift */; };
+		6A520CDC253DA1350034F065 /* TabBarControllerAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A520CDB253DA1350034F065 /* TabBarControllerAd.swift */; };
+		6A864BC925901827005D0789 /* NativeAdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A864BC825901827005D0789 /* NativeAdViewController.swift */; };
+		6AA7F6CB2CE0FD0400D336FA /* NativeAdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6AA7F6CA2CE0FD0400D336FA /* NativeAdView.xib */; };
+		6AA7F6CE2CE100EE00D336FA /* SwiftyAds in Frameworks */ = {isa = PBXBuildFile; productRef = 6AA7F6CD2CE100EE00D336FA /* SwiftyAds */; };
+		6AAEDE042C72378300ED445F /* SwiftyAds.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6AAEDE032C72378300ED445F /* SwiftyAds.plist */; };
+		6AAEDE072C7239FE00ED445F /* AdsRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAEDE062C7239FE00ED445F /* AdsRequestBuilder.swift */; };
+		6AAEDE092C723A1900ED445F /* AdsMediationConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAEDE082C723A1900ED445F /* AdsMediationConfigurator.swift */; };
+		6AD3988A25CE970A0038C9B0 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AD3988925CE970A0038C9B0 /* AppTrackingTransparency.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		6AEB371525E2F3A100AFA313 /* ConsentSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEB371425E2F3A100AFA313 /* ConsentSelectionViewController.swift */; };
+		6AEF6C2E2560CC1200780DFB /* TabBarControllerNoAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEF6C2D2560CC1200780DFB /* TabBarControllerNoAd.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6A38EBBA24019D1B00E645A0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		6A185ACD253D9D77001542BC /* DemoSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoSelectionViewController.swift; sourceTree = "<group>"; };
+		6A185AD5253D9EE5001542BC /* BasicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCell.swift; sourceTree = "<group>"; };
+		6A4286012400609E0035487A /* SwiftyAdsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyAdsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A4286042400609E0035487A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6A428611240060A00035487A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6A428614240060A00035487A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		6A428616240060A00035487A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6A520CD9253DA1130034F065 /* PlainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainViewController.swift; sourceTree = "<group>"; };
+		6A520CDB253DA1350034F065 /* TabBarControllerAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarControllerAd.swift; sourceTree = "<group>"; };
+		6A864BC825901827005D0789 /* NativeAdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeAdViewController.swift; sourceTree = "<group>"; };
+		6AA7F6CA2CE0FD0400D336FA /* NativeAdView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NativeAdView.xib; sourceTree = "<group>"; };
+		6AAEDE032C72378300ED445F /* SwiftyAds.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SwiftyAds.plist; sourceTree = "<group>"; };
+		6AAEDE062C7239FE00ED445F /* AdsRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsRequestBuilder.swift; sourceTree = "<group>"; };
+		6AAEDE082C723A1900ED445F /* AdsMediationConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsMediationConfigurator.swift; sourceTree = "<group>"; };
+		6AD3988925CE970A0038C9B0 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
+		6AEB371425E2F3A100AFA313 /* ConsentSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentSelectionViewController.swift; sourceTree = "<group>"; };
+		6AEF6C2D2560CC1200780DFB /* TabBarControllerNoAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarControllerNoAd.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6A4285FE2400609E0035487A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6AD3988A25CE970A0038C9B0 /* AppTrackingTransparency.framework in Frameworks */,
+				6AA7F6CE2CE100EE00D336FA /* SwiftyAds in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6A4285F82400609E0035487A = {
+			isa = PBXGroup;
+			children = (
+				6A4286032400609E0035487A /* SwiftyAdsDemo */,
+				6A4286022400609E0035487A /* Products */,
+				6A864BCC25901ADE005D0789 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		6A4286022400609E0035487A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6A4286012400609E0035487A /* SwiftyAdsDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6A4286032400609E0035487A /* SwiftyAdsDemo */ = {
+			isa = PBXGroup;
+			children = (
+				6A4286042400609E0035487A /* AppDelegate.swift */,
+				6AEB380825E4623B00AFA313 /* ViewControllers */,
+				6AAEDE052C7239D900ED445F /* SwiftyAds */,
+				6A428613240060A00035487A /* LaunchScreen.storyboard */,
+				6A428611240060A00035487A /* Assets.xcassets */,
+				6A428616240060A00035487A /* Info.plist */,
+			);
+			path = SwiftyAdsDemo;
+			sourceTree = "<group>";
+		};
+		6A864BCC25901ADE005D0789 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6AD3988925CE970A0038C9B0 /* AppTrackingTransparency.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6AAEDE052C7239D900ED445F /* SwiftyAds */ = {
+			isa = PBXGroup;
+			children = (
+				6AAEDE082C723A1900ED445F /* AdsMediationConfigurator.swift */,
+				6AAEDE062C7239FE00ED445F /* AdsRequestBuilder.swift */,
+				6AAEDE032C72378300ED445F /* SwiftyAds.plist */,
+			);
+			path = SwiftyAds;
+			sourceTree = "<group>";
+		};
+		6AEB371725E2F4D000AFA313 /* Demos */ = {
+			isa = PBXGroup;
+			children = (
+				6AA7F6CA2CE0FD0400D336FA /* NativeAdView.xib */,
+				6A864BC825901827005D0789 /* NativeAdViewController.swift */,
+				6A520CD9253DA1130034F065 /* PlainViewController.swift */,
+				6A520CDB253DA1350034F065 /* TabBarControllerAd.swift */,
+				6AEF6C2D2560CC1200780DFB /* TabBarControllerNoAd.swift */,
+			);
+			path = Demos;
+			sourceTree = "<group>";
+		};
+		6AEB380825E4623B00AFA313 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				6AEB371725E2F4D000AFA313 /* Demos */,
+				6AEB371425E2F3A100AFA313 /* ConsentSelectionViewController.swift */,
+				6A185ACD253D9D77001542BC /* DemoSelectionViewController.swift */,
+				6A185AD5253D9EE5001542BC /* BasicCell.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6A4286002400609E0035487A /* SwiftyAdsDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6A428619240060A00035487A /* Build configuration list for PBXNativeTarget "SwiftyAdsDemo" */;
+			buildPhases = (
+				6A4285FD2400609E0035487A /* Sources */,
+				6A4285FE2400609E0035487A /* Frameworks */,
+				6A4285FF2400609E0035487A /* Resources */,
+				6A38EBBA24019D1B00E645A0 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwiftyAdsDemo;
+			packageProductDependencies = (
+				6AA7F6CD2CE100EE00D336FA /* SwiftyAds */,
+			);
+			productName = Example;
+			productReference = 6A4286012400609E0035487A /* SwiftyAdsDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6A4285F92400609E0035487A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 1130;
+				LastUpgradeCheck = 1530;
+				ORGANIZATIONNAME = "Dominik Ringler";
+				TargetAttributes = {
+					6A4286002400609E0035487A = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 6A4285FC2400609E0035487A /* Build configuration list for PBXProject "SwiftyAdsDemo" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				de,
+				es,
+				fr,
+			);
+			mainGroup = 6A4285F82400609E0035487A;
+			packageReferences = (
+				6AA7F6CC2CE100EE00D336FA /* XCRemoteSwiftPackageReference "swifty-ads" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 6A4286022400609E0035487A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6A4286002400609E0035487A /* SwiftyAdsDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6A4285FF2400609E0035487A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6AA7F6CB2CE0FD0400D336FA /* NativeAdView.xib in Resources */,
+				6A428612240060A00035487A /* Assets.xcassets in Resources */,
+				6A428615240060A00035487A /* LaunchScreen.storyboard in Resources */,
+				6AAEDE042C72378300ED445F /* SwiftyAds.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6A4285FD2400609E0035487A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6AAEDE092C723A1900ED445F /* AdsMediationConfigurator.swift in Sources */,
+				6A520CDA253DA1130034F065 /* PlainViewController.swift in Sources */,
+				6A185ACE253D9D77001542BC /* DemoSelectionViewController.swift in Sources */,
+				6A520CDC253DA1350034F065 /* TabBarControllerAd.swift in Sources */,
+				6A185AD6253D9EE5001542BC /* BasicCell.swift in Sources */,
+				6AEF6C2E2560CC1200780DFB /* TabBarControllerNoAd.swift in Sources */,
+				6AAEDE072C7239FE00ED445F /* AdsRequestBuilder.swift in Sources */,
+				6A864BC925901827005D0789 /* NativeAdViewController.swift in Sources */,
+				6A4286052400609E0035487A /* AppDelegate.swift in Sources */,
+				6AEB371525E2F3A100AFA313 /* ConsentSelectionViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		6A428613240060A00035487A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6A428614240060A00035487A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6A428617240060A00035487A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		6A428618240060A00035487A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6A42861A240060A00035487A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DK88YZ475Z;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAdsDemo/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = SwiftyAdsDemo;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.SwiftyAdsDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6A42861B240060A00035487A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DK88YZ475Z;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = "$(SRCROOT)/SwiftyAdsDemo/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = SwiftyAdsDemo;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.SwiftyAdsDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6A4285FC2400609E0035487A /* Build configuration list for PBXProject "SwiftyAdsDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A428617240060A00035487A /* Debug */,
+				6A428618240060A00035487A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6A428619240060A00035487A /* Build configuration list for PBXNativeTarget "SwiftyAdsDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A42861A240060A00035487A /* Debug */,
+				6A42861B240060A00035487A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6AA7F6CC2CE100EE00D336FA /* XCRemoteSwiftPackageReference "swifty-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/crashoverride777/swifty-ads";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 20.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6AA7F6CD2CE100EE00D336FA /* SwiftyAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6AA7F6CC2CE100EE00D336FA /* XCRemoteSwiftPackageReference "swifty-ads" */;
+			productName = SwiftyAds;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 6A4285F92400609E0035487A /* Project object */;
+}
