@@ -26,7 +26,7 @@ import UserMessagingPlatform
 enum SwiftyAdsEnvironment {
     struct DevelopmentSettings {
         let testDeviceIdentifiers: [String]
-        let geography: UMPDebugGeography
+        let geography: DebugGeography
         let resetsConsentOnLaunch: Bool
         let isTaggedForChildDirectedTreatment: Bool?
         let isTaggedForUnderAgeOfConsent: Bool?

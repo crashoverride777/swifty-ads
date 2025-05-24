@@ -10,7 +10,7 @@ let package = Package(
     platforms: [.iOS(.v15)],
     products: [.library(name: packageName, targets: [packageName])],
     dependencies: [
-        .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", from: "12.2.0")
+        .package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git", from: "12.4.0")
     ],
     targets: [
         .target(

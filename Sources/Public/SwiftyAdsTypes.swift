@@ -23,7 +23,7 @@
 import GoogleMobileAds
 import UserMessagingPlatform
 
-public typealias SwiftyAdsConsentStatus = UMPConsentStatus
+public typealias SwiftyAdsConsentStatus = ConsentStatus
 
 public enum SwiftyAdsAdUnitIdType: Sendable {
     case plist
@@ -118,7 +118,7 @@ public protocol SwiftyAdsType: Sendable {
     func loadAdsIfNeeded() async throws
     #if DEBUG
     func enableDebug(testDeviceIdentifiers: [String],
-                     geography: UMPDebugGeography,
+                     geography: DebugGeography,
                      resetsConsentOnLaunch: Bool,
                      isTaggedForChildDirectedTreatment: Bool?,
                      isTaggedForUnderAgeOfConsent: Bool?)

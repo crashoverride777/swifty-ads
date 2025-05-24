@@ -43,7 +43,7 @@ final class DefaultSwiftyAdsConsentManager {
 
     // MARK: - Properties
 
-    private let consentInformation: UMPConsentInformation
+    private let consentInformation: ConsentInformation
     private let isTaggedForChildDirectedTreatment: Bool
     private let isTaggedForUnderAgeOfConsent: Bool
     private let mediationConfigurator: SwiftyAdsMediationConfigurator?
@@ -59,7 +59,7 @@ final class DefaultSwiftyAdsConsentManager {
          mobileAds: MobileAds) {
         self.isTaggedForChildDirectedTreatment = isTaggedForChildDirectedTreatment
         self.isTaggedForUnderAgeOfConsent = isTaggedForUnderAgeOfConsent
-        self.consentInformation = .sharedInstance
+        self.consentInformation = .shared
         self.mediationConfigurator = mediationConfigurator
         self.environment = environment
         self.mobileAds = mobileAds
@@ -88,7 +88,7 @@ extension DefaultSwiftyAdsConsentManager: SwiftyAdsConsentManager {
         // The consent information state was updated and we can now check if a form is available.
         switch consentInformation.formStatus {
         case .available:
-            let form = try await UMPConsentForm.load()
+            let form = try await ConsentForm.load()
             try await form.present(from: viewController)
         case .unavailable:
             // Showing a consent form is not required
@@ -107,11 +107,11 @@ extension DefaultSwiftyAdsConsentManager: SwiftyAdsConsentManager {
 private extension DefaultSwiftyAdsConsentManager {
     func requestUpdate() async throws {
         // Create a UMPRequestParameters object.
-        let parameters = UMPRequestParameters()
-        parameters.tagForUnderAgeOfConsent = isTaggedForUnderAgeOfConsent
+        let parameters = RequestParameters()
+        parameters.isTaggedForUnderAgeOfConsent = isTaggedForUnderAgeOfConsent
         
         if case .development(let developmentConfig) = environment {
-            let debugSettings = UMPDebugSettings()
+            let debugSettings = DebugSettings()
             debugSettings.testDeviceIdentifiers = developmentConfig.testDeviceIdentifiers
             debugSettings.geography = developmentConfig.geography
             parameters.debugSettings = debugSettings

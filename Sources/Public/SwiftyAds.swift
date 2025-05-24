@@ -463,7 +463,7 @@ extension SwiftyAds: SwiftyAdsType {
     #if DEBUG
     /// Enable debugging. Should be called before `configure`.
     public func enableDebug(testDeviceIdentifiers: [String], 
-                            geography: UMPDebugGeography,
+                            geography: DebugGeography,
                             resetsConsentOnLaunch: Bool,
                             isTaggedForChildDirectedTreatment: Bool?,
                             isTaggedForUnderAgeOfConsent: Bool?) {
