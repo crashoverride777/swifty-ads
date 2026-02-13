@@ -1,6 +1,6 @@
 //    The MIT License (MIT)
 //
-//    Copyright (c) 2015-2025 Dominik Ringler
+//    Copyright (c) 2015-2026 Dominik Ringler
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy
 //    of this software and associated documentation files (the "Software"), to deal
@@ -117,8 +117,7 @@ extension GADSwiftyAdsBannerAd: SwiftyAdsBannerAd {
         guard hasConsent() else { return }
         guard let bannerView = bannerView else { return }
         guard let currentView = bannerView.rootViewController?.view else { return }
-
-        // Determine the view width to use for the ad width.
+        
         let frame = { () -> CGRect in
             switch position {
             case .top(let isUsingSafeArea), .bottom(let isUsingSafeArea):
@@ -129,15 +128,8 @@ extension GADSwiftyAdsBannerAd: SwiftyAdsBannerAd {
                 }
             }
         }()
-
-        // Get Adaptive GADAdSize and set the ad view.
-        if isLandscape {
-            bannerView.adSize = landscapeAnchoredAdaptiveBanner(width: frame.size.width)
-        } else {
-            bannerView.adSize = portraitAnchoredAdaptiveBanner(width: frame.size.width)
-        }
-
-        // Create an ad request and load the adaptive banner ad.
+        
+        bannerView.adSize = largeAnchoredAdaptiveBanner(width: frame.size.width)
         bannerView.load(request())
     }
 
