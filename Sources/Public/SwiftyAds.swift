@@ -148,7 +148,11 @@ extension SwiftyAds: SwiftyAdsType {
         guard !hasInitializedMobileAds else { return }
         
         if let consentManager {
-            try await consentManager.request(from: viewController)
+            do {
+                try await consentManager.request(from: viewController)
+            } catch {
+                print("SwiftyAds consent request failed, continuing with SDK init: \(error)")
+            }
         }
         /*
          Ads may be preloaded by the Mobile Ads SDK or mediation partner SDKs upon
@@ -163,7 +167,7 @@ extension SwiftyAds: SwiftyAdsType {
         if case .development = environment {
             print("SwiftyAds initialization status", initializationStatus.adapterStatusesByClassName)
         }
-        try await loadAdsIfNeeded()
+        await loadAdsIfNeeded()
     }
     
     // MARK: Banner Ads
@@ -304,10 +308,6 @@ extension SwiftyAds: SwiftyAdsType {
             throw SwiftyAdsError.notConfigured
         }
         
-        guard hasConsent else {
-            throw SwiftyAdsError.consentNotObtained
-        }
-
         try await rewardedAd.show(
             from: viewController,
             onOpen: onOpen,
@@ -432,7 +432,7 @@ extension SwiftyAds: SwiftyAdsType {
             nativeAd?.stopLoading()
         } else {
             Task { [weak self] in
-                try await self?.loadAdsIfNeeded()
+                await self?.loadAdsIfNeeded()
             }
         }
     }
@@ -440,9 +440,13 @@ extension SwiftyAds: SwiftyAdsType {
     // MARK: Load Ads If Needed
     
     /// Preloads ads if needed e.g. offline/online changes.
-    public func loadAdsIfNeeded() async throws {
+    public func loadAdsIfNeeded() async {
         if let rewardedAd, !rewardedAd.isReady {
-            try await rewardedAd.load()
+            do {
+                try await rewardedAd.load()
+            } catch {
+                print("SwiftyAds rewarded ad load error: \(error)")
+            }
         }
         
         guard !isDisabled else {
@@ -450,11 +454,19 @@ extension SwiftyAds: SwiftyAdsType {
         }
         
         if let interstitialAd, !interstitialAd.isReady {
-            try await interstitialAd.load()
+            do {
+                try await interstitialAd.load()
+            } catch {
+                print("SwiftyAds interstitial ad load error: \(error)")
+            }
         }
         
         if let rewardedInterstitialAd, !rewardedInterstitialAd.isReady {
-            try await rewardedInterstitialAd.load()
+            do {
+                try await rewardedInterstitialAd.load()
+            } catch {
+                print("SwiftyAds rewarded interstitial ad load error: \(error)")
+            }
         }
     }
     
