@@ -432,7 +432,7 @@ extension SwiftyAds: SwiftyAdsType {
             nativeAd?.stopLoading()
         } else {
             Task { [weak self] in
-                try await self?.loadAdsIfNeeded()
+                try? await self?.loadAdsIfNeeded()
             }
         }
     }

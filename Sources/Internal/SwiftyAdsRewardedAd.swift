@@ -128,7 +128,7 @@ extension GADSwiftyAdsRewardedAd: FullScreenContentDelegate {
 private extension GADSwiftyAdsRewardedAd {
     func reload() {
         Task { [weak self] in
-            try await self?.load()
+            try? await self?.load()
         }
     }
 }

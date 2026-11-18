@@ -129,7 +129,7 @@ extension GADSwiftyAdsInterstitialAd: FullScreenContentDelegate {
 private extension GADSwiftyAdsInterstitialAd {
     func reload() {
         Task { [weak self] in
-            try await self?.load()
+            try? await self?.load()
         }
     }
 }
